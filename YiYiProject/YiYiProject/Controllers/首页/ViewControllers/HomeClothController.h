@@ -17,7 +17,7 @@
 
 
 //跳转到品牌详细界面
--(void)pushToPinpaiDetailVCWithIdStr:(NSString *)theID;
+-(void)pushToPinpaiDetailVCWithIdStr:(NSString *)theID pinpaiName:(NSString *)theName;
 
 
 //跳转到附近的商场界面

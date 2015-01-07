@@ -32,6 +32,7 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
+    self.navigationItem.title = self.pinpaiName;
     
     
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(100, 100, 100, 100)];
@@ -97,12 +98,42 @@
     static NSString *identifier = @"identifier";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     
+    for (UIView *view in cell.contentView.subviews) {
+        [view removeFromSuperview];
+    }
+    
+    //数据源
     NSDictionary *dic = _dataArray[indexPath.row];
-    cell.textLabel.text = [dic stringValueForKey:@"mall_name"];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"距离:%@",[dic stringValueForKey:@"distance"]];
+    
+    //name
+    UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 18, 0, 16)];
+    nameLabel.font = [UIFont boldSystemFontOfSize:15];
+    nameLabel.text = [dic stringValueForKey:@"mall_name"];
+    [nameLabel sizeToFit];
+    
+    //距离
+    UILabel *distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(nameLabel.frame)+15, nameLabel.frame.origin.y+4, 0, nameLabel.frame.size.height)];
+    distanceLabel.font = [UIFont systemFontOfSize:12];
+    distanceLabel.textColor = RGBCOLOR(153, 153, 153);
+    distanceLabel.text = [NSString stringWithFormat:@"%@m",[dic stringValueForKey:@"distance"]];
+    [distanceLabel sizeToFit];
+    
+    
+    //活动
+    UILabel *activeLabel = [[UILabel alloc]initWithFrame:CGRectMake(nameLabel.frame.origin.x, CGRectGetMaxY(nameLabel.frame)+10, 0, 15)];
+    activeLabel.font = [UIFont systemFontOfSize:14];
+    activeLabel.textColor = RGBCOLOR(114, 114, 114);
+    activeLabel.text = [dic stringValueForKey:@"activity_info"];
+    [activeLabel sizeToFit];
+    
+    
+    
+    [cell.contentView addSubview:nameLabel];
+    [cell.contentView addSubview:distanceLabel];
+    [cell.contentView addSubview:activeLabel];
     
     return cell;
 }

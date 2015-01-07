@@ -8,6 +8,7 @@
 
 #import "GRootScrollView.h"
 #import "GtopScrollView.h"
+#import "NSDictionary+GJson.h"
 
 
 #define POSITIONID (int)(scrollView.contentOffset.x/self.frame.size.width)
@@ -138,7 +139,10 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
 //    return self.dataArray.count;
-    return 10;
+    
+    
+    NSArray *dataArray = self.dataArray[tableView.tag-200];
+    return dataArray.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -148,14 +152,74 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     
+    
+    for (UIView *view in cell.contentView.subviews) {
+        [view removeFromSuperview];
+    }
+    
+    
+    //数据源
+    NSArray *dataArray = self.dataArray[tableView.tag-200];
+    NSDictionary *dic = dataArray[indexPath.row];
+    
+    
+    //logo
+    UIImageView *logoImv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 10, 70, 70)];
+    logoImv.layer.cornerRadius = 35;
+    logoImv.layer.borderWidth = 1;
+    logoImv.layer.borderColor = RGBCOLOR(210, 210, 210).CGColor;
+    
+    NSLog(@"%@",[dic objectForKey:@"brand_logo"]);
+    [logoImv sd_setImageWithURL:[NSURL URLWithString:[dic stringValueForKey:@"brand_logo"]] placeholderImage:nil];
+    
+    //name
+    UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(logoImv.frame)+10, logoImv.frame.origin.y+17, cell.bounds.size.width-logoImv.frame.size.width -17, 18)];
+    nameLabel.backgroundColor = [UIColor orangeColor];
+    nameLabel.textColor = [UIColor blackColor];
+    nameLabel.font = [UIFont systemFontOfSize:17];
+    nameLabel.textAlignment = NSTextAlignmentLeft;
+    nameLabel.text = [dic stringValueForKey:@"brand_name"];
+    
+    
+    //号码 活动
+    UILabel *activeLabel = [[UILabel alloc]initWithFrame:CGRectMake(nameLabel.frame.origin.x, CGRectGetMaxY(nameLabel.frame)+7, nameLabel.frame.size.width, nameLabel.frame.size.height)];
+    activeLabel.text = @"B2016   满100减30";
+    
+    
+    [cell.contentView addSubview:logoImv];
+    [cell.contentView addSubview:nameLabel];
+    [cell.contentView addSubview:activeLabel];
+    
     return cell;
 }
+
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSArray *dataArray = self.dataArray[tableView.tag-200];
+    NSDictionary *dicInfo = dataArray[indexPath.row];
+    NSLog(@"商城id:%@",[dicInfo stringValueForKey:@"brand_id"]);
+    
+}
+
+
 
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 90.0f;
 }
 
+
+//显示不全不显示
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    return [UIView new];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.01f;
+}
 
 
 
