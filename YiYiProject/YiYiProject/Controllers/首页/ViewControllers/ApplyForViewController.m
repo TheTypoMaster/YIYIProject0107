@@ -104,6 +104,10 @@
     {
         cell.backgroundColor = RGBCOLOR(242,242,242);
         cell.contentView.backgroundColor = RGBCOLOR(242,242,242);
+        ///白色背景
+        UIView * whiteBackView = [[UIView alloc] initWithFrame:CGRectMake(0,12,DEVICE_WIDTH,144)];
+        whiteBackView.backgroundColor = [UIColor whiteColor];
+        [cell.contentView addSubview:whiteBackView];
         
         
         UILabel * idcard_label = [[UILabel alloc] initWithFrame:CGRectMake(58,0,200,46)];
@@ -111,15 +115,15 @@
         idcard_label.font = [UIFont systemFontOfSize:16];
         idcard_label.textAlignment = NSTextAlignmentLeft;
         idcard_label.textColor = RGBCOLOR(114,114,114);
-        [cell.contentView addSubview:idcard_label];
+        [whiteBackView addSubview:idcard_label];
         
         
         idcard_button = [UIButton buttonWithType:UIButtonTypeCustom];
-        idcard_button.frame = CGRectMake(58,46,108,108);
+        idcard_button.frame = CGRectMake(48,35,108,108);
 //        idcard_button.backgroundColor = [UIColor grayColor];
         [idcard_button setImage:[UIImage imageNamed:@"apply_idcard_image"] forState:UIControlStateNormal];
         [idcard_button addTarget:self action:@selector(chooseIdCardTap:) forControlEvents:UIControlEventTouchUpInside];
-        [cell.contentView addSubview:idcard_button];
+        [whiteBackView addSubview:idcard_button];
         
         UILabel * tishi_label = [[UILabel alloc] initWithFrame:CGRectMake(56,170,168,40)];
         tishi_label.text = @"您还需要完善个人主页的详细资料在T台中晒20张搭配图片哦!";
@@ -131,10 +135,10 @@
         
         UIButton * done_button = [UIButton buttonWithType:UIButtonTypeCustom];
         done_button.frame = CGRectMake(20,240,DEVICE_WIDTH-40,45);
-        done_button.backgroundColor = RGBCOLOR(219,64,91);
+        done_button.backgroundColor = RGBCOLOR(236,0,82);
         done_button.layer.masksToBounds = YES;
         [done_button setTitle:@"提交申请" forState:UIControlStateNormal];
-        done_button.layer.cornerRadius = 8;
+        done_button.layer.cornerRadius = 3;
         [done_button addTarget:self action:@selector(doneButtonTap:) forControlEvents:UIControlEventTouchUpInside];
         [cell.contentView addSubview:done_button];
         

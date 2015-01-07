@@ -30,7 +30,23 @@
 #define RONGCLOUD_IM_APPKEY    @"kj7swf8o7zaf2"
 #define RONGCLOUD_IM_APPSECRET @"2cCSWhaLcCm37"
 
-#define UmengAppkey @"548bae91fd98c50d0c000b8b"
+#define UmengAppkey @"5423e48cfd98c58eed00664f"
+
+
+/**
+ *  先用骑叭的做测试
+ */
+//骑叭
+#define SinaAppKey @"2470821654"
+#define SinaAppSecret @"bea7d21c9647406a25960a617a8e40a8"
+#define QQAPPID @"1103196390" //十六进制:41C170E6; 生成方法:echo 'ibase=10;obase=16;1103196390'|bc
+#define QQAPPKEY @"zc8ykXXrvWjKpyuh"
+
+//fbauto （没用）
+#define WXAPPID @"wx10280ad0d507a8933b9d"
+#define WXAPPSECRET @"SADSDAS"
+
+#define RedirectUrl @"http://sns.whalecloud.com/sina2/callback" //回调地址
 
 
 //================正式
@@ -48,16 +64,16 @@
 
 //新浪
 
-#define SinaAppKey @"2208620241"
-#define SinaAppSecret @"fe596bc4ac8c92316ad5f255fbc49432"
+//#define SinaAppKey @"2208620241"
+//#define SinaAppSecret @"fe596bc4ac8c92316ad5f255fbc49432"
 
-#define QQAPPID @"1103196390" //十六进制:41C170E6; 生成方法:echo 'ibase=10;obase=16;1103196390'|bc
-#define QQAPPKEY @"zc8ykXXrvWjKpyuh"
+//#define QQAPPID @"1103196390" //十六进制:41C170E6; 生成方法:echo 'ibase=10;obase=16;1103196390'|bc
+//#define QQAPPKEY @"zc8ykXXrvWjKpyuh"
 
-#define WXAPPID @"wx47f54e431de32846"
-#define WXAPPSECRET @"a71699732e3bef01aefdaf324e2f522c"
+//#define WXAPPID @"wx47f54e431de32846"
+//#define WXAPPSECRET @"a71699732e3bef01aefdaf324e2f522c"
 //
-#define RedirectUrl @"http://sns.whalecloud.com/sina2/callback" //回调地址
+//#define RedirectUrl @"http://sns.whalecloud.com/sina2/callback" //回调地址
 
 @interface AppDelegate ()<BMKGeneralDelegate,RCIMConnectionStatusDelegate,RCConnectDelegate>
 {

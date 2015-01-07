@@ -144,27 +144,9 @@
     [self.photoView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
     _photoView.height = [self height:aHeight / 2.f aWidth:aWidth];
     
-    NSString *userImageUrl;
-    
-    NSString *user_name;
-
-    
-    if ([aModel.uinfo isKindOfClass:[NSDictionary class]]) {
-        
-        userImageUrl = aModel.uinfo[@"photo"];
-        
-        user_name = aModel.uinfo[@"user_name"];
-    }else
-    {
-        userImageUrl = @"";
-        
-        user_name = @"";
-    }
-    
+    NSString *userImageUrl = aModel.uinfo[@"photo"];
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:userImageUrl] placeholderImage:nil];
-    
-    
-    self.userNameLabel.text = user_name;
+    self.userNameLabel.text = aModel.uinfo[@"user_name"];
     self.timeLabel.text = [LTools timechange:aModel.add_time];
     
     self.like_label.text = aModel.tt_like_num;

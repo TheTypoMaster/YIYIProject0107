@@ -16,11 +16,32 @@
     
 }
 
+
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    [super scrollViewDidScroll:scrollView];
+    qtmquitView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
+//    qtmquitView.top = 0;
     
-    
-//    match_waterflow_block(scrollView.contentOffset.y);
+    if (scrollView.contentOffset.y <= 50)
+    {
+        ///up show
+        
+        if (upHidden)
+        {
+            [self setValue:@"1" forKey:@"isShowUp"];
+            upHidden = NO;
+        }
+        
+    }else
+    {
+        ///up hidden
+        if (!upHidden)
+        {
+            [self setValue:@"0" forKey:@"isShowUp"];
+            upHidden = YES;
+        }
+    }
 }
 
 -(void)setWaterBlock:(MatchWaterflowViewBlock)aBlock

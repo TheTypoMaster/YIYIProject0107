@@ -128,10 +128,21 @@
 //创建楼层滚动view
 -(void)creatFloorScrollViewWithDic:(NSDictionary *)dic{
 
+    id brandDic = nil;
+    if (dic) {
+        brandDic = [dic objectForKey:@"brand"];
+    }
     
-    
-    NSDictionary *brandDic = [dic objectForKey:@"brand"];
-    
+    NSArray *keys = nil;
+    if ([brandDic isKindOfClass:[NSDictionary class]]) {
+        keys = [brandDic allKeys];
+    }else{
+        return;
+    }
+    NSMutableArray *floorsNameArray = [NSMutableArray arrayWithCapacity:1];
+    for (NSString *str in keys) {
+        [floorsNameArray addObject:[NSString stringWithFormat:@"F%@",str]];
+    }
     
     UIView *floorView = [[UIView alloc]initWithFrame:CGRectMake(12, 185, DEVICE_WIDTH-24, DEVICE_HEIGHT-_upStoreInfoView.frame.size.height)];
     
@@ -140,8 +151,9 @@
     topScrollView.myRootScrollView = rootScrollView;
     rootScrollView.myTopScrollView = topScrollView;
     
-    topScrollView.nameArray = @[@"F1",@"F2",@"F3",@"F4",@"F5",@"F6",@"F7",@"F8",@"F9",@"F10",@"F11",@"F12"];
-    rootScrollView.viewNameArray =@[@"F1",@"F2",@"F3",@"F4",@"F5",@"F6",@"F7",@"F8",@"F9",@"F10",@"F11",@"F12"];
+    topScrollView.nameArray = (NSArray*)floorsNameArray;
+    rootScrollView.viewNameArray =topScrollView.nameArray;
+    
     
     [topScrollView initWithNameButtons];
     [rootScrollView initWithViews];

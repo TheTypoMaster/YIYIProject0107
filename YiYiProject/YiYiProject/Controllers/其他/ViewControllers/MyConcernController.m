@@ -124,7 +124,7 @@
 {
     //关注接口:http://182.92.158.32/index.php?d=api&c=brand&m=attend_brand&authcode=AX4BeFojV7EBulfKVuYJ3lP2V7UB9Ar7Ay5WZ1YzBDJabAAyWzhcZgM1V2RTMgp6BTFWaA==&brand_id=
     
-    NSString *url = [NSString stringWithFormat:MY_CONCERN_BRAND,[GMAPI getAuthkey],brandTable.pageNum,L_PAGE_SIZE];
+    NSString *url = [NSString stringWithFormat:MY_CONCERN_BRAND,[GMAPI getAuthkey],brandTable.pageNum];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
@@ -142,7 +142,6 @@
         BOOL isHaveMore = YES;
         
         if (arr.count >= L_PAGE_SIZE) {
-            
             
         }
         

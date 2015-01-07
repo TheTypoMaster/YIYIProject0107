@@ -23,6 +23,8 @@
 
 #import "MyConcernController.h"//我的关注
 
+//#import "ShenQingDianPuViewController.h"
+
 typedef enum{
     USERFACE = 0,//头像
     USERBANNER,//banner
@@ -323,6 +325,15 @@ typedef enum{
             
         case 4:
         {
+            
+            
+            if (indexPath.row==0) {
+                
+//                ShenQingDianPuViewController *_shenqingVC = [[ShenQingDianPuViewController alloc]init];
+//                _shenqingVC.hidesBottomBarWhenPushed = YES;
+//                [self.navigationController pushViewController:_shenqingVC animated:YES];
+
+            }
             
             
         }

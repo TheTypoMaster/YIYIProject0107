@@ -7,8 +7,9 @@
 //
 
 #import "MyViewController.h"
+#import "ZYQAssetPickerController.h"
 
-@interface MyYiChuViewController : MyViewController
+@interface MyYiChuViewController : MyViewController<UIImagePickerControllerDelegate,UIActionSheetDelegate,UINavigationControllerDelegate,ZYQAssetPickerControllerDelegate>
 
 //@property(nonatomic,strong)NSMutableArray *listArray;
 

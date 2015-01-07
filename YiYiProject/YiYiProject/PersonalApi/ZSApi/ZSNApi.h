@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define REGULAR_IMAGES @"<img\\b[^>]*src=(.*?)[^>]*?>"
+
 @interface ZSNApi : NSObject
 
 ///时间转换
@@ -17,9 +19,8 @@
  */
 +(NSString *)timechange:(NSString *)placetime WithFormat:(NSString *)aFormat;
 
-
-
-
+///正则匹配所有图片
++(NSMutableArray *)regularMatchAllImagesWithContent:(NSString *)content;
 
 
 
