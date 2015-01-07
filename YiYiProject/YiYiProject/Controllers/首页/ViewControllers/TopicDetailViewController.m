@@ -81,6 +81,49 @@
     }];
 }
 
+#pragma mark - 创建sectionView
+-(void)createSectionView
+{
+    CGFloat height = 77;
+    UIView * sectionView = [[UIView alloc] initWithFrame:CGRectMake(0,0,DEVICE_WIDTH,0)];
+    sectionView.backgroundColor = RGBCOLOR(245,245,245);
+    
+    
+    UIImageView * headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(12,12,50,50)];
+    headerImageView.layer.masksToBounds = YES;
+    headerImageView.layer.cornerRadius = 25;
+    headerImageView.backgroundColor = [UIColor grayColor];
+    [sectionView addSubview:headerImageView];
+    [headerImageView sd_setImageWithURL:[NSURL URLWithString:_topic_info.t_user_photo] placeholderImage:nil];
+    
+    UILabel * userName_label = [[UILabel alloc] initWithFrame:CGRectMake(70,12,150,50)];
+    userName_label.text = _topic_info.t_username;
+    userName_label.textAlignment = NSTextAlignmentLeft;
+    userName_label.textColor = [UIColor blackColor];
+    userName_label.font = [UIFont systemFontOfSize:15];
+    [sectionView addSubview:userName_label];
+    
+    
+    UIImageView * date_imageView = [[UIImageView alloc] initWithFrame:CGRectMake(DEVICE_WIDTH-60,31,12,12)];
+    date_imageView.image = [UIImage imageNamed:@"clock_image"];
+    [sectionView addSubview:date_imageView];
+    
+    UILabel * date_label = [[UILabel alloc] initWithFrame:CGRectMake(DEVICE_WIDTH-45,12,50,50)];
+    date_label.text = [ZSNApi timechange:_topic_info.topic_create_time WithFormat:@"HH:mm"];
+    date_label.textAlignment = NSTextAlignmentLeft;
+    date_label.textColor = [UIColor grayColor];
+    date_label.font = [UIFont systemFontOfSize:11];
+    [sectionView addSubview:date_label];
+    
+    
+    
+    
+    
+    sectionView.height = height;
+    _myTableView.tableHeaderView = sectionView;
+    
+}
+
 
 #pragma mark - 获取数据
 ///获取话题详情
@@ -102,6 +145,7 @@
                 NSDictionary * topic_info = [allDic objectForKey:@"topic_info"];
                 bself.topic_info = [[TopicModel alloc] initWithDictionary:topic_info];
                 [bottom_view setTitleWithTopicModel:bself.topic_info];
+                [bself createSectionView];
             }else
             {
                 [LTools showMBProgressWithText:[allDic objectForKey:@"msg"] addToView:self.view];

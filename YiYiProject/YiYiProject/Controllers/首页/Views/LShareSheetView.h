@@ -30,12 +30,23 @@ typedef enum {
     
 }Share_Type;
 
+typedef enum {
+    
+    Share_Success = 1,//分享成功
+    Share_Fail = 2 //分享失败
+    
+}Share_Result;
+
 typedef void(^ ActionBlock) (NSInteger buttonIndex,Share_Type shareType);
+typedef void(^ ShareResultBlock) (Share_Result result,Share_Type type);//分享结果block
 
 @interface LShareSheetView : UIView<UMSocialUIDelegate>
 
 {
     ActionBlock actionBlock;
+    
+    ShareResultBlock shareBlock;
+    
     UIView *bgView;
     NSArray *items;
    
@@ -50,6 +61,8 @@ typedef void(^ ActionBlock) (NSInteger buttonIndex,Share_Type shareType);
 + (id)shareInstance;
 
 - (void)actionBlock:(ActionBlock)aBlock;
+
+- (void)shareResult:(ShareResultBlock)aBlock;//分享结果的block
 
 - (void)showShareContent:(NSString *)content
                 shareUrl:(NSString *)url

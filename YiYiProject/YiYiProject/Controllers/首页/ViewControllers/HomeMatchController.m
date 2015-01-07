@@ -25,6 +25,7 @@
 {
     MBProgressHUD * hud;
     UIView * section_view;
+    UIView * second_section_view;
     NSInteger current_page;
     ///瀑布流
     MatchWaterflowView * waterFlow;
@@ -63,7 +64,7 @@
     _myTableView.dataSource = self;
     _myTableView.refreshDelegate = self;
     [self.view addSubview:_myTableView];
-    
+    _myTableView.backgroundColor = RGBCOLOR(242,242,242);
     hud = [LTools MBProgressWithText:@"正在加载..." addToView:self.view];
     
     [self getDapeishiDataWithType:HomeMatchRequestTypeHot];
@@ -109,7 +110,7 @@
                         [bself.myMatch_array addObject:model];
                     }
                 }
-                [bself setSectionView];
+                [bself.myTableView finishReloadigData];
             }
         }
         @catch (NSException *exception) {
@@ -207,7 +208,7 @@
 }
 
 #pragma mark - UITableView Section View
--(void)setSectionView
+-(void)setFirstSectionView
 {
     section_view = [[UIView alloc] initWithFrame:CGRectMake(0,0,DEVICE_WIDTH,430)];
     section_view.backgroundColor = RGBCOLOR(242,242,242);
@@ -275,38 +276,50 @@
         button.layer.cornerRadius = 5;
         [section_view addSubview:button];
     }
-    
-    height = height + 25 + 20;
-    
-    for (int i = 0;i < 2;i++) {
-        UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.frame = CGRectMake(12+(DEVICE_WIDTH-24)/2*i,height,(DEVICE_WIDTH-24)/2,34);
-        button.tag = 1000 + i;
-        button.layer.masksToBounds = YES;
-        button.layer.cornerRadius = 8;
-        button.layer.borderColor = RGBCOLOR(235,77,104).CGColor;
-        button.layer.borderWidth = 1;
-        [button addTarget:self action:@selector(clickForChange:) forControlEvents:UIControlEventTouchUpInside];
-        [section_view addSubview:button];
+    section_view.height = height + 34;
+}
+
+///第二个sectionview
+-(UIView *)setSecondSectionView
+{
+    if (!second_section_view) {
+        second_section_view = [[UIView alloc] initWithFrame:CGRectMake(0,0,DEVICE_WIDTH,54)];
+        second_section_view.backgroundColor = RGBCOLOR(242,242,242);
         
-        if (i == 0)
+        UIView * segment_view = [[UIView alloc] initWithFrame:CGRectMake(12,10,DEVICE_WIDTH-24,34)];
+        segment_view.layer.masksToBounds = YES;
+        segment_view.layer.cornerRadius = 8;
+        segment_view.layer.borderColor = RGBCOLOR(235,77,104).CGColor;
+        segment_view.layer.borderWidth = 1;
+        [second_section_view addSubview:segment_view];
+        
+        for (int i = 0;i < 2;i++)
         {
-            [button setTitle:@"话题" forState:UIControlStateNormal];
-            [button setTitleColor:RGBCOLOR(235,77,104) forState:UIControlStateSelected];
-            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            button.selected = YES;
-        }else
-        {
-            [button setTitle:@"搭配" forState:UIControlStateNormal];
-            [button setTitleColor:RGBCOLOR(235,77,104) forState:UIControlStateSelected];
-            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            button.selected = NO;
+            UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
+            button.frame = CGRectMake((DEVICE_WIDTH-24)/2*i,0,(DEVICE_WIDTH-24)/2,34);
+            button.tag = 1000 + i;
+            [button addTarget:self action:@selector(clickForChange:) forControlEvents:UIControlEventTouchUpInside];
+            [button setBackgroundImage:[UIImage imageNamed:@"match_segment_unselected_image"] forState:UIControlStateSelected];
+            [button setBackgroundImage:[UIImage imageNamed:@"match_segment_selected_image"] forState:UIControlStateNormal];
+            [button setTitleColor:RGBCOLOR(235,77,104) forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+            
+            [segment_view addSubview:button];
+            
+            if (i == 0)
+            {
+                [button setTitle:@"话题" forState:UIControlStateNormal];
+                button.selected = YES;
+            }else
+            {
+                [button setTitle:@"搭配" forState:UIControlStateNormal];
+                button.selected = NO;
+            }
         }
+        
     }
     
-    
-    section_view.height = height + 34 + 20;
-    _myTableView.tableHeaderView = section_view;
+    return second_section_view;
 }
 
 #pragma mark - 点击按钮
@@ -335,14 +348,32 @@
     
     if (button.tag == 1000)///点击的话题
     {
-        aButton = (UIButton *)[section_view viewWithTag:1001];
-        [self getTopicData];
+        aButton = (UIButton *)[second_section_view viewWithTag:1001];
+        
         selected_type = MatchSelectedTypeTopic;
+        self.myTableView.tableFooterView.hidden = NO;
+        
+        if (_array_topic.count == 0)
+        {
+            [self getTopicData];
+        }else
+        {
+            [self.myTableView finishReloadigData];
+        }
+        
     }else///点击的搭配
     {
-        aButton = (UIButton *)[section_view viewWithTag:1000];
-        [self getMatchData];
+        aButton = (UIButton *)[second_section_view viewWithTag:1000];
+        
         selected_type = MatchSelectedTypeMatch;
+        self.myTableView.tableFooterView.hidden = YES;
+        if (_array_matchCase.count == 0)
+        {
+            [self getMatchData];
+        }else
+        {
+            [self.myTableView finishReloadigData];
+        }
     }
     
     aButton.selected = NO;
@@ -354,13 +385,22 @@
 #pragma mark - UITabelView
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (selected_type == MatchSelectedTypeTopic) {
-        return _array_topic.count;
+    if (section == 1) {
+        if (selected_type == MatchSelectedTypeTopic) {
+            return _array_topic.count;
+        }else
+        {
+            return 1;
+        }
     }else
     {
-        return 1;
+        return 0;
     }
     
+}
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
 }
 
 
@@ -388,26 +428,35 @@
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         }
         
-        waterFlow = [[MatchWaterflowView alloc]initWithFrame:CGRectMake(0, 0, ALL_FRAME_WIDTH, ALL_FRAME_HEIGHT - 49 - 44) waterDelegate:self waterDataSource:self];
+        waterFlow = [[MatchWaterflowView alloc]initWithFrame:CGRectMake(0, 0,DEVICE_WIDTH,DEVICE_HEIGHT-64-49-54) waterDelegate:self waterDataSource:self];
         waterFlow.backgroundColor = RGBCOLOR(240, 230, 235);
+        [waterFlow removeHeaderView];
         [cell.contentView addSubview:waterFlow];
         
         [waterFlow showRefreshHeader:NO];
         [waterFlow reloadData:_array_matchCase total:100];
-        
-        
-        [waterFlow setWaterBlock:^(float offsetY) {
-            
-            if (offsetY == 0)
-            {
-                
-            }
-            
-            
-        }];
-        
+         [waterFlow addObserver:self forKeyPath:@"isShowUp" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
         
         return cell;
+    }
+}
+
+// 只要MatchWaterflowView类的"offSet_string"属性发生的变化都会触发到以下的方法
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+   
+    
+    float isShowUp = [[change objectForKey:@"new"] intValue];
+    
+    if (isShowUp)
+    {
+        // 输出改变后的值
+        NSLog(@"new musicName is %@",[change objectForKey:@"new"]);
+        [_myTableView setContentOffset:CGPointMake(0,0) animated:YES];
+    }else
+    {
+        NSLog(@"old musicName is %@",[change objectForKey:@"old"]);
+
+        [_myTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
     }
 }
 
@@ -415,30 +464,80 @@
 #pragma mark - Refresh Delegate
 - (void)loadNewData
 {
-    
+    if (selected_type == MatchSelectedTypeTopic) {
+        [self getTopicData];
+    }else
+    {
+        [self getMatchData];
+    }
 }
 - (void)loadMoreData
 {
-    
+    if (selected_type == MatchSelectedTypeTopic)
+    {
+        topic_data_page++;
+        [self getTopicData];
+    }else
+    {
+        match_data_page++;
+        [self getMatchData];
+    }
 }
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MatchTopicModel * model = [_array_topic objectAtIndex:indexPath.row];
-    TopicDetailViewController * topic_detail = [[TopicDetailViewController alloc] init];
-    topic_detail.hidesBottomBarWhenPushed = YES;
-    topic_detail.topic_model = model;
-    [self.rootViewController.navigationController pushViewController:topic_detail animated:YES];
+    @try{
+        MatchTopicModel * model = [_array_topic objectAtIndex:indexPath.row];
+        TopicDetailViewController * topic_detail = [[TopicDetailViewController alloc] init];
+        topic_detail.hidesBottomBarWhenPushed = YES;
+        topic_detail.topic_model = model;
+        [self.rootViewController.navigationController pushViewController:topic_detail animated:YES];
+    }
+    @catch(NSException *exception) {
+        NSLog(@"exception:%@", exception);
+    }
+    @finally {
+        
+    }
+    
     
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
 {
-    if (selected_type == MatchSelectedTypeTopic) {
-        return 89;
+    if (indexPath.section == 0) {
+        return 0;
     }else
     {
-        return DEVICE_HEIGHT-64-49;
+        if (selected_type == MatchSelectedTypeTopic) {
+            return 89;
+        }else
+        {
+            return DEVICE_HEIGHT-64-49;
+        }
     }
 }
+
+- (UIView *)viewForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return section_view;
+    }else
+    {
+        [self setSecondSectionView];
+        return second_section_view;
+    }
+}
+- (CGFloat)heightForHeaderInSection:(NSInteger)section
+{
+    if (section == 0)
+    {
+        [self setFirstSectionView];
+        return section_view.height;
+    }else
+    {
+        return 54;
+    }
+}
+
 
 
 #pragma mark - WaterFlowDelegate
@@ -449,7 +548,8 @@
 }
 - (void)waterLoadMoreData
 {
-    
+    match_data_page++;
+    [self getMatchData];
 }
 
 - (void)waterDidSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -491,6 +591,9 @@
     if (!cell)
     {
         cell = [[MatchCaseCell alloc] initWithReuseIdentifier:@"identifier"];
+        cell.backgroundColor = [UIColor whiteColor];
+        cell.layer.cornerRadius = 3;
+        cell.layer.masksToBounds = YES;
     }
     
     MatchCaseModel * model = waterFlow.dataArray[indexPath.row];

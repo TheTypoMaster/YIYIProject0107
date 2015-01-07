@@ -8,13 +8,6 @@
 
 #import "MyViewController.h"
 
-
-/**
- 
- 单品详情
- 
- */
-
 typedef enum {
     
     Action_like_yes = 0,//添加赞

@@ -46,7 +46,7 @@
 @property(nonatomic,assign)NSInteger is_like;
 
 @property(nonatomic,retain)NSDictionary *brand_info;
-@property(nonatomic,retain)NSDictionary *mall_info;//商场信息
+@property(nonatomic,retain)NSDictionary *mall_info;
 
 @property(nonatomic,retain)NSArray *images;//图片数组(单品详情)
 

@@ -128,18 +128,25 @@
         brandDic = [dic objectForKey:@"brand"];
     }
     
+
     //取出brand字段中所有的key
+
+
     NSArray *keys = nil;
     if ([brandDic isKindOfClass:[NSDictionary class]]) {
         keys = [brandDic allKeys];
     }else{
         return;
     }
+
     //楼层数
+
+
     NSMutableArray *floorsNameArray = [NSMutableArray arrayWithCapacity:1];
     for (NSString *str in keys) {
         [floorsNameArray addObject:[NSString stringWithFormat:@"F%@",str]];
     }
+
     
     //每层的数据的二维数组
     NSMutableArray *data_2Array = [NSMutableArray arrayWithCapacity:1];
@@ -147,6 +154,7 @@
         [data_2Array addObject:[brandDic objectForKey:key]];
     }
     
+
     
     UIView *floorView = [[UIView alloc]initWithFrame:CGRectMake(12, 185, DEVICE_WIDTH-24, DEVICE_HEIGHT-_upStoreInfoView.frame.size.height)];
     
@@ -160,8 +168,10 @@
     topScrollView.nameArray = (NSArray*)floorsNameArray;
     rootScrollView.viewNameArray =topScrollView.nameArray;
     
+
     //数据源二维数组
     rootScrollView.dataArray = data_2Array;
+
 
     
     [topScrollView initWithNameButtons];

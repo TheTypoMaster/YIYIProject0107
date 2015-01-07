@@ -29,7 +29,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="uNR-yT-ZHt">
-                        <rect key="frame" x="240" y="15" width="72" height="30"/>
+                        <rect key="frame" x="235" y="15" width="72" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <state key="normal" title="取消关注">
@@ -50,7 +50,7 @@
                 <outlet property="cancelButton" destination="uNR-yT-ZHt" id="SEm-xa-fLc"/>
                 <outlet property="nameLabel" destination="ubO-V2-iHI" id="RLN-cM-O3W"/>
             </connections>
-            <point key="canvasLocation" x="90" y="209"/>
+            <point key="canvasLocation" x="118" y="208"/>
         </tableViewCell>
     </objects>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

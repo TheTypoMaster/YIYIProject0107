@@ -10,6 +10,8 @@
 #import "TDetailModel.h"
 #import "RefreshTableView.h"
 
+#import "LShareSheetView.h"
+
 @interface TTaiDetailController ()<RefreshDelegate,UITableViewDataSource>
 {
     TDetailModel *detail_model;
@@ -17,7 +19,7 @@
     UILabel *comment_label;//评论
     UIButton *zan_btn;//赞
     UILabel *zhuan_num_label;//转发
-    
+    UILabel *zan_num_label;//赞 个数
     UILabel *comment_num_label;//底部评论个数
 }
 
@@ -55,9 +57,20 @@
 
 #pragma mark - 事件处理
 
+- (void)setViewWithModel:(TDetailModel *)aModel
+{
+    zan_num_label.text = aModel.tt_like_num;
+    zhuan_num_label.text = aModel.tt_share_num;
+    comment_label.text = aModel.tt_comment_num;
+    comment_num_label.text = aModel.tt_comment_num;
+    
+    zan_btn.selected = aModel.is_like == 1 ? YES : NO;
+}
+
 - (void)clickToZan:(UIButton *)sender
 {
-    
+    sender.selected = !sender.selected;
+    [self zanTTaiDetail:sender.selected];
 }
 
 - (void)clickToComment:(UIButton *)sender
@@ -67,12 +80,55 @@
 
 - (void)clickToZhuanFa:(UIButton *)sender
 {
+    [[LShareSheetView shareInstance] showShareContent:@"分享的内容" shareUrl:@"http://www.baidu.com" shareImage:[UIImage imageNamed:@"product_like_cancel"] targetViewController:self];
+    [[LShareSheetView shareInstance]actionBlock:^(NSInteger buttonIndex, Share_Type shareType) {
+        
+        if (shareType == Share_QQ) {
+            
+            NSLog(@"Share_QQ");
+            
+        }else if (shareType == Share_QQZone){
+            
+            NSLog(@"Share_QQZone");
+            
+        }else if (shareType == Share_WeiBo){
+            
+            NSLog(@"Share_WeiBo");
+            
+        }else if (shareType == Share_WX_HaoYou){
+            
+            NSLog(@"Share_WX_HaoYou");
+            
+        }else if (shareType == Share_WX_PengYouQuan){
+            
+            NSLog(@"Share_WX_PengYouQuan");
+            
+        }
+        
+    }];
     
+    [[LShareSheetView shareInstance]shareResult:^(Share_Result result, Share_Type type) {
+        
+        if (result == Share_Success) {
+            
+            //分享 + 1
+            NSLog(@"分享成功");
+            
+            [self zhuanFaTTaiDetail];
+            
+        }else
+        {
+            //分享失败
+            
+            NSLog(@"分享失败");
+        }
+        
+    }];
 }
 
 #pragma mark - 网络请求
 
-//t台详情
+//T台详情
 
 - (void)getTTaiDetail
 {
@@ -84,11 +140,72 @@
         
         [self createViewsWithModel:detail_model];
         
+        [self setViewWithModel:detail_model];
+        
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
         
+    }];
+}
+
+//T台赞 或 取消
+
+- (void)zanTTaiDetail:(BOOL)zan
+{
+    NSString *authkey = [GMAPI getAuthkey];
+    NSString *post = [NSString stringWithFormat:@"tt_id=%@&authcode=%@",self.tt_id,authkey];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    
+    NSString *url;
+    
+    if (zan) {
+        url = TTAI_ZAN;
+    }else
+    {
+        url = TTAI_ZAN_CANCEL;
+    }
+    
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"-->%@",result);
+        
+        zan_btn.selected = zan;
+        
+        int like_num = [detail_model.tt_like_num intValue];
+        detail_model.tt_like_num = [NSString stringWithFormat:@"%d",zan ? like_num + 1 : like_num - 1];
+        zan_num_label.text = detail_model.tt_like_num;
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        [LTools showMBProgressWithText:failDic[@"msg"] addToView:self.view];
+    }];
+}
+
+// 转发 + 1
+
+- (void)zhuanFaTTaiDetail
+{
+    NSString *authkey = [GMAPI getAuthkey];
+    NSString *post = [NSString stringWithFormat:@"tt_id=%@&authcode=%@",self.tt_id,authkey];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    
+    NSString *url = TTAI_ZHUANFA_ADD;
+    
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"-->%@",result);
+        
+        int like_num = [detail_model.tt_share_num intValue];
+        detail_model.tt_like_num = [NSString stringWithFormat:@"%d",like_num + 1];
+        zhuan_num_label.text = detail_model.tt_like_num;
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        [LTools showMBProgressWithText:failDic[@"msg"] addToView:self.view];
     }];
 }
 
@@ -109,21 +226,21 @@
     
     [zan_btn setImage:[UIImage imageNamed:@"xq_love_down"] forState:UIControlStateSelected];
     
-    UILabel *zan_num_label = [LTools createLabelFrame:CGRectMake(zan_btn.right + 5, 0, 50, 50) title:@"1111" font:13 align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
+    zan_num_label = [LTools createLabelFrame:CGRectMake(zan_btn.right + 5, 0, 50, 50) title:@"0" font:13 align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
     [view addSubview:zan_num_label];
     
     //评论
     UIButton *comment_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(DEVICE_WIDTH/2.f - 20, 0, 26, 50) normalTitle:nil image:[UIImage imageNamed:@"xq_pinglun"] backgroudImage:nil superView:nil target:self action:@selector(clickToComment:)];
     [view addSubview:comment_btn];
     
-    comment_num_label = [LTools createLabelFrame:CGRectMake(comment_btn.right + 5, 0, 50, 50) title:@"1115" font:13 align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
+    comment_num_label = [LTools createLabelFrame:CGRectMake(comment_btn.right + 5, 0, 50, 50) title:@"0" font:13 align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
     [view addSubview:comment_num_label];
     
     //转发
     UIButton *zhuan_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(DEVICE_WIDTH - 85, 0, 26, 50) normalTitle:nil image:[UIImage imageNamed:@"fenxiangb"] backgroudImage:nil superView:nil target:self action:@selector(clickToZhuanFa:)];
     [view addSubview:zhuan_btn];
     
-    zhuan_num_label = [LTools createLabelFrame:CGRectMake(zhuan_btn.right + 5, 0, 50, 50) title:@"1115" font:13 align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
+    zhuan_num_label = [LTools createLabelFrame:CGRectMake(zhuan_btn.right + 5, 0, 50, 50) title:@"0" font:13 align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
     [view addSubview:zhuan_num_label];
 }
 
@@ -208,9 +325,9 @@
     
     if (aModel.tt_detail.count > 0) {
         NSDictionary *aDic = aModel.tt_detail[0];
-        brand_text = aDic[@"品牌"];
-        model_text = aDic[@"型号"];
-        price_text = aDic[@"价格"];
+        brand_text = [LTools NSStringNotNull:aDic[@"品牌"]];
+        model_text = [LTools NSStringNotNull:aDic[@"型号"]];
+        price_text = [LTools NSStringNotNull:aDic[@"价格"]];
     }
     brand_text = brand_text.length > 0 ? brand_text : @"未填写";
     model_text = model_text.length > 0 ? model_text : @"未填写";
