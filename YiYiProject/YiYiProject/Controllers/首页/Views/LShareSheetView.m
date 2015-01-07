@@ -142,10 +142,31 @@
     }];
 }
 
+#pragma mark 分享操作
 
 - (void)actionBlock:(ActionBlock)aBlock
 {
     actionBlock = aBlock;
+}
+
+#pragma mark 分享结果block
+
+- (void)shareResult:(ShareResultBlock)aBlock
+{
+    shareBlock = aBlock;
+}
+
+/**
+ *  分享结果
+ *
+ *  @param result 成功与失败
+ *  @param aType  分享平台
+ */
+- (void)shareResult:(Share_Result)result shareType:(Share_Type)aType
+{
+    if (shareBlock) {
+        shareBlock(result,aType);
+    }
 }
 
 - (void)actionToDo:(CustomButton *)button
@@ -233,9 +254,12 @@
                 
                 NSLog(@"QQ分享成功");
                 
+                [self shareResult:Share_Success shareType:Share_QQ];
+                
             }else{
                 
                 NSLog(@"分享失败");
+                [self shareResult:Share_Fail shareType:Share_QQ];
             }
         }];
         
@@ -255,9 +279,12 @@
                 
                 NSLog(@"QQ空间分享成功");
                 
+                [self shareResult:Share_Success shareType:Share_QQZone];
+                
             }else{
                 
                 NSLog(@"QQ空间分享失败");
+                [self shareResult:Share_Fail shareType:Share_QQZone];
             }
         }];
         
@@ -290,9 +317,14 @@
     {
         //得到分享到的微博平台名
         NSLog(@"share to sns name is %@ 成功",[[response.data allKeys] objectAtIndex:0]);
+        
+        [self shareResult:Share_Success shareType:Share_QQZone];
+        
     }else
     {
         NSLog(@"share to sns name is %@ 失败",[[response.data allKeys] objectAtIndex:0]);
+        
+        [self shareResult:Share_Fail shareType:Share_QQZone];
     }
 }
 

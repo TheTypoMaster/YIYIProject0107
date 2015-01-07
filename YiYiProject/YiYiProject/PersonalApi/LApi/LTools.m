@@ -821,6 +821,8 @@
         return @"";
     }else if ([text isEqualToString:@"(null)"]){
         return @"";
+    }else if ([text isKindOfClass:[NSNull class]]){
+        return @"";
     }
     return text;
 }

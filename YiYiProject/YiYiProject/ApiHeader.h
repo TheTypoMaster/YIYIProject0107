@@ -168,9 +168,15 @@ typedef enum {
 
 #define TTAI_DETAIL @"http://182.92.158.32/?d=api&c=tplat&m=ttinfo&tt_id=%@&authcode=%@"
 
+//T台点赞
 
+#define TTAI_ZAN @"http://182.92.158.32/?d=api&c=tplat&m=like"
 
+//T台取消赞
+#define TTAI_ZAN_CANCEL @"http://182.92.158.32/?d=api&c=tplat&m=cancelLike"
 
+//转发 + 1
+#define TTAI_ZHUANFA_ADD @"http://182.92.158.32/?d=api&c=tplat&m=incrShare"
 
 
 //个人信息相关
