@@ -278,6 +278,8 @@
 		13CD36541A3C732D0068C12A /* LWaterflowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CD36531A3C732D0068C12A /* LWaterflowView.m */; };
 		13EA3D1E1A3B2682002AF7D6 /* HomeBuyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EA3D1D1A3B2682002AF7D6 /* HomeBuyController.m */; };
 		13EA3D241A3B2E13002AF7D6 /* HomeMatchController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EA3D231A3B2E13002AF7D6 /* HomeMatchController.m */; };
+		19B937701A5D8057009B359F /* libiOS_IMKit_v1_2_7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B9376F1A5D8057009B359F /* libiOS_IMKit_v1_2_7.a */; };
+		19B937761A5D8780009B359F /* ShenQingDianPuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B937751A5D8780009B359F /* ShenQingDianPuViewController.m */; };
 		19D0C0D21A4EDA6D00BEC10D /* MyYiChuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D0C0D11A4EDA6D00BEC10D /* MyYiChuViewController.m */; };
 		19D5E6B21A4FE39B008401E0 /* YiChuListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D5E6B11A4FE39B008401E0 /* YiChuListModel.m */; };
 		19D5E6B51A4FE8E1008401E0 /* YichuListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D5E6B41A4FE8E1008401E0 /* YichuListTableViewCell.m */; };
@@ -332,13 +334,11 @@
 		56DAB2181A46C86B00273140 /* MatchCaseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56DAB2161A46C86B00273140 /* MatchCaseCell.xib */; };
 		56DAB21B1A46DB6000273140 /* ApplyForViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56DAB21A1A46DB6000273140 /* ApplyForViewController.m */; };
 		AB9102ED706793EE205C4D50 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F47272E4C36CD60C81CD9A79 /* libPods.a */; };
-		DF391AA31A537F8200958BA4 /* libiOS_IMKit_v1_2_7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DF391AA21A537F8200958BA4 /* libiOS_IMKit_v1_2_7.a */; };
 		DF6855821A592181004D924F /* ZYQAssetPicker.Bundle in Resources */ = {isa = PBXBuildFile; fileRef = DF68557F1A592181004D924F /* ZYQAssetPicker.Bundle */; };
 		DF6855831A592181004D924F /* ZYQAssetPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6855811A592181004D924F /* ZYQAssetPickerController.m */; };
 		DF6855861A592CD2004D924F /* UploadPicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6855851A592CD2004D924F /* UploadPicViewController.m */; };
 		DF7467931A57FB0400F0AEC8 /* my_sc_dui@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF7467911A57FB0400F0AEC8 /* my_sc_dui@3x.png */; };
 		DF7467941A57FB0400F0AEC8 /* my_sc_guanbi@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF7467921A57FB0400F0AEC8 /* my_sc_guanbi@3x.png */; };
-		E33FF48C1A4EBB8D0060E130 /* libiOS_IMKit_v1_2_7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E33FF48B1A4EBB8D0060E130 /* libiOS_IMKit_v1_2_7.a */; };
 		E33FF5011A4EBC810060E130 /* GLeadBuyMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E33FF4901A4EBC810060E130 /* GLeadBuyMapViewController.m */; };
 		E33FF5021A4EBC810060E130 /* GMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E33FF4921A4EBC810060E130 /* GMapViewController.m */; };
 		E33FF5031A4EBC810060E130 /* GmyMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E33FF4941A4EBC810060E130 /* GmyMainViewController.m */; };
@@ -774,6 +774,9 @@
 		13EA3D1D1A3B2682002AF7D6 /* HomeBuyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeBuyController.m; sourceTree = "<group>"; };
 		13EA3D221A3B2E13002AF7D6 /* HomeMatchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeMatchController.h; sourceTree = "<group>"; };
 		13EA3D231A3B2E13002AF7D6 /* HomeMatchController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeMatchController.m; sourceTree = "<group>"; };
+		19B9376F1A5D8057009B359F /* libiOS_IMKit_v1_2_7.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libiOS_IMKit_v1_2_7.a; sourceTree = "<group>"; };
+		19B937741A5D8780009B359F /* ShenQingDianPuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShenQingDianPuViewController.h; sourceTree = "<group>"; };
+		19B937751A5D8780009B359F /* ShenQingDianPuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShenQingDianPuViewController.m; sourceTree = "<group>"; };
 		19D0C0D01A4EDA6D00BEC10D /* MyYiChuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyYiChuViewController.h; sourceTree = "<group>"; };
 		19D0C0D11A4EDA6D00BEC10D /* MyYiChuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyYiChuViewController.m; sourceTree = "<group>"; };
 		19D5E6B01A4FE39B008401E0 /* YiChuListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YiChuListModel.h; sourceTree = "<group>"; };
@@ -857,7 +860,6 @@
 		56DAB2161A46C86B00273140 /* MatchCaseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MatchCaseCell.xib; sourceTree = "<group>"; };
 		56DAB2191A46DB5F00273140 /* ApplyForViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplyForViewController.h; sourceTree = "<group>"; };
 		56DAB21A1A46DB6000273140 /* ApplyForViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplyForViewController.m; sourceTree = "<group>"; };
-		DF391AA21A537F8200958BA4 /* libiOS_IMKit_v1_2_7.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libiOS_IMKit_v1_2_7.a; sourceTree = "<group>"; };
 		DF68557F1A592181004D924F /* ZYQAssetPicker.Bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ZYQAssetPicker.Bundle; sourceTree = "<group>"; };
 		DF6855801A592181004D924F /* ZYQAssetPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYQAssetPickerController.h; sourceTree = "<group>"; };
 		DF6855811A592181004D924F /* ZYQAssetPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYQAssetPickerController.m; sourceTree = "<group>"; };
@@ -865,7 +867,6 @@
 		DF6855851A592CD2004D924F /* UploadPicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadPicViewController.m; sourceTree = "<group>"; };
 		DF7467911A57FB0400F0AEC8 /* my_sc_dui@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "my_sc_dui@3x.png"; sourceTree = "<group>"; };
 		DF7467921A57FB0400F0AEC8 /* my_sc_guanbi@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "my_sc_guanbi@3x.png"; sourceTree = "<group>"; };
-		E33FF48B1A4EBB8D0060E130 /* libiOS_IMKit_v1_2_7.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libiOS_IMKit_v1_2_7.a; sourceTree = "<group>"; };
 		E33FF48F1A4EBC810060E130 /* GLeadBuyMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLeadBuyMapViewController.h; sourceTree = "<group>"; };
 		E33FF4901A4EBC810060E130 /* GLeadBuyMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLeadBuyMapViewController.m; sourceTree = "<group>"; };
 		E33FF4911A4EBC810060E130 /* GMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMapViewController.h; sourceTree = "<group>"; };
@@ -1009,7 +1010,7 @@
 				E3E3E84A1A3C6780001A1DD6 /* QuartzCore.framework in Frameworks */,
 				E3E3E84C1A3C678C001A1DD6 /* OpenGLES.framework in Frameworks */,
 				137FC2B21A4DAE780039E3FF /* MapKit.framework in Frameworks */,
-				E33FF48C1A4EBB8D0060E130 /* libiOS_IMKit_v1_2_7.a in Frameworks */,
+				19B937701A5D8057009B359F /* libiOS_IMKit_v1_2_7.a in Frameworks */,
 				138C2C141A39E46B00EA59F5 /* libz.dylib in Frameworks */,
 				138C2C121A39E45E00EA59F5 /* libstdc++.dylib in Frameworks */,
 				138C2C0E1A39E25000EA59F5 /* libsqlite3.dylib in Frameworks */,
@@ -1020,7 +1021,6 @@
 				E33FF50C1A4EBC810060E130 /* libbaidumapapi.a in Frameworks */,
 				137FC2AA1A4DAE320039E3FF /* CoreMedia.framework in Frameworks */,
 				E3E3E8481A3C6772001A1DD6 /* CoreLocation.framework in Frameworks */,
-				DF391AA31A537F8200958BA4 /* libiOS_IMKit_v1_2_7.a in Frameworks */,
 				137FC2A81A4DAE1F0039E3FF /* CoreImage.framework in Frameworks */,
 				138C2C0C1A39E24600EA59F5 /* CoreGraphics.framework in Frameworks */,
 				137FC2A61A4DAE0F0039E3FF /* CoreAudio.framework in Frameworks */,
@@ -1518,8 +1518,7 @@
 		137FC2B61A4DB2DC0039E3FF /* IMKit */ = {
 			isa = PBXGroup;
 			children = (
-				E33FF48B1A4EBB8D0060E130 /* libiOS_IMKit_v1_2_7.a */,
-				DF391AA21A537F8200958BA4 /* libiOS_IMKit_v1_2_7.a */,
+				19B9376F1A5D8057009B359F /* libiOS_IMKit_v1_2_7.a */,
 				137FC2B71A4DB2DC0039E3FF /* Headers */,
 				137FC2DC1A4DB2DC0039E3FF /* RongCloud.bundle */,
 			);
@@ -2119,6 +2118,8 @@
 		19B9372E1A5ACFE0009B359F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				19B937741A5D8780009B359F /* ShenQingDianPuViewController.h */,
+				19B937751A5D8780009B359F /* ShenQingDianPuViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -2510,11 +2511,11 @@
 				TargetAttributes = {
 					13684A641A37583E00A508FB = {
 						CreatedOnToolsVersion = 6.1;
-						DevelopmentTeam = 3SPFDP9HQL;
+						DevelopmentTeam = 96PFYKQ596;
 					};
 					13684A7D1A37583E00A508FB = {
 						CreatedOnToolsVersion = 6.1;
-						DevelopmentTeam = 3SPFDP9HQL;
+						DevelopmentTeam = 96PFYKQ596;
 						TestTargetID = 13684A641A37583E00A508FB;
 					};
 				};
@@ -2736,7 +2737,6 @@
 				137B07D01A4E6FDF00DE7DCC /* xihuanb@3x.png in Resources */,
 				56A8A82D1A458FF200E85F6B /* clock_image@2x.png in Resources */,
 				564387C41A5ABD3A00499AD3 /* match_segment_selected_image@2x.png in Resources */,
-				E3B1F7261A5890D900004CCF /* gRed@2x.png in Resources */,
 				137B07D61A4E6FDF00DE7DCC /* share_qqkongjian@3x.png in Resources */,
 				137B08781A4EADFE00DE7DCC /* my_down@3x.png in Resources */,
 				137B08921A4ECDD100DE7DCC /* shaixuan_boy@2x.png in Resources */,
@@ -2908,6 +2908,7 @@
 				13A389A21A38942D00ABBACB /* MineViewController.m in Sources */,
 				13B690771A580291007FE152 /* BrandViewCell.m in Sources */,
 				13A389861A387A8800ABBACB /* UIColor+ConvertColor.m in Sources */,
+				19B937761A5D8780009B359F /* ShenQingDianPuViewController.m in Sources */,
 				E33FF5191A4EBC810060E130 /* GTableViewCell.m in Sources */,
 				E33FF5051A4EBC810060E130 /* GpinpaiDetailViewController.m in Sources */,
 				139607BC1A46D82400AACAC4 /* FilterViewController.m in Sources */,
@@ -3019,7 +3020,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "45fc02cd-8f46-413e-9209-08c03c9e32b6";
+				PROVISIONING_PROFILE = "27e08856-f67b-488e-978d-fe2673561b24";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -3055,7 +3056,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "45fc02cd-8f46-413e-9209-08c03c9e32b6";
+				PROVISIONING_PROFILE = "27e08856-f67b-488e-978d-fe2673561b24";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -3068,8 +3069,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: HAO WANG (PWZU4H562Q)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: HAO WANG (PWZU4H562Q)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YiYiProject/UMengShare/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
@@ -3090,7 +3091,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "45fc02cd-8f46-413e-9209-08c03c9e32b6";
+				PROVISIONING_PROFILE = "27e08856-f67b-488e-978d-fe2673561b24";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Debug;
@@ -3102,8 +3103,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: HAO WANG (PWZU4H562Q)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: HAO WANG (PWZU4H562Q)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YiYiProject/UMengShare/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
@@ -3124,7 +3125,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "45fc02cd-8f46-413e-9209-08c03c9e32b6";
+				PROVISIONING_PROFILE = "27e08856-f67b-488e-978d-fe2673561b24";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Release;
