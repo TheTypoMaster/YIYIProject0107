@@ -15,7 +15,12 @@ typedef void(^MatchWaterflowViewBlock)(float offsetY);
 @interface MatchWaterflowView : LWaterflowView
 {
     MatchWaterflowViewBlock match_waterflow_block;
+    int isShowUp;
+    
+    BOOL upHidden;
 }
+
+-(void)removeHeaderView;
 
 -(void)setWaterBlock:(MatchWaterflowViewBlock)aBlock;
 

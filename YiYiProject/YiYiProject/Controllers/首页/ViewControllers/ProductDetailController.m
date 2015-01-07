@@ -240,19 +240,9 @@
  */
 - (IBAction)clickToContact:(id)sender {
     
-    if ([LTools cacheBoolForKey:USER_LONGIN] == NO) {
-        
-        [LTools showMBProgressWithText:@"未登录" addToView:self.view];
-        
-        return;
-    }
-    
-    NSString *userId = aModel.mall_info[@"uid"];
-    NSString *userName = aModel.mall_info[@"mall_name"];
-    
     YIYIChatViewController *contact = [[YIYIChatViewController alloc]init];
-    contact.currentTarget = userId;
-    contact.currentTargetName = userName;
+    contact.currentTarget = @"1";
+    contact.currentTargetName = @"RNail";
     contact.portraitStyle = RCUserAvatarCycle;
     contact.enableSettings = NO;
     contact.conversationType = ConversationType_PRIVATE;

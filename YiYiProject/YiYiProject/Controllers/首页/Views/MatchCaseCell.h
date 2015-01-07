@@ -15,7 +15,7 @@
 
 
 ///图片宽度
-#define PIC_WIDTH DEVICE_WIDTH/2.0f-20
+#define PIC_WIDTH DEVICE_WIDTH/2.0f-10
 
 @interface MatchCaseCell : TMQuiltViewCell
 

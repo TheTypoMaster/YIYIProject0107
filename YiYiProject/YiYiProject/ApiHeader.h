@@ -53,8 +53,6 @@ alpha:(a)]
 #define NOTIFICATION_LOGIN @"loginin_success" //登录成功通知
 #define NOTIFICATION_LOGOUT @"logout_success" //退出登录通知
 
-#define NOTIFICATION_TTAI_PUBLISE_SUCCESS @"TTAI_PUBLISE_SUCCESS"//t台发布成功
-
 //错误提示信息 
 
 #define ALERT_ERRO_PHONE @"请输入有效手机号"
@@ -134,7 +132,7 @@ typedef enum {
 //获取附近商铺
 #define HOME_CLOTH_NEARBYSTORE @"http://182.92.158.32/?d=api&c=mall&m=gerNearMalls&long=116.33232544&lat=39.98189909"
 //获取店铺详情
-#define HOME_CLOTH_NEARBYSTORE_DETAIL @"http://182.92.158.32?d=api&c=mall&m=getMallDetail&mall_id=1&authcode=123"
+#define HOME_CLOTH_NEARBYSTORE_DETAIL @"http://182.92.158.32?d=api&c=mall&m=getMallDetail&mall_id=%@&authcode=123"
 
 //点击品牌进入该品牌的商铺列表
 #define HOME_CLOTH_PINPAI_STORELIST @"http://182.92.158.32/index.php?d=api&c=mall&m=get_mall_by_brand"
@@ -160,13 +158,10 @@ typedef enum {
 //T 台
 #define TTAI_LIST @"http://182.92.158.32/?d=api&c=tplat&m=listT&page=%d&count=%d&authcode=%@"
 
-//添加T台
-#define TTAI_ADD @"http://182.92.158.32/?d=api&c=tplat&m=addTplat"
 
 
-//t台详情
 
-#define TTAI_DETAIL @"http://182.92.158.32/?d=api&c=tplat&m=ttinfo&tt_id=%@&authcode=%@"
+
 
 //T台点赞
 
@@ -225,6 +220,15 @@ typedef enum {
 
 
 
+
+#pragma mark--我的衣橱接口
+
+
+#define GET_MYYICHU_LIST_URL @"http://182.92.158.32/index.php?d=api&c=wardrobe&m=get_my_wardrobe&authcode=%@"
+
+
+
+
 #pragma mark--我的衣橱接口
 
 
@@ -237,7 +241,6 @@ typedef enum {
 
 
 #define GET_MYYICHU_LIST_URL @"http://182.92.158.32/index.php?d=api&c=wardrobe&m=get_my_wardrobe&authcode=%@"
-
 
 
 
@@ -256,7 +259,19 @@ typedef enum {
 
 #define UPLOAD_IMAGE_URL @"http://182.92.158.32/index.php?d=api&c=upload&m=upload_pic"//action(等于topic_pic为上传话题图片，等于ttinfo为上传T台图片)
 
-#define MY_CONCERN_BRAND @"http://182.92.158.32/index.php?d=api&c=brand&m=get_attend_brands&authcode=%@&page=%d&count=%d"//我关注品牌
+//添加分类
+#define GET_ADDCLASSICATION_URL @"http://182.92.158.32/index.php?d=api&c=wardrobe&m=add_sort&sort_name=%@&authcode=%@"
+//删除分类
+#define GET_DELETECLASSICATION_URL @"http://182.92.158.32/index.php?d=api&c=wardrobe&m=del_sort&sort_id=%@&authcode=%@"
+
+//编辑分类
+#define GET_EDITCLASSICATION_URL @"http://182.92.158.32/index.php?d=api&c=wardrobe&m=update_sort&sort_id=%@&sort_name=%@&authcode=%@"
+//获取分类
+#define GET_GETCLASSTCATION_URL @"http://182.92.158.32/index.php?d=api&c=wardrobe&m=get_my_sort&authcode=%@"
+//衣橱里面添加衣服
+#define POST_ADDCLOTHES_URL     @"http://182.92.158.32/index.php?d=api&c=wardrobe&m=add_clothes"
+
+#define MY_CONCERN_BRAND @"http://182.92.158.32/index.php?d=api&c=brand&m=get_attend_brands&authcode=%@&page=%d"//我关注品牌
 #define MY_CONCERN_BRAND_CANCEL @"http://182.92.158.32/index.php?d=api&c=brand&m=cancel_attend_brand"//取消品牌关注
 
 #define MY_CONCERN_SHOP @"http://182.92.158.32/?d=api&c=friendship&m=listMall&authcode=%@&page=%d&count=%d"//我关注商家

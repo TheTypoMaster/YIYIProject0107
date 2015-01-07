@@ -36,7 +36,7 @@
         _userName_label.font = [UIFont systemFontOfSize:17];
         [self addSubview:_userName_label];
         
-        _pic_imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10,56,PIC_WIDTH,0)];
+        _pic_imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,50,PIC_WIDTH,0)];
         [self addSubview:_pic_imageView];
     }
     
@@ -52,7 +52,7 @@
     
     
 //    _pic_imageView.height = PIC_WIDTH*([model.tt_img_height floatValue])/[model.tt_img_width floatValue];
-    _pic_imageView.height = [model.tt_img_width floatValue]/2.0;
+    _pic_imageView.height = [model.tt_img_height floatValue]/2.0;
     [_pic_imageView sd_setImageWithURL:[NSURL URLWithString:model.t_img] placeholderImage:nil];
 }
 

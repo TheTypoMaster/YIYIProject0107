@@ -11,7 +11,6 @@
 #import "PublishHuatiController.h"
 
 #import "TTPublishViewController.h"
-#import "TTaiDetailController.h"
 
 #import "LWaterflowView.h"
 #import "TPlatModel.h"
@@ -41,8 +40,6 @@
     [waterFlow showRefreshHeader:YES];
     
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateTTai:) name:NOTIFICATION_TTAI_PUBLISE_SUCCESS object:nil];
-    
 //    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
 //    btn.frame = CGRectMake(100, 100, 50, 30);
 //    [btn setTitle:@"登录" forState:UIControlStateNormal];
@@ -59,11 +56,6 @@
 }
 
 #pragma mark 事件处理
-
-- (void)updateTTai:(NSNotification *)noti
-{
-    [waterFlow showRefreshHeader:YES];
-}
 
 - (void)clickToPhoto:(UIButton *)sender
 {
@@ -171,11 +163,7 @@
 
 - (void)waterDidSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TPlatModel *aModel = waterFlow.dataArray[indexPath.row];
-    TTaiDetailController *t_detail = [[TTaiDetailController alloc]init];
-    t_detail.tt_id = aModel.tt_id;
-    t_detail.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:t_detail animated:YES];
+    
     
 }
 
