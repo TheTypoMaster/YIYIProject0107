@@ -26,6 +26,8 @@
 #import "MyBodyViewController.h"//我的体型
 #import "MyMatchViewController.h"//我的搭配
 //#import "ShenQingDianPuViewController.h"
+#import "ShenQingDianPuViewController.h"
+
 
 typedef enum{
     USERFACE = 0,//头像
@@ -114,17 +116,17 @@ typedef enum{
     self.userBannerImv = [[UIImageView alloc]initWithFrame:backView.frame];
     self.userBannerImv.backgroundColor = RGBCOLOR_ONE;
     //模糊效果
-//    self.userBannerImv.layer.masksToBounds = NO;
-//    self.userBannerImv.layer.shadowColor = [UIColor blackColor].CGColor;
-//    self.userBannerImv.layer.shadowOffset = CGSizeMake(0.0f, 5.0f);//shadowOffset阴影偏移,x向右偏移4，y向下偏移4，默认(0, -3),这个跟shadowRadius配合使用
-//    self.userBannerImv.layer.shadowOpacity = 0.5f;//阴影透明度，默认0
-//    self.userBannerImv.layer.shadowRadius = 4;//阴影半径，默认3
+    //    self.userBannerImv.layer.masksToBounds = NO;
+    //    self.userBannerImv.layer.shadowColor = [UIColor blackColor].CGColor;
+    //    self.userBannerImv.layer.shadowOffset = CGSizeMake(0.0f, 5.0f);//shadowOffset阴影偏移,x向右偏移4，y向下偏移4，默认(0, -3),这个跟shadowRadius配合使用
+    //    self.userBannerImv.layer.shadowOpacity = 0.5f;//阴影透明度，默认0
+    //    self.userBannerImv.layer.shadowRadius = 4;//阴影半径，默认3
     
     
     
     //标题
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake((DEVICE_WIDTH-33.00)*0.5, 33, 33, 17)];
-//    titleLabel.backgroundColor = [UIColor redColor];
+    //    titleLabel.backgroundColor = [UIColor redColor];
     titleLabel.font = [UIFont systemFontOfSize:16];
     titleLabel.text = @"我的";
     titleLabel.textColor = [UIColor whiteColor];
@@ -151,19 +153,19 @@ typedef enum{
     self.userNameLabel.text = @"昵称";
     self.userNameLabel.font = [UIFont systemFontOfSize:14];
     self.userNameLabel.textColor = [UIColor whiteColor];
-//    self.userNameLabel.backgroundColor = [UIColor lightGrayColor];
+    //    self.userNameLabel.backgroundColor = [UIColor lightGrayColor];
     
     //积分
     self.userScoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.userNameLabel.frame.origin.x, CGRectGetMaxY(self.userNameLabel.frame)+10, self.userNameLabel.frame.size.width, self.userNameLabel.frame.size.height)];
     self.userScoreLabel.font = [UIFont systemFontOfSize:14];
     self.userScoreLabel.text = @"积分：2000";
     self.userScoreLabel.textColor = [UIColor whiteColor];
-//    self.userScoreLabel.backgroundColor = [UIColor orangeColor];
+    //    self.userScoreLabel.backgroundColor = [UIColor orangeColor];
     
     //编辑按钮
     UIButton *editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [editBtn setFrame:CGRectMake(CGRectGetMaxX(self.userNameLabel.frame)+35, self.userFaceImv.frame.origin.y+20, 55, 44)];
-//    editBtn.backgroundColor = [UIColor purpleColor];
+    //    editBtn.backgroundColor = [UIColor purpleColor];
     editBtn.titleLabel.font = [UIFont systemFontOfSize:16];
     [editBtn addTarget:self action:@selector(goToEdit) forControlEvents:UIControlEventTouchUpInside];
     [editBtn setTitle:@"编辑" forState:UIControlStateNormal];
@@ -208,22 +210,22 @@ typedef enum{
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-//    NSInteger num = 0;
-//    
-//    if (section == 0) {
-//        num = 1;
-//    }else if (section == 1){
-//        num = 2;
-//    }else if (section == 2){
-//        num = 3;
-//    }else if (section == 3){
-//        num = 1;
-//    }else if (section == 4){
-//        num = 1;
-//    }else if (section == 5){
-//        num = 1;
-//    }
-//    
+    //    NSInteger num = 0;
+    //
+    //    if (section == 0) {
+    //        num = 1;
+    //    }else if (section == 1){
+    //        num = 2;
+    //    }else if (section == 2){
+    //        num = 3;
+    //    }else if (section == 3){
+    //        num = 1;
+    //    }else if (section == 4){
+    //        num = 1;
+    //    }else if (section == 5){
+    //        num = 1;
+    //    }
+    //
     return [[_tabelViewCellTitleArray objectAtIndex:section] count];
     
     
@@ -277,7 +279,7 @@ typedef enum{
             GmyMainViewController *dd = [[GmyMainViewController alloc]init];
             dd.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:dd animated:YES];
-
+            
         }
             break;
             
@@ -297,7 +299,7 @@ typedef enum{
                 MyYiChuViewController *_myyichuVC=[[MyYiChuViewController alloc]init];
                 
                 _myyichuVC.hidesBottomBarWhenPushed = YES;
-
+                
                 [self.navigationController pushViewController:_myyichuVC animated:YES];
                 
                 NSLog(@"我的衣橱");
@@ -309,12 +311,12 @@ typedef enum{
                 _myBodyVC.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:_myBodyVC animated:YES];
                 NSLog(@"我的体型");
-
-            
+                
+                
             }else if(indexPath.row==2){
                 
                 NSLog(@"穿衣日记");
-
+                
                 
             }
             
@@ -336,10 +338,10 @@ typedef enum{
             
             if (indexPath.row==0) {
                 
-//                ShenQingDianPuViewController *_shenqingVC = [[ShenQingDianPuViewController alloc]init];
-//                _shenqingVC.hidesBottomBarWhenPushed = YES;
-//                [self.navigationController pushViewController:_shenqingVC animated:YES];
-
+                ShenQingDianPuViewController *_shenqingVC = [[ShenQingDianPuViewController alloc]init];
+                _shenqingVC.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:_shenqingVC animated:YES];
+                
             }
             
             
@@ -361,11 +363,11 @@ typedef enum{
     
     
     
-//    if (indexPath.row == 0) {
-//        GmyMainViewController *dd = [[GmyMainViewController alloc]init];
-//        dd.hidesBottomBarWhenPushed = YES;
-//        [self.navigationController pushViewController:dd animated:YES];
-//    }
+    //    if (indexPath.row == 0) {
+    //        GmyMainViewController *dd = [[GmyMainViewController alloc]init];
+    //        dd.hidesBottomBarWhenPushed = YES;
+    //        [self.navigationController pushViewController:dd animated:YES];
+    //    }
     
     
     
@@ -425,8 +427,8 @@ typedef enum{
 ///隐藏或显示tabbar
 -(void)gHideTabBar:(BOOL)hidden{
     
-//    [UIView beginAnimations:nil context:NULL];
-//    [UIView setAnimationDuration:0.5];
+    //    [UIView beginAnimations:nil context:NULL];
+    //    [UIView setAnimationDuration:0.5];
     
     
     
@@ -444,7 +446,7 @@ typedef enum{
     }];
     
     
-//    [UIView commitAnimations];
+    //    [UIView commitAnimations];
     
     
     //    self.tabBarController.tabBar.hidden = hidden;//无动画

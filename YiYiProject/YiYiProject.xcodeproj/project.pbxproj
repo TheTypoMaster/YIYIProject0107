@@ -259,8 +259,6 @@
 		13B690631A56784D007FE152 /* TPlatModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B690621A56784D007FE152 /* TPlatModel.m */; };
 		13B690671A56797E007FE152 /* TPlatCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B690661A56797E007FE152 /* TPlatCell.m */; };
 		13B6906A1A5694C5007FE152 /* MyCollectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B690691A5694C5007FE152 /* MyCollectionController.m */; };
-		13B6906E1A569BC3007FE152 /* TTPublishViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B6906C1A569BC3007FE152 /* TTPublishViewController.m */; };
-		13B6906F1A569BC3007FE152 /* TTPublishViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B6906D1A569BC3007FE152 /* TTPublishViewController.xib */; };
 		13B690721A56A30E007FE152 /* MyConcernController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B690711A56A30E007FE152 /* MyConcernController.m */; };
 		13B690771A580291007FE152 /* BrandViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B690751A580291007FE152 /* BrandViewCell.m */; };
 		13B690781A580291007FE152 /* BrandViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B690761A580291007FE152 /* BrandViewCell.xib */; };
@@ -276,8 +274,22 @@
 		13CD364A1A3C6A870068C12A /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CD36471A3C6A870068C12A /* EGORefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		13CD364E1A3C6BD90068C12A /* TMPhotoQuiltViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CD364D1A3C6BD90068C12A /* TMPhotoQuiltViewCell.m */; };
 		13CD36541A3C732D0068C12A /* LWaterflowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CD36531A3C732D0068C12A /* LWaterflowView.m */; };
+		13CEC8891A5D956B00FE273F /* TTaiDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CEC8881A5D956B00FE273F /* TTaiDetailController.m */; };
+		13CEC88F1A5D95F400FE273F /* TDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CEC88E1A5D95F400FE273F /* TDetailModel.m */; };
+		13CEC8931A5D96CF00FE273F /* TTPublishViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CEC8911A5D96CF00FE273F /* TTPublishViewController.m */; };
+		13CEC8941A5D96CF00FE273F /* TTPublishViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13CEC8921A5D96CF00FE273F /* TTPublishViewController.xib */; };
+		13CEC89E1A5D974900FE273F /* dapei_jiantou@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13CEC8961A5D974900FE273F /* dapei_jiantou@2x.png */; };
+		13CEC89F1A5D974900FE273F /* dapeishi_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13CEC8971A5D974900FE273F /* dapeishi_bg@2x.png */; };
+		13CEC8A01A5D974900FE273F /* pinglun_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13CEC8981A5D974900FE273F /* pinglun_icon@2x.png */; };
+		13CEC8A11A5D974900FE273F /* time_iocn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13CEC8991A5D974900FE273F /* time_iocn@2x.png */; };
+		13CEC8A21A5D974900FE273F /* xingji_ban@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13CEC89A1A5D974900FE273F /* xingji_ban@2x.png */; };
+		13CEC8A31A5D974900FE273F /* xingji_kong@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13CEC89B1A5D974900FE273F /* xingji_kong@2x.png */; };
+		13CEC8A41A5D974900FE273F /* xingji_man@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13CEC89C1A5D974900FE273F /* xingji_man@2x.png */; };
+		13CEC8A51A5D974900FE273F /* zhixiangjiantou@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13CEC89D1A5D974900FE273F /* zhixiangjiantou@2x.png */; };
 		13EA3D1E1A3B2682002AF7D6 /* HomeBuyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EA3D1D1A3B2682002AF7D6 /* HomeBuyController.m */; };
 		13EA3D241A3B2E13002AF7D6 /* HomeMatchController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EA3D231A3B2E13002AF7D6 /* HomeMatchController.m */; };
+		19B937701A5D8057009B359F /* libiOS_IMKit_v1_2_7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B9376F1A5D8057009B359F /* libiOS_IMKit_v1_2_7.a */; };
+		19B937761A5D8780009B359F /* ShenQingDianPuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B937751A5D8780009B359F /* ShenQingDianPuViewController.m */; };
 		19D0C0D21A4EDA6D00BEC10D /* MyYiChuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D0C0D11A4EDA6D00BEC10D /* MyYiChuViewController.m */; };
 		19D5E6B21A4FE39B008401E0 /* YiChuListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D5E6B11A4FE39B008401E0 /* YiChuListModel.m */; };
 		19D5E6B51A4FE8E1008401E0 /* YichuListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D5E6B41A4FE8E1008401E0 /* YichuListTableViewCell.m */; };
@@ -743,9 +755,6 @@
 		13B690661A56797E007FE152 /* TPlatCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPlatCell.m; sourceTree = "<group>"; };
 		13B690681A5694C5007FE152 /* MyCollectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCollectionController.h; sourceTree = "<group>"; };
 		13B690691A5694C5007FE152 /* MyCollectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCollectionController.m; sourceTree = "<group>"; };
-		13B6906B1A569BC3007FE152 /* TTPublishViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTPublishViewController.h; sourceTree = "<group>"; };
-		13B6906C1A569BC3007FE152 /* TTPublishViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTPublishViewController.m; sourceTree = "<group>"; };
-		13B6906D1A569BC3007FE152 /* TTPublishViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TTPublishViewController.xib; sourceTree = "<group>"; };
 		13B690701A56A30E007FE152 /* MyConcernController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyConcernController.h; sourceTree = "<group>"; };
 		13B690711A56A30E007FE152 /* MyConcernController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyConcernController.m; sourceTree = "<group>"; };
 		13B690741A580291007FE152 /* BrandViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrandViewCell.h; sourceTree = "<group>"; };
@@ -775,10 +784,28 @@
 		13CD364D1A3C6BD90068C12A /* TMPhotoQuiltViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMPhotoQuiltViewCell.m; sourceTree = "<group>"; };
 		13CD36521A3C732D0068C12A /* LWaterflowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LWaterflowView.h; sourceTree = "<group>"; };
 		13CD36531A3C732D0068C12A /* LWaterflowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LWaterflowView.m; sourceTree = "<group>"; };
+		13CEC8871A5D956B00FE273F /* TTaiDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTaiDetailController.h; sourceTree = "<group>"; };
+		13CEC8881A5D956B00FE273F /* TTaiDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTaiDetailController.m; sourceTree = "<group>"; };
+		13CEC88D1A5D95F400FE273F /* TDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDetailModel.h; sourceTree = "<group>"; };
+		13CEC88E1A5D95F400FE273F /* TDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDetailModel.m; sourceTree = "<group>"; };
+		13CEC8901A5D96CF00FE273F /* TTPublishViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTPublishViewController.h; sourceTree = "<group>"; };
+		13CEC8911A5D96CF00FE273F /* TTPublishViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTPublishViewController.m; sourceTree = "<group>"; };
+		13CEC8921A5D96CF00FE273F /* TTPublishViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TTPublishViewController.xib; sourceTree = "<group>"; };
+		13CEC8961A5D974900FE273F /* dapei_jiantou@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dapei_jiantou@2x.png"; sourceTree = "<group>"; };
+		13CEC8971A5D974900FE273F /* dapeishi_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dapeishi_bg@2x.png"; sourceTree = "<group>"; };
+		13CEC8981A5D974900FE273F /* pinglun_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pinglun_icon@2x.png"; sourceTree = "<group>"; };
+		13CEC8991A5D974900FE273F /* time_iocn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "time_iocn@2x.png"; sourceTree = "<group>"; };
+		13CEC89A1A5D974900FE273F /* xingji_ban@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xingji_ban@2x.png"; sourceTree = "<group>"; };
+		13CEC89B1A5D974900FE273F /* xingji_kong@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xingji_kong@2x.png"; sourceTree = "<group>"; };
+		13CEC89C1A5D974900FE273F /* xingji_man@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xingji_man@2x.png"; sourceTree = "<group>"; };
+		13CEC89D1A5D974900FE273F /* zhixiangjiantou@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zhixiangjiantou@2x.png"; sourceTree = "<group>"; };
 		13EA3D1C1A3B2682002AF7D6 /* HomeBuyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeBuyController.h; sourceTree = "<group>"; };
 		13EA3D1D1A3B2682002AF7D6 /* HomeBuyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeBuyController.m; sourceTree = "<group>"; };
 		13EA3D221A3B2E13002AF7D6 /* HomeMatchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeMatchController.h; sourceTree = "<group>"; };
 		13EA3D231A3B2E13002AF7D6 /* HomeMatchController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeMatchController.m; sourceTree = "<group>"; };
+		19B9376F1A5D8057009B359F /* libiOS_IMKit_v1_2_7.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libiOS_IMKit_v1_2_7.a; sourceTree = "<group>"; };
+		19B937741A5D8780009B359F /* ShenQingDianPuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShenQingDianPuViewController.h; sourceTree = "<group>"; };
+		19B937751A5D8780009B359F /* ShenQingDianPuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShenQingDianPuViewController.m; sourceTree = "<group>"; };
 		19D0C0D01A4EDA6D00BEC10D /* MyYiChuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyYiChuViewController.h; sourceTree = "<group>"; };
 		19D0C0D11A4EDA6D00BEC10D /* MyYiChuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyYiChuViewController.m; sourceTree = "<group>"; };
 		19D5E6B01A4FE39B008401E0 /* YiChuListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YiChuListModel.h; sourceTree = "<group>"; };
@@ -1026,6 +1053,7 @@
 				E3E3E84C1A3C678C001A1DD6 /* OpenGLES.framework in Frameworks */,
 				137FC2B21A4DAE780039E3FF /* MapKit.framework in Frameworks */,
 				DF7050BE1A5D86B9003AC716 /* libiOS_IMKit_v1_2_7.a in Frameworks */,
+				19B937701A5D8057009B359F /* libiOS_IMKit_v1_2_7.a in Frameworks */,
 				138C2C141A39E46B00EA59F5 /* libz.dylib in Frameworks */,
 				138C2C121A39E45E00EA59F5 /* libstdc++.dylib in Frameworks */,
 				138C2C0E1A39E25000EA59F5 /* libsqlite3.dylib in Frameworks */,
@@ -1099,6 +1127,7 @@
 		13681C6F1A4527A200671D07 /* AllImages */ = {
 			isa = PBXGroup;
 			children = (
+				13CEC8951A5D974900FE273F /* 搭配师 */,
 				13B690591A566A4A007FE152 /* T台 */,
 				13B690461A564BF6007FE152 /* 首页弹出 */,
 				13963F541A4FE3B8007BE68B /* 话题发布按钮 */,
@@ -1534,6 +1563,7 @@
 			isa = PBXGroup;
 			children = (
 				DF7050BD1A5D86B9003AC716 /* libiOS_IMKit_v1_2_7.a */,
+				19B9376F1A5D8057009B359F /* libiOS_IMKit_v1_2_7.a */,
 				137FC2B71A4DB2DC0039E3FF /* Headers */,
 				137FC2DC1A4DB2DC0039E3FF /* RongCloud.bundle */,
 			);
@@ -1928,12 +1958,14 @@
 		13A389921A3893C100ABBACB /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				13CEC8901A5D96CF00FE273F /* TTPublishViewController.h */,
+				13CEC8911A5D96CF00FE273F /* TTPublishViewController.m */,
+				13CEC8921A5D96CF00FE273F /* TTPublishViewController.xib */,
+				13CEC8871A5D956B00FE273F /* TTaiDetailController.h */,
+				13CEC8881A5D956B00FE273F /* TTaiDetailController.m */,
 				13A389931A3893D000ABBACB /* TTaiViewController.h */,
 				13A389941A3893D000ABBACB /* TTaiViewController.m */,
 				13A389951A3893D000ABBACB /* TTaiViewController.xib */,
-				13B6906B1A569BC3007FE152 /* TTPublishViewController.h */,
-				13B6906C1A569BC3007FE152 /* TTPublishViewController.m */,
-				13B6906D1A569BC3007FE152 /* TTPublishViewController.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -2039,6 +2071,8 @@
 		13B690601A56783C007FE152 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				13CEC88D1A5D95F400FE273F /* TDetailModel.h */,
+				13CEC88E1A5D95F400FE273F /* TDetailModel.m */,
 				13B690611A56784D007FE152 /* TPlatModel.h */,
 				13B690621A56784D007FE152 /* TPlatModel.m */,
 			);
@@ -2124,6 +2158,21 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		13CEC8951A5D974900FE273F /* 搭配师 */ = {
+			isa = PBXGroup;
+			children = (
+				13CEC8961A5D974900FE273F /* dapei_jiantou@2x.png */,
+				13CEC8971A5D974900FE273F /* dapeishi_bg@2x.png */,
+				13CEC8981A5D974900FE273F /* pinglun_icon@2x.png */,
+				13CEC8991A5D974900FE273F /* time_iocn@2x.png */,
+				13CEC89A1A5D974900FE273F /* xingji_ban@2x.png */,
+				13CEC89B1A5D974900FE273F /* xingji_kong@2x.png */,
+				13CEC89C1A5D974900FE273F /* xingji_man@2x.png */,
+				13CEC89D1A5D974900FE273F /* zhixiangjiantou@2x.png */,
+			);
+			path = "搭配师";
+			sourceTree = "<group>";
+		};
 		19B9372C1A5ACF5F009B359F /* zkingControl */ = {
 			isa = PBXGroup;
 			children = (
@@ -2145,6 +2194,8 @@
 		19B9372E1A5ACFE0009B359F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				19B937741A5D8780009B359F /* ShenQingDianPuViewController.h */,
+				19B937751A5D8780009B359F /* ShenQingDianPuViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -2536,11 +2587,11 @@
 				TargetAttributes = {
 					13684A641A37583E00A508FB = {
 						CreatedOnToolsVersion = 6.1;
-						DevelopmentTeam = 3SPFDP9HQL;
+						DevelopmentTeam = 96PFYKQ596;
 					};
 					13684A7D1A37583E00A508FB = {
 						CreatedOnToolsVersion = 6.1;
-						DevelopmentTeam = 3SPFDP9HQL;
+						DevelopmentTeam = 96PFYKQ596;
 						TestTargetID = 13684A641A37583E00A508FB;
 					};
 				};
@@ -2593,7 +2644,6 @@
 				137B08151A4E6FDF00DE7DCC /* xinxi_icon@3x.png in Resources */,
 				137B08161A4E6FDF00DE7DCC /* love_up@3x.png in Resources */,
 				137B082F1A4E716700DE7DCC /* 1+1_botton@2x.png in Resources */,
-				13B6906F1A569BC3007FE152 /* TTPublishViewController.xib in Resources */,
 				56D187E41A5C274A006A606D /* dapeishi_bg@2x.png in Resources */,
 				138C2BF91A39E09200EA59F5 /* UMShareEditViewController.xib in Resources */,
 				137B086A1A4EAC9900DE7DCC /* xiaoxi_down@2x.png in Resources */,
@@ -2602,6 +2652,7 @@
 				13963F511A4FE3A5007BE68B /* fabu@3x.png in Resources */,
 				137B08631A4EAC9900DE7DCC /* home_up@2x.png in Resources */,
 				13681C851A453B9700671D07 /* back@2x.png in Resources */,
+				13CEC8A21A5D974900FE273F /* xingji_ban@2x.png in Resources */,
 				137B08501A4E8D6700DE7DCC /* zhidemai_botton_up@3x.png in Resources */,
 				137B07D71A4E6FDF00DE7DCC /* xq_love_down @3x.png in Resources */,
 				13CD36371A3C51BE0068C12A /* ForgetPwdController.xib in Resources */,
@@ -2663,8 +2714,10 @@
 				137B07FF1A4E6FDF00DE7DCC /* my_shezhi@3x.png in Resources */,
 				137B07F91A4E6FDF00DE7DCC /* my_dapei@3x.png in Resources */,
 				13A3899D1A3893FC00ABBACB /* MessageViewController.xib in Resources */,
+				13CEC8941A5D96CF00FE273F /* TTPublishViewController.xib in Resources */,
 				139562CC1A3C11EC007BB183 /* RegisterViewController.xib in Resources */,
 				566FE2591A5042B700A96B5F /* default_navigation_clear_image@2x.png in Resources */,
+				13CEC8A51A5D974900FE273F /* zhixiangjiantou@2x.png in Resources */,
 				137E0ADD1A4C567500B59F64 /* weixin72_72@2x.png in Resources */,
 				13963F591A4FE3B8007BE68B /* fabu_pic@2x.png in Resources */,
 				137B086B1A4EAC9900DE7DCC /* xiaoxi_up@2x.png in Resources */,
@@ -2721,6 +2774,7 @@
 				137B08651A4EAC9900DE7DCC /* my_up@2x.png in Resources */,
 				13B690541A564EBF007FE152 /* t_xiangce@3x.png in Resources */,
 				139607B61A46A0BB00AACAC4 /* product_like@2x.png in Resources */,
+				13CEC89F1A5D974900FE273F /* dapeishi_bg@2x.png in Resources */,
 				13B690521A564BF6007FE152 /* tianjia_down@2x.png in Resources */,
 				137B083B1A4E716700DE7DCC /* sh_jiantou_left@2x.png in Resources */,
 				13B690511A564BF6007FE152 /* t_yichu@2x.png in Resources */,
@@ -2756,6 +2810,8 @@
 				13B690781A580291007FE152 /* BrandViewCell.xib in Resources */,
 				137B07DC1A4E6FDF00DE7DCC /* sweiixn_icon@3x.png in Resources */,
 				137B08641A4EAC9900DE7DCC /* my_down@2x.png in Resources */,
+				13CEC8A31A5D974900FE273F /* xingji_kong@2x.png in Resources */,
+				13CEC8A01A5D974900FE273F /* pinglun_icon@2x.png in Resources */,
 				13B6905C1A566A4A007FE152 /* love_up@2x.png in Resources */,
 				13681C8A1A453DE600671D07 /* login_suo@2x.png in Resources */,
 				13681C821A453B3200671D07 /* share_sina@2x.png in Resources */,
@@ -2763,10 +2819,12 @@
 				56A8A82D1A458FF200E85F6B /* clock_image@2x.png in Resources */,
 				564387C41A5ABD3A00499AD3 /* match_segment_selected_image@2x.png in Resources */,
 				137B07D61A4E6FDF00DE7DCC /* share_qqkongjian@3x.png in Resources */,
+				13CEC8A11A5D974900FE273F /* time_iocn@2x.png in Resources */,
 				137B08781A4EADFE00DE7DCC /* my_down@3x.png in Resources */,
 				137B08921A4ECDD100DE7DCC /* shaixuan_boy@2x.png in Resources */,
 				137B07C71A4E6FDF00DE7DCC /* dapeishi_bg@3x.png in Resources */,
 				13A3898C1A38937600ABBACB /* HomeViewController.xib in Resources */,
+				13CEC89E1A5D974900FE273F /* dapei_jiantou@2x.png in Resources */,
 				138C2BF81A39E09200EA59F5 /* UMSCommentInputControlleriPad.xib in Resources */,
 				137E0ADC1A4C567500B59F64 /* weibo90_72@2x.png in Resources */,
 				564031861A4EFF6000680E08 /* apply_idcard_image@3x.png in Resources */,
@@ -2784,6 +2842,7 @@
 				13B690561A564EEB007FE152 /* t_xiangce@2x.png in Resources */,
 				137B07EB1A4E6FDF00DE7DCC /* shangchang_d@3x.png in Resources */,
 				137B07D11A4E6FDF00DE7DCC /* d_qq@3x.png in Resources */,
+				13CEC8A41A5D974900FE273F /* xingji_man@2x.png in Resources */,
 				137B07FD1A4E6FDF00DE7DCC /* my_rizhi@3x.png in Resources */,
 				E3B3AC531A5AAE3F006BF9B5 /* gGray@2x.png in Resources */,
 				137B08001A4E6FDF00DE7DCC /* my_shoucnag@3x.png in Resources */,
@@ -2848,7 +2907,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				56726C491A55A9A90085D77C /* TopicSubCommentsModel.m in Sources */,
-				13B6906E1A569BC3007FE152 /* TTPublishViewController.m in Sources */,
 				E33FF51A1A4EBC810060E130 /* Gview.m in Sources */,
 				565321461A59769300E43F80 /* OHAttributedLabel.m in Sources */,
 				13CD364A1A3C6A870068C12A /* EGORefreshTableHeaderView.m in Sources */,
@@ -2884,6 +2942,7 @@
 				13B690801A580B76007FE152 /* MailModel.m in Sources */,
 				13A389BD1A38974F00ABBACB /* RefreshTableView.m in Sources */,
 				13963F4C1A4FC5FB007BE68B /* PublishHuatiController.m in Sources */,
+				13CEC8931A5D96CF00FE273F /* TTPublishViewController.m in Sources */,
 				E33FF5011A4EBC810060E130 /* GLeadBuyMapViewController.m in Sources */,
 				E3881BD51A4FB55D00C338AC /* GEditPersonInfoViewController.m in Sources */,
 				E3881C011A4FDF2800C338AC /* CWSegmentedControl.m in Sources */,
@@ -2916,6 +2975,7 @@
 				13CD36411A3C69860068C12A /* TMQuiltViewCell.m in Sources */,
 				13EA3D1E1A3B2682002AF7D6 /* HomeBuyController.m in Sources */,
 				E33FF5021A4EBC810060E130 /* GMapViewController.m in Sources */,
+				13CEC88F1A5D95F400FE273F /* TDetailModel.m in Sources */,
 				E33FF5071A4EBC810060E130 /* GViewController.mm in Sources */,
 				13963F431A4FC54D007BE68B /* LEditor.m in Sources */,
 				E33FF5151A4EBC810060E130 /* GScrollView.m in Sources */,
@@ -2930,6 +2990,7 @@
 				E33FF5171A4EBC810060E130 /* GStarsView.m in Sources */,
 				566FE24B1A501C4E00A96B5F /* TopicCommentsCell.m in Sources */,
 				E33FF5131A4EBC810060E130 /* GcustomActionSheet.m in Sources */,
+				13CEC8891A5D956B00FE273F /* TTaiDetailController.m in Sources */,
 				E33FF5121A4EBC810060E130 /* UILabel+GautoMatchedText.m in Sources */,
 				E33FF51D1A4EBCD80060E130 /* HomeClothController.m in Sources */,
 				13963F441A4FC54D007BE68B /* LImageCell.m in Sources */,
@@ -2938,6 +2999,7 @@
 				13B690771A580291007FE152 /* BrandViewCell.m in Sources */,
 				DF5E89B01A5E676E00535EBA /* ChooseClothesViewController.m in Sources */,
 				13A389861A387A8800ABBACB /* UIColor+ConvertColor.m in Sources */,
+				19B937761A5D8780009B359F /* ShenQingDianPuViewController.m in Sources */,
 				E33FF5191A4EBC810060E130 /* GTableViewCell.m in Sources */,
 				E33FF5051A4EBC810060E130 /* GpinpaiDetailViewController.m in Sources */,
 				139607BC1A46D82400AACAC4 /* FilterViewController.m in Sources */,
@@ -3050,7 +3112,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "45fc02cd-8f46-413e-9209-08c03c9e32b6";
+				PROVISIONING_PROFILE = "27e08856-f67b-488e-978d-fe2673561b24";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -3086,7 +3148,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "45fc02cd-8f46-413e-9209-08c03c9e32b6";
+				PROVISIONING_PROFILE = "27e08856-f67b-488e-978d-fe2673561b24";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -3099,8 +3161,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: HAO WANG (PWZU4H562Q)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: HAO WANG (PWZU4H562Q)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YiYiProject/UMengShare/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
@@ -3122,6 +3184,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "8615fc2e-f7a3-4b4a-992d-4d1daf0a25b9";
+				PROVISIONING_PROFILE = "27e08856-f67b-488e-978d-fe2673561b24";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Debug;
@@ -3133,8 +3196,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: HAO WANG (PWZU4H562Q)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: HAO WANG (PWZU4H562Q)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YiYiProject/UMengShare/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
@@ -3156,6 +3219,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "8615fc2e-f7a3-4b4a-992d-4d1daf0a25b9";
+				PROVISIONING_PROFILE = "27e08856-f67b-488e-978d-fe2673561b24";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Release;

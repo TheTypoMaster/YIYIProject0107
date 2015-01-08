@@ -138,13 +138,16 @@
             [arr addObject:aModel];
         }
         
-//        [brandTable reloadData:arr total:100];
+//        int count = [result[@"count"] intValue];
+        
         BOOL isHaveMore = YES;
         
-        if (arr.count >= L_PAGE_SIZE) {
+        if (arr.count < L_PAGE_SIZE) {
             
+            isHaveMore = NO;
         }
         
+        [brandTable reloadData:arr isHaveMore:isHaveMore];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
@@ -242,7 +245,7 @@
     bgScroll.contentSize = CGSizeMake(DEVICE_WIDTH * 2, bgScroll.height);
     
     //店铺
-    shopTable = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, bgScroll.height) showLoadMore:NO];
+    shopTable = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, bgScroll.height) showLoadMore:YES];
     shopTable.refreshDelegate = self;
     shopTable.dataSource = self;
     [bgScroll addSubview:shopTable];
@@ -250,7 +253,7 @@
     shopTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     //品牌
-    brandTable = [[RefreshTableView alloc]initWithFrame:CGRectMake(DEVICE_WIDTH, 0, DEVICE_WIDTH, bgScroll.height) showLoadMore:NO];
+    brandTable = [[RefreshTableView alloc]initWithFrame:CGRectMake(DEVICE_WIDTH, 0, DEVICE_WIDTH, bgScroll.height) showLoadMore:YES];
     brandTable.refreshDelegate = self;
     brandTable.dataSource = self;
     [bgScroll addSubview:brandTable];

@@ -287,6 +287,10 @@
                 userHeadImage:(NSString *)headImage
 {
     
+    if (headImage.length == 0) {
+        headImage = @"";
+    }
+    
     NSString *url = [NSString stringWithFormat:RONCLOUD_GET_TOKEN,userId,userName,headImage];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {

@@ -30,6 +30,7 @@
     self.cancelButton.layer.borderWidth = 1.f;
     
     self.iconImageView.layer.cornerRadius = 35.f;
+    self.iconImageView.clipsToBounds = YES;
 }
 
 @end

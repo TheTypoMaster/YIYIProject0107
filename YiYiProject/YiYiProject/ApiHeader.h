@@ -53,6 +53,8 @@ alpha:(a)]
 #define NOTIFICATION_LOGIN @"loginin_success" //登录成功通知
 #define NOTIFICATION_LOGOUT @"logout_success" //退出登录通知
 
+#define NOTIFICATION_TTAI_PUBLISE_SUCCESS @"TTAI_PUBLISE_SUCCESS"//t台发布成功
+
 //错误提示信息 
 
 #define ALERT_ERRO_PHONE @"请输入有效手机号"
@@ -159,13 +161,25 @@ typedef enum {
 #define TTAI_LIST @"http://182.92.158.32/?d=api&c=tplat&m=listT&page=%d&count=%d&authcode=%@"
 
 
+//添加T台
+#define TTAI_ADD @"http://182.92.158.32/?d=api&c=tplat&m=addTplat"
+
+
+//t台详情
+
+#define TTAI_DETAIL @"http://182.92.158.32/?d=api&c=tplat&m=ttinfo&tt_id=%@&authcode=%@"
 
 
 
+//T台点赞
 
+#define TTAI_ZAN @"http://182.92.158.32/?d=api&c=tplat&m=like"
 
+//T台取消赞
+#define TTAI_ZAN_CANCEL @"http://182.92.158.32/?d=api&c=tplat&m=cancelLike"
 
-
+//转发 + 1
+#define TTAI_ZHUANFA_ADD @"http://182.92.158.32/?d=api&c=tplat&m=incrShare"
 
 
 //个人信息相关
