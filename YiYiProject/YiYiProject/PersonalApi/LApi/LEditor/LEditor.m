@@ -17,7 +17,7 @@
     if (self) {
         
         rootViewController = rootVc;
-        originalHeight = frame.size.height;
+        originalHeight = frame.size.height - 40;
         
         self.backgroundColor = [UIColor whiteColor];
         
@@ -38,7 +38,7 @@
         line.backgroundColor = RGBCOLOR(223, 222, 222);
         [self addSubview:line];
         
-        self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, _titleTextField.bottom, frame.size.width, frame.size.height) style:UITableViewStylePlain];
+        self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, _titleTextField.bottom, frame.size.width, frame.size.height - 40) style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.backgroundColor = [UIColor whiteColor];
@@ -48,7 +48,7 @@
         
         height_arr = [NSMutableArray array];
         
-        NSDictionary *params = @{CELL_NEW_HEIGHT:[NSNumber numberWithFloat:ORIGINAL_HEIGHT]};
+        NSDictionary *params = @{CELL_NEW_HEIGHT:[NSNumber numberWithFloat:ORIGINAL_HEIGHT],CELL_NEW_WIDTH:[NSNumber numberWithFloat:100]};//宽度暂定
         
         [height_arr addObject:params];
         
@@ -80,9 +80,22 @@
 
 #pragma mark 事件处理
 
+/**
+ *  隐藏键盘
+ */
+- (void)hiddenKeyboard
+{
+    [self clickToHidden:nil];
+}
+
 - (NSArray *)content
 {
     return height_arr;
+}
+
+- (NSString *)editorTitle
+{
+    return self.titleTextField.text;
 }
 
 
@@ -148,6 +161,7 @@
     //图片先固定 200
     
     [dic setObject:[NSNumber numberWithFloat:ORIGINAL_HEIGHT_IMAGE] forKey:CELL_NEW_HEIGHT];
+    [dic setObject:[NSNumber numberWithFloat:ORIGINAL_WIDTH_IMAGE] forKey:CELL_NEW_WIDTH];
     [dic setObject:aImage forKey:CELL_TEXT];
     
     [height_arr addObject:dic];
@@ -199,6 +213,7 @@
     
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setObject:[NSNumber numberWithFloat:ORIGINAL_HEIGHT_IMAGE] forKey:CELL_NEW_HEIGHT];
+    [dic setObject:[NSNumber numberWithFloat:ORIGINAL_WIDTH_IMAGE] forKey:CELL_NEW_WIDTH];
     [dic setObject:aImage forKey:CELL_TEXT];
     
     if (height_arr.count == currentIndexPath.row + 1) {
@@ -214,6 +229,7 @@
     NSMutableDictionary *dic_text = [NSMutableDictionary dictionary];
     
     [dic_text setObject:[NSNumber numberWithFloat:[self heightForText:trailText]] forKey:CELL_NEW_HEIGHT];
+    [dic_text setObject:[NSNumber numberWithFloat:ORIGINAL_WIDTH_IMAGE] forKey:CELL_NEW_WIDTH];
     
     [dic_text setObject:trailText forKey:CELL_TEXT];
     

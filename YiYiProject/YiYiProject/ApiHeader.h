@@ -302,6 +302,14 @@ typedef enum {
 #define MY_CONCERN_MAIL_CANCEL @"http://182.92.158.32/?d=api&c=friendship&m=mallDestory"//取消关注商家
 
 #define POST_MYBODY_URL @"http://182.92.158.32/index.php?d=api&c=user_api&m=update_user_body_info"//修改我的体型
+
+
+
+#pragma - mark 搭配师话题
+
+#define TOPIC_ADD @"http://182.92.158.32/index.php?d=api&c=topic&m=publish_topic"//添加话题
+
+
 #endif
 
 

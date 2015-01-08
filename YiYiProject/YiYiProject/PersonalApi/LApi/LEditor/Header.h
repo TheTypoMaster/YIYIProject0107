@@ -19,10 +19,16 @@
 #define ALL_FRAME_HEIGHT ALL_FRAME.size.height
 
 #define CELL_NEW_HEIGHT @"CELL_NEW_HEIGHT" //cell 高度
+#define CELL_NEW_WIDTH @"CELL_NEW_WIDTH" //cell 宽度
 
-#define KEYBOARD_FRAME_Y @"KEYBOARD_FRAME_Y" //键盘 y
+#define IMAGE_HEIGHT_ORIGINAL @"IMAGE_HEIGHT_ORIGINAL" //图片原始高度
+#define IMAGE_WIDTH_ORIGINAL @"IMAGE_WIDTH_ORIGINAL" //图片原始宽度
 
-#define CELL_TEXT @"CELL_TEXT" //内容
+#define CELL_TEXT @"CELL_TEXT" //内容(可能是文字 也可能是 图片地址)
+
+#define IMAGE_ORIGINAL_URL @"IMAGE_ORIGINAL_URL"//原图地址
+
+#define KEYBOARD_FRAME_Y @"KEYBOARD_FRAME_Y" //键盘
 
 #define First_TextView @"First_TextView" //记录当前响应者 textView
 #define First_IndexPath @"First_IndexPath" //记录响应者 indexPath
@@ -30,6 +36,7 @@
 #define ORIGINAL_HEIGHT 38.F
 
 #define ORIGINAL_HEIGHT_IMAGE 200.F
+#define ORIGINAL_WIDTH_IMAGE 200.F
 
 #import "UIView+Frame.h"
 #import "LImageCell.h"

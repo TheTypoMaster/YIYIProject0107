@@ -93,7 +93,7 @@
         backgroundView_ = [[UIImageView alloc] initWithFrame:self.bounds];
 //        backgroundView_.image = [[UIImage imageNamed:@"modal_background.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:6];
         
-        backgroundView_.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.6];
+        backgroundView_.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.8];
         backgroundView_.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         [self addSubview:backgroundView_];
         buttons_ = [[NSMutableArray alloc] initWithCapacity:6];
