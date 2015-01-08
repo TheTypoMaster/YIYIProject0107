@@ -264,6 +264,8 @@ typedef enum {
 #define GET_GETCLASSTCATION_URL @"http://182.92.158.32/index.php?d=api&c=wardrobe&m=get_my_sort&authcode=%@"
 //衣橱里面添加衣服
 #define POST_ADDCLOTHES_URL     @"http://182.92.158.32/index.php?d=api&c=wardrobe&m=add_clothes"
+//获取某个分类下的衣服
+#define GET_CLASSICATIONCLOTHES_URL @"http://182.92.158.32/index.php?d=api&c=wardrobe&m=get_clothes&sort_id=%@&authcode=%@"
 
 #define MY_CONCERN_BRAND @"http://182.92.158.32/index.php?d=api&c=brand&m=get_attend_brands&authcode=%@&page=%d"//我关注品牌
 #define MY_CONCERN_BRAND_CANCEL @"http://182.92.158.32/index.php?d=api&c=brand&m=cancel_attend_brand"//取消品牌关注
@@ -272,7 +274,7 @@ typedef enum {
 
 #define MY_CONCERN_MAIL_CANCEL @"http://182.92.158.32/?d=api&c=friendship&m=mallDestory"//取消关注商家
 
-
+#define POST_MYBODY_URL @"http://182.92.158.32/index.php?d=api&c=user_api&m=update_user_body_info"//修改我的体型
 #endif
 
 

@@ -12,20 +12,24 @@
 	<dict>
 		<key>13BFFBC0123CC18E755D27526CE4500D90BD1984</key>
 		<string>github.com:TeamOfFBAuto/YIYIProject.git</string>
+		<key>B17D34269DFBBFFD1B28E5067E72F14F24527419</key>
+		<string>https://github.com/TeamOfFBAuto/YIYIProject0107.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>YiYiProject/YiYiProject.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>13BFFBC0123CC18E755D27526CE4500D90BD1984</key>
+		<string>../../../YIYIProject</string>
+		<key>B17D34269DFBBFFD1B28E5067E72F14F24527419</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>github.com:TeamOfFBAuto/YIYIProject.git</string>
+	<string>https://github.com/TeamOfFBAuto/YIYIProject0107.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>13BFFBC0123CC18E755D27526CE4500D90BD1984</string>
+	<string>B17D34269DFBBFFD1B28E5067E72F14F24527419</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
@@ -35,6 +39,14 @@
 			<string>13BFFBC0123CC18E755D27526CE4500D90BD1984</string>
 			<key>IDESourceControlWCCName</key>
 			<string>YIYIProject</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>B17D34269DFBBFFD1B28E5067E72F14F24527419</string>
+			<key>IDESourceControlWCCName</key>
+			<string>YIYIProject0107</string>
 		</dict>
 	</array>
 </dict>
