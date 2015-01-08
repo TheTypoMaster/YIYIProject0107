@@ -292,7 +292,7 @@
     leftBtn.layer.cornerRadius = 4;
     [leftBtn setImage:[UIImage imageNamed:@"gjiantouleft.png"] forState:UIControlStateNormal];
     [leftBtn addTarget:self action:@selector(pinpaiGoleft) forControlEvents:UIControlEventTouchUpInside];
-    [_pinpaiView addSubview:leftBtn];
+//    [_pinpaiView addSubview:leftBtn];
     
     
     //向右按钮btn
@@ -301,7 +301,7 @@
     rightBtn.layer.cornerRadius = 4;
     [rightBtn setImage:[UIImage imageNamed:@"gjiantouright.png"] forState:UIControlStateNormal];
     [rightBtn addTarget:self action:@selector(pinpaiGoRight) forControlEvents:UIControlEventTouchUpInside];
-    [_pinpaiView addSubview:rightBtn];
+//    [_pinpaiView addSubview:rightBtn];
     
     
     return _pinpaiView;
