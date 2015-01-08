@@ -41,7 +41,9 @@ typedef enum{
 {
     UITableView *_tableView;//主tableview
     CHANGEIMAGETYPE _changeImageType;
-    NSArray *_tabelViewCellTitleArray;
+    NSArray *_tabelViewCellTitleArray;//title文字数组
+    NSArray *_logoImageArray;//title前面的logo图数组
+    NSDictionary *_customInfo_tabelViewCell;//cell数据源
 }
 @end
 
@@ -84,6 +86,18 @@ typedef enum{
                                  ,@[@"我的关注"]
                                  ,@[@"我是店主，申请衣+衣店铺"]
                                  ,@[@"邀请好友"]];
+    _logoImageArray = @[@[[UIImage imageNamed:@"my_zhuye.png"]]
+                        ,@[[UIImage imageNamed:@"my_shoucang.png"],[UIImage imageNamed:@"my_dapei.png"]]
+                        ,@[[UIImage imageNamed:@"my_yichu.png"],[UIImage imageNamed:@"my_tixing.png"],[UIImage imageNamed:@"my_rizhi.png"]]
+                        ,@[[UIImage imageNamed:@"my_guanzhu.png"]]
+                        ,@[[UIImage imageNamed:@"my_shenqing.png"]]
+                        ,@[[UIImage imageNamed:@"my_haoyou.png"]]
+                        ];
+    _customInfo_tabelViewCell = @{@"titleLogo":_logoImageArray,
+                                  @"titleArray":_tabelViewCellTitleArray
+                                  };
+    
+    
     
     
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT-49) style:UITableViewStyleGrouped];
@@ -131,7 +145,7 @@ typedef enum{
     //小齿轮设置按钮
     UIButton *chilunBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [chilunBtn setFrame:CGRectMake(DEVICE_WIDTH - 40, 30, 25, 25)];
-    chilunBtn.backgroundColor = RGBCOLOR_ONE;
+    [chilunBtn setBackgroundImage:[UIImage imageNamed:@"my_shezhi.png"] forState:UIControlStateNormal];
     [chilunBtn addTarget:self action:@selector(xiaochilun) forControlEvents:UIControlEventTouchUpInside];
     
     
@@ -139,7 +153,7 @@ typedef enum{
     
     
     //头像
-    self.userFaceImv = [[UIImageView alloc]initWithFrame:CGRectMake(30*GscreenRatio_320, 75.00*GscreenRatio_320, 50, 50)];
+    self.userFaceImv = [[UIImageView alloc]initWithFrame:CGRectMake(30*GscreenRatio_320, 75*GscreenRatio_320, 50, 50)];
     self.userFaceImv.backgroundColor = RGBCOLOR_ONE;
     self.userFaceImv.layer.cornerRadius = 25*GscreenRatio_320;
     self.userFaceImv.layer.masksToBounds = YES;
@@ -206,22 +220,6 @@ typedef enum{
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    //    NSInteger num = 0;
-    //
-    //    if (section == 0) {
-    //        num = 1;
-    //    }else if (section == 1){
-    //        num = 2;
-    //    }else if (section == 2){
-    //        num = 3;
-    //    }else if (section == 3){
-    //        num = 1;
-    //    }else if (section == 4){
-    //        num = 1;
-    //    }else if (section == 5){
-    //        num = 1;
-    //    }
-    //
     return [[_tabelViewCellTitleArray objectAtIndex:section] count];
     
     
@@ -261,7 +259,7 @@ typedef enum{
     NSLog(@"indexpath.section:%ld row:%ld",(long)indexPath.section,(long)indexPath.row);
     NSLog(@"%@",_tabelViewCellTitleArray[indexPath.section][indexPath.row]);
     
-    [cell creatCustomViewWithGcellType:GPERSON indexPath:indexPath customObject:_tabelViewCellTitleArray[indexPath.section][indexPath.row]];
+    [cell creatCustomViewWithGcellType:GPERSON indexPath:indexPath customObject:_customInfo_tabelViewCell];
     
     return cell;
 }

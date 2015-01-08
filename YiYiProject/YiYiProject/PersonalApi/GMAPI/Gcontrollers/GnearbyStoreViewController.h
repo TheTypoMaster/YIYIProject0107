@@ -11,9 +11,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GnearbyStoreViewController : UIViewController
+@interface GnearbyStoreViewController : MyViewController
 
 
 @property(nonatomic,strong)NSString *storeIdStr;
+@property(nonatomic,strong)NSString *storeNameStr;
 
 @end

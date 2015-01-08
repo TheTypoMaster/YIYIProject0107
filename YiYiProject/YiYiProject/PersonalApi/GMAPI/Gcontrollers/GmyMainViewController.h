@@ -11,6 +11,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GmyMainViewController : UIViewController
+@interface GmyMainViewController : MyViewController
 
 @end
