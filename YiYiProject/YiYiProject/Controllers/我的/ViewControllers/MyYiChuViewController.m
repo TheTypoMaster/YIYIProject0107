@@ -8,7 +8,8 @@
 
 #import "MyYiChuViewController.h"
 #import "UploadPicViewController.h"
-
+#import "ClasscationClothesViewController.h"
+#import "FreeCollocationViewController.h"
 @interface MyYiChuViewController ()
 {
     UIScrollView *_rootScrollView ;//根rootScrollView
@@ -227,7 +228,9 @@
 //点击事件-我要搭配
 -(void)myMatchButonClick:(UIButton *) sender
 {
-    
+    FreeCollocationViewController *freeCollocationVC = [[FreeCollocationViewController alloc] init];
+    freeCollocationVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:freeCollocationVC animated:YES];
 }
 //隐藏手势
 -(void)hiddenMaskView:(UIButton *) sender
@@ -279,7 +282,9 @@
 //点击搭配类别进入的界面
 -(void)listTap:(UITapGestureRecognizer *) tap
 {
-    NSLog(@"点击了类别");
+    ClasscationClothesViewController *classcationVC = [[ClasscationClothesViewController alloc] init];
+    classcationVC -> sourceDic = [_dataSourceArray objectAtIndex:tap.view.tag - 100];
+    [self.navigationController pushViewController:classcationVC animated:YES];
 }
 //长按搭配类别
 -(void)listLongPress:(UILongPressGestureRecognizer *) longPress

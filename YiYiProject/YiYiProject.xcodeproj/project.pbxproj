@@ -343,9 +343,16 @@
 		56DAB2181A46C86B00273140 /* MatchCaseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56DAB2161A46C86B00273140 /* MatchCaseCell.xib */; };
 		56DAB21B1A46DB6000273140 /* ApplyForViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56DAB21A1A46DB6000273140 /* ApplyForViewController.m */; };
 		AB9102ED706793EE205C4D50 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F47272E4C36CD60C81CD9A79 /* libPods.a */; };
+		DF5E89A71A5E115900535EBA /* MyBodyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5E89A61A5E115900535EBA /* MyBodyViewController.m */; };
+		DF5E89AA1A5E50DB00535EBA /* ClasscationClothesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5E89A91A5E50DB00535EBA /* ClasscationClothesViewController.m */; };
+		DF5E89AD1A5E5A5500535EBA /* FreeCollocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5E89AC1A5E5A5500535EBA /* FreeCollocationViewController.m */; };
+		DF5E89B01A5E676E00535EBA /* ChooseClothesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5E89AF1A5E676E00535EBA /* ChooseClothesViewController.m */; };
+		DF5E89B31A5E7B0D00535EBA /* ChooseImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5E89B21A5E7B0D00535EBA /* ChooseImageViewController.m */; };
+		DF5E89B61A5E7E6C00535EBA /* MyMatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5E89B51A5E7E6C00535EBA /* MyMatchViewController.m */; };
 		DF6855821A592181004D924F /* ZYQAssetPicker.Bundle in Resources */ = {isa = PBXBuildFile; fileRef = DF68557F1A592181004D924F /* ZYQAssetPicker.Bundle */; };
 		DF6855831A592181004D924F /* ZYQAssetPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6855811A592181004D924F /* ZYQAssetPickerController.m */; };
 		DF6855861A592CD2004D924F /* UploadPicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6855851A592CD2004D924F /* UploadPicViewController.m */; };
+		DF7050BE1A5D86B9003AC716 /* libiOS_IMKit_v1_2_7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DF7050BD1A5D86B9003AC716 /* libiOS_IMKit_v1_2_7.a */; };
 		DF7467931A57FB0400F0AEC8 /* my_sc_dui@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF7467911A57FB0400F0AEC8 /* my_sc_dui@3x.png */; };
 		DF7467941A57FB0400F0AEC8 /* my_sc_guanbi@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF7467921A57FB0400F0AEC8 /* my_sc_guanbi@3x.png */; };
 		E3996E271A5E1A0F00673147 /* libiOS_IMKit_v1_2_7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E3996E261A5E1A0F00673147 /* libiOS_IMKit_v1_2_7.a */; };
@@ -889,11 +896,24 @@
 		56DAB2161A46C86B00273140 /* MatchCaseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MatchCaseCell.xib; sourceTree = "<group>"; };
 		56DAB2191A46DB5F00273140 /* ApplyForViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplyForViewController.h; sourceTree = "<group>"; };
 		56DAB21A1A46DB6000273140 /* ApplyForViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplyForViewController.m; sourceTree = "<group>"; };
+		DF5E89A51A5E115900535EBA /* MyBodyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyBodyViewController.h; sourceTree = "<group>"; };
+		DF5E89A61A5E115900535EBA /* MyBodyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyBodyViewController.m; sourceTree = "<group>"; };
+		DF5E89A81A5E50DB00535EBA /* ClasscationClothesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClasscationClothesViewController.h; sourceTree = "<group>"; };
+		DF5E89A91A5E50DB00535EBA /* ClasscationClothesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClasscationClothesViewController.m; sourceTree = "<group>"; };
+		DF5E89AB1A5E5A5500535EBA /* FreeCollocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreeCollocationViewController.h; sourceTree = "<group>"; };
+		DF5E89AC1A5E5A5500535EBA /* FreeCollocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FreeCollocationViewController.m; sourceTree = "<group>"; };
+		DF5E89AE1A5E676E00535EBA /* ChooseClothesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseClothesViewController.h; sourceTree = "<group>"; };
+		DF5E89AF1A5E676E00535EBA /* ChooseClothesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseClothesViewController.m; sourceTree = "<group>"; };
+		DF5E89B11A5E7B0D00535EBA /* ChooseImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseImageViewController.h; sourceTree = "<group>"; };
+		DF5E89B21A5E7B0D00535EBA /* ChooseImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseImageViewController.m; sourceTree = "<group>"; };
+		DF5E89B41A5E7E6C00535EBA /* MyMatchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyMatchViewController.h; sourceTree = "<group>"; };
+		DF5E89B51A5E7E6C00535EBA /* MyMatchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyMatchViewController.m; sourceTree = "<group>"; };
 		DF68557F1A592181004D924F /* ZYQAssetPicker.Bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ZYQAssetPicker.Bundle; sourceTree = "<group>"; };
 		DF6855801A592181004D924F /* ZYQAssetPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYQAssetPickerController.h; sourceTree = "<group>"; };
 		DF6855811A592181004D924F /* ZYQAssetPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYQAssetPickerController.m; sourceTree = "<group>"; };
 		DF6855841A592CD2004D924F /* UploadPicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadPicViewController.h; sourceTree = "<group>"; };
 		DF6855851A592CD2004D924F /* UploadPicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadPicViewController.m; sourceTree = "<group>"; };
+		DF7050BD1A5D86B9003AC716 /* libiOS_IMKit_v1_2_7.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libiOS_IMKit_v1_2_7.a; sourceTree = "<group>"; };
 		DF7467911A57FB0400F0AEC8 /* my_sc_dui@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "my_sc_dui@3x.png"; sourceTree = "<group>"; };
 		DF7467921A57FB0400F0AEC8 /* my_sc_guanbi@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "my_sc_guanbi@3x.png"; sourceTree = "<group>"; };
 		E3996E261A5E1A0F00673147 /* libiOS_IMKit_v1_2_7.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libiOS_IMKit_v1_2_7.a; sourceTree = "<group>"; };
@@ -1050,7 +1070,12 @@
 				E3E3E84A1A3C6780001A1DD6 /* QuartzCore.framework in Frameworks */,
 				E3E3E84C1A3C678C001A1DD6 /* OpenGLES.framework in Frameworks */,
 				137FC2B21A4DAE780039E3FF /* MapKit.framework in Frameworks */,
+
 				E3996E271A5E1A0F00673147 /* libiOS_IMKit_v1_2_7.a in Frameworks */,
+
+				DF7050BE1A5D86B9003AC716 /* libiOS_IMKit_v1_2_7.a in Frameworks */,
+				19B937701A5D8057009B359F /* libiOS_IMKit_v1_2_7.a in Frameworks */,
+
 				138C2C141A39E46B00EA59F5 /* libz.dylib in Frameworks */,
 				138C2C121A39E45E00EA59F5 /* libstdc++.dylib in Frameworks */,
 				138C2C0E1A39E25000EA59F5 /* libsqlite3.dylib in Frameworks */,
@@ -1560,7 +1585,12 @@
 		137FC2B61A4DB2DC0039E3FF /* IMKit */ = {
 			isa = PBXGroup;
 			children = (
+
 				E3996E261A5E1A0F00673147 /* libiOS_IMKit_v1_2_7.a */,
+
+				DF7050BD1A5D86B9003AC716 /* libiOS_IMKit_v1_2_7.a */,
+				19B9376F1A5D8057009B359F /* libiOS_IMKit_v1_2_7.a */,
+
 				137FC2B71A4DB2DC0039E3FF /* Headers */,
 				137FC2DC1A4DB2DC0039E3FF /* RongCloud.bundle */,
 			);
@@ -1989,6 +2019,18 @@
 				13A389A11A38942D00ABBACB /* MineViewController.xib */,
 				DF6855841A592CD2004D924F /* UploadPicViewController.h */,
 				DF6855851A592CD2004D924F /* UploadPicViewController.m */,
+				DF5E89A51A5E115900535EBA /* MyBodyViewController.h */,
+				DF5E89A61A5E115900535EBA /* MyBodyViewController.m */,
+				DF5E89A81A5E50DB00535EBA /* ClasscationClothesViewController.h */,
+				DF5E89A91A5E50DB00535EBA /* ClasscationClothesViewController.m */,
+				DF5E89AB1A5E5A5500535EBA /* FreeCollocationViewController.h */,
+				DF5E89AC1A5E5A5500535EBA /* FreeCollocationViewController.m */,
+				DF5E89AE1A5E676E00535EBA /* ChooseClothesViewController.h */,
+				DF5E89AF1A5E676E00535EBA /* ChooseClothesViewController.m */,
+				DF5E89B11A5E7B0D00535EBA /* ChooseImageViewController.h */,
+				DF5E89B21A5E7B0D00535EBA /* ChooseImageViewController.m */,
+				DF5E89B41A5E7E6C00535EBA /* MyMatchViewController.h */,
+				DF5E89B51A5E7E6C00535EBA /* MyMatchViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -2938,7 +2980,13 @@
 				E3996EDC1A5E1DBA00673147 /* GScrollView.m in Sources */,
 				137FC2E11A4DB6A60039E3FF /* YIYIChatViewController.m in Sources */,
 				565321451A59769300E43F80 /* NSAttributedString+Attributes.m in Sources */,
+				DF5E89AD1A5E5A5500535EBA /* FreeCollocationViewController.m in Sources */,
 				13963F461A4FC54D007BE68B /* LTextViewCell.m in Sources */,
+
+
+				E33FF5101A4EBC810060E130 /* MLImageCrop.m in Sources */,
+				DF5E89AA1A5E50DB00535EBA /* ClasscationClothesViewController.m in Sources */,
+
 				565321441A59769300E43F80 /* MarkupParser.m in Sources */,
 				139562C71A3BF42E007BB183 /* UserInfo.m in Sources */,
 				13CD36421A3C69860068C12A /* TMQuiltViewController.m in Sources */,
@@ -2965,9 +3013,14 @@
 				566FE2471A5018BA00A96B5F /* TopicCommentsModel.m in Sources */,
 				13A389871A387A8800ABBACB /* UIView+Frame.m in Sources */,
 				13963F471A4FC54D007BE68B /* UIView+Frame.m in Sources */,
+
 				E3996EC11A5E1DBA00673147 /* GViewController.mm in Sources */,
 				E3996ED81A5E1DBA00673147 /* UILabel+GautoMatchedText.m in Sources */,
 				E3996EE21A5E1DBA00673147 /* GLeadbuyTableViewCell.m in Sources */,
+
+				DF5E89B31A5E7B0D00535EBA /* ChooseImageViewController.m in Sources */,
+				E33FF5041A4EBC810060E130 /* GnearbyStoreViewController.m in Sources */,
+
 				136875B81A598EE40048CB4D /* BrandModel.m in Sources */,
 				E3996EBF1A5E1DBA00673147 /* GpinpaiDetailViewController.m in Sources */,
 				13CD364E1A3C6BD90068C12A /* TMPhotoQuiltViewCell.m in Sources */,
@@ -2983,8 +3036,13 @@
 				5658C79A1A4C486E00DC86F8 /* MatchWaterflowView.m in Sources */,
 				DF6855831A592181004D924F /* ZYQAssetPickerController.m in Sources */,
 				565321431A59769300E43F80 /* FBHelper.m in Sources */,
+
 				E3996EE01A5E1DBA00673147 /* GClothWaveCustomView.m in Sources */,
 				E3996EC41A5E1DBA00673147 /* Gmodel.m in Sources */,
+
+				E3B1F7201A5876F800004CCF /* GtopScrollView.m in Sources */,
+				DF5E89B61A5E7E6C00535EBA /* MyMatchViewController.m in Sources */,
+
 				13CD36401A3C69860068C12A /* TMQuiltView.m in Sources */,
 				13CD36411A3C69860068C12A /* TMQuiltViewCell.m in Sources */,
 				13EA3D1E1A3B2682002AF7D6 /* HomeBuyController.m in Sources */,
@@ -3009,6 +3067,7 @@
 				5697222C1A408040004B6641 /* HomeMatchView.m in Sources */,
 				13A389A21A38942D00ABBACB /* MineViewController.m in Sources */,
 				13B690771A580291007FE152 /* BrandViewCell.m in Sources */,
+				DF5E89B01A5E676E00535EBA /* ChooseClothesViewController.m in Sources */,
 				13A389861A387A8800ABBACB /* UIColor+ConvertColor.m in Sources */,
 				19B937761A5D8780009B359F /* ShenQingDianPuViewController.m in Sources */,
 				139607BC1A46D82400AACAC4 /* FilterViewController.m in Sources */,
@@ -3016,6 +3075,7 @@
 				19D0C0D21A4EDA6D00BEC10D /* MyYiChuViewController.m in Sources */,
 				E3996ECF1A5E1DBA00673147 /* UIViewAdditions.m in Sources */,
 				DF6855861A592CD2004D924F /* UploadPicViewController.m in Sources */,
+				DF5E89A71A5E115900535EBA /* MyBodyViewController.m in Sources */,
 				566FE2571A503B1000A96B5F /* MatchInfoModel.m in Sources */,
 				13B690671A56797E007FE152 /* TPlatCell.m in Sources */,
 				13684A6B1A37583E00A508FB /* main.m in Sources */,
@@ -3195,7 +3255,12 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+
 				PROVISIONING_PROFILE = "f0f07b52-40c5-4f8a-86b2-fee6114d7a20";
+
+				PROVISIONING_PROFILE = "8615fc2e-f7a3-4b4a-992d-4d1daf0a25b9";
+				PROVISIONING_PROFILE = "27e08856-f67b-488e-978d-fe2673561b24";
+
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Debug;
@@ -3229,7 +3294,12 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+
 				PROVISIONING_PROFILE = "f0f07b52-40c5-4f8a-86b2-fee6114d7a20";
+
+				PROVISIONING_PROFILE = "8615fc2e-f7a3-4b4a-992d-4d1daf0a25b9";
+				PROVISIONING_PROFILE = "27e08856-f67b-488e-978d-fe2673561b24";
+
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Release;

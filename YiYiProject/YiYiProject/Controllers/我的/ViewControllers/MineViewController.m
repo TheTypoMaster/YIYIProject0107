@@ -23,7 +23,11 @@
 
 #import "MyConcernController.h"//我的关注
 
+#import "MyBodyViewController.h"//我的体型
+#import "MyMatchViewController.h"//我的搭配
+//#import "ShenQingDianPuViewController.h"
 #import "ShenQingDianPuViewController.h"
+
 
 typedef enum{
     USERFACE = 0,//头像
@@ -279,7 +283,9 @@ typedef enum{
             
         case 1:
         {
-            
+            MyMatchViewController *myMatchVC = [[MyMatchViewController alloc] init];
+            myMatchVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:myMatchVC animated:YES];
         }
             break;
             
@@ -299,6 +305,9 @@ typedef enum{
                 
             }else if(indexPath.row==1){
                 
+                MyBodyViewController *_myBodyVC =[[MyBodyViewController alloc] init];
+                _myBodyVC.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:_myBodyVC animated:YES];
                 NSLog(@"我的体型");
                 
                 

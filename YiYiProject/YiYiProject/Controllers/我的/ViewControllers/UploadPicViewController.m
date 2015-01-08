@@ -286,10 +286,10 @@
                                    constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
                                    {
 //                                       //如果要上传多张图片把下面两句代码放到for循环里即可
-//                                       for (int i = 0; i < imageArray.count; i++) {
+                                       for (int i = 0; i < imageArray.count; i++) {
                                            NSData *imageData =UIImageJPEGRepresentation([imageArray objectAtIndex:0], 0.1);
-                                           [formData appendPartWithFileData:imageData name:@"pic" fileName:@"icon.jpg" mimeType:@"image/jpg"];
-                                      // }
+                                           [formData appendPartWithFileData:imageData name:[NSString stringWithFormat:@"pic%d",i] fileName:@"icon.jpg" mimeType:@"image/jpg"];
+                                       }
                                    }
                                    success:^(AFHTTPRequestOperation *operation, id responseObject)
                                    {
