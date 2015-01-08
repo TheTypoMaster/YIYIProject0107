@@ -106,6 +106,8 @@
     }
     
     NSLog(@"commit content %@",temp_arr);
+    
+    [self addTopicContent:[temp_arr JSONString] title:[editor editorTitle]];
 }
 
 /**
@@ -216,6 +218,13 @@
     [editor clickToAddAlbum:sender];
 }
 
+//返回
+- (void)clickToBack:(UIButton *)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
 #pragma mark - 创建视图
 
 - (void)createNavigationbarTools
@@ -264,8 +273,10 @@
                   title:(NSString *)title
 {
     NSString *authkey = [GMAPI getAuthkey];
-    NSString *post = [NSString stringWithFormat:@"topic_title=%@&topip_content=%@&authcode=%@",title,content,authkey];
+    NSString *post = [NSString stringWithFormat:@"topic_title=%@&topic_content=%@&authcode=%@",title,content,authkey];
     NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    
+    NSLog(@"---->话题 %@",post);
     
     NSString *url = [NSString stringWithFormat:TOPIC_ADD];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
@@ -273,7 +284,9 @@
         
         NSLog(@"-->%@",result);
         
+        [LTools showMBProgressWithText:result[@"msg"] addToView:self.view];
         
+        [self performSelector:@selector(leftButtonTap:) withObject:nil afterDelay:0.2];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         

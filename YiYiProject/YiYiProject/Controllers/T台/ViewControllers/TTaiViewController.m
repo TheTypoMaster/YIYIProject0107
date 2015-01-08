@@ -65,8 +65,26 @@
     [waterFlow showRefreshHeader:YES];
 }
 
+/**
+ *  发布 T 台
+ *
+ *  @param sender <#sender description#>
+ */
 - (void)clickToPhoto:(UIButton *)sender
 {
+    
+    //判断是否登录
+    if ([LTools cacheBoolForKey:USER_LONGIN] == NO) {
+        
+        LoginViewController *login = [[LoginViewController alloc]init];
+        
+        UINavigationController *unVc = [[UINavigationController alloc]initWithRootViewController:login];
+        
+        [self presentViewController:unVc animated:YES completion:nil];
+        
+        return;
+    }
+    
     TTPublishViewController *publishT = [[TTPublishViewController alloc]init];
     publishT.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:publishT animated:YES];
