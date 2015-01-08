@@ -15,12 +15,26 @@
 #import "OHAttributedLabel.h"
 #import "OHLableHelper.h"
 
+typedef enum{
+    TopicCommentsCellClickTypeUser=0,///到个人中心的
+    TopicCommentsCellClickTypeComment///回复这个人的
+}TopicCommentsCellClickType;
+
+
+typedef void(^TopicCommentsCellBlock)(TopicCommentsCellClickType aType,NSString * userName,NSString * uid,NSString * reply_id);
 
 
 ///对回复进行回复view
 @interface SecondForwardView : UIView<OHAttributedLabelDelegate>
+{
+    TopicCommentsCellBlock SecondForwardView_block;
+    
+    NSArray * comments_array;
+}
 
 -(CGFloat)setupWithArray:(NSMutableArray *)array;
+
+-(void)setSeconForwardViewBlock:(TopicCommentsCellBlock)aBlock;
 
 @end
 
@@ -28,6 +42,11 @@
 
 
 @interface TopicCommentsCell : UITableViewCell
+{
+    TopicCommentsCellBlock TopicCommentsCell_block;
+    
+    TopicCommentsModel * aModel;
+}
 
 ///头像
 @property (strong, nonatomic) IBOutlet UIImageView *header_imageView;
@@ -46,6 +65,7 @@
 ///填充数据
 -(void)setInfoWithCommentsModel:(TopicCommentsModel *)model;
 
+-(void)setTopicCommentsCellBlock:(TopicCommentsCellBlock)aBlock;
 
 @end
 

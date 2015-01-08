@@ -7,7 +7,7 @@
 //
 
 #import "TopicCommentsCell.h"
-
+#import "TopicSubCommentsModel.h"
 
 @implementation SecondForwardView
 
@@ -24,17 +24,32 @@
 
 -(CGFloat)setupWithArray:(NSMutableArray *)array
 {
+    comments_array = [NSArray arrayWithArray:array];
     CGFloat height = 5;
     
     for (int i = 0;i < array.count;i++)
     {
         CGRect labelFrame = CGRectMake(0,height,self.frame.size.width,0);
         
-        TopicCommentsModel * model = [array objectAtIndex:i];
+        TopicSubCommentsModel * model = [array objectAtIndex:i];
+        
+        if (model.user_name.length == 0) {
+            continue;
+        }
+        
         NSString * content = model.repost_content;
-        content = [NSString stringWithFormat:@"%@:%@",model.user_name,content];
+        
+        if (model.r_reply_user_name.length)
+        {
+            content = [NSString stringWithFormat:@"%@:回复 %@:%@",model.user_name,model.r_reply_user_name,content];
+        }else
+        {
+            content = [NSString stringWithFormat:@"%@:%@",model.user_name,content];
+        }
         
         OHAttributedLabel * label = [[OHAttributedLabel alloc] initWithFrame:labelFrame];
+        label.tag = 10000 + i;
+        label.userInteractionEnabled = YES;
         label.textColor = RGBCOLOR(3,3,3);
         label.font = [UIFont systemFontOfSize:12];
         [self addSubview:label];
@@ -45,6 +60,10 @@
         [label setLinkColor:RGBCOLOR(87,106,154)];
         //        label.backgroundColor = [UIColor clearColor];
         height += label.frame.size.height+3;
+        
+        
+        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commentsTap:)];
+        [label addGestureRecognizer:tap];
     }
     
     return height;
@@ -56,7 +75,20 @@
 {
     NSString * uid = [linkInfo.URL absoluteString];
 
+    SecondForwardView_block(TopicCommentsCellClickTypeUser,@"",uid,@"");
+    
     return YES;
+}
+-(void)setSeconForwardViewBlock:(TopicCommentsCellBlock)aBlock
+{
+    SecondForwardView_block = aBlock;
+}
+
+-(void)commentsTap:(UITapGestureRecognizer *)sender
+{
+    TopicSubCommentsModel * model = [comments_array objectAtIndex:sender.view.tag - 10000];
+
+    SecondForwardView_block(TopicCommentsCellClickTypeComment,model.user_name,model.repost_uid,model.reply_id);
 }
 
 @end
@@ -76,6 +108,11 @@
     _userName_label.frame = CGRectMake(60,10,DEVICE_WIDTH-60-12,16);
     _date_label.frame = CGRectMake(60,30,DEVICE_WIDTH-60-12,16);
     _content_label.numberOfLines = 0;
+    
+    
+    _content_label.userInteractionEnabled = YES;
+    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(CommentsTap:)];
+    [_content_label addGestureRecognizer:tap];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -87,6 +124,8 @@
 
 -(void)setInfoWithCommentsModel:(TopicCommentsModel *)model
 {
+    aModel = model;
+    
     [_header_imageView sd_setImageWithURL:[NSURL URLWithString:model.photo] placeholderImage:nil];
     _userName_label.text = model.user_name;
     _date_label.text = [ZSNApi timechange:model.post_time WithFormat:@"MM月dd日 HH:mm"];
@@ -103,7 +142,17 @@
         _second_view.height = second_height;
         [self.contentView addSubview:_second_view];
     }
-    
+}
+
+-(void)setTopicCommentsCellBlock:(TopicCommentsCellBlock)aBlock
+{
+    TopicCommentsCell_block = aBlock;
+}
+
+///点击内容去评论
+-(void)CommentsTap:(UITapGestureRecognizer *)sender
+{
+    TopicCommentsCell_block(TopicCommentsCellClickTypeComment,aModel.user_name,aModel.repost_uid,aModel.reply_id);
 }
 
 @end

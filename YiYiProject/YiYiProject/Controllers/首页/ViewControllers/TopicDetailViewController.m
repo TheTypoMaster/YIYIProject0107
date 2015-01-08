@@ -13,6 +13,7 @@
 #import "TopicCommentsCell.h"
 #import "TopicDetailBottomView.h"
 #import "TopicModel.h"
+#import "CustomInputView.h"
 
 @interface TopicDetailViewController ()<UITableViewDataSource,SNRefreshDelegate>
 {
@@ -26,10 +27,30 @@
 @property(nonatomic,strong)NSMutableArray * array_comments;
 ///话题详情数据
 @property(nonatomic,strong)TopicModel * topic_info;
+///评论界面
+@property(nonatomic,strong)CustomInputView * input_view;
+///回复的回复的id
+@property(nonatomic,strong)NSString * r_reply_uid;
+///回复回复的昵称
+@property(nonatomic,strong)NSString * r_reply_userName;
+///如果是二级回复，那么我就存放主评论的id
+@property(nonatomic,strong)NSString * parent_post;
 
 @end
 
 @implementation TopicDetailViewController
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [_input_view addKeyBordNotification];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [_input_view deleteKeyBordNotification];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -66,7 +87,7 @@
                 break;
             case 1:///评论
             {
-                
+                [bself.input_view showInputView:nil];
             }
                 break;
             case 2:///转发
@@ -79,6 +100,34 @@
                 break;
         }
     }];
+    
+    
+    
+    _input_view = [[CustomInputView alloc] initWithFrame:CGRectMake(0,DEVICE_HEIGHT,DEVICE_WIDTH,44)];
+    
+    _input_view.userInteractionEnabled = NO;
+    
+    [_input_view loadAllViewWithPinglunCount:@"0" WithType:0 WithPushBlock:^(int type){
+        
+        
+        if (type == 0)
+        {
+            NSLog(@"跳到评论");
+            
+        }else
+        {
+            NSLog(@"分类按钮");
+        }
+        
+    } WithSendBlock:^(NSString *content, BOOL isForward) {
+        
+        NSLog(@"发表评论 ---  %@",[GMAPI getAuthkey]);
+        
+        [bself topicCommentsWithUserName:bself.r_reply_userName WithUid:bself.r_reply_uid];
+        
+    }];
+    
+    [self.view addSubview:_input_view];
 }
 
 #pragma mark - 创建sectionView
@@ -252,6 +301,39 @@
     [request start];
 }
 
+#pragma mark - 话题评论
+-(void)topicCommentsWithUserName:(NSString *)aName WithUid:(NSString *)aUid
+{
+    NSString * level = @"1";
+    NSString * reply_id = @"0";
+    if (aName.length)
+    {
+        level = @"2";
+        reply_id = _parent_post;
+    }
+    
+    NSString *post = [NSString stringWithFormat:@"authcode=%@&topic_id=%@&repost_content=%@&level=%@&r_reply_id=%@&parent_post=%@",[GMAPI getAuthkey],_topic_model.topic_id,_input_view.text_input_view.text,level,aUid,reply_id];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    
+    NSString *url = [NSString stringWithFormat:TOPIC_COMMENTS_URL];
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
+    __weak typeof(self)bself = self;
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"-->%@",result);
+        
+        [bself getTopicComments];
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        [LTools showMBProgressWithText:failDic[@"msg"] addToView:self.view];
+    }];
+    
+    _r_reply_uid = @"";
+    _r_reply_userName = @"";
+    _parent_post = @"";
+}
+
 
 
 #pragma mark - UITableView Methods
@@ -268,10 +350,20 @@
     if (cell == nil) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"TopicCommentsCell" owner:self options:nil] objectAtIndex:0];
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     TopicCommentsModel * model = [_array_comments objectAtIndex:indexPath.row];
     
     [cell setInfoWithCommentsModel:model];
+    
+    __weak typeof(self)bself = self;
+    [cell setTopicCommentsCellBlock:^(TopicCommentsCellClickType aType, NSString *userName, NSString *uid, NSString *reply_id) {
+        [bself clickWithType:aType WithUserName:userName WithUid:uid WithReplyId:reply_id];
+    }];
+    [cell.second_view setSeconForwardViewBlock:^(TopicCommentsCellClickType aType, NSString *userName, NSString *uid, NSString *reply_id) {
+        [bself clickWithType:aType WithUserName:userName WithUid:uid WithReplyId:reply_id];
+    }];
+    
     
     return cell;
 }
@@ -282,11 +374,11 @@
 #pragma mark - Refresh Delegate
 - (void)loadNewData
 {
-    
+    [self getTopicComments];
 }
 - (void)loadMoreData
 {
-    
+    [self getTopicComments];
 }
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -311,7 +403,26 @@
 
 
 
-
+#pragma mark - 判断跳转方向
+-(void)clickWithType:(TopicCommentsCellClickType)aType WithUserName:(NSString *)aName WithUid:(NSString *)aUid WithReplyId:(NSString *)aREplyId
+{
+    if (aType == TopicCommentsCellClickTypeComment)///跳评论的
+    {
+        NSLog(@"评论 ------   %@ ----  %@",aName,aUid);
+        _r_reply_userName = aName;
+        _r_reply_uid = aUid;
+        _parent_post = aREplyId;
+        _input_view.text_input_view.text = [NSString stringWithFormat:@"回复 %@:",aName];
+        [_input_view showInputView:nil];
+        
+    }else///跳个人的
+    {
+        NSLog(@"这里要调到个人界面 uid----  %@",aUid);
+    }
+    
+    
+    
+}
 
 
 
