@@ -399,6 +399,8 @@
 		E3996EE21A5E1DBA00673147 /* GLeadbuyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996EB71A5E1DBA00673147 /* GLeadbuyTableViewCell.m */; };
 		E3996EE31A5E1DBA00673147 /* GTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996EB91A5E1DBA00673147 /* GTableViewCell.m */; };
 		E3996EE61A5E1E0600673147 /* HomeClothController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996EE51A5E1E0600673147 /* HomeClothController.m */; };
+		E3B139161A5EAEE200B9189A /* gjiantouleft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3B139141A5EAEE200B9189A /* gjiantouleft@2x.png */; };
+		E3B139171A5EAEE200B9189A /* gjiantouright@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3B139151A5EAEE200B9189A /* gjiantouright@2x.png */; };
 		E3E3E8481A3C6772001A1DD6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E3E8471A3C6772001A1DD6 /* CoreLocation.framework */; };
 		E3E3E84A1A3C6780001A1DD6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E3E8491A3C6780001A1DD6 /* QuartzCore.framework */; };
 		E3E3E84C1A3C678C001A1DD6 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E3E84B1A3C678C001A1DD6 /* OpenGLES.framework */; };
@@ -1050,6 +1052,8 @@
 		E3996EB91A5E1DBA00673147 /* GTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTableViewCell.m; sourceTree = "<group>"; };
 		E3996EE41A5E1E0600673147 /* HomeClothController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeClothController.h; sourceTree = "<group>"; };
 		E3996EE51A5E1E0600673147 /* HomeClothController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeClothController.m; sourceTree = "<group>"; };
+		E3B139141A5EAEE200B9189A /* gjiantouleft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gjiantouleft@2x.png"; sourceTree = "<group>"; };
+		E3B139151A5EAEE200B9189A /* gjiantouright@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gjiantouright@2x.png"; sourceTree = "<group>"; };
 		E3E3E8471A3C6772001A1DD6 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		E3E3E8491A3C6780001A1DD6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E3E3E84B1A3C678C001A1DD6 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -1070,12 +1074,8 @@
 				E3E3E84A1A3C6780001A1DD6 /* QuartzCore.framework in Frameworks */,
 				E3E3E84C1A3C678C001A1DD6 /* OpenGLES.framework in Frameworks */,
 				137FC2B21A4DAE780039E3FF /* MapKit.framework in Frameworks */,
-
 				E3996E271A5E1A0F00673147 /* libiOS_IMKit_v1_2_7.a in Frameworks */,
-
 				DF7050BE1A5D86B9003AC716 /* libiOS_IMKit_v1_2_7.a in Frameworks */,
-				19B937701A5D8057009B359F /* libiOS_IMKit_v1_2_7.a in Frameworks */,
-
 				138C2C141A39E46B00EA59F5 /* libz.dylib in Frameworks */,
 				138C2C121A39E45E00EA59F5 /* libstdc++.dylib in Frameworks */,
 				138C2C0E1A39E25000EA59F5 /* libsqlite3.dylib in Frameworks */,
@@ -1149,6 +1149,7 @@
 		13681C6F1A4527A200671D07 /* AllImages */ = {
 			isa = PBXGroup;
 			children = (
+				E3B139131A5EAEE200B9189A /* 首页衣加衣 */,
 				13CEC8951A5D974900FE273F /* 搭配师 */,
 				13B690591A566A4A007FE152 /* T台 */,
 				13B690461A564BF6007FE152 /* 首页弹出 */,
@@ -1585,12 +1586,8 @@
 		137FC2B61A4DB2DC0039E3FF /* IMKit */ = {
 			isa = PBXGroup;
 			children = (
-
 				E3996E261A5E1A0F00673147 /* libiOS_IMKit_v1_2_7.a */,
-
 				DF7050BD1A5D86B9003AC716 /* libiOS_IMKit_v1_2_7.a */,
-				19B9376F1A5D8057009B359F /* libiOS_IMKit_v1_2_7.a */,
-
 				137FC2B71A4DB2DC0039E3FF /* Headers */,
 				137FC2DC1A4DB2DC0039E3FF /* RongCloud.bundle */,
 			);
@@ -2588,6 +2585,15 @@
 			path = "首页衣加衣";
 			sourceTree = "<group>";
 		};
+		E3B139131A5EAEE200B9189A /* 首页衣加衣 */ = {
+			isa = PBXGroup;
+			children = (
+				E3B139141A5EAEE200B9189A /* gjiantouleft@2x.png */,
+				E3B139151A5EAEE200B9189A /* gjiantouright@2x.png */,
+			);
+			path = "首页衣加衣";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2787,6 +2793,7 @@
 				137B08011A4E6FDF00DE7DCC /* my_tixing@3x.png in Resources */,
 				137B08571A4E993C00DE7DCC /* shaixuan@2x.png in Resources */,
 				137B08681A4EAC9900DE7DCC /* ttai_down@2x.png in Resources */,
+				E3B139161A5EAEE200B9189A /* gjiantouleft@2x.png in Resources */,
 				E3996ECE1A5E1DBA00673147 /* red_background.png in Resources */,
 				137B07E91A4E6FDF00DE7DCC /* sh_jiantou_left@3x.png in Resources */,
 				137B08391A4E716700DE7DCC /* quxian_left@2x.png in Resources */,
@@ -2862,6 +2869,7 @@
 				137B07DD1A4E6FDF00DE7DCC /* 1+1_botton@3x.png in Resources */,
 				E3996ED31A5E1DBA00673147 /* gRed@2x.png in Resources */,
 				137B08311A4E716700DE7DCC /* dian_shangchang@2x.png in Resources */,
+				E3B139171A5EAEE200B9189A /* gjiantouright@2x.png in Resources */,
 				DF6855821A592181004D924F /* ZYQAssetPicker.Bundle in Resources */,
 				13681C891A453DE600671D07 /* login_phone@2x.png in Resources */,
 				13B690781A580291007FE152 /* BrandViewCell.xib in Resources */,
@@ -2982,11 +2990,7 @@
 				565321451A59769300E43F80 /* NSAttributedString+Attributes.m in Sources */,
 				DF5E89AD1A5E5A5500535EBA /* FreeCollocationViewController.m in Sources */,
 				13963F461A4FC54D007BE68B /* LTextViewCell.m in Sources */,
-
-
-				E33FF5101A4EBC810060E130 /* MLImageCrop.m in Sources */,
 				DF5E89AA1A5E50DB00535EBA /* ClasscationClothesViewController.m in Sources */,
-
 				565321441A59769300E43F80 /* MarkupParser.m in Sources */,
 				139562C71A3BF42E007BB183 /* UserInfo.m in Sources */,
 				13CD36421A3C69860068C12A /* TMQuiltViewController.m in Sources */,
@@ -3013,14 +3017,10 @@
 				566FE2471A5018BA00A96B5F /* TopicCommentsModel.m in Sources */,
 				13A389871A387A8800ABBACB /* UIView+Frame.m in Sources */,
 				13963F471A4FC54D007BE68B /* UIView+Frame.m in Sources */,
-
 				E3996EC11A5E1DBA00673147 /* GViewController.mm in Sources */,
 				E3996ED81A5E1DBA00673147 /* UILabel+GautoMatchedText.m in Sources */,
 				E3996EE21A5E1DBA00673147 /* GLeadbuyTableViewCell.m in Sources */,
-
 				DF5E89B31A5E7B0D00535EBA /* ChooseImageViewController.m in Sources */,
-				E33FF5041A4EBC810060E130 /* GnearbyStoreViewController.m in Sources */,
-
 				136875B81A598EE40048CB4D /* BrandModel.m in Sources */,
 				E3996EBF1A5E1DBA00673147 /* GpinpaiDetailViewController.m in Sources */,
 				13CD364E1A3C6BD90068C12A /* TMPhotoQuiltViewCell.m in Sources */,
@@ -3036,13 +3036,9 @@
 				5658C79A1A4C486E00DC86F8 /* MatchWaterflowView.m in Sources */,
 				DF6855831A592181004D924F /* ZYQAssetPickerController.m in Sources */,
 				565321431A59769300E43F80 /* FBHelper.m in Sources */,
-
 				E3996EE01A5E1DBA00673147 /* GClothWaveCustomView.m in Sources */,
 				E3996EC41A5E1DBA00673147 /* Gmodel.m in Sources */,
-
-				E3B1F7201A5876F800004CCF /* GtopScrollView.m in Sources */,
 				DF5E89B61A5E7E6C00535EBA /* MyMatchViewController.m in Sources */,
-
 				13CD36401A3C69860068C12A /* TMQuiltView.m in Sources */,
 				13CD36411A3C69860068C12A /* TMQuiltViewCell.m in Sources */,
 				13EA3D1E1A3B2682002AF7D6 /* HomeBuyController.m in Sources */,
@@ -3255,12 +3251,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-
-				PROVISIONING_PROFILE = "f0f07b52-40c5-4f8a-86b2-fee6114d7a20";
-
-				PROVISIONING_PROFILE = "8615fc2e-f7a3-4b4a-992d-4d1daf0a25b9";
 				PROVISIONING_PROFILE = "27e08856-f67b-488e-978d-fe2673561b24";
-
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Debug;
@@ -3294,12 +3285,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-
-				PROVISIONING_PROFILE = "f0f07b52-40c5-4f8a-86b2-fee6114d7a20";
-
-				PROVISIONING_PROFILE = "8615fc2e-f7a3-4b4a-992d-4d1daf0a25b9";
 				PROVISIONING_PROFILE = "27e08856-f67b-488e-978d-fe2673561b24";
-
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Release;

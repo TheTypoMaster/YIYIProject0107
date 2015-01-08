@@ -290,7 +290,7 @@
     UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [leftBtn setFrame:CGRectMake(15, CGRectGetMaxY(downTitleLine.frame)+40, 22, 22)];
     leftBtn.layer.cornerRadius = 4;
-    leftBtn.backgroundColor = RGBCOLOR(195, 195, 195);
+    [leftBtn setImage:[UIImage imageNamed:@"gjiantouleft.png"] forState:UIControlStateNormal];
     [leftBtn addTarget:self action:@selector(pinpaiGoleft) forControlEvents:UIControlEventTouchUpInside];
     [_pinpaiView addSubview:leftBtn];
     
@@ -299,7 +299,7 @@
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightBtn setFrame:CGRectMake(DEVICE_WIDTH-37, CGRectGetMaxY(downTitleLine.frame)+40, 22, 22)];
     rightBtn.layer.cornerRadius = 4;
-    rightBtn.backgroundColor = RGBCOLOR(195, 195, 195);
+    [rightBtn setImage:[UIImage imageNamed:@"gjiantouright.png"] forState:UIControlStateNormal];
     [rightBtn addTarget:self action:@selector(pinpaiGoRight) forControlEvents:UIControlEventTouchUpInside];
     [_pinpaiView addSubview:rightBtn];
     
