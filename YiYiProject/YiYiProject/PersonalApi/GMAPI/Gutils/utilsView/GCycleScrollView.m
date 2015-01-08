@@ -22,38 +22,25 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        _scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
+        _scrollView.delegate = self;
+        _scrollView.contentSize = CGSizeMake(self.bounds.size.width * 3, self.bounds.size.height);
+        _scrollView.showsHorizontalScrollIndicator = NO;
+        _scrollView.contentOffset = CGPointMake(self.bounds.size.width, 0);
+        _scrollView.pagingEnabled = YES;
+        [self addSubview:_scrollView];
+        
+        CGRect rect = self.bounds;
+        rect.origin.y = rect.size.height - 30;
+        rect.size.height = 30;
+        _pageControl = [[UIPageControl alloc] initWithFrame:rect];
+        _pageControl.userInteractionEnabled = NO;
+        
+        [self addSubview:_pageControl];
+        
+        _curPage = 0;
     }
     return self;
-}
-
-
-- (void)loadGcycleScrollView{
-    if (self.theGcycelScrollViewType == GCYCELNEARSTORE) {//附近的商场
-        UIImageView *imv1_back = [[UIImageView alloc]initWithFrame:CGRectMake(0, 60, self.bounds.size.width, self.bounds.size.height-60)];
-        [imv1_back setImage:[UIImage imageNamed:@"gimv1_back.png"]];
-        [self addSubview:imv1_back];
-    }
-    
-    _scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
-    _scrollView.delegate = self;
-    _scrollView.contentSize = CGSizeMake(self.bounds.size.width * 3, self.bounds.size.height);
-    _scrollView.showsHorizontalScrollIndicator = NO;
-    _scrollView.contentOffset = CGPointMake(self.bounds.size.width, 0);
-    _scrollView.pagingEnabled = YES;
-    [self addSubview:_scrollView];
-    
-    CGRect rect = self.bounds;
-    rect.origin.y = rect.size.height - 30;
-    rect.size.height = 30;
-    _pageControl = [[UIPageControl alloc] initWithFrame:rect];
-    _pageControl.userInteractionEnabled = NO;
-    if (self.theGcycelScrollViewType == GCYCELNEARSTORE) {
-        _pageControl.hidden = NO;
-    }
-    
-    [self addSubview:_pageControl];
-    
-    _curPage = 0;
 }
 
 - (void)setDataource:(id<GCycleScrollViewDatasource>)datasource
@@ -64,8 +51,7 @@
 
 - (void)reloadData
 {
-    
-    _totalPages = [_datasource numberOfPagesWithScrollView:self];
+    _totalPages = [_datasource numberOfPages];
     if (_totalPages == 0) {
         return;
     }
@@ -110,9 +96,9 @@
     
     [_curViews removeAllObjects];
     
-    [_curViews addObject:[_datasource pageAtIndex:pre ScrollView:self]];
-    [_curViews addObject:[_datasource pageAtIndex:page ScrollView:self]];
-    [_curViews addObject:[_datasource pageAtIndex:last ScrollView:self]];
+    [_curViews addObject:[_datasource pageAtIndex:pre]];
+    [_curViews addObject:[_datasource pageAtIndex:page]];
+    [_curViews addObject:[_datasource pageAtIndex:last]];
 }
 
 - (int)validPageValue:(NSInteger)value {
@@ -150,35 +136,19 @@
 
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
+    int x = aScrollView.contentOffset.x;
     
-    if (self.theGcycelScrollViewType == GCYCELNEARSTORE) {
-        int x = aScrollView.contentOffset.x;
-        //往下翻一张
-        if(x >= (2*self.frame.size.width)) {
-            
-            [self loadData];
-        }
-        
-        //往上翻
-        if(x <= 0) {
-            
-            [self loadData];
-        }
-    }else{
-        int x = aScrollView.contentOffset.x;
-        //往下翻一张
-        if(x >= (2*self.frame.size.width)) {
-            _curPage = [self validPageValue:_curPage+1];
-            [self loadData];
-        }
-        
-        //往上翻
-        if(x <= 0) {
-            _curPage = [self validPageValue:_curPage-1];
-            [self loadData];
-        }
+    //往下翻一张
+    if(x >= (2*self.frame.size.width)) {
+        _curPage = [self validPageValue:_curPage+1];
+        [self loadData];
     }
     
+    //往上翻
+    if(x <= 0) {
+        _curPage = [self validPageValue:_curPage-1];
+        [self loadData];
+    }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)aScrollView {

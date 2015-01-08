@@ -9,11 +9,6 @@
 #import <UIKit/UIKit.h>
 
 
-typedef enum{
-    GCYCELNORMORL = 0,//正常
-    GCYCELNEARSTORE ,
-}GCycelScrollViewType;
-
 @protocol GCycleScrollViewDelegate;
 @protocol GCycleScrollViewDatasource;
 
@@ -36,11 +31,9 @@ typedef enum{
 @property (nonatomic,assign) NSInteger currentPage;
 @property (nonatomic,assign,setter = setDataource:) id<GCycleScrollViewDatasource> datasource;
 @property (nonatomic,assign,setter = setDelegate:) id<GCycleScrollViewDelegate> delegate;
-@property(nonatomic,assign)GCycelScrollViewType theGcycelScrollViewType;
 
 - (void)reloadData;
 - (void)setViewContent:(UIView *)view atIndex:(NSInteger)index;
-- (void)loadGcycleScrollView;
 @end
 
 @protocol GCycleScrollViewDelegate <NSObject>
@@ -51,7 +44,7 @@ typedef enum{
 
 @protocol GCycleScrollViewDatasource <NSObject>
 @required
-- (NSInteger)numberOfPagesWithScrollView:(GCycleScrollView*)theGCycleScrollView;
-- (UIView *)pageAtIndex:(NSInteger)index ScrollView:(GCycleScrollView *)theGCycleScrollView;
+- (NSInteger)numberOfPages;
+- (UIView *)pageAtIndex:(NSInteger)index;
 
 @end

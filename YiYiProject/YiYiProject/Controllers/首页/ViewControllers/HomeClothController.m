@@ -14,7 +14,6 @@
 #import "GScrollView.h"
 #import "GpinpaiDetailViewController.h"
 #import "GnearbyStoreViewController.h"
-#import "GClothWaveCustomView.h"
 
 @interface HomeClothController ()<GCycleScrollViewDatasource,GCycleScrollViewDelegate,UIScrollViewDelegate>
 {
@@ -26,7 +25,6 @@
     //第二行
     UIView *_nearbyView;//附近的view
     GScrollView *_scrollview_nearbyView;//附近的view上面的scrollview
-    NSMutableArray *_nearByStoreDataArray;//附近的商城数据数组
     
     //第三行
     UIView *_pinpaiView;//品牌的view
@@ -38,24 +36,16 @@
 
 @implementation HomeClothController
 
-
-
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:YES];
-    
-}
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.view.backgroundColor = RGBCOLOR(242, 242, 242);
+    self.view.backgroundColor = [UIColor whiteColor];
     
     
     UIScrollView *scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT -  64 - 44)];
     scrollView.delegate = self;
-    scrollView.backgroundColor = RGBCOLOR(242, 242, 242);
+    scrollView.backgroundColor = [UIColor whiteColor];
     scrollView.contentSize = CGSizeMake(DEVICE_WIDTH, 180+218+155);
     
     [scrollView addSubview:[self creatGscrollView]];//循环滚动幻灯片
@@ -66,6 +56,9 @@
     
     [self.view addSubview:scrollView];
     
+    
+    
+    
     //网络请求
     //请求顶部滚动广告栏
     [self prepareTopScrollViewIms];
@@ -73,9 +66,6 @@
     [self prepareNearbyPinpai];
     //请求附近的商店
     [self prepareNearbyStore];
-    
-    
-    
     
 }
 
@@ -103,27 +93,6 @@
     
 }
 
-
-//请求附近的商店
--(void)prepareNearbyStore{
-    NSString *api = [NSString stringWithFormat:@"%@&page=1&count=100",HOME_CLOTH_NEARBYSTORE];
-    GmPrepareNetData *dd = [[GmPrepareNetData alloc]initWithUrl:api isPost:YES postData:nil];
-    [dd requestCompletion:^(NSDictionary *result, NSError *erro) {
-        
-        NSLog(@"%@",result);
-        
-        _nearByStoreDataArray = [result objectForKey:@"list"];
-        _scrollview_nearbyView.dataArray = _nearByStoreDataArray;
-        [_scrollview_nearbyView gReloadData];
-        
-    } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        
-    }];
-    
-}
-
-
-
 //请求附近的品牌
 -(void)prepareNearbyPinpai{
     NSString *api = HOME_CLOTH_NEARBYPINPAI;
@@ -140,29 +109,40 @@
     }];
 }
 
-
+//请求附近的商店
+-(void)prepareNearbyStore{
+    NSString *api = [NSString stringWithFormat:@"%@&page=1&count=100",HOME_CLOTH_NEARBYSTORE];
+    GmPrepareNetData *dd = [[GmPrepareNetData alloc]initWithUrl:api isPost:YES postData:nil];
+    [dd requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"%@",result);
+        _scrollview_nearbyView.dataArray = [result objectForKey:@"list"];
+        
+        [_scrollview_nearbyView gReloadData];
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+    }];
+    
+}
 
 
 
 ///创建循环滚动的scrollview
 -(UIView*)creatGscrollView{
     _gscrollView = [[GCycleScrollView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 180)];
-    _gscrollView.theGcycelScrollViewType = GCYCELNORMORL;
-    [_gscrollView loadGcycleScrollView];
-    _gscrollView.tag = 200;
     _gscrollView.backgroundColor = [UIColor orangeColor];
     _gscrollView.delegate = self;
     _gscrollView.datasource = self;
     return _gscrollView;
 }
 
-//创建附近的商城view
+//创建附近的view
 -(UIView*)creatNearbyView{
     
     
     _nearbyView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_gscrollView.frame), DEVICE_WIDTH, 218)];
     _nearbyView.backgroundColor = [UIColor whiteColor];
-    
     
     
     
@@ -173,50 +153,59 @@
     [_nearbyView addSubview:titleLabel];
     
     
-    //背景图
-    UIView *graypngBackview = [[UIView alloc]initWithFrame:CGRectMake(15, 30+60, DEVICE_WIDTH-15-15, 218-30-14-60)];
-    [_nearbyView addSubview:graypngBackview];
-    if (DEVICE_WIDTH>320) {
-        
-        
-        for (int i = 0; i<4; i++) {
-            UIImageView *imv1_back = [[UIImageView alloc]initWithFrame:CGRectMake(0+i*120, 0, 120, 218-30-14-60)];
-            [imv1_back setImage:[UIImage imageNamed:@"gimv1_back.png"]];
-            [graypngBackview addSubview:imv1_back];
-        }
-    }else{
-        for (int i = 0; i<3; i++) {
-            UIImageView *imv1_back = [[UIImageView alloc]initWithFrame:CGRectMake(0+i*120, 0, 120, 218-30-14-60)];
-            [imv1_back setImage:[UIImage imageNamed:@"gimv1_back.png"]];
-            [graypngBackview addSubview:imv1_back];
-        }
-    }
-    
-    //遮挡view
-    UIView *zview = [[UIView alloc]initWithFrame:CGRectMake(DEVICE_WIDTH-15, graypngBackview.frame.origin.y, 15, graypngBackview.frame.size.height)];
-    zview.backgroundColor = [UIColor whiteColor];
-    [_nearbyView addSubview:zview];
-    
-    
-    
-    
     //滚动界面
-
-    _scrollview_nearbyView = [[GScrollView alloc]initWithFrame:CGRectMake(15, 30, DEVICE_WIDTH-15-15, 218-30-14)];
+    _scrollview_nearbyView = [[GScrollView alloc]initWithFrame:CGRectMake(15, 30, DEVICE_WIDTH-15-40, 218-30-14)];
+    _scrollview_nearbyView.backgroundColor = [UIColor whiteColor];
+    _scrollview_nearbyView.contentSize = CGSizeMake(1000, 218-30-14);
     _scrollview_nearbyView.tag = 10;
     _scrollview_nearbyView.gtype = 10;
     _scrollview_nearbyView.delegate = self;
-    _scrollview_nearbyView.showsHorizontalScrollIndicator = NO;
     _scrollview_nearbyView.delegate1 = self;
-//    _scrollview_nearbyView.bounces = NO;
-    
+    _scrollview_nearbyView.showsHorizontalScrollIndicator = NO;
     [_nearbyView addSubview:_scrollview_nearbyView];
+    
+    
+    for (int i = 0; i<20; i++) {
+//        UIView *pinpaiView = [[UIView alloc]initWithFrame:CGRectMake(0+i*77, 0, 70, 218-30-14)];
+//        pinpaiView.backgroundColor = [UIColor lightGrayColor];
+//        pinpaiView.userInteractionEnabled = YES;
+//        
+//        UITapGestureRecognizer *tt = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(goNearbyStoreVC)];
+//        [pinpaiView addGestureRecognizer:tt];
+//        [_scrollview_nearbyView addSubview:pinpaiView];
+        
+        
+        
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn addTarget:self action:@selector(goNearbyStoreVC) forControlEvents:UIControlEventTouchUpInside];
+        [btn setFrame:CGRectMake(0+i*77, 0, 70, 218-30-14)];
+        btn.backgroundColor = [UIColor lightGrayColor];
+        [_scrollview_nearbyView addSubview:btn];
+        
+    }
+    
+    
+    
+    
     
     
     //标题下面的分割线
     UIView *downTitleLine = [[UIView alloc]initWithFrame:CGRectMake(titleLabel.frame.origin.x, CGRectGetMaxY(titleLabel.frame)+3, DEVICE_WIDTH-30, 1)];
     downTitleLine.backgroundColor = RGBCOLOR(213, 213, 213);
     [_nearbyView addSubview:downTitleLine];
+    
+    
+    
+    //向右按钮btn
+    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightBtn setFrame:CGRectMake(DEVICE_WIDTH-37, CGRectGetMaxY(downTitleLine.frame)+15, 22, 22)];
+    rightBtn.layer.cornerRadius = 4;
+    rightBtn.backgroundColor = RGBCOLOR(195, 195, 195);
+    [rightBtn addTarget:self action:@selector(nearGoRight) forControlEvents:UIControlEventTouchUpInside];
+    [_nearbyView addSubview:rightBtn];
+    
+    
+    
     
     return _nearbyView;
 }
@@ -322,7 +311,21 @@
 
 
 
-
+-(void)nearGoRight{
+    CGFloat xx = _scrollview_nearbyView.contentOffset.x;
+    CGFloat yy = _scrollview_nearbyView.contentOffset.y;
+    xx+=100;
+    if (xx>_scrollview_nearbyView.contentSize.width*0.5) {
+        xx = _scrollview_nearbyView.contentSize.width*0.5;
+    }
+    
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        _scrollview_nearbyView.contentOffset = CGPointMake(xx, yy);
+    } completion:^(BOOL finished) {
+        
+    }];
+}
 
 
 -(void)pinpaiGoleft{
@@ -369,43 +372,30 @@
 #pragma mark - 循环滚动的scrollView的代理方法
 
 //滚动总共几页
-- (NSInteger)numberOfPagesWithScrollView:(GCycleScrollView*)theGCycleScrollView
+- (NSInteger)numberOfPages
 {
     
-    NSInteger num = 0;
-    if (theGCycleScrollView.tag == 200) {
-        num = _topScrollviewImvInfoArray.count;
-    }else if (theGCycleScrollView.tag == 201){
-        num = _nearByStoreDataArray.count/4+1;
-    }
-    return num;
-    
+    return _topScrollviewImvInfoArray.count;
 }
 
 //每一页
-- (UIView *)pageAtIndex:(NSInteger)index ScrollView:(GCycleScrollView *)theGCycleScrollView
+- (UIView *)pageAtIndex:(NSInteger)index
 {
+    UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 180)];
+    imv.userInteractionEnabled = YES;
     
-    
-    if (theGCycleScrollView.tag == 200) {
-        UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 180)];
-        imv.userInteractionEnabled = YES;
-        
-        NSDictionary *dic = _topScrollviewImvInfoArray[index];
-        NSString *str = nil;
-        if ([dic isKindOfClass:[NSDictionary class]]) {
-            str = [dic stringValueForKey:@"img_url"];
-        }
-        
-        [imv sd_setImageWithURL:[NSURL URLWithString:str] placeholderImage:nil];
-        return imv;
-    }else if (theGCycleScrollView.tag == 201){
-        GClothWaveCustomView *view = [[GClothWaveCustomView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH-30, 180)];
-        [view loadCustomViewWithDataArray:_nearByStoreDataArray pageIndex:index];
-        return view;
+    NSDictionary *dic = _topScrollviewImvInfoArray[index];
+    NSString *str = nil;
+    if ([dic isKindOfClass:[NSDictionary class]]) {
+        str = [dic stringValueForKey:@"img_url"];
     }
     
-    return [UIView new];
+    [imv sd_setImageWithURL:[NSURL URLWithString:str] placeholderImage:nil];
+    
+    
+    
+    
+    return imv;
     
 }
 
@@ -454,12 +444,11 @@
 
 
 
--(void)pushToPinpaiDetailVCWithIdStr:(NSString *)theID pinpaiName:(NSString *)theName{
+-(void)pushToPinpaiDetailVCWithIdStr:(NSString *)theID{
     
     GpinpaiDetailViewController *cc = [[GpinpaiDetailViewController alloc]init];
     cc.hidesBottomBarWhenPushed = YES;
     cc.pinpaiIdStr = theID;
-    cc.pinpaiName = theName;
     [self.rootViewController.navigationController pushViewController:cc animated:YES];
     
 }

@@ -10,7 +10,6 @@
 
 #import "NSDictionary+GJson.h"
 #import "HomeClothController.h"
-#import "UIView+Gstring.h"
 
 @implementation GScrollView
 
@@ -44,14 +43,13 @@
             NSString *imvStr = [dic stringValueForKey:@"brand_logo"];
             NSString *nameStr = [dic stringValueForKey:@"brand_name"];
             
-            UIView *pinpaiView = [[GView alloc]initWithFrame:CGRectMake(0+i*77, 0, 70, 120)];
-            pinpaiView.tag = [[dic stringValueForKey:@"id"]intValue]+100;
-            pinpaiView.gString = nameStr;
+            UIView *pinpaiView = [[UIView alloc]initWithFrame:CGRectMake(0+i*77, 0, 70, 120)];
+            pinpaiView.tag = [[dic stringValueForKey:@"id"]intValue];
             pinpaiView.backgroundColor = RGBCOLOR(242, 242, 242);
             pinpaiView.userInteractionEnabled = YES;
             
             //手势
-            UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ggdoTap:)];
+            UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doTap:)];
             [pinpaiView addGestureRecognizer:tap];
             
             
@@ -85,108 +83,36 @@
             [view removeFromSuperview];
         }
         
+        NSInteger countNum = self.dataArray.count;
         
+        self.contentSize = CGSizeMake(countNum *77, self.contentSize.height);
         
-        NSInteger countNum = self.dataArray.count*0.5+1;
-        NSInteger countNum_info = self.dataArray.count;
-        
-        if (DEVICE_WIDTH>320) {
-            countNum = countNum<4?4:countNum;
-        }
-        
-        self.contentSize = CGSizeMake(countNum *118, self.contentSize.height);
-        
-        
-        //红图和信息view
         for (int i = 0; i<countNum; i++) {
-            //红图
-            UIImageView *nearStoreView = [[UIImageView alloc]initWithFrame:CGRectMake(0+i*118, 50, 118, 123)];
-            [nearStoreView setImage:[UIImage imageNamed:@"gnearstorered.png"]];
+            
+            NSDictionary *dic = self.dataArray[i];
+            
+            UIView *nearStoreView = [[UIView alloc]initWithFrame:CGRectMake(0+i*77, 0, 70, 218-30-14)];
+            nearStoreView.backgroundColor = [UIColor lightGrayColor];
+            nearStoreView.tag = [[dic stringValueForKey:@"mall_id"]integerValue];
+            
+            //商家名称
+            UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 70, 70)];
+            nameLabel.numberOfLines = 3;
+            nameLabel.text = [dic stringValueForKey:@"mall_name"];
+            [nearStoreView addSubview:nameLabel];
+            //商家距离
+            UILabel *distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(nameLabel.frame)+5, 70, 15)];
+            distanceLabel.text = [dic stringValueForKey:@"distance"];
+            [nearStoreView addSubview:distanceLabel];
+            
+            
+            //手势
+            UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goNearbyStoreVC:)];
+            [nearStoreView addGestureRecognizer:tap];
+           
+            
             [self addSubview:nearStoreView];
         }
-        
-        
-        
-        
-        //数据源
-        NSMutableArray *upDataArray = [NSMutableArray arrayWithCapacity:1];
-        NSMutableArray *downDataArray = [NSMutableArray arrayWithCapacity:1];
-        
-        //单双信息分组
-        for (int i = 0; i<countNum_info; i++) {
-            NSDictionary *dic = self.dataArray[i];
-            if (i%2==0) {//下
-                [downDataArray addObject:dic];
-            }else if (i%2==1){//上
-                [upDataArray addObject:dic];
-            }
-        }
-        
-        NSInteger upArrayNum = upDataArray.count;
-        NSInteger downArrayNum = downDataArray.count;
-        
-        //信息
-        for (int i = 0; i<downArrayNum; i++) {//下
-            NSDictionary *dic = downDataArray[i];
-            UIView *view = [[UIView alloc]initWithFrame:CGRectMake(19+i*(38+80), 102, 80, 60)];
-            view.userInteractionEnabled = YES;
-            UIButton *storeNameBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//            storeNameBtn.backgroundColor = [UIColor orangeColor];
-            [storeNameBtn setFrame:CGRectMake(0, -8, view.frame.size.width, 35)];
-            storeNameBtn.tag = [[dic stringValueForKey:@"mall_id"]integerValue];
-            [storeNameBtn addTarget:self action:@selector(goNearbyStoreVC:) forControlEvents:UIControlEventTouchUpInside];
-            [storeNameBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            storeNameBtn.titleLabel.font = [UIFont systemFontOfSize:12];
-            storeNameBtn.titleLabel.numberOfLines = 2;
-            [storeNameBtn setBackgroundImage:[UIImage imageNamed:@"gdownname.png"] forState:UIControlStateNormal];
-            [storeNameBtn setBackgroundImage:[UIImage imageNamed:@"gdownname1.png"] forState:UIControlStateSelected];
-            [storeNameBtn setTitle:[dic stringValueForKey:@"mall_name"] forState:UIControlStateNormal];
-            [view addSubview:storeNameBtn];
-            //距离
-            UILabel *distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(storeNameBtn.frame)+10, view.frame.size.width, 25)];
-            distanceLabel.font = [UIFont systemFontOfSize:13];
-            distanceLabel.textAlignment = NSTextAlignmentCenter;
-            distanceLabel.textColor = [UIColor whiteColor];
-            distanceLabel.text = [NSString stringWithFormat:@"%@m",[dic stringValueForKey:@"distance"]];
-            [view addSubview:distanceLabel];
-            
-            [self addSubview:view];
-        }
-        
-        for (int i =0; i<upArrayNum; i++) {//上
-            UIView *view = [[UIView alloc]initWithFrame:CGRectMake(80+i*(38+80), 0, 80, 60)];
-//            view.backgroundColor = [UIColor redColor];
-            NSDictionary *dic = upDataArray[i];
-            //距离
-            UILabel *distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, view.frame.size.width, 18)];
-//            distanceLabel.backgroundColor = [UIColor orangeColor];
-            distanceLabel.font = [UIFont systemFontOfSize:13];
-            distanceLabel.textAlignment = NSTextAlignmentCenter;
-            distanceLabel.textColor = [UIColor blackColor];
-            distanceLabel.text = [NSString stringWithFormat:@"%@m",[dic stringValueForKey:@"distance"]];
-            [view addSubview:distanceLabel];
-            
-            //商城名字
-            UIButton *storeNameBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-            //            storeNameBtn.backgroundColor = [UIColor orangeColor];
-            [storeNameBtn setFrame:CGRectMake(0, CGRectGetMaxY(distanceLabel.frame), view.frame.size.width, 35)];
-            storeNameBtn.tag = [[dic stringValueForKey:@"mall_id"]integerValue];
-            [storeNameBtn addTarget:self action:@selector(goNearbyStoreVC:) forControlEvents:UIControlEventTouchUpInside];
-            [storeNameBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            storeNameBtn.titleLabel.font = [UIFont systemFontOfSize:12];
-            storeNameBtn.titleLabel.numberOfLines = 2;
-            [storeNameBtn setBackgroundImage:[UIImage imageNamed:@"gupname.png"] forState:UIControlStateNormal];
-            [storeNameBtn setBackgroundImage:[UIImage imageNamed:@"gupname1.png"] forState:UIControlStateSelected];
-            [storeNameBtn setTitle:[dic stringValueForKey:@"mall_name"] forState:UIControlStateNormal];
-            [view addSubview:storeNameBtn];
-            
-            
-            
-            [self addSubview:view];
-        }
-        
-        
-        
     }
     
     
@@ -199,23 +125,21 @@
 
 
 
--(void)goNearbyStoreVC:(UIButton*)sender{
-    NSString *ssidStr = [NSString stringWithFormat:@"%ld",sender.tag-100];
+-(void)goNearbyStoreVC:(UITapGestureRecognizer*)sender{
+    NSString *ssidStr = [NSString stringWithFormat:@"%ld",sender.view.tag];
     [self.delegate1 pushToNearbyStoreVCWithIdStr:ssidStr];
 }
 
 
 
-//点击品牌
--(void)ggdoTap:(UITapGestureRecognizer *)sender{
+//手势方法
+-(void)doTap:(UITapGestureRecognizer *)sender{
 //    if (self.pinpaiViewBlock) {
 //        self.pinpaiViewBlock(sender.view.tag);
 //    }
     
     NSString *ssidstr = [NSString stringWithFormat:@"%ld",sender.view.tag];
-    NSString *pinpaiName = sender.view.gString;
-    [self.delegate1 pushToPinpaiDetailVCWithIdStr:ssidstr pinpaiName:pinpaiName];
-    
+    [self.delegate1 pushToPinpaiDetailVCWithIdStr:ssidstr];
     
 }
 

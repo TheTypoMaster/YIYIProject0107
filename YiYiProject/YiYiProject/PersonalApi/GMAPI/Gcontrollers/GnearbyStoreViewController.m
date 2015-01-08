@@ -51,13 +51,6 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = NO;
-    
-    //添加商场信息view
-    [self creatUpStoreInfoView];
-    
-    
-    //请求网络数据
-    [self prepareNetData];
 }
 
 
@@ -72,8 +65,20 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-
+//    _mainScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT-64)];
+//    _mainScrollView.backgroundColor = [UIColor purpleColor];
+//    _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH, DEVICE_HEIGHT);
     
+//    [self.view addSubview:_mainScrollView];
+    
+    //添加商场信息view
+    [self creatUpStoreInfoView];
+    
+    //添加商城楼层view
+//    [self creatFloorScrollView];
+    
+    //请求网络数据
+    [self prepareNetData];
     
     
 }
@@ -128,51 +133,27 @@
         brandDic = [dic objectForKey:@"brand"];
     }
     
-
-    //取出brand字段中所有的key
-
-
     NSArray *keys = nil;
     if ([brandDic isKindOfClass:[NSDictionary class]]) {
         keys = [brandDic allKeys];
     }else{
         return;
     }
-
-    //楼层数
-
-
     NSMutableArray *floorsNameArray = [NSMutableArray arrayWithCapacity:1];
     for (NSString *str in keys) {
         [floorsNameArray addObject:[NSString stringWithFormat:@"F%@",str]];
     }
-
-    
-    //每层的数据的二维数组
-    NSMutableArray *data_2Array = [NSMutableArray arrayWithCapacity:1];
-    for (NSString *key in keys) {
-        [data_2Array addObject:[brandDic objectForKey:key]];
-    }
-    
-
     
     UIView *floorView = [[UIView alloc]initWithFrame:CGRectMake(12, 185, DEVICE_WIDTH-24, DEVICE_HEIGHT-_upStoreInfoView.frame.size.height)];
     
     GtopScrollView *topScrollView = [[GtopScrollView alloc]initWithFrame:CGRectMake(0, 0, floorView.frame.size.width, 28)];
-    GRootScrollView *rootScrollView = [[GRootScrollView alloc]initWithFrame:CGRectMake(0, 28, topScrollView.frame.size.width, DEVICE_HEIGHT-_upStoreInfoView.frame.size.height-topScrollView.frame.size.height-64)];
-    
-    NSLog(@"%@",NSStringFromCGRect(rootScrollView.frame));
+    GRootScrollView *rootScrollView = [[GRootScrollView alloc]initWithFrame:CGRectMake(0, 28, topScrollView.frame.size.width, DEVICE_HEIGHT-_upStoreInfoView.frame.size.height-topScrollView.frame.size.height)];
     topScrollView.myRootScrollView = rootScrollView;
     rootScrollView.myTopScrollView = topScrollView;
     
     topScrollView.nameArray = (NSArray*)floorsNameArray;
     rootScrollView.viewNameArray =topScrollView.nameArray;
     
-
-    //数据源二维数组
-    rootScrollView.dataArray = data_2Array;
-
-
     
     [topScrollView initWithNameButtons];
     [rootScrollView initWithViews];

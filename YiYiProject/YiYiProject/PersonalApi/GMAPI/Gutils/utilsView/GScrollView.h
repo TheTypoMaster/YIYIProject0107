@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "GView.h"
 @class HomeClothController;
 
 typedef void (^pinpaiViewBlock)(NSInteger index);//定义block

@@ -6,14 +6,11 @@
 //  Copyright (c) 2014年 lcw. All rights reserved.
 //
 
-
-//点击首页品牌scrollview 进入附近商家列表
 #import <UIKit/UIKit.h>
 
 @interface GpinpaiDetailViewController : UIViewController
 
-@property(nonatomic,strong)NSString *pinpaiIdStr;//品牌id
-@property(nonatomic,strong)NSString *pinpaiName;//品牌名称
+@property(nonatomic,strong)NSString *pinpaiIdStr;
 
 @end
 
