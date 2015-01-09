@@ -77,7 +77,7 @@
     
     int imageIndex = 0;
     
-    int sum = temp_arr.count;
+    int sum = (int)temp_arr.count;
     
     for (int i = 0; i < sum; i ++) {
         
@@ -87,7 +87,7 @@
         {
             //需要替换
             
-            TopicImageModel *aImageModel = (TopicImageModel*)imageModels[imageIndex];
+            TopicImageModel *aImageModel = (TopicImageModel*)[imageModels objectAtIndex:imageIndex];
             
             NSMutableDictionary *temp = [NSMutableDictionary dictionaryWithDictionary:aDic];
             [temp setObject:aImageModel.image_resize_url forKey:CELL_TEXT];
@@ -150,10 +150,21 @@
     }
     
     NSArray *content_arr = [editor content];
-    NSDictionary *content_dic = [content_arr lastObject];
-    NSString *contentStr = content_dic[CELL_TEXT];
     
-    if (content_arr.count == 0 || contentStr.length == 0) {
+    BOOL contentIsNull = YES;
+    
+    for (NSDictionary *aDic in content_arr) {
+        
+        id dd = [aDic objectForKey:CELL_TEXT];
+        if ([dd isKindOfClass:[UIImage class]]) {
+            contentIsNull = NO;
+        }else if (((NSString *)dd).length > 0){
+            
+            contentIsNull = NO;
+        }
+    }
+    
+    if (content_arr.count == 0 || contentIsNull) {
         
         [LTools showMBProgressWithText:@"话题内容不能为空" addToView:self.view];
         return;
@@ -317,7 +328,7 @@
                                            
                                            UIImage *aImage = aImage_arr[i];
         
-                                           NSData * data= UIImageJPEGRepresentation(aImage, 0.5);
+                                           NSData * data= UIImageJPEGRepresentation(aImage, 1);
                                            
                                            NSLog(@"---> 大小 %ld",(unsigned long)data.length);
                                            

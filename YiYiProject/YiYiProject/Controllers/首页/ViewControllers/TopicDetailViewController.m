@@ -15,6 +15,8 @@
 #import "TopicModel.h"
 #import "CustomInputView.h"
 
+#import "TopicParseModel.h"
+
 @interface TopicDetailViewController ()<UITableViewDataSource,SNRefreshDelegate>
 {
     ///底部view
@@ -164,11 +166,60 @@
     date_label.font = [UIFont systemFontOfSize:11];
     [sectionView addSubview:date_label];
     
+    //话题标题
+    
+    NSString *title = self.topic_info.topic_title;
+    
+    //宽度
+    
+    CGFloat aWidth = DEVICE_WIDTH - 2 * headerImageView.left;
+    
+    UILabel *title_label = [LTools createLabelFrame:CGRectMake(headerImageView.left, headerImageView.bottom + 13,aWidth, 0) title:title font:17 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"010101"]];
+    title_label.font = [UIFont boldSystemFontOfSize:17];
+    CGFloat title_height = [LTools heightForText:title width:aWidth Boldfont:17];
+    title_label.height = title_height;
+    
+    [sectionView addSubview:title_label];
+    
+    //话题内容
+    
+    NSArray *content_arr = (NSArray *)[self.topic_info.topic_content objectFromJSONString];
+    
+    CGFloat top = title_label.bottom + 14;//记录上一个 y坐标
+    
+    for (NSDictionary *aDic in content_arr) {
+        
+        //是图片创建imageView
+        TopicParseModel *aImageModel = [[TopicParseModel alloc]initWithDictionary:aDic];
+        if (aImageModel.IMAGE_ORIGINAL_URL.length > 0) {
+            
+            CGFloat imageHeight = aImageModel.CELL_NEW_HEIGHT * aWidth / aImageModel.CELL_NEW_WIDTH;
+            
+            UIImageView *aImageView = [[UIImageView alloc]initWithFrame:CGRectMake(12, top, aWidth, imageHeight)];
+            [sectionView addSubview:aImageView];
+            
+            [aImageView sd_setImageWithURL:[NSURL URLWithString:aImageModel.CELL_TEXT] placeholderImage:nil];
+            
+            top = aImageView.bottom + 10;
+            
+        }else   //文字的话创建label
+        {
+            
+            NSString *text = aImageModel.CELL_TEXT;
+            UILabel *content_label = [LTools createLabelFrame:CGRectMake(headerImageView.left, top,aWidth, 0) title:text font:14 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"3a3a3a"]];
+            content_label.font = [UIFont systemFontOfSize:14];
+            CGFloat c_height = [LTools heightForText:title width:aWidth font:14];
+            content_label.height = c_height;
+            [sectionView addSubview:content_label];
+            
+            top = content_label.bottom + 10;
+        }
+        
+    }
     
     
     
-    
-    sectionView.height = height;
+    sectionView.height = top;
     _myTableView.tableHeaderView = sectionView;
     
 }
@@ -194,6 +245,7 @@
                 NSDictionary * topic_info = [allDic objectForKey:@"topic_info"];
                 bself.topic_info = [[TopicModel alloc] initWithDictionary:topic_info];
                 [bottom_view setTitleWithTopicModel:bself.topic_info];
+                
                 [bself createSectionView];
             }else
             {

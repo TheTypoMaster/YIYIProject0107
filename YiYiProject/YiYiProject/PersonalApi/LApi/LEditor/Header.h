@@ -35,7 +35,7 @@
 
 #define ORIGINAL_HEIGHT 38.F
 
-#define ORIGINAL_HEIGHT_IMAGE 200.F
+#define ORIGINAL_HEIGHT_IMAGE 540
 #define ORIGINAL_WIDTH_IMAGE 200.F
 
 #import "UIView+Frame.h"

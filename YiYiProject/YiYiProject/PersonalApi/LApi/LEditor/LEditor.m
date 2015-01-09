@@ -38,7 +38,7 @@
         line.backgroundColor = RGBCOLOR(223, 222, 222);
         [self addSubview:line];
         
-        self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, _titleTextField.bottom, frame.size.width, frame.size.height - 40) style:UITableViewStylePlain];
+        self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, _titleTextField.bottom, frame.size.width, frame.size.height) style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.backgroundColor = [UIColor whiteColor];
@@ -746,7 +746,7 @@
         //将二进制数据生成UIImage
         UIImage *image = [UIImage imageWithData:data];
         
-        image = [self scaleToSizeWithImage:image size:CGSizeMake(180, ORIGINAL_HEIGHT_IMAGE)];
+        image = [self scaleToSizeWithImage:image size:CGSizeMake(540, ORIGINAL_HEIGHT_IMAGE)];
         
         //        [self addNewImage:image];
         

@@ -8,6 +8,9 @@
 
 #import "BaseModel.h"
 
+/**
+ *  话题内容 model
+ */
 @interface TopicImageModel : BaseModel
 
 @property(nonatomic,assign)CGFloat image_height; //原始

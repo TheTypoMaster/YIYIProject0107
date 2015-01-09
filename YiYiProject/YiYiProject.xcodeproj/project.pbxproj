@@ -246,6 +246,7 @@
 		13A389BB1A38974F00ABBACB /* LTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A389AC1A38974F00ABBACB /* LTools.m */; };
 		13A389BC1A38974F00ABBACB /* NSString+Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A389AF1A38974F00ABBACB /* NSString+Emoji.m */; };
 		13A389BD1A38974F00ABBACB /* RefreshTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A389B11A38974F00ABBACB /* RefreshTableView.m */; };
+		13AD17B11A603E4300AB24F5 /* TopicParseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AD17B01A603E4300AB24F5 /* TopicParseModel.m */; };
 		13B690451A564825007FE152 /* CHTumblrMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B690441A564825007FE152 /* CHTumblrMenuView.m */; };
 		13B6904D1A564BF6007FE152 /* t_dapei@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13B690471A564BF6007FE152 /* t_dapei@2x.png */; };
 		13B6904E1A564BF6007FE152 /* t_paizhao@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13B690481A564BF6007FE152 /* t_paizhao@2x.png */; };
@@ -750,6 +751,8 @@
 		13A389AF1A38974F00ABBACB /* NSString+Emoji.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Emoji.m"; sourceTree = "<group>"; };
 		13A389B01A38974F00ABBACB /* RefreshTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefreshTableView.h; sourceTree = "<group>"; };
 		13A389B11A38974F00ABBACB /* RefreshTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RefreshTableView.m; sourceTree = "<group>"; };
+		13AD17AF1A603E4300AB24F5 /* TopicParseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopicParseModel.h; sourceTree = "<group>"; };
+		13AD17B01A603E4300AB24F5 /* TopicParseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopicParseModel.m; sourceTree = "<group>"; };
 		13B690431A564825007FE152 /* CHTumblrMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHTumblrMenuView.h; sourceTree = "<group>"; };
 		13B690441A564825007FE152 /* CHTumblrMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHTumblrMenuView.m; sourceTree = "<group>"; };
 		13B690471A564BF6007FE152 /* t_dapei@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "t_dapei@2x.png"; sourceTree = "<group>"; };
@@ -1645,6 +1648,8 @@
 			children = (
 				1387B08B1A5EC2D0006365D8 /* TopicImageModel.h */,
 				1387B08C1A5EC2D0006365D8 /* TopicImageModel.m */,
+				13AD17AF1A603E4300AB24F5 /* TopicParseModel.h */,
+				13AD17B01A603E4300AB24F5 /* TopicParseModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3022,6 +3027,7 @@
 				13A389BD1A38974F00ABBACB /* RefreshTableView.m in Sources */,
 				13963F4C1A4FC5FB007BE68B /* PublishHuatiController.m in Sources */,
 				13CEC8931A5D96CF00FE273F /* TTPublishViewController.m in Sources */,
+				13AD17B11A603E4300AB24F5 /* TopicParseModel.m in Sources */,
 				13684A901A37585200A508FB /* RootViewController.m in Sources */,
 				13CD36361A3C51BE0068C12A /* ForgetPwdController.m in Sources */,
 				13A389BB1A38974F00ABBACB /* LTools.m in Sources */,
