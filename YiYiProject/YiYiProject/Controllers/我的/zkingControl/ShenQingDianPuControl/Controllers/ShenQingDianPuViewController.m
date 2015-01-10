@@ -122,6 +122,47 @@
  
 }
 
+-(void)createShangchangdianView{
+    UIView *witheBgView=[[UIView alloc]initWithFrame:CGRectMake(DEVICE_WIDTH, 0, DEVICE_WIDTH, 200)];
+    
+    witheBgView.backgroundColor=[UIColor whiteColor];
+    [bgScroll addSubview:witheBgView];
+    
+    NSArray *titleArr=@[@"选择商场",@"选择楼层",@"选择品牌",@"填写门牌号",@"电话",@"验证码"];
+    
+    for (int i=0; i<6; i++) {
+        
+        
+        
+        UILabel *title_Label=[LTools createLabelFrame:CGRectMake(17, i*50, DEVICE_WIDTH, 50) title:titleArr[i] font:17 align:NSTextAlignmentLeft textColor:RGBCOLOR(95, 95, 95)];
+        [witheBgView addSubview:title_Label];
+        
+        UIView *lineView=[[UIView alloc]initWithFrame:CGRectMake(0, 50*i, DEVICE_WIDTH, 0.5)];
+        lineView.backgroundColor=RGBCOLOR(229, 229, 229);
+        [witheBgView addSubview:lineView];
+        
+        UITextField *shuRuTextfield=[[UITextField alloc]initWithFrame:CGRectMake(85, i*50, DEVICE_WIDTH, 50)];
+        shuRuTextfield.tag=200+i;
+        [witheBgView addSubview:shuRuTextfield];
+        
+        
+        
+        
+    }
+    
+    UIButton *commitButton=[LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(20, 290, DEVICE_WIDTH-40, 44) normalTitle:@"提交" image:nil backgroudImage:nil superView:witheBgView target:self action:@selector(tijiao:)];
+    
+    commitButton.backgroundColor=RGBCOLOR(208, 40, 73);
+    
+    CALayer *l = [commitButton layer];   //获取ImageView的层
+    [l setMasksToBounds:YES];
+    [l setCornerRadius:2.0f];
+    
+    [bgScroll addSubview:commitButton];
+
+
+}
+
 
 -(void)createJingPinDianView{
     
