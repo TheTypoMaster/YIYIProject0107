@@ -305,8 +305,9 @@ typedef enum {
 
 
 
-#define KAITONG_DIANPU_URL @"182.92.158.32/?d=api&c=mall&m=addMall"
 
+
+#define KAITONG_DIANPU_URL @"http://182.92.158.32/?d=api&c=mall&m=addMall"
 
 #pragma - mark 搭配师话题
 

@@ -49,12 +49,14 @@
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         
         
+        NSLog(@"data===%@",request);
+        NSString *str=[[NSString alloc]initWithData:data encoding:NSASCIIStringEncoding];
+        
+        NSLog(@"sxsxs==%@",str);
         
         if (data.length > 0) {
             
-            NSString *str=[[NSString alloc]initWithData:data encoding:NSASCIIStringEncoding];
-            
-            NSLog(@"sxsxs==%@",str);
+           
             
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             

@@ -147,6 +147,7 @@
         [witheBgView addSubview:lineView];
         
         UITextField *shuRuTextfield=[[UITextField alloc]initWithFrame:CGRectMake(85, i*50, DEVICE_WIDTH, 50)];
+        shuRuTextfield.tag=100+i;
         [witheBgView addSubview:shuRuTextfield];
         
         
@@ -171,21 +172,41 @@
     
     
     
-    NSString *post = [NSString stringWithFormat:@"&mall_name=%@&street=%@&mobile=%@&code=%@&mall_type=%@",@"SS",@"知春路",@"18600912932",@"213",@"1"];
+    /*mall_name 商铺名称 string 限制30字以内
+     mall_type 商铺类型(商场小店), 1 商场 2 精品店
+     mobile 手机号 code 验证码 latitude 维度, 小数点后8
+     longitude 经度, 小数点后8
+     floor_num 楼层 int
+     province_id 省id int
+     city_id 市id int
+     disctrict_id 区id, int
+     street 街道地址 string
+     authcode 约定好的code 判断店铺所有人*/
+    
+    
+    NSString *authkey = [GMAPI getAuthkey];
+    
+    
+    
+    NSString *post = [NSString stringWithFormat:@"&mall_name=%@&street=%@&mobile=%@&code=%@&mall_type=%@&authkey=%@",@"SS",@"知春路",@"18600912932",@"213",@"1",authkey];
     NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-    GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:KAITONG_DIANPU_URL isPost:YES postData:postData];
-    [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
+    
+    NSString *url = [NSString stringWithFormat:KAITONG_DIANPU_URL];
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
-        NSLog(@"result[[[==%@",result);
+        NSLog(@"-->%@",result);
+        
+        
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
-        UIAlertView *myalert=[[UIAlertView alloc]initWithTitle:@"提示" message:[failDic objectForKey:@"ERRO_INFO"] delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil, nil];
-        [myalert show];
         
-        NSLog(@"failDic[[[==%@",failDic);
-
+        NSLog(@"faildic==%@",failDic);
+        
+        [LTools showMBProgressWithText:failDic[@"msg"] addToView:self.view];
     }];
+    
     
 
 }
