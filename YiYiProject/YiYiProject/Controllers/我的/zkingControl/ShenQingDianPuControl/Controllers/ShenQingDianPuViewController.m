@@ -119,19 +119,18 @@
     [self createJingPinDianView];
     
     //品牌
- 
+    [self createShangchangdianView];
 }
 
 -(void)createShangchangdianView{
-    UIView *witheBgView=[[UIView alloc]initWithFrame:CGRectMake(DEVICE_WIDTH, 0, DEVICE_WIDTH, 200)];
+    UIView *witheBgView=[[UIView alloc]initWithFrame:CGRectMake(DEVICE_WIDTH, 0, DEVICE_WIDTH, 300)];
     
     witheBgView.backgroundColor=[UIColor whiteColor];
     [bgScroll addSubview:witheBgView];
     
-    NSArray *titleArr=@[@"选择商场",@"选择楼层",@"选择品牌",@"填写门牌号",@"电话",@"验证码"];
+    NSArray *titleArr=@[@"选择商场",@"选择楼层",@"选择品牌",@"门牌号",@"电话",@"验证码"];
     
     for (int i=0; i<6; i++) {
-        
         
         
         UILabel *title_Label=[LTools createLabelFrame:CGRectMake(17, i*50, DEVICE_WIDTH, 50) title:titleArr[i] font:17 align:NSTextAlignmentLeft textColor:RGBCOLOR(95, 95, 95)];
@@ -141,17 +140,16 @@
         lineView.backgroundColor=RGBCOLOR(229, 229, 229);
         [witheBgView addSubview:lineView];
         
-        UITextField *shuRuTextfield=[[UITextField alloc]initWithFrame:CGRectMake(85, i*50, DEVICE_WIDTH, 50)];
+        UITextField *shuRuTextfield=[[UITextField alloc]initWithFrame:CGRectMake(100, i*50, DEVICE_WIDTH, 50)];
         shuRuTextfield.tag=200+i;
         [witheBgView addSubview:shuRuTextfield];
         
         
-        
-        
     }
     
-    UIButton *commitButton=[LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(20, 290, DEVICE_WIDTH-40, 44) normalTitle:@"提交" image:nil backgroudImage:nil superView:witheBgView target:self action:@selector(tijiao:)];
+    UIButton *commitButton=[LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(20+DEVICE_WIDTH, 390, DEVICE_WIDTH-40, 44) normalTitle:@"提交" image:nil backgroudImage:nil superView:witheBgView target:self action:@selector(tijiao:)];
     
+    commitButton.tag=300;
     commitButton.backgroundColor=RGBCOLOR(208, 40, 73);
     
     CALayer *l = [commitButton layer];   //获取ImageView的层
@@ -197,7 +195,7 @@
     }
     
     UIButton *commitButton=[LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(20, 290, DEVICE_WIDTH-40, 44) normalTitle:@"提交" image:nil backgroudImage:nil superView:witheBgView target:self action:@selector(tijiao:)];
-    
+    commitButton.tag=400;
     commitButton.backgroundColor=RGBCOLOR(208, 40, 73);
     
     CALayer *l = [commitButton layer];   //获取ImageView的层
@@ -225,29 +223,40 @@
      authcode 约定好的code 判断店铺所有人*/
     
     
-    NSString *authkey = [GMAPI getAuthkey];
+    if (sender.tag==400)//申请普通精品小店
+    {
+        
+        
+        NSString *authkey = [GMAPI getAuthkey];
+        
+        
+        
+        NSString *post = [NSString stringWithFormat:@"&mall_name=%@&street=%@&mobile=%@&code=%@&mall_type=%@&authkey=%@",@"SS",@"知春路",@"18600912932",@"213",@"1",authkey];
+        NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+        
+        NSString *url = [NSString stringWithFormat:KAITONG_DIANPU_URL];
+        LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
+        [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+            
+            NSLog(@"-->%@",result);
+            
+            
+            
+        } failBlock:^(NSDictionary *failDic, NSError *erro) {
+            
+            
+            NSLog(@"faildic==%@",failDic);
+            
+            [LTools showMBProgressWithText:failDic[@"msg"] addToView:self.view];
+        }];
+        
+
+        
+    }else if(sender.tag==300)//申请商场店
+    {
+        
     
-    
-    
-    NSString *post = [NSString stringWithFormat:@"&mall_name=%@&street=%@&mobile=%@&code=%@&mall_type=%@&authkey=%@",@"SS",@"知春路",@"18600912932",@"213",@"1",authkey];
-    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-    
-    NSString *url = [NSString stringWithFormat:KAITONG_DIANPU_URL];
-    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
-    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
-        
-        NSLog(@"-->%@",result);
-        
-        
-        
-    } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        
-        
-        NSLog(@"faildic==%@",failDic);
-        
-        [LTools showMBProgressWithText:failDic[@"msg"] addToView:self.view];
-    }];
-    
+    }
     
 
 }
