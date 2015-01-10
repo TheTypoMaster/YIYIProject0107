@@ -356,6 +356,8 @@
 		DF7050BE1A5D86B9003AC716 /* libiOS_IMKit_v1_2_7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DF7050BD1A5D86B9003AC716 /* libiOS_IMKit_v1_2_7.a */; };
 		DF7467931A57FB0400F0AEC8 /* my_sc_dui@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF7467911A57FB0400F0AEC8 /* my_sc_dui@3x.png */; };
 		DF7467941A57FB0400F0AEC8 /* my_sc_guanbi@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF7467921A57FB0400F0AEC8 /* my_sc_guanbi@3x.png */; };
+		DFC7812A1A6159FD00776C62 /* MyMatchDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC781291A6159FD00776C62 /* MyMatchDetailViewController.m */; };
+		DFC7812D1A615FF700776C62 /* MyMatchDivisionDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC7812C1A615FF700776C62 /* MyMatchDivisionDetailViewController.m */; };
 		E33FF5011A4EBC810060E130 /* GLeadBuyMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E33FF4901A4EBC810060E130 /* GLeadBuyMapViewController.m */; };
 		E33FF5021A4EBC810060E130 /* GMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E33FF4921A4EBC810060E130 /* GMapViewController.m */; };
 		E33FF5031A4EBC810060E130 /* GmyMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E33FF4941A4EBC810060E130 /* GmyMainViewController.m */; };
@@ -909,6 +911,10 @@
 		DF7050BD1A5D86B9003AC716 /* libiOS_IMKit_v1_2_7.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libiOS_IMKit_v1_2_7.a; sourceTree = "<group>"; };
 		DF7467911A57FB0400F0AEC8 /* my_sc_dui@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "my_sc_dui@3x.png"; sourceTree = "<group>"; };
 		DF7467921A57FB0400F0AEC8 /* my_sc_guanbi@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "my_sc_guanbi@3x.png"; sourceTree = "<group>"; };
+		DFC781281A6159FD00776C62 /* MyMatchDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyMatchDetailViewController.h; sourceTree = "<group>"; };
+		DFC781291A6159FD00776C62 /* MyMatchDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyMatchDetailViewController.m; sourceTree = "<group>"; };
+		DFC7812B1A615FF700776C62 /* MyMatchDivisionDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyMatchDivisionDetailViewController.h; sourceTree = "<group>"; };
+		DFC7812C1A615FF700776C62 /* MyMatchDivisionDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyMatchDivisionDetailViewController.m; sourceTree = "<group>"; };
 		E33FF48F1A4EBC810060E130 /* GLeadBuyMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLeadBuyMapViewController.h; sourceTree = "<group>"; };
 		E33FF4901A4EBC810060E130 /* GLeadBuyMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLeadBuyMapViewController.m; sourceTree = "<group>"; };
 		E33FF4911A4EBC810060E130 /* GMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMapViewController.h; sourceTree = "<group>"; };
@@ -2004,6 +2010,10 @@
 				DF5E89B21A5E7B0D00535EBA /* ChooseImageViewController.m */,
 				DF5E89B41A5E7E6C00535EBA /* MyMatchViewController.h */,
 				DF5E89B51A5E7E6C00535EBA /* MyMatchViewController.m */,
+				DFC781281A6159FD00776C62 /* MyMatchDetailViewController.h */,
+				DFC781291A6159FD00776C62 /* MyMatchDetailViewController.m */,
+				DFC7812B1A615FF700776C62 /* MyMatchDivisionDetailViewController.h */,
+				DFC7812C1A615FF700776C62 /* MyMatchDivisionDetailViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -2587,11 +2597,11 @@
 				TargetAttributes = {
 					13684A641A37583E00A508FB = {
 						CreatedOnToolsVersion = 6.1;
-						DevelopmentTeam = 96PFYKQ596;
+						DevelopmentTeam = HXFU9MZ8SD;
 					};
 					13684A7D1A37583E00A508FB = {
 						CreatedOnToolsVersion = 6.1;
-						DevelopmentTeam = 96PFYKQ596;
+						DevelopmentTeam = HXFU9MZ8SD;
 						TestTargetID = 13684A641A37583E00A508FB;
 					};
 				};
@@ -2908,6 +2918,7 @@
 			files = (
 				56726C491A55A9A90085D77C /* TopicSubCommentsModel.m in Sources */,
 				E33FF51A1A4EBC810060E130 /* Gview.m in Sources */,
+				DFC7812D1A615FF700776C62 /* MyMatchDivisionDetailViewController.m in Sources */,
 				565321461A59769300E43F80 /* OHAttributedLabel.m in Sources */,
 				13CD364A1A3C6A870068C12A /* EGORefreshTableHeaderView.m in Sources */,
 				56DAB2131A46C66E00273140 /* MatchCaseModel.m in Sources */,
@@ -2931,6 +2942,7 @@
 				139562C71A3BF42E007BB183 /* UserInfo.m in Sources */,
 				E33FF5031A4EBC810060E130 /* GmyMainViewController.m in Sources */,
 				13CD36421A3C69860068C12A /* TMQuiltViewController.m in Sources */,
+				DFC7812A1A6159FD00776C62 /* MyMatchDetailViewController.m in Sources */,
 				13A389BC1A38974F00ABBACB /* NSString+Emoji.m in Sources */,
 				56DAB2101A46A8E100273140 /* SNRefreshTableView.m in Sources */,
 				565321471A59769300E43F80 /* RegexKitLite.m in Sources */,
@@ -3091,8 +3103,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -3112,7 +3124,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "27e08856-f67b-488e-978d-fe2673561b24";
+				PROVISIONING_PROFILE = "ca1c9dd0-a046-42fe-909b-5b12ec26956e";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -3134,8 +3146,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3148,7 +3160,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "27e08856-f67b-488e-978d-fe2673561b24";
+				PROVISIONING_PROFILE = "ca1c9dd0-a046-42fe-909b-5b12ec26956e";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -3161,8 +3173,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YiYiProject/UMengShare/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
@@ -3183,8 +3195,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8615fc2e-f7a3-4b4a-992d-4d1daf0a25b9";
-				PROVISIONING_PROFILE = "27e08856-f67b-488e-978d-fe2673561b24";
+				PROVISIONING_PROFILE = "ca1c9dd0-a046-42fe-909b-5b12ec26956e";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Debug;
@@ -3196,8 +3207,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YiYiProject/UMengShare/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
@@ -3218,8 +3229,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8615fc2e-f7a3-4b4a-992d-4d1daf0a25b9";
-				PROVISIONING_PROFILE = "27e08856-f67b-488e-978d-fe2673561b24";
+				PROVISIONING_PROFILE = "ca1c9dd0-a046-42fe-909b-5b12ec26956e";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Release;

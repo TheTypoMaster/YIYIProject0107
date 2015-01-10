@@ -13,6 +13,10 @@
 {
     UITableView *myTableView;
     NSMutableArray * _dataSourceArray;
+    UIView *_chooseImageView;
+    UIScrollView  *myScrollView;
+    NSMutableArray *_imageAarray;
+    float zuoBiaoX ;
 }
 @end
 
@@ -26,6 +30,8 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self createTableView];
     [self prepareMyYiChuListData];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addImage:) name:@"addImag" object:nil];
+    zuoBiaoX = 10;
 
 }
 -(void)createTableView
@@ -35,7 +41,58 @@
     myTableView.dataSource = self;
     myTableView.rowHeight = 70;
     [self.view addSubview:myTableView];
+    [self addImageViewForWindow];
     
+}
+-(void)addImageViewForWindow
+{
+    UIWindow *currentWindow =(UIWindow*) [UIApplication sharedApplication].keyWindow;
+    _chooseImageView = [[UIView alloc] initWithFrame:CGRectMake(0, DEVICE_HEIGHT-120, DEVICE_WIDTH, 120)];
+    _chooseImageView.backgroundColor = [UIColor whiteColor];
+    [currentWindow addSubview:_chooseImageView];
+    
+    UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 40)];
+    headView.backgroundColor = [UIColor grayColor];
+    [_chooseImageView addSubview:headView];
+    
+    UIButton *button  = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(DEVICE_WIDTH-20-50, 5, 50, 30) normalTitle:@"确定" image:nil backgroudImage:nil superView:headView target:self action:@selector(confirmBtn:)];
+    button.backgroundColor = [UIColor colorWithHexString:@"eb6fb7"];
+    
+    myScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, headView.frame.origin.y+headView.frame.size.height, DEVICE_WIDTH, _chooseImageView.height-headView.height)];
+    myScrollView.backgroundColor = [UIColor whiteColor];
+    [_chooseImageView addSubview:myScrollView];
+    
+}
+-(void)confirmBtn:(UIButton *) sender
+{
+    zuoBiaoX = 10;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"addImageWithArray" object:_imageAarray];
+    UIViewController *popVC = (UIViewController *)[self.navigationController.viewControllers objectAtIndex:2];
+    [self.navigationController popToViewController:popVC animated:YES];
+    [_chooseImageView removeFromSuperview];
+}
+-(void)addImage:(NSNotification*)notify
+{
+    if(!_imageAarray)
+    {
+        _imageAarray = [NSMutableArray arrayWithCapacity:1];
+    }
+    NSDictionary *dic = [notify object];
+    [_imageAarray addObject:[NSURL URLWithString:[dic objectForKey:@"image_url"]]];
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(zuoBiaoX, 10, 60, 60)];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"image_url"]] placeholderImage:nil];
+    [myScrollView addSubview:imageView];
+    
+    zuoBiaoX += 70;
+    
+    myScrollView.contentSize = CGSizeMake(imageView.frame.origin.x+imageView.width, _chooseImageView.height- 40);
+    
+}
+-(void)leftButtonTap:(UIButton *)sender
+{
+    [_chooseImageView removeFromSuperview];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 #pragma mark--UItableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -57,7 +114,8 @@
         UILabel *nameLabel = [LTools createLabelFrame:CGRectMake(imageView.frame.origin.x + imageView.width +10, (70-15)/2.0, 100, 15) title:@"测试数据" font:15 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"686868"]];
         nameLabel.tag = 102;
         [cell addSubview:nameLabel];
-               
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     }
     UIImageView  *currentImageView = (UIImageView *)[cell viewWithTag:101];
     UILabel *currentLabel = (UILabel *)[cell viewWithTag:102];

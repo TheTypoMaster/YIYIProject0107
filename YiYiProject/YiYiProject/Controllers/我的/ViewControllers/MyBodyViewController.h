@@ -8,6 +8,6 @@
 
 #import "MyViewController.h"
 #import "ZYQAssetPickerController.h"
-@interface MyBodyViewController : MyViewController<UIActionSheetDelegate,ZYQAssetPickerControllerDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+@interface MyBodyViewController : MyViewController<UIActionSheetDelegate,ZYQAssetPickerControllerDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITextFieldDelegate>
 
 @end

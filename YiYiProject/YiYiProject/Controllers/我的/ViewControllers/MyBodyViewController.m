@@ -18,6 +18,7 @@
     UITextField *yaoWeiTextField;//腰围
     UITextField *TunWeiTextField;//臀围
     UIImageView *imageView;//生活照
+    NSDictionary *sourceDic;//数据源字典
 }
 @end
 
@@ -32,6 +33,7 @@
     self.myTitle=@"我的体型";
     [self createRootScrolliew];
     [self createViews];
+    [self getNetData];
     // Do any additional setup after loading the view.
 }
 -(void)createRootScrolliew
@@ -66,18 +68,23 @@
     }
     
     shenGaoTextField = [[UITextField alloc] initWithFrame:CGRectMake(68, (50-40)/2.0, 100, 40)];
-    shenGaoTextField.backgroundColor = [UIColor clearColor];
+    shenGaoTextField.backgroundColor = [UIColor whiteColor];
     shenGaoTextField.font = [UIFont systemFontOfSize:15];
     shenGaoTextField.keyboardType = UIKeyboardTypeDecimalPad;
     //shenGaoTextField.textAlignment = NSTextAlignmentRight;
     shenGaoTextField.placeholder = @"单位:cm";
+    shenGaoTextField.delegate = self;
     [jiBenInfoView addSubview:shenGaoTextField];
+    
+//    UILabel *label1 = [LTools createLabelFrame:CGRectMake(shenGaoTextField.frame.origin.x+shenGaoTextField.frame.size.width, shenGaoTextField.frame.origin.y, 30, 40) title:@"cm" font:15 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"000000"]];
+//    [jiBenInfoView addSubview:label1];
     
     tiZhongTextField = [[UITextField alloc] initWithFrame:CGRectMake(68, (50-15)/2.0+50, 100, 15)];
     tiZhongTextField.backgroundColor = [UIColor clearColor];
     tiZhongTextField.font = [UIFont systemFontOfSize:15];
     tiZhongTextField.placeholder = @"单位:kg";
     tiZhongTextField.keyboardType = UIKeyboardTypeDecimalPad;
+    tiZhongTextField.delegate = self;
     //tiZhongTextField.textAlignment = NSTextAlignmentRight;
     [jiBenInfoView addSubview:tiZhongTextField];
     
@@ -87,6 +94,7 @@
     jianKuanTextField.keyboardType = UIKeyboardTypeDecimalPad;
     //jianKuanTextField.textAlignment = NSTextAlignmentRight;
     jianKuanTextField.placeholder = @"单位:cm";
+    jianKuanTextField.delegate = self;
     [jiBenInfoView addSubview:jianKuanTextField];
     
     UIView *sanWeiView = [[UIView alloc] initWithFrame:CGRectMake(0, jiBenInfoView.frame.origin.y+jiBenInfoView.frame.size.height+16, DEVICE_WIDTH, 150)];
@@ -112,6 +120,7 @@
     xiongWeiTextField = [[UITextField alloc] initWithFrame:CGRectMake(68, (50-15)/2.0, 100, 15)];
     xiongWeiTextField.backgroundColor = [UIColor clearColor];
     xiongWeiTextField.placeholder = @"单位:cm";
+    xiongWeiTextField.delegate = self;
     xiongWeiTextField.font = [UIFont systemFontOfSize:15];
     xiongWeiTextField.keyboardType = UIKeyboardTypeDecimalPad;
     //xiongWeiTextField.textAlignment = NSTextAlignmentRight;
@@ -121,6 +130,7 @@
     yaoWeiTextField.backgroundColor = [UIColor clearColor];
     yaoWeiTextField.font = [UIFont systemFontOfSize:15];
     yaoWeiTextField.placeholder = @"单位:cm";
+    yaoWeiTextField.delegate = self;
     yaoWeiTextField.keyboardType = UIKeyboardTypeDecimalPad;
     //yaoWeiTextField.textAlignment = NSTextAlignmentRight;
     [sanWeiView addSubview:yaoWeiTextField];
@@ -129,6 +139,7 @@
     TunWeiTextField.backgroundColor = [UIColor clearColor];
     TunWeiTextField.font = [UIFont systemFontOfSize:15];
     TunWeiTextField.placeholder = @"单位:cm";
+    TunWeiTextField.delegate = self;
     TunWeiTextField.keyboardType = UIKeyboardTypeDecimalPad;
     //TunWeiTextField.textAlignment = NSTextAlignmentRight;
     [sanWeiView addSubview:TunWeiTextField];
@@ -234,20 +245,21 @@
 {
     
     //设置接收响应类型为标准HTTP类型(默认为响应类型为JSON)
+    NSDictionary *paraments = @{
+                                @"authcode":[GMAPI getAuthkey],
+                                @"height": [shenGaoTextField.text substringToIndex:shenGaoTextField.text.length - 3],
+                                @"weight": [tiZhongTextField.text substringToIndex:tiZhongTextField.text.length -3],
+                                @"shoulder_width":[jianKuanTextField.text substringToIndex:jianKuanTextField.text.length - 3],
+                                @"chest_width":[xiongWeiTextField.text substringToIndex:xiongWeiTextField.text.length -3],
+                                @"waistline":[yaoWeiTextField.text substringToIndex:yaoWeiTextField.text.length - 3],
+                                @"hipline":[TunWeiTextField.text substringToIndex:TunWeiTextField.text.length -3]
+                                };
+    
     AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     AFHTTPRequestOperation  * o2= [manager
-                                   POST:POST_ADDCLOTHES_URL
-                                   parameters:@{
-                                                @"authcode":[GMAPI getAuthkey],
-                                                @"height": shenGaoTextField.text,
-                                                @"weight": tiZhongTextField.text,
-                                                @"shoulderwidth":jianKuanTextField.text,
-                                                @"chestwidth":xiongWeiTextField.text,
-                                                @"waistline":yaoWeiTextField.text,
-                                                @"hipline":TunWeiTextField.text
-                                                
-                                                }
+                                   POST:POST_EDITMYBODY_URL
+                                   parameters:paraments
                                    constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
                                    {
                                            NSData *imageData =UIImageJPEGRepresentation(imageView.image, 0.1);
@@ -273,12 +285,73 @@
     
     
 }
-
+-(void)getNetData{
+    NSString *api = [NSString stringWithFormat:GET_GETMYBODY_URL,[GMAPI getAuthkey]];
+    
+    NSLog(@"api===%@",api);
+    GmPrepareNetData *gg = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+    [gg requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        if(result && [[result objectForKey:@"errorcode"] integerValue] == 0)
+        {
+            sourceDic = result;
+            shenGaoTextField.text = [[sourceDic objectForKey:@"height"] stringByAppendingString:@" cm"];
+            tiZhongTextField.text = [[sourceDic objectForKey:@"weight"] stringByAppendingString:@" kg"];
+            jianKuanTextField.text = [[sourceDic objectForKey:@"shoulder_width"] stringByAppendingString:@" cm"];
+            xiongWeiTextField.text = [[sourceDic objectForKey:@"chest_width"] stringByAppendingString:@" cm"];
+            yaoWeiTextField.text = [[sourceDic objectForKey:@"waistline"] stringByAppendingString:@" cm"];
+            TunWeiTextField.text = [[sourceDic objectForKey:@"hipline"] stringByAppendingString:@" cm"];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:[sourceDic objectForKey:@"recent_photo"]]];
+            
+        }
+        
+        NSLog(@"%@",result);
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSLog(@"%@",failDic);
+        
+    }];
+    
+}
+-(void)createPickView
+{
+    
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    return YES;
+}
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if(textField.text.length > 3)
+    {
+    textField.text = [textField.text substringToIndex:textField.text.length -3];
+    }
+}
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
+    return YES;
+}
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if(textField.text.length == 0)
+    {
+        return;
+    }
+    if(textField == tiZhongTextField)
+    {
+       textField.text = [textField.text stringByAppendingString:@" kg"];
+    }
+    else
+    {
+        textField.text = [textField.text stringByAppendingString:@" cm"];
+    }
+}
 /*
 #pragma mark - Navigation
 

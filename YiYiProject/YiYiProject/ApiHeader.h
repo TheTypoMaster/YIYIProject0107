@@ -288,7 +288,22 @@ typedef enum {
 
 #define MY_CONCERN_MAIL_CANCEL @"http://182.92.158.32/?d=api&c=friendship&m=mallDestory"//取消关注商家
 
-#define POST_MYBODY_URL @"http://182.92.158.32/index.php?d=api&c=user_api&m=update_user_body_info"//修改我的体型
+#define POST_EDITMYBODY_URL @"http://182.92.158.32/index.php?d=api&c=user_api&m=update_user_body_info"//修改我的体型
+
+#define GET_GETMYBODY_URL @"http://182.92.158.32/index.php?d=api&c=user_api&m=get_user_body_info&authcode=%@"//获取我的体型信息
+
+#define GET_GETMYSTYLE_URL @"http://182.92.158.32/index.php?d=api&c=division&m=get_my_styles&authcode=%@"//获取我的搭配风格
+
+#define GET_ADDSTYLE_URL @"http://182.92.158.32/index.php?d=api&c=division&m=add_style&style_pid=%@&style_name=%@&authcode=%@"//添加搭配风格
+
+#define GET_EDITSTYLENAME_URL @"http://182.92.158.32/index.php?d=api&c=division&m=update_style&style_id=%@&style_name=%@&authcode=%@"//修改搭配风格名字
+
+#define GET_DELETESTYLENAME_URL @"http://182.92.158.32/index.php?d=api&c=division&m=del_style&style_id=%@&authcode=%@"//删除搭配风格
+
+#define POST_ADDDAPEISTYLE_URL @"http://182.92.158.32/index.php?d=api&c=division&m=add_division"//添加我的搭配
+#define GET_DIVISION_INFO @"http://182.92.158.32/index.php?d=api&c=division&m=get_division_info&division_id=%@&authcode=%@"
+
+#define GET_DIVISOINBYSTYLE_URL @"http://182.92.158.32/index.php?d=api&c=division&m=get_divisions_by_style&style_id=%@&authcode=%@"
 #endif
 
 
