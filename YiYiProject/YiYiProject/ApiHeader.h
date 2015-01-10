@@ -304,15 +304,12 @@ typedef enum {
 #define POST_MYBODY_URL @"http://182.92.158.32/index.php?d=api&c=user_api&m=update_user_body_info"//修改我的体型
 
 
-<<<<<<< HEAD
-#define KAITONG_DIANPU_URL @"182.92.158.32/?d=api&c=mall&m=addMall"
-=======
+#define KAITONG_DIANPU_URL @"http://182.92.158.32/?d=api&c=mall&m=addMall"
 
 #pragma - mark 搭配师话题
 
 #define TOPIC_ADD @"http://182.92.158.32/index.php?d=api&c=topic&m=publish_topic"//添加话题
 
->>>>>>> FETCH_HEAD
 
 #endif
 
