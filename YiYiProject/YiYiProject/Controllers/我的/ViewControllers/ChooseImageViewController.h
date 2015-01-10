@@ -7,10 +7,12 @@
 //
 
 #import "MyViewController.h"
-
-@interface ChooseImageViewController : MyViewController
+#import "LWaterflowView.h"
+@interface ChooseImageViewController : MyViewController<TMQuiltViewDataSource,WaterFlowDelegate>
 {
+     LWaterflowView *waterFlow;
     @public
     NSDictionary *sourceDic;
+    
 }
 @end

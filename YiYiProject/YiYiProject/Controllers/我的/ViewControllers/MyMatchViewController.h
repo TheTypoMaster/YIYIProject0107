@@ -9,5 +9,7 @@
 #import "MyViewController.h"
 
 @interface MyMatchViewController : MyViewController
-
+{
+    
+}
 @end

@@ -8,6 +8,6 @@
 
 #import "MyViewController.h"
 
-@interface FreeCollocationViewController : MyViewController
+@interface FreeCollocationViewController : MyViewController<UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate>
 
 @end
