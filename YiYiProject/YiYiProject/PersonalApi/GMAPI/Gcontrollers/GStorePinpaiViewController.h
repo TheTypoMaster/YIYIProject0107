@@ -13,9 +13,12 @@
 #import <UIKit/UIKit.h>
 #import "ParallaxHeaderView.h"
 
-@interface GStorePinpaiViewController : UIViewController
+@interface GStorePinpaiViewController : MyViewController
 
 
+@property(nonatomic,strong)NSString *pinpaiNameStr;//品牌名称
+@property(nonatomic,strong)NSString *storeNameStr;//商家名称
 
+@property(nonatomic,strong)NSString *storeIdStr;//商城id
 
 @end

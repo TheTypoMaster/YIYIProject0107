@@ -10,6 +10,7 @@
 #import "GmPrepareNetData.h"
 #import "NSDictionary+GJson.h"
 #import "GnearbyStoreViewController.h"
+#import "GStorePinpaiViewController.h"
 
 @interface GpinpaiDetailViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -147,9 +148,12 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    GnearbyStoreViewController *cc = [[GnearbyStoreViewController alloc]init];
     NSDictionary *dic = _dataArray[indexPath.row];
+    
+    GStorePinpaiViewController *cc = [[GStorePinpaiViewController alloc]init];
     cc.storeIdStr = [dic stringValueForKey:@"mall_id"];
+    cc.pinpaiNameStr = self.pinpaiName;
+    cc.storeNameStr = [dic stringValueForKey:@"mall_name"];
     [self.navigationController pushViewController:cc animated:YES];
     
     

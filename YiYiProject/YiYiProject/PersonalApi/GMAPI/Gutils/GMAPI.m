@@ -273,8 +273,6 @@
     }
 }
 
-
-
 ///开始定位
 -(void)startLocation{
     _locService = [[BMKLocationService alloc]init];
@@ -289,7 +287,6 @@
         _locService = nil;
     }
 }
-
 
 //用户位置更新后，会调用此函数
 - (void)didUpdateUserLocation:(BMKUserLocation *)userLocation

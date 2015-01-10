@@ -15,6 +15,7 @@
 @property(nonatomic,strong)NSString *pinpaiIdStr;//品牌id
 @property(nonatomic,strong)NSString *pinpaiName;//品牌名称
 
+
 @end
 
 

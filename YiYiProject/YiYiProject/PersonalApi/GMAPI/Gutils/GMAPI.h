@@ -91,15 +91,17 @@ typedef void(^ GCllocationBlock)(CLLocation *theLocation);
 
 
 
+
 //信息处理
 +(NSString *)exchangeStringForDeleteNULL:(id)sender;
 
 
-///开始定位
--(void)startLocation:(UIButton*)sender;
 
-///停止定位
--(void)stopLocation:(UIButton*)sender;
+//地图相关
+//获取经纬度
+- (void)GgetCllocation:(void(^)(CLLocation *theLocation))completionBlock;
+
+
 
 
 
