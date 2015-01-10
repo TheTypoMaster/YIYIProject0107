@@ -360,7 +360,7 @@
 		E30479471A6109B800709985 /* ParallaxHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = E30479441A6109B800709985 /* ParallaxHeaderView.m */; };
 		E30479481A6109B800709985 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = E30479461A6109B800709985 /* UIImage+ImageEffects.m */; };
 		E304794B1A6109DE00709985 /* GStorePinpaiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E304794A1A6109DE00709985 /* GStorePinpaiViewController.m */; };
-		E304794D1A6112E400709985 /* 1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E304794C1A6112E400709985 /* 1@2x.png */; };
+		E304794D1A6112E400709985 /* guserbannerdefaul@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E304794C1A6112E400709985 /* guserbannerdefaul@2x.png */; };
 		E3996EBA1A5E1DBA00673147 /* GEditPersonInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E2F1A5E1DBA00673147 /* GEditPersonInfoViewController.m */; };
 		E3996EBB1A5E1DBA00673147 /* GLeadBuyMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E311A5E1DBA00673147 /* GLeadBuyMapViewController.m */; };
 		E3996EBC1A5E1DBA00673147 /* GMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E331A5E1DBA00673147 /* GMapViewController.m */; };
@@ -929,7 +929,7 @@
 		E30479461A6109B800709985 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		E30479491A6109DE00709985 /* GStorePinpaiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GStorePinpaiViewController.h; sourceTree = "<group>"; };
 		E304794A1A6109DE00709985 /* GStorePinpaiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GStorePinpaiViewController.m; sourceTree = "<group>"; };
-		E304794C1A6112E400709985 /* 1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1@2x.png"; sourceTree = "<group>"; };
+		E304794C1A6112E400709985 /* guserbannerdefaul@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "guserbannerdefaul@2x.png"; sourceTree = "<group>"; };
 		E3996E2E1A5E1DBA00673147 /* GEditPersonInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GEditPersonInfoViewController.h; sourceTree = "<group>"; };
 		E3996E2F1A5E1DBA00673147 /* GEditPersonInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GEditPersonInfoViewController.m; sourceTree = "<group>"; };
 		E3996E301A5E1DBA00673147 /* GLeadBuyMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLeadBuyMapViewController.h; sourceTree = "<group>"; };
@@ -2426,7 +2426,7 @@
 		E3996E3E1A5E1DBA00673147 /* Gmodels */ = {
 			isa = PBXGroup;
 			children = (
-				E304794C1A6112E400709985 /* 1@2x.png */,
+				E304794C1A6112E400709985 /* guserbannerdefaul@2x.png */,
 				E3996E411A5E1DBA00673147 /* Gmodel.h */,
 				E3996E421A5E1DBA00673147 /* Gmodel.m */,
 				E3996E441A5E1DBA00673147 /* gpin@2x.png */,
@@ -2725,7 +2725,7 @@
 				138C2BF91A39E09200EA59F5 /* UMShareEditViewController.xib in Resources */,
 				137B086A1A4EAC9900DE7DCC /* xiaoxi_down@2x.png in Resources */,
 				137B07CE1A4E6FDF00DE7DCC /* fenxiangb@3x.png in Resources */,
-				E304794D1A6112E400709985 /* 1@2x.png in Resources */,
+				E304794D1A6112E400709985 /* guserbannerdefaul@2x.png in Resources */,
 				13963F511A4FE3A5007BE68B /* fabu@3x.png in Resources */,
 				137B08631A4EAC9900DE7DCC /* home_up@2x.png in Resources */,
 				13681C851A453B9700671D07 /* back@2x.png in Resources */,

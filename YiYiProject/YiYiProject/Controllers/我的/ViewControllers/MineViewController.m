@@ -30,7 +30,7 @@
 
 #import "ParallaxHeaderView.h"
 #import "UIImage+ImageEffects.h"
-
+#import "NSDictionary+GJson.h"
 
 typedef enum{
     USERFACE = 0,//头像
@@ -140,13 +140,22 @@ typedef enum{
 
 //网络请求获取用户信息
 -(void)GgetUserInfo{
-    NSString *URLstr = [NSString stringWithFormat:@"%@&%@",PERSON_GETUSERINFO,[GMAPI getAuthkey]];
+    NSString *URLstr = [NSString stringWithFormat:@"%@&authcode=%@",PERSON_GETUSERINFO,[GMAPI getAuthkey]];
     
     
     GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:URLstr isPost:NO postData:nil];
     [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"%@",result);
+        NSDictionary *dic = [result dictionaryValueForKey:@"user_info"];
+        
+        NSString *name = [dic stringValueForKey:@"user_name"];
+        NSString *score = [dic stringValueForKey:@"score"];
+        self.userNameLabel.text = [NSString stringWithFormat:@"昵称:%@",name];
+        self.userScoreLabel.text = [NSString stringWithFormat:@"积分:%@",score];
+        
+        [_tableView reloadData];
+        
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
     }];
@@ -159,7 +168,7 @@ typedef enum{
 -(UIView *)creatTableViewHeaderView{
     //底层view
     _backView = [ParallaxHeaderView parallaxHeaderViewWithCGSize:CGSizeMake(DEVICE_WIDTH, 150)];
-    _backView.headerImage = [UIImage imageNamed:@"1.png"];
+    _backView.headerImage = [UIImage imageNamed:@"guserbannerdefaul.png"];
     
     
     //banner
@@ -194,7 +203,7 @@ typedef enum{
     //头像
     self.userFaceImv = [[UIImageView alloc]initWithFrame:CGRectMake(30*GscreenRatio_320, 75*GscreenRatio_320, 50, 50)];
     self.userFaceImv.backgroundColor = RGBCOLOR_ONE;
-    self.userFaceImv.layer.cornerRadius = 25*GscreenRatio_320;
+    self.userFaceImv.layer.cornerRadius = 25;
     self.userFaceImv.layer.masksToBounds = YES;
 
     //昵称
@@ -213,7 +222,7 @@ typedef enum{
 
     //编辑按钮
     UIButton *editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [editBtn setFrame:CGRectMake(CGRectGetMaxX(self.userNameLabel.frame)+35, self.userFaceImv.frame.origin.y+20, 55, 44)];
+    [editBtn setFrame:CGRectMake(DEVICE_WIDTH-80, self.userFaceImv.frame.origin.y+15, 55, 44)];
     //    editBtn.backgroundColor = [UIColor purpleColor];
     editBtn.titleLabel.font = [UIFont systemFontOfSize:16];
     [editBtn addTarget:self action:@selector(goToEdit) forControlEvents:UIControlEventTouchUpInside];
@@ -411,9 +420,9 @@ typedef enum{
 
 
 -(void)goToEdit{
-    GMapViewController *ggg = [[GMapViewController alloc]init];
-    ggg.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:ggg animated:YES];
+//    GMapViewController *ggg = [[GMapViewController alloc]init];
+//    ggg.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:ggg animated:YES];
 }
 
 
