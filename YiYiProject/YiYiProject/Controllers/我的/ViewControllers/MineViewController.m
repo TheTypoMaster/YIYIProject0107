@@ -28,6 +28,9 @@
 //#import "ShenQingDianPuViewController.h"
 #import "ShenQingDianPuViewController.h"
 
+#import "ParallaxHeaderView.h"
+#import "UIImage+ImageEffects.h"
+
 
 typedef enum{
     USERFACE = 0,//头像
@@ -48,6 +51,7 @@ typedef enum{
     NSArray *_tabelViewCellTitleArray;//title文字数组
     NSArray *_logoImageArray;//title前面的logo图数组
     NSDictionary *_customInfo_tabelViewCell;//cell数据源
+    ParallaxHeaderView *_backView;//banner
 }
 @end
 
@@ -132,18 +136,22 @@ typedef enum{
 ///创建用户头像banner的view
 -(UIView *)creatTableViewHeaderView{
     //底层view
-    UIView *backView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 150.00)];
-    backView.backgroundColor = [UIColor whiteColor];
+    _backView = [ParallaxHeaderView parallaxHeaderViewWithCGSize:CGSizeMake(DEVICE_WIDTH, 150)];
+    _backView.headerImage = [UIImage imageNamed:@"1.png"];
+    
     
     //banner
-    self.userBannerImv = [[UIImageView alloc]initWithFrame:backView.frame];
-    self.userBannerImv.backgroundColor = RGBCOLOR_ONE;
-    //模糊效果
-    //    self.userBannerImv.layer.masksToBounds = NO;
-    //    self.userBannerImv.layer.shadowColor = [UIColor blackColor].CGColor;
-    //    self.userBannerImv.layer.shadowOffset = CGSizeMake(0.0f, 5.0f);//shadowOffset阴影偏移,x向右偏移4，y向下偏移4，默认(0, -3),这个跟shadowRadius配合使用
-    //    self.userBannerImv.layer.shadowOpacity = 0.5f;//阴影透明度，默认0
-    //    self.userBannerImv.layer.shadowRadius = 4;//阴影半径，默认3
+//    self.userBannerImv = [[UIImageView alloc]initWithFrame:backView.frame];
+//    [self.userBannerImv setImage:[UIImage imageNamed:@"1.png"]];
+//    backView.imageView = self.userBannerImv;
+//    //模糊效果
+//    //    self.userBannerImv.layer.masksToBounds = NO;
+//    //    self.userBannerImv.layer.shadowColor = [UIColor blackColor].CGColor;
+//    //    self.userBannerImv.layer.shadowOffset = CGSizeMake(0.0f, 5.0f);//shadowOffset阴影偏移,x向右偏移4，y向下偏移4，默认(0, -3),这个跟shadowRadius配合使用
+//    //    self.userBannerImv.layer.shadowOpacity = 0.5f;//阴影透明度，默认0
+//    //    self.userBannerImv.layer.shadowRadius = 4;//阴影半径，默认3
+
+    
     
     
     
@@ -153,7 +161,7 @@ typedef enum{
     titleLabel.font = [UIFont systemFontOfSize:16];
     titleLabel.text = @"我的";
     titleLabel.textColor = [UIColor whiteColor];
-    [self.userBannerImv addSubview:titleLabel];
+    [_backView addSubview:titleLabel];
     
     //小齿轮设置按钮
     UIButton *chilunBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -161,30 +169,26 @@ typedef enum{
     [chilunBtn setBackgroundImage:[UIImage imageNamed:@"my_shezhi.png"] forState:UIControlStateNormal];
     [chilunBtn addTarget:self action:@selector(xiaochilun) forControlEvents:UIControlEventTouchUpInside];
     
-    
-    
-    
-    
     //头像
     self.userFaceImv = [[UIImageView alloc]initWithFrame:CGRectMake(30*GscreenRatio_320, 75*GscreenRatio_320, 50, 50)];
     self.userFaceImv.backgroundColor = RGBCOLOR_ONE;
     self.userFaceImv.layer.cornerRadius = 25*GscreenRatio_320;
     self.userFaceImv.layer.masksToBounds = YES;
-    
+
     //昵称
     self.userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.userFaceImv.frame)+10, self.userFaceImv.frame.origin.y+6, 120*GscreenRatio_320, 14)];
     self.userNameLabel.text = @"昵称";
     self.userNameLabel.font = [UIFont systemFontOfSize:14];
     self.userNameLabel.textColor = [UIColor whiteColor];
     //    self.userNameLabel.backgroundColor = [UIColor lightGrayColor];
-    
+
     //积分
     self.userScoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.userNameLabel.frame.origin.x, CGRectGetMaxY(self.userNameLabel.frame)+10, self.userNameLabel.frame.size.width, self.userNameLabel.frame.size.height)];
     self.userScoreLabel.font = [UIFont systemFontOfSize:14];
     self.userScoreLabel.text = @"积分：2000";
     self.userScoreLabel.textColor = [UIColor whiteColor];
     //    self.userScoreLabel.backgroundColor = [UIColor orangeColor];
-    
+
     //编辑按钮
     UIButton *editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [editBtn setFrame:CGRectMake(CGRectGetMaxX(self.userNameLabel.frame)+35, self.userFaceImv.frame.origin.y+20, 55, 44)];
@@ -193,26 +197,24 @@ typedef enum{
     [editBtn addTarget:self action:@selector(goToEdit) forControlEvents:UIControlEventTouchUpInside];
     [editBtn setTitle:@"编辑" forState:UIControlStateNormal];
     
-    
-    
     //手势
     UITapGestureRecognizer *ddd = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(userBannerClicked)];
-    self.userBannerImv.userInteractionEnabled = YES;
-    [self.userBannerImv addGestureRecognizer:ddd];
+    _backView.imageView.userInteractionEnabled = YES;
+    [_backView.imageView addGestureRecognizer:ddd];
     UITapGestureRecognizer *eee = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(userFaceClicked)];
     self.userFaceImv.userInteractionEnabled = YES;
     [self.userFaceImv addGestureRecognizer:eee];
     
     
-    //添加视图
-    [backView addSubview:self.userBannerImv];
-    [backView addSubview:self.userFaceImv];
-    [backView addSubview:self.userNameLabel];
-    [backView addSubview:self.userScoreLabel];
-    [backView addSubview:editBtn];
-    [backView addSubview:chilunBtn];
+//    //添加视图
+//    [backView addSubview:self.userBannerImv];
+    [_backView addSubview:self.userFaceImv];
+    [_backView addSubview:self.userNameLabel];
+    [_backView addSubview:self.userScoreLabel];
+    [_backView addSubview:editBtn];
+    [_backView addSubview:chilunBtn];
     
-    return backView;
+    return _backView;
 }
 
 
@@ -550,7 +552,7 @@ typedef enum{
         self.userBanner = doneImage;
         self.userUploadImagedata = UIImageJPEGRepresentation(self.userBanner, 0.8);
         [GMAPI setUserBannerImageWithData:self.userUploadImagedata];//存储到本地
-        [self.userBannerImv setImage:[GMAPI getUserBannerImage]];//及时更新banner
+        _backView.headerImage = [GMAPI getUserBannerImage];//及时更新banner
         [GMAPI setUpUserBannerYes];//设置是否上传标志位
     }else if (_changeImageType == USERFACE){
         UIImage *doneImage = [self scaleToSize:cropImage size:UPIMAGECGSIZE_USERFACE];//按像素缩放
@@ -649,6 +651,20 @@ typedef enum{
     
 }
 
+
+
+#pragma mark -
+#pragma mark UISCrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    
+    if (scrollView == _tableView)
+    {
+        // pass the current offset of the UITableView so that the ParallaxHeaderView layouts the subViews.
+        [(ParallaxHeaderView *)_tableView.tableHeaderView layoutHeaderViewForScrollViewOffset:scrollView.contentOffset];
+    }
+}
 
 
 

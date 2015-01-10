@@ -263,6 +263,46 @@
 
 
 
+//地图相关
+
+- (void)GgetCllocation:(void(^)(CLLocation *theLocation))completionBlock{
+    _theCllocation = nil;
+    [self startLocation];
+    if (_theCllocation) {
+        gcllocationBlock(_theCllocation);
+    }
+}
+
+
+
+///开始定位
+-(void)startLocation{
+    _locService = [[BMKLocationService alloc]init];
+    _locService.delegate = self;
+    [_locService startUserLocationService];
+}
+
+///停止定位
+-(void)stopLocation{
+    [_locService stopUserLocationService];
+    if (_locService) {
+        _locService = nil;
+    }
+}
+
+
+//用户位置更新后，会调用此函数
+- (void)didUpdateUserLocation:(BMKUserLocation *)userLocation
+{
+    NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
+    if (userLocation) {
+        _theCllocation = userLocation.location;
+        [self stopLocation];
+    }
+    
+}
+
+
 
 
 
