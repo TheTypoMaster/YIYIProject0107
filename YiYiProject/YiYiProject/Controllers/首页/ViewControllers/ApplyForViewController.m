@@ -21,6 +21,17 @@
     UIButton * idcard_button;
     ///图标
     NSArray * image_array;
+    ///获取验证码按钮
+    UIButton * timer_button;
+    ///输入手机号码
+    UITextField * tel_textField;
+    ///验证码
+    UITextField * ver_textField;
+    
+    ///计时器
+    NSTimer * timer;
+    ///倒计时时间
+    int theCount;
 }
 
 
@@ -149,14 +160,14 @@
         imageView.center = CGPointMake(33,25);
         [cell.contentView addSubview:imageView];
         
-        UITextField * textField = [[UITextField alloc] initWithFrame:CGRectMake(54,0,DEVICE_WIDTH-160,50)];
-        textField.delegate = self;
-        textField.placeholder = [placeHolder_array objectAtIndex:indexPath.row];
-        textField.tag = 100+indexPath.row;
-        [cell.contentView addSubview:textField];
+        ver_textField = [[UITextField alloc] initWithFrame:CGRectMake(54,0,DEVICE_WIDTH-160,50)];
+        ver_textField.delegate = self;
+        ver_textField.placeholder = [placeHolder_array objectAtIndex:indexPath.row];
+        ver_textField.tag = 100+indexPath.row;
+        [cell.contentView addSubview:ver_textField];
         
         
-        UIButton * timer_button = [UIButton buttonWithType:UIButtonTypeCustom];
+        timer_button = [UIButton buttonWithType:UIButtonTypeCustom];
         timer_button.frame = CGRectMake(DEVICE_WIDTH-100,10,80,30);
         timer_button.titleLabel.font = [UIFont systemFontOfSize:15];
         [timer_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -164,8 +175,31 @@
         timer_button.backgroundColor = RGBCOLOR(189,189,189);
         timer_button.layer.masksToBounds = YES;
         timer_button.layer.cornerRadius = 5;
+        [timer_button addTarget:self action:@selector(timerButtonTap:) forControlEvents:UIControlEventTouchUpInside];
         [cell.contentView addSubview:timer_button];
-    }else
+    }else if(indexPath.row == 1)
+    {
+        UIImageView * imageView = [[UIImageView alloc] initWithImage:[image_array objectAtIndex:indexPath.row]];
+        imageView.center = CGPointMake(33,25);
+        [cell.contentView addSubview:imageView];
+        
+        tel_textField = [[UITextField alloc] initWithFrame:CGRectMake(54,0,DEVICE_WIDTH-160,50)];
+        tel_textField.delegate = self;
+        tel_textField.placeholder = [placeHolder_array objectAtIndex:indexPath.row];
+        tel_textField.tag = 100+indexPath.row;
+        [cell.contentView addSubview:tel_textField];
+    }else if(indexPath.row == 3)
+    {
+        UIImageView * imageView = [[UIImageView alloc] initWithImage:[image_array objectAtIndex:indexPath.row]];
+        imageView.center = CGPointMake(33,25);
+        [cell.contentView addSubview:imageView];
+        
+        UITextField * textField = [[UITextField alloc] initWithFrame:CGRectMake(54,0,DEVICE_WIDTH-160,50)];
+        textField.delegate = self;
+        textField.placeholder = [placeHolder_array objectAtIndex:indexPath.row];
+        textField.tag = 100+indexPath.row;
+        [cell.contentView addSubview:textField];
+    }else if(indexPath.row == 4)
     {
         UIImageView * imageView = [[UIImageView alloc] initWithImage:[image_array objectAtIndex:indexPath.row]];
         imageView.center = CGPointMake(33,25);
@@ -275,6 +309,62 @@
     
     
     [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - 获取验证码
+-(void)timerButtonTap:(UIButton *)button
+{
+    NSLog(@"我艹-----  %d",tel_textField.text.length);
+    if (tel_textField.text.length != 11)
+    {
+        [LTools showMBProgressWithText:@"请输入正确的手机号码" addToView:self.view];
+        return;
+    }
+    
+    NSString * fullUrl = [NSString stringWithFormat:USER_GET_SECURITY_CODE,tel_textField.text,4];
+    
+    AFHTTPRequestOperation * request = [[AFHTTPRequestOperation alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:fullUrl]]];
+    __weak typeof(self)bself = self;
+    [request setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary * allDic = [operation.responseString objectFromJSONString];
+        
+        if ([[allDic objectForKey:@"errorcode"] intValue] == 0)
+        {
+            [bself TheTimer];
+        }else
+        {
+            [LTools showMBProgressWithText:[allDic objectForKey:@"msg"] addToView:bself.view];
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [LTools showMBProgressWithText:@"验证码获取失败" addToView:bself.view];
+    }];
+    
+    [request start];
+}
+
+#pragma mark - 计时器
+-(void)TheTimer
+{
+    timer_button.userInteractionEnabled = NO;
+    timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(timerCount) userInfo:nil repeats:YES];
+}
+-(void)timerCount
+{
+    theCount++;
+
+    [timer_button setTitle:[NSString stringWithFormat:@"%d",(60-theCount)] forState:UIControlStateNormal];
+    
+    if (theCount == 60)
+    {
+        [timer invalidate];
+        [timer_button setTitle:@"重新发送" forState:UIControlStateNormal];
+        timer_button.userInteractionEnabled = YES;
+    }
+    
+    
+    
 }
 
 

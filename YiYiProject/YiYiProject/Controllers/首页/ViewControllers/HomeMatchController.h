@@ -11,6 +11,12 @@
  *  搭配师
  */
 
+typedef enum{
+    HomeMatchTeacherTypeZhiYe = 0,//职业
+    HomeMatchTeacherTypeShiShang=1,//时尚
+    HomeMatchTeacherTypeXiuXian=2,//休闲
+    HomeMatchTeacherTypeYunDong,//运动
+}HomeMatchTeacherType;//搭配师类型
 
 typedef enum{
     HomeMatchRequestTypeMy = 0,
@@ -25,6 +31,7 @@ typedef enum{
 @interface HomeMatchController : UIViewController
 {
     MatchSelectedType selected_type;
+    HomeMatchTeacherType teacher_type;
 }
 
 @property(nonatomic,assign)UIViewController *rootViewController;

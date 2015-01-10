@@ -199,7 +199,7 @@ typedef enum {
  page(页数 默认1)
  perpage(每页显示数量 默认10)
  */
-#define GET_DAPEISHI_URL @"http://182.92.158.32/index.php?d=api&c=division_t&m=get_division_teachers&action=%@&authcode=%@&tagid=%@&page=%d&perpage=%d"
+#define GET_DAPEISHI_URL @"http://182.92.158.32/index.php?d=api&c=division_t&m=get_division_teachers&action=%@&authcode=%@&tagid=%d&page=%d&perpage=%d"
 ///搭配师界面获取话题接口
 #define GET_TOPIC_DATA_URL @"http://182.92.158.32/index.php?d=api&c=topic&m=get_topics&uid=%@&page=%d&per_page=%d"
 ///搭配师界面获取搭配师搭配接口
@@ -211,7 +211,7 @@ typedef enum {
 #define GET_MATCH_DATA_URL @"http://182.92.158.32/index.php?d=api&c=division_t&m=get_division_tts&t_uid=%@&page=%d&per_page=%d"
 
 ///话题详情接口
-#define GET_TOPIC_DETAIL_URL @"http://182.92.158.32/index.php?d=api&c=topic&m=get_topic_info&topic_id=%@"
+#define GET_TOPIC_DETAIL_URL @"http://182.92.158.32/index.php?d=api&c=topic&m=get_topic_info&topic_id=%@&authcode=%@"
 ///获取话题评论接口
 #define GET_TOPIC_COMMENTS_URL @"http://182.92.158.32/index.php?d=api&c=topic&m=get_replies&topic_id=%@&page=%d&per_page=20"
 ///获取搭配师个人信息
