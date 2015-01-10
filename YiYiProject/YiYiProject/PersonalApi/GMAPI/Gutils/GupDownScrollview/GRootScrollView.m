@@ -88,6 +88,7 @@
     
 }
 
+
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     self.userContentOffsetX = scrollView.contentOffset.x;
@@ -205,7 +206,11 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSArray *dataArray = self.dataArray[tableView.tag-200];
     NSDictionary *dicInfo = dataArray[indexPath.row];
-    NSLog(@"商城id:%@",[dicInfo stringValueForKey:@"brand_id"]);
+    NSString *storeIdStr = [dicInfo stringValueForKey:@"brand_id"];
+    NSLog(@"商城id:%@",storeIdStr);
+    NSDictionary *dic = dataArray[indexPath.row];
+    NSString *pinpaiNameStr = [dic stringValueForKey:@"brand_name"];
+    self.thePinpaiBlock(storeIdStr,pinpaiNameStr);
     
 }
 
@@ -228,7 +233,9 @@
     return 0.01f;
 }
 
-
+-(void)setThePinpaiBlock:(pinpaiClick)thePinpaiBlock{
+    _thePinpaiBlock = thePinpaiBlock;
+}
 
 
 

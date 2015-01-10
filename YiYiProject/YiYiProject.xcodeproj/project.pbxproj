@@ -358,10 +358,6 @@
 		DF7467941A57FB0400F0AEC8 /* my_sc_guanbi@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF7467921A57FB0400F0AEC8 /* my_sc_guanbi@3x.png */; };
 		DFC7812A1A6159FD00776C62 /* MyMatchDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC781291A6159FD00776C62 /* MyMatchDetailViewController.m */; };
 		DFC7812D1A615FF700776C62 /* MyMatchDivisionDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC7812C1A615FF700776C62 /* MyMatchDivisionDetailViewController.m */; };
-
-		DFC7812F1A616D3100776C62 /* libiOS_IMKit_v1_2_7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC7812E1A616D3100776C62 /* libiOS_IMKit_v1_2_7.a */; };
-
-
 		E30479471A6109B800709985 /* ParallaxHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = E30479441A6109B800709985 /* ParallaxHeaderView.m */; };
 		E30479481A6109B800709985 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = E30479461A6109B800709985 /* UIImage+ImageEffects.m */; };
 		E304794B1A6109DE00709985 /* GStorePinpaiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E304794A1A6109DE00709985 /* GStorePinpaiViewController.m */; };
@@ -374,6 +370,9 @@
 		E3601E781A61733300CC41FE /* gupname@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3601E731A61733300CC41FE /* gupname@3x.png */; };
 		E3601E791A61733300CC41FE /* gupname1@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3601E741A61733300CC41FE /* gupname1@3x.png */; };
 		E3601E7B1A61733C00CC41FE /* gimv1_back@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3601E7A1A61733C00CC41FE /* gimv1_back@3x.png */; };
+		E3601E7D1A61A05800CC41FE /* libiOS_IMKit_v1_2_7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E3601E7C1A61A05800CC41FE /* libiOS_IMKit_v1_2_7.a */; };
+		E3601E801A61A27900CC41FE /* GcustomStoreTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3601E7F1A61A27900CC41FE /* GcustomStoreTableViewCell.m */; };
+		E3601E821A61A75700CC41FE /* gcustomstore@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3601E811A61A75700CC41FE /* gcustomstore@3x.png */; };
 		E3996EBA1A5E1DBA00673147 /* GEditPersonInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E2F1A5E1DBA00673147 /* GEditPersonInfoViewController.m */; };
 		E3996EBB1A5E1DBA00673147 /* GLeadBuyMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E311A5E1DBA00673147 /* GLeadBuyMapViewController.m */; };
 		E3996EBC1A5E1DBA00673147 /* GMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E331A5E1DBA00673147 /* GMapViewController.m */; };
@@ -416,7 +415,6 @@
 		E3E3E8481A3C6772001A1DD6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E3E8471A3C6772001A1DD6 /* CoreLocation.framework */; };
 		E3E3E84A1A3C6780001A1DD6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E3E8491A3C6780001A1DD6 /* QuartzCore.framework */; };
 		E3E3E84C1A3C678C001A1DD6 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E3E84B1A3C678C001A1DD6 /* OpenGLES.framework */; };
-		E3EDF11D1A614F7A00F24F61 /* libiOS_IMKit_v1_2_7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E3EDF11C1A614F7A00F24F61 /* libiOS_IMKit_v1_2_7.a */; };
 		E3FC8DE71A3C4B430025525D /* GeditUserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FC8DE61A3C4B430025525D /* GeditUserInfoViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -939,10 +937,6 @@
 		DFC781291A6159FD00776C62 /* MyMatchDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyMatchDetailViewController.m; sourceTree = "<group>"; };
 		DFC7812B1A615FF700776C62 /* MyMatchDivisionDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyMatchDivisionDetailViewController.h; sourceTree = "<group>"; };
 		DFC7812C1A615FF700776C62 /* MyMatchDivisionDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyMatchDivisionDetailViewController.m; sourceTree = "<group>"; };
-
-		DFC7812E1A616D3100776C62 /* libiOS_IMKit_v1_2_7.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libiOS_IMKit_v1_2_7.a; sourceTree = "<group>"; };
-
-
 		E30479431A6109B800709985 /* ParallaxHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParallaxHeaderView.h; sourceTree = "<group>"; };
 		E30479441A6109B800709985 /* ParallaxHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParallaxHeaderView.m; sourceTree = "<group>"; };
 		E30479451A6109B800709985 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
@@ -960,6 +954,10 @@
 		E3601E731A61733300CC41FE /* gupname@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gupname@3x.png"; sourceTree = "<group>"; };
 		E3601E741A61733300CC41FE /* gupname1@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gupname1@3x.png"; sourceTree = "<group>"; };
 		E3601E7A1A61733C00CC41FE /* gimv1_back@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gimv1_back@3x.png"; sourceTree = "<group>"; };
+		E3601E7C1A61A05800CC41FE /* libiOS_IMKit_v1_2_7.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libiOS_IMKit_v1_2_7.a; sourceTree = "<group>"; };
+		E3601E7E1A61A27900CC41FE /* GcustomStoreTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GcustomStoreTableViewCell.h; sourceTree = "<group>"; };
+		E3601E7F1A61A27900CC41FE /* GcustomStoreTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GcustomStoreTableViewCell.m; sourceTree = "<group>"; };
+		E3601E811A61A75700CC41FE /* gcustomstore@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gcustomstore@3x.png"; sourceTree = "<group>"; };
 		E3996E2E1A5E1DBA00673147 /* GEditPersonInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GEditPersonInfoViewController.h; sourceTree = "<group>"; };
 		E3996E2F1A5E1DBA00673147 /* GEditPersonInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GEditPersonInfoViewController.m; sourceTree = "<group>"; };
 		E3996E301A5E1DBA00673147 /* GLeadBuyMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLeadBuyMapViewController.h; sourceTree = "<group>"; };
@@ -1091,7 +1089,6 @@
 		E3E3E8471A3C6772001A1DD6 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		E3E3E8491A3C6780001A1DD6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E3E3E84B1A3C678C001A1DD6 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
-		E3EDF11C1A614F7A00F24F61 /* libiOS_IMKit_v1_2_7.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libiOS_IMKit_v1_2_7.a; sourceTree = "<group>"; };
 		E3FC8DE51A3C4B430025525D /* GeditUserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeditUserInfoViewController.h; sourceTree = "<group>"; };
 		E3FC8DE61A3C4B430025525D /* GeditUserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeditUserInfoViewController.m; sourceTree = "<group>"; };
 		F47272E4C36CD60C81CD9A79 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1109,11 +1106,7 @@
 				E3E3E84A1A3C6780001A1DD6 /* QuartzCore.framework in Frameworks */,
 				E3E3E84C1A3C678C001A1DD6 /* OpenGLES.framework in Frameworks */,
 				137FC2B21A4DAE780039E3FF /* MapKit.framework in Frameworks */,
-
-				DFC7812F1A616D3100776C62 /* libiOS_IMKit_v1_2_7.a in Frameworks */,
-
-				E3EDF11D1A614F7A00F24F61 /* libiOS_IMKit_v1_2_7.a in Frameworks */,
-
+				E3601E7D1A61A05800CC41FE /* libiOS_IMKit_v1_2_7.a in Frameworks */,
 				138C2C141A39E46B00EA59F5 /* libz.dylib in Frameworks */,
 				138C2C121A39E45E00EA59F5 /* libstdc++.dylib in Frameworks */,
 				138C2C0E1A39E25000EA59F5 /* libsqlite3.dylib in Frameworks */,
@@ -1623,11 +1616,7 @@
 		137FC2B61A4DB2DC0039E3FF /* IMKit */ = {
 			isa = PBXGroup;
 			children = (
-
-				DFC7812E1A616D3100776C62 /* libiOS_IMKit_v1_2_7.a */,
-
-				E3EDF11C1A614F7A00F24F61 /* libiOS_IMKit_v1_2_7.a */,
-
+				E3601E7C1A61A05800CC41FE /* libiOS_IMKit_v1_2_7.a */,
 				137FC2B71A4DB2DC0039E3FF /* Headers */,
 				137FC2DC1A4DB2DC0039E3FF /* RongCloud.bundle */,
 			);
@@ -2467,6 +2456,7 @@
 		E3996E3E1A5E1DBA00673147 /* Gmodels */ = {
 			isa = PBXGroup;
 			children = (
+				E3601E811A61A75700CC41FE /* gcustomstore@3x.png */,
 				E3601E7A1A61733C00CC41FE /* gimv1_back@3x.png */,
 				E3601E701A61733300CC41FE /* gdownname@3x.png */,
 				E3601E711A61733300CC41FE /* gdownname1@3x.png */,
@@ -2649,6 +2639,8 @@
 				E3996EB91A5E1DBA00673147 /* GTableViewCell.m */,
 				E3601E6D1A61716100CC41FE /* GView.h */,
 				E3601E6E1A61716100CC41FE /* GView.m */,
+				E3601E7E1A61A27900CC41FE /* GcustomStoreTableViewCell.h */,
+				E3601E7F1A61A27900CC41FE /* GcustomStoreTableViewCell.m */,
 			);
 			path = Gviews;
 			sourceTree = "<group>";
@@ -2939,6 +2931,7 @@
 				137B07DD1A4E6FDF00DE7DCC /* 1+1_botton@3x.png in Resources */,
 				E3996ED31A5E1DBA00673147 /* gRed@2x.png in Resources */,
 				137B08311A4E716700DE7DCC /* dian_shangchang@2x.png in Resources */,
+				E3601E821A61A75700CC41FE /* gcustomstore@3x.png in Resources */,
 				E3B139171A5EAEE200B9189A /* gjiantouright@2x.png in Resources */,
 				DF6855821A592181004D924F /* ZYQAssetPicker.Bundle in Resources */,
 				13681C891A453DE600671D07 /* login_phone@2x.png in Resources */,
@@ -3141,6 +3134,7 @@
 				5697222C1A408040004B6641 /* HomeMatchView.m in Sources */,
 				13A389A21A38942D00ABBACB /* MineViewController.m in Sources */,
 				13B690771A580291007FE152 /* BrandViewCell.m in Sources */,
+				E3601E801A61A27900CC41FE /* GcustomStoreTableViewCell.m in Sources */,
 				DF5E89B01A5E676E00535EBA /* ChooseClothesViewController.m in Sources */,
 				13A389861A387A8800ABBACB /* UIColor+ConvertColor.m in Sources */,
 				19B937761A5D8780009B359F /* ShenQingDianPuViewController.m in Sources */,

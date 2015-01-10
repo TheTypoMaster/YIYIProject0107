@@ -11,11 +11,17 @@
 #import "NSDictionary+GJson.h"
 #import "GnearbyStoreViewController.h"
 #import "GStorePinpaiViewController.h"
+#import "GcustomStoreTableViewCell.h"
 
 @interface GpinpaiDetailViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *_tableView;
     NSArray *_dataArray;
+    
+    
+    
+    GcustomStoreTableViewCell *_tmpCell;//用户获取自定义单元格高度
+    
 }
 @end
 
@@ -91,17 +97,17 @@
 }
 
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 67;
-}
+//-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+//    return 67;
+//}
 
 
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *identifier = @"identifier";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    GcustomStoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        cell = [[GcustomStoreTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     
     for (UIView *view in cell.contentView.subviews) {
@@ -111,36 +117,33 @@
     //数据源
     NSDictionary *dic = _dataArray[indexPath.row];
     
-    //name
-    UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 18, 0, 16)];
-    nameLabel.font = [UIFont boldSystemFontOfSize:15];
-    nameLabel.text = [dic stringValueForKey:@"mall_name"];
-    [nameLabel sizeToFit];
-    
-    //距离
-    UILabel *distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(nameLabel.frame)+15, nameLabel.frame.origin.y+4, 0, nameLabel.frame.size.height)];
-    distanceLabel.font = [UIFont systemFontOfSize:12];
-    distanceLabel.textColor = RGBCOLOR(153, 153, 153);
-    distanceLabel.text = [NSString stringWithFormat:@"%@m",[dic stringValueForKey:@"distance"]];
-    [distanceLabel sizeToFit];
     
     
-    //活动
-    UILabel *activeLabel = [[UILabel alloc]initWithFrame:CGRectMake(nameLabel.frame.origin.x, CGRectGetMaxY(nameLabel.frame)+10, 0, 15)];
-    activeLabel.font = [UIFont systemFontOfSize:14];
-    activeLabel.textColor = RGBCOLOR(114, 114, 114);
-    activeLabel.text = [dic stringValueForKey:@"activity_info"];
-    [activeLabel sizeToFit];
+    //通过数据源加载数据
+    [cell loadCustomCellWithDic:dic];
     
     
-    
-    [cell.contentView addSubview:nameLabel];
-    [cell.contentView addSubview:distanceLabel];
-    [cell.contentView addSubview:activeLabel];
     
     return cell;
 }
 
+
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    CGFloat cellHeight = 0.0f;
+    
+    if (_tmpCell) {
+        cellHeight = [_tmpCell loadCustomCellWithDic:_dataArray[indexPath.row]];
+    }else{
+        _tmpCell = [[GcustomStoreTableViewCell alloc]init];
+        cellHeight = [_tmpCell loadCustomCellWithDic:_dataArray[indexPath.row]];
+    }
+    
+    return cellHeight;
+    
+    
+}
 
 
 

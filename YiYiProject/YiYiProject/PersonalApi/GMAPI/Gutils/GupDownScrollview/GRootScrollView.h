@@ -10,6 +10,8 @@
 @class GtopScrollView;
 
 
+typedef void(^pinpaiClick)(NSString *pinpaiId,NSString *pinpaiName);
+
 typedef enum{
     GROOTFLOOR = 0,
     GROOTPINPAI
@@ -28,8 +30,10 @@ typedef enum{
 @property(nonatomic,strong)NSMutableArray *tabelViewArray;//所有的tableview数组
 @property(nonatomic,strong)NSMutableArray *dataArray;//数据源 二维数组
 @property(nonatomic,assign)GROOTTYPE theGRootScrollType;
-
+@property(nonatomic,copy)pinpaiClick thePinpaiBlock;
 
 - (void)initWithViews;
+
+-(void)setThePinpaiBlock:(pinpaiClick)thePinpaiBlock;
 
 @end

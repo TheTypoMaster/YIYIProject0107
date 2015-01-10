@@ -41,7 +41,7 @@ typedef enum{
 #define CROPIMAGERATIO_USERBANNER 0.4687//banner 图片裁剪框高宽比
 #define CROPIMAGERATIO_USERFACE 1.0//头像 图片裁剪框宽高比例
 
-#define UPIMAGECGSIZE_USERBANNER CGSizeMake(1080,1080*0.618)//需要上传的banner的分辨率
+#define UPIMAGECGSIZE_USERBANNER CGSizeMake(1080,1080*0.4687)//需要上传的banner的分辨率
 #define UPIMAGECGSIZE_USERFACE CGSizeMake(200,200)//需要上传的头像的分辨率
 
 @interface MineViewController ()<UITableViewDataSource,UITableViewDelegate,GcustomActionSheetDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,MLImageCropDelegate>
@@ -167,9 +167,10 @@ typedef enum{
 ///创建用户头像banner的view
 -(UIView *)creatTableViewHeaderView{
     //底层view
-    _backView = [ParallaxHeaderView parallaxHeaderViewWithCGSize:CGSizeMake(DEVICE_WIDTH, 150*GscreenRatio_320)];
+    _backView = [ParallaxHeaderView parallaxHeaderViewWithCGSize:CGSizeMake(DEVICE_WIDTH, 150.00*DEVICE_WIDTH/320)];
     _backView.headerImage = [UIImage imageNamed:@"guserbannerdefaul.png"];
     
+    NSLog(@"%@",NSStringFromCGRect(_backView.frame));
     
     //banner
 //    self.userBannerImv = [[UIImageView alloc]initWithFrame:backView.frame];
@@ -187,9 +188,10 @@ typedef enum{
     
     
     //标题
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake((DEVICE_WIDTH-33.00)*0.5, 33, 33, 17)];
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake((DEVICE_WIDTH-50.00)*0.5, 33, 50, 17)];
     //    titleLabel.backgroundColor = [UIColor redColor];
-    titleLabel.font = [UIFont systemFontOfSize:16];
+    titleLabel.font = [UIFont systemFontOfSize:16*GscreenRatio_320];
+    titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.text = @"我的";
     titleLabel.textColor = [UIColor whiteColor];
     [_backView addSubview:titleLabel];
@@ -200,22 +202,26 @@ typedef enum{
     [chilunBtn setBackgroundImage:[UIImage imageNamed:@"my_shezhi.png"] forState:UIControlStateNormal];
     [chilunBtn addTarget:self action:@selector(xiaochilun) forControlEvents:UIControlEventTouchUpInside];
     
+    
     //头像
-    self.userFaceImv = [[UIImageView alloc]initWithFrame:CGRectMake(30*GscreenRatio_320, 75*GscreenRatio_320, 50, 50)];
+    self.userFaceImv = [[UIImageView alloc]initWithFrame:CGRectMake(30*GscreenRatio_320, _backView.frame.size.height - 75, 50, 50)];
     self.userFaceImv.backgroundColor = RGBCOLOR_ONE;
     self.userFaceImv.layer.cornerRadius = 25;
     self.userFaceImv.layer.masksToBounds = YES;
 
+    
+    NSLog(@"%@",NSStringFromCGRect(self.userFaceImv.frame));
+    
     //昵称
     self.userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.userFaceImv.frame)+10, self.userFaceImv.frame.origin.y+6, 120*GscreenRatio_320, 14)];
     self.userNameLabel.text = @"昵称";
-    self.userNameLabel.font = [UIFont systemFontOfSize:14];
+    self.userNameLabel.font = [UIFont systemFontOfSize:14*GscreenRatio_320];
     self.userNameLabel.textColor = [UIColor whiteColor];
     //    self.userNameLabel.backgroundColor = [UIColor lightGrayColor];
 
     //积分
     self.userScoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.userNameLabel.frame.origin.x, CGRectGetMaxY(self.userNameLabel.frame)+10, self.userNameLabel.frame.size.width, self.userNameLabel.frame.size.height)];
-    self.userScoreLabel.font = [UIFont systemFontOfSize:14];
+    self.userScoreLabel.font = [UIFont systemFontOfSize:14*GscreenRatio_320];
     self.userScoreLabel.text = @"积分：";
     self.userScoreLabel.textColor = [UIColor whiteColor];
     //    self.userScoreLabel.backgroundColor = [UIColor orangeColor];
@@ -224,7 +230,7 @@ typedef enum{
     UIButton *editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [editBtn setFrame:CGRectMake(DEVICE_WIDTH-80, self.userFaceImv.frame.origin.y+15, 55, 44)];
     //    editBtn.backgroundColor = [UIColor purpleColor];
-    editBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+    editBtn.titleLabel.font = [UIFont systemFontOfSize:16*GscreenRatio_320];
     [editBtn addTarget:self action:@selector(goToEdit) forControlEvents:UIControlEventTouchUpInside];
     [editBtn setTitle:@"编辑" forState:UIControlStateNormal];
     
@@ -312,6 +318,25 @@ typedef enum{
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    
+    
+    //判断是否登录
+    if ([LTools cacheBoolForKey:USER_LONGIN] == NO) {
+        
+        LoginViewController *login = [[LoginViewController alloc]init];
+        
+        UINavigationController *unVc = [[UINavigationController alloc]initWithRootViewController:login];
+        
+        [self presentViewController:unVc animated:YES completion:nil];
+
+        
+        return;
+        
+    }
+    
+    
+    
     
     switch (indexPath.section) {
         case 0:
@@ -440,7 +465,7 @@ typedef enum{
                                                        actionBackColor:RGBCOLOR(236, 236, 236)];
     aaa.tag = 90;
     aaa.delegate = self;
-    [aaa showInView:self.view WithAnimation:YES];
+    [aaa showInView:self.view.window WithAnimation:YES];
     
     
 }
@@ -457,7 +482,7 @@ typedef enum{
                                                        actionBackColor:RGBCOLOR(236, 236, 236)];
     aaa.tag = 91;
     aaa.delegate = self;
-    [aaa showInView:self.view WithAnimation:YES];
+    [aaa showInView:self.view.window WithAnimation:YES];
 }
 
 

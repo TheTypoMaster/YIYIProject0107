@@ -10,8 +10,12 @@
 //是否上传本地用户banner 头像
 #define ISUPUSERBANNER @"gIsUpBanner"
 #define ISUPUSERFACE @"gIsUpFace"
+
 //代码屏幕适配（设计图为320*568）
 #define GscreenRatio_320 DEVICE_WIDTH/320.00
+//代码屏幕适配 (设计图为320*568)
+#define GscreenRatio_568 DEVICE_HEIGHT/568.00
+
 #import "BMapKit.h"
 
 typedef void(^ GCllocationBlock)(NSDictionary *theLocationDic);
@@ -38,7 +42,7 @@ typedef void(^ GCllocationBlock)(NSDictionary *theLocationDic);
 + (NSString *)getUerHeadImageUrl;//头像url
 
 
-+ (MBProgressHUD *)showMBProgressWithText:(NSString *)text addToView:(UIView *)aView;
+
 
 
 //写数据=========================
@@ -88,8 +92,9 @@ typedef void(^ GCllocationBlock)(NSDictionary *theLocationDic);
 + (id)cacheForKey:(NSString *)key;
 
 
-
-
+//提示浮层
++ (void)showAutoHiddenMBProgressWithText:(NSString *)text addToView:(UIView *)aView;
++ (MBProgressHUD *)showMBProgressWithText:(NSString *)text addToView:(UIView *)aView;
 
 
 //信息处理

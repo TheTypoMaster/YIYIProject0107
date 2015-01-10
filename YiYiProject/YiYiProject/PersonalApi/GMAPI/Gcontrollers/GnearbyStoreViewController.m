@@ -15,6 +15,7 @@
 
 #import "GtopScrollView.h"
 #import "GRootScrollView.h"
+#import "GStorePinpaiViewController.h"
 
 
 @interface GnearbyStoreViewController ()<CWSegmentDelegate,UIScrollViewDelegate>
@@ -174,18 +175,34 @@
     //数据源二维数组
     rootScrollView.dataArray = data_2Array;
 
-    
+    //初始化视图
     [topScrollView initWithNameButtons];
     [rootScrollView initWithViews];
     
+    //设置跳转block
+    __weak typeof (self)bself = self;
     
+    [rootScrollView setThePinpaiBlock:^(NSString *pinpaiId, NSString *pinpaiName) {
+        [bself rootScrollViewPushVcWithPinpaiId:pinpaiId pinpaiName:pinpaiName];
+    }];
+    
+    
+    
+    //添加视图
     [floorView addSubview:topScrollView];
     [floorView addSubview:rootScrollView];
-    
     [self.view addSubview:floorView];
     
 }
 
+
+-(void)rootScrollViewPushVcWithPinpaiId:(NSString *)theId pinpaiName:(NSString *)thePinpaiName{
+    GStorePinpaiViewController *cc = [[GStorePinpaiViewController alloc]init];
+    cc.storeIdStr = theId;
+    cc.storeNameStr = _mallNameLabel.text;
+    cc.pinpaiNameStr = thePinpaiName;
+    [self.navigationController pushViewController:cc animated:YES];
+}
 
 
 -(void)leadYouBuy{

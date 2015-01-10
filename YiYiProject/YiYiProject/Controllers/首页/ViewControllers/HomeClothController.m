@@ -167,10 +167,27 @@
     
     
     //标题
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 12, 30, 15)];
-    titleLabel.font = [UIFont systemFontOfSize:15];
-    titleLabel.text = @"附近";
-    [_nearbyView addSubview:titleLabel];
+//    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 12, 30, 15)];
+//    titleLabel.font = [UIFont systemFontOfSize:15];
+//    titleLabel.text = @"附近";
+//    [_nearbyView addSubview:titleLabel];
+    UIButton *nearbyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [nearbyBtn setTitle:@"附近" forState:UIControlStateNormal];
+    [nearbyBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [nearbyBtn setFrame:CGRectMake(15, 12, 30, 15)];
+    nearbyBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    nearbyBtn.tag = 62;
+    [nearbyBtn addTarget:self action:@selector(nearOrGuanzhuBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [_nearbyView addSubview:nearbyBtn];
+    
+    UIButton *guanzhuBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [guanzhuBtn setTitle:@"我关注的商家" forState:UIControlStateNormal];
+    [guanzhuBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [guanzhuBtn setFrame:CGRectMake(CGRectGetMaxX(nearbyBtn.frame)+10, 12, 100, 15)];
+    guanzhuBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    guanzhuBtn.tag = 63;
+    [guanzhuBtn addTarget:self action:@selector(nearOrGuanzhuBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [_nearbyView addSubview:guanzhuBtn];
     
     
     //背景图
@@ -214,7 +231,7 @@
     
     
     //标题下面的分割线
-    UIView *downTitleLine = [[UIView alloc]initWithFrame:CGRectMake(titleLabel.frame.origin.x, CGRectGetMaxY(titleLabel.frame)+3, DEVICE_WIDTH-30, 1)];
+    UIView *downTitleLine = [[UIView alloc]initWithFrame:CGRectMake(nearbyBtn.frame.origin.x, CGRectGetMaxY(nearbyBtn.frame)+3, DEVICE_WIDTH-30, 1)];
     downTitleLine.backgroundColor = RGBCOLOR(213, 213, 213);
     [_nearbyView addSubview:downTitleLine];
     
@@ -230,10 +247,28 @@
     
     
     //标题
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 12, 30, 15)];
-    titleLabel.font = [UIFont systemFontOfSize:15];
-    titleLabel.text = @"品牌";
-    [_pinpaiView addSubview:titleLabel];
+//    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 12, 30, 15)];
+//    titleLabel.font = [UIFont systemFontOfSize:15];
+//    titleLabel.text = @"品牌";
+//    [_pinpaiView addSubview:titleLabel];
+    
+    UIButton *pinpaiBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [pinpaiBtn setTitle:@"品牌" forState:UIControlStateNormal];
+    [pinpaiBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [pinpaiBtn setFrame:CGRectMake(15, 12, 30, 15)];
+    pinpaiBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    pinpaiBtn.tag = 60;
+    [pinpaiBtn addTarget:self action:@selector(nearOrGuanzhuBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [_pinpaiView addSubview:pinpaiBtn];
+    
+    UIButton *guanzhuBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [guanzhuBtn setTitle:@"我关注的商家" forState:UIControlStateNormal];
+    [guanzhuBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [guanzhuBtn setFrame:CGRectMake(CGRectGetMaxX(pinpaiBtn.frame)+10, 12, 100, 15)];
+    guanzhuBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    guanzhuBtn.tag = 61;
+    [guanzhuBtn addTarget:self action:@selector(nearOrGuanzhuBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [_pinpaiView addSubview:guanzhuBtn];
     
     
     //滚动界面
@@ -279,7 +314,7 @@
     
     
     //标题下面的分割线
-    UIView *downTitleLine = [[UIView alloc]initWithFrame:CGRectMake(titleLabel.frame.origin.x, CGRectGetMaxY(titleLabel.frame)+3, DEVICE_WIDTH-30, 1)];
+    UIView *downTitleLine = [[UIView alloc]initWithFrame:CGRectMake(pinpaiBtn.frame.origin.x, CGRectGetMaxY(pinpaiBtn.frame)+3, DEVICE_WIDTH-30, 1)];
     downTitleLine.backgroundColor = RGBCOLOR(213, 213, 213);
     [_pinpaiView addSubview:downTitleLine];
     
@@ -320,7 +355,20 @@
 
 
 
-
+-(void)nearOrGuanzhuBtnClicked:(UIButton*)sender{
+    
+    NSLog(@"点击的是%ld",(long)sender.tag);
+    
+    if (sender.tag == 60) {//附近的品牌
+        
+    }else if (sender.tag == 61){//我关注的品牌
+        
+    }else if (sender.tag == 62){//附近的商家
+        
+    }else if (sender.tag == 63){//我关注的商家
+        
+    }
+}
 
 
 
