@@ -136,14 +136,15 @@
         UILabel *title_Label=[LTools createLabelFrame:CGRectMake(17, i*50, DEVICE_WIDTH, 50) title:titleArr[i] font:17 align:NSTextAlignmentLeft textColor:RGBCOLOR(95, 95, 95)];
         [witheBgView addSubview:title_Label];
         
+        
         UIView *lineView=[[UIView alloc]initWithFrame:CGRectMake(0, 50*i, DEVICE_WIDTH, 0.5)];
         lineView.backgroundColor=RGBCOLOR(229, 229, 229);
         [witheBgView addSubview:lineView];
         
+        
         UITextField *shuRuTextfield=[[UITextField alloc]initWithFrame:CGRectMake(100, i*50, DEVICE_WIDTH, 50)];
         shuRuTextfield.tag=200+i;
         [witheBgView addSubview:shuRuTextfield];
-        
         
     }
     
@@ -157,7 +158,6 @@
     [l setCornerRadius:2.0f];
     
     [bgScroll addSubview:commitButton];
-
 
 }
 
@@ -250,7 +250,6 @@
             [LTools showMBProgressWithText:failDic[@"msg"] addToView:self.view];
         }];
         
-
         
     }else if(sender.tag==300)//申请商场店
     {
