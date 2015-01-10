@@ -128,7 +128,7 @@
     
     
     
-    UIView *witheBgView=[[UIView alloc]initWithFrame:CGRectMake(0, 58, DEVICE_WIDTH, 200)];
+    UIView *witheBgView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 200)];
     
     witheBgView.backgroundColor=[UIColor whiteColor];
     [bgScroll addSubview:witheBgView];
@@ -170,7 +170,23 @@
 -(void)tijiao:(UIButton *)sender{
     
     
+    
+    NSString *post = [NSString stringWithFormat:@"&mall_name=%@&street=%@&mobile=%@&code=%@&mall_type=%@",@"SS",@"知春路",@"18600912932",@"213",@"1"];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:KAITONG_DIANPU_URL isPost:YES postData:postData];
+    [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"result[[[==%@",result);
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        UIAlertView *myalert=[[UIAlertView alloc]initWithTitle:@"提示" message:[failDic objectForKey:@"ERRO_INFO"] delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil, nil];
+        [myalert show];
+        
+        NSLog(@"failDic[[[==%@",failDic);
 
+    }];
+    
 
 }
 - (void)didReceiveMemoryWarning {
