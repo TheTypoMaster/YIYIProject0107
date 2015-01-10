@@ -368,6 +368,12 @@
 		E304794D1A6112E400709985 /* guserbannerdefaul@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E304794C1A6112E400709985 /* guserbannerdefaul@2x.png */; };
 		E34E3D671A615B8000DD95BB /* CustomSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = E34E3D661A615B8000DD95BB /* CustomSegmentView.m */; };
 		E3601E6F1A61716100CC41FE /* GView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3601E6E1A61716100CC41FE /* GView.m */; };
+		E3601E751A61733300CC41FE /* gdownname@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3601E701A61733300CC41FE /* gdownname@3x.png */; };
+		E3601E761A61733300CC41FE /* gdownname1@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3601E711A61733300CC41FE /* gdownname1@3x.png */; };
+		E3601E771A61733300CC41FE /* gnearstorered@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3601E721A61733300CC41FE /* gnearstorered@3x.png */; };
+		E3601E781A61733300CC41FE /* gupname@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3601E731A61733300CC41FE /* gupname@3x.png */; };
+		E3601E791A61733300CC41FE /* gupname1@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3601E741A61733300CC41FE /* gupname1@3x.png */; };
+		E3601E7B1A61733C00CC41FE /* gimv1_back@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3601E7A1A61733C00CC41FE /* gimv1_back@3x.png */; };
 		E3996EBA1A5E1DBA00673147 /* GEditPersonInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E2F1A5E1DBA00673147 /* GEditPersonInfoViewController.m */; };
 		E3996EBB1A5E1DBA00673147 /* GLeadBuyMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E311A5E1DBA00673147 /* GLeadBuyMapViewController.m */; };
 		E3996EBC1A5E1DBA00673147 /* GMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E331A5E1DBA00673147 /* GMapViewController.m */; };
@@ -948,6 +954,12 @@
 		E34E3D661A615B8000DD95BB /* CustomSegmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomSegmentView.m; sourceTree = "<group>"; };
 		E3601E6D1A61716100CC41FE /* GView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GView.h; sourceTree = "<group>"; };
 		E3601E6E1A61716100CC41FE /* GView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GView.m; sourceTree = "<group>"; };
+		E3601E701A61733300CC41FE /* gdownname@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gdownname@3x.png"; sourceTree = "<group>"; };
+		E3601E711A61733300CC41FE /* gdownname1@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gdownname1@3x.png"; sourceTree = "<group>"; };
+		E3601E721A61733300CC41FE /* gnearstorered@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gnearstorered@3x.png"; sourceTree = "<group>"; };
+		E3601E731A61733300CC41FE /* gupname@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gupname@3x.png"; sourceTree = "<group>"; };
+		E3601E741A61733300CC41FE /* gupname1@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gupname1@3x.png"; sourceTree = "<group>"; };
+		E3601E7A1A61733C00CC41FE /* gimv1_back@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gimv1_back@3x.png"; sourceTree = "<group>"; };
 		E3996E2E1A5E1DBA00673147 /* GEditPersonInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GEditPersonInfoViewController.h; sourceTree = "<group>"; };
 		E3996E2F1A5E1DBA00673147 /* GEditPersonInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GEditPersonInfoViewController.m; sourceTree = "<group>"; };
 		E3996E301A5E1DBA00673147 /* GLeadBuyMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLeadBuyMapViewController.h; sourceTree = "<group>"; };
@@ -2455,6 +2467,12 @@
 		E3996E3E1A5E1DBA00673147 /* Gmodels */ = {
 			isa = PBXGroup;
 			children = (
+				E3601E7A1A61733C00CC41FE /* gimv1_back@3x.png */,
+				E3601E701A61733300CC41FE /* gdownname@3x.png */,
+				E3601E711A61733300CC41FE /* gdownname1@3x.png */,
+				E3601E721A61733300CC41FE /* gnearstorered@3x.png */,
+				E3601E731A61733300CC41FE /* gupname@3x.png */,
+				E3601E741A61733300CC41FE /* gupname1@3x.png */,
 				E304794C1A6112E400709985 /* guserbannerdefaul@2x.png */,
 				E3996E411A5E1DBA00673147 /* Gmodel.h */,
 				E3996E421A5E1DBA00673147 /* Gmodel.m */,
@@ -2743,6 +2761,7 @@
 				137B08621A4EAC9900DE7DCC /* home_down@2x.png in Resources */,
 				138C2BFC1A39E09200EA59F5 /* UMSnsAccountViewController.xib in Resources */,
 				56A8A8241A4571CD00E85F6B /* stars_selected_image@2x.png in Resources */,
+				E3601E791A61733300CC41FE /* gupname1@3x.png in Resources */,
 				137B08411A4E716700DE7DCC /* xiaodian_d@2x.png in Resources */,
 				137B083D1A4E716700DE7DCC /* shangchang_d@2x.png in Resources */,
 				137B080D1A4E6FDF00DE7DCC /* my_bg@3x.png in Resources */,
@@ -2750,10 +2769,12 @@
 				E3996ED21A5E1DBA00673147 /* gGray@2x.png in Resources */,
 				139886A81A45880B00241962 /* navigationBarColor_black@2x.png in Resources */,
 				137B08151A4E6FDF00DE7DCC /* xinxi_icon@3x.png in Resources */,
+				E3601E751A61733300CC41FE /* gdownname@3x.png in Resources */,
 				137B08161A4E6FDF00DE7DCC /* love_up@3x.png in Resources */,
 				137B082F1A4E716700DE7DCC /* 1+1_botton@2x.png in Resources */,
 				56D187E41A5C274A006A606D /* dapeishi_bg@2x.png in Resources */,
 				138C2BF91A39E09200EA59F5 /* UMShareEditViewController.xib in Resources */,
+				E3601E7B1A61733C00CC41FE /* gimv1_back@3x.png in Resources */,
 				137B086A1A4EAC9900DE7DCC /* xiaoxi_down@2x.png in Resources */,
 				137B07CE1A4E6FDF00DE7DCC /* fenxiangb@3x.png in Resources */,
 				E304794D1A6112E400709985 /* guserbannerdefaul@2x.png in Resources */,
@@ -2851,6 +2872,7 @@
 				56A8A8361A45BB1300E85F6B /* MatchTopicCell.xib in Resources */,
 				13963F521A4FE3A5007BE68B /* fabu_pic@3x.png in Resources */,
 				566FE24C1A501C4E00A96B5F /* TopicCommentsCell.xib in Resources */,
+				E3601E771A61733300CC41FE /* gnearstorered@3x.png in Resources */,
 				137B08301A4E716700DE7DCC /* dapeishi_botton@2x.png in Resources */,
 				137B07F81A4E6FDF00DE7DCC /* tianjia_down@3x.png in Resources */,
 				137B084A1A4E8D2B00DE7DCC /* zhidemai_botton_up@2x.png in Resources */,
@@ -2902,6 +2924,7 @@
 				137B080F1A4E6FDF00DE7DCC /* love_up@3x.png in Resources */,
 				56A8A82E1A458FF200E85F6B /* match_pinglun_image@2x.png in Resources */,
 				137B08031A4E6FDF00DE7DCC /* my_zhuye@3x.png in Resources */,
+				E3601E781A61733300CC41FE /* gupname@3x.png in Resources */,
 				137E0ADB1A4C567500B59F64 /* quxiao_button600_90@2x.png in Resources */,
 				565321411A59769300E43F80 /* emotion.plist in Resources */,
 				137B087A1A4EADFE00DE7DCC /* tianjia_down@3x.png in Resources */,
@@ -2952,6 +2975,7 @@
 				137B08831A4EB9BE00DE7DCC /* xihuanb_down@3x.png in Resources */,
 				56DAB2181A46C86B00273140 /* MatchCaseCell.xib in Resources */,
 				13B690561A564EEB007FE152 /* t_xiangce@2x.png in Resources */,
+				E3601E761A61733300CC41FE /* gdownname1@3x.png in Resources */,
 				137B07EB1A4E6FDF00DE7DCC /* shangchang_d@3x.png in Resources */,
 				137B07D11A4E6FDF00DE7DCC /* d_qq@3x.png in Resources */,
 				13CEC8A41A5D974900FE273F /* xingji_man@2x.png in Resources */,
@@ -3305,7 +3329,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ca1c9dd0-a046-42fe-909b-5b12ec26956e";
+				PROVISIONING_PROFILE = "0c1b68b6-94ba-43b9-b1d3-dea4d4ca3175";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Debug;
@@ -3339,7 +3363,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ca1c9dd0-a046-42fe-909b-5b12ec26956e";
+				PROVISIONING_PROFILE = "0c1b68b6-94ba-43b9-b1d3-dea4d4ca3175";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Release;
