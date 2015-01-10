@@ -9,6 +9,13 @@
 #import <UIKit/UIKit.h>
 @class GRootScrollView;
 
+
+typedef enum{
+    GTOPFLOOR = 0,
+    GTOPPINPAI
+}GTOPTYPE;
+
+
 @interface GtopScrollView : UIScrollView <UIScrollViewDelegate>
 
 
@@ -21,6 +28,7 @@
 
 @property(nonatomic,assign)GRootScrollView *myRootScrollView;
 
+@property(nonatomic,assign)GTOPTYPE theTopType;
 
 
 

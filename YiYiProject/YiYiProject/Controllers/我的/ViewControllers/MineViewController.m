@@ -38,7 +38,7 @@ typedef enum{
     USERIMAGENULL,
 }CHANGEIMAGETYPE;
 
-#define CROPIMAGERATIO_USERBANNER 0.618//banner 图片裁剪框宽高比
+#define CROPIMAGERATIO_USERBANNER 0.4687//banner 图片裁剪框高宽比
 #define CROPIMAGERATIO_USERFACE 1.0//头像 图片裁剪框宽高比例
 
 #define UPIMAGECGSIZE_USERBANNER CGSizeMake(1080,1080*0.618)//需要上传的banner的分辨率
@@ -167,7 +167,7 @@ typedef enum{
 ///创建用户头像banner的view
 -(UIView *)creatTableViewHeaderView{
     //底层view
-    _backView = [ParallaxHeaderView parallaxHeaderViewWithCGSize:CGSizeMake(DEVICE_WIDTH, 150)];
+    _backView = [ParallaxHeaderView parallaxHeaderViewWithCGSize:CGSizeMake(DEVICE_WIDTH, 150*GscreenRatio_320)];
     _backView.headerImage = [UIImage imageNamed:@"guserbannerdefaul.png"];
     
     
@@ -216,7 +216,7 @@ typedef enum{
     //积分
     self.userScoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.userNameLabel.frame.origin.x, CGRectGetMaxY(self.userNameLabel.frame)+10, self.userNameLabel.frame.size.width, self.userNameLabel.frame.size.height)];
     self.userScoreLabel.font = [UIFont systemFontOfSize:14];
-    self.userScoreLabel.text = @"积分：2000";
+    self.userScoreLabel.text = @"积分：";
     self.userScoreLabel.textColor = [UIColor whiteColor];
     //    self.userScoreLabel.backgroundColor = [UIColor orangeColor];
 

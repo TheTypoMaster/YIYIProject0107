@@ -9,6 +9,12 @@
 #import <UIKit/UIKit.h>
 @class GtopScrollView;
 
+
+typedef enum{
+    GROOTFLOOR = 0,
+    GROOTPINPAI
+}GROOTTYPE;
+
 @interface GRootScrollView : UIScrollView<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
 
 
@@ -21,6 +27,7 @@
 
 @property(nonatomic,strong)NSMutableArray *tabelViewArray;//所有的tableview数组
 @property(nonatomic,strong)NSMutableArray *dataArray;//数据源 二维数组
+@property(nonatomic,assign)GROOTTYPE theGRootScrollType;
 
 
 - (void)initWithViews;
