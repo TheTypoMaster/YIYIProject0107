@@ -63,6 +63,14 @@
 
 - (void)initWithNameButtons
 {
+    
+    
+    
+    if (self.theTopType == GTOPPINPAI) {//品牌
+        
+    }
+    
+    
     float xPos = 0;
     for (int i = 0; i < [self.nameArray count]; i++) {
         

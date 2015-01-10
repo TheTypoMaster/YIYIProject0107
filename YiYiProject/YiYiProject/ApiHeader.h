@@ -138,6 +138,9 @@ typedef enum {
 
 //点击品牌进入该品牌的商铺列表
 #define HOME_CLOTH_PINPAI_STORELIST @"http://182.92.158.32/index.php?d=api&c=mall&m=get_mall_by_brand"
+//某商场某一品牌下的单品列表
+#define HOME_CLOTH_STORE_PINPAILIST @"http://182.92.158.32/index.php?d=api&c=products&m=getProductList"
+
 
 
 //单品详情
