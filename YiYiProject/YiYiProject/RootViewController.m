@@ -16,6 +16,8 @@
 
 #import "MyCollectionController.h"
 
+#import "PublishHuatiController.h"
+
 @interface RootViewController ()<UITabBarControllerDelegate>
 
 @end
@@ -158,6 +160,9 @@
         CHTumblrMenuView *menuView = [[CHTumblrMenuView alloc] init];
         [menuView addMenuItemWithTitle:@"拍照" andIcon:[UIImage imageNamed:@"t_paizhao"] andSelectedBlock:^{
             NSLog(@"Text selected");
+            
+            [self clickToPublish:nil];
+            
         }];
         [menuView addMenuItemWithTitle:@"相册" andIcon:[UIImage imageNamed:@"t_xiangce"] andSelectedBlock:^{
             NSLog(@"Photo selected");
@@ -193,6 +198,14 @@
     }
     
     self.selectedIndex = sender.tag - 100;
+}
+
+
+- (void)clickToPublish:(UIButton *)sender
+{
+    PublishHuatiController *publish = [[PublishHuatiController alloc]init];
+    publish.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:publish animated:YES];
 }
 
 @end

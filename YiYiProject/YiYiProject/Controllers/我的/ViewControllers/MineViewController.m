@@ -120,6 +120,15 @@ typedef enum{
     // Dispose of any resources that can be recreated.
 }
 
+
+//网络请求获取用户信息
+-(void)getUserInfo{
+//    NSString *URLstr = [NSString stringWithFormat:@"%@&",PERSON_GETUSERINFO]
+//    GmPrepareNetData *cc = [GmPrepareNetData alloc]initWithUrl:<#(NSString *)#> isPost:<#(BOOL)#> postData:<#(NSData *)#>
+}
+
+
+
 ///创建用户头像banner的view
 -(UIView *)creatTableViewHeaderView{
     //底层view
@@ -275,6 +284,7 @@ typedef enum{
         case 0:
         {
             GmyMainViewController *dd = [[GmyMainViewController alloc]init];
+            dd.theType = GMYSELF;
             dd.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:dd animated:YES];
             

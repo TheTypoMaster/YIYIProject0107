@@ -19,7 +19,7 @@
         self.aImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 0, ALL_FRAME_WIDTH - 20, ORIGINAL_HEIGHT_IMAGE)];
         _aImageView.backgroundColor = [UIColor whiteColor];
         
-        _aImageView.contentMode = UIViewContentModeCenter;
+        _aImageView.contentMode = UIViewContentModeScaleToFill;
         
         _aImageView.userInteractionEnabled = YES;
         
