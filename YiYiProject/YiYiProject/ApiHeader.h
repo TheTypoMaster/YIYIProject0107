@@ -184,7 +184,7 @@ typedef enum {
 
 //个人信息相关
 #define PERSON_CHANGEUSERBANNER @"http://182.92.158.32/index.php?d=api&c=user_api&m=update_user_banner"
-
+#define PERSON_GETUSERINFO @"http://182.92.158.32/index.php?d=api&c=user_api&m=get_user_info"
 
 
 
@@ -217,6 +217,19 @@ typedef enum {
 #define TOPIC_ADDFAV_URL @"http://182.92.158.32/index.php?d=api&c=topic&m=like_topic&authcode=%@&topic_id=%@"
 ///话题取消赞接口
 #define TOPIC_DELFAV_URL @"http://182.92.158.32/index.php?d=api&c=topic&m=cancel_like&topic_id=%@&authcode=%@"
+
+///话题评论接口
+/*
+ 参数解释依次为:
+ authcode（uid加密串）
+ topic_id(话题id)
+ repost_content(回复内容)
+ level（回复的评论是主评论还是子评论，1=》主评论 2=》子评论） parent_post(回复的主评论id，若level=1则值为0)
+ r_reply_id(回复的回复id，当为二级评论的时候需要该参数，若level=1则值为0)
+ */
+#define TOPIC_COMMENTS_URL @"http://182.92.158.32/index.php?d=api&c=topic&m=reply_topic"
+
+
 #pragma mark - 搭配师相关接口 ******************************add by sn
 
 
@@ -304,6 +317,19 @@ typedef enum {
 #define GET_DIVISION_INFO @"http://182.92.158.32/index.php?d=api&c=division&m=get_division_info&division_id=%@&authcode=%@"
 
 #define GET_DIVISOINBYSTYLE_URL @"http://182.92.158.32/index.php?d=api&c=division&m=get_divisions_by_style&style_id=%@&authcode=%@"
+#define POST_MYBODY_URL @"http://182.92.158.32/index.php?d=api&c=user_api&m=update_user_body_info"//修改我的体型
+
+
+
+
+
+#define KAITONG_DIANPU_URL @"http://182.92.158.32/?d=api&c=mall&m=addMall"
+
+#pragma - mark 搭配师话题
+
+#define TOPIC_ADD @"http://182.92.158.32/index.php?d=api&c=topic&m=publish_topic"//添加话题
+
+
 #endif
 
 

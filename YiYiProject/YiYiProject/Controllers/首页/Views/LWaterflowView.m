@@ -303,6 +303,43 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+
+#pragma mark - WaterFlowDelegate
+
+- (void)waterLoadNewData
+{
+//    [self deserveBuyForSex:sex_type discount:discount_type page:waterFlow.pageNum];
+}
+- (void)waterLoadMoreData
+{
+//    [self deserveBuyForSex:sex_type discount:discount_type page:waterFlow.pageNum];
+}
+
+- (void)waterDidSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+}
+
+- (CGFloat)waterHeightForCellIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat aHeight = 0.f;
+//    ProductModel *aMode = waterFlow.dataArray[indexPath.row];
+//    if (aMode.imagelist.count >= 1) {
+//        
+//        NSDictionary *imageDic = aMode.imagelist[0];
+//        NSDictionary *middleImage = imageDic[@"540Middle"];
+//        //        CGFloat aWidth = [middleImage[@"width"]floatValue];
+//        aHeight = [middleImage[@"height"]floatValue];
+//    }
+    
+    return aHeight / 2.f + 33;
+}
+- (CGFloat)waterViewNumberOfColumns
+{
+    
+    return 2;
+}
+
 #pragma mark - TMQuiltViewDataSource
 
 - (NSInteger)quiltViewNumberOfCells:(TMQuiltView *)TMQuiltView {

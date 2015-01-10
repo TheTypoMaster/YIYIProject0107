@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GLeadBuyMapViewController : UIViewController
+@interface GLeadBuyMapViewController : MyViewController
 
 
 //地图上标注的信息字典
 @property(nonatomic,strong)NSDictionary *dataDic;
+
+//商城名
+@property(nonatomic,strong)NSString *storeName;
 
 @end

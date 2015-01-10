@@ -46,4 +46,8 @@
 
 - (NSArray *)content;
 
+- (NSString *)editorTitle;//标题
+
+- (void)hiddenKeyboard;//隐藏键盘
+
 @end

@@ -28,6 +28,9 @@
 //#import "ShenQingDianPuViewController.h"
 #import "ShenQingDianPuViewController.h"
 
+#import "ParallaxHeaderView.h"
+#import "UIImage+ImageEffects.h"
+#import "NSDictionary+GJson.h"
 
 typedef enum{
     USERFACE = 0,//头像
@@ -45,7 +48,10 @@ typedef enum{
 {
     UITableView *_tableView;//主tableview
     CHANGEIMAGETYPE _changeImageType;
-    NSArray *_tabelViewCellTitleArray;
+    NSArray *_tabelViewCellTitleArray;//title文字数组
+    NSArray *_logoImageArray;//title前面的logo图数组
+    NSDictionary *_customInfo_tabelViewCell;//cell数据源
+    ParallaxHeaderView *_backView;//banner
 }
 @end
 
@@ -57,6 +63,7 @@ typedef enum{
     
     
     self.navigationController.navigationBarHidden = YES;
+    
     
 }
 
@@ -79,6 +86,7 @@ typedef enum{
     }
     
     
+    
     //初始化相关
     _changeImageType = USERIMAGENULL;
     
@@ -88,6 +96,18 @@ typedef enum{
                                  ,@[@"我的关注"]
                                  ,@[@"我是店主，申请衣+衣店铺"]
                                  ,@[@"邀请好友"]];
+    _logoImageArray = @[@[[UIImage imageNamed:@"my_zhuye.png"]]
+                        ,@[[UIImage imageNamed:@"my_shoucang.png"],[UIImage imageNamed:@"my_dapei.png"]]
+                        ,@[[UIImage imageNamed:@"my_yichu.png"],[UIImage imageNamed:@"my_tixing.png"],[UIImage imageNamed:@"my_rizhi.png"]]
+                        ,@[[UIImage imageNamed:@"my_guanzhu.png"]]
+                        ,@[[UIImage imageNamed:@"my_shenqing.png"]]
+                        ,@[[UIImage imageNamed:@"my_haoyou.png"]]
+                        ];
+    _customInfo_tabelViewCell = @{@"titleLogo":_logoImageArray,
+                                  @"titleArray":_tabelViewCellTitleArray
+                                  };
+    
+    
     
     
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT-49) style:UITableViewStyleGrouped];
@@ -95,6 +115,15 @@ typedef enum{
     _tableView.dataSource = self;
     _tableView.tableHeaderView = [self creatTableViewHeaderView];
     [self.view addSubview:_tableView];
+    
+    
+    if ([LTools cacheBoolForKey:USER_LONGIN] == YES){
+        [self GgetUserInfo];
+    }
+    
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GgetUserInfo) name:NOTIFICATION_LOGIN object:nil];
+    
     
     NSLog(@"%@",NSStringFromCGRect(_tableView.frame));
     
@@ -106,21 +135,54 @@ typedef enum{
     // Dispose of any resources that can be recreated.
 }
 
+
+
+
+//网络请求获取用户信息
+-(void)GgetUserInfo{
+    NSString *URLstr = [NSString stringWithFormat:@"%@&authcode=%@",PERSON_GETUSERINFO,[GMAPI getAuthkey]];
+    
+    
+    GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:URLstr isPost:NO postData:nil];
+    [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"%@",result);
+        NSDictionary *dic = [result dictionaryValueForKey:@"user_info"];
+        
+        NSString *name = [dic stringValueForKey:@"user_name"];
+        NSString *score = [dic stringValueForKey:@"score"];
+        self.userNameLabel.text = [NSString stringWithFormat:@"昵称:%@",name];
+        self.userScoreLabel.text = [NSString stringWithFormat:@"积分:%@",score];
+        
+        [_tableView reloadData];
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+    }];
+    
+}
+
+
+
 ///创建用户头像banner的view
 -(UIView *)creatTableViewHeaderView{
     //底层view
-    UIView *backView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 150.00)];
-    backView.backgroundColor = [UIColor whiteColor];
+    _backView = [ParallaxHeaderView parallaxHeaderViewWithCGSize:CGSizeMake(DEVICE_WIDTH, 150)];
+    _backView.headerImage = [UIImage imageNamed:@"guserbannerdefaul.png"];
+    
     
     //banner
-    self.userBannerImv = [[UIImageView alloc]initWithFrame:backView.frame];
-    self.userBannerImv.backgroundColor = RGBCOLOR_ONE;
-    //模糊效果
-    //    self.userBannerImv.layer.masksToBounds = NO;
-    //    self.userBannerImv.layer.shadowColor = [UIColor blackColor].CGColor;
-    //    self.userBannerImv.layer.shadowOffset = CGSizeMake(0.0f, 5.0f);//shadowOffset阴影偏移,x向右偏移4，y向下偏移4，默认(0, -3),这个跟shadowRadius配合使用
-    //    self.userBannerImv.layer.shadowOpacity = 0.5f;//阴影透明度，默认0
-    //    self.userBannerImv.layer.shadowRadius = 4;//阴影半径，默认3
+//    self.userBannerImv = [[UIImageView alloc]initWithFrame:backView.frame];
+//    [self.userBannerImv setImage:[UIImage imageNamed:@"1.png"]];
+//    backView.imageView = self.userBannerImv;
+//    //模糊效果
+//    //    self.userBannerImv.layer.masksToBounds = NO;
+//    //    self.userBannerImv.layer.shadowColor = [UIColor blackColor].CGColor;
+//    //    self.userBannerImv.layer.shadowOffset = CGSizeMake(0.0f, 5.0f);//shadowOffset阴影偏移,x向右偏移4，y向下偏移4，默认(0, -3),这个跟shadowRadius配合使用
+//    //    self.userBannerImv.layer.shadowOpacity = 0.5f;//阴影透明度，默认0
+//    //    self.userBannerImv.layer.shadowRadius = 4;//阴影半径，默认3
+
+    
     
     
     
@@ -130,66 +192,60 @@ typedef enum{
     titleLabel.font = [UIFont systemFontOfSize:16];
     titleLabel.text = @"我的";
     titleLabel.textColor = [UIColor whiteColor];
-    [self.userBannerImv addSubview:titleLabel];
+    [_backView addSubview:titleLabel];
     
     //小齿轮设置按钮
     UIButton *chilunBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [chilunBtn setFrame:CGRectMake(DEVICE_WIDTH - 40, 30, 25, 25)];
-    chilunBtn.backgroundColor = RGBCOLOR_ONE;
+    [chilunBtn setBackgroundImage:[UIImage imageNamed:@"my_shezhi.png"] forState:UIControlStateNormal];
     [chilunBtn addTarget:self action:@selector(xiaochilun) forControlEvents:UIControlEventTouchUpInside];
     
-    
-    
-    
-    
     //头像
-    self.userFaceImv = [[UIImageView alloc]initWithFrame:CGRectMake(30*GscreenRatio_320, 75.00*GscreenRatio_320, 50, 50)];
+    self.userFaceImv = [[UIImageView alloc]initWithFrame:CGRectMake(30*GscreenRatio_320, 75*GscreenRatio_320, 50, 50)];
     self.userFaceImv.backgroundColor = RGBCOLOR_ONE;
-    self.userFaceImv.layer.cornerRadius = 25*GscreenRatio_320;
+    self.userFaceImv.layer.cornerRadius = 25;
     self.userFaceImv.layer.masksToBounds = YES;
-    
+
     //昵称
     self.userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.userFaceImv.frame)+10, self.userFaceImv.frame.origin.y+6, 120*GscreenRatio_320, 14)];
     self.userNameLabel.text = @"昵称";
     self.userNameLabel.font = [UIFont systemFontOfSize:14];
     self.userNameLabel.textColor = [UIColor whiteColor];
     //    self.userNameLabel.backgroundColor = [UIColor lightGrayColor];
-    
+
     //积分
     self.userScoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.userNameLabel.frame.origin.x, CGRectGetMaxY(self.userNameLabel.frame)+10, self.userNameLabel.frame.size.width, self.userNameLabel.frame.size.height)];
     self.userScoreLabel.font = [UIFont systemFontOfSize:14];
     self.userScoreLabel.text = @"积分：2000";
     self.userScoreLabel.textColor = [UIColor whiteColor];
     //    self.userScoreLabel.backgroundColor = [UIColor orangeColor];
-    
+
     //编辑按钮
     UIButton *editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [editBtn setFrame:CGRectMake(CGRectGetMaxX(self.userNameLabel.frame)+35, self.userFaceImv.frame.origin.y+20, 55, 44)];
+    [editBtn setFrame:CGRectMake(DEVICE_WIDTH-80, self.userFaceImv.frame.origin.y+15, 55, 44)];
     //    editBtn.backgroundColor = [UIColor purpleColor];
     editBtn.titleLabel.font = [UIFont systemFontOfSize:16];
     [editBtn addTarget:self action:@selector(goToEdit) forControlEvents:UIControlEventTouchUpInside];
     [editBtn setTitle:@"编辑" forState:UIControlStateNormal];
     
-    
-    
     //手势
     UITapGestureRecognizer *ddd = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(userBannerClicked)];
-    self.userBannerImv.userInteractionEnabled = YES;
-    [self.userBannerImv addGestureRecognizer:ddd];
+    _backView.imageView.userInteractionEnabled = YES;
+    [_backView.imageView addGestureRecognizer:ddd];
     UITapGestureRecognizer *eee = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(userFaceClicked)];
     self.userFaceImv.userInteractionEnabled = YES;
     [self.userFaceImv addGestureRecognizer:eee];
     
     
-    //添加视图
-    [backView addSubview:self.userBannerImv];
-    [backView addSubview:self.userFaceImv];
-    [backView addSubview:self.userNameLabel];
-    [backView addSubview:self.userScoreLabel];
-    [backView addSubview:editBtn];
-    [backView addSubview:chilunBtn];
+//    //添加视图
+//    [backView addSubview:self.userBannerImv];
+    [_backView addSubview:self.userFaceImv];
+    [_backView addSubview:self.userNameLabel];
+    [_backView addSubview:self.userScoreLabel];
+    [_backView addSubview:editBtn];
+    [_backView addSubview:chilunBtn];
     
-    return backView;
+    return _backView;
 }
 
 
@@ -210,22 +266,6 @@ typedef enum{
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    //    NSInteger num = 0;
-    //
-    //    if (section == 0) {
-    //        num = 1;
-    //    }else if (section == 1){
-    //        num = 2;
-    //    }else if (section == 2){
-    //        num = 3;
-    //    }else if (section == 3){
-    //        num = 1;
-    //    }else if (section == 4){
-    //        num = 1;
-    //    }else if (section == 5){
-    //        num = 1;
-    //    }
-    //
     return [[_tabelViewCellTitleArray objectAtIndex:section] count];
     
     
@@ -265,7 +305,7 @@ typedef enum{
     NSLog(@"indexpath.section:%ld row:%ld",(long)indexPath.section,(long)indexPath.row);
     NSLog(@"%@",_tabelViewCellTitleArray[indexPath.section][indexPath.row]);
     
-    [cell creatCustomViewWithGcellType:GPERSON indexPath:indexPath customObject:_tabelViewCellTitleArray[indexPath.section][indexPath.row]];
+    [cell creatCustomViewWithGcellType:GPERSON indexPath:indexPath customObject:_customInfo_tabelViewCell];
     
     return cell;
 }
@@ -277,6 +317,7 @@ typedef enum{
         case 0:
         {
             GmyMainViewController *dd = [[GmyMainViewController alloc]init];
+            dd.theType = GMYSELF;
             dd.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:dd animated:YES];
             
@@ -379,9 +420,9 @@ typedef enum{
 
 
 -(void)goToEdit{
-    GMapViewController *ggg = [[GMapViewController alloc]init];
-    ggg.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:ggg animated:YES];
+//    GMapViewController *ggg = [[GMapViewController alloc]init];
+//    ggg.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:ggg animated:YES];
 }
 
 
@@ -542,7 +583,7 @@ typedef enum{
         self.userBanner = doneImage;
         self.userUploadImagedata = UIImageJPEGRepresentation(self.userBanner, 0.8);
         [GMAPI setUserBannerImageWithData:self.userUploadImagedata];//存储到本地
-        [self.userBannerImv setImage:[GMAPI getUserBannerImage]];//及时更新banner
+        _backView.headerImage = [GMAPI getUserBannerImage];//及时更新banner
         [GMAPI setUpUserBannerYes];//设置是否上传标志位
     }else if (_changeImageType == USERFACE){
         UIImage *doneImage = [self scaleToSize:cropImage size:UPIMAGECGSIZE_USERFACE];//按像素缩放
@@ -641,6 +682,20 @@ typedef enum{
     
 }
 
+
+
+#pragma mark -
+#pragma mark UISCrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    
+    if (scrollView == _tableView)
+    {
+        // pass the current offset of the UITableView so that the ParallaxHeaderView layouts the subViews.
+        [(ParallaxHeaderView *)_tableView.tableHeaderView layoutHeaderViewForScrollViewOffset:scrollView.contentOffset];
+    }
+}
 
 
 

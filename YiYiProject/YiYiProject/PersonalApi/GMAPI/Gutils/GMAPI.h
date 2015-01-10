@@ -12,11 +12,17 @@
 #define ISUPUSERFACE @"gIsUpFace"
 //代码屏幕适配（设计图为320*568）
 #define GscreenRatio_320 DEVICE_WIDTH/320.00
+#import "BMapKit.h"
+
+typedef void(^ GCllocationBlock)(NSDictionary *theLocationDic);
 
 
-
-@interface GMAPI : NSObject
-
+@interface GMAPI : NSObject<BMKMapViewDelegate,BMKLocationServiceDelegate>
+{
+    BMKLocationService* _locService;//定位服务
+    NSDictionary *_theLocationDic;//经纬度
+    GCllocationBlock gcllocationBlock;
+}
 
 +(NSString *)getUsername;
 
@@ -85,8 +91,19 @@
 
 
 
+
 //信息处理
 +(NSString *)exchangeStringForDeleteNULL:(id)sender;
+
+
+
+//地图相关
+
+//获取单例
++ (GMAPI *)sharedManager;
+
+//获取经纬度
+- (void)GgetCllocation:(void(^)(CLLocation *theLocation))completionBlock;
 
 
 

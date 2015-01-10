@@ -112,7 +112,7 @@
 }
 
 - (NSString *)stringValueForKey:(NSString *)key {
-    return [self stringValueForKey:key defaultValue:nil];
+    return [self stringValueForKey:key defaultValue:@"暂无"];
 }
 
 - (NSString *)stringValueForKey:(NSString *)key defaultValue:(NSString *)defaultValue {

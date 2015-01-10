@@ -263,6 +263,56 @@
 
 
 
+//地图相关
+
++ (GMAPI *)sharedManager
+{
+    static GMAPI *sharedAccountManagerInstance = nil;
+    static dispatch_once_t predicate;
+    dispatch_once(&predicate, ^{
+        sharedAccountManagerInstance = [[self alloc] init];
+    });
+    return sharedAccountManagerInstance;
+}
+
+- (void)GgetCllocation:(void(^)(CLLocation *theLocation))completionBlock{
+    _theLocationDic = nil;
+    [self startLocation];
+    if (_theLocationDic) {
+        gcllocationBlock(_theLocationDic);
+    }
+}
+
+///开始定位
+-(void)startLocation{
+    _locService = [[BMKLocationService alloc]init];
+    _locService.delegate = self;
+    [_locService startUserLocationService];
+}
+
+///停止定位
+-(void)stopLocation{
+    [_locService stopUserLocationService];
+    if (_locService) {
+        _locService = nil;
+    }
+}
+
+//用户位置更新后，会调用此函数
+- (void)didUpdateUserLocation:(BMKUserLocation *)userLocation
+{
+    NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
+    if (userLocation) {
+        _theLocationDic = @{
+                            @"lat":[NSString stringWithFormat:@"%f",userLocation.location.coordinate.latitude],
+                            @"long":[NSString stringWithFormat:@"%f",userLocation.location.coordinate.longitude]
+                            };
+        [self stopLocation];
+    }
+    
+}
+
+
 
 
 

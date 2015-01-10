@@ -13,6 +13,9 @@
 #import "TopicCommentsCell.h"
 #import "TopicDetailBottomView.h"
 #import "TopicModel.h"
+#import "CustomInputView.h"
+
+#import "TopicParseModel.h"
 
 @interface TopicDetailViewController ()<UITableViewDataSource,SNRefreshDelegate>
 {
@@ -26,10 +29,30 @@
 @property(nonatomic,strong)NSMutableArray * array_comments;
 ///话题详情数据
 @property(nonatomic,strong)TopicModel * topic_info;
+///评论界面
+@property(nonatomic,strong)CustomInputView * input_view;
+///回复的回复的id
+@property(nonatomic,strong)NSString * r_reply_uid;
+///回复回复的昵称
+@property(nonatomic,strong)NSString * r_reply_userName;
+///如果是二级回复，那么我就存放主评论的id
+@property(nonatomic,strong)NSString * parent_post;
 
 @end
 
 @implementation TopicDetailViewController
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [_input_view addKeyBordNotification];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [_input_view deleteKeyBordNotification];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -66,7 +89,7 @@
                 break;
             case 1:///评论
             {
-                
+                [bself.input_view showInputView:nil];
             }
                 break;
             case 2:///转发
@@ -79,6 +102,34 @@
                 break;
         }
     }];
+    
+    
+    
+    _input_view = [[CustomInputView alloc] initWithFrame:CGRectMake(0,DEVICE_HEIGHT,DEVICE_WIDTH,44)];
+    
+    _input_view.userInteractionEnabled = NO;
+    
+    [_input_view loadAllViewWithPinglunCount:@"0" WithType:0 WithPushBlock:^(int type){
+        
+        
+        if (type == 0)
+        {
+            NSLog(@"跳到评论");
+            
+        }else
+        {
+            NSLog(@"分类按钮");
+        }
+        
+    } WithSendBlock:^(NSString *content, BOOL isForward) {
+        
+        NSLog(@"发表评论 ---  %@",[GMAPI getAuthkey]);
+        
+        [bself topicCommentsWithUserName:bself.r_reply_userName WithUid:bself.r_reply_uid];
+        
+    }];
+    
+    [self.view addSubview:_input_view];
 }
 
 #pragma mark - 创建sectionView
@@ -115,11 +166,60 @@
     date_label.font = [UIFont systemFontOfSize:11];
     [sectionView addSubview:date_label];
     
+    //话题标题
+    
+    NSString *title = self.topic_info.topic_title;
+    
+    //宽度
+    
+    CGFloat aWidth = DEVICE_WIDTH - 2 * headerImageView.left;
+    
+    UILabel *title_label = [LTools createLabelFrame:CGRectMake(headerImageView.left, headerImageView.bottom + 13,aWidth, 0) title:title font:17 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"010101"]];
+    title_label.font = [UIFont boldSystemFontOfSize:17];
+    CGFloat title_height = [LTools heightForText:title width:aWidth Boldfont:17];
+    title_label.height = title_height;
+    
+    [sectionView addSubview:title_label];
+    
+    //话题内容
+    
+    NSArray *content_arr = (NSArray *)[self.topic_info.topic_content objectFromJSONString];
+    
+    CGFloat top = title_label.bottom + 14;//记录上一个 y坐标
+    
+    for (NSDictionary *aDic in content_arr) {
+        
+        //是图片创建imageView
+        TopicParseModel *aImageModel = [[TopicParseModel alloc]initWithDictionary:aDic];
+        if (aImageModel.IMAGE_ORIGINAL_URL.length > 0) {
+            
+            CGFloat imageHeight = aImageModel.CELL_NEW_HEIGHT * aWidth / aImageModel.CELL_NEW_WIDTH;
+            
+            UIImageView *aImageView = [[UIImageView alloc]initWithFrame:CGRectMake(12, top, aWidth, imageHeight)];
+            [sectionView addSubview:aImageView];
+            
+            [aImageView sd_setImageWithURL:[NSURL URLWithString:aImageModel.CELL_TEXT] placeholderImage:nil];
+            
+            top = aImageView.bottom + 10;
+            
+        }else   //文字的话创建label
+        {
+            
+            NSString *text = aImageModel.CELL_TEXT;
+            UILabel *content_label = [LTools createLabelFrame:CGRectMake(headerImageView.left, top,aWidth, 0) title:text font:14 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"3a3a3a"]];
+            content_label.font = [UIFont systemFontOfSize:14];
+            CGFloat c_height = [LTools heightForText:title width:aWidth font:14];
+            content_label.height = c_height;
+            [sectionView addSubview:content_label];
+            
+            top = content_label.bottom + 10;
+        }
+        
+    }
     
     
     
-    
-    sectionView.height = height;
+    sectionView.height = top;
     _myTableView.tableHeaderView = sectionView;
     
 }
@@ -145,6 +245,7 @@
                 NSDictionary * topic_info = [allDic objectForKey:@"topic_info"];
                 bself.topic_info = [[TopicModel alloc] initWithDictionary:topic_info];
                 [bottom_view setTitleWithTopicModel:bself.topic_info];
+                
                 [bself createSectionView];
             }else
             {
@@ -252,6 +353,39 @@
     [request start];
 }
 
+#pragma mark - 话题评论
+-(void)topicCommentsWithUserName:(NSString *)aName WithUid:(NSString *)aUid
+{
+    NSString * level = @"1";
+    NSString * reply_id = @"0";
+    if (aName.length)
+    {
+        level = @"2";
+        reply_id = _parent_post;
+    }
+    
+    NSString *post = [NSString stringWithFormat:@"authcode=%@&topic_id=%@&repost_content=%@&level=%@&r_reply_id=%@&parent_post=%@",[GMAPI getAuthkey],_topic_model.topic_id,_input_view.text_input_view.text,level,aUid,reply_id];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    
+    NSString *url = [NSString stringWithFormat:TOPIC_COMMENTS_URL];
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
+    __weak typeof(self)bself = self;
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"-->%@",result);
+        
+        [bself getTopicComments];
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        [LTools showMBProgressWithText:failDic[@"msg"] addToView:self.view];
+    }];
+    
+    _r_reply_uid = @"";
+    _r_reply_userName = @"";
+    _parent_post = @"";
+}
+
 
 
 #pragma mark - UITableView Methods
@@ -268,10 +402,20 @@
     if (cell == nil) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"TopicCommentsCell" owner:self options:nil] objectAtIndex:0];
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     TopicCommentsModel * model = [_array_comments objectAtIndex:indexPath.row];
     
     [cell setInfoWithCommentsModel:model];
+    
+    __weak typeof(self)bself = self;
+    [cell setTopicCommentsCellBlock:^(TopicCommentsCellClickType aType, NSString *userName, NSString *uid, NSString *reply_id) {
+        [bself clickWithType:aType WithUserName:userName WithUid:uid WithReplyId:reply_id];
+    }];
+    [cell.second_view setSeconForwardViewBlock:^(TopicCommentsCellClickType aType, NSString *userName, NSString *uid, NSString *reply_id) {
+        [bself clickWithType:aType WithUserName:userName WithUid:uid WithReplyId:reply_id];
+    }];
+    
     
     return cell;
 }
@@ -282,11 +426,11 @@
 #pragma mark - Refresh Delegate
 - (void)loadNewData
 {
-    
+    [self getTopicComments];
 }
 - (void)loadMoreData
 {
-    
+    [self getTopicComments];
 }
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -311,7 +455,26 @@
 
 
 
-
+#pragma mark - 判断跳转方向
+-(void)clickWithType:(TopicCommentsCellClickType)aType WithUserName:(NSString *)aName WithUid:(NSString *)aUid WithReplyId:(NSString *)aREplyId
+{
+    if (aType == TopicCommentsCellClickTypeComment)///跳评论的
+    {
+        NSLog(@"评论 ------   %@ ----  %@",aName,aUid);
+        _r_reply_userName = aName;
+        _r_reply_uid = aUid;
+        _parent_post = aREplyId;
+        _input_view.text_input_view.text = [NSString stringWithFormat:@"回复 %@:",aName];
+        [_input_view showInputView:nil];
+        
+    }else///跳个人的
+    {
+        NSLog(@"这里要调到个人界面 uid----  %@",aUid);
+    }
+    
+    
+    
+}
 
 
 

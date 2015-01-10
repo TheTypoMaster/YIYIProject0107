@@ -89,6 +89,11 @@
     {
         self.navigationController.navigationBar.translucent = NO;
     }
+    
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
+    self.myTitleLabel.textColor = [UIColor whiteColor];
+    self.myTitle = self.storeName;
+    
     //初始化地图
     [self setGMap];
     //初始化定位服务
