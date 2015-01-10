@@ -64,6 +64,7 @@ typedef enum{
     
     self.navigationController.navigationBarHidden = YES;
     
+    
 }
 
 - (void)viewDidLoad {
@@ -83,6 +84,7 @@ typedef enum{
         [self presentViewController:unVc animated:YES completion:nil];
         
     }
+    
     
     
     //初始化相关
@@ -114,6 +116,15 @@ typedef enum{
     _tableView.tableHeaderView = [self creatTableViewHeaderView];
     [self.view addSubview:_tableView];
     
+    
+    if ([LTools cacheBoolForKey:USER_LONGIN] == YES){
+        [self GgetUserInfo];
+    }
+    
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GgetUserInfo) name:NOTIFICATION_LOGIN object:nil];
+    
+    
     NSLog(@"%@",NSStringFromCGRect(_tableView.frame));
     
     
@@ -125,10 +136,21 @@ typedef enum{
 }
 
 
+
+
 //网络请求获取用户信息
--(void)getUserInfo{
-//    NSString *URLstr = [NSString stringWithFormat:@"%@&",PERSON_GETUSERINFO]
-//    GmPrepareNetData *cc = [GmPrepareNetData alloc]initWithUrl:<#(NSString *)#> isPost:<#(BOOL)#> postData:<#(NSData *)#>
+-(void)GgetUserInfo{
+    NSString *URLstr = [NSString stringWithFormat:@"%@&%@",PERSON_GETUSERINFO,[GMAPI getAuthkey]];
+    
+    
+    GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:URLstr isPost:NO postData:nil];
+    [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"%@",result);
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+    }];
+    
 }
 
 

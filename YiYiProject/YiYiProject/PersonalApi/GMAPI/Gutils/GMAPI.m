@@ -265,11 +265,21 @@
 
 //地图相关
 
++ (GMAPI *)sharedManager
+{
+    static GMAPI *sharedAccountManagerInstance = nil;
+    static dispatch_once_t predicate;
+    dispatch_once(&predicate, ^{
+        sharedAccountManagerInstance = [[self alloc] init];
+    });
+    return sharedAccountManagerInstance;
+}
+
 - (void)GgetCllocation:(void(^)(CLLocation *theLocation))completionBlock{
-    _theCllocation = nil;
+    _theLocationDic = nil;
     [self startLocation];
-    if (_theCllocation) {
-        gcllocationBlock(_theCllocation);
+    if (_theLocationDic) {
+        gcllocationBlock(_theLocationDic);
     }
 }
 
@@ -293,7 +303,10 @@
 {
     NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
     if (userLocation) {
-        _theCllocation = userLocation.location;
+        _theLocationDic = @{
+                            @"lat":[NSString stringWithFormat:@"%f",userLocation.location.coordinate.latitude],
+                            @"long":[NSString stringWithFormat:@"%f",userLocation.location.coordinate.longitude]
+                            };
         [self stopLocation];
     }
     

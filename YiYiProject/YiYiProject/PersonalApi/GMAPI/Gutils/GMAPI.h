@@ -14,13 +14,13 @@
 #define GscreenRatio_320 DEVICE_WIDTH/320.00
 #import "BMapKit.h"
 
-typedef void(^ GCllocationBlock)(CLLocation *theLocation);
+typedef void(^ GCllocationBlock)(NSDictionary *theLocationDic);
 
 
 @interface GMAPI : NSObject<BMKMapViewDelegate,BMKLocationServiceDelegate>
 {
     BMKLocationService* _locService;//定位服务
-    CLLocation *_theCllocation;//经纬度
+    NSDictionary *_theLocationDic;//经纬度
     GCllocationBlock gcllocationBlock;
 }
 
@@ -98,6 +98,10 @@ typedef void(^ GCllocationBlock)(CLLocation *theLocation);
 
 
 //地图相关
+
+//获取单例
++ (GMAPI *)sharedManager;
+
 //获取经纬度
 - (void)GgetCllocation:(void(^)(CLLocation *theLocation))completionBlock;
 
