@@ -333,6 +333,17 @@ typedef enum {
 #define TOPIC_ADD @"http://182.92.158.32/index.php?d=api&c=topic&m=publish_topic"//添加话题
 
 
+
+
+
+#pragma mark-----设置
+#define	APP_RATING_URL	 @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=951259287"
+
+#pragma mark-------------编辑个人资料
+#define POST_UPDATEMYINFO_URL @"http://182.92.158.32/index.php?d=api&c=user_api&m=update_user_info"  //修改个人资料
+
+#define POST_GETMYINFO_URL @"http://182.92.158.32/index.php?d=api&c=user_api&m=get_user_info"  //获取个人资料
+
 #endif
 
 

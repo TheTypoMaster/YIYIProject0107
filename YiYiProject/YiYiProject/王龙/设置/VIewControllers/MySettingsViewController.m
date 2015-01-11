@@ -1,0 +1,266 @@
+//
+//  MySettingsViewController.m
+//  YiYiProject
+//
+//  Created by 王龙 on 15/1/1.
+//  Copyright (c) 2015年 lcw. All rights reserved.
+//
+
+#import "MySettingsViewController.h"
+#import "MyseetingTableViewCell.h"
+#import "AboutTailCircleViewController.h"
+//RBG color
+#define RGBA(r,g,b,a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
+@interface MySettingsViewController ()
+{
+    NSString *cellIdentifer;
+}
+@end
+
+@implementation MySettingsViewController
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBarHidden = NO;
+    
+}
+
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:YES];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        int size = [self sizeOfFolder:[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0]];
+        NSString * lastSize = @"";
+        if (size < (1024*1024)) {
+            lastSize = [NSString stringWithFormat:@"%.1fKB",size/1024.0f];
+        }else if(size > (1024*1024)){
+            lastSize = [NSString stringWithFormat:@"%.1fMB",size/1024.0f/1024.0f];
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            catchSize = lastSize;
+            [_mTableVIew reloadData];
+        });
+    });
+    
+    
+    
+}
+
+/////计算缓存
+- (int)sizeOfFolder:(NSString*)folderPath
+{
+    NSArray *contents;
+    NSEnumerator *enumerator;
+    NSString *path;
+    contents = [[NSFileManager defaultManager] subpathsAtPath:folderPath];
+    enumerator = [contents objectEnumerator];
+    int fileSizeInt = 0;
+    while (path = [enumerator nextObject]) {
+        NSError *error;
+        NSDictionary *fattrib = [[NSFileManager defaultManager] attributesOfItemAtPath:[folderPath stringByAppendingPathComponent:path] error:&error];
+        fileSizeInt +=[fattrib fileSize];
+    }
+    return fileSizeInt;
+}
+
+/////////////////////
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
+    
+     self.myTitleLabel.text = @"设置";
+    
+    [self initSettingsArray];
+    
+    _mTableVIew.backgroundColor = RGBCOLOR(242, 242, 242);
+    
+    //注册cell
+    
+    cellIdentifer = @"MyseetingTableViewCell";
+    UINib * cellNib = [UINib nibWithNibName:cellIdentifer bundle:nil];
+    [_mTableVIew registerNib:cellNib forCellReuseIdentifier:cellIdentifer];
+    
+     //隐藏多余的分割线
+    UIView *footView = [[UIView alloc] init];
+    footView.backgroundColor = RGBA(248, 248, 248, 1);
+    
+    ///退出登录
+    
+    UIButton *logOutBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    logOutBtn.frame = CGRectMake(0, 10, DEVICE_WIDTH, 50);
+    [logOutBtn setTitle:@"退出登录" forState:UIControlStateNormal];
+    [logOutBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    logOutBtn.titleLabel.font = [UIFont systemFontOfSize:15.0];
+    logOutBtn.backgroundColor = [UIColor whiteColor];
+    [footView addSubview:logOutBtn];
+    
+    [logOutBtn addTarget:self action:@selector(logOutActon) forControlEvents:UIControlEventTouchUpInside];
+    
+    [_mTableVIew setTableFooterView:footView];
+    
+    
+}
+
+
+//初始化数据源
+-(void)initSettingsArray{
+    
+    catchSize = @"";
+    
+    dataArray = @[@"关于我们",
+                  @"清除缓存",
+                  @"检测新版本",
+                  @"爱的鼓励",
+                  @"意见反馈",
+                  ];
+}
+
+
+
+
+#pragma mark------------------UItableVIewDataSource
+
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+
+    return 5;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    MyseetingTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifer];
+    
+    cell.contentLabel.text = [dataArray objectAtIndex:indexPath.row];
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    if (indexPath.row == 1) {
+        cell.secondLabel.text = catchSize;
+        cell.secondLabel.hidden = NO;
+        cell.haveNewVersionView.hidden = YES;
+    }else{
+        cell.secondLabel.hidden = YES;
+        
+        if (indexPath.row == 2 ) {
+            cell.haveNewVersionView.hidden = NO;
+        }else{
+            cell.haveNewVersionView.hidden = YES;
+        }
+    }
+    
+    
+    
+    return cell;
+
+}
+
+
+
+#pragma mark------------------UItableVIewDelegate
+-(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 100;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 50.0;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 20;
+}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UIView * view = [[UIView alloc] init];
+    view.backgroundColor = RGBA(248, 248, 248, 1);
+    return view;
+}
+
+////////cell的点击事件
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if (indexPath.row == 0) {
+        AboutTailCircleViewController *aboutVC = [[AboutTailCircleViewController alloc] initWithNibName:@"AboutTailCircleViewController" bundle:nil];
+        
+        [self.navigationController pushViewController:aboutVC animated:YES];
+    }
+    
+    if (indexPath.row == 1) {
+        /////////清理缓存
+//        [XDTools showProgressWithText:@"正在清理..." hasMask:NO];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSString *cachPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+            NSArray *files = [[NSFileManager defaultManager] subpathsAtPath:cachPath];
+            NSLog(@"files :%d",[files count]);
+            for (NSString *p in files) {
+                NSError *error;
+                NSString *path = [cachPath stringByAppendingPathComponent:p];
+                if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+                    [[NSFileManager defaultManager] removeItemAtPath:path error:&error];
+                }
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+//                [XDTools hiddenProgress];
+                
+                catchSize = @"0KB";
+                
+                [_mTableVIew reloadData];
+            });
+        });
+    }
+    
+    
+    if (indexPath.row == 2) {
+         //检测新版本
+        
+        //TODO:
+    }
+    
+    if (indexPath.row == 3) {
+        //打分
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:APP_RATING_URL]];
+    }
+    
+    if (indexPath.row == 4) {
+        //意见反馈
+        
+        //TODO:  还没做
+    }
+    
+    
+    
+}
+
+
+
+
+#pragma mark---退出登录
+
+-(void)logOutActon{
+    //TODO:
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

@@ -358,10 +358,6 @@
 		DF7467941A57FB0400F0AEC8 /* my_sc_guanbi@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF7467921A57FB0400F0AEC8 /* my_sc_guanbi@3x.png */; };
 		DFC7812A1A6159FD00776C62 /* MyMatchDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC781291A6159FD00776C62 /* MyMatchDetailViewController.m */; };
 		DFC7812D1A615FF700776C62 /* MyMatchDivisionDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC7812C1A615FF700776C62 /* MyMatchDivisionDetailViewController.m */; };
-
-		DFC7812F1A616D3100776C62 /* libiOS_IMKit_v1_2_7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC7812E1A616D3100776C62 /* libiOS_IMKit_v1_2_7.a */; };
-
-
 		E30479471A6109B800709985 /* ParallaxHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = E30479441A6109B800709985 /* ParallaxHeaderView.m */; };
 		E30479481A6109B800709985 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = E30479461A6109B800709985 /* UIImage+ImageEffects.m */; };
 		E304794B1A6109DE00709985 /* GStorePinpaiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E304794A1A6109DE00709985 /* GStorePinpaiViewController.m */; };
@@ -410,8 +406,17 @@
 		E3E3E8481A3C6772001A1DD6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E3E8471A3C6772001A1DD6 /* CoreLocation.framework */; };
 		E3E3E84A1A3C6780001A1DD6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E3E8491A3C6780001A1DD6 /* QuartzCore.framework */; };
 		E3E3E84C1A3C678C001A1DD6 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E3E84B1A3C678C001A1DD6 /* OpenGLES.framework */; };
-		E3EDF11D1A614F7A00F24F61 /* libiOS_IMKit_v1_2_7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E3EDF11C1A614F7A00F24F61 /* libiOS_IMKit_v1_2_7.a */; };
 		E3FC8DE71A3C4B430025525D /* GeditUserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FC8DE61A3C4B430025525D /* GeditUserInfoViewController.m */; };
+		EF9329D61A617D4000A8BD18 /* libiOS_IMKit_v1_2_7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF9329D51A617D4000A8BD18 /* libiOS_IMKit_v1_2_7.a */; };
+		EF9329F31A617DD500A8BD18 /* MySettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9329E61A617DD500A8BD18 /* MySettingsViewController.m */; };
+		EF9329F41A617DD500A8BD18 /* MySettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF9329E71A617DD500A8BD18 /* MySettingsViewController.xib */; };
+		EF9329F51A617DD500A8BD18 /* AboutTailCircleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9329EA1A617DD500A8BD18 /* AboutTailCircleViewController.m */; };
+		EF9329F61A617DD500A8BD18 /* AboutTailCircleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF9329EB1A617DD500A8BD18 /* AboutTailCircleViewController.xib */; };
+		EF9329F91A617DD500A8BD18 /* MyseetingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9329F01A617DD500A8BD18 /* MyseetingTableViewCell.m */; };
+		EF9329FA1A617DD500A8BD18 /* MyseetingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF9329F11A617DD500A8BD18 /* MyseetingTableViewCell.xib */; };
+		EF9329FD1A617E1F00A8BD18 /* EditMyInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9329FC1A617E1F00A8BD18 /* EditMyInfoViewController.m */; };
+		EF932A011A617E2B00A8BD18 /* EditInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9329FF1A617E2B00A8BD18 /* EditInfoView.m */; };
+		EF932A021A617E2B00A8BD18 /* EditInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF932A001A617E2B00A8BD18 /* EditInfoView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -933,10 +938,6 @@
 		DFC781291A6159FD00776C62 /* MyMatchDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyMatchDetailViewController.m; sourceTree = "<group>"; };
 		DFC7812B1A615FF700776C62 /* MyMatchDivisionDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyMatchDivisionDetailViewController.h; sourceTree = "<group>"; };
 		DFC7812C1A615FF700776C62 /* MyMatchDivisionDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyMatchDivisionDetailViewController.m; sourceTree = "<group>"; };
-
-		DFC7812E1A616D3100776C62 /* libiOS_IMKit_v1_2_7.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libiOS_IMKit_v1_2_7.a; sourceTree = "<group>"; };
-
-
 		E30479431A6109B800709985 /* ParallaxHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParallaxHeaderView.h; sourceTree = "<group>"; };
 		E30479441A6109B800709985 /* ParallaxHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParallaxHeaderView.m; sourceTree = "<group>"; };
 		E30479451A6109B800709985 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
@@ -1079,9 +1080,23 @@
 		E3E3E8471A3C6772001A1DD6 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		E3E3E8491A3C6780001A1DD6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E3E3E84B1A3C678C001A1DD6 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
-		E3EDF11C1A614F7A00F24F61 /* libiOS_IMKit_v1_2_7.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libiOS_IMKit_v1_2_7.a; sourceTree = "<group>"; };
 		E3FC8DE51A3C4B430025525D /* GeditUserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeditUserInfoViewController.h; sourceTree = "<group>"; };
 		E3FC8DE61A3C4B430025525D /* GeditUserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeditUserInfoViewController.m; sourceTree = "<group>"; };
+		EF9329D51A617D4000A8BD18 /* libiOS_IMKit_v1_2_7.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libiOS_IMKit_v1_2_7.a; sourceTree = "<group>"; };
+		EF9329E51A617DD500A8BD18 /* MySettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySettingsViewController.h; sourceTree = "<group>"; };
+		EF9329E61A617DD500A8BD18 /* MySettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySettingsViewController.m; sourceTree = "<group>"; };
+		EF9329E71A617DD500A8BD18 /* MySettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MySettingsViewController.xib; sourceTree = "<group>"; };
+		EF9329E91A617DD500A8BD18 /* AboutTailCircleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutTailCircleViewController.h; sourceTree = "<group>"; };
+		EF9329EA1A617DD500A8BD18 /* AboutTailCircleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutTailCircleViewController.m; sourceTree = "<group>"; };
+		EF9329EB1A617DD500A8BD18 /* AboutTailCircleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutTailCircleViewController.xib; sourceTree = "<group>"; };
+		EF9329EF1A617DD500A8BD18 /* MyseetingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyseetingTableViewCell.h; sourceTree = "<group>"; };
+		EF9329F01A617DD500A8BD18 /* MyseetingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyseetingTableViewCell.m; sourceTree = "<group>"; };
+		EF9329F11A617DD500A8BD18 /* MyseetingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyseetingTableViewCell.xib; sourceTree = "<group>"; };
+		EF9329FB1A617E1F00A8BD18 /* EditMyInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditMyInfoViewController.h; sourceTree = "<group>"; };
+		EF9329FC1A617E1F00A8BD18 /* EditMyInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditMyInfoViewController.m; sourceTree = "<group>"; };
+		EF9329FE1A617E2B00A8BD18 /* EditInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditInfoView.h; sourceTree = "<group>"; };
+		EF9329FF1A617E2B00A8BD18 /* EditInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditInfoView.m; sourceTree = "<group>"; };
+		EF932A001A617E2B00A8BD18 /* EditInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditInfoView.xib; sourceTree = "<group>"; };
 		F47272E4C36CD60C81CD9A79 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -1097,11 +1112,7 @@
 				E3E3E84A1A3C6780001A1DD6 /* QuartzCore.framework in Frameworks */,
 				E3E3E84C1A3C678C001A1DD6 /* OpenGLES.framework in Frameworks */,
 				137FC2B21A4DAE780039E3FF /* MapKit.framework in Frameworks */,
-
-				DFC7812F1A616D3100776C62 /* libiOS_IMKit_v1_2_7.a in Frameworks */,
-
-				E3EDF11D1A614F7A00F24F61 /* libiOS_IMKit_v1_2_7.a in Frameworks */,
-
+				EF9329D61A617D4000A8BD18 /* libiOS_IMKit_v1_2_7.a in Frameworks */,
 				138C2C141A39E46B00EA59F5 /* libz.dylib in Frameworks */,
 				138C2C121A39E45E00EA59F5 /* libstdc++.dylib in Frameworks */,
 				138C2C0E1A39E25000EA59F5 /* libsqlite3.dylib in Frameworks */,
@@ -1239,6 +1250,7 @@
 		13684A671A37583E00A508FB /* YiYiProject */ = {
 			isa = PBXGroup;
 			children = (
+				EF9329D71A617DD500A8BD18 /* 王龙 */,
 				DF68557E1A592181004D924F /* ZYQAssetPickerController */,
 				13681C6F1A4527A200671D07 /* AllImages */,
 				137B075F1A4E6FB600DE7DCC /* AllImages@3x */,
@@ -1611,11 +1623,7 @@
 		137FC2B61A4DB2DC0039E3FF /* IMKit */ = {
 			isa = PBXGroup;
 			children = (
-
-				DFC7812E1A616D3100776C62 /* libiOS_IMKit_v1_2_7.a */,
-
-				E3EDF11C1A614F7A00F24F61 /* libiOS_IMKit_v1_2_7.a */,
-
+				EF9329D51A617D4000A8BD18 /* libiOS_IMKit_v1_2_7.a */,
 				137FC2B71A4DB2DC0039E3FF /* Headers */,
 				137FC2DC1A4DB2DC0039E3FF /* RongCloud.bundle */,
 			);
@@ -2644,6 +2652,123 @@
 			path = "首页衣加衣";
 			sourceTree = "<group>";
 		};
+		EF9329D71A617DD500A8BD18 /* 王龙 */ = {
+			isa = PBXGroup;
+			children = (
+				EF9329D81A617DD500A8BD18 /* 他人中心 */,
+				EF9329DC1A617DD500A8BD18 /* 编辑资料 */,
+				EF9329E01A617DD500A8BD18 /* 设置 */,
+			);
+			path = "王龙";
+			sourceTree = "<group>";
+		};
+		EF9329D81A617DD500A8BD18 /* 他人中心 */ = {
+			isa = PBXGroup;
+			children = (
+				EF9329D91A617DD500A8BD18 /* Modal */,
+				EF9329DA1A617DD500A8BD18 /* VIewControllers */,
+				EF9329DB1A617DD500A8BD18 /* Views */,
+			);
+			path = "他人中心";
+			sourceTree = "<group>";
+		};
+		EF9329D91A617DD500A8BD18 /* Modal */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Modal;
+			sourceTree = "<group>";
+		};
+		EF9329DA1A617DD500A8BD18 /* VIewControllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = VIewControllers;
+			sourceTree = "<group>";
+		};
+		EF9329DB1A617DD500A8BD18 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		EF9329DC1A617DD500A8BD18 /* 编辑资料 */ = {
+			isa = PBXGroup;
+			children = (
+				EF9329DD1A617DD500A8BD18 /* Modal */,
+				EF9329DE1A617DD500A8BD18 /* VIewControllers */,
+				EF9329DF1A617DD500A8BD18 /* Views */,
+			);
+			path = "编辑资料";
+			sourceTree = "<group>";
+		};
+		EF9329DD1A617DD500A8BD18 /* Modal */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Modal;
+			sourceTree = "<group>";
+		};
+		EF9329DE1A617DD500A8BD18 /* VIewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				EF9329FB1A617E1F00A8BD18 /* EditMyInfoViewController.h */,
+				EF9329FC1A617E1F00A8BD18 /* EditMyInfoViewController.m */,
+			);
+			path = VIewControllers;
+			sourceTree = "<group>";
+		};
+		EF9329DF1A617DD500A8BD18 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				EF9329FE1A617E2B00A8BD18 /* EditInfoView.h */,
+				EF9329FF1A617E2B00A8BD18 /* EditInfoView.m */,
+				EF932A001A617E2B00A8BD18 /* EditInfoView.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		EF9329E01A617DD500A8BD18 /* 设置 */ = {
+			isa = PBXGroup;
+			children = (
+				EF9329E11A617DD500A8BD18 /* Modal */,
+				EF9329E21A617DD500A8BD18 /* VIewControllers */,
+				EF9329E81A617DD500A8BD18 /* Views */,
+			);
+			path = "设置";
+			sourceTree = "<group>";
+		};
+		EF9329E11A617DD500A8BD18 /* Modal */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Modal;
+			sourceTree = "<group>";
+		};
+		EF9329E21A617DD500A8BD18 /* VIewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				EF9329E51A617DD500A8BD18 /* MySettingsViewController.h */,
+				EF9329E61A617DD500A8BD18 /* MySettingsViewController.m */,
+				EF9329E71A617DD500A8BD18 /* MySettingsViewController.xib */,
+			);
+			path = VIewControllers;
+			sourceTree = "<group>";
+		};
+		EF9329E81A617DD500A8BD18 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				EF9329E91A617DD500A8BD18 /* AboutTailCircleViewController.h */,
+				EF9329EA1A617DD500A8BD18 /* AboutTailCircleViewController.m */,
+				EF9329EB1A617DD500A8BD18 /* AboutTailCircleViewController.xib */,
+				EF9329EF1A617DD500A8BD18 /* MyseetingTableViewCell.h */,
+				EF9329F01A617DD500A8BD18 /* MyseetingTableViewCell.m */,
+				EF9329F11A617DD500A8BD18 /* MyseetingTableViewCell.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2783,6 +2908,7 @@
 				137B07D31A4E6FDF00DE7DCC /* d_xinlang@3x.png in Resources */,
 				137B07C51A4E6FDF00DE7DCC /* bianji_girl@3x.png in Resources */,
 				137B08661A4EAC9900DE7DCC /* tianjia_down@2x.png in Resources */,
+				EF932A021A617E2B00A8BD18 /* EditInfoView.xib in Resources */,
 				137B07CB1A4E6FDF00DE7DCC /* xingji_kong@3x.png in Resources */,
 				137B07DA1A4E6FDF00DE7DCC /* sQQ_icon@3x.png in Resources */,
 				137E0AE11A4C66F200B59F64 /* product_shoucang_cancel@2x.png in Resources */,
@@ -2816,7 +2942,9 @@
 				137B07EA1A4E6FDF00DE7DCC /* sh_jiantou_right@3x.png in Resources */,
 				137B087F1A4EADFE00DE7DCC /* xiaoxi_up@3x.png in Resources */,
 				139607B81A46A0BB00AACAC4 /* product_shoucang@2x.png in Resources */,
+				EF9329F41A617DD500A8BD18 /* MySettingsViewController.xib in Resources */,
 				137B07C61A4E6FDF00DE7DCC /* dapei_jiantou@3x.png in Resources */,
+				EF9329FA1A617DD500A8BD18 /* MyseetingTableViewCell.xib in Resources */,
 				137B07D91A4E6FDF00DE7DCC /* xq_pinglun@3x.png in Resources */,
 				138C2BF61A39E09200EA59F5 /* UMSCommentDetailController.xib in Resources */,
 				138C2C021A39E09200EA59F5 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
@@ -2880,6 +3008,7 @@
 				13684A761A37583E00A508FB /* Images.xcassets in Resources */,
 				564031891A4EFF6000680E08 /* apply_ver_image@2x.png in Resources */,
 				564031801A4EEBC800680E08 /* stars_unselected_image@3x.png in Resources */,
+				EF9329F61A617DD500A8BD18 /* AboutTailCircleViewController.xib in Resources */,
 				137B08651A4EAC9900DE7DCC /* my_up@2x.png in Resources */,
 				13B690541A564EBF007FE152 /* t_xiangce@3x.png in Resources */,
 				139607B61A46A0BB00AACAC4 /* product_like@2x.png in Resources */,
@@ -3045,6 +3174,7 @@
 				DFC7812A1A6159FD00776C62 /* MyMatchDetailViewController.m in Sources */,
 				13A389BC1A38974F00ABBACB /* NSString+Emoji.m in Sources */,
 				56DAB2101A46A8E100273140 /* SNRefreshTableView.m in Sources */,
+				EF9329F51A617DD500A8BD18 /* AboutTailCircleViewController.m in Sources */,
 				565321471A59769300E43F80 /* RegexKitLite.m in Sources */,
 				E3996EC01A5E1DBA00673147 /* GSettingViewController.m in Sources */,
 				56A8A8351A45BB1300E85F6B /* MatchTopicCell.m in Sources */,
@@ -3097,6 +3227,7 @@
 				13CEC88F1A5D95F400FE273F /* TDetailModel.m in Sources */,
 				13963F431A4FC54D007BE68B /* LEditor.m in Sources */,
 				13B6906A1A5694C5007FE152 /* MyCollectionController.m in Sources */,
+				EF9329F31A617DD500A8BD18 /* MySettingsViewController.m in Sources */,
 				E3996ED11A5E1DBA00673147 /* GmPrepareNetData.m in Sources */,
 				E34E3D671A615B8000DD95BB /* CustomSegmentView.m in Sources */,
 				E3996EDE1A5E1DBA00673147 /* GStarsView.m in Sources */,
@@ -3112,6 +3243,7 @@
 				566FE24B1A501C4E00A96B5F /* TopicCommentsCell.m in Sources */,
 				1387B08D1A5EC2D0006365D8 /* TopicImageModel.m in Sources */,
 				E3996ED41A5E1DBA00673147 /* GRootScrollView.m in Sources */,
+				EF9329F91A617DD500A8BD18 /* MyseetingTableViewCell.m in Sources */,
 				13CEC8891A5D956B00FE273F /* TTaiDetailController.m in Sources */,
 				13963F441A4FC54D007BE68B /* LImageCell.m in Sources */,
 				5697222C1A408040004B6641 /* HomeMatchView.m in Sources */,
@@ -3127,6 +3259,7 @@
 				DF6855861A592CD2004D924F /* UploadPicViewController.m in Sources */,
 				DF5E89A71A5E115900535EBA /* MyBodyViewController.m in Sources */,
 				566FE2571A503B1000A96B5F /* MatchInfoModel.m in Sources */,
+				EF932A011A617E2B00A8BD18 /* EditInfoView.m in Sources */,
 				13B690671A56797E007FE152 /* TPlatCell.m in Sources */,
 				13684A6B1A37583E00A508FB /* main.m in Sources */,
 				13CD36541A3C732D0068C12A /* LWaterflowView.m in Sources */,
@@ -3141,6 +3274,7 @@
 				E3996EBB1A5E1DBA00673147 /* GLeadBuyMapViewController.m in Sources */,
 				13B690721A56A30E007FE152 /* MyConcernController.m in Sources */,
 				13963F451A4FC54D007BE68B /* LPropertyActionSheet.m in Sources */,
+				EF9329FD1A617E1F00A8BD18 /* EditMyInfoViewController.m in Sources */,
 				13A389BA1A38974F00ABBACB /* LRefreshTableHeaderView.m in Sources */,
 				19D5E6B21A4FE39B008401E0 /* YiChuListModel.m in Sources */,
 				E3FC8DE71A3C4B430025525D /* GeditUserInfoViewController.m in Sources */,
@@ -3283,8 +3417,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YiYiProject/UMengShare/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
@@ -3305,7 +3439,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ca1c9dd0-a046-42fe-909b-5b12ec26956e";
+				PROVISIONING_PROFILE = "";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Debug;
@@ -3339,7 +3473,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ca1c9dd0-a046-42fe-909b-5b12ec26956e";
+				PROVISIONING_PROFILE = "";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Release;

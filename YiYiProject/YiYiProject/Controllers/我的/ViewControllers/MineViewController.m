@@ -25,6 +25,10 @@
 
 #import "MyBodyViewController.h"//我的体型
 #import "MyMatchViewController.h"//我的搭配
+
+#import "MySettingsViewController.h" //设置
+#import "EditMyInfoViewController.h"  //编辑资料
+
 //#import "ShenQingDianPuViewController.h"
 #import "ShenQingDianPuViewController.h"
 
@@ -252,9 +256,9 @@ typedef enum{
 
 //跳转个人设置界面
 -(void)xiaochilun{
-    GSettingViewController *gg = [[GSettingViewController alloc]init];
-    gg.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:gg animated:YES];
+    MySettingsViewController *mySettingVC = [[MySettingsViewController alloc]init];
+    mySettingVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:mySettingVC animated:YES];
 }
 
 
@@ -419,10 +423,14 @@ typedef enum{
 
 
 
+///编辑资料
 -(void)goToEdit{
-//    GMapViewController *ggg = [[GMapViewController alloc]init];
-//    ggg.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:ggg animated:YES];
+    
+    //编辑
+    EditMyInfoViewController *editInfoVC = [[EditMyInfoViewController alloc] init];
+    editInfoVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:editInfoVC animated:YES];
+    
 }
 
 
