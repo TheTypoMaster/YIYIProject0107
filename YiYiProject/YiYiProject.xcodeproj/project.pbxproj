@@ -291,6 +291,7 @@
 		13CEC8A51A5D974900FE273F /* zhixiangjiantou@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13CEC89D1A5D974900FE273F /* zhixiangjiantou@2x.png */; };
 		13EA3D1E1A3B2682002AF7D6 /* HomeBuyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EA3D1D1A3B2682002AF7D6 /* HomeBuyController.m */; };
 		13EA3D241A3B2E13002AF7D6 /* HomeMatchController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EA3D231A3B2E13002AF7D6 /* HomeMatchController.m */; };
+		1926C36C1A6264BE00CEB52A /* libiOS_IMKit_v1_2_7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1926C36B1A6264BE00CEB52A /* libiOS_IMKit_v1_2_7.a */; };
 		19B937761A5D8780009B359F /* ShenQingDianPuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B937751A5D8780009B359F /* ShenQingDianPuViewController.m */; };
 		19D0C0D21A4EDA6D00BEC10D /* MyYiChuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D0C0D11A4EDA6D00BEC10D /* MyYiChuViewController.m */; };
 		19D5E6B21A4FE39B008401E0 /* YiChuListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D5E6B11A4FE39B008401E0 /* YiChuListModel.m */; };
@@ -370,7 +371,6 @@
 		E3601E781A61733300CC41FE /* gupname@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3601E731A61733300CC41FE /* gupname@3x.png */; };
 		E3601E791A61733300CC41FE /* gupname1@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3601E741A61733300CC41FE /* gupname1@3x.png */; };
 		E3601E7B1A61733C00CC41FE /* gimv1_back@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3601E7A1A61733C00CC41FE /* gimv1_back@3x.png */; };
-		E3601E7D1A61A05800CC41FE /* libiOS_IMKit_v1_2_7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E3601E7C1A61A05800CC41FE /* libiOS_IMKit_v1_2_7.a */; };
 		E3601E801A61A27900CC41FE /* GcustomStoreTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3601E7F1A61A27900CC41FE /* GcustomStoreTableViewCell.m */; };
 		E3601E821A61A75700CC41FE /* gcustomstore@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3601E811A61A75700CC41FE /* gcustomstore@3x.png */; };
 		E3996EBA1A5E1DBA00673147 /* GEditPersonInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E2F1A5E1DBA00673147 /* GEditPersonInfoViewController.m */; };
@@ -416,7 +416,6 @@
 		E3E3E84A1A3C6780001A1DD6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E3E8491A3C6780001A1DD6 /* QuartzCore.framework */; };
 		E3E3E84C1A3C678C001A1DD6 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E3E84B1A3C678C001A1DD6 /* OpenGLES.framework */; };
 		E3FC8DE71A3C4B430025525D /* GeditUserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FC8DE61A3C4B430025525D /* GeditUserInfoViewController.m */; };
-		EF9329D61A617D4000A8BD18 /* libiOS_IMKit_v1_2_7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF9329D51A617D4000A8BD18 /* libiOS_IMKit_v1_2_7.a */; };
 		EF9329F31A617DD500A8BD18 /* MySettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9329E61A617DD500A8BD18 /* MySettingsViewController.m */; };
 		EF9329F41A617DD500A8BD18 /* MySettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF9329E71A617DD500A8BD18 /* MySettingsViewController.xib */; };
 		EF9329F51A617DD500A8BD18 /* AboutTailCircleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9329EA1A617DD500A8BD18 /* AboutTailCircleViewController.m */; };
@@ -839,6 +838,7 @@
 		13EA3D1D1A3B2682002AF7D6 /* HomeBuyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeBuyController.m; sourceTree = "<group>"; };
 		13EA3D221A3B2E13002AF7D6 /* HomeMatchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeMatchController.h; sourceTree = "<group>"; };
 		13EA3D231A3B2E13002AF7D6 /* HomeMatchController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeMatchController.m; sourceTree = "<group>"; };
+		1926C36B1A6264BE00CEB52A /* libiOS_IMKit_v1_2_7.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libiOS_IMKit_v1_2_7.a; sourceTree = "<group>"; };
 		19B937741A5D8780009B359F /* ShenQingDianPuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShenQingDianPuViewController.h; sourceTree = "<group>"; };
 		19B937751A5D8780009B359F /* ShenQingDianPuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShenQingDianPuViewController.m; sourceTree = "<group>"; };
 		19D0C0D01A4EDA6D00BEC10D /* MyYiChuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyYiChuViewController.h; sourceTree = "<group>"; };
@@ -964,7 +964,6 @@
 		E3601E731A61733300CC41FE /* gupname@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gupname@3x.png"; sourceTree = "<group>"; };
 		E3601E741A61733300CC41FE /* gupname1@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gupname1@3x.png"; sourceTree = "<group>"; };
 		E3601E7A1A61733C00CC41FE /* gimv1_back@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gimv1_back@3x.png"; sourceTree = "<group>"; };
-		E3601E7C1A61A05800CC41FE /* libiOS_IMKit_v1_2_7.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libiOS_IMKit_v1_2_7.a; sourceTree = "<group>"; };
 		E3601E7E1A61A27900CC41FE /* GcustomStoreTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GcustomStoreTableViewCell.h; sourceTree = "<group>"; };
 		E3601E7F1A61A27900CC41FE /* GcustomStoreTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GcustomStoreTableViewCell.m; sourceTree = "<group>"; };
 		E3601E811A61A75700CC41FE /* gcustomstore@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gcustomstore@3x.png"; sourceTree = "<group>"; };
@@ -1101,7 +1100,6 @@
 		E3E3E84B1A3C678C001A1DD6 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		E3FC8DE51A3C4B430025525D /* GeditUserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeditUserInfoViewController.h; sourceTree = "<group>"; };
 		E3FC8DE61A3C4B430025525D /* GeditUserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeditUserInfoViewController.m; sourceTree = "<group>"; };
-		EF9329D51A617D4000A8BD18 /* libiOS_IMKit_v1_2_7.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libiOS_IMKit_v1_2_7.a; sourceTree = "<group>"; };
 		EF9329E51A617DD500A8BD18 /* MySettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySettingsViewController.h; sourceTree = "<group>"; };
 		EF9329E61A617DD500A8BD18 /* MySettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySettingsViewController.m; sourceTree = "<group>"; };
 		EF9329E71A617DD500A8BD18 /* MySettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MySettingsViewController.xib; sourceTree = "<group>"; };
@@ -1131,8 +1129,7 @@
 				E3E3E84A1A3C6780001A1DD6 /* QuartzCore.framework in Frameworks */,
 				E3E3E84C1A3C678C001A1DD6 /* OpenGLES.framework in Frameworks */,
 				137FC2B21A4DAE780039E3FF /* MapKit.framework in Frameworks */,
-				EF9329D61A617D4000A8BD18 /* libiOS_IMKit_v1_2_7.a in Frameworks */,
-				E3601E7D1A61A05800CC41FE /* libiOS_IMKit_v1_2_7.a in Frameworks */,
+				1926C36C1A6264BE00CEB52A /* libiOS_IMKit_v1_2_7.a in Frameworks */,
 				138C2C141A39E46B00EA59F5 /* libz.dylib in Frameworks */,
 				138C2C121A39E45E00EA59F5 /* libstdc++.dylib in Frameworks */,
 				138C2C0E1A39E25000EA59F5 /* libsqlite3.dylib in Frameworks */,
@@ -1643,8 +1640,7 @@
 		137FC2B61A4DB2DC0039E3FF /* IMKit */ = {
 			isa = PBXGroup;
 			children = (
-				EF9329D51A617D4000A8BD18 /* libiOS_IMKit_v1_2_7.a */,
-				E3601E7C1A61A05800CC41FE /* libiOS_IMKit_v1_2_7.a */,
+				1926C36B1A6264BE00CEB52A /* libiOS_IMKit_v1_2_7.a */,
 				137FC2B71A4DB2DC0039E3FF /* Headers */,
 				137FC2DC1A4DB2DC0039E3FF /* RongCloud.bundle */,
 			);
@@ -3477,7 +3473,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0c1b68b6-94ba-43b9-b1d3-dea4d4ca3175";
+				PROVISIONING_PROFILE = "ca1c9dd0-a046-42fe-909b-5b12ec26956e";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Debug;
@@ -3511,7 +3507,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0c1b68b6-94ba-43b9-b1d3-dea4d4ca3175";
+				PROVISIONING_PROFILE = "ca1c9dd0-a046-42fe-909b-5b12ec26956e";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Release;
