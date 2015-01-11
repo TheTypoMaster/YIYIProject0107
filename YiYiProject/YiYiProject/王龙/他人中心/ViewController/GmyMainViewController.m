@@ -71,7 +71,7 @@
     if (self.theType == GSOMEONE) {
         mid_height = 58.0f;
     }
-    headerView = [ParallaxHeaderView parallaxHeaderViewWithCGSize:CGSizeMake(DEVICE_WIDTH, 150.00*DEVICE_WIDTH/320)];
+    headerView = [ParallaxHeaderView parallaxHeaderViewWithCGSize:CGSizeMake(DEVICE_WIDTH, 150.00)];
     
     self.waterfall.headerView = headerView;
     
@@ -271,6 +271,8 @@
 //
     NSString *url;
     if (self.theType == GSOMEONE) {
+        
+        //TODO:修改uid
        url = [NSString stringWithFormat:@"%@&page=%d&count=%d&user_id=%@&authcode=%@",POST_TLIST_URL,1,10,@"user_id",[GMAPI getAuthkey]];
     }else{
         url = [NSString stringWithFormat:@"%@&page=%d&count=%d&authcode=%@",POST_TLIST_URL,1,10,[GMAPI getAuthkey]];

@@ -376,7 +376,6 @@
 		E3996EBA1A5E1DBA00673147 /* GEditPersonInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E2F1A5E1DBA00673147 /* GEditPersonInfoViewController.m */; };
 		E3996EBB1A5E1DBA00673147 /* GLeadBuyMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E311A5E1DBA00673147 /* GLeadBuyMapViewController.m */; };
 		E3996EBC1A5E1DBA00673147 /* GMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E331A5E1DBA00673147 /* GMapViewController.m */; };
-		E3996EBD1A5E1DBA00673147 /* GmyMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E351A5E1DBA00673147 /* GmyMainViewController.m */; };
 		E3996EBE1A5E1DBA00673147 /* GnearbyStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E371A5E1DBA00673147 /* GnearbyStoreViewController.m */; };
 		E3996EBF1A5E1DBA00673147 /* GpinpaiDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E391A5E1DBA00673147 /* GpinpaiDetailViewController.m */; };
 		E3996EC01A5E1DBA00673147 /* GSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E3B1A5E1DBA00673147 /* GSettingViewController.m */; };
@@ -431,6 +430,7 @@
 		EF932A181A6236AD00A8BD18 /* WaterFallHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = EF932A0E1A6236AD00A8BD18 /* WaterFallHeader.m */; };
 		EF932A191A6236AD00A8BD18 /* WaterFCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF932A101A6236AD00A8BD18 /* WaterFCell.m */; };
 		EF932A1A1A6236AD00A8BD18 /* WaterFLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = EF932A121A6236AD00A8BD18 /* WaterFLayout.m */; };
+		EFDCC9DF1A62A3F300911782 /* GmyMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFDCC9DE1A62A3F300911782 /* GmyMainViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -979,8 +979,6 @@
 		E3996E311A5E1DBA00673147 /* GLeadBuyMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLeadBuyMapViewController.m; sourceTree = "<group>"; };
 		E3996E321A5E1DBA00673147 /* GMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMapViewController.h; sourceTree = "<group>"; };
 		E3996E331A5E1DBA00673147 /* GMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMapViewController.m; sourceTree = "<group>"; };
-		E3996E341A5E1DBA00673147 /* GmyMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GmyMainViewController.h; sourceTree = "<group>"; };
-		E3996E351A5E1DBA00673147 /* GmyMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GmyMainViewController.m; sourceTree = "<group>"; };
 		E3996E361A5E1DBA00673147 /* GnearbyStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GnearbyStoreViewController.h; sourceTree = "<group>"; };
 		E3996E371A5E1DBA00673147 /* GnearbyStoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GnearbyStoreViewController.m; sourceTree = "<group>"; };
 		E3996E381A5E1DBA00673147 /* GpinpaiDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GpinpaiDetailViewController.h; sourceTree = "<group>"; };
@@ -1131,6 +1129,8 @@
 		EF932A101A6236AD00A8BD18 /* WaterFCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaterFCell.m; sourceTree = "<group>"; };
 		EF932A111A6236AD00A8BD18 /* WaterFLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaterFLayout.h; sourceTree = "<group>"; };
 		EF932A121A6236AD00A8BD18 /* WaterFLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaterFLayout.m; sourceTree = "<group>"; };
+		EFDCC9DD1A62A3F300911782 /* GmyMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GmyMainViewController.h; path = "YiYiProject/王龙/他人中心/ViewController/GmyMainViewController.h"; sourceTree = SOURCE_ROOT; };
+		EFDCC9DE1A62A3F300911782 /* GmyMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GmyMainViewController.m; path = "YiYiProject/王龙/他人中心/ViewController/GmyMainViewController.m"; sourceTree = SOURCE_ROOT; };
 		F47272E4C36CD60C81CD9A79 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -2478,8 +2478,6 @@
 				E3996E311A5E1DBA00673147 /* GLeadBuyMapViewController.m */,
 				E3996E321A5E1DBA00673147 /* GMapViewController.h */,
 				E3996E331A5E1DBA00673147 /* GMapViewController.m */,
-				E3996E341A5E1DBA00673147 /* GmyMainViewController.h */,
-				E3996E351A5E1DBA00673147 /* GmyMainViewController.m */,
 				E3996E361A5E1DBA00673147 /* GnearbyStoreViewController.h */,
 				E3996E371A5E1DBA00673147 /* GnearbyStoreViewController.m */,
 				E3996E381A5E1DBA00673147 /* GpinpaiDetailViewController.h */,
@@ -2725,6 +2723,8 @@
 		EF9329DA1A617DD500A8BD18 /* VIewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				EFDCC9DD1A62A3F300911782 /* GmyMainViewController.h */,
+				EFDCC9DE1A62A3F300911782 /* GmyMainViewController.m */,
 			);
 			path = VIewControllers;
 			sourceTree = "<group>";
@@ -3314,7 +3314,6 @@
 				13EA3D241A3B2E13002AF7D6 /* HomeMatchController.m in Sources */,
 				E3996EDA1A5E1DBA00673147 /* GcustomActionSheet.m in Sources */,
 				56A8A8311A45946000E85F6B /* MatchTopicModel.m in Sources */,
-				E3996EBD1A5E1DBA00673147 /* GmyMainViewController.m in Sources */,
 				566FE24B1A501C4E00A96B5F /* TopicCommentsCell.m in Sources */,
 				1387B08D1A5EC2D0006365D8 /* TopicImageModel.m in Sources */,
 				E3996ED41A5E1DBA00673147 /* GRootScrollView.m in Sources */,
@@ -3356,6 +3355,7 @@
 				E3FC8DE71A3C4B430025525D /* GeditUserInfoViewController.m in Sources */,
 				5653214F1A59785F00E43F80 /* OHLableHelper.m in Sources */,
 				13B690451A564825007FE152 /* CHTumblrMenuView.m in Sources */,
+				EFDCC9DF1A62A3F300911782 /* GmyMainViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
