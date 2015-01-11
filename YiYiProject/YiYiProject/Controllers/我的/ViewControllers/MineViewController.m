@@ -157,6 +157,9 @@ typedef enum{
         NSString *score = [dic stringValueForKey:@"score"];
         self.userNameLabel.text = [NSString stringWithFormat:@"昵称:%@",name];
         self.userScoreLabel.text = [NSString stringWithFormat:@"积分:%@",score];
+        [_backView.imageView sd_setImageWithURL:[NSURL URLWithString:[dic stringValueForKey:@"user_banner"]] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            [GMAPI setUserBannerImageWithData:UIImagePNGRepresentation(_backView.imageView.image)];
+        }];
         
         [_tableView reloadData];
         

@@ -79,7 +79,17 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeText];
+    self.rightString = @"关注";
+    
+//    UIButton *guanzhuBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [guanzhuBtn setTitle:@"+关注" forState:UIControlStateNormal];
+//    [guanzhuBtn setFrame:CGRectMake(0, 0, 50, 40)];
+//    UIBarButtonItem *righItem = [[UIBarButtonItem alloc]initWithCustomView:guanzhuBtn];
+//    self.navigationItem.rightBarButtonItem = righItem;
+//    [guanzhuBtn addTarget:self action:@selector(ggGuanzhu) forControlEvents:UIControlEventTouchUpInside];
+    
+    
     self.myTitleLabel.textColor = [UIColor whiteColor];
     self.myTitle = self.storeNameStr;
     
@@ -91,6 +101,10 @@
 }
 
 
+-(void)rightButtonTap:(UIButton *)sender
+{
+    NSLog(@"在这里添加关注");
+}
 
 
 //创建商家顶部信息view
@@ -150,7 +164,7 @@
     //楼层数
     NSMutableArray *floorsNameArray = [NSMutableArray arrayWithCapacity:1];
     for (NSString *str in keys) {
-        [floorsNameArray addObject:[NSString stringWithFormat:@"F%@",str]];
+        [floorsNameArray addObject:[NSString stringWithFormat:@"%@",str]];
     }
     
     //每层的数据的二维数组
