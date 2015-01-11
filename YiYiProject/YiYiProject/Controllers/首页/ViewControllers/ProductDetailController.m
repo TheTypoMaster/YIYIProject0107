@@ -241,8 +241,8 @@
 - (IBAction)clickToContact:(id)sender {
     
     YIYIChatViewController *contact = [[YIYIChatViewController alloc]init];
-    contact.currentTarget = @"1";
-    contact.currentTargetName = @"RNail";
+    contact.currentTarget = [GMAPI getUid];
+    contact.currentTargetName = [GMAPI getUsername];
     contact.portraitStyle = RCUserAvatarCycle;
     contact.enableSettings = NO;
     contact.conversationType = ConversationType_PRIVATE;
@@ -253,6 +253,7 @@
 - (IBAction)clickToBuy:(id)sender {
     
     GLeadBuyMapViewController *ll = [[GLeadBuyMapViewController alloc]init];
+    ll.aModel = aModel;
     [self.navigationController pushViewController:ll animated:YES];
 }
 

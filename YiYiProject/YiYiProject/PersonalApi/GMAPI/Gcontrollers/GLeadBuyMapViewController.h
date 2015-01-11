@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ProductModel.h"
 
 @interface GLeadBuyMapViewController : MyViewController
 
@@ -16,5 +17,11 @@
 
 //商城名
 @property(nonatomic,strong)NSString *storeName;
+
+
+//产品model,包含坐标、name等所有信息
+@property(nonatomic,retain)ProductModel *aModel;
+
+
 
 @end
