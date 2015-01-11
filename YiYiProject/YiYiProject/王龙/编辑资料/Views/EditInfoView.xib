@@ -247,8 +247,12 @@
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="女" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="btT-GK-vXb">
                             <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="20" id="Z8b-EA-C2X"/>
-                                <constraint firstAttribute="height" constant="20" id="aMC-1T-8vB"/>
+                                <constraint firstAttribute="width" constant="20" id="Z8b-EA-C2X">
+                                    <variation key="heightClass=regular-widthClass=compact" constant="13"/>
+                                </constraint>
+                                <constraint firstAttribute="height" constant="20" id="aMC-1T-8vB">
+                                    <variation key="heightClass=regular-widthClass=compact" constant="13"/>
+                                </constraint>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -266,13 +270,14 @@
                                 </mask>
                             </variation>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o3c-kJ-dao">
+                        <button opaque="NO" tag="1001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o3c-kJ-dao">
                             <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                            <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="15" id="0FS-k4-e1t"/>
                                 <constraint firstAttribute="height" constant="15" id="yqL-EE-jvq"/>
                             </constraints>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <state key="normal">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -289,13 +294,18 @@
                                 </mask>
                             </variation>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b1t-8Y-BHC">
+                        <button opaque="NO" tag="1002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b1t-8Y-BHC">
                             <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                            <color key="backgroundColor" red="0.8625315657" green="0.56662262669999997" blue="0.2952060983" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="15" id="RvJ-fy-TJw"/>
-                                <constraint firstAttribute="width" constant="15" id="uBB-er-3as"/>
+                                <constraint firstAttribute="height" constant="15" id="RvJ-fy-TJw">
+                                    <variation key="heightClass=regular-widthClass=compact" constant="13"/>
+                                </constraint>
+                                <constraint firstAttribute="width" constant="15" id="uBB-er-3as">
+                                    <variation key="heightClass=regular-widthClass=compact" constant="13"/>
+                                </constraint>
                             </constraints>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <state key="normal">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -337,7 +347,9 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="b1t-8Y-BHC" firstAttribute="top" secondItem="Ocx-6I-jZe" secondAttribute="top" constant="18" id="18Y-K4-PBe"/>
+                        <constraint firstItem="b1t-8Y-BHC" firstAttribute="top" secondItem="Ocx-6I-jZe" secondAttribute="top" constant="18" id="18Y-K4-PBe">
+                            <variation key="heightClass=regular-widthClass=compact" constant="19"/>
+                        </constraint>
                         <constraint firstItem="3MS-tL-i93" firstAttribute="top" secondItem="Ocx-6I-jZe" secondAttribute="top" constant="15" id="5ng-ya-EBO"/>
                         <constraint firstItem="WlC-bk-yoj" firstAttribute="leading" secondItem="Ocx-6I-jZe" secondAttribute="leading" constant="15" id="7v8-yl-rCT"/>
                         <constraint firstAttribute="height" constant="50" id="H8k-0i-IZD"/>
@@ -347,7 +359,9 @@
                         <constraint firstItem="WlC-bk-yoj" firstAttribute="top" secondItem="Ocx-6I-jZe" secondAttribute="top" constant="10" id="baX-wW-Q4o"/>
                         <constraint firstAttribute="trailing" secondItem="3MS-tL-i93" secondAttribute="trailing" constant="10" id="bap-ia-12C"/>
                         <constraint firstItem="o3c-kJ-dao" firstAttribute="top" secondItem="Ocx-6I-jZe" secondAttribute="top" constant="18" id="mMd-Hm-VCv"/>
-                        <constraint firstItem="btT-GK-vXb" firstAttribute="top" secondItem="Ocx-6I-jZe" secondAttribute="top" constant="15" id="mZR-Dz-JK1"/>
+                        <constraint firstItem="btT-GK-vXb" firstAttribute="top" secondItem="Ocx-6I-jZe" secondAttribute="top" constant="15" id="mZR-Dz-JK1">
+                            <variation key="heightClass=regular-widthClass=compact" constant="19"/>
+                        </constraint>
                     </constraints>
                     <variation key="default">
                         <mask key="subviews">

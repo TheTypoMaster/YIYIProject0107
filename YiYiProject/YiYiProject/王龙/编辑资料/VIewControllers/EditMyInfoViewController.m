@@ -40,6 +40,8 @@
     
     [self addGesturesOnViews];
     
+    [self getMyUserInfo];
+    
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -56,6 +58,12 @@
     infoView.frame = CGRectMake(0, 0, DEVICE_WIDTH, infoScrollView.frame.size.height);
     infoView.backgroundColor= RGBA(248, 248, 248, 1);
     [infoScrollView addSubview:infoView];
+    
+    
+    [infoView.manBtn addTarget:self action:@selector(sexAction:) forControlEvents:UIControlEventTouchUpInside];
+    [infoView.womanBtn addTarget:self action:@selector(sexAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+   // 1002 男  1001 女
     
     dateView = [[UIView alloc] initWithFrame:CGRectMake(0, DEVICE_HEIGHT, DEVICE_WIDTH, 250+44)];
     [self.view addSubview:dateView];
@@ -98,7 +106,18 @@
     
 }
 
-
+////性别
+-(void)sexAction:(UIButton *)btn{
+    if (btn.tag == 1001) {
+        //nv
+        infoView.manBtn.selected = NO;
+        infoView.womanBtn.selected = YES;
+    }else{
+        //nan
+        infoView.manBtn.selected = YES;
+        infoView.womanBtn.selected = NO;
+    }
+}
 /////按钮事件
 -(void)sureBtnAction{
     NSDate *select = [datePicker date];
@@ -132,17 +151,81 @@
     [infoView.nickerTf resignFirstResponder];
     return YES;
 }
+
+
+//刷新资料
+-(void)reloadUserInfo{
+    NSString *headUrl = infoDic[@"photo"];
+    NSString *nick = infoDic[@"user_name"];
+    NSString *sex = infoDic[@"gender"];
+    NSString *birth =infoDic[@"birthday"];
+    [self judgeNil:headUrl];
+    [self judgeNil:nick];
+    [self judgeNil:sex];
+    [self judgeNil:birth];
+    [infoView.headImageView sd_setImageWithURL:[NSURL URLWithString:headUrl] placeholderImage:nil];
+    infoView.nickerTf.text = nick;
+
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    
+    NSDate *birthDate = [NSDate dateWithTimeIntervalSince1970:[birth longLongValue]];
+    infoView.birthdayLabel.text = [formatter stringFromDate:birthDate];
+    
+    
+    if ([sex intValue] == 1) {
+        //男
+        infoView.manBtn.selected = YES;
+        infoView.womanBtn.selected = NO;
+    }else{
+        //女
+        infoView.manBtn.selected = NO;
+        infoView.womanBtn.selected = YES;
+        
+    }
+}
+
+#pragma mark------------获取个人资料
+
+-(void)getMyUserInfo{
+    NSString *url = url = [NSString stringWithFormat:@"%@&authcode=%@",GET_UPDATEMYINFO_URL,[GMAPI getAuthkey]];
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        if ([result isKindOfClass:[NSDictionary class]]) {
+            
+            if ([result[@"errorcode"] intValue] == 0) {
+                infoDic = result[@"user_info"];
+                [self reloadUserInfo];
+            }
+        }
+
+        
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+        
+    }];
+}
 #pragma mark -完成 事件处理
 
 -(void)rightButtonTap:(UIButton *)sender
 {
     NSString *user_name = [self judgeNil:infoView.nickerTf.text];
 
+    NSString *gender;
+    if (infoView.manBtn.selected) {
+        gender = @"1";
+    }else{
+        gender = @"2";
+    }
 
     NSDictionary *dic = @{
                           @"authcode":[GMAPI getAuthkey],
                           @"user_name":user_name,
-                          @"gender": @"1",
+                          @"gender": gender,
                           @"birthday":infoView.birthdayLabel.text,
                           };
     //设置接收响应类型为标准HTTP类型(默认为响应类型为JSON)

@@ -26,7 +26,6 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        
         self.pageNum = 1;
         self.dataArray = [NSMutableArray array];
         

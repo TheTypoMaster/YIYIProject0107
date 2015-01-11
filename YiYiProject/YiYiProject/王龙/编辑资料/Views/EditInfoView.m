@@ -15,10 +15,10 @@
     self.headImageView.layer.masksToBounds = YES;
     
     [self.womanBtn setBackgroundImage:[UIImage imageNamed:@"bianji_gir_nor"] forState:UIControlStateNormal];
-    [self.womanBtn setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+    [self.womanBtn setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateSelected];
     
     [self.manBtn setBackgroundImage:[UIImage imageNamed:@"bianji_boy_nor"] forState:UIControlStateNormal];
-    [self.manBtn setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+    [self.manBtn setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateSelected];
 }
 /*
 // Only override drawRect: if you perform custom drawing.

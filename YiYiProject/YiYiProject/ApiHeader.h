@@ -126,6 +126,7 @@ typedef enum {
 //首页--值得买
 #define HOME_DESERVE_BUY @"http://182.92.158.32/?d=api&c=products&m=listWorthBuy&long=%@&lat=%@&sex=%d&discount=%d&page=%d&count=%d&authcode=%@"
 
+
 //首页--衣加衣
 //获取顶部scrollview图片
 #define HOME_CLOTH_TOPSCROLLVIEW @"http://182.92.158.32/index.php?d=api&c=advertisement&m=get_advertisement"
@@ -340,9 +341,14 @@ typedef enum {
 #define	APP_RATING_URL	 @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=951259287"
 
 #pragma mark-------------编辑个人资料
+#define GET_UPDATEMYINFO_URL @"http://182.92.158.32/index.php?d=api&c=user_api&m=get_user_info"  //获取个人资料
+
 #define POST_UPDATEMYINFO_URL @"http://182.92.158.32/index.php?d=api&c=user_api&m=update_user_info"  //修改个人资料
 
 #define POST_GETMYINFO_URL @"http://182.92.158.32/index.php?d=api&c=user_api&m=get_user_info"  //获取个人资料
+
+#define POST_TLIST_URL @"http://182.92.158.32/?d=api&c=tplat&m=listT"  //获取个人资料
+
 
 #endif
 

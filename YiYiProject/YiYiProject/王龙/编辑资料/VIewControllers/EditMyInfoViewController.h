@@ -17,7 +17,7 @@
     NSMutableArray *yearArray;
     NSArray *monthArray;
     NSMutableArray *DaysArray;
-    
+    NSDictionary *infoDic;  //用户信息
     UIView *dateView;
 }
 

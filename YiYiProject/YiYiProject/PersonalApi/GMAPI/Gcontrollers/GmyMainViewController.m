@@ -10,7 +10,7 @@
 #import "GShowStarsView.h"
 #import "TMQuiltView.h"
 #import "LWaterflowView.h"
-
+#import "TPlatModel.h"
 
 @interface GmyMainViewController ()<TMQuiltViewDataSource,WaterFlowDelegate>
 {
@@ -26,13 +26,12 @@
     //第二层 (自己的主页没有这一层)
     UIView *_jiaoliuGuanzhuView;//交流关注view
     
-    
-    //第三层
-    LWaterflowView *waterFlow;//瀑布流
+    UIView *ttaiView;
     
     
     
-    UIScrollView *_mainScrollView;//最底层scrollview
+    
+    
 }
 @end
 
@@ -57,58 +56,53 @@
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     }
     
+    //
+    [self initWaterFlowView];
+    [self initHeadBackView];
+    [self deserveBuyForSex:0 discount:0 page:1];
     
-    _mainScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT)];
-    if (self.theType == GMYSELF) {//自己的主页
-        _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH, DEVICE_HEIGHT+150);
-    }else if (self.theType == GSOMEONE){//别人的主页
-        _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH, DEVICE_WIDTH+150+58);
+}
+
+
+///初始化头部的view
+-(void)initHeadBackView{
+    
+    float mid_height = 0.0f;
+    if (self.theType == GSOMEONE) {
+        mid_height = 58.0f;
     }
+    headerView = [ParallaxHeaderView parallaxHeaderViewWithCGSize:CGSizeMake(DEVICE_WIDTH, 150.00*DEVICE_WIDTH/320)];
     
-    [self.view addSubview:_mainScrollView];
+    self.waterfall.headerView = headerView;
     
-    //加载顶部信息
-    [_mainScrollView addSubview:[self creatUpUserInfoView]];
+    headerView.userInteractionEnabled = YES;
+    
+    headerView.headerImage = [UIImage imageNamed:@"guserbannerdefaul.png"];
     
     if (self.theType == GSOMEONE) {
-        //加载交流关注view
-        [_mainScrollView addSubview:[self creatJiaoliuGuanzhuView]];
-        //加载瀑布流
-        [_mainScrollView addSubview:[self creatPubuliu]];
-    }else if (self.theType == GMYSELF){
-        //加载瀑布流
-        [_mainScrollView addSubview:[self creatPubuliu]];
+        [headerView addSubview:[self creatUpUserInfoView]];
+        [headerView addSubview:[self creatJiaoliuGuanzhuView]];
+        [headerView addSubview:[self createTtaiView]];
+        ttaiView.frame = CGRectMake(0, _jiaoliuGuanzhuView.frame.size.height+_jiaoliuGuanzhuView.frame.origin.y, DEVICE_WIDTH, 25);
+    }else{
+        [headerView addSubview:[self creatUpUserInfoView]];
+        [headerView addSubview:[self createTtaiView]];
+        ttaiView.frame = CGRectMake(0, _upUserInfoView.frame.size.height+_upUserInfoView.frame.origin.y, DEVICE_WIDTH, 25);
     }
+    [self.waterfall.collectionView addSubview:headerView];
     
     
     
-    
-    
-    
-    
+    //返回按钮
+    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backBtn setImage:BACK_DEFAULT_IMAGE forState:UIControlStateNormal];
+    [backBtn setImageEdgeInsets:UIEdgeInsetsMake(30, 15, 30, 50)];
+    [backBtn setFrame:CGRectMake(0, 0, 80, 80)];
+    [backBtn addTarget:self action:@selector(gGoBackVc) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:backBtn];
 }
 
-
-
-
-//请求网络数据
--(void)prepareNetData{
-    [waterFlow showRefreshHeader:YES];
-}
-
-
-//瀑布流
--(UIView*)creatPubuliu{
-    if (self.theType == GSOMEONE) {
-        waterFlow = [[LWaterflowView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_jiaoliuGuanzhuView.frame), ALL_FRAME_WIDTH, DEVICE_HEIGHT - _jiaoliuGuanzhuView.frame.size.height) waterDelegate:self waterDataSource:self];
-    }else if (self.theType == GMYSELF){
-        waterFlow = [[LWaterflowView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_upUserInfoView.frame), ALL_FRAME_WIDTH, DEVICE_HEIGHT) waterDelegate:self waterDataSource:self];
-    }
-    waterFlow.backgroundColor = RGBCOLOR(240, 242, 242);
-    
-    return waterFlow;
-}
-
+//RGBCOLOR(240, 242, 242);
 //别人主页的 交流关注view
 -(UIView*)creatJiaoliuGuanzhuView{
     _jiaoliuGuanzhuView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_upUserInfoView.frame), DEVICE_WIDTH, 58)];
@@ -119,6 +113,7 @@
     [btn setFrame:CGRectMake((DEVICE_WIDTH-100-100-10)*0.5, 12, 100, 34)];
     [btn setBackgroundColor:RGBCOLOR(252, 252, 252)];
     [btn setTitle:@"交流" forState:UIControlStateNormal];
+    btn.titleLabel.font = [UIFont systemFontOfSize:15.0];
     [btn setTitleColor:RGBCOLOR(114, 114, 114) forState:UIControlStateNormal];
     btn.layer.borderWidth = 0.5;
     btn.layer.cornerRadius = 2;
@@ -128,6 +123,7 @@
     //关注
     UIButton *btn1 = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn1 setFrame:CGRectMake(CGRectGetMaxX(btn.frame)+10, btn.frame.origin.y, btn.frame.size.width, btn.frame.size.height)];
+    btn1.titleLabel.font = [UIFont systemFontOfSize:15.0];
     [btn1 setTitle:@"+ 关注" forState:UIControlStateNormal];
     [btn1 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [btn1 setBackgroundColor:RGBCOLOR(234, 95, 120)];
@@ -145,22 +141,12 @@
     
     //整个view
     _upUserInfoView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 150)];
-    _upUserInfoView.backgroundColor = RGBCOLOR_ONE;
-    
-    //返回按钮
-    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backBtn setImage:BACK_DEFAULT_IMAGE forState:UIControlStateNormal];
-//    [backBtn setImageEdgeInsets:UIEdgeInsetsMake(30, 15, 30, 55)];
-    [backBtn setImageEdgeInsets:UIEdgeInsetsMake(30, 15, 30, 50)];
-    [backBtn setFrame:CGRectMake(0, 0, 80, 80)];
-    [backBtn addTarget:self action:@selector(gGoBackVc) forControlEvents:UIControlEventTouchUpInside];
-//    backBtn.backgroundColor = [UIColor redColor];
-    [_upUserInfoView addSubview:backBtn];
-    
+    _upUserInfoView.backgroundColor = [UIColor clearColor];
+
     //头像
-    _userFaceImv = [[UIImageView alloc]initWithFrame:CGRectMake((DEVICE_WIDTH-50)*0.5, 50, 50, 50)];
+    _userFaceImv = [[UIImageView alloc]initWithFrame:CGRectMake((DEVICE_WIDTH-60)*0.5, 35, 60, 60)];
     _userFaceImv.backgroundColor = RGBCOLOR_ONE;
-    _userFaceImv.layer.cornerRadius = 25;
+    _userFaceImv.layer.cornerRadius = 30;
     _userFaceImv.layer.borderWidth = 1;
     _userFaceImv.layer.borderColor = [[UIColor whiteColor]CGColor];
     _userFaceImv.layer.masksToBounds = YES;
@@ -168,24 +154,28 @@
     
     //用户名
     _userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0 , CGRectGetMaxY(_userFaceImv.frame)+5, DEVICE_WIDTH, 20)];
-    _userNameLabel.backgroundColor = RGBCOLOR_ONE;
-    _userNameLabel.font = [UIFont systemFontOfSize:19];
+    _userNameLabel.backgroundColor = [UIColor clearColor];
+    _userNameLabel.font = [UIFont systemFontOfSize:18];
+    _userNameLabel.text = @"longwang";
+    _userNameLabel.textColor = [UIColor whiteColor];
     _userNameLabel.textAlignment = NSTextAlignmentCenter;
     [_upUserInfoView addSubview:_userNameLabel];
     
     //关注 粉丝
-    _guanzhuLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_userNameLabel.frame)+10, DEVICE_WIDTH*0.5-1, 16)];
-    _guanzhuLabel.font = [UIFont systemFontOfSize:15];
+    _guanzhuLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_userNameLabel.frame)+10, DEVICE_WIDTH*0.5-10, 16)];
+    _guanzhuLabel.font = [UIFont systemFontOfSize:14];
     _guanzhuLabel.textColor = [UIColor whiteColor];
     _guanzhuLabel.textAlignment = NSTextAlignmentRight;
-    _guanzhuLabel.backgroundColor = RGBCOLOR_ONE;
+    _guanzhuLabel.text = @"关注 300";
+    _guanzhuLabel.backgroundColor = [UIColor clearColor];
     //分割线
-    UIView *fenView = [[UIView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_guanzhuLabel.frame), _guanzhuLabel.frame.origin.y, 1, _guanzhuLabel.frame.size.height)];
+    UIView *fenView = [[UIView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_guanzhuLabel.frame)+10, _guanzhuLabel.frame.origin.y, 1, _guanzhuLabel.frame.size.height)];
     fenView.backgroundColor = [UIColor whiteColor];
-    _fensiLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(fenView.frame), fenView.frame.origin.y, _guanzhuLabel.frame.size.width, _guanzhuLabel.frame.size.height)];
-    _fensiLabel.font = [UIFont systemFontOfSize:15];
-    _fensiLabel.backgroundColor = RGBCOLOR_ONE;
+    _fensiLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(fenView.frame)+10, fenView.frame.origin.y, _guanzhuLabel.frame.size.width, _guanzhuLabel.frame.size.height)];
+    _fensiLabel.font = [UIFont systemFontOfSize:14];
+    _fensiLabel.backgroundColor = [UIColor clearColor];
     _fensiLabel.textColor = [UIColor whiteColor];
+    _fensiLabel.text = @"粉丝 300";
     _fensiLabel.textAlignment = NSTextAlignmentLeft;
     [_upUserInfoView addSubview:_guanzhuLabel];
     [_upUserInfoView addSubview:fenView];
@@ -197,73 +187,128 @@
     
 }
 
+///T台
+-(UIView *)createTtaiView{
+    //整个view
+    ttaiView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 25)];
+    ttaiView.backgroundColor = RGBCOLOR(239, 239, 239);
+    
+    UIImageView *lineView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 0, 2, 25)];
+    lineView.backgroundColor = RGBCOLOR(239, 47, 48);
+    lineView.layer.cornerRadius = 3;
+    [ttaiView addSubview:lineView];
+    
+    UILabel *titaiLabel = [[UILabel alloc]initWithFrame:CGRectMake(lineView.frame.size.width+lineView.frame.origin.x+5, 0,150,25)];
+    titaiLabel.font = [UIFont systemFontOfSize:15];
+    titaiLabel.backgroundColor = [UIColor clearColor];
+    titaiLabel.textAlignment = NSTextAlignmentLeft;
+    [ttaiView addSubview:titaiLabel];
+    if (self.theType == GSOMEONE) {
+        titaiLabel.text = @"她的T台";
+    }else{
+        titaiLabel.text = @"我的T台";
+    }
+    return ttaiView;
+}
+
 -(void)gGoBackVc{
     
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-
-#pragma mark - WaterFlowDelegate
-
-- (void)waterLoadNewData
-{
+//////初始化瀑布流
+-(void)initWaterFlowView{
+    WaterFLayout* flowLayout = [[WaterFLayout alloc]init];
     
-}
-- (void)waterLoadMoreData
-{
+    if (self.theType == GSOMEONE) {
+        flowLayout.headerHeight = 150+58+25;
+
+    }else{
+        flowLayout.headerHeight = 150+25;
+    }
     
+    
+    self.waterfall = [[WaterF alloc]initWithCollectionViewLayout:flowLayout];
+    
+    
+    self.waterfall.delegate  = self;
+    
+    //    flowLayout.minimumInteritemSpacing = 20.0;
+    flowLayout.sectionInset = UIEdgeInsetsMake(10, 10, 10, 10);
+    self.waterfall.sectionNum = 2;
+    
+    self.waterfall.collectionView.frame = CGRectMake(0,0, DEVICE_WIDTH, DEVICE_HEIGHT);
+    
+    self.waterfall.collectionView.showsVerticalScrollIndicator = NO;
+    
+    self.waterfall.collectionView.backgroundColor = RGBCOLOR(239, 239, 239);
+    
+    
+    [self.waterfall.collectionView setAlwaysBounceVertical:YES];
+
+    
+    [self.view addSubview:self.waterfall.collectionView];
 }
 
-- (void)waterDidSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSLog(@"%s",__FUNCTION__);
-    NSLog(@"indexpath = %ld",(long)indexPath.row);
-}
 
-- (CGFloat)waterHeightForCellIndexPath:(NSIndexPath *)indexPath
+
+
+
+
+
+
+#pragma mark-----------------获取数据
+
+/**
+ * 获取T台列表
+ */
+- (void)deserveBuyForSex:(SORT_SEX_TYPE)sortType
+                discount:(SORT_Discount_TYPE)discountType
+                    page:(int)pageNum
 {
-    CGFloat aHeight = 0.f;
-    ProductModel *aMode = waterFlow.dataArray[indexPath.row];
-    if (aMode.imagelist.count >= 1) {
+//    NSString *longtitud = @"116.42111721";
+//    NSString *latitude = @"39.90304099";
+//
+    NSString *url;
+    if (self.theType == GSOMEONE) {
+       url = [NSString stringWithFormat:@"%@&page=%d&count=%d&user_id=%@&authcode=%@",POST_TLIST_URL,1,10,@"user_id",[GMAPI getAuthkey]];
+    }else{
+        url = [NSString stringWithFormat:@"%@&page=%d&count=%d&authcode=%@",POST_TLIST_URL,1,10,[GMAPI getAuthkey]];
+    }
+
+
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
-        NSDictionary *imageDic = aMode.imagelist[0];
-        NSDictionary *middleImage = imageDic[@"540Middle"];
-        aHeight = [middleImage[@"height"]floatValue];
-    }
-    
-    return aHeight / 2.0f + 33;
+        NSMutableArray *arr;
+        if ([result isKindOfClass:[NSDictionary class]]) {
+            
+            NSArray *list = result[@"list"];
+            arr = [NSMutableArray arrayWithCapacity:list.count];
+            if ([list isKindOfClass:[NSArray class]]) {
+                
+                for (NSDictionary *aDic in list) {
+                    
+                    TPlatModel *aModel = [[TPlatModel alloc]initWithDictionary:aDic];
+                    
+                    [arr addObject:aModel];
+                }
+                
+            }
+            
+        }
+        
+        self.waterfall.imagesArr = [[NSArray alloc] initWithArray:arr];
+        
+        [self.waterfall.collectionView reloadData];
+        
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+        
+    }];
 }
-- (CGFloat)waterViewNumberOfColumns
-{
-    
-    return 2;
-}
-
-#pragma mark - TMQuiltViewDataSource
-
-- (NSInteger)quiltViewNumberOfCells:(TMQuiltView *)TMQuiltView {
-    return [waterFlow.dataArray count];
-}
-
-- (TMQuiltViewCell *)quiltView:(TMQuiltView *)quiltView cellAtIndexPath:(NSIndexPath *)indexPath {
-    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[quiltView dequeueReusableCellWithReuseIdentifier:@"PhotoCell"];
-    if (!cell) {
-        cell = [[TMPhotoQuiltViewCell alloc] initWithReuseIdentifier:@"PhotoCell"];
-    }
-    
-    cell.layer.cornerRadius = 3.f;
-    
-    ProductModel *aMode = waterFlow.dataArray[indexPath.row];
-    [cell setCellWithModel:aMode];
-    
-    
-    return cell;
-}
-
-
-
-
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

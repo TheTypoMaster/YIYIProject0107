@@ -426,6 +426,12 @@
 		EF9329FD1A617E1F00A8BD18 /* EditMyInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9329FC1A617E1F00A8BD18 /* EditMyInfoViewController.m */; };
 		EF932A011A617E2B00A8BD18 /* EditInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9329FF1A617E2B00A8BD18 /* EditInfoView.m */; };
 		EF932A021A617E2B00A8BD18 /* EditInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF932A001A617E2B00A8BD18 /* EditInfoView.xib */; };
+		EF932A151A6236AD00A8BD18 /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = EF932A081A6236AD00A8BD18 /* placeholder.png */; };
+		EF932A161A6236AD00A8BD18 /* WaterF.m in Sources */ = {isa = PBXBuildFile; fileRef = EF932A0A1A6236AD00A8BD18 /* WaterF.m */; };
+		EF932A171A6236AD00A8BD18 /* WaterFallFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = EF932A0C1A6236AD00A8BD18 /* WaterFallFooter.m */; };
+		EF932A181A6236AD00A8BD18 /* WaterFallHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = EF932A0E1A6236AD00A8BD18 /* WaterFallHeader.m */; };
+		EF932A191A6236AD00A8BD18 /* WaterFCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF932A101A6236AD00A8BD18 /* WaterFCell.m */; };
+		EF932A1A1A6236AD00A8BD18 /* WaterFLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = EF932A121A6236AD00A8BD18 /* WaterFLayout.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1116,6 +1122,17 @@
 		EF9329FE1A617E2B00A8BD18 /* EditInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditInfoView.h; sourceTree = "<group>"; };
 		EF9329FF1A617E2B00A8BD18 /* EditInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditInfoView.m; sourceTree = "<group>"; };
 		EF932A001A617E2B00A8BD18 /* EditInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditInfoView.xib; sourceTree = "<group>"; };
+		EF932A081A6236AD00A8BD18 /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
+		EF932A091A6236AD00A8BD18 /* WaterF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaterF.h; sourceTree = "<group>"; };
+		EF932A0A1A6236AD00A8BD18 /* WaterF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaterF.m; sourceTree = "<group>"; };
+		EF932A0B1A6236AD00A8BD18 /* WaterFallFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaterFallFooter.h; sourceTree = "<group>"; };
+		EF932A0C1A6236AD00A8BD18 /* WaterFallFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaterFallFooter.m; sourceTree = "<group>"; };
+		EF932A0D1A6236AD00A8BD18 /* WaterFallHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaterFallHeader.h; sourceTree = "<group>"; };
+		EF932A0E1A6236AD00A8BD18 /* WaterFallHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaterFallHeader.m; sourceTree = "<group>"; };
+		EF932A0F1A6236AD00A8BD18 /* WaterFCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaterFCell.h; sourceTree = "<group>"; };
+		EF932A101A6236AD00A8BD18 /* WaterFCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaterFCell.m; sourceTree = "<group>"; };
+		EF932A111A6236AD00A8BD18 /* WaterFLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaterFLayout.h; sourceTree = "<group>"; };
+		EF932A121A6236AD00A8BD18 /* WaterFLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaterFLayout.m; sourceTree = "<group>"; };
 		F47272E4C36CD60C81CD9A79 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -1131,11 +1148,8 @@
 				E3E3E84A1A3C6780001A1DD6 /* QuartzCore.framework in Frameworks */,
 				E3E3E84C1A3C678C001A1DD6 /* OpenGLES.framework in Frameworks */,
 				137FC2B21A4DAE780039E3FF /* MapKit.framework in Frameworks */,
-<<<<<<< HEAD
 				EF9329D61A617D4000A8BD18 /* libiOS_IMKit_v1_2_7.a in Frameworks */,
-=======
 				E3601E7D1A61A05800CC41FE /* libiOS_IMKit_v1_2_7.a in Frameworks */,
->>>>>>> FETCH_HEAD
 				138C2C141A39E46B00EA59F5 /* libz.dylib in Frameworks */,
 				138C2C121A39E45E00EA59F5 /* libstdc++.dylib in Frameworks */,
 				138C2C0E1A39E25000EA59F5 /* libsqlite3.dylib in Frameworks */,
@@ -1646,11 +1660,8 @@
 		137FC2B61A4DB2DC0039E3FF /* IMKit */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
 				EF9329D51A617D4000A8BD18 /* libiOS_IMKit_v1_2_7.a */,
-=======
 				E3601E7C1A61A05800CC41FE /* libiOS_IMKit_v1_2_7.a */,
->>>>>>> FETCH_HEAD
 				137FC2B71A4DB2DC0039E3FF /* Headers */,
 				137FC2DC1A4DB2DC0039E3FF /* RongCloud.bundle */,
 			);
@@ -2725,6 +2736,7 @@
 		EF9329DB1A617DD500A8BD18 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				EF932A071A6236AD00A8BD18 /* waterflowview */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2803,6 +2815,24 @@
 				EF9329F11A617DD500A8BD18 /* MyseetingTableViewCell.xib */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		EF932A071A6236AD00A8BD18 /* waterflowview */ = {
+			isa = PBXGroup;
+			children = (
+				EF932A081A6236AD00A8BD18 /* placeholder.png */,
+				EF932A091A6236AD00A8BD18 /* WaterF.h */,
+				EF932A0A1A6236AD00A8BD18 /* WaterF.m */,
+				EF932A0B1A6236AD00A8BD18 /* WaterFallFooter.h */,
+				EF932A0C1A6236AD00A8BD18 /* WaterFallFooter.m */,
+				EF932A0D1A6236AD00A8BD18 /* WaterFallHeader.h */,
+				EF932A0E1A6236AD00A8BD18 /* WaterFallHeader.m */,
+				EF932A0F1A6236AD00A8BD18 /* WaterFCell.h */,
+				EF932A101A6236AD00A8BD18 /* WaterFCell.m */,
+				EF932A111A6236AD00A8BD18 /* WaterFLayout.h */,
+				EF932A121A6236AD00A8BD18 /* WaterFLayout.m */,
+			);
+			path = waterflowview;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2973,6 +3003,7 @@
 				137B08101A4E6FDF00DE7DCC /* shaixuan@3x.png in Resources */,
 				E3996EC81A5E1DBA00673147 /* gstart_half@2x.png in Resources */,
 				137B07F71A4E6FDF00DE7DCC /* t_yichu@3x.png in Resources */,
+				EF932A151A6236AD00A8BD18 /* placeholder.png in Resources */,
 				137B08081A4E6FDF00DE7DCC /* qiu_down@3x.png in Resources */,
 				13684A791A37583E00A508FB /* LaunchScreen.xib in Resources */,
 				13B6904D1A564BF6007FE152 /* t_dapei@2x.png in Resources */,
@@ -3202,6 +3233,7 @@
 				13684A6E1A37583E00A508FB /* AppDelegate.m in Sources */,
 				56DAB2171A46C86B00273140 /* MatchCaseCell.m in Sources */,
 				13B6907C1A580430007FE152 /* ShopViewCell.m in Sources */,
+				EF932A171A6236AD00A8BD18 /* WaterFallFooter.m in Sources */,
 				138C2C1D1A39E77300EA59F5 /* BaseModel.m in Sources */,
 				56DAB21B1A46DB6000273140 /* ApplyForViewController.m in Sources */,
 				E3996EDC1A5E1DBA00673147 /* GScrollView.m in Sources */,
@@ -3232,11 +3264,13 @@
 				13AD17B11A603E4300AB24F5 /* TopicParseModel.m in Sources */,
 				13684A901A37585200A508FB /* RootViewController.m in Sources */,
 				13CD36361A3C51BE0068C12A /* ForgetPwdController.m in Sources */,
+				EF932A181A6236AD00A8BD18 /* WaterFallHeader.m in Sources */,
 				13A389BB1A38974F00ABBACB /* LTools.m in Sources */,
 				5640317A1A4ED57100680E08 /* TopicDetailViewController.m in Sources */,
 				139562CB1A3C11EC007BB183 /* RegisterViewController.m in Sources */,
 				E304794B1A6109DE00709985 /* GStorePinpaiViewController.m in Sources */,
 				139562C31A3BF41B007BB183 /* LoginViewController.m in Sources */,
+				EF932A1A1A6236AD00A8BD18 /* WaterFLayout.m in Sources */,
 				566FE2471A5018BA00A96B5F /* TopicCommentsModel.m in Sources */,
 				13A389871A387A8800ABBACB /* UIView+Frame.m in Sources */,
 				13963F471A4FC54D007BE68B /* UIView+Frame.m in Sources */,
@@ -3256,6 +3290,7 @@
 				566FE24F1A50264A00A96B5F /* TopicDetailBottomView.m in Sources */,
 				566FE2541A503A9E00A96B5F /* MatchInfoViewController.m in Sources */,
 				565321521A59896600E43F80 /* TopicModel.m in Sources */,
+				EF932A161A6236AD00A8BD18 /* WaterF.m in Sources */,
 				19D5E6B51A4FE8E1008401E0 /* YichuListTableViewCell.m in Sources */,
 				13A389961A3893D000ABBACB /* TTaiViewController.m in Sources */,
 				5658C79A1A4C486E00DC86F8 /* MatchWaterflowView.m in Sources */,
@@ -3273,6 +3308,7 @@
 				EF9329F31A617DD500A8BD18 /* MySettingsViewController.m in Sources */,
 				E3996ED11A5E1DBA00673147 /* GmPrepareNetData.m in Sources */,
 				E34E3D671A615B8000DD95BB /* CustomSegmentView.m in Sources */,
+				EF932A191A6236AD00A8BD18 /* WaterFCell.m in Sources */,
 				E3996EDE1A5E1DBA00673147 /* GStarsView.m in Sources */,
 				E3996ED61A5E1DBA00673147 /* MLImageCrop.m in Sources */,
 				569722291A407DAE004B6641 /* HomeMatchModel.m in Sources */,
@@ -3412,7 +3448,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "ca1c9dd0-a046-42fe-909b-5b12ec26956e";
+				PROVISIONING_PROFILE = "53355697-44a0-481f-bfd3-d74123a1b76d";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -3448,7 +3484,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "ca1c9dd0-a046-42fe-909b-5b12ec26956e";
+				PROVISIONING_PROFILE = "53355697-44a0-481f-bfd3-d74123a1b76d";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -3461,8 +3497,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YiYiProject/UMengShare/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
@@ -3483,11 +3519,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-<<<<<<< HEAD
-				PROVISIONING_PROFILE = "";
-=======
-				PROVISIONING_PROFILE = "0c1b68b6-94ba-43b9-b1d3-dea4d4ca3175";
->>>>>>> FETCH_HEAD
+				PROVISIONING_PROFILE = "53355697-44a0-481f-bfd3-d74123a1b76d";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Debug;
@@ -3521,11 +3553,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-<<<<<<< HEAD
-				PROVISIONING_PROFILE = "";
-=======
-				PROVISIONING_PROFILE = "0c1b68b6-94ba-43b9-b1d3-dea4d4ca3175";
->>>>>>> FETCH_HEAD
+				PROVISIONING_PROFILE = "53355697-44a0-481f-bfd3-d74123a1b76d";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Release;
