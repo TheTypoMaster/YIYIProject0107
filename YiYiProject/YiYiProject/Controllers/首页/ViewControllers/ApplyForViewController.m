@@ -7,6 +7,7 @@
 //
 
 #import "ApplyForViewController.h"
+#import "AFHTTPRequestOperationManager.h"
 
 @interface ApplyForViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
@@ -27,11 +28,18 @@
     UITextField * tel_textField;
     ///验证码
     UITextField * ver_textField;
+    ///qq号
+    UITextField * qq_textField;
+    ///微信号
+    UITextField * wechat_textField;
     
     ///计时器
     NSTimer * timer;
     ///倒计时时间
     int theCount;
+    
+    ///身份证图片
+    UIImage * idcard_image;
 }
 
 
@@ -42,6 +50,11 @@
 @end
 
 @implementation ApplyForViewController
+
+-(void)leftButtonTap:(UIButton *)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -130,7 +143,7 @@
         
         
         idcard_button = [UIButton buttonWithType:UIButtonTypeCustom];
-        idcard_button.frame = CGRectMake(48,35,108,108);
+        idcard_button.frame = CGRectMake(76,35+10,80,80);
 //        idcard_button.backgroundColor = [UIColor grayColor];
         [idcard_button setImage:[UIImage imageNamed:@"apply_idcard_image"] forState:UIControlStateNormal];
         [idcard_button addTarget:self action:@selector(chooseIdCardTap:) forControlEvents:UIControlEventTouchUpInside];
@@ -194,22 +207,22 @@
         imageView.center = CGPointMake(33,25);
         [cell.contentView addSubview:imageView];
         
-        UITextField * textField = [[UITextField alloc] initWithFrame:CGRectMake(54,0,DEVICE_WIDTH-160,50)];
-        textField.delegate = self;
-        textField.placeholder = [placeHolder_array objectAtIndex:indexPath.row];
-        textField.tag = 100+indexPath.row;
-        [cell.contentView addSubview:textField];
+        qq_textField = [[UITextField alloc] initWithFrame:CGRectMake(54,0,DEVICE_WIDTH-160,50)];
+        qq_textField.delegate = self;
+        qq_textField.placeholder = [placeHolder_array objectAtIndex:indexPath.row];
+        qq_textField.tag = 100+indexPath.row;
+        [cell.contentView addSubview:qq_textField];
     }else if(indexPath.row == 4)
     {
         UIImageView * imageView = [[UIImageView alloc] initWithImage:[image_array objectAtIndex:indexPath.row]];
         imageView.center = CGPointMake(33,25);
         [cell.contentView addSubview:imageView];
         
-        UITextField * textField = [[UITextField alloc] initWithFrame:CGRectMake(54,0,DEVICE_WIDTH-160,50)];
-        textField.delegate = self;
-        textField.placeholder = [placeHolder_array objectAtIndex:indexPath.row];
-        textField.tag = 100+indexPath.row;
-        [cell.contentView addSubview:textField];
+        wechat_textField = [[UITextField alloc] initWithFrame:CGRectMake(54,0,DEVICE_WIDTH-160,50)];
+        wechat_textField.delegate = self;
+        wechat_textField.placeholder = [placeHolder_array objectAtIndex:indexPath.row];
+        wechat_textField.tag = 100+indexPath.row;
+        [cell.contentView addSubview:wechat_textField];
     }
     
     return cell;
@@ -277,7 +290,49 @@
 #pragma mark - 提交申请
 -(void)doneButtonTap:(UIButton *)button
 {
+    if (ver_textField.text.length == 0)
+    {
+        [LTools showMBProgressWithText:@"请输入验证码" addToView:self.view];
+        return;
+    }else if (tel_textField.text.length != 11)
+    {
+        [LTools showMBProgressWithText:@"请输入正确的手机号码" addToView:self.view];
+        return;
+    }else if (!idcard_image)
+    {
+        [LTools showMBProgressWithText:@"请上传身份证照片" addToView:self.view];
+        return;
+    }
     
+    __weak typeof(self)bself = self;
+    
+    NSDictionary *parameters = @{@"authcode":[GMAPI getAuthkey],@"mobile":tel_textField.text,@"code":ver_textField.text,@"qq":qq_textField.text,@"weixin":wechat_textField.text};
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    AFHTTPRequestOperation *operation = [manager POST:APPLY_MATCH_URL parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
+    {
+        NSData * image_data = UIImageJPEGRepresentation(idcard_image,1.0);
+        [formData appendPartWithFileData:image_data name:@"uploadFile" fileName:@"pic" mimeType:@"image/png"];
+        
+        
+    }success:^(AFHTTPRequestOperation *operation, id responseObject){
+        
+        NSDictionary * allDic = [operation.responseString objectFromJSONString];
+        NSString * errcode = [allDic objectForKey:@"errorcode"];
+        NSLog(@"allDic -----   %@",allDic);
+        if ([errcode intValue] == 0)
+        {
+            [LTools showMBProgressWithText:@"申请成功" addToView:self.view];
+            [bself performSelector:@selector(leftButtonTap:) withObject:nil afterDelay:1.5];
+        }else
+        {
+            [LTools showMBProgressWithText:[allDic objectForKey:@"msg"] addToView:self.view];
+        }
+        
+    }failure:^(AFHTTPRequestOperation *operation, NSError *error){
+        [LTools showMBProgressWithText:@"申请失败,请检查当前网络" addToView:self.view];
+    }];
 }
 
 #pragma mark - UITextField Delegate
@@ -305,8 +360,9 @@
 {
     UIImage* image = [info objectForKey: @"UIImagePickerControllerEditedImage"];
     
-    [idcard_button setImage:image forState:UIControlStateNormal];
+    idcard_image = image;
     
+    [idcard_button setImage:idcard_image forState:UIControlStateNormal];
     
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
@@ -314,7 +370,6 @@
 #pragma mark - 获取验证码
 -(void)timerButtonTap:(UIButton *)button
 {
-    NSLog(@"我艹-----  %d",tel_textField.text.length);
     if (tel_textField.text.length != 11)
     {
         [LTools showMBProgressWithText:@"请输入正确的手机号码" addToView:self.view];

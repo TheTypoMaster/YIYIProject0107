@@ -219,6 +219,17 @@ typedef enum {
  */
 #define GET_MATCH_DATA_URL @"http://182.92.158.32/index.php?d=api&c=division_t&m=get_division_tts&t_uid=%@&page=%d&per_page=%d"
 
+///申请搭配师
+/*
+ authcode(uid加密串) string
+ mobile（手机号码）string
+ code(验证码) int
+ qq(qq号码) int
+ weixin(微信号码，可不填) int
+ pic(身份证照片) string
+ */
+#define APPLY_MATCH_URL @"http://182.92.158.32/index.php?d=api&c=division_t&m=apply_division_teacher"
+
 ///话题详情接口
 #define GET_TOPIC_DETAIL_URL @"http://182.92.158.32/index.php?d=api&c=topic&m=get_topic_info&topic_id=%@&authcode=%@"
 ///获取话题评论接口
