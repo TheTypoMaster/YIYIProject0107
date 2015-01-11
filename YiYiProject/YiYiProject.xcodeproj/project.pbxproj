@@ -1131,11 +1131,8 @@
 				E3E3E84A1A3C6780001A1DD6 /* QuartzCore.framework in Frameworks */,
 				E3E3E84C1A3C678C001A1DD6 /* OpenGLES.framework in Frameworks */,
 				137FC2B21A4DAE780039E3FF /* MapKit.framework in Frameworks */,
-<<<<<<< HEAD
 				EF9329D61A617D4000A8BD18 /* libiOS_IMKit_v1_2_7.a in Frameworks */,
-=======
 				E3601E7D1A61A05800CC41FE /* libiOS_IMKit_v1_2_7.a in Frameworks */,
->>>>>>> FETCH_HEAD
 				138C2C141A39E46B00EA59F5 /* libz.dylib in Frameworks */,
 				138C2C121A39E45E00EA59F5 /* libstdc++.dylib in Frameworks */,
 				138C2C0E1A39E25000EA59F5 /* libsqlite3.dylib in Frameworks */,
@@ -1646,11 +1643,8 @@
 		137FC2B61A4DB2DC0039E3FF /* IMKit */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
 				EF9329D51A617D4000A8BD18 /* libiOS_IMKit_v1_2_7.a */,
-=======
 				E3601E7C1A61A05800CC41FE /* libiOS_IMKit_v1_2_7.a */,
->>>>>>> FETCH_HEAD
 				137FC2B71A4DB2DC0039E3FF /* Headers */,
 				137FC2DC1A4DB2DC0039E3FF /* RongCloud.bundle */,
 			);
@@ -3483,11 +3477,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-<<<<<<< HEAD
-				PROVISIONING_PROFILE = "";
-=======
 				PROVISIONING_PROFILE = "0c1b68b6-94ba-43b9-b1d3-dea4d4ca3175";
->>>>>>> FETCH_HEAD
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Debug;
@@ -3521,11 +3511,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-<<<<<<< HEAD
-				PROVISIONING_PROFILE = "";
-=======
 				PROVISIONING_PROFILE = "0c1b68b6-94ba-43b9-b1d3-dea4d4ca3175";
->>>>>>> FETCH_HEAD
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Release;
