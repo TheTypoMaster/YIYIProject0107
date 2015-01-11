@@ -46,25 +46,26 @@
     
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeText];
-    UIButton *guanzhuBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [guanzhuBtn setTitle:@"+关注" forState:UIControlStateNormal];
-    [guanzhuBtn setFrame:CGRectMake(0, 0, 50, 40)];
-    UIBarButtonItem *righItem = [[UIBarButtonItem alloc]initWithCustomView:guanzhuBtn];
-    self.navigationItem.rightBarButtonItem = righItem;
-    [guanzhuBtn addTarget:self action:@selector(gGuanzhu) forControlEvents:UIControlEventTouchUpInside];
+    self.rightString = @"关注";
+//    UIButton *guanzhuBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [guanzhuBtn setTitle:@"+关注" forState:UIControlStateNormal];
+//    [guanzhuBtn setFrame:CGRectMake(5, 0, 50, 40)];
+//    UIBarButtonItem *righItem = [[UIBarButtonItem alloc]initWithCustomView:guanzhuBtn];
+//    self.navigationItem.rightBarButtonItem = righItem;
+//    [guanzhuBtn addTarget:self action:@selector(gGuanzhu) forControlEvents:UIControlEventTouchUpInside];
     
     self.view.backgroundColor = RGBCOLOR(242, 242, 242);
     
-    NSString *aaa = [NSString stringWithFormat:@"%@ · %@",self.pinpaiNameStr,self.storeNameStr];
+    NSString *aaa = [NSString stringWithFormat:@"%@.%@",self.pinpaiNameStr,self.storeNameStr];
     NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:aaa];
     NSInteger pinpaiNameLength = self.pinpaiNameStr.length;
     NSInteger storeNameLength = self.storeNameStr.length;
-    [title addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0,pinpaiNameLength+2)];
+    [title addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0,pinpaiNameLength+1)];
     [title addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:17*GscreenRatio_320] range:NSMakeRange(0,pinpaiNameLength)];
     
-    [title addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(240, 173, 184) range:NSMakeRange(pinpaiNameLength+3, storeNameLength)];
+    [title addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(240, 173, 184) range:NSMakeRange(pinpaiNameLength+1, storeNameLength)];
     [title addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13*GscreenRatio_320] range:NSMakeRange(pinpaiNameLength+1, storeNameLength)];
-    
+    self.myTitleLabel.textAlignment = NSTextAlignmentCenter;
     self.myTitleLabel.attributedText = title;
     
     
@@ -89,7 +90,8 @@
     
 }
 
--(void)gGuanzhu{
+
+-(void)rightButtonTap:(UIButton *)sender{
     NSLog(@"在这里点击的添加关注");
 }
 

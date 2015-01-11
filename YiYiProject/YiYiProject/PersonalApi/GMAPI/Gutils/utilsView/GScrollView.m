@@ -92,6 +92,8 @@
         
         if (DEVICE_WIDTH>320) {
             countNum = countNum<4?4:countNum;
+        }else{
+            countNum = countNum<3?3:countNum;
         }
         
         self.contentSize = CGSizeMake(countNum *118, self.contentSize.height);

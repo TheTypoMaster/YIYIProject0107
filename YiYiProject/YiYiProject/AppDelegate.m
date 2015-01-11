@@ -33,12 +33,9 @@
 #define UmengAppkey @"5423e48cfd98c58eed00664f"
 
 
-/**
- *  先用骑叭的做测试
- */
-//骑叭
-#define SinaAppKey @"2470821654"
-#define SinaAppSecret @"bea7d21c9647406a25960a617a8e40a8"
+#define SinaAppKey @"2208620241" //正式审核通过 微博开放平台账号szkyaojiayou@163.com 密码：mobile2014
+#define SinaAppSecret @"fe596bc4ac8c92316ad5f255fbc49432"
+
 #define QQAPPID @"1103196390" //十六进制:41C170E6; 生成方法:echo 'ibase=10;obase=16;1103196390'|bc
 #define QQAPPKEY @"zc8ykXXrvWjKpyuh"
 

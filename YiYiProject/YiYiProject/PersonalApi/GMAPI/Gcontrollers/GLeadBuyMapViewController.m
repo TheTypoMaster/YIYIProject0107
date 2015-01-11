@@ -10,32 +10,13 @@
 #import "BMapKit.h"
 #import "GLeadbuyTableViewCell.h"
 
-@interface GLeadBuyMapViewController ()<BMKMapViewDelegate,BMKLocationServiceDelegate,BMKPoiSearchDelegate,BMKAnnotation,UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
+@interface GLeadBuyMapViewController ()<BMKMapViewDelegate,BMKLocationServiceDelegate,BMKPoiSearchDelegate,BMKAnnotation,UIAlertViewDelegate>
 {
     BMKMapView* _mapView;//地图
     BMKLocationService* _locService;//定位服务
     
-    
-    //下面详细信息的view
-    UIView *_downInfoView;
-    UITableView *_tableView;
-    BOOL _isShowDownInfoView;
-    
-    //底层弹上来的view
-    UIView *_downBackView;
-    
     //信息字典
     NSMutableDictionary *_poiAnnotationDic;
-    
-    //拨号
-    NSString *_phoneNum;
-    //用于获取高度的临时cell
-    GLeadbuyTableViewCell *_tmpCell;
-    
-    
-    
-
-    
     
 }
 
@@ -107,8 +88,13 @@
     _poiAnnotationDic  = [[NSMutableDictionary alloc]init];
     
     
-    //添加附近商家标注
-    [self addMapAnnotations];
+    
+    //加标注
+    if (self.theType == LEADYOUTYPE_STORE) {//商店
+        [self addMapAnnotationOfStore];
+    }else if (self.theType == LEADYOUTYPE_CHANPIN){//产品
+        [self addMapAnnotationOfChanpin];
+    }
     
     
 }
@@ -127,23 +113,7 @@
     _locService.delegate = self;
 }
 
-#pragma mark - 初始化下层弹出view
--(void)setDownInfoView{
-    //下面信息view
-    _downInfoView = [[UIView alloc]initWithFrame:CGRectMake(0, 568, 320, 206)];
-    _downInfoView.backgroundColor = RGBCOLOR(211, 214, 219);
-    
-    //底层view
-    _downBackView = [[UIView alloc]initWithFrame:CGRectMake(10, 12, 300, 206-12-14)];
-    _downBackView.backgroundColor = [UIColor whiteColor];
-    _downBackView.layer.borderWidth = 0.5;
-    _downBackView.layer.borderColor = [RGBCOLOR(200, 199, 204)CGColor];
-    _downBackView.layer.cornerRadius = 5;
-    [_downInfoView addSubview:_downBackView];
-    
-    
-    [self.view addSubview:_downInfoView];
-}
+
 
 #pragma mark - 开启定位罗盘态
 // 罗盘态
@@ -198,118 +168,35 @@
 
 
 
-#pragma mark - UITableViewDelegate && UITableViewDataSource
--(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *identifier = @"dd";
-    GLeadbuyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (!cell) {
-        cell = [[GLeadbuyTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-    }
-    
-    for (UIView *view in cell.contentView.subviews) {
-        [view removeFromSuperview];
-    }
-    
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.separatorInset = UIEdgeInsetsMake(0,53,0,0);
-    
-    
-    [cell loadViewWithIndexPath:indexPath];
-    
-    [cell configWithDataModel:self.tableViewCellDataModel indexPath:indexPath];
-    return cell;
-    
-}
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    CGFloat cellHeight = 0.0f;
-    if (_tmpCell) {
-        cellHeight = [_tmpCell configWithDataModel:self.tableViewCellDataModel indexPath:indexPath];
-    }else{
-        _tmpCell = [[GLeadbuyTableViewCell alloc]init];
-        cellHeight = [_tmpCell configWithDataModel:self.tableViewCellDataModel indexPath:indexPath];
-    }
-    return cellHeight;
-}
-
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 4;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
-    return [UIView new];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    return 0.01f;
-}
-
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"%d",indexPath.row);
-        if (indexPath.row == 3) {
-            if ([[GMAPI exchangeStringForDeleteNULL:self.tableViewCellDataModel.phone]isEqualToString:@"暂无"]) {
-                
-            }else{
-                NSString *phoneStr = [self.tableViewCellDataModel.phone stringByReplacingOccurrencesOfString:@"(" withString:@""];
-                NSString *phoneStr1 = [phoneStr stringByReplacingOccurrencesOfString:@")" withString:@""];
-                _phoneNum = phoneStr1;
-                UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"拨号" message:phoneStr1 delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-                [al show];
-            }
-            
-        }
-    
-    
-}
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    NSLog(@"%d",buttonIndex);
-    
-    //0取消    1确定
-    if (buttonIndex == 1) {
-        NSString *strPhone = [NSString stringWithFormat:@"tel://%@",_phoneNum];
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:strPhone]];
-    }
-}
-
-
-
-
-
-
-//添加地图标注
--(void)addMapAnnotations{
+//添加地图标注 商场方向
+-(void)addMapAnnotationOfStore{
     // 清楚屏幕中所有的annotation
     NSArray* array = [NSArray arrayWithArray:_mapView.annotations];
     [_mapView removeAnnotations:array];
-    NSArray *modelArray = [self.dataDic objectForKey:@"datainfo"];
-    for (int i = 0; i < modelArray.count; i++) {
-        NSDictionary *modelInfo = [modelArray objectAtIndex:1];
-        BMKPoiInfo *poi = [[BMKPoiInfo alloc]init];
-        poi.name = [modelInfo objectForKey:@"name"];
-        poi.address = [modelInfo objectForKey:@"address"];
-        poi.phone = [modelInfo objectForKey:@"phone"];
-        poi.uid = [modelInfo objectForKey:@"id"];
-        poi.postcode = [modelInfo objectForKey:@"owner"];//救援队联系人
-        CLLocationCoordinate2D pt = CLLocationCoordinate2DMake([[modelInfo objectForKey:@"wei_lat"]floatValue], [[modelInfo objectForKey:@"jing_lng"]floatValue]);
-        poi.pt = pt;
         
-        [_poiAnnotationDic setObject:poi forKey:poi.name];
-        
-        BMKPointAnnotation* item = [[BMKPointAnnotation alloc]init];
-        item.coordinate = poi.pt;
-        item.title = poi.name;
-        item.subtitle = poi.address;
-        
-        
-        NSLog(@"%@",item.title);
-        
-        [_mapView addAnnotation:item];//addAnnotation方法会掉BMKMapViewDelegate的-mapView:viewForAnnotation:函数来生成标注对应的View
-        }
+    BMKPointAnnotation* item = [[BMKPointAnnotation alloc]init];
+    item.coordinate = self.coordinate_store;
+    item.title = self.storeName;
+    
+    [_mapView addAnnotation:item];//addAnnotation方法会掉BMKMapViewDelegate的-mapView:viewForAnnotation:函数来生成标注对应的View
     
     
 }
+
+//添加地图标注 产品方向
+-(void)addMapAnnotationOfChanpin{
+    // 清楚屏幕中所有的annotation
+    NSArray* array = [NSArray arrayWithArray:_mapView.annotations];
+    [_mapView removeAnnotations:array];
+    BMKPointAnnotation* item = [[BMKPointAnnotation alloc]init];
+    item.coordinate = self.coordinate_chanpin;
+    item.title = self.chanpinName;
+    
+    
+    [_mapView addAnnotation:item];//addAnnotation方法会掉BMKMapViewDelegate的-mapView:viewForAnnotation:函数来生成标注对应的View
+}
+
+
 
 
 
@@ -344,19 +231,9 @@
     // 设置是否可以拖拽
     annotationView.draggable = NO;
     
-    
-    
-    //    //加载所有救援队的tableview
-    //    _allJiuyuanduiTableView = nil;
-    //    _allJiuyuanduiTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, iPhone5?568-216:480-216, 320, 216) style:UITableViewStylePlain];
-    //    _allJiuyuanduiTableView.delegate = self;
-    //    _allJiuyuanduiTableView.dataSource = self;
-    //    _allJiuyuanduiTableView.tag = allJiuyuanduiInfoTableView;
-    //    [self.view addSubview:_allJiuyuanduiTableView];
-    
-    
-    
     annotationView.image = [UIImage imageNamed:@"gpin.png"];
+    
+    annotationView.selected = YES;
     
     return annotationView;
 }
@@ -365,12 +242,6 @@
 {
     
     NSLog(@"%s",__FUNCTION__);
-    
-    if (_isShowDownInfoView) {
-        [UIView animateWithDuration:0.3 animations:^{
-            _downInfoView.frame = CGRectMake(0, 568, 320, 206);
-        }];
-    }
     
     [mapView bringSubviewToFront:view];
     [mapView setNeedsDisplay];
@@ -388,40 +259,6 @@
 // 当点击annotation view弹出的泡泡时，调用此接口
 - (void)mapView:(BMKMapView *)mapView annotationViewForBubble:(BMKAnnotationView *)view;
 {
-    NSLog(@"paopaoclick");
-    
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 300, 206-12-14) style:UITableViewStylePlain];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    _tableView.backgroundColor = [UIColor whiteColor];
-    _tableView.layer.borderWidth = 0.5;
-    _tableView.layer.borderColor = [RGBCOLOR(200, 199, 204)CGColor];
-    _tableView.layer.cornerRadius = 5;
-    [_downBackView addSubview:_tableView];
-    
-    NSLog(@"---------%@",[view.annotation title]);
-    NSLog(@"---------%@",[view.annotation subtitle]);
-    
-    BMKPoiInfo *poi = [_poiAnnotationDic objectForKey:[view.annotation title]];
-    NSLog(@"%@",poi.postcode);
-    NSLog(@"%@",poi.phone);
-    
-    self.tableViewCellDataModel = poi;
-    
-    
-    if (!_isShowDownInfoView) {
-        [UIView animateWithDuration:0.3 animations:^{
-            _downInfoView.frame = CGRectMake(0, 568-206, 320, 206);
-        } completion:^(BOOL finished) {
-            _isShowDownInfoView = !_isShowDownInfoView;
-        }];
-    }else{
-        [UIView animateWithDuration:0.3 animations:^{
-            _downInfoView.frame = CGRectMake(0, 568, 320, 206);
-        } completion:^(BOOL finished) {
-            _isShowDownInfoView = !_isShowDownInfoView;
-        }];
-    }
     
 }
 

@@ -79,7 +79,17 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeText];
+    self.rightString = @"关注";
+    
+//    UIButton *guanzhuBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [guanzhuBtn setTitle:@"+关注" forState:UIControlStateNormal];
+//    [guanzhuBtn setFrame:CGRectMake(0, 0, 50, 40)];
+//    UIBarButtonItem *righItem = [[UIBarButtonItem alloc]initWithCustomView:guanzhuBtn];
+//    self.navigationItem.rightBarButtonItem = righItem;
+//    [guanzhuBtn addTarget:self action:@selector(ggGuanzhu) forControlEvents:UIControlEventTouchUpInside];
+    
+    
     self.myTitleLabel.textColor = [UIColor whiteColor];
     self.myTitle = self.storeNameStr;
     
@@ -91,6 +101,10 @@
 }
 
 
+-(void)rightButtonTap:(UIButton *)sender
+{
+    NSLog(@"在这里添加关注");
+}
 
 
 //创建商家顶部信息view
@@ -150,7 +164,7 @@
     //楼层数
     NSMutableArray *floorsNameArray = [NSMutableArray arrayWithCapacity:1];
     for (NSString *str in keys) {
-        [floorsNameArray addObject:[NSString stringWithFormat:@"F%@",str]];
+        [floorsNameArray addObject:[NSString stringWithFormat:@"%@",str]];
     }
     
     //每层的数据的二维数组
@@ -207,7 +221,10 @@
 
 -(void)leadYouBuy{
     GLeadBuyMapViewController *cc = [[GLeadBuyMapViewController alloc]init];
+    cc.theType = LEADYOUTYPE_STORE;
     cc.storeName = _mallNameLabel.text;
+    cc.coordinate_store = self.coordinate_store;
+    
     [self.navigationController pushViewController:cc animated:YES];
 }
 
@@ -235,6 +252,7 @@
         _huodongLabel.text = [NSString stringWithFormat:@"活动：%@",[result stringValueForKey:@"doorno"]];
         _adressLabel.text = [NSString stringWithFormat:@"地址：%@",[result stringValueForKey:@"address"]];
         
+        self.coordinate_store = CLLocationCoordinate2DMake([[result stringValueForKey:@"latitude"]floatValue], [[result stringValueForKey:@"longitude"]floatValue]);
         
         
         [self creatFloorScrollViewWithDic:result];

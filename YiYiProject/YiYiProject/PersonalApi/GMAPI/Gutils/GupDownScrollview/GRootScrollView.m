@@ -173,6 +173,7 @@
     UIImageView *logoImv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 10, 70, 70)];
     logoImv.layer.cornerRadius = 35;
     logoImv.layer.borderWidth = 1;
+    logoImv.layer.masksToBounds = YES;
     logoImv.layer.borderColor = RGBCOLOR(210, 210, 210).CGColor;
     
     NSLog(@"%@",[dic objectForKey:@"brand_logo"]);

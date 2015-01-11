@@ -9,7 +9,7 @@
 #import "LTools.h"
 #import <CommonCrypto/CommonDigest.h>
 #import "AppDelegate.h"
-
+#import "LoginViewController.h"
 
 @implementation LTools
 {
@@ -801,6 +801,24 @@
     [aView addSubview:hud];
     hud.removeFromSuperViewOnHide = YES;
     return hud;
+}
+
+#pragma - mark 特殊
+
++ (BOOL)isLogin:(UIViewController *)viewController
+{
+    if ([LTools cacheBoolForKey:USER_LONGIN] == NO) {
+        
+        LoginViewController *login = [[LoginViewController alloc]init];
+        
+        UINavigationController *unVc = [[UINavigationController alloc]initWithRootViewController:login];
+        
+        [viewController presentViewController:unVc animated:YES completion:nil];
+        
+        return NO;
+    }
+    
+    return YES;
 }
 
 #pragma - mark 非空字符串

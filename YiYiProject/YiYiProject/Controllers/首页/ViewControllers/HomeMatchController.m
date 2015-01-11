@@ -59,7 +59,10 @@
     topic_data_page = 1;
     match_data_page = 1;
     
-    _myTableView = [[SNRefreshTableView alloc] initWithFrame:CGRectMake(0,0,DEVICE_WIDTH,DEVICE_HEIGHT-64-49) showLoadMore:YES];
+    self.myTitleLabel.text = @"搭配师";
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
+    
+    _myTableView = [[SNRefreshTableView alloc] initWithFrame:CGRectMake(0,0,DEVICE_WIDTH,DEVICE_HEIGHT-64- (self.isNormal ? 0 : 49)) showLoadMore:YES];
     _myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _myTableView.dataSource = self;
     _myTableView.refreshDelegate = self;

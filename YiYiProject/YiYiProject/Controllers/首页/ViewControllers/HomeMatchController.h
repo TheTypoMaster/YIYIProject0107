@@ -28,12 +28,13 @@ typedef enum{
     MatchSelectedTypeMatch
 }MatchSelectedType;
 
-@interface HomeMatchController : UIViewController
+@interface HomeMatchController : MyViewController
 {
     MatchSelectedType selected_type;
     HomeMatchTeacherType teacher_type;
 }
 
 @property(nonatomic,assign)UIViewController *rootViewController;
+@property(nonatomic,assign)BOOL isNormal;//判断是否是 普通使用方式
 
 @end

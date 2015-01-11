@@ -134,6 +134,11 @@ typedef enum {
 #define HOME_CLOTH_NEARBYPINPAI @"http://182.92.158.32/index.php?d=api&c=brand&m=get_nearby_brands"
 //获取附近商铺
 #define HOME_CLOTH_NEARBYSTORE @"http://182.92.158.32/?d=api&c=mall&m=gerNearMalls&long=116.33232544&lat=39.98189909"
+//获取我关注的店铺
+#define HOME_CLOTH_GUANZHUSTORE_MINE @"http://182.92.158.32/?d=api&c=friendship&m=listMall&authcode=%@&page=1&count=100"
+//获取我关注的品牌
+#define HOME_CLOTH_GUANZHUPINPAI_MINE @"http://182.92.158.32/index.php?d=api&c=brand&m=get_attend_brands&authcode=%@&page=%d"
+
 //获取店铺详情
 #define HOME_CLOTH_NEARBYSTORE_DETAIL @"http://182.92.158.32?d=api&c=mall&m=getMallDetail&mall_id=%@&authcode=123"
 
@@ -164,6 +169,9 @@ typedef enum {
 //T 台
 #define TTAI_LIST @"http://182.92.158.32/?d=api&c=tplat&m=listT&page=%d&count=%d&authcode=%@"
 
+//T 台 通过user_id查看某个用户id
+
+#define TTAI_LIST_UID @"http://182.92.158.32/?d=api&c=tplat&m=listT&page=%d&count=%d&authcode=%@&user_id=%@"
 
 //添加T台
 #define TTAI_ADD @"http://182.92.158.32/?d=api&c=tplat&m=addTplat"
@@ -189,7 +197,7 @@ typedef enum {
 //个人信息相关
 #define PERSON_CHANGEUSERBANNER @"http://182.92.158.32/index.php?d=api&c=user_api&m=update_user_banner"
 #define PERSON_GETUSERINFO @"http://182.92.158.32/index.php?d=api&c=user_api&m=get_user_info"
-
+#define PERSON_CHANGEUSERFACE @"http://182.92.158.32/index.php?d=api&c=user_api&m=update_user_info"
 
 
 #pragma mark - 搭配师相关接口 ******************************add by sn
