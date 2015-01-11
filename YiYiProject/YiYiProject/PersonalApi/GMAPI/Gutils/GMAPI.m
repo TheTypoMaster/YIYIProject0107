@@ -73,16 +73,6 @@
     return url;
 }
 
-#pragma mark - 弹出提示框
-+ (MBProgressHUD *)showMBProgressWithText:(NSString *)text addToView:(UIView *)aView{
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:aView animated:YES];
-    hud.mode = MBProgressHUDModeText;
-    hud.labelText = text;
-    hud.margin = 15.f;
-    hud.yOffset = 0.0f;
-    hud.removeFromSuperViewOnHide = YES;
-    return hud;
-}
 
 
 //把用户bannerImage写到本地
@@ -312,6 +302,30 @@
     
 }
 
+
+
++ (void)showAutoHiddenMBProgressWithText:(NSString *)text addToView:(UIView *)aView
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:aView animated:YES];
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = text;
+    hud.margin = 15.f;
+    hud.yOffset = 0.f;
+    hud.removeFromSuperViewOnHide = YES;
+    [hud hide:YES afterDelay:1.5];
+}
+
+
++ (MBProgressHUD *)showMBProgressWithText:(NSString *)text addToView:(UIView *)aView
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:aView animated:YES];
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = text;
+    hud.margin = 15.f;
+    hud.yOffset = 0.0f;
+    hud.removeFromSuperViewOnHide = YES;
+    return hud;
+}
 
 
 
