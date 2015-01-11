@@ -21,6 +21,7 @@
     UILabel *zhuan_num_label;//转发
     UILabel *zan_num_label;//赞 个数
     UILabel *comment_num_label;//底部评论个数
+    MBProgressHUD *loading;
 }
 
 @end
@@ -43,6 +44,8 @@
     [self.view addSubview:_table];
     _table.backgroundColor = [UIColor clearColor];
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    loading = [LTools MBProgressWithText:@"加载..." addToView:self.view];
     
     [self getTTaiDetail];
     
@@ -69,8 +72,10 @@
 
 - (void)clickToZan:(UIButton *)sender
 {
-    sender.selected = !sender.selected;
-    [self zanTTaiDetail:sender.selected];
+    if ([LTools isLogin:self]) {
+        sender.selected = !sender.selected;
+        [self zanTTaiDetail:sender.selected];
+    }
 }
 
 - (void)clickToComment:(UIButton *)sender
@@ -132,9 +137,15 @@
 
 - (void)getTTaiDetail
 {
+    
+    [loading show:YES];
+    
     NSString *url = [NSString stringWithFormat:TTAI_DETAIL,self.tt_id,[GMAPI getAuthkey]];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        
+        [loading hide:YES];
         
         detail_model = [[TDetailModel alloc]initWithDictionary:result];
         
@@ -146,6 +157,8 @@
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+        
+        [loading hide:YES];
         
     }];
 }
@@ -307,7 +320,7 @@
     
     if ([aModel.image isKindOfClass:[NSDictionary class]]) {
         
-        image_height = [aModel.image[@"heigth"]floatValue];
+        image_height = [aModel.image[@"height"]floatValue];
         image_width = [aModel.image[@"width"]floatValue];
         image_url = aModel.image[@"url"];
     }

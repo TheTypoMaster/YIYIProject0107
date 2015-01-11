@@ -208,7 +208,7 @@
 {
     CGFloat aHeight = 0.f;
     TPlatModel *aModel = waterFlow.dataArray[indexPath.row];
-    aHeight = [aModel.image[@"heigth"]floatValue];
+    aHeight = [aModel.image[@"height"]floatValue];
     CGFloat aWidth = [aModel.image[@"width"]floatValue];
     
     return [self height:aHeight / 2.f aWidth:aWidth] + 55 + 36;

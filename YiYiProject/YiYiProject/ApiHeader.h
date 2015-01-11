@@ -168,6 +168,9 @@ typedef enum {
 //T 台
 #define TTAI_LIST @"http://182.92.158.32/?d=api&c=tplat&m=listT&page=%d&count=%d&authcode=%@"
 
+//T 台 通过user_id查看某个用户id
+
+#define TTAI_LIST_UID @"http://182.92.158.32/?d=api&c=tplat&m=listT&page=%d&count=%d&authcode=%@&user_id=%@"
 
 //添加T台
 #define TTAI_ADD @"http://182.92.158.32/?d=api&c=tplat&m=addTplat"

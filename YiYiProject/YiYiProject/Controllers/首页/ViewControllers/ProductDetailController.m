@@ -11,8 +11,9 @@
 #import "LShareSheetView.h"
 #import "YIYIChatViewController.h"
 #import "GLeadBuyMapViewController.h"
+#import "LoginViewController.h"
 
-
+#import "HomeMatchController.h"
 
 @interface ProductDetailController ()
 {
@@ -21,6 +22,8 @@
     UIButton *heartButton;//赞 与 取消赞
     
     UIButton *collectButton;//收藏 与 取消收藏
+
+    MBProgressHUD *loading;
 }
 
 @end
@@ -55,6 +58,8 @@
     self.bugButton.layer.borderColor = [UIColor whiteColor].CGColor;
     self.bugButton.layer.borderWidth = 1.f;
     
+    loading = [LTools MBProgressWithText:@"加载..." addToView:self.view];
+    
     [self networkForDetail];
     
 }
@@ -80,12 +85,15 @@
 - (void)networkForDetail
 {
     
+    [loading show:YES];
     __weak typeof(self)weakSelf = self;
     NSString *url = [NSString stringWithFormat:HOME_PRODUCT_DETAIL,self.product_id,[GMAPI getAuthkey]];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"result %@",result);
+        
+        [loading hide:YES];
         
         if ([result isKindOfClass:[NSDictionary class]]) {
             
@@ -100,6 +108,10 @@
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+        
+        [loading hide:YES];
+        
+        [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
         
     }];
 }
@@ -171,12 +183,16 @@
  */
 - (void)clickToLike:(UIButton *)sender
 {
-    if (sender.selected) {
+    
+    if ([LTools isLogin:self]) {
         
-        [self networkForActionType:Action_like_no];
-    }else
-    {
-        [self networkForActionType:Action_like_yes];
+        if (sender.selected) {
+            
+            [self networkForActionType:Action_like_no];
+        }else
+        {
+            [self networkForActionType:Action_like_yes];
+        }
     }
 }
 
@@ -231,7 +247,12 @@
 
 - (IBAction)clickToDaPeiShi:(id)sender {
     
+    HomeMatchController *dapei = [[HomeMatchController alloc]init];
+    dapei.isNormal = YES;
+    dapei.rootViewController = self;
+    [self.navigationController pushViewController:dapei animated:YES];
 }
+
 
 /**
  *  联系商家
@@ -240,14 +261,38 @@
  */
 - (IBAction)clickToContact:(id)sender {
     
-    YIYIChatViewController *contact = [[YIYIChatViewController alloc]init];
-    contact.currentTarget = [GMAPI getUid];
-    contact.currentTargetName = [GMAPI getUsername];
-    contact.portraitStyle = RCUserAvatarCycle;
-    contact.enableSettings = NO;
-    contact.conversationType = ConversationType_PRIVATE;
+    //判断是否登录
+//    if ([LTools cacheBoolForKey:USER_LONGIN] == NO) {
+//        
+//        LoginViewController *login = [[LoginViewController alloc]init];
+//        
+//        UINavigationController *unVc = [[UINavigationController alloc]initWithRootViewController:login];
+//        
+//        [self presentViewController:unVc animated:YES completion:nil];
+//        
+//        return;
+//        
+//    }
     
-    [self.navigationController pushViewController:contact animated:YES];
+    if ([LTools isLogin:self]) {
+        
+        NSString *useriId;
+        NSString *userName;
+        if ([aModel.mall_info isKindOfClass:[NSDictionary class]]) {
+            
+            useriId = aModel.mall_info[@"uid"];
+            userName = aModel.mall_info[@"mall_name"];
+        }
+        
+        YIYIChatViewController *contact = [[YIYIChatViewController alloc]init];
+        contact.currentTarget = useriId;
+        contact.currentTargetName = userName;
+        contact.portraitStyle = RCUserAvatarCycle;
+        contact.enableSettings = NO;
+        contact.conversationType = ConversationType_PRIVATE;
+        
+        [self.navigationController pushViewController:contact animated:YES];
+    }
 }
 
 - (IBAction)clickToBuy:(id)sender {

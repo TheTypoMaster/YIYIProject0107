@@ -21,6 +21,8 @@
 {
     ///底部view
     TopicDetailBottomView * bottom_view;
+    
+    MBProgressHUD *loading;
 }
 
 
@@ -67,6 +69,8 @@
     _myTableView.dataSource = self;
     _myTableView.separatorInset = UIEdgeInsetsMake(0,15,0,0);
     [self.view addSubview:_myTableView];
+    
+    loading = [LTools MBProgressWithText:@"加载中..." addToView:self.view];
     
     [self createBottomView];
     
