@@ -221,7 +221,10 @@
 
 -(void)leadYouBuy{
     GLeadBuyMapViewController *cc = [[GLeadBuyMapViewController alloc]init];
+    cc.theType = LEADYOUTYPE_STORE;
     cc.storeName = _mallNameLabel.text;
+    cc.coordinate_store = self.coordinate_store;
+    
     [self.navigationController pushViewController:cc animated:YES];
 }
 
@@ -249,6 +252,7 @@
         _huodongLabel.text = [NSString stringWithFormat:@"活动：%@",[result stringValueForKey:@"doorno"]];
         _adressLabel.text = [NSString stringWithFormat:@"地址：%@",[result stringValueForKey:@"address"]];
         
+        self.coordinate_store = CLLocationCoordinate2DMake([[result stringValueForKey:@"latitude"]floatValue], [[result stringValueForKey:@"longitude"]floatValue]);
         
         
         [self creatFloorScrollViewWithDic:result];

@@ -43,7 +43,7 @@ typedef enum{
     USERIMAGENULL,
 }CHANGEIMAGETYPE;
 
-#define CROPIMAGERATIO_USERBANNER 0.4687//banner 图片裁剪框高宽比
+#define CROPIMAGERATIO_USERBANNER 320.00/150 //banner 图片裁剪框宽高比
 #define CROPIMAGERATIO_USERFACE 1.0//头像 图片裁剪框宽高比例
 
 #define UPIMAGECGSIZE_USERBANNER CGSizeMake(1080,1080*0.4687)//需要上传的banner的分辨率
@@ -69,6 +69,10 @@ typedef enum{
     
     self.navigationController.navigationBarHidden = YES;
     
+    if (IOS7_OR_LATER) {
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+    }
     
 }
 
@@ -158,8 +162,13 @@ typedef enum{
         NSString *score = [dic stringValueForKey:@"score"];
         self.userNameLabel.text = [NSString stringWithFormat:@"昵称:%@",name];
         self.userScoreLabel.text = [NSString stringWithFormat:@"积分:%@",score];
-        [_backView.imageView sd_setImageWithURL:[NSURL URLWithString:[dic stringValueForKey:@"user_banner"]] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        [_backView.imageView sd_setImageWithURL:[NSURL URLWithString:[dic stringValueForKey:@"user_banner"]] placeholderImage:[UIImage imageNamed:@"my_bg.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             [GMAPI setUserBannerImageWithData:UIImagePNGRepresentation(_backView.imageView.image)];
+        }];
+        NSString *userFaceUrl = [NSString stringWithFormat:@"%@",[dic stringValueForKey:@"photo"]];
+        
+        [self.userFaceImv sd_setImageWithURL:[NSURL URLWithString:userFaceUrl] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            [GMAPI setUserFaceImageWithData:UIImagePNGRepresentation(self.userFaceImv.image)];
         }];
         
         [_tableView reloadData];
@@ -176,7 +185,7 @@ typedef enum{
 -(UIView *)creatTableViewHeaderView{
     //底层view
     _backView = [ParallaxHeaderView parallaxHeaderViewWithCGSize:CGSizeMake(DEVICE_WIDTH, 150.00*DEVICE_WIDTH/320)];
-    _backView.headerImage = [UIImage imageNamed:@"guserbannerdefaul.png"];
+    _backView.headerImage = [UIImage imageNamed:@"my_bg.png"];
     
     NSLog(@"%@",NSStringFromCGRect(_backView.frame));
     
@@ -611,8 +620,12 @@ typedef enum{
         MLImageCrop *imageCrop = [[MLImageCrop alloc]init];
         imageCrop.delegate = self;
         
-        //按像素缩放
-        imageCrop.ratioOfWidthAndHeight = 400.0f/400.0f;//设置缩放比例
+        //按像素缩放  //设置缩放比例
+        if (_changeImageType == USERBANNER) {
+            imageCrop.ratioOfWidthAndHeight = CROPIMAGERATIO_USERBANNER;
+        }else if (_changeImageType == USERFACE){
+            imageCrop.ratioOfWidthAndHeight = 1;
+        }
         
         imageCrop.image = scaleImage;
         //[imageCrop showWithAnimation:NO];
@@ -660,7 +673,7 @@ typedef enum{
     if (_changeImageType == USERBANNER) {//banner
         uploadImageUrlStr = PERSON_CHANGEUSERBANNER;
     }else if (_changeImageType == USERFACE){//头像
-        uploadImageUrlStr = @"456";
+        uploadImageUrlStr = PERSON_CHANGEUSERFACE;
     }
     
     //设置接收响应类型为标准HTTP类型(默认为响应类型为JSON)
@@ -692,7 +705,7 @@ typedef enum{
                                    success:^(AFHTTPRequestOperation *operation, id responseObject)
                                    {
                                        
-                                       
+                                       [GMAPI showAutoHiddenMBProgressWithText:@"更改成功" addToView:self.view];
                                        
                                        NSLog(@"%@",responseObject);
                                        
@@ -712,6 +725,7 @@ typedef enum{
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        
+                                       [GMAPI showAutoHiddenMBProgressWithText:@"更改失败,联网自动上传" addToView:self.view];
                                        
                                        
                                        NSLog(@"%@",error);

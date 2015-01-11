@@ -196,7 +196,7 @@ typedef enum {
 //个人信息相关
 #define PERSON_CHANGEUSERBANNER @"http://182.92.158.32/index.php?d=api&c=user_api&m=update_user_banner"
 #define PERSON_GETUSERINFO @"http://182.92.158.32/index.php?d=api&c=user_api&m=get_user_info"
-
+#define PERSON_CHANGEUSERFACE @"http://182.92.158.32/index.php?d=api&c=user_api&m=update_user_info"
 
 
 #pragma mark - 搭配师相关接口 ******************************add by sn
