@@ -22,6 +22,7 @@
 #import "MyYiChuViewController.h"//我的衣橱
 
 #import "MyConcernController.h"//我的关注
+#import "MyCollectionController.h"//我的收藏
 
 #import "MyBodyViewController.h"//我的体型
 #import "MyMatchViewController.h"//我的搭配
@@ -358,9 +359,21 @@ typedef enum{
             
         case 1:
         {
-            MyMatchViewController *myMatchVC = [[MyMatchViewController alloc] init];
-            myMatchVC.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:myMatchVC animated:YES];
+            
+            if (indexPath.row == 0) {
+                NSLog(@"我的收藏");
+                
+                MyCollectionController *myMatchVC = [[MyCollectionController alloc] init];
+                myMatchVC.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:myMatchVC animated:YES];
+                
+            }else if (indexPath.row == 1){
+                NSLog(@"我的搭配");
+                
+                MyMatchViewController *myMatchVC = [[MyMatchViewController alloc] init];
+                myMatchVC.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:myMatchVC animated:YES];
+            }
         }
             break;
             
