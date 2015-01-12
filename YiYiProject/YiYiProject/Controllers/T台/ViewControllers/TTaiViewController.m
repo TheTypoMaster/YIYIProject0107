@@ -131,6 +131,47 @@
 
 #pragma mark 网络请求
 
+//T台赞 或 取消
+
+- (void)zanTTaiDetail:(UIButton *)zan_btn
+{
+    if (![LTools isLogin:self]) {
+        return;
+    }
+    
+    NSString *authkey = [GMAPI getAuthkey];
+    
+    TPlatModel *detail_model = waterFlow.dataArray[zan_btn.tag - 100];
+    NSString *t_id = detail_model.tt_id;
+    NSString *post = [NSString stringWithFormat:@"tt_id=%@&authcode=%@",t_id,authkey];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    
+    NSString * url = TTAI_ZAN;
+    
+    
+    TPlatCell *cell = (TPlatCell *)[waterFlow.quitView cellAtIndexPath:[NSIndexPath indexPathForRow:zan_btn.tag - 100 inSection:0]];
+    
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"-->%@",result);
+        
+        zan_btn.selected = YES;
+        
+        int like_num = [detail_model.tt_like_num intValue];
+        detail_model.tt_like_num = [NSString stringWithFormat:@"%d",like_num + 1];
+        cell.like_label.text = detail_model.tt_like_num;
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        if ([failDic[RESULT_CODE] intValue] == -11) {
+            [LTools showMBProgressWithText:failDic[@"msg"] addToView:self.view];
+        }
+        
+    }];
+}
+
+
 - (void)getTTaiData
 {
     NSString *url = [NSString stringWithFormat:TTAI_LIST,waterFlow.pageNum,L_PAGE_SIZE,[GMAPI getAuthkey]];
@@ -235,6 +276,8 @@
     
     TPlatModel *aMode = waterFlow.dataArray[indexPath.row];
     [cell setCellWithModel:aMode];
+    cell.like_btn.tag = 100 + indexPath.row;
+    [cell.like_btn addTarget:self action:@selector(zanTTaiDetail:) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
 }

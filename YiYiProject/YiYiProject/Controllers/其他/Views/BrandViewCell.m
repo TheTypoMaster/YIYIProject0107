@@ -25,6 +25,8 @@
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:aModel.brand_logo] placeholderImage:nil];
     self.nameLabel.text = aModel.brand_name;
     
+    self.iconImageView.backgroundColor = [UIColor lightGrayColor];
+    
     self.cancelButton.layer.cornerRadius = 3.f;
     self.cancelButton.layer.borderColor = [UIColor colorWithHexString:@"ef7186"].CGColor;
     self.cancelButton.layer.borderWidth = 1.f;
