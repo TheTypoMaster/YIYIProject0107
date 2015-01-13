@@ -48,7 +48,7 @@
     loading = [LTools MBProgressWithText:@"加载..." addToView:self.view];
     
     [self getTTaiDetail];
-    
+    [self getTTaiComments];
     [self createToolsView];
     
 }
@@ -132,6 +132,22 @@
 }
 
 #pragma mark - 网络请求
+
+///T台评论
+-(void)getTTaiComments
+{
+    NSString * url = [NSString stringWithFormat:TTAI_COMMENTS_URL,_table.pageNum,_tt_id];
+    NSLog(@"请求t台评论接口 --  %@",url);
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"请求t台评论数据 ---  %@",result);
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+    }];
+}
 
 //T台详情
 

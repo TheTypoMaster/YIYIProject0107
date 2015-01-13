@@ -181,7 +181,8 @@ typedef enum {
 
 #define TTAI_DETAIL @"http://182.92.158.32/?d=api&c=tplat&m=ttinfo&tt_id=%@&authcode=%@"
 
-
+///t台评论接口
+#define TTAI_COMMENTS_URL @"http://182.92.158.32/?d=api&c=tplat&m=listReply&page=%d&count=20&tt_id=%@"
 
 //T台点赞
 
