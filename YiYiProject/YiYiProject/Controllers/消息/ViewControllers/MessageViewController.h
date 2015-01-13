@@ -6,8 +6,8 @@
 //  Copyright (c) 2014年 lcw. All rights reserved.
 //
 
-#import "MyViewController.h"
+#import "RCChatListViewController.h"
 
-@interface MessageViewController : MyViewController
+@interface MessageViewController : RCChatListViewController
 
 @end
