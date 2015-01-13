@@ -8,6 +8,7 @@
 
 #import "MessageViewController.h"
 #import "MessageViewCell.h"
+#import "YIYIChatViewController.h"
 
 @interface MessageViewController ()
 
@@ -42,11 +43,17 @@
     cell1.frame = CGRectMake(0, 0, DEVICE_WIDTH, 65);
     [view addSubview:cell1];
     cell1.iconImageView.layer.cornerRadius = 43/2.f;
+    cell1.nameLabel.text = @"衣+衣团队";
+    cell1.messageLabel.text = @"欢迎使用衣+衣!";
+    [cell1.clickButton addTarget:self action:@selector(tapToYIJiaYi:) forControlEvents:UIControlEventTouchUpInside];
     
     MessageViewCell *cell2 = [[[NSBundle mainBundle]loadNibNamed:@"MessageViewCell" owner:self options:nil]lastObject];
     cell2.frame = CGRectMake(0, 65, DEVICE_WIDTH, 65);
     [view addSubview:cell2];
     cell2.iconImageView.layer.cornerRadius = 43/2.f;
+    cell2.nameLabel.text = @"商家消息";
+    cell2.messageLabel.text = @"您关注的商家没有最新消息!";
+    [cell2.clickButton addTarget:self action:@selector(tapToMail:) forControlEvents:UIControlEventTouchUpInside];
     
 }
 
@@ -55,14 +62,60 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
+#pragma mark - 网络请求
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark - 事件处理
+
+/**
+ *  衣加衣团队
+ */
+- (void)tapToYIJiaYi:(UITapGestureRecognizer *)tap
+{
+    NSLog(@"衣加衣团队");
 }
-*/
+
+/**
+ *  商家消息
+ */
+- (void)tapToMail:(UITapGestureRecognizer *)tap
+{
+    NSLog(@"商家消息");
+}
+
+#pragma mark - Rongcloud 方法重新
+
+/**
+ *  重载选择表格事件
+ *
+ *  @param conversation
+ */
+-(void)onSelectedTableRow:(RCConversation*)conversation{
+    
+    
+//    if(conversation.conversationType == ConversationType_GROUP)
+//    {
+//        DemoGroupListViewController* groupVC = [[DemoGroupListViewController alloc] init];
+//        self.currentGroupListView = groupVC;
+//        groupVC.portraitStyle = RCUserAvatarCycle;
+//        [self.navigationController pushViewController:groupVC animated:YES];
+//        return;
+//    }
+    
+    if ([LTools isLogin:self]) {
+        
+        NSString *useriId = conversation.targetId;
+        NSString *userName = conversation.conversationTitle;
+        
+        YIYIChatViewController *contact = [[YIYIChatViewController alloc]init];
+        contact.currentTarget = useriId;
+        contact.currentTargetName = userName;
+        contact.portraitStyle = RCUserAvatarCycle;
+        contact.enableSettings = NO;
+        contact.conversationType = conversation.conversationType;
+        contact.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:contact animated:YES];
+    }
+
+}
 
 @end

@@ -50,7 +50,7 @@
                             <constraint firstAttribute="height" constant="21" id="Q3X-jK-TbW"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" red="0.56470588239999997" green="0.56470588239999997" blue="0.56470588239999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="textColor" red="0.78431372549019607" green="0.78431372549019607" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K6m-xk-z8V">
@@ -60,28 +60,42 @@
                             <constraint firstAttribute="height" constant="0.5" id="Ivh-5Y-dhQ"/>
                         </constraints>
                     </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W7I-yT-Jx1">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="65"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <state key="normal">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
                 </subviews>
+                <gestureRecognizers/>
                 <constraints>
+                    <constraint firstItem="W7I-yT-Jx1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="05U-9Z-OTN"/>
                     <constraint firstItem="K6m-xk-z8V" firstAttribute="top" secondItem="p9i-1g-LxU" secondAttribute="bottom" constant="11.5" id="6xF-cg-Igx"/>
                     <constraint firstItem="ucJ-y4-Hnd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="7wh-V4-uMi"/>
                     <constraint firstItem="p9i-1g-LxU" firstAttribute="leading" secondItem="ucJ-y4-Hnd" secondAttribute="trailing" constant="14" id="9vP-vh-JWe"/>
                     <constraint firstItem="zE7-TN-10Y" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="Hcn-EQ-6Uv"/>
+                    <constraint firstItem="W7I-yT-Jx1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="IAv-Uz-Phy"/>
                     <constraint firstItem="uEv-Cs-I4V" firstAttribute="leading" secondItem="ucJ-y4-Hnd" secondAttribute="trailing" constant="14" id="InI-ON-hvV"/>
                     <constraint firstItem="K6m-xk-z8V" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="59" id="MaF-1p-ooq"/>
                     <constraint firstItem="p9i-1g-LxU" firstAttribute="top" secondItem="uEv-Cs-I4V" secondAttribute="bottom" id="Si0-DS-rco"/>
                     <constraint firstItem="K6m-xk-z8V" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" constant="-2" id="c4Q-Pg-g6b"/>
                     <constraint firstItem="ucJ-y4-Hnd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="c4Z-1l-gf5"/>
                     <constraint firstItem="zE7-TN-10Y" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" constant="-4" id="cLT-yt-I6G"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="W7I-yT-Jx1" secondAttribute="bottom" constant="-8" id="gQI-rn-khK"/>
                     <constraint firstItem="uEv-Cs-I4V" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="oGA-vR-W82"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="W7I-yT-Jx1" secondAttribute="trailing" constant="-8" id="toe-zS-UHj"/>
                 </constraints>
             </tableViewCellContentView>
+            <gestureRecognizers/>
             <connections>
+                <outlet property="clickButton" destination="W7I-yT-Jx1" id="cvP-Km-TxL"/>
                 <outlet property="iconImageView" destination="ucJ-y4-Hnd" id="ncG-2H-qDe"/>
                 <outlet property="messageLabel" destination="p9i-1g-LxU" id="u6A-UK-NQr"/>
                 <outlet property="nameLabel" destination="uEv-Cs-I4V" id="AEr-BY-9Lz"/>
                 <outlet property="timeLabel" destination="zE7-TN-10Y" id="lZZ-0Z-HUw"/>
             </connections>
-            <point key="canvasLocation" x="68" y="215.5"/>
+            <point key="canvasLocation" x="-131" y="194.5"/>
         </tableViewCell>
     </objects>
 </document>
