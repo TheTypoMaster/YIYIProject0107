@@ -34,6 +34,8 @@
         qtmquitView.dataSource = waterDatasource;
         self.waterDelegate = waterDelegate;
         
+        self.quitView = qtmquitView;
+        
         [self addSubview:qtmquitView];
                 
 //        [qtmquitView reloadData];

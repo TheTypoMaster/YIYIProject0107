@@ -69,18 +69,21 @@
     int index = (int)sender.tag - 100000;
     BrandModel *aModel = brandTable.dataArray[index];
     
+    __weak typeof(self)weakSelf = self;
     //测试
     NSString *authkey = [GMAPI getAuthkey];
     
     NSString *post = [NSString stringWithFormat:@"brand_id=%@&authcode=%@",aModel.id,authkey];
     
-    NSString *url = [NSString stringWithFormat:@"%@&%@",MY_CONCERN_MAIL_CANCEL,post];
-    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    
+    NSString *url = [NSString stringWithFormat:@"%@&%@",MY_CONCERN_BRAND_CANCEL,post];
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"-->%@",result);
         
-        
+        [weakSelf refreshBrandList:index];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
@@ -97,6 +100,8 @@
     int index = (int)sender.tag - 100;
     MailModel *aModel = shopTable.dataArray[index];
     
+    __weak typeof(self)weakSelf = self;
+    
     //测试
     NSString *authkey = [GMAPI getAuthkey];
     NSString *post = [NSString stringWithFormat:@"mall_id=%@&authcode=%@",aModel.mall_id,authkey];
@@ -108,6 +113,8 @@
         
         NSLog(@"-->%@",result);
         
+        //刷新数据
+        [weakSelf refreshMailList:index];
         
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
@@ -262,6 +269,27 @@
 }
 
 #pragma mark - 事件处理
+/**
+ *  刷新品牌列表
+ *
+ *  @param brandIndex 品牌下标
+ */
+- (void)refreshBrandList:(int)brandIndex
+{
+    [brandTable.dataArray removeObjectAtIndex:brandIndex];
+    [brandTable reloadData];
+}
+
+/**
+ *  刷新商家列表
+ *
+ *  @param mailIndex 商家下标
+ */
+- (void)refreshMailList:(int)mailIndex
+{
+    [shopTable.dataArray removeObjectAtIndex:mailIndex];
+    [shopTable reloadData];
+}
 
 - (UIButton *)buttonForTag:(int)tag
 {
@@ -375,6 +403,7 @@
     cell.cancelButton.tag = 100000 + indexPath.row;
     
     [cell.cancelButton addTarget:self action:@selector(cancelConcernBrand:) forControlEvents:UIControlEventTouchUpInside];
+    
     
     return cell;
 }
