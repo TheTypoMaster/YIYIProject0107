@@ -10,6 +10,8 @@
 #import "MessageViewCell.h"
 #import "YIYIChatViewController.h"
 
+#import "MailMessageViewController.h"
+
 @interface MessageViewController ()
 
 @end
@@ -43,6 +45,7 @@
     cell1.frame = CGRectMake(0, 0, DEVICE_WIDTH, 65);
     [view addSubview:cell1];
     cell1.iconImageView.layer.cornerRadius = 43/2.f;
+    cell1.iconImageView.image = [UIImage imageNamed:@"yixx150_150"];
     cell1.nameLabel.text = @"衣+衣团队";
     cell1.messageLabel.text = @"欢迎使用衣+衣!";
     [cell1.clickButton addTarget:self action:@selector(tapToYIJiaYi:) forControlEvents:UIControlEventTouchUpInside];
@@ -53,6 +56,7 @@
     cell2.iconImageView.layer.cornerRadius = 43/2.f;
     cell2.nameLabel.text = @"商家消息";
     cell2.messageLabel.text = @"您关注的商家没有最新消息!";
+    cell2.iconImageView.image = [UIImage imageNamed:@"sjxx150_150"];
     [cell2.clickButton addTarget:self action:@selector(tapToMail:) forControlEvents:UIControlEventTouchUpInside];
     
 }
@@ -80,6 +84,9 @@
 - (void)tapToMail:(UITapGestureRecognizer *)tap
 {
     NSLog(@"商家消息");
+    MailMessageViewController *mail = [[MailMessageViewController alloc]init];
+    mail.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:mail animated:YES];
 }
 
 #pragma mark - Rongcloud 方法重新

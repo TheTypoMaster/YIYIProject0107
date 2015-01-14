@@ -229,6 +229,13 @@
 		139886A51A45673500241962 /* ProductDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 139886A31A45673500241962 /* ProductDetailController.m */; };
 		139886A61A45673500241962 /* ProductDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 139886A41A45673500241962 /* ProductDetailController.xib */; };
 		139886A81A45880B00241962 /* navigationBarColor_black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 139886A71A45880B00241962 /* navigationBarColor_black@2x.png */; };
+		139A05171A66AC0600A8EB49 /* sjxx150_150@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 139A05151A66AC0600A8EB49 /* sjxx150_150@3x.png */; };
+		139A05181A66AC0600A8EB49 /* yixx150_150@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 139A05161A66AC0600A8EB49 /* yixx150_150@3x.png */; };
+		139A051C1A66AC3500A8EB49 /* sjxx150_150@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 139A051A1A66AC3500A8EB49 /* sjxx150_150@2x.png */; };
+		139A051D1A66AC3500A8EB49 /* yixx150_150@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 139A051B1A66AC3500A8EB49 /* yixx150_150@2x.png */; };
+		139A05201A66ADB100A8EB49 /* MailMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 139A051F1A66ADB100A8EB49 /* MailMessageViewController.m */; };
+		139A05241A66B9C500A8EB49 /* MailMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 139A05221A66B9C500A8EB49 /* MailMessageCell.m */; };
+		139A05251A66B9C500A8EB49 /* MailMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 139A05231A66B9C500A8EB49 /* MailMessageCell.xib */; };
 		13A3897E1A3878FE00ABBACB /* MyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A3897D1A3878FE00ABBACB /* MyViewController.m */; };
 		13A389861A387A8800ABBACB /* UIColor+ConvertColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A389821A387A8800ABBACB /* UIColor+ConvertColor.m */; };
 		13A389871A387A8800ABBACB /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A389851A387A8800ABBACB /* UIView+Frame.m */; };
@@ -747,6 +754,15 @@
 		139886A31A45673500241962 /* ProductDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductDetailController.m; sourceTree = "<group>"; };
 		139886A41A45673500241962 /* ProductDetailController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductDetailController.xib; sourceTree = "<group>"; };
 		139886A71A45880B00241962 /* navigationBarColor_black@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigationBarColor_black@2x.png"; sourceTree = "<group>"; };
+		139A05151A66AC0600A8EB49 /* sjxx150_150@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sjxx150_150@3x.png"; sourceTree = "<group>"; };
+		139A05161A66AC0600A8EB49 /* yixx150_150@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yixx150_150@3x.png"; sourceTree = "<group>"; };
+		139A051A1A66AC3500A8EB49 /* sjxx150_150@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sjxx150_150@2x.png"; sourceTree = "<group>"; };
+		139A051B1A66AC3500A8EB49 /* yixx150_150@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yixx150_150@2x.png"; sourceTree = "<group>"; };
+		139A051E1A66ADB100A8EB49 /* MailMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MailMessageViewController.h; sourceTree = "<group>"; };
+		139A051F1A66ADB100A8EB49 /* MailMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MailMessageViewController.m; sourceTree = "<group>"; };
+		139A05211A66B9C500A8EB49 /* MailMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MailMessageCell.h; sourceTree = "<group>"; };
+		139A05221A66B9C500A8EB49 /* MailMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MailMessageCell.m; sourceTree = "<group>"; };
+		139A05231A66B9C500A8EB49 /* MailMessageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MailMessageCell.xib; sourceTree = "<group>"; };
 		13A3897C1A3878FE00ABBACB /* MyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyViewController.h; sourceTree = "<group>"; };
 		13A3897D1A3878FE00ABBACB /* MyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyViewController.m; sourceTree = "<group>"; };
 		13A3897F1A38796D00ABBACB /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
@@ -1225,6 +1241,7 @@
 		13681C6F1A4527A200671D07 /* AllImages */ = {
 			isa = PBXGroup;
 			children = (
+				139A05191A66AC3500A8EB49 /* 消息 */,
 				E3B139131A5EAEE200B9189A /* 首页衣加衣 */,
 				13CEC8951A5D974900FE273F /* 搭配师 */,
 				13B690591A566A4A007FE152 /* T台 */,
@@ -1343,6 +1360,7 @@
 		137B075F1A4E6FB600DE7DCC /* AllImages@3x */ = {
 			isa = PBXGroup;
 			children = (
+				139A05141A66AC0600A8EB49 /* 消息 */,
 				13963F4D1A4FE3A5007BE68B /* 话题发布按钮 */,
 				137B07601A4E6FDF00DE7DCC /* 编辑个人资料 */,
 				137B07631A4E6FDF00DE7DCC /* 搭配师 */,
@@ -1938,6 +1956,24 @@
 			path = "话题发布按钮";
 			sourceTree = "<group>";
 		};
+		139A05141A66AC0600A8EB49 /* 消息 */ = {
+			isa = PBXGroup;
+			children = (
+				139A05151A66AC0600A8EB49 /* sjxx150_150@3x.png */,
+				139A05161A66AC0600A8EB49 /* yixx150_150@3x.png */,
+			);
+			path = "消息";
+			sourceTree = "<group>";
+		};
+		139A05191A66AC3500A8EB49 /* 消息 */ = {
+			isa = PBXGroup;
+			children = (
+				139A051A1A66AC3500A8EB49 /* sjxx150_150@2x.png */,
+				139A051B1A66AC3500A8EB49 /* yixx150_150@2x.png */,
+			);
+			path = "消息";
+			sourceTree = "<group>";
+		};
 		13A3894F1A38768400ABBACB /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -2088,6 +2124,8 @@
 				13A389991A3893FC00ABBACB /* MessageViewController.h */,
 				13A3899A1A3893FC00ABBACB /* MessageViewController.m */,
 				13A3899B1A3893FC00ABBACB /* MessageViewController.xib */,
+				139A051E1A66ADB100A8EB49 /* MailMessageViewController.h */,
+				139A051F1A66ADB100A8EB49 /* MailMessageViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -2157,6 +2195,9 @@
 				13A8A38B1A655879008D3D44 /* MessageViewCell.h */,
 				13A8A38C1A655879008D3D44 /* MessageViewCell.m */,
 				13A8A38D1A655879008D3D44 /* MessageViewCell.xib */,
+				139A05211A66B9C500A8EB49 /* MailMessageCell.h */,
+				139A05221A66B9C500A8EB49 /* MailMessageCell.m */,
+				139A05231A66B9C500A8EB49 /* MailMessageCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2939,6 +2980,7 @@
 				137E0ADF1A4C65D000B59F64 /* product_like_cancel@2x.png in Resources */,
 				13963F581A4FE3B8007BE68B /* fabu@2x.png in Resources */,
 				137B08671A4EAC9900DE7DCC /* tianjia_up@2x.png in Resources */,
+				139A051C1A66AC3500A8EB49 /* sjxx150_150@2x.png in Resources */,
 				137E0AD81A4C567500B59F64 /* pengyouquan72_7222x.png in Resources */,
 				137B087B1A4EADFE00DE7DCC /* tianjia_up@3x.png in Resources */,
 				13681C831A453B3200671D07 /* share_weixin@2x.png in Resources */,
@@ -3007,8 +3049,10 @@
 				137B07F41A4E6FDF00DE7DCC /* t_paizhao@3x.png in Resources */,
 				139607B71A46A0BB00AACAC4 /* product_share@2x.png in Resources */,
 				137B08171A4E6FDF00DE7DCC /* Ttai_pinglun@3x.png in Resources */,
+				139A05251A66B9C500A8EB49 /* MailMessageCell.xib in Resources */,
 				137B08481A4E8D2B00DE7DCC /* 1+1_botton_up@2x.png in Resources */,
 				137B07D21A4E6FDF00DE7DCC /* d_wexin@3x.png in Resources */,
+				139A051D1A66AC3500A8EB49 /* yixx150_150@2x.png in Resources */,
 				137B08791A4EADFE00DE7DCC /* my_up@3x.png in Resources */,
 				137B07EF1A4E6FDF00DE7DCC /* xiaodian_d@3x.png in Resources */,
 				13681C811A453B3200671D07 /* share_QQ@2x.png in Resources */,
@@ -3128,6 +3172,7 @@
 				137B08381A4E716700DE7DCC /* quxian@2x.png in Resources */,
 				E3996EC71A5E1DBA00673147 /* gstart@2x.png in Resources */,
 				137B07DD1A4E6FDF00DE7DCC /* 1+1_botton@3x.png in Resources */,
+				139A05181A66AC0600A8EB49 /* yixx150_150@3x.png in Resources */,
 				E3996ED31A5E1DBA00673147 /* gRed@2x.png in Resources */,
 				137B08311A4E716700DE7DCC /* dian_shangchang@2x.png in Resources */,
 				E3601E821A61A75700CC41FE /* gcustomstore@3x.png in Resources */,
@@ -3152,6 +3197,7 @@
 				137B07C71A4E6FDF00DE7DCC /* dapeishi_bg@3x.png in Resources */,
 				13A3898C1A38937600ABBACB /* HomeViewController.xib in Resources */,
 				13CEC89E1A5D974900FE273F /* dapei_jiantou@2x.png in Resources */,
+				139A05171A66AC0600A8EB49 /* sjxx150_150@3x.png in Resources */,
 				138C2BF81A39E09200EA59F5 /* UMSCommentInputControlleriPad.xib in Resources */,
 				137E0ADC1A4C567500B59F64 /* weibo90_72@2x.png in Resources */,
 				564031861A4EFF6000680E08 /* apply_idcard_image@3x.png in Resources */,
@@ -3336,6 +3382,7 @@
 				1387B08D1A5EC2D0006365D8 /* TopicImageModel.m in Sources */,
 				E3996ED41A5E1DBA00673147 /* GRootScrollView.m in Sources */,
 				EF9329F91A617DD500A8BD18 /* MyseetingTableViewCell.m in Sources */,
+				139A05201A66ADB100A8EB49 /* MailMessageViewController.m in Sources */,
 				13CEC8891A5D956B00FE273F /* TTaiDetailController.m in Sources */,
 				13963F441A4FC54D007BE68B /* LImageCell.m in Sources */,
 				5697222C1A408040004B6641 /* HomeMatchView.m in Sources */,
@@ -3346,6 +3393,7 @@
 				13A389861A387A8800ABBACB /* UIColor+ConvertColor.m in Sources */,
 				19B937761A5D8780009B359F /* ShenQingDianPuViewController.m in Sources */,
 				139607BC1A46D82400AACAC4 /* FilterViewController.m in Sources */,
+				139A05241A66B9C500A8EB49 /* MailMessageCell.m in Sources */,
 				13A3899C1A3893FC00ABBACB /* MessageViewController.m in Sources */,
 				19D0C0D21A4EDA6D00BEC10D /* MyYiChuViewController.m in Sources */,
 				E3996ECF1A5E1DBA00673147 /* UIViewAdditions.m in Sources */,
@@ -3462,7 +3510,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "0c0fcf41-02c9-4bbc-b06a-e103275d3718";
 				PROVISIONING_PROFILE = "24aa36b6-0e0c-497a-82be-3a3f98d1129f";
 				SDKROOT = iphoneos;
 			};
@@ -3499,7 +3546,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "0c0fcf41-02c9-4bbc-b06a-e103275d3718";
 				PROVISIONING_PROFILE = "24aa36b6-0e0c-497a-82be-3a3f98d1129f";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -3535,7 +3581,6 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0c0fcf41-02c9-4bbc-b06a-e103275d3718";
 				PROVISIONING_PROFILE = "24aa36b6-0e0c-497a-82be-3a3f98d1129f";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
@@ -3570,7 +3615,6 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0c0fcf41-02c9-4bbc-b06a-e103275d3718";
 				PROVISIONING_PROFILE = "24aa36b6-0e0c-497a-82be-3a3f98d1129f";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
