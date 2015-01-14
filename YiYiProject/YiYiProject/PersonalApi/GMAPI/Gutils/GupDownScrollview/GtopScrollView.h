@@ -12,7 +12,8 @@
 
 typedef enum{
     GTOPFLOOR = 0,
-    GTOPPINPAI
+    GTOPPINPAI,
+    GTOPSHENQINGDIANPU,
 }GTOPTYPE;
 
 

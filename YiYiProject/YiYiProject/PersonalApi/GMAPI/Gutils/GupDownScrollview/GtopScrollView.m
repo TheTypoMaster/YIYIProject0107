@@ -64,10 +64,24 @@
 - (void)initWithNameButtons
 {
     
+    int titleBtnWidth = 0.0;
+    int titleBtnHeight = 0.0;
     
     
     if (self.theTopType == GTOPPINPAI) {//品牌
-        
+        titleBtnWidth = 70;
+        titleBtnHeight = 28;
+    }
+    
+    if (self.theTopType == GTOPSHENQINGDIANPU) {//申请店铺
+        NSLog(@"申请店铺");
+        titleBtnWidth = DEVICE_WIDTH*0.5;
+        titleBtnHeight = 48;
+    }
+    
+    if (self.theTopType == GTOPFLOOR) {
+        titleBtnWidth = 70;
+        titleBtnHeight = 28;
     }
     
     
@@ -94,7 +108,7 @@
 //                            constrainedToSize:CGSizeMake(150, 30)
 //                                lineBreakMode:NSLineBreakByClipping].width;
         
-        button.frame = CGRectMake(xPos, 0, 70, GtopScrollViewHeight);
+        button.frame = CGRectMake(xPos, 0, titleBtnWidth, titleBtnHeight);
         
         [_buttonOriginXArray addObject:@(xPos)];
         
@@ -113,7 +127,10 @@
 //点击顶部条滚动标签
 - (void)selectNameButton:(UIButton *)sender
 {
-    [self adjustScrollViewContentX:sender];
+    if (self.theTopType != GTOPSHENQINGDIANPU) {
+        [self adjustScrollViewContentX:sender];
+    }
+    
     
     //如果更换按钮
     if (sender.tag != self.userSelectedChannelID) {
@@ -149,19 +166,7 @@
 }
 
 
-- (void)adjustScrollViewContentX:(UIButton *)sender
-{
-    float originX = [[_buttonOriginXArray objectAtIndex:BUTTONID] floatValue];
-    float width = [[_buttonWithArray objectAtIndex:BUTTONID] floatValue];
-    
-    if (sender.frame.origin.x - self.contentOffset.x > self.frame.size.width-(BUTTONGAP+width)) {
-        [self setContentOffset:CGPointMake(originX - 30, 0)  animated:YES];
-    }
-    
-    if (sender.frame.origin.x - self.contentOffset.x < 5) {
-        [self setContentOffset:CGPointMake(originX,0)  animated:YES];
-    }
-}
+
 
 
 
@@ -193,6 +198,23 @@
     
 }
 
+//点击titleButton时候 顶部标签大于屏幕宽度往后滑动显示出来
+- (void)adjustScrollViewContentX:(UIButton *)sender
+{
+    float originX = [[_buttonOriginXArray objectAtIndex:BUTTONID] floatValue];
+    float width = [[_buttonWithArray objectAtIndex:BUTTONID] floatValue];
+    
+    if (sender.frame.origin.x - self.contentOffset.x > self.frame.size.width-(BUTTONGAP+width)) {
+        [self setContentOffset:CGPointMake(originX - 30, 0)  animated:YES];
+    }
+    
+    if (sender.frame.origin.x - self.contentOffset.x < 5) {
+        [self setContentOffset:CGPointMake(originX,0)  animated:YES];
+    }
+}
+
+
+//rootScrollView滑动的时候 改变titleButton位置 大于屏幕宽度向右滑动
 -(void)setScrollViewContentOffset
 {
     float originX = [[self.buttonOriginXArray objectAtIndex:BUTTONSELECTEDID] floatValue];
