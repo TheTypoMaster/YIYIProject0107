@@ -180,7 +180,7 @@
 }
 
 
-+ (NSString *)documentFolder{
++ (NSString *)getDocumentFolderPath{
     return [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
 }
 

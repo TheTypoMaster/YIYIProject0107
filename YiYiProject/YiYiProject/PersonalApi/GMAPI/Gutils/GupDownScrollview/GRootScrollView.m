@@ -9,6 +9,8 @@
 #import "GRootScrollView.h"
 #import "GtopScrollView.h"
 #import "NSDictionary+GJson.h"
+#import "GrootScrollViewFloorTableViewCell.h"
+#import "GshenqingdianpuTableViewCell.h"
 
 
 #define POSITIONID (int)(scrollView.contentOffset.x/self.frame.size.width)
@@ -49,38 +51,47 @@
 
 - (void)initWithViews
 {
-//    for (int i = 0; i < [self.viewNameArray count]; i++) {
-//        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0+320*i, 0, 320, GrootScrollViewHeight)];
-//        label.textAlignment = NSTextAlignmentCenter;
-//        label.font = [UIFont boldSystemFontOfSize:50.0];
-//        label.tag = 200 + i;
-//        if (i == 0) {
-//            label.text = [self.viewNameArray objectAtIndex:i];
-//        }
-//        [self addSubview:label];
-//    }
-//    self.contentSize = CGSizeMake(320*[self.viewNameArray count], GrootScrollViewHeight);
-    
     
     if (self.theGRootScrollType == GROOTPINPAI) {//品牌
         
     }
     
-    //楼层
-    for (int i = 0; i<[self.myTopScrollView.nameArray count]; i++) {
-        UITableView *tab = [[UITableView alloc]initWithFrame:CGRectMake(0+self.frame.size.width*i, 0, self.frame.size.width, self.frame.size.height) style:UITableViewStylePlain];
-        tab.backgroundColor = RGBCOLOR(248, 248, 248);
-        tab.tag = 200+i;
-        tab.delegate = self;
-        tab.dataSource = self;
-        [self.tabelViewArray addObject:tab];
-        if (i==0) {
+    if (self.theGRootScrollType == GROOTSHENQINGDIANPU) {//申请店铺
+        //楼层
+        for (int i = 0; i<[self.myTopScrollView.nameArray count]; i++) {
+            UITableView *tab = [[UITableView alloc]initWithFrame:CGRectMake(0+self.frame.size.width*i, 0, self.frame.size.width, self.frame.size.height) style:UITableViewStylePlain];
+            tab.backgroundColor = RGBCOLOR(248, 248, 248);
+            tab.tag = 200+i;
+            tab.delegate = self;
+            tab.dataSource = self;
+            [self.tabelViewArray addObject:tab];
+            if (i==0) {
+                
+            }
+            [self addSubview:tab];
             
         }
-        [self addSubview:tab];
-        
+        self.contentSize = CGSizeMake(self.frame.size.width*[self.myTopScrollView.nameArray count], self.frame.size.height);
     }
-    self.contentSize = CGSizeMake(self.frame.size.width*[self.myTopScrollView.nameArray count], self.frame.size.height);
+    
+    if (self.theGRootScrollType == GROOTFLOOR) {//楼层
+        for (int i = 0; i<[self.myTopScrollView.nameArray count]; i++) {
+            UITableView *tab = [[UITableView alloc]initWithFrame:CGRectMake(0+self.frame.size.width*i, 0, self.frame.size.width, self.frame.size.height) style:UITableViewStylePlain];
+            tab.backgroundColor = RGBCOLOR(248, 248, 248);
+            tab.tag = 200+i;
+            tab.delegate = self;
+            tab.dataSource = self;
+            [self.tabelViewArray addObject:tab];
+            if (i==0) {
+                
+            }
+            [self addSubview:tab];
+            
+        }
+        self.contentSize = CGSizeMake(self.frame.size.width*[self.myTopScrollView.nameArray count], self.frame.size.height);
+    }
+    
+    
     
     
     
@@ -109,15 +120,15 @@
     //调整顶部滑条按钮状态
     [self adjustTopScrollViewButton:scrollView];
     
-    [self loadData];
+    [self GreloadData];
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
-    [self loadData];
+    [self GreloadData];
 }
 
--(void)loadData
+-(void)GreloadData
 {
 //    CGFloat pagewidth = self.frame.size.width;
 //    int page = floor((self.contentOffset.x - pagewidth/self.viewNameArray.count)/pagewidth)+1;
@@ -138,7 +149,10 @@
     [self.myTopScrollView setButtonUnSelect];
     self.myTopScrollView.scrollViewSelectedChannelID = POSITIONID+100;
     [self.myTopScrollView setButtonSelect];
-    [self.myTopScrollView setScrollViewContentOffset];
+    if (self.theGRootScrollType != GROOTSHENQINGDIANPU) {//不是申请店铺界面
+        [self.myTopScrollView setScrollViewContentOffset];
+    }
+    
 }
 
 
@@ -152,66 +166,66 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *identifier = @"identifier";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (!cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+    
+    
+    if (self.theGRootScrollType == GROOTFLOOR) {//楼层
+        static NSString *identifier = @"nearbypinpai";
+        GrootScrollViewFloorTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        if (!cell) {
+            cell = [[GrootScrollViewFloorTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        }
+        for (UIView *view in cell.contentView.subviews) {
+            [view removeFromSuperview];
+        }
+        //数据源
+        NSArray *dataArray = self.dataArray[tableView.tag-200];
+        NSDictionary *dic = dataArray[indexPath.row];
+        //加载视图
+        [cell loadCustomViewWithDicData:dic];
+        
+        return cell;
+        
+    }else if (self.theGRootScrollType == GROOTSHENQINGDIANPU){//申请店铺
+        static NSString *identifier = @"shenqingdianpu";
+        GshenqingdianpuTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        if (!cell) {
+            cell = [[GshenqingdianpuTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        }
+        for (UIView *view in cell.contentView.subviews) {
+            [view removeFromSuperview];
+        }
+        
+        [cell loadCustomViewWithData:nil];
+        
+        return cell;
+        
+        
     }
     
     
-    for (UIView *view in cell.contentView.subviews) {
-        [view removeFromSuperview];
-    }
+    return [[UITableViewCell alloc]init];
     
-    
-    //数据源
-    NSArray *dataArray = self.dataArray[tableView.tag-200];
-    NSDictionary *dic = dataArray[indexPath.row];
-    
-    
-    //logo
-    UIImageView *logoImv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 10, 70, 70)];
-    logoImv.layer.cornerRadius = 35;
-    logoImv.layer.borderWidth = 1;
-    logoImv.layer.masksToBounds = YES;
-    logoImv.layer.borderColor = RGBCOLOR(210, 210, 210).CGColor;
-    
-    NSLog(@"%@",[dic objectForKey:@"brand_logo"]);
-    [logoImv sd_setImageWithURL:[NSURL URLWithString:[dic stringValueForKey:@"brand_logo"]] placeholderImage:nil];
-    
-    //name
-    UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(logoImv.frame)+10, logoImv.frame.origin.y+17, cell.bounds.size.width-logoImv.frame.size.width -17, 18)];
-//    nameLabel.backgroundColor = [UIColor orangeColor];
-    nameLabel.textColor = [UIColor blackColor];
-    nameLabel.font = [UIFont systemFontOfSize:17];
-    nameLabel.textAlignment = NSTextAlignmentLeft;
-    nameLabel.text = [dic stringValueForKey:@"brand_name"];
-    
-    
-    //号码 活动
-    UILabel *activeLabel = [[UILabel alloc]initWithFrame:CGRectMake(nameLabel.frame.origin.x, CGRectGetMaxY(nameLabel.frame)+7, nameLabel.frame.size.width, nameLabel.frame.size.height)];
-    activeLabel.text = @"B2016   满100减30";
-    
-    
-    [cell.contentView addSubview:logoImv];
-    [cell.contentView addSubview:nameLabel];
-    [cell.contentView addSubview:activeLabel];
-    
-    cell.contentView.backgroundColor = RGBCOLOR(248, 248, 248);
-    
-    return cell;
 }
 
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSArray *dataArray = self.dataArray[tableView.tag-200];
-    NSDictionary *dicInfo = dataArray[indexPath.row];
-    NSString *storeIdStr = [dicInfo stringValueForKey:@"brand_id"];
-    NSLog(@"商城id:%@",storeIdStr);
-    NSDictionary *dic = dataArray[indexPath.row];
-    NSString *pinpaiNameStr = [dic stringValueForKey:@"brand_name"];
-    self.thePinpaiBlock(storeIdStr,pinpaiNameStr);
+    if (self.theGRootScrollType == GROOTFLOOR) {//品牌
+        NSArray *dataArray = self.dataArray[tableView.tag-200];
+        NSDictionary *dicInfo = dataArray[indexPath.row];
+        NSString *storeIdStr = [dicInfo stringValueForKey:@"brand_id"];
+        NSLog(@"商城id:%@",storeIdStr);
+        NSDictionary *dic = dataArray[indexPath.row];
+        NSString *pinpaiNameStr = [dic stringValueForKey:@"brand_name"];
+        if (self.thePinpaiBlock) {
+            self.thePinpaiBlock(storeIdStr,pinpaiNameStr);
+        }
+    }else if (self.theGRootScrollType == GROOTSHENQINGDIANPU){//申请店铺
+        if (self.theShenqingDianpuBlock) {
+            self.theShenqingDianpuBlock(indexPath,tableView.tag);
+        }
+    }
+    
     
 }
 
@@ -219,7 +233,11 @@
 
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 90.0f;
+    CGFloat height = 0.0f;
+    if (self.theGRootScrollType == GROOTFLOOR) {
+        height = 90;
+    }
+    return height;
 }
 
 
@@ -237,7 +255,9 @@
 -(void)setThePinpaiBlock:(pinpaiClick)thePinpaiBlock{
     _thePinpaiBlock = thePinpaiBlock;
 }
-
+-(void)setTheShenqingDianpuBlock:(shenqingDianpuBlock)theShenqingDianpuBlock{
+    _theShenqingDianpuBlock = theShenqingDianpuBlock;
+}
 
 
 @end
