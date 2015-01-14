@@ -66,7 +66,7 @@
     loading = [LTools MBProgressWithText:@"加载..." addToView:self.view];
     
     [self getTTaiDetail];
-    
+    [self getTTaiComments];
     [self createToolsView];
     
 }
@@ -151,12 +151,28 @@
 
 #pragma mark - 网络请求
 
+///T台评论
+-(void)getTTaiComments
+{
+    NSString * url = [NSString stringWithFormat:TTAI_COMMENTS_URL,_table.pageNum,_tt_id];
+    NSLog(@"请求t台评论接口 --  %@",url);
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"请求t台评论数据 ---  %@",result);
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+    }];
+}
+
 #pragma mark - 话题评论
 
 -(void)tPlatCommentWithUserName:(NSString *)aName WithUid:(NSString *)aUid
 {
 
-    NSString *parent_post = @"1";
+    NSString *parent_post = @"0";
     NSString *content = _input_view.text_input_view.text;
     
     NSString *post = [NSString stringWithFormat:@"authcode=%@&tt_id=%@&parent_post=%@&content=%@",[GMAPI getAuthkey],self.tt_id,parent_post,content];

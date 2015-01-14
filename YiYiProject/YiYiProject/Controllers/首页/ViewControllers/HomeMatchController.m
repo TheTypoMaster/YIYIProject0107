@@ -91,7 +91,7 @@
         fullUrl = [NSString stringWithFormat:GET_DAPEISHI_URL,@"my",[GMAPI getAuthkey],0,1,100];
     }
     
-    NSLog(@"fullUrl ----   %@",fullUrl);
+    NSLog(@"fullUrl ----   %@",[GMAPI getUid]);
     AFHTTPRequestOperation * request = [[AFHTTPRequestOperation alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:fullUrl]]];
     __weak typeof(self)bself = self;
     [request setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
