@@ -9,6 +9,8 @@
 #import "MySettingsViewController.h"
 #import "MyseetingTableViewCell.h"
 #import "AboutTailCircleViewController.h"
+
+#import "UMFeedbackViewController.h"
 //RBG color
 #define RGBA(r,g,b,a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 @interface MySettingsViewController ()
@@ -231,6 +233,11 @@
     
     if (indexPath.row == 4) {
         //意见反馈
+        
+        UMFeedbackViewController *_feedbackVC=[[UMFeedbackViewController alloc]init];
+        
+        [self.navigationController pushViewController:_feedbackVC animated:YES];
+        
         
         //TODO:  还没做
     }
