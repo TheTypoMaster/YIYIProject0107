@@ -73,7 +73,6 @@
     loading = [LTools MBProgressWithText:@"加载中..." addToView:self.view];
     
     [self createBottomView];
-    
     [self getTopicComments];
     [self getTopicDetailData];
 }

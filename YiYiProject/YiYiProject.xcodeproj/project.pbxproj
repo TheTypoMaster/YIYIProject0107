@@ -318,6 +318,9 @@
 		5653214C1A59780B00E43F80 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5653214B1A59780B00E43F80 /* libicucore.dylib */; };
 		5653214F1A59785F00E43F80 /* OHLableHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5653214E1A59785F00E43F80 /* OHLableHelper.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		565321521A59896600E43F80 /* TopicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 565321511A59896600E43F80 /* TopicModel.m */; };
+		565821DC1A66AA2A004C8F7D /* xq_love_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 565821D91A66AA2A004C8F7D /* xq_love_down@2x.png */; };
+		565821DD1A66AA2A004C8F7D /* xq_love_up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 565821DA1A66AA2A004C8F7D /* xq_love_up@2x.png */; };
+		565821DE1A66AA2A004C8F7D /* xq_pinglun@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 565821DB1A66AA2A004C8F7D /* xq_pinglun@2x.png */; };
 		5658C79A1A4C486E00DC86F8 /* MatchWaterflowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5658C7991A4C486E00DC86F8 /* MatchWaterflowView.m */; };
 		566FE2471A5018BA00A96B5F /* TopicCommentsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 566FE2461A5018BA00A96B5F /* TopicCommentsModel.m */; };
 		566FE24B1A501C4E00A96B5F /* TopicCommentsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 566FE2491A501C4E00A96B5F /* TopicCommentsCell.m */; };
@@ -887,6 +890,9 @@
 		5653214E1A59785F00E43F80 /* OHLableHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OHLableHelper.m; sourceTree = "<group>"; };
 		565321501A59896600E43F80 /* TopicModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopicModel.h; sourceTree = "<group>"; };
 		565321511A59896600E43F80 /* TopicModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopicModel.m; sourceTree = "<group>"; };
+		565821D91A66AA2A004C8F7D /* xq_love_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xq_love_down@2x.png"; sourceTree = "<group>"; };
+		565821DA1A66AA2A004C8F7D /* xq_love_up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xq_love_up@2x.png"; sourceTree = "<group>"; };
+		565821DB1A66AA2A004C8F7D /* xq_pinglun@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xq_pinglun@2x.png"; sourceTree = "<group>"; };
 		5658C7981A4C486D00DC86F8 /* MatchWaterflowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchWaterflowView.h; sourceTree = "<group>"; };
 		5658C7991A4C486E00DC86F8 /* MatchWaterflowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchWaterflowView.m; sourceTree = "<group>"; };
 		566FE2451A5018BA00A96B5F /* TopicCommentsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopicCommentsModel.h; sourceTree = "<group>"; };
@@ -2271,6 +2277,9 @@
 		13CEC8951A5D974900FE273F /* 搭配师 */ = {
 			isa = PBXGroup;
 			children = (
+				565821D91A66AA2A004C8F7D /* xq_love_down@2x.png */,
+				565821DA1A66AA2A004C8F7D /* xq_love_up@2x.png */,
+				565821DB1A66AA2A004C8F7D /* xq_pinglun@2x.png */,
 				13CEC8961A5D974900FE273F /* dapei_jiantou@2x.png */,
 				13CEC8981A5D974900FE273F /* pinglun_icon@2x.png */,
 				13CEC8991A5D974900FE273F /* time_iocn@2x.png */,
@@ -2960,6 +2969,7 @@
 				137B07C41A4E6FDF00DE7DCC /* bianji_boy@3x.png in Resources */,
 				E3996EC61A5E1DBA00673147 /* gpin@2x.png in Resources */,
 				137B07F21A4E6FDF00DE7DCC /* zhidemai_botton@3x.png in Resources */,
+				565821DD1A66AA2A004C8F7D /* xq_love_up@2x.png in Resources */,
 				1387B08F1A5EDF51006365D8 /* apply_qq_image@2x.png in Resources */,
 				137B07E71A4E6FDF00DE7DCC /* quxian_left@3x.png in Resources */,
 				13B6904F1A564BF6007FE152 /* t_rizhi@2x.png in Resources */,
@@ -3033,6 +3043,7 @@
 				137B07CD1A4E6FDF00DE7DCC /* zhixiangjiantou@2x.png in Resources */,
 				13B6907D1A580430007FE152 /* ShopViewCell.xib in Resources */,
 				137B07DE1A4E6FDF00DE7DCC /* dapeishi_botton@3x.png in Resources */,
+				565821DE1A66AA2A004C8F7D /* xq_pinglun@2x.png in Resources */,
 				13963F531A4FE3A5007BE68B /* fabu_shous@3x.png in Resources */,
 				137B08011A4E6FDF00DE7DCC /* my_tixing@3x.png in Resources */,
 				137B08571A4E993C00DE7DCC /* shaixuan@2x.png in Resources */,
@@ -3044,6 +3055,7 @@
 				137B08551A4E993C00DE7DCC /* love_down@2x.png in Resources */,
 				56A8A8361A45BB1300E85F6B /* MatchTopicCell.xib in Resources */,
 				13963F521A4FE3A5007BE68B /* fabu_pic@3x.png in Resources */,
+				565821DC1A66AA2A004C8F7D /* xq_love_down@2x.png in Resources */,
 				566FE24C1A501C4E00A96B5F /* TopicCommentsCell.xib in Resources */,
 				E3601E771A61733300CC41FE /* gnearstorered@3x.png in Resources */,
 				137B08301A4E716700DE7DCC /* dapeishi_botton@2x.png in Resources */,
@@ -3445,7 +3457,6 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "0c0fcf41-02c9-4bbc-b06a-e103275d3718";
-				PROVISIONING_PROFILE = "24aa36b6-0e0c-497a-82be-3a3f98d1129f";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -3482,7 +3493,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PROVISIONING_PROFILE = "0c0fcf41-02c9-4bbc-b06a-e103275d3718";
-				PROVISIONING_PROFILE = "24aa36b6-0e0c-497a-82be-3a3f98d1129f";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -3518,7 +3528,6 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "0c0fcf41-02c9-4bbc-b06a-e103275d3718";
-				PROVISIONING_PROFILE = "24aa36b6-0e0c-497a-82be-3a3f98d1129f";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Debug;
@@ -3553,7 +3562,6 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "0c0fcf41-02c9-4bbc-b06a-e103275d3718";
-				PROVISIONING_PROFILE = "24aa36b6-0e0c-497a-82be-3a3f98d1129f";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Release;
