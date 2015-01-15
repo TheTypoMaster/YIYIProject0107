@@ -7,6 +7,8 @@
 //
 
 #import "ShenQingDianPuViewController.h"
+#import "GRootScrollView.h"
+#import "GtopScrollView.h"
 
 @interface ShenQingDianPuViewController (){
 
@@ -49,9 +51,35 @@
     self.view.backgroundColor=RGBCOLOR(239, 239, 239);
     
     
-    [self createViews];
+    //顶部标签
+    GtopScrollView *top = [[GtopScrollView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 48)];
+    top.backgroundColor = RGBCOLOR(239, 239, 239);
+    top.nameArray = @[@"精品店",@"商场店"];
+    top.theTopType = GTOPSHENQINGDIANPU;
+    [top initWithNameButtons];
+    top.scrollEnabled = NO;
+    [self.view addSubview:top];
     
-    [self createSegButton];
+    
+    //下部标签
+    GRootScrollView *rootScrollView = [[GRootScrollView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(top.frame)+10, DEVICE_WIDTH, DEVICE_HEIGHT-64-48-10)];
+    rootScrollView.backgroundColor = RGBCOLOR(239, 239, 239);
+    rootScrollView.viewNameArray = top.nameArray;
+    
+    rootScrollView.theGRootScrollType = GROOTSHENQINGDIANPU;
+    [self.view addSubview:rootScrollView];
+    
+    
+    top.myRootScrollView = rootScrollView;
+    rootScrollView.myTopScrollView = top;
+    
+    [rootScrollView initWithViews];
+    
+    
+    
+//    [self createViews];
+//    
+//    [self createSegButton];
     
     
     // Do any additional setup after loading the view.

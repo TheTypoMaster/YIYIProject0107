@@ -172,7 +172,7 @@
 -(void)tPlatCommentWithUserName:(NSString *)aName WithUid:(NSString *)aUid
 {
 
-    NSString *parent_post = @"1";
+    NSString *parent_post = @"0";
     NSString *content = _input_view.text_input_view.text;
     
     NSString *post = [NSString stringWithFormat:@"authcode=%@&tt_id=%@&parent_post=%@&content=%@",[GMAPI getAuthkey],self.tt_id,parent_post,content];

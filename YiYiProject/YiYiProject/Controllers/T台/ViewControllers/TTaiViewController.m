@@ -42,20 +42,6 @@
     
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateTTai:) name:NOTIFICATION_TTAI_PUBLISE_SUCCESS object:nil];
-    
-    //    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    //    btn.frame = CGRectMake(100, 100, 50, 30);
-    //    [btn setTitle:@"登录" forState:UIControlStateNormal];
-    //    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    //    [btn addTarget:self action:@selector(clickToPush:) forControlEvents:UIControlEventTouchUpInside];
-    //    [self.view addSubview:btn];
-    //
-    //    UIButton *btn2 = [UIButton buttonWithType:UIButtonTypeCustom];
-    //    btn2.frame = CGRectMake(100, 200, 100, 30);
-    //    [btn2 setTitle:@"发布话题" forState:UIControlStateNormal];
-    //    [btn2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    //    [btn2 addTarget:self action:@selector(clickToPublish:) forControlEvents:UIControlEventTouchUpInside];
-    //    [self.view addSubview:btn2];
 }
 
 #pragma mark 事件处理
