@@ -52,9 +52,7 @@
 - (void)initWithViews
 {
     
-    if (self.theGRootScrollType == GROOTPINPAI) {//品牌
-        
-    }
+    
     
     if (self.theGRootScrollType == GROOTSHENQINGDIANPU) {//申请店铺
         //楼层
@@ -72,9 +70,7 @@
             
         }
         self.contentSize = CGSizeMake(self.frame.size.width*[self.myTopScrollView.nameArray count], self.frame.size.height);
-    }
-    
-    if (self.theGRootScrollType == GROOTFLOOR) {//楼层
+    }else if (self.theGRootScrollType == GROOTFLOOR) {//楼层
         for (int i = 0; i<[self.myTopScrollView.nameArray count]; i++) {
             UITableView *tab = [[UITableView alloc]initWithFrame:CGRectMake(0+self.frame.size.width*i, 0, self.frame.size.width, self.frame.size.height) style:UITableViewStylePlain];
             tab.backgroundColor = RGBCOLOR(248, 248, 248);
