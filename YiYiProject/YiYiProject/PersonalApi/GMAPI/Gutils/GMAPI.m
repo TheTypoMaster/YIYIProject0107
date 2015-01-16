@@ -7,6 +7,8 @@
 //
 
 #import "GMAPI.h"
+#import "DataBase.h"
+#import "FBCity.h"
 
 @implementation GMAPI
 
@@ -326,6 +328,121 @@
     hud.removeFromSuperViewOnHide = YES;
     return hud;
 }
+
+
+
+
+//地区相关
++ (NSArray *)getSubCityWithProvinceId:(int)privinceId
+{
+    //打开数据库
+    sqlite3 *db = [DataBase openDB];
+    //创建操作指针
+    sqlite3_stmt *stmt = nil;
+    //执行SQL语句
+    int result = sqlite3_prepare_v2(db, "select * from area where provinceId = ? and isProvince = 0", -1, &stmt, nil);
+    NSLog(@"All subcities result = %d",result);
+    NSMutableArray *subCityArray = [NSMutableArray arrayWithCapacity:1];
+    if (result == SQLITE_OK) {
+        
+        sqlite3_bind_int(stmt, 1, privinceId);
+        
+        while (sqlite3_step(stmt) == SQLITE_ROW) {
+            const unsigned char *cityName = sqlite3_column_text(stmt, 0);
+            int cityId = sqlite3_column_int(stmt, 1);
+            int provinceId = sqlite3_column_int(stmt, 3);
+            
+            FBCity *province = [[FBCity alloc]initSubcityWithName:[NSString stringWithUTF8String:(const char *)cityName] cityId:cityId provinceId:provinceId];
+            [subCityArray addObject:province];
+        }
+    }
+    sqlite3_finalize(stmt);
+    return subCityArray;
+    
+}
+
+
++ (NSArray *)getAllProvince
+{
+    //打开数据库
+    sqlite3 *db = [DataBase openDB];
+    //创建操作指针
+    sqlite3_stmt *stmt = nil;
+    //执行SQL语句
+    int result = sqlite3_prepare_v2(db, "select * from area where isProvince = 1", -1, &stmt, nil);
+    NSLog(@"All subcities result = %d",result);
+    NSMutableArray *subCityArray = [NSMutableArray arrayWithCapacity:1];
+    if (result == SQLITE_OK) {
+        
+        while (sqlite3_step(stmt) == SQLITE_ROW) {
+            const unsigned char *cityName = sqlite3_column_text(stmt, 0);
+            int cityId = sqlite3_column_int(stmt, 1);
+            FBCity *province = [[FBCity alloc]initProvinceWithName:[NSString stringWithUTF8String:(const char *)cityName] provinceId:cityId];
+            [subCityArray addObject:province];
+        }
+    }
+    sqlite3_finalize(stmt);
+    return subCityArray;
+    
+}
+
++ (NSString *)cityNameForId:(int)cityId
+{
+    //打开数据库
+    sqlite3 *db = [DataBase openDB];
+    //创建操作指针
+    sqlite3_stmt *stmt = nil;
+    //执行SQL语句
+    int result = sqlite3_prepare_v2(db, "select * from area where id = ?", -1, &stmt, nil);
+    
+    NSLog(@"All subcities result = %d %d",result,cityId);
+    
+    if (result == SQLITE_OK) {
+        
+        sqlite3_bind_int(stmt, 1, cityId);
+        
+        while (sqlite3_step(stmt) == SQLITE_ROW) {
+            
+            
+            const unsigned char *cityName = sqlite3_column_text(stmt, 0);
+            
+            return [NSString stringWithUTF8String:(const char *)cityName];
+        }
+    }
+    sqlite3_finalize(stmt);
+    return @"";
+}
+
++ (int)cityIdForName:(NSString *)cityName//根据城市名获取id
+{
+    //打开数据库
+    sqlite3 *db = [DataBase openDB];
+    //创建操作指针
+    sqlite3_stmt *stmt = nil;
+    //执行SQL语句
+    int result = sqlite3_prepare_v2(db, "select * from area where name = ?", -1, &stmt, nil);
+    
+    NSLog(@"All subcities result = %d %@",result,cityName);
+    
+    if (result == SQLITE_OK) {
+        
+        sqlite3_bind_text(stmt, 1, [cityName UTF8String], -1, nil);
+        
+        while (sqlite3_step(stmt) == SQLITE_ROW) {
+            
+            
+            int cityId = sqlite3_column_int(stmt, 1);
+            
+            return cityId;
+        }
+    }
+    sqlite3_finalize(stmt);
+    return 0;
+}
+
+
+
+
 
 
 

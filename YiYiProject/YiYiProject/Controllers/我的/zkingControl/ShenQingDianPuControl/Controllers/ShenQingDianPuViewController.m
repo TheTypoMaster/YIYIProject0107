@@ -10,16 +10,32 @@
 #import "GRootScrollView.h"
 #import "GtopScrollView.h"
 
-@interface ShenQingDianPuViewController (){
+@interface ShenQingDianPuViewController ()<UIPickerViewDelegate,UIPickerViewDataSource>
+{
 
     UIView *_indicator;
     
     
     UIScrollView *_jingpingdianView;
     UIScrollView *_shanchangdianView;
-
+    
+    //地区选择
+    UIPickerView *_pickeView;
+    NSArray *_data;//地区数据
+    NSInteger _flagRow;//pickerView地区标志位
+    //地区数据字符串拼接
+    NSString *_str3;
+    NSString *_str1;
+    NSString *_str2;
+    BOOL _isChooseArea;//是否修改了地区
 
 }
+//地区相关
+@property(nonatomic,strong)UIView *backPickView;//地区选择pickerView后面的背景view
+@property(nonatomic,strong)NSString *province;//省
+@property(nonatomic,strong)NSString *city;//城市
+@property(nonatomic,assign)NSInteger provinceIn;//省份对应id
+@property(nonatomic,assign)NSInteger cityIn;//市区对应id
 
 @end
 
@@ -55,9 +71,16 @@
     self.shuruTextFieldArray = [NSMutableArray arrayWithCapacity:1];
     self.chooseLabelArray = [NSMutableArray arrayWithCapacity:1];
     
+    //创建按钮view
+    [self createSegButton];
+    
+    //创建内容view
     [self createViews];
     
-    [self createSegButton];
+    //创建地区选择pickerview
+    [self createAreaPickView];
+    
+    
     
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(gShou) name:UIKeyboardWillHideNotification object:nil];
@@ -66,6 +89,130 @@
     
     // Do any additional setup after loading the view.
 }
+
+
+
+
+-(void)createAreaPickView{
+    //地区pickview
+    _pickeView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, 20, DEVICE_WIDTH, 216)];
+    _pickeView.delegate = self;
+    _pickeView.dataSource = self;
+    _isChooseArea = NO;
+    
+    
+    //确定按钮
+    UIButton *quedingBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    quedingBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    [quedingBtn setTitle:@"确定" forState:UIControlStateNormal];
+    [quedingBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    quedingBtn.frame = CGRectMake(270, 0, 35, 30);
+    [quedingBtn addTarget:self action:@selector(areaHidden) forControlEvents:UIControlEventTouchUpInside];
+    //上下横线
+    UIView *shangxian = [[UIView alloc]initWithFrame:CGRectMake(270, 5, 35, 0.5)];
+    shangxian.backgroundColor = [UIColor blackColor];
+    UIView *xiaxian = [[UIView alloc]initWithFrame:CGRectMake(270, 25, 35, 0.5)];
+    xiaxian.backgroundColor = [UIColor blackColor];
+
+    //地区选择
+    self.backPickView = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT, DEVICE_WIDTH, 216+30)];
+    self.backPickView .backgroundColor = [UIColor whiteColor];
+    [self.backPickView addSubview:shangxian];
+    [self.backPickView addSubview:xiaxian];
+    [self.backPickView addSubview:quedingBtn];
+    [self.backPickView addSubview:_pickeView];
+    
+    
+    NSString *path = [[NSBundle mainBundle]pathForResource:@"area" ofType:@"plist"];
+    _data = [NSArray arrayWithContentsOfFile:path];
+    
+    [self.view addSubview:self.backPickView];
+    
+    
+}
+
+#pragma mark - 地区选择
+
+//地区出现
+-(void)areaShow{
+    NSLog(@"_backPickView");
+    __weak typeof (self)bself = self;
+    [UIView animateWithDuration:0.3 animations:^{
+        bself.backPickView.frame = CGRectMake(0,DEVICE_HEIGHT-216-30, DEVICE_WIDTH, 216);
+    }];
+    
+    
+}
+
+-(void)areaHidden{//地区隐藏
+    __weak typeof (self)bself = self;
+    [UIView animateWithDuration:0.3 animations:^{
+        bself.backPickView.frame = CGRectMake(0, DEVICE_HEIGHT, DEVICE_WIDTH, iPhone5?444:360);
+        
+    }];
+    
+}
+
+#pragma mark - UIPickerViewDataSource
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+    return 2;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+    
+    if (component == 0) {
+        return _data.count;
+    } else if (component == 1) {
+        NSArray * cities = _data[_flagRow][@"Cities"];
+        return cities.count;
+    }
+    return 0;
+    
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
+    
+    if (component == 0) {
+            if ([_data[row][@"State"] isEqualToString:@"省份"]) {
+                self.province = @"";
+            }else{
+                self.province = _data[row][@"State"];
+            }
+        
+        NSString *provinceStr = [NSString stringWithFormat:@"%@",_data[row][@"State"]];
+//        //字符转id
+        self.provinceIn = [GMAPI cityIdForName:provinceStr];//上传
+        return provinceStr;
+        
+        
+    } else if (component == 1) {
+        NSArray * cities = _data[_flagRow][@"Cities"];
+        if ([cities[row][@"city"] isEqualToString:@"市区县"]) {
+            self.city = @"";
+        }else{
+            self.city = cities[row][@"city"];
+        }
+        NSString *cityStr = [NSString stringWithFormat:@"%@",cities[row][@"city"]];
+//        //字符转id
+        self.cityIn = [GMAPI cityIdForName:cityStr];//上传
+        return cityStr;
+    }
+    return 0;
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
+    
+    if (component == 0) {
+        _flagRow = row;
+        _isChooseArea = YES;
+    }else if (component == 1){
+        _isChooseArea = YES;
+    }
+    
+    [pickerView reloadAllComponents];
+}
+
 
 
 
@@ -98,6 +245,12 @@
 
 - (void)clickToSwap:(UIButton *)sender
 {
+    
+    
+    
+    [self gShou];
+    
+    
     UIButton *btn1 = (UIButton *)[self.view viewWithTag:100];
     UIButton *btn2 = (UIButton *)[self.view viewWithTag:101];
     if (sender.tag == 100) {
@@ -146,18 +299,24 @@
 }
 
 -(void)createShangchangdianView{
-    UIView *witheBgView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 300)];
+    UIView *witheBgView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 350)];
     
     witheBgView.backgroundColor=[UIColor whiteColor];
     [_shanchangdianView addSubview:witheBgView];
     
-    NSArray *titleArr=@[@"选择商场",@"选择楼层",@"选择品牌",@"门牌号",@"电话",@"验证码"];
+    NSArray *titleArr=@[@"选择地区",@"选择商场",@"选择楼层",@"选择品牌",@"门牌号",@"电话",@"验证码"];
     
-    for (int i=0; i<6; i++) {
+    for (int i=0; i<7; i++) {
         
         
-        UILabel *title_Label=[LTools createLabelFrame:CGRectMake(17, i*50, DEVICE_WIDTH-17, 50) title:titleArr[i] font:17 align:NSTextAlignmentLeft textColor:RGBCOLOR(95, 95, 95)];
+        UILabel *title_Label=[LTools createLabelFrame:CGRectMake(17, i*50, DEVICE_WIDTH-17-17, 50) title:titleArr[i] font:17 align:NSTextAlignmentLeft textColor:RGBCOLOR(95, 95, 95)];
         [witheBgView addSubview:title_Label];
+        title_Label.userInteractionEnabled = YES;
+        title_Label.tag = 1000+i;
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapClicked:)];
+        [title_Label addGestureRecognizer:tap];
+        
         
         [self.chooseLabelArray addObject:title_Label];
         
@@ -166,13 +325,14 @@
         [witheBgView addSubview:lineView];
         
         
+        
 //        UITextField *shuRuTextfield=[[UITextField alloc]initWithFrame:CGRectMake(100, i*50, DEVICE_WIDTH, 50)];
 //        shuRuTextfield.tag=200+i;
 //        [witheBgView addSubview:shuRuTextfield];
         
     }
     
-    UIButton *commitButton=[LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(20+DEVICE_WIDTH, 390, DEVICE_WIDTH-40, 44) normalTitle:@"提交" image:nil backgroudImage:nil superView:witheBgView target:self action:@selector(tijiao:)];
+    UIButton *commitButton=[LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(20, 390, DEVICE_WIDTH-40, 44) normalTitle:@"提交" image:nil backgroudImage:nil superView:witheBgView target:self action:@selector(tijiao:)];
     
     commitButton.tag=300;
     commitButton.backgroundColor=RGBCOLOR(208, 40, 73);
@@ -183,6 +343,16 @@
     
     [_shanchangdianView addSubview:commitButton];
 
+}
+
+//商场店选择手势
+-(void)tapClicked:(UIGestureRecognizer *)sender{
+    NSInteger tapIdTag = sender.view.tag;
+    NSLog(@"sender.tag = %ld",(long)tapIdTag);
+    
+    if (tapIdTag == 1000) {//地区选择
+        [self areaShow];
+    }
 }
 
 

@@ -413,6 +413,10 @@
 		E3601E7B1A61733C00CC41FE /* gimv1_back@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3601E7A1A61733C00CC41FE /* gimv1_back@3x.png */; };
 		E3601E801A61A27900CC41FE /* GcustomStoreTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3601E7F1A61A27900CC41FE /* GcustomStoreTableViewCell.m */; };
 		E3601E821A61A75700CC41FE /* gcustomstore@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3601E811A61A75700CC41FE /* gcustomstore@3x.png */; };
+		E36BFC841A693974009DAF81 /* DataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = E36BFC831A693974009DAF81 /* DataBase.m */; };
+		E36BFC871A6939FC009DAF81 /* FBCity.m in Sources */ = {isa = PBXBuildFile; fileRef = E36BFC861A6939FC009DAF81 /* FBCity.m */; };
+		E36BFC8E1A69465B009DAF81 /* area 21-14-49-589.plist in Resources */ = {isa = PBXBuildFile; fileRef = E36BFC8C1A69465B009DAF81 /* area 21-14-49-589.plist */; };
+		E36BFC8F1A69465B009DAF81 /* garea.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = E36BFC8D1A69465B009DAF81 /* garea.sqlite */; };
 		E3996EBA1A5E1DBA00673147 /* GEditPersonInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E2F1A5E1DBA00673147 /* GEditPersonInfoViewController.m */; };
 		E3996EBB1A5E1DBA00673147 /* GLeadBuyMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E311A5E1DBA00673147 /* GLeadBuyMapViewController.m */; };
 		E3996EBC1A5E1DBA00673147 /* GMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E331A5E1DBA00673147 /* GMapViewController.m */; };
@@ -1062,6 +1066,12 @@
 		E3601E7E1A61A27900CC41FE /* GcustomStoreTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GcustomStoreTableViewCell.h; sourceTree = "<group>"; };
 		E3601E7F1A61A27900CC41FE /* GcustomStoreTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GcustomStoreTableViewCell.m; sourceTree = "<group>"; };
 		E3601E811A61A75700CC41FE /* gcustomstore@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gcustomstore@3x.png"; sourceTree = "<group>"; };
+		E36BFC821A693974009DAF81 /* DataBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataBase.h; sourceTree = "<group>"; };
+		E36BFC831A693974009DAF81 /* DataBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataBase.m; sourceTree = "<group>"; };
+		E36BFC851A6939FC009DAF81 /* FBCity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBCity.h; sourceTree = "<group>"; };
+		E36BFC861A6939FC009DAF81 /* FBCity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBCity.m; sourceTree = "<group>"; };
+		E36BFC8C1A69465B009DAF81 /* area 21-14-49-589.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "area 21-14-49-589.plist"; sourceTree = "<group>"; };
+		E36BFC8D1A69465B009DAF81 /* garea.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = garea.sqlite; sourceTree = "<group>"; };
 		E3996E2E1A5E1DBA00673147 /* GEditPersonInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GEditPersonInfoViewController.h; sourceTree = "<group>"; };
 		E3996E2F1A5E1DBA00673147 /* GEditPersonInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GEditPersonInfoViewController.m; sourceTree = "<group>"; };
 		E3996E301A5E1DBA00673147 /* GLeadBuyMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLeadBuyMapViewController.h; sourceTree = "<group>"; };
@@ -2682,6 +2692,8 @@
 		E3996E3E1A5E1DBA00673147 /* Gmodels */ = {
 			isa = PBXGroup;
 			children = (
+				E36BFC8C1A69465B009DAF81 /* area 21-14-49-589.plist */,
+				E36BFC8D1A69465B009DAF81 /* garea.sqlite */,
 				E3601E811A61A75700CC41FE /* gcustomstore@3x.png */,
 				E3601E7A1A61733C00CC41FE /* gimv1_back@3x.png */,
 				E3601E701A61733300CC41FE /* gdownname@3x.png */,
@@ -2702,6 +2714,10 @@
 		E3996E491A5E1DBA00673147 /* Gutils */ = {
 			isa = PBXGroup;
 			children = (
+				E36BFC851A6939FC009DAF81 /* FBCity.h */,
+				E36BFC861A6939FC009DAF81 /* FBCity.m */,
+				E36BFC821A693974009DAF81 /* DataBase.h */,
+				E36BFC831A693974009DAF81 /* DataBase.m */,
 				E3996E4A1A5E1DBA00673147 /* BaiduMap_IOSSDK_v2.5.0_Lib */,
 				E3996E8B1A5E1DBA00673147 /* CWSegmentControl */,
 				E3996E911A5E1DBA00673147 /* GMAPI.h */,
@@ -3138,6 +3154,7 @@
 				E3601E7B1A61733C00CC41FE /* gimv1_back@3x.png in Resources */,
 				137B086A1A4EAC9900DE7DCC /* xiaoxi_down@2x.png in Resources */,
 				137B07CE1A4E6FDF00DE7DCC /* fenxiangb@3x.png in Resources */,
+				E36BFC8E1A69465B009DAF81 /* area 21-14-49-589.plist in Resources */,
 				E304794D1A6112E400709985 /* guserbannerdefaul@2x.png in Resources */,
 				13963F511A4FE3A5007BE68B /* fabu@3x.png in Resources */,
 				137B08631A4EAC9900DE7DCC /* home_up@2x.png in Resources */,
@@ -3200,6 +3217,7 @@
 				EF932A151A6236AD00A8BD18 /* placeholder.png in Resources */,
 				137B08081A4E6FDF00DE7DCC /* qiu_down@3x.png in Resources */,
 				13684A791A37583E00A508FB /* LaunchScreen.xib in Resources */,
+				E36BFC8F1A69465B009DAF81 /* garea.sqlite in Resources */,
 				13B6904D1A564BF6007FE152 /* t_dapei@2x.png in Resources */,
 				19F7B4391A67FFA600087BCB /* item_ok@2x.png in Resources */,
 				137B07DB1A4E6FDF00DE7DCC /* stianjia@3x.png in Resources */,
@@ -3493,6 +3511,7 @@
 				13A389871A387A8800ABBACB /* UIView+Frame.m in Sources */,
 				13963F471A4FC54D007BE68B /* UIView+Frame.m in Sources */,
 				E3996EC11A5E1DBA00673147 /* GViewController.mm in Sources */,
+				E36BFC841A693974009DAF81 /* DataBase.m in Sources */,
 				E3996ED81A5E1DBA00673147 /* UILabel+GautoMatchedText.m in Sources */,
 				564264661A5EB2550069AEBD /* CustomInputView.m in Sources */,
 				E3996EE21A5E1DBA00673147 /* GLeadbuyTableViewCell.m in Sources */,
@@ -3518,6 +3537,7 @@
 				E3996EE01A5E1DBA00673147 /* GClothWaveCustomView.m in Sources */,
 				E3996EC41A5E1DBA00673147 /* Gmodel.m in Sources */,
 				DF5E89B61A5E7E6C00535EBA /* MyMatchViewController.m in Sources */,
+				E36BFC871A6939FC009DAF81 /* FBCity.m in Sources */,
 				13CD36401A3C69860068C12A /* TMQuiltView.m in Sources */,
 				13CD36411A3C69860068C12A /* TMQuiltViewCell.m in Sources */,
 				13EA3D1E1A3B2682002AF7D6 /* HomeBuyController.m in Sources */,
@@ -3674,7 +3694,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "0c0fcf41-02c9-4bbc-b06a-e103275d3718";
 				PROVISIONING_PROFILE = "ca1c9dd0-a046-42fe-909b-5b12ec26956e";
 				SDKROOT = iphoneos;
 			};
@@ -3711,7 +3730,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "0c0fcf41-02c9-4bbc-b06a-e103275d3718";
 				PROVISIONING_PROFILE = "ca1c9dd0-a046-42fe-909b-5b12ec26956e";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -3747,7 +3765,6 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0c0fcf41-02c9-4bbc-b06a-e103275d3718";
 				PROVISIONING_PROFILE = "ca1c9dd0-a046-42fe-909b-5b12ec26956e";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
@@ -3782,7 +3799,6 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0c0fcf41-02c9-4bbc-b06a-e103275d3718";
 				PROVISIONING_PROFILE = "ca1c9dd0-a046-42fe-909b-5b12ec26956e";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
