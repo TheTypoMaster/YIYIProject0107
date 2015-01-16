@@ -89,19 +89,24 @@
 
 - (TMQuiltViewCell *)quiltView:(TMQuiltView *)quiltView cellAtIndexPath:(NSIndexPath *)indexPath
 {
-    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[quiltView dequeueReusableCellWithReuseIdentifier:@"PhotoCell"];
+    TMQuiltViewCell *cell = (TMQuiltViewCell *)[quiltView dequeueReusableCellWithReuseIdentifier:@"PhotoCell"];
     if (!cell) {
-        cell = [[TMPhotoQuiltViewCell alloc] initWithReuseIdentifier:@"PhotoCell"];
-//        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
-//        imageView.tag = 1001;
-//        imageView.backgroundColor = RGBCOLOR(180, 180, 180);
-//        [cell addSubview:imageView];
-        //cell.backgroundColor = [UIColor redColor];
+        cell = [[TMQuiltViewCell alloc] initWithReuseIdentifier:@"PhotoCell"];
+//        [cell.titleView removeFromSuperview];
+//        [cell.infoView removeFromSuperview];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+        imageView.tag = 1001;
+        imageView.layer.masksToBounds = YES;
+        imageView.backgroundColor = RGBCOLOR(180, 180, 180);
+        [cell addSubview:imageView];
+        cell.backgroundColor = [UIColor whiteColor];
         
     }
-//    NSLog(@"cell = %@",[NSValue valueWithCGRect:cell.bounds]);
-//    UIImageView *imageView = (UIImageView *)[cell viewWithTag:1001];
-    [cell.photoView sd_setImageWithURL:[NSURL URLWithString:[[_dataSourceArray objectAtIndex:indexPath.row] objectForKey:@"image_url"]] placeholderImage:[UIImage imageNamed:@"dapei_jiantou"]];
+    NSLog(@"cell = %@",[NSValue valueWithCGRect:cell.bounds]);
+    UIImageView *imageView = (UIImageView *)[cell viewWithTag:1001];
+    imageView.frame = cell.bounds;
+    //[imageView sd_setImageWithURL:[NSURL URLWithString:[[_dataSourceArray objectAtIndex:indexPath.row] objectForKey:@"image_url"]]];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:[[_dataSourceArray objectAtIndex:indexPath.row] objectForKey:@"image_url"]] placeholderImage:nil];
     return cell;
 }
 

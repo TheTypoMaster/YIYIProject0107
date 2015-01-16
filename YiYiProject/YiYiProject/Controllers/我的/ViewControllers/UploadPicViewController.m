@@ -44,7 +44,7 @@
 }
 -(void)createRightBarItem
 {
-    UIButton *rightBarItem = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(0, 0, 111/3.0, 111/3.0) normalTitle:nil image:nil backgroudImage:[UIImage imageNamed:@"t_paizhao"] superView:nil target:self action:@selector(rightBtnClick:)];
+    UIButton *rightBarItem = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(0, 0, 111/3.0, 111/3.0) normalTitle:@"完成" image:nil backgroudImage:nil superView:nil target:self action:@selector(rightBtnClick:)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBarItem];
     
 }
@@ -273,7 +273,12 @@
 //上传
 -(void)upLoadImage
 {
-
+    NSString *str = [chooseDic objectForKey:@"sort_id"];
+    if(str.length == 0)
+    {
+        return;
+    }
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     //设置接收响应类型为标准HTTP类型(默认为响应类型为JSON)
     AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -293,15 +298,22 @@
                                    }
                                    success:^(AFHTTPRequestOperation *operation, id responseObject)
                                    {
+                                       [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                       NSLog(@"success %@",operation.responseString);
+                                       NSError * myerr;
+                                       NSDictionary *mydic=[NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:0 error:&myerr];
+                                       NSLog(@"mydic == %@ err0 = %@",mydic,myerr);
+                                       [LTools showMBProgressWithText:mydic[@"msg"] addToView:self.view];
+                                       int erroCode = [mydic[@"errorcode"] intValue]; 
+                                       if (erroCode == 0) {
+                                           NSString *str = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+                                           NSLog(@"....str = %@",str);
+                                       }
                                        
-                                       
-                                       NSString *str = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-                                    
-                                       NSLog(@"....str = %@",str);
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        
-                                       
+                                        [MBProgressHUD hideHUDForView:self.view animated:YES];
                         
                                    }];
     //设置上传操作的进度
