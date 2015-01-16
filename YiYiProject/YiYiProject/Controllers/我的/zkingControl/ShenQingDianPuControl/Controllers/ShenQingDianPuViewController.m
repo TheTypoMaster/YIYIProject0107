@@ -12,10 +12,11 @@
 
 @interface ShenQingDianPuViewController (){
 
-    UIView *indicator;
+    UIView *_indicator;
     
-    UIScrollView *bgScroll;
-
+    
+    UIScrollView *_jingpingdianView;
+    UIScrollView *_shanchangdianView;
 
 
 }
@@ -50,36 +51,17 @@
     
     self.view.backgroundColor=RGBCOLOR(239, 239, 239);
     
+    //分配内存
+    self.shuruTextFieldArray = [NSMutableArray arrayWithCapacity:1];
+    self.chooseLabelArray = [NSMutableArray arrayWithCapacity:1];
     
-    //顶部标签
-    GtopScrollView *top = [[GtopScrollView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 48)];
-    top.backgroundColor = RGBCOLOR(239, 239, 239);
-    top.nameArray = @[@"精品店",@"商场店"];
-    top.theTopType = GTOPSHENQINGDIANPU;
-    [top initWithNameButtons];
-    top.scrollEnabled = NO;
-    [self.view addSubview:top];
+    [self createViews];
+    
+    [self createSegButton];
     
     
-    //下部标签
-    GRootScrollView *rootScrollView = [[GRootScrollView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(top.frame)+10, DEVICE_WIDTH, DEVICE_HEIGHT-64-48-10)];
-    rootScrollView.backgroundColor = RGBCOLOR(239, 239, 239);
-    rootScrollView.viewNameArray = top.nameArray;
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(gShou) name:UIKeyboardWillHideNotification object:nil];
     
-    rootScrollView.theGRootScrollType = GROOTSHENQINGDIANPU;
-    [self.view addSubview:rootScrollView];
-    
-    
-    top.myRootScrollView = rootScrollView;
-    rootScrollView.myTopScrollView = top;
-    
-    [rootScrollView initWithViews];
-    
-    
-    
-//    [self createViews];
-//    
-//    [self createSegButton];
     
     
     // Do any additional setup after loading the view.
@@ -108,9 +90,9 @@
         [btn addTarget:self action:@selector(clickToSwap:) forControlEvents:UIControlEventTouchUpInside];
     }
     
-    indicator = [[UIView alloc]initWithFrame:CGRectMake(0, 43, DEVICE_WIDTH/2.f, 2)];
-    indicator.backgroundColor = [UIColor colorWithHexString:@"ea5670"];
-    [segView addSubview:indicator];
+    _indicator = [[UIView alloc]initWithFrame:CGRectMake(0, 43, DEVICE_WIDTH/2.f, 2)];
+    _indicator.backgroundColor = [UIColor colorWithHexString:@"ea5670"];
+    [segView addSubview:_indicator];
 }
 
 
@@ -121,14 +103,16 @@
     if (sender.tag == 100) {
         btn1.selected = YES;
         btn2.selected = NO;
-        indicator.left = 0;
-        bgScroll.contentOffset = CGPointMake(0, 0);
+        _indicator.left = 0;
+        _jingpingdianView.hidden = NO;
+        _shanchangdianView.hidden = YES;
     }else
     {
         btn1.selected = NO;
         btn2.selected = YES;
-        indicator.left = DEVICE_WIDTH/2.f;
-        bgScroll.contentOffset = CGPointMake(DEVICE_WIDTH, 0);
+        _indicator.left = DEVICE_WIDTH/2.f;
+        _jingpingdianView.hidden = YES;
+        _shanchangdianView.hidden = NO;
     }
 }
 
@@ -138,41 +122,53 @@
 
 - (void)createViews
 {
-    bgScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 58, DEVICE_WIDTH, self.view.height - 58)];
-    bgScroll.scrollEnabled=NO;
-    [self.view addSubview:bgScroll];
-    bgScroll.contentSize = CGSizeMake(DEVICE_WIDTH * 2, bgScroll.height);
+    
+    
+    
+    //精品店
+    _jingpingdianView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 58, DEVICE_WIDTH, DEVICE_HEIGHT - 58)];
+    _jingpingdianView.contentSize = CGSizeMake(DEVICE_WIDTH, DEVICE_HEIGHT+58+58);
+    _jingpingdianView.scrollEnabled = NO;
+    [self.view addSubview:_jingpingdianView];
+    
+    //商场店
+    _shanchangdianView = [[UIScrollView alloc]initWithFrame:_jingpingdianView.frame];
+    _shanchangdianView.hidden = YES;
+    [self.view addSubview:_shanchangdianView];
     
     //精品
     [self createJingPinDianView];
     
-    //品牌
+    //商场店
     [self createShangchangdianView];
+    
+    
 }
 
 -(void)createShangchangdianView{
-    UIView *witheBgView=[[UIView alloc]initWithFrame:CGRectMake(DEVICE_WIDTH, 0, DEVICE_WIDTH, 300)];
+    UIView *witheBgView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 300)];
     
     witheBgView.backgroundColor=[UIColor whiteColor];
-    [bgScroll addSubview:witheBgView];
+    [_shanchangdianView addSubview:witheBgView];
     
     NSArray *titleArr=@[@"选择商场",@"选择楼层",@"选择品牌",@"门牌号",@"电话",@"验证码"];
     
     for (int i=0; i<6; i++) {
         
         
-        UILabel *title_Label=[LTools createLabelFrame:CGRectMake(17, i*50, DEVICE_WIDTH, 50) title:titleArr[i] font:17 align:NSTextAlignmentLeft textColor:RGBCOLOR(95, 95, 95)];
+        UILabel *title_Label=[LTools createLabelFrame:CGRectMake(17, i*50, DEVICE_WIDTH-17, 50) title:titleArr[i] font:17 align:NSTextAlignmentLeft textColor:RGBCOLOR(95, 95, 95)];
         [witheBgView addSubview:title_Label];
         
+        [self.chooseLabelArray addObject:title_Label];
         
         UIView *lineView=[[UIView alloc]initWithFrame:CGRectMake(0, 50*i, DEVICE_WIDTH, 0.5)];
         lineView.backgroundColor=RGBCOLOR(229, 229, 229);
         [witheBgView addSubview:lineView];
         
         
-        UITextField *shuRuTextfield=[[UITextField alloc]initWithFrame:CGRectMake(100, i*50, DEVICE_WIDTH, 50)];
-        shuRuTextfield.tag=200+i;
-        [witheBgView addSubview:shuRuTextfield];
+//        UITextField *shuRuTextfield=[[UITextField alloc]initWithFrame:CGRectMake(100, i*50, DEVICE_WIDTH, 50)];
+//        shuRuTextfield.tag=200+i;
+//        [witheBgView addSubview:shuRuTextfield];
         
     }
     
@@ -185,20 +181,26 @@
     [l setMasksToBounds:YES];
     [l setCornerRadius:2.0f];
     
-    [bgScroll addSubview:commitButton];
+    [_shanchangdianView addSubview:commitButton];
 
 }
 
 
 -(void)createJingPinDianView{
     
+    //收键盘
+    //收键盘
+    UIControl *backControl = [[UIControl alloc]initWithFrame:_jingpingdianView.bounds];
+    [backControl addTarget:self action:@selector(gShou) forControlEvents:UIControlEventTouchDown];
+    [_jingpingdianView addSubview:backControl];
     
     
-    
+    //背景色
     UIView *witheBgView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 200)];
-    
     witheBgView.backgroundColor=[UIColor whiteColor];
-    [bgScroll addSubview:witheBgView];
+    witheBgView.userInteractionEnabled = NO;
+    [_jingpingdianView addSubview:witheBgView];
+    
     
     NSArray *titleArr=@[@"名称",@"地址",@"电话",@"验证码"];
 
@@ -206,23 +208,25 @@
         
         
         
-        UILabel *title_Label=[LTools createLabelFrame:CGRectMake(17, i*50, DEVICE_WIDTH, 50) title:titleArr[i] font:17 align:NSTextAlignmentLeft textColor:RGBCOLOR(95, 95, 95)];
-        [witheBgView addSubview:title_Label];
+        UILabel *title_Label=[LTools createLabelFrame:CGRectMake(17, i*50, 65, 50) title:titleArr[i] font:17 align:NSTextAlignmentLeft textColor:RGBCOLOR(95, 95, 95)];
+        [_jingpingdianView addSubview:title_Label];
         
         UIView *lineView=[[UIView alloc]initWithFrame:CGRectMake(0, 50*i, DEVICE_WIDTH, 0.5)];
         lineView.backgroundColor=RGBCOLOR(229, 229, 229);
-        [witheBgView addSubview:lineView];
+        [_jingpingdianView addSubview:lineView];
         
-        UITextField *shuRuTextfield=[[UITextField alloc]initWithFrame:CGRectMake(85, i*50, DEVICE_WIDTH, 50)];
+        UITextField *shuRuTextfield=[[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(title_Label.frame), i*50, DEVICE_WIDTH-17-title_Label.frame.size.width-17, 50)];
         shuRuTextfield.tag=100+i;
-        [witheBgView addSubview:shuRuTextfield];
+        [self.shuruTextFieldArray addObject:shuRuTextfield];
+        shuRuTextfield.delegate = self;
+        [_jingpingdianView addSubview:shuRuTextfield];
         
         
         
         
     }
     
-    UIButton *commitButton=[LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(20, 290, DEVICE_WIDTH-40, 44) normalTitle:@"提交" image:nil backgroudImage:nil superView:witheBgView target:self action:@selector(tijiao:)];
+    UIButton *commitButton=[LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(20, 290, DEVICE_WIDTH-40, 44) normalTitle:@"提交" image:nil backgroudImage:nil superView:_jingpingdianView target:self action:@selector(tijiao:)];
     commitButton.tag=400;
     commitButton.backgroundColor=RGBCOLOR(208, 40, 73);
     
@@ -230,7 +234,7 @@
     [l setMasksToBounds:YES];
     [l setCornerRadius:2.0f];
     
-    [bgScroll addSubview:commitButton];
+    [_jingpingdianView addSubview:commitButton];
 
 }
 
@@ -253,7 +257,7 @@
     
     if (sender.tag==400)//申请普通精品小店
     {
-        
+        [self gShou];
         
         NSString *authkey = [GMAPI getAuthkey];
         
@@ -292,14 +296,33 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)textFieldDidBeginEditing:(UITextField *)textField;{
+    NSLog(@"textField.tag = %ld",(long)textField.tag);
+    
+    _jingpingdianView.scrollEnabled = YES;
+    if (textField.tag == 102||textField.tag == 103) {//电话 验证码
+        if (_jingpingdianView.contentOffset.y>=58) {
+            
+        }else{
+            _jingpingdianView.contentOffset = CGPointMake(0, 58);
+        }
+        
+    }
+    
 }
-*/
+
+
+
+
+-(void)gShou{
+    NSLog(@"收键盘了");
+    if (_jingpingdianView.contentOffset.y>=58) {
+        _jingpingdianView.contentOffset = CGPointMake(0, 0);
+    }
+    for (UITextField *tf in self.shuruTextFieldArray) {
+        [tf resignFirstResponder];
+    }
+    _jingpingdianView.scrollEnabled = NO;
+}
 
 @end

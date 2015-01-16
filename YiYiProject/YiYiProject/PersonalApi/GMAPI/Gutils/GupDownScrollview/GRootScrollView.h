@@ -11,14 +11,9 @@
 
 
 typedef void(^pinpaiClick)(NSString *pinpaiId,NSString *pinpaiName);//品牌楼层block
-typedef void(^shenqingDianpuBlock)(NSIndexPath *indexPath,NSInteger tableViewTag);//申请店铺block
 
-typedef enum{
-    GROOTTYPENULL = 0,
-    GROOTFLOOR ,
-    GROOTPINPAI,
-    GROOTSHENQINGDIANPU,
-}GROOTTYPE;
+
+
 
 @interface GRootScrollView : UIScrollView<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
 
@@ -32,14 +27,19 @@ typedef enum{
 
 @property(nonatomic,strong)NSMutableArray *tabelViewArray;//所有的tableview数组
 @property(nonatomic,strong)NSMutableArray *dataArray;//数据源 二维数组
-@property(nonatomic,assign)GROOTTYPE theGRootScrollType;
+
+
 @property(nonatomic,copy)pinpaiClick thePinpaiBlock;
-@property(nonatomic,copy)shenqingDianpuBlock theShenqingDianpuBlock;
+
+
+//申请店铺
+@property(nonatomic,strong)NSMutableArray *contentTfArray;
+@property(nonatomic,strong)NSMutableArray *scrollViewArray;//所有的scrollview数组
 
 - (void)initWithViews;
 
 -(void)setThePinpaiBlock:(pinpaiClick)thePinpaiBlock;
--(void)setTheShenqingDianpuBlock:(shenqingDianpuBlock)theShenqingDianpuBlock;
+
 
 -(void)GreloadData;
 

@@ -127,9 +127,7 @@
 //点击顶部条滚动标签
 - (void)selectNameButton:(UIButton *)sender
 {
-    if (self.theTopType != GTOPSHENQINGDIANPU) {
-        [self adjustScrollViewContentX:sender];
-    }
+    [self adjustScrollViewContentX:sender];
     
     
     //如果更换按钮
