@@ -304,7 +304,6 @@
 		19D0C0D21A4EDA6D00BEC10D /* MyYiChuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D0C0D11A4EDA6D00BEC10D /* MyYiChuViewController.m */; };
 		19D5E6B21A4FE39B008401E0 /* YiChuListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D5E6B11A4FE39B008401E0 /* YiChuListModel.m */; };
 		19D5E6B51A4FE8E1008401E0 /* YichuListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D5E6B41A4FE8E1008401E0 /* YichuListTableViewCell.m */; };
-		19F7B40E1A67F19D00087BCB /* libiOS_IMKit_v1_2_7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F7B40D1A67F19D00087BCB /* libiOS_IMKit_v1_2_7.a */; };
 		19F7B4331A67FFA600087BCB /* UMEGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 19F7B4121A67FFA600087BCB /* UMEGORefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		19F7B4341A67FFA600087BCB /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 19F7B4141A67FFA600087BCB /* background@2x.png */; };
 		19F7B4351A67FFA600087BCB /* icon_rightArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 19F7B4151A67FFA600087BCB /* icon_rightArrow@2x.png */; };
@@ -392,6 +391,7 @@
 		DF5E89B01A5E676E00535EBA /* ChooseClothesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5E89AF1A5E676E00535EBA /* ChooseClothesViewController.m */; };
 		DF5E89B31A5E7B0D00535EBA /* ChooseImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5E89B21A5E7B0D00535EBA /* ChooseImageViewController.m */; };
 		DF5E89B61A5E7E6C00535EBA /* MyMatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5E89B51A5E7E6C00535EBA /* MyMatchViewController.m */; };
+		DF626D651A6964E200093568 /* TMPhotoViewQuiltViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DF626D641A6964E200093568 /* TMPhotoViewQuiltViewCell.m */; };
 		DF6855821A592181004D924F /* ZYQAssetPicker.Bundle in Resources */ = {isa = PBXBuildFile; fileRef = DF68557F1A592181004D924F /* ZYQAssetPicker.Bundle */; };
 		DF6855831A592181004D924F /* ZYQAssetPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6855811A592181004D924F /* ZYQAssetPickerController.m */; };
 		DF6855861A592CD2004D924F /* UploadPicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6855851A592CD2004D924F /* UploadPicViewController.m */; };
@@ -399,13 +399,7 @@
 		DF7467941A57FB0400F0AEC8 /* my_sc_guanbi@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF7467921A57FB0400F0AEC8 /* my_sc_guanbi@3x.png */; };
 		DFC7812A1A6159FD00776C62 /* MyMatchDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC781291A6159FD00776C62 /* MyMatchDetailViewController.m */; };
 		DFC7812D1A615FF700776C62 /* MyMatchDivisionDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC7812C1A615FF700776C62 /* MyMatchDivisionDetailViewController.m */; };
-
-
-
 		DFC7812F1A616D3100776C62 /* libiOS_IMKit_v1_2_7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC7812E1A616D3100776C62 /* libiOS_IMKit_v1_2_7.a */; };
-
-
-
 		E30479471A6109B800709985 /* ParallaxHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = E30479441A6109B800709985 /* ParallaxHeaderView.m */; };
 		E30479481A6109B800709985 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = E30479461A6109B800709985 /* UIImage+ImageEffects.m */; };
 		E304794B1A6109DE00709985 /* GStorePinpaiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E304794A1A6109DE00709985 /* GStorePinpaiViewController.m */; };
@@ -916,7 +910,6 @@
 		19D5E6B11A4FE39B008401E0 /* YiChuListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YiChuListModel.m; sourceTree = "<group>"; };
 		19D5E6B31A4FE8E1008401E0 /* YichuListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YichuListTableViewCell.h; sourceTree = "<group>"; };
 		19D5E6B41A4FE8E1008401E0 /* YichuListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YichuListTableViewCell.m; sourceTree = "<group>"; };
-		19F7B40D1A67F19D00087BCB /* libiOS_IMKit_v1_2_7.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libiOS_IMKit_v1_2_7.a; sourceTree = "<group>"; };
 		19F7B4111A67FFA600087BCB /* UMEGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMEGORefreshTableHeaderView.h; sourceTree = "<group>"; };
 		19F7B4121A67FFA600087BCB /* UMEGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMEGORefreshTableHeaderView.m; sourceTree = "<group>"; };
 		19F7B4141A67FFA600087BCB /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background@2x.png"; sourceTree = "<group>"; };
@@ -1042,6 +1035,8 @@
 		DF5E89B21A5E7B0D00535EBA /* ChooseImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseImageViewController.m; sourceTree = "<group>"; };
 		DF5E89B41A5E7E6C00535EBA /* MyMatchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyMatchViewController.h; sourceTree = "<group>"; };
 		DF5E89B51A5E7E6C00535EBA /* MyMatchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyMatchViewController.m; sourceTree = "<group>"; };
+		DF626D631A6964E200093568 /* TMPhotoViewQuiltViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMPhotoViewQuiltViewCell.h; sourceTree = "<group>"; };
+		DF626D641A6964E200093568 /* TMPhotoViewQuiltViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMPhotoViewQuiltViewCell.m; sourceTree = "<group>"; };
 		DF68557F1A592181004D924F /* ZYQAssetPicker.Bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ZYQAssetPicker.Bundle; sourceTree = "<group>"; };
 		DF6855801A592181004D924F /* ZYQAssetPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYQAssetPickerController.h; sourceTree = "<group>"; };
 		DF6855811A592181004D924F /* ZYQAssetPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYQAssetPickerController.m; sourceTree = "<group>"; };
@@ -1053,13 +1048,7 @@
 		DFC781291A6159FD00776C62 /* MyMatchDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyMatchDetailViewController.m; sourceTree = "<group>"; };
 		DFC7812B1A615FF700776C62 /* MyMatchDivisionDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyMatchDivisionDetailViewController.h; sourceTree = "<group>"; };
 		DFC7812C1A615FF700776C62 /* MyMatchDivisionDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyMatchDivisionDetailViewController.m; sourceTree = "<group>"; };
-
-
-
 		DFC7812E1A616D3100776C62 /* libiOS_IMKit_v1_2_7.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libiOS_IMKit_v1_2_7.a; sourceTree = "<group>"; };
-
-
-
 		E30479431A6109B800709985 /* ParallaxHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParallaxHeaderView.h; sourceTree = "<group>"; };
 		E30479441A6109B800709985 /* ParallaxHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParallaxHeaderView.m; sourceTree = "<group>"; };
 		E30479451A6109B800709985 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
@@ -1261,16 +1250,7 @@
 				E3E3E84A1A3C6780001A1DD6 /* QuartzCore.framework in Frameworks */,
 				E3E3E84C1A3C678C001A1DD6 /* OpenGLES.framework in Frameworks */,
 				137FC2B21A4DAE780039E3FF /* MapKit.framework in Frameworks */,
-
-
-				19F7B40E1A67F19D00087BCB /* libiOS_IMKit_v1_2_7.a in Frameworks */,
-
 				DFC7812F1A616D3100776C62 /* libiOS_IMKit_v1_2_7.a in Frameworks */,
-				E3EDF11D1A614F7A00F24F61 /* libiOS_IMKit_v1_2_7.a in Frameworks */,
-
-
-				19F7B40E1A67F19D00087BCB /* libiOS_IMKit_v1_2_7.a in Frameworks */,
-
 				138C2C141A39E46B00EA59F5 /* libz.dylib in Frameworks */,
 				138C2C121A39E45E00EA59F5 /* libstdc++.dylib in Frameworks */,
 				138C2C0E1A39E25000EA59F5 /* libsqlite3.dylib in Frameworks */,
@@ -1783,16 +1763,7 @@
 		137FC2B61A4DB2DC0039E3FF /* IMKit */ = {
 			isa = PBXGroup;
 			children = (
-
-
-				19F7B40D1A67F19D00087BCB /* libiOS_IMKit_v1_2_7.a */,
-
 				DFC7812E1A616D3100776C62 /* libiOS_IMKit_v1_2_7.a */,
-				E3EDF11C1A614F7A00F24F61 /* libiOS_IMKit_v1_2_7.a */,
-
-
-				19F7B40D1A67F19D00087BCB /* libiOS_IMKit_v1_2_7.a */,
-
 				137FC2B71A4DB2DC0039E3FF /* Headers */,
 				137FC2DC1A4DB2DC0039E3FF /* RongCloud.bundle */,
 			);
@@ -2510,6 +2481,8 @@
 			children = (
 				19D5E6B31A4FE8E1008401E0 /* YichuListTableViewCell.h */,
 				19D5E6B41A4FE8E1008401E0 /* YichuListTableViewCell.m */,
+				DF626D631A6964E200093568 /* TMPhotoViewQuiltViewCell.h */,
+				DF626D641A6964E200093568 /* TMPhotoViewQuiltViewCell.m */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -3564,6 +3537,7 @@
 				19D5E6B51A4FE8E1008401E0 /* YichuListTableViewCell.m in Sources */,
 				13A389961A3893D000ABBACB /* TTaiViewController.m in Sources */,
 				5658C79A1A4C486E00DC86F8 /* MatchWaterflowView.m in Sources */,
+				DF626D651A6964E200093568 /* TMPhotoViewQuiltViewCell.m in Sources */,
 				DF6855831A592181004D924F /* ZYQAssetPickerController.m in Sources */,
 				565321431A59769300E43F80 /* FBHelper.m in Sources */,
 				E3996EE01A5E1DBA00673147 /* GClothWaveCustomView.m in Sources */,

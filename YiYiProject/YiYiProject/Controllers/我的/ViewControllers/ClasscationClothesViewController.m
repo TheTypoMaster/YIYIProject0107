@@ -7,7 +7,7 @@
 //
 
 #import "ClasscationClothesViewController.h"
-
+#import "TMPhotoViewQuiltViewCell.h"
 @interface ClasscationClothesViewController ()
 {
     NSMutableArray *_dataSourceArray;
@@ -73,7 +73,10 @@
     CGFloat aHeight = 0.f;
     NSDictionary *aMode = waterFlow.dataArray[indexPath.row];
     aHeight = [[aMode objectForKey:@"image_height"] floatValue];
-    return aHeight / 2.f + 33;
+    CGFloat aWindth = [[aMode objectForKey:@"image_width"] floatValue];
+    float rate = aHeight/aWindth;
+    
+    return  (DEVICE_WIDTH-30)/2.0*rate+5;
 }
 - (CGFloat)waterViewNumberOfColumns
 {
@@ -89,24 +92,11 @@
 
 - (TMQuiltViewCell *)quiltView:(TMQuiltView *)quiltView cellAtIndexPath:(NSIndexPath *)indexPath
 {
-    TMQuiltViewCell *cell = (TMQuiltViewCell *)[quiltView dequeueReusableCellWithReuseIdentifier:@"PhotoCell"];
+    TMPhotoViewQuiltViewCell *cell = (TMPhotoViewQuiltViewCell *)[quiltView dequeueReusableCellWithReuseIdentifier:@"PhotoCell"];
     if (!cell) {
-        cell = [[TMQuiltViewCell alloc] initWithReuseIdentifier:@"PhotoCell"];
-//        [cell.titleView removeFromSuperview];
-//        [cell.infoView removeFromSuperview];
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
-        imageView.tag = 1001;
-        imageView.layer.masksToBounds = YES;
-        imageView.backgroundColor = RGBCOLOR(180, 180, 180);
-        [cell addSubview:imageView];
-        cell.backgroundColor = [UIColor whiteColor];
-        
+        cell = [[TMPhotoViewQuiltViewCell alloc] initWithReuseIdentifier:@"PhotoCell"];
     }
-    NSLog(@"cell = %@",[NSValue valueWithCGRect:cell.bounds]);
-    UIImageView *imageView = (UIImageView *)[cell viewWithTag:1001];
-    imageView.frame = cell.bounds;
-    //[imageView sd_setImageWithURL:[NSURL URLWithString:[[_dataSourceArray objectAtIndex:indexPath.row] objectForKey:@"image_url"]]];
-    [imageView sd_setImageWithURL:[NSURL URLWithString:[[_dataSourceArray objectAtIndex:indexPath.row] objectForKey:@"image_url"]] placeholderImage:nil];
+    [cell setValueWithDic:[_dataSourceArray objectAtIndex:indexPath.row]];
     return cell;
 }
 
