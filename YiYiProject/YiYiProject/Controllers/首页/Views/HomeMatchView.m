@@ -71,9 +71,9 @@
     {
         UILabel * tishi_label = [[UILabel alloc] initWithFrame:CGRectMake(10,100,DEVICE_WIDTH-20,40)];
         tishi_label.text = @"关注搭配师，即可成为我的搭配师";
-        tishi_label.textColor = [UIColor blackColor];
+        tishi_label.textColor = RGBCOLOR(150,150,150);
         tishi_label.textAlignment = NSTextAlignmentCenter;
-        tishi_label.font = [UIFont systemFontOfSize:18];
+        tishi_label.font = [UIFont systemFontOfSize:14];
         [self addSubview:tishi_label];
     }
     

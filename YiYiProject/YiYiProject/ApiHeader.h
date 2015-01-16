@@ -239,7 +239,7 @@ typedef enum {
 ///获取话题评论接口
 #define GET_TOPIC_COMMENTS_URL @"http://182.92.158.32/index.php?d=api&c=topic&m=get_replies&topic_id=%@&page=%d&per_page=20"
 ///获取搭配师个人信息
-#define GET_MATCH_INFOMATION_URL @"http://182.92.158.32/index.php?d=api&c=division_t&m=get_division_t_info&t_uid=%@"
+#define GET_MATCH_INFOMATION_URL @"http://182.92.158.32/index.php?d=api&c=division_t&m=get_division_t_info&t_uid=%@&authcode=%@"
 ///话题点赞接口
 #define TOPIC_ADDFAV_URL @"http://182.92.158.32/index.php?d=api&c=topic&m=like_topic&authcode=%@&topic_id=%@"
 ///话题取消赞接口
@@ -256,6 +256,14 @@ typedef enum {
  */
 #define TOPIC_COMMENTS_URL @"http://182.92.158.32/index.php?d=api&c=topic&m=reply_topic"
 
+///关注取消关注接口
+/*
+ 参数解释依次为:
+ authcode(uid的加密串) string
+ action(取消还是关注 at_friend⇒关注某人 can_friend⇒取消关注某人) str
+ friend_uid(操作的对象uid) int
+ */
+#define ATTENTTION_SOMEBODY_URL @"http://182.92.158.32/index.php?d=api&c=my_api&m=attention&authcode=%@&action=%@&friend_uid=%@"
 
 #pragma mark - 搭配师相关接口 ******************************add by sn
 

@@ -92,7 +92,7 @@
         fullUrl = [NSString stringWithFormat:GET_DAPEISHI_URL,@"my",[GMAPI getAuthkey],0,1,100];
     }
     
-    NSLog(@"fullUrl ----   %@",[GMAPI getUid]);
+    NSLog(@"fullUrl ----   %@",fullUrl);
     AFHTTPRequestOperation * request = [[AFHTTPRequestOperation alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:fullUrl]]];
     __weak typeof(self)bself = self;
     [request setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -238,8 +238,7 @@
                 LoginViewController *login = [[LoginViewController alloc]init];
                 
                 UINavigationController *unVc = [[UINavigationController alloc]initWithRootViewController:login];
-                
-                [self presentViewController:unVc animated:YES completion:nil];
+                [self.rootViewController presentViewController:unVc animated:YES completion:nil];
             }else
             {
                 ApplyForViewController * applyVC = [[ApplyForViewController alloc] init];

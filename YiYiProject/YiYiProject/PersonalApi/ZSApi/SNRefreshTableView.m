@@ -245,6 +245,7 @@
 #pragma mark - UIScrollViewDelegate Methods
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    [self setValue:[NSString stringWithFormat:@"%f",scrollView.contentOffset.y] forKey:@"offsetY"];
     if (_refreshHeaderView) {
         [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
     }
