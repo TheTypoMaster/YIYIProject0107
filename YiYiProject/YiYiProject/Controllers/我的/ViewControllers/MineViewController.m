@@ -22,9 +22,14 @@
 #import "MyYiChuViewController.h"//我的衣橱
 
 #import "MyConcernController.h"//我的关注
+#import "MyCollectionController.h"//我的收藏
 
 #import "MyBodyViewController.h"//我的体型
 #import "MyMatchViewController.h"//我的搭配
+
+#import "MySettingsViewController.h" //设置
+#import "EditMyInfoViewController.h"  //编辑资料
+
 //#import "ShenQingDianPuViewController.h"
 #import "ShenQingDianPuViewController.h"
 
@@ -38,10 +43,10 @@ typedef enum{
     USERIMAGENULL,
 }CHANGEIMAGETYPE;
 
-#define CROPIMAGERATIO_USERBANNER 0.4687//banner 图片裁剪框高宽比
+#define CROPIMAGERATIO_USERBANNER 320.00/150 //banner 图片裁剪框宽高比
 #define CROPIMAGERATIO_USERFACE 1.0//头像 图片裁剪框宽高比例
 
-#define UPIMAGECGSIZE_USERBANNER CGSizeMake(1080,1080*0.618)//需要上传的banner的分辨率
+#define UPIMAGECGSIZE_USERBANNER CGSizeMake(1080,1080*0.4687)//需要上传的banner的分辨率
 #define UPIMAGECGSIZE_USERFACE CGSizeMake(200,200)//需要上传的头像的分辨率
 
 @interface MineViewController ()<UITableViewDataSource,UITableViewDelegate,GcustomActionSheetDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,MLImageCropDelegate>
@@ -64,6 +69,10 @@ typedef enum{
     
     self.navigationController.navigationBarHidden = YES;
     
+    if (IOS7_OR_LATER) {
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+    }
     
 }
 
@@ -153,6 +162,14 @@ typedef enum{
         NSString *score = [dic stringValueForKey:@"score"];
         self.userNameLabel.text = [NSString stringWithFormat:@"昵称:%@",name];
         self.userScoreLabel.text = [NSString stringWithFormat:@"积分:%@",score];
+        [_backView.imageView sd_setImageWithURL:[NSURL URLWithString:[dic stringValueForKey:@"user_banner"]] placeholderImage:[UIImage imageNamed:@"my_bg.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            [GMAPI setUserBannerImageWithData:UIImagePNGRepresentation(_backView.imageView.image)];
+        }];
+        NSString *userFaceUrl = [NSString stringWithFormat:@"%@",[dic stringValueForKey:@"photo"]];
+        
+        [self.userFaceImv sd_setImageWithURL:[NSURL URLWithString:userFaceUrl] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            [GMAPI setUserFaceImageWithData:UIImagePNGRepresentation(self.userFaceImv.image)];
+        }];
         
         [_tableView reloadData];
         
@@ -167,9 +184,10 @@ typedef enum{
 ///创建用户头像banner的view
 -(UIView *)creatTableViewHeaderView{
     //底层view
-    _backView = [ParallaxHeaderView parallaxHeaderViewWithCGSize:CGSizeMake(DEVICE_WIDTH, 150*GscreenRatio_320)];
-    _backView.headerImage = [UIImage imageNamed:@"guserbannerdefaul.png"];
+    _backView = [ParallaxHeaderView parallaxHeaderViewWithCGSize:CGSizeMake(DEVICE_WIDTH, 150.00*DEVICE_WIDTH/320)];
+    _backView.headerImage = [UIImage imageNamed:@"my_bg.png"];
     
+    NSLog(@"%@",NSStringFromCGRect(_backView.frame));
     
     //banner
 //    self.userBannerImv = [[UIImageView alloc]initWithFrame:backView.frame];
@@ -187,9 +205,10 @@ typedef enum{
     
     
     //标题
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake((DEVICE_WIDTH-33.00)*0.5, 33, 33, 17)];
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake((DEVICE_WIDTH-50.00)*0.5, 33, 50, 17)];
     //    titleLabel.backgroundColor = [UIColor redColor];
-    titleLabel.font = [UIFont systemFontOfSize:16];
+    titleLabel.font = [UIFont systemFontOfSize:16*GscreenRatio_320];
+    titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.text = @"我的";
     titleLabel.textColor = [UIColor whiteColor];
     [_backView addSubview:titleLabel];
@@ -200,22 +219,26 @@ typedef enum{
     [chilunBtn setBackgroundImage:[UIImage imageNamed:@"my_shezhi.png"] forState:UIControlStateNormal];
     [chilunBtn addTarget:self action:@selector(xiaochilun) forControlEvents:UIControlEventTouchUpInside];
     
+    
     //头像
-    self.userFaceImv = [[UIImageView alloc]initWithFrame:CGRectMake(30*GscreenRatio_320, 75*GscreenRatio_320, 50, 50)];
+    self.userFaceImv = [[UIImageView alloc]initWithFrame:CGRectMake(30*GscreenRatio_320, _backView.frame.size.height - 75, 50, 50)];
     self.userFaceImv.backgroundColor = RGBCOLOR_ONE;
     self.userFaceImv.layer.cornerRadius = 25;
     self.userFaceImv.layer.masksToBounds = YES;
 
+    
+    NSLog(@"%@",NSStringFromCGRect(self.userFaceImv.frame));
+    
     //昵称
     self.userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.userFaceImv.frame)+10, self.userFaceImv.frame.origin.y+6, 120*GscreenRatio_320, 14)];
     self.userNameLabel.text = @"昵称";
-    self.userNameLabel.font = [UIFont systemFontOfSize:14];
+    self.userNameLabel.font = [UIFont systemFontOfSize:14*GscreenRatio_320];
     self.userNameLabel.textColor = [UIColor whiteColor];
     //    self.userNameLabel.backgroundColor = [UIColor lightGrayColor];
 
     //积分
     self.userScoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.userNameLabel.frame.origin.x, CGRectGetMaxY(self.userNameLabel.frame)+10, self.userNameLabel.frame.size.width, self.userNameLabel.frame.size.height)];
-    self.userScoreLabel.font = [UIFont systemFontOfSize:14];
+    self.userScoreLabel.font = [UIFont systemFontOfSize:14*GscreenRatio_320];
     self.userScoreLabel.text = @"积分：";
     self.userScoreLabel.textColor = [UIColor whiteColor];
     //    self.userScoreLabel.backgroundColor = [UIColor orangeColor];
@@ -224,7 +247,7 @@ typedef enum{
     UIButton *editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [editBtn setFrame:CGRectMake(DEVICE_WIDTH-80, self.userFaceImv.frame.origin.y+15, 55, 44)];
     //    editBtn.backgroundColor = [UIColor purpleColor];
-    editBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+    editBtn.titleLabel.font = [UIFont systemFontOfSize:16*GscreenRatio_320];
     [editBtn addTarget:self action:@selector(goToEdit) forControlEvents:UIControlEventTouchUpInside];
     [editBtn setTitle:@"编辑" forState:UIControlStateNormal];
     
@@ -252,9 +275,9 @@ typedef enum{
 
 //跳转个人设置界面
 -(void)xiaochilun{
-    GSettingViewController *gg = [[GSettingViewController alloc]init];
-    gg.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:gg animated:YES];
+    MySettingsViewController *mySettingVC = [[MySettingsViewController alloc]init];
+    mySettingVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:mySettingVC animated:YES];
 }
 
 
@@ -313,6 +336,25 @@ typedef enum{
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+    
+    
+    //判断是否登录
+    if ([LTools cacheBoolForKey:USER_LONGIN] == NO) {
+        
+        LoginViewController *login = [[LoginViewController alloc]init];
+        
+        UINavigationController *unVc = [[UINavigationController alloc]initWithRootViewController:login];
+        
+        [self presentViewController:unVc animated:YES completion:nil];
+
+        
+        return;
+        
+    }
+    
+    
+    
+    
     switch (indexPath.section) {
         case 0:
         {
@@ -326,9 +368,21 @@ typedef enum{
             
         case 1:
         {
-            MyMatchViewController *myMatchVC = [[MyMatchViewController alloc] init];
-            myMatchVC.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:myMatchVC animated:YES];
+            
+            if (indexPath.row == 0) {
+                NSLog(@"我的收藏");
+                
+                MyCollectionController *myMatchVC = [[MyCollectionController alloc] init];
+                myMatchVC.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:myMatchVC animated:YES];
+                
+            }else if (indexPath.row == 1){
+                NSLog(@"我的搭配");
+                
+                MyMatchViewController *myMatchVC = [[MyMatchViewController alloc] init];
+                myMatchVC.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:myMatchVC animated:YES];
+            }
         }
             break;
             
@@ -419,10 +473,14 @@ typedef enum{
 
 
 
+///编辑资料
 -(void)goToEdit{
-//    GMapViewController *ggg = [[GMapViewController alloc]init];
-//    ggg.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:ggg animated:YES];
+    
+    //编辑
+    EditMyInfoViewController *editInfoVC = [[EditMyInfoViewController alloc] init];
+    editInfoVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:editInfoVC animated:YES];
+    
 }
 
 
@@ -440,7 +498,7 @@ typedef enum{
                                                        actionBackColor:RGBCOLOR(236, 236, 236)];
     aaa.tag = 90;
     aaa.delegate = self;
-    [aaa showInView:self.view WithAnimation:YES];
+    [aaa showInView:self.view.window WithAnimation:YES];
     
     
 }
@@ -457,7 +515,7 @@ typedef enum{
                                                        actionBackColor:RGBCOLOR(236, 236, 236)];
     aaa.tag = 91;
     aaa.delegate = self;
-    [aaa showInView:self.view WithAnimation:YES];
+    [aaa showInView:self.view.window WithAnimation:YES];
 }
 
 
@@ -562,8 +620,12 @@ typedef enum{
         MLImageCrop *imageCrop = [[MLImageCrop alloc]init];
         imageCrop.delegate = self;
         
-        //按像素缩放
-        imageCrop.ratioOfWidthAndHeight = 400.0f/400.0f;//设置缩放比例
+        //按像素缩放  //设置缩放比例
+        if (_changeImageType == USERBANNER) {
+            imageCrop.ratioOfWidthAndHeight = CROPIMAGERATIO_USERBANNER;
+        }else if (_changeImageType == USERFACE){
+            imageCrop.ratioOfWidthAndHeight = 1;
+        }
         
         imageCrop.image = scaleImage;
         //[imageCrop showWithAnimation:NO];
@@ -611,7 +673,7 @@ typedef enum{
     if (_changeImageType == USERBANNER) {//banner
         uploadImageUrlStr = PERSON_CHANGEUSERBANNER;
     }else if (_changeImageType == USERFACE){//头像
-        uploadImageUrlStr = @"456";
+        uploadImageUrlStr = PERSON_CHANGEUSERFACE;
     }
     
     //设置接收响应类型为标准HTTP类型(默认为响应类型为JSON)
@@ -643,7 +705,7 @@ typedef enum{
                                    success:^(AFHTTPRequestOperation *operation, id responseObject)
                                    {
                                        
-                                       
+                                       [GMAPI showAutoHiddenMBProgressWithText:@"更改成功" addToView:self.view];
                                        
                                        NSLog(@"%@",responseObject);
                                        
@@ -663,6 +725,7 @@ typedef enum{
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        
+                                       [GMAPI showAutoHiddenMBProgressWithText:@"更改失败,联网自动上传" addToView:self.view];
                                        
                                        
                                        NSLog(@"%@",error);

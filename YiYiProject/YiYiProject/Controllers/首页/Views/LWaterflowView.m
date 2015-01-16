@@ -26,7 +26,6 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        
         self.pageNum = 1;
         self.dataArray = [NSMutableArray array];
         
@@ -34,6 +33,8 @@
         qtmquitView.delegate = self;
         qtmquitView.dataSource = waterDatasource;
         self.waterDelegate = waterDelegate;
+        
+        self.quitView = qtmquitView;
         
         [self addSubview:qtmquitView];
                 

@@ -37,6 +37,12 @@
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [button addTarget:self action:@selector(buttonTap:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:button];
+        
+        
+        if (i == 0)
+        {
+            [button setImage:[UIImage imageNamed:@"xq_love_down"] forState:UIControlStateSelected];
+        }
     }
 }
 
@@ -61,6 +67,16 @@
     [pinglun_button setTitle:model.topic_repost_num forState:UIControlStateNormal];
     [zhuanfa_button setTitle:model.topic_share_num forState:UIControlStateNormal];
 }
+
+///设置赞状态
+-(void)setZanButtonSelected:(BOOL)isSelected
+{
+    UIButton * button = (UIButton *)[self viewWithTag:100];
+    
+    button.selected = isSelected;
+}
+
+
 
 @end
 

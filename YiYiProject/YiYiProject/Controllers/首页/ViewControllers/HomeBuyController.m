@@ -67,6 +67,56 @@
 
 #pragma mark 事件处理
 
+
+/**
+ *  赞 取消赞 收藏 取消收藏
+ */
+
+- (void)clickToZan:(UIButton *)sender
+{
+    if (![LTools isLogin:self]) {
+        
+        return;
+    }
+    //直接变状态
+    //更新数据
+    
+    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[waterFlow.quitView cellAtIndexPath:[NSIndexPath indexPathForRow:sender.tag - 100 inSection:0]];
+    cell.like_label.text = @"";
+    
+    ProductModel *aMode = waterFlow.dataArray[sender.tag - 100];
+    
+    NSString *productId = aMode.product_id;
+    __weak typeof(self)weakSelf = self;
+    
+    NSString *api = HOME_PRODUCT_ZAN_ADD;
+    
+    NSString *post = [NSString stringWithFormat:@"product_id=%@&authcode=%@",productId,[GMAPI getAuthkey]];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    
+    NSString *url = api;
+    
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"result %@",result);
+        sender.selected = YES;
+        aMode.is_like = 1;
+        aMode.product_like_num = NSStringFromInt([aMode.product_like_num intValue] + 1);
+        cell.like_label.text = aMode.product_like_num;
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+        if ([failDic[RESULT_CODE] intValue] == -11) {
+            
+            [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
+        }
+        
+    }];
+}
+
+
 - (void)clickToFilter:(UIButton *)sender
 {
     __weak typeof(waterFlow)weakFlow = waterFlow;
@@ -152,17 +202,26 @@
 
 - (CGFloat)waterHeightForCellIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat aHeight = 0.f;
+    CGFloat imageH = 0.f;
     ProductModel *aMode = waterFlow.dataArray[indexPath.row];
     if (aMode.imagelist.count >= 1) {
+
         
         NSDictionary *imageDic = aMode.imagelist[0];
         NSDictionary *middleImage = imageDic[@"540Middle"];
-//        CGFloat aWidth = [middleImage[@"width"]floatValue];
-        aHeight = [middleImage[@"height"]floatValue];
+        float image_width = [middleImage[@"width"]floatValue];
+        float image_height = [middleImage[@"height"]floatValue];
+        
+        if (image_width == 0.0) {
+            image_width = image_height;
+        }
+        float rate = image_height/image_width;
+        
+        imageH = (DEVICE_WIDTH-30)/2.0*rate+33;
+        
     }
     
-    return aHeight / 2.f + 33;
+    return imageH;
 }
 - (CGFloat)waterViewNumberOfColumns
 {
@@ -187,9 +246,18 @@
     ProductModel *aMode = waterFlow.dataArray[indexPath.row];
     [cell setCellWithModel:aMode];
     
+    cell.like_btn.tag = 100 + indexPath.row;
+    [cell.like_btn addTarget:self action:@selector(clickToZan:) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
 }
+
+
+
+
+#pragma mark-------------获取数据
+
+
 
 
 @end

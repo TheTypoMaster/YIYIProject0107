@@ -17,10 +17,14 @@ typedef enum{
     GSOMEONE
 }GMAINVIEWTYPE;
 
+#import "WaterF.h"
+#import "ParallaxHeaderView.h"
 
-@interface GmyMainViewController : MyViewController
-
+@interface GmyMainViewController : MyViewController<UIScrollViewDelegate,CollectionClickDelegate,UICollectionViewDelegate>
+{
+    ParallaxHeaderView *headerView;
+}
 
 @property(nonatomic,assign)GMAINVIEWTYPE theType;//类型  自己的 别人的
-
+@property (nonatomic,strong) WaterF* waterfall;
 @end

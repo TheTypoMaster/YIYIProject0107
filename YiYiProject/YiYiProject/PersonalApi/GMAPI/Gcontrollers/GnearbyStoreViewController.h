@@ -16,5 +16,6 @@
 
 @property(nonatomic,strong)NSString *storeIdStr;
 @property(nonatomic,strong)NSString *storeNameStr;
+@property(nonatomic,assign)CLLocationCoordinate2D coordinate_store;//经纬度
 
 @end

@@ -15,6 +15,7 @@
 #import "GpinpaiDetailViewController.h"
 #import "GnearbyStoreViewController.h"
 #import "GClothWaveCustomView.h"
+#import "LoginViewController.h"
 
 @interface HomeClothController ()<GCycleScrollViewDatasource,GCycleScrollViewDelegate,UIScrollViewDelegate>
 {
@@ -32,16 +33,34 @@
     UIView *_pinpaiView;//品牌的view
     GScrollView *_scrollView_pinpai;//品牌的scrollview
     NSMutableArray *_pinpaiScrollViewModelInfoArray;//品牌信息数组
+    
+    
+    //四个按钮
+    UIButton *_nearbyBtn;//附近的商场
+    UIButton *_guanzhuBtn_Store;//我关注的商场
+    UIButton *_pinpaiBtn;//附近的品牌
+    UIButton *_guanzhuBtn_pinpai;//我关注的品牌
+    
+    
 
 }
 @end
 
 @implementation HomeClothController
 
-
+-(void)viewDidDisappear:(BOOL)animated{
+    
+    [super viewDidDisappear:YES];
+    
+}
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+    
+//    if( ([[[UIDevice currentDevice] systemVersion] doubleValue]>=7.0))
+//    {
+//        self.navigationController.navigationBar.translucent = NO;
+//    }
     
 }
 
@@ -106,40 +125,90 @@
 
 //请求附近的商店
 -(void)prepareNearbyStore{
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     NSString *api = [NSString stringWithFormat:@"%@&page=1&count=100",HOME_CLOTH_NEARBYSTORE];
     GmPrepareNetData *dd = [[GmPrepareNetData alloc]initWithUrl:api isPost:YES postData:nil];
     [dd requestCompletion:^(NSDictionary *result, NSError *erro) {
-        
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
         NSLog(@"%@",result);
         
         _nearByStoreDataArray = [result objectForKey:@"list"];
         _scrollview_nearbyView.dataArray = _nearByStoreDataArray;
+        if (_nearByStoreDataArray.count == 0) {
+            [GMAPI showAutoHiddenMBProgressWithText:@"附近没有符合条件的商场" addToView:self.view];
+        }
         [_scrollview_nearbyView gReloadData];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
     }];
     
+}
+
+//请求我关注的商店
+-(void)prepareGuanzhuStore{
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    NSString *url = [NSString stringWithFormat:HOME_CLOTH_GUANZHUSTORE_MINE,[GMAPI getAuthkey]];
+    GmPrepareNetData *dd = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:nil];
+    [dd requestCompletion:^(NSDictionary *result, NSError *erro) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        NSLog(@"%@",result);
+        
+        _nearByStoreDataArray = [result objectForKey:@"list"];
+        _scrollview_nearbyView.dataArray = _nearByStoreDataArray;
+        if (_nearByStoreDataArray.count == 0) {
+            [GMAPI showAutoHiddenMBProgressWithText:@"您还没有关注任何商场" addToView:self.view];
+        }
+        
+        [_scrollview_nearbyView gReloadData];
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+    }];
 }
 
 
 
 //请求附近的品牌
 -(void)prepareNearbyPinpai{
+//    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     NSString *api = HOME_CLOTH_NEARBYPINPAI;
     GmPrepareNetData *gg = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
     [gg requestCompletion:^(NSDictionary *result, NSError *erro) {
-        
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
         NSLog(@"%@",result);
         _pinpaiScrollViewModelInfoArray = [result objectForKey:@"brand_data"];
         _scrollView_pinpai.dataArray = _pinpaiScrollViewModelInfoArray;
+        if (_pinpaiScrollViewModelInfoArray.count == 0) {
+            [GMAPI showAutoHiddenMBProgressWithText:@"附近没有符合条件的品牌" addToView:self.view];
+        }
         [_scrollView_pinpai gReloadData];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
     }];
 }
 
+
+//请求我关注的品牌
+-(void)prepareGuanzhuPinpai{
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    NSString *url = [NSString stringWithFormat:HOME_CLOTH_GUANZHUPINPAI_MINE,[GMAPI getAuthkey],1];
+    GmPrepareNetData *gg = [[GmPrepareNetData alloc]initWithUrl:url isPost:NO postData:nil];
+    [gg requestCompletion:^(NSDictionary *result, NSError *erro) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        NSLog(@"%@",result);
+        _pinpaiScrollViewModelInfoArray = [result objectForKey:@"brand_data"];
+        _scrollView_pinpai.dataArray = _pinpaiScrollViewModelInfoArray;
+        if (_pinpaiScrollViewModelInfoArray.count == 0) {
+            [GMAPI showAutoHiddenMBProgressWithText:@"您还没有关注任何品牌" addToView:self.view];
+        }
+        [_scrollView_pinpai gReloadData];
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+    }];
+}
 
 
 
@@ -167,10 +236,27 @@
     
     
     //标题
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 12, 30, 15)];
-    titleLabel.font = [UIFont systemFontOfSize:15];
-    titleLabel.text = @"附近";
-    [_nearbyView addSubview:titleLabel];
+//    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 12, 30, 15)];
+//    titleLabel.font = [UIFont systemFontOfSize:15];
+//    titleLabel.text = @"附近";
+//    [_nearbyView addSubview:titleLabel];
+    _nearbyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_nearbyBtn setTitle:@"附近" forState:UIControlStateNormal];
+    [_nearbyBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [_nearbyBtn setFrame:CGRectMake(15, 12, 30, 15)];
+    _nearbyBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    _nearbyBtn.tag = 62;
+    [_nearbyBtn addTarget:self action:@selector(nearOrGuanzhuBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [_nearbyView addSubview:_nearbyBtn];
+    
+    _guanzhuBtn_Store = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_guanzhuBtn_Store setTitle:@"我关注的商家" forState:UIControlStateNormal];
+    [_guanzhuBtn_Store setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [_guanzhuBtn_Store setFrame:CGRectMake(CGRectGetMaxX(_nearbyBtn.frame)+10, 12, 100, 15)];
+    _guanzhuBtn_Store.titleLabel.font = [UIFont systemFontOfSize:15];
+    _guanzhuBtn_Store.tag = 63;
+    [_guanzhuBtn_Store addTarget:self action:@selector(nearOrGuanzhuBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [_nearbyView addSubview:_guanzhuBtn_Store];
     
     
     //背景图
@@ -214,7 +300,7 @@
     
     
     //标题下面的分割线
-    UIView *downTitleLine = [[UIView alloc]initWithFrame:CGRectMake(titleLabel.frame.origin.x, CGRectGetMaxY(titleLabel.frame)+3, DEVICE_WIDTH-30, 1)];
+    UIView *downTitleLine = [[UIView alloc]initWithFrame:CGRectMake(_nearbyBtn.frame.origin.x, CGRectGetMaxY(_nearbyBtn.frame)+3, DEVICE_WIDTH-30, 1)];
     downTitleLine.backgroundColor = RGBCOLOR(213, 213, 213);
     [_nearbyView addSubview:downTitleLine];
     
@@ -230,10 +316,28 @@
     
     
     //标题
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 12, 30, 15)];
-    titleLabel.font = [UIFont systemFontOfSize:15];
-    titleLabel.text = @"品牌";
-    [_pinpaiView addSubview:titleLabel];
+//    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 12, 30, 15)];
+//    titleLabel.font = [UIFont systemFontOfSize:15];
+//    titleLabel.text = @"品牌";
+//    [_pinpaiView addSubview:titleLabel];
+    
+    _pinpaiBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_pinpaiBtn setTitle:@"品牌" forState:UIControlStateNormal];
+    [_pinpaiBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [_pinpaiBtn setFrame:CGRectMake(15, 12, 30, 15)];
+    _pinpaiBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    _pinpaiBtn.tag = 60;
+    [_pinpaiBtn addTarget:self action:@selector(nearOrGuanzhuBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [_pinpaiView addSubview:_pinpaiBtn];
+    
+    UIButton *guanzhuBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [guanzhuBtn setTitle:@"我关注的品牌" forState:UIControlStateNormal];
+    [guanzhuBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [guanzhuBtn setFrame:CGRectMake(CGRectGetMaxX(_pinpaiBtn.frame)+10, 12, 100, 15)];
+    guanzhuBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    guanzhuBtn.tag = 61;
+    [guanzhuBtn addTarget:self action:@selector(nearOrGuanzhuBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [_pinpaiView addSubview:guanzhuBtn];
     
     
     //滚动界面
@@ -279,7 +383,7 @@
     
     
     //标题下面的分割线
-    UIView *downTitleLine = [[UIView alloc]initWithFrame:CGRectMake(titleLabel.frame.origin.x, CGRectGetMaxY(titleLabel.frame)+3, DEVICE_WIDTH-30, 1)];
+    UIView *downTitleLine = [[UIView alloc]initWithFrame:CGRectMake(_pinpaiBtn.frame.origin.x, CGRectGetMaxY(_pinpaiBtn.frame)+3, DEVICE_WIDTH-30, 1)];
     downTitleLine.backgroundColor = RGBCOLOR(213, 213, 213);
     [_pinpaiView addSubview:downTitleLine];
     
@@ -320,7 +424,36 @@
 
 
 
+-(void)nearOrGuanzhuBtnClicked:(UIButton*)sender{
+    
+    NSLog(@"点击的是%ld",(long)sender.tag);
+    //判断是否登录
+    if ([LTools cacheBoolForKey:USER_LONGIN] == NO) {
+        LoginViewController *login = [[LoginViewController alloc]init];
+        UINavigationController *unVc = [[UINavigationController alloc]initWithRootViewController:login];
+//        [self presentViewController:unVc animated:YES completion:nil];
+        [self.rootViewController presentViewController:unVc animated:YES completion:^{
+            
+        }];
+        return;
+    }
+    
+    
+    if (sender.tag == 60) {//附近的品牌
+        [self prepareNearbyPinpai];
+    }else if (sender.tag == 61){//我关注的品牌
+        [self prepareGuanzhuPinpai];
+    }else if (sender.tag == 62){//附近的商家
+        [self prepareNearbyStore];
+    }else if (sender.tag == 63){//我关注的商家
+        [self prepareGuanzhuStore];
+        
+    }
+    
+    
+    
 
+}
 
 
 

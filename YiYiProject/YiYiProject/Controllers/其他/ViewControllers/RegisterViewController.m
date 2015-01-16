@@ -100,6 +100,8 @@ static int seconds = 60;//计时60s
 //    {“errorcode”:0,“msg”:“\u5e97\u94fa\u521b\u5efa\u6210\u529f”,'code':123456} errorcode 0 成功 1失败 msg为失败或成功文案
     
     
+    [self tapToHiddenKeyboard:nil];
+    
     SecurityCode_Type type;//默认注册
     NSString *mobile = self.phoneTF.text;
     
@@ -149,6 +151,8 @@ static int seconds = 60;//计时60s
     //    type(注册类型，1=》手机注册 2=》邮箱注册，默认为手机注册) int
     //    code(验证码 6位数字) int
     //    mobile(手机号) string
+    
+    [self tapToHiddenKeyboard:nil];
     
     NSString *userName = @"";
     NSString *password = self.passwordTF.text;

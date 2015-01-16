@@ -21,6 +21,8 @@
 {
     ///底部view
     TopicDetailBottomView * bottom_view;
+    
+    MBProgressHUD *loading;
 }
 
 
@@ -68,8 +70,9 @@
     _myTableView.separatorInset = UIEdgeInsetsMake(0,15,0,0);
     [self.view addSubview:_myTableView];
     
-    [self createBottomView];
+    loading = [LTools MBProgressWithText:@"加载中..." addToView:self.view];
     
+    [self createBottomView];
     [self getTopicComments];
     [self getTopicDetailData];
 }
@@ -103,7 +106,7 @@
         }
     }];
     
-    
+    [bottom_view setZanButtonSelected:[_topic_info.is_like integerValue]];
     
     _input_view = [[CustomInputView alloc] initWithFrame:CGRectMake(0,DEVICE_HEIGHT,DEVICE_WIDTH,44)];
     
@@ -229,7 +232,7 @@
 ///获取话题详情
 -(void)getTopicDetailData
 {
-    NSString * fullUrl = [NSString stringWithFormat:GET_TOPIC_DETAIL_URL,_topic_model.topic_id];
+    NSString * fullUrl = [NSString stringWithFormat:GET_TOPIC_DETAIL_URL,_topic_model.topic_id,[GMAPI getAuthkey]];
     NSLog(@"话题详情接口 ----   %@",fullUrl);
     AFHTTPRequestOperation * request = [[AFHTTPRequestOperation alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:fullUrl]]];
     __weak typeof(self)bself = self;
@@ -247,6 +250,7 @@
                 [bottom_view setTitleWithTopicModel:bself.topic_info];
                 
                 [bself createSectionView];
+                [bottom_view setZanButtonSelected:[bself.topic_info.is_like integerValue]];
             }else
             {
                 [LTools showMBProgressWithText:[allDic objectForKey:@"msg"] addToView:self.view];
@@ -331,7 +335,7 @@
     NSLog(@"点赞取消点赞接口----  %@",fullUrl);
     
     AFHTTPRequestOperation * request = [[AFHTTPRequestOperation alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:fullUrl]]];
-    
+    __weak typeof(self)bself = self;
     [request setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSDictionary * allDic = [operation.responseString objectFromJSONString];
@@ -340,7 +344,9 @@
         if ([errocode intValue] == 0)
         {
             [LTools showMBProgressWithText:isPraise?@"取消赞成功":@"已赞" addToView:self.view];
-            self.topic_info.is_like = [NSString stringWithFormat:@"%d",!isPraise];
+            bself.topic_info.is_like = [NSString stringWithFormat:@"%d",!isPraise];
+            [bottom_view setZanButtonSelected:!isPraise];
+            
         }else
         {
             [LTools showMBProgressWithText:[allDic objectForKey:@"msg"] addToView:self.view];

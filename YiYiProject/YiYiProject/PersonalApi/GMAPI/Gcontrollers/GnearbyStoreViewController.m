@@ -15,6 +15,7 @@
 
 #import "GtopScrollView.h"
 #import "GRootScrollView.h"
+#import "GStorePinpaiViewController.h"
 
 
 @interface GnearbyStoreViewController ()<CWSegmentDelegate,UIScrollViewDelegate>
@@ -78,7 +79,17 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeText];
+    self.rightString = @"关注";
+    
+//    UIButton *guanzhuBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [guanzhuBtn setTitle:@"+关注" forState:UIControlStateNormal];
+//    [guanzhuBtn setFrame:CGRectMake(0, 0, 50, 40)];
+//    UIBarButtonItem *righItem = [[UIBarButtonItem alloc]initWithCustomView:guanzhuBtn];
+//    self.navigationItem.rightBarButtonItem = righItem;
+//    [guanzhuBtn addTarget:self action:@selector(ggGuanzhu) forControlEvents:UIControlEventTouchUpInside];
+    
+    
     self.myTitleLabel.textColor = [UIColor whiteColor];
     self.myTitle = self.storeNameStr;
     
@@ -90,6 +101,10 @@
 }
 
 
+-(void)rightButtonTap:(UIButton *)sender
+{
+    NSLog(@"在这里添加关注");
+}
 
 
 //创建商家顶部信息view
@@ -149,7 +164,7 @@
     //楼层数
     NSMutableArray *floorsNameArray = [NSMutableArray arrayWithCapacity:1];
     for (NSString *str in keys) {
-        [floorsNameArray addObject:[NSString stringWithFormat:@"F%@",str]];
+        [floorsNameArray addObject:[NSString stringWithFormat:@"%@",str]];
     }
     
     //每层的数据的二维数组
@@ -174,23 +189,43 @@
     //数据源二维数组
     rootScrollView.dataArray = data_2Array;
 
-    
+    //初始化视图
     [topScrollView initWithNameButtons];
     [rootScrollView initWithViews];
     
     
+    //设置跳转block
+    __weak typeof (self)bself = self;
+    
+    [rootScrollView setThePinpaiBlock:^(NSString *pinpaiId, NSString *pinpaiName) {
+        [bself rootScrollViewPushVcWithPinpaiId:pinpaiId pinpaiName:pinpaiName];
+    }];
+    
+    
+    
+    //添加视图
     [floorView addSubview:topScrollView];
     [floorView addSubview:rootScrollView];
-    
     [self.view addSubview:floorView];
     
 }
 
 
+-(void)rootScrollViewPushVcWithPinpaiId:(NSString *)theId pinpaiName:(NSString *)thePinpaiName{
+    GStorePinpaiViewController *cc = [[GStorePinpaiViewController alloc]init];
+    cc.storeIdStr = theId;
+    cc.storeNameStr = _mallNameLabel.text;
+    cc.pinpaiNameStr = thePinpaiName;
+    [self.navigationController pushViewController:cc animated:YES];
+}
+
 
 -(void)leadYouBuy{
     GLeadBuyMapViewController *cc = [[GLeadBuyMapViewController alloc]init];
+    cc.theType = LEADYOUTYPE_STORE;
     cc.storeName = _mallNameLabel.text;
+    cc.coordinate_store = self.coordinate_store;
+    
     [self.navigationController pushViewController:cc animated:YES];
 }
 
@@ -218,6 +253,7 @@
         _huodongLabel.text = [NSString stringWithFormat:@"活动：%@",[result stringValueForKey:@"doorno"]];
         _adressLabel.text = [NSString stringWithFormat:@"地址：%@",[result stringValueForKey:@"address"]];
         
+        self.coordinate_store = CLLocationCoordinate2DMake([[result stringValueForKey:@"latitude"]floatValue], [[result stringValueForKey:@"longitude"]floatValue]);
         
         
         [self creatFloorScrollViewWithDic:result];

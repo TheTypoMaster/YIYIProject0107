@@ -21,5 +21,6 @@ typedef void(^TopicDetailBottomViewBlock)(int index);
 -(void)setBottomBlock:(TopicDetailBottomViewBlock)aBlock;
 
 -(void)setTitleWithTopicModel:(TopicModel *)model;
+-(void)setZanButtonSelected:(BOOL)isSelected;
 
 @end

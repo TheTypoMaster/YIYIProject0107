@@ -9,7 +9,7 @@
 #import "LTools.h"
 #import <CommonCrypto/CommonDigest.h>
 #import "AppDelegate.h"
-
+#import "LoginViewController.h"
 
 @implementation LTools
 {
@@ -666,7 +666,7 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init] ;
     [formatter setDateStyle:NSDateFormatterMediumStyle];
     [formatter setTimeStyle:NSDateFormatterShortStyle];
-    [formatter setDateFormat:@"YYYY.MM.dd"];
+    [formatter setDateFormat:@"YYYY-MM-dd"];
     NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[placetime doubleValue]];
     NSString *confromTimespStr = [formatter stringFromDate:confromTimesp];
     return confromTimespStr;
@@ -801,6 +801,24 @@
     [aView addSubview:hud];
     hud.removeFromSuperViewOnHide = YES;
     return hud;
+}
+
+#pragma - mark 特殊
+
++ (BOOL)isLogin:(UIViewController *)viewController
+{
+    if ([LTools cacheBoolForKey:USER_LONGIN] == NO) {
+        
+        LoginViewController *login = [[LoginViewController alloc]init];
+        
+        UINavigationController *unVc = [[UINavigationController alloc]initWithRootViewController:login];
+        
+        [viewController presentViewController:unVc animated:YES completion:nil];
+        
+        return NO;
+    }
+    
+    return YES;
 }
 
 #pragma - mark 非空字符串

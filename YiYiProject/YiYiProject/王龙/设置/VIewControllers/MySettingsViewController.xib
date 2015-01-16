@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MySettingsViewController">
+            <connections>
+                <outlet property="mTableVIew" destination="Buf-Se-u2a" id="XBB-8t-ABf"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Buf-Se-u2a">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="veM-S5-ZfS"/>
+                        <outlet property="delegate" destination="-1" id="t2r-e9-T1a"/>
+                    </connections>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="Buf-Se-u2a" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="GtX-OS-Dpg"/>
+                <constraint firstItem="Buf-Se-u2a" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="LSZ-aB-4CB"/>
+                <constraint firstAttribute="bottom" secondItem="Buf-Se-u2a" secondAttribute="bottom" id="vi5-gT-fvl"/>
+                <constraint firstAttribute="trailing" secondItem="Buf-Se-u2a" secondAttribute="trailing" id="zP8-pE-Si5"/>
+            </constraints>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="Buf-Se-u2a"/>
+                </mask>
+                <mask key="constraints">
+                    <exclude reference="GtX-OS-Dpg"/>
+                    <exclude reference="LSZ-aB-4CB"/>
+                    <exclude reference="vi5-gT-fvl"/>
+                    <exclude reference="zP8-pE-Si5"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=regular-widthClass=compact">
+                <mask key="subviews">
+                    <include reference="Buf-Se-u2a"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="GtX-OS-Dpg"/>
+                    <include reference="LSZ-aB-4CB"/>
+                    <include reference="vi5-gT-fvl"/>
+                    <include reference="zP8-pE-Si5"/>
+                </mask>
+            </variation>
+        </view>
+    </objects>
+</document>

@@ -12,6 +12,8 @@
 
 #import "LShareSheetView.h"
 
+#import "CustomInputView.h"
+
 @interface TTaiDetailController ()<RefreshDelegate,UITableViewDataSource>
 {
     TDetailModel *detail_model;
@@ -21,11 +23,28 @@
     UILabel *zhuan_num_label;//转发
     UILabel *zan_num_label;//赞 个数
     UILabel *comment_num_label;//底部评论个数
+    MBProgressHUD *loading;
 }
+
+///评论界面
+@property(nonatomic,strong)CustomInputView * input_view;
 
 @end
 
 @implementation TTaiDetailController
+
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [_input_view addKeyBordNotification];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [_input_view deleteKeyBordNotification];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -44,8 +63,10 @@
     _table.backgroundColor = [UIColor clearColor];
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    [self getTTaiDetail];
+    loading = [LTools MBProgressWithText:@"加载..." addToView:self.view];
     
+    [self getTTaiDetail];
+    [self getTTaiComments];
     [self createToolsView];
     
 }
@@ -69,13 +90,15 @@
 
 - (void)clickToZan:(UIButton *)sender
 {
-    sender.selected = !sender.selected;
-    [self zanTTaiDetail:sender.selected];
+    if ([LTools isLogin:self]) {
+        sender.selected = !sender.selected;
+        [self zanTTaiDetail:sender.selected];
+    }
 }
 
 - (void)clickToComment:(UIButton *)sender
 {
-    
+    [_input_view showInputView:nil];
 }
 
 - (void)clickToZhuanFa:(UIButton *)sender
@@ -128,13 +151,64 @@
 
 #pragma mark - 网络请求
 
+///T台评论
+-(void)getTTaiComments
+{
+    NSString * url = [NSString stringWithFormat:TTAI_COMMENTS_URL,_table.pageNum,_tt_id];
+    NSLog(@"请求t台评论接口 --  %@",url);
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"请求t台评论数据 ---  %@",result);
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+    }];
+}
+
+#pragma mark - 话题评论
+
+-(void)tPlatCommentWithUserName:(NSString *)aName WithUid:(NSString *)aUid
+{
+
+    NSString *parent_post = @"0";
+    NSString *content = _input_view.text_input_view.text;
+    
+    NSString *post = [NSString stringWithFormat:@"authcode=%@&tt_id=%@&parent_post=%@&content=%@",[GMAPI getAuthkey],self.tt_id,parent_post,content];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    
+    NSString *url = [NSString stringWithFormat:TTAI_COMMENT];
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
+    
+    __weak typeof(self)bself = self;
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"-->%@",result);
+        
+        [LTools showMBProgressWithText:result[RESULT_INFO] addToView:self.view];
+        
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        [LTools showMBProgressWithText:failDic[@"msg"] addToView:self.view];
+    }];
+}
+
+
 //T台详情
 
 - (void)getTTaiDetail
 {
+    
+    [loading show:YES];
+    
     NSString *url = [NSString stringWithFormat:TTAI_DETAIL,self.tt_id,[GMAPI getAuthkey]];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        
+        [loading hide:YES];
         
         detail_model = [[TDetailModel alloc]initWithDictionary:result];
         
@@ -146,6 +220,8 @@
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+        
+        [loading hide:YES];
         
     }];
 }
@@ -242,6 +318,36 @@
     
     zhuan_num_label = [LTools createLabelFrame:CGRectMake(zhuan_btn.right + 5, 0, 50, 50) title:@"0" font:13 align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
     [view addSubview:zhuan_num_label];
+    
+    __weak typeof(self)weakSelf = self;
+    
+    _input_view = [[CustomInputView alloc] initWithFrame:CGRectMake(0,DEVICE_HEIGHT,DEVICE_WIDTH,44)];
+    
+    _input_view.userInteractionEnabled = NO;
+    
+    [_input_view loadAllViewWithPinglunCount:@"0" WithType:0 WithPushBlock:^(int type){
+        
+        
+        if (type == 0)
+        {
+            NSLog(@"跳到评论");
+            
+        }else
+        {
+            NSLog(@"分类按钮");
+        }
+        
+    } WithSendBlock:^(NSString *content, BOOL isForward) {
+        
+        NSLog(@"发表评论 ---  %@",[GMAPI getAuthkey]);
+        
+        [weakSelf tPlatCommentWithUserName:@"RNail" WithUid:@"14"];
+        
+        
+    }];
+    
+    [self.view addSubview:_input_view];
+    
 }
 
 - (void)createViewsWithModel:(TDetailModel *)aModel
@@ -307,7 +413,7 @@
     
     if ([aModel.image isKindOfClass:[NSDictionary class]]) {
         
-        image_height = [aModel.image[@"heigth"]floatValue];
+        image_height = [aModel.image[@"height"]floatValue];
         image_width = [aModel.image[@"width"]floatValue];
         image_url = aModel.image[@"url"];
     }

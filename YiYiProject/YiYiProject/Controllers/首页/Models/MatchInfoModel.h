@@ -24,6 +24,7 @@
 @property(nonatomic,strong)NSString * t_intro;
 ///搭配师头像
 @property(nonatomic,strong)NSString * photo;
+///1已关注，2未关注，3已互相关注
 @property(nonatomic,strong)NSString * relation;
 ///搭配师标签
 @property(nonatomic,strong)NSMutableArray * t_tags;

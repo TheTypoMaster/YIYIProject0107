@@ -139,7 +139,7 @@
 {
     NSString *imageUrl = aModel.image[@"url"];
     CGFloat aWidth = [aModel.image[@"width"]floatValue];
-    CGFloat aHeight = [aModel.image[@"heigth"]floatValue];
+    CGFloat aHeight = [aModel.image[@"height"]floatValue];
     
     [self.photoView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
     _photoView.height = [self height:aHeight / 2.f aWidth:aWidth];

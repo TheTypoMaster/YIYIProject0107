@@ -50,7 +50,7 @@
 @property(nonatomic,retain)UILabel *loadingLabel;
 @property(nonatomic,assign)BOOL hiddenLoadMore;//隐藏加载更多,默认隐藏
 
-
+@property(nonatomic,assign)TMQuiltView *quitView;
 
 -(instancetype)initWithFrame:(CGRect)frame
                waterDelegate:(id<WaterFlowDelegate>)waterDelegate

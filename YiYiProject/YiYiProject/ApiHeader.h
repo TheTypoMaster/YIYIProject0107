@@ -126,6 +126,7 @@ typedef enum {
 //首页--值得买
 #define HOME_DESERVE_BUY @"http://182.92.158.32/?d=api&c=products&m=listWorthBuy&long=%@&lat=%@&sex=%d&discount=%d&page=%d&count=%d&authcode=%@"
 
+
 //首页--衣加衣
 //获取顶部scrollview图片
 #define HOME_CLOTH_TOPSCROLLVIEW @"http://182.92.158.32/index.php?d=api&c=advertisement&m=get_advertisement"
@@ -133,6 +134,11 @@ typedef enum {
 #define HOME_CLOTH_NEARBYPINPAI @"http://182.92.158.32/index.php?d=api&c=brand&m=get_nearby_brands"
 //获取附近商铺
 #define HOME_CLOTH_NEARBYSTORE @"http://182.92.158.32/?d=api&c=mall&m=gerNearMalls&long=116.33232544&lat=39.98189909"
+//获取我关注的店铺
+#define HOME_CLOTH_GUANZHUSTORE_MINE @"http://182.92.158.32/?d=api&c=friendship&m=listMall&authcode=%@&page=1&count=100"
+//获取我关注的品牌
+#define HOME_CLOTH_GUANZHUPINPAI_MINE @"http://182.92.158.32/index.php?d=api&c=brand&m=get_attend_brands&authcode=%@&page=%d"
+
 //获取店铺详情
 #define HOME_CLOTH_NEARBYSTORE_DETAIL @"http://182.92.158.32?d=api&c=mall&m=getMallDetail&mall_id=%@&authcode=123"
 
@@ -163,6 +169,9 @@ typedef enum {
 //T 台
 #define TTAI_LIST @"http://182.92.158.32/?d=api&c=tplat&m=listT&page=%d&count=%d&authcode=%@"
 
+//T 台 通过user_id查看某个用户id
+
+#define TTAI_LIST_UID @"http://182.92.158.32/?d=api&c=tplat&m=listT&page=%d&count=%d&authcode=%@&user_id=%@"
 
 //添加T台
 #define TTAI_ADD @"http://182.92.158.32/?d=api&c=tplat&m=addTplat"
@@ -172,7 +181,11 @@ typedef enum {
 
 #define TTAI_DETAIL @"http://182.92.158.32/?d=api&c=tplat&m=ttinfo&tt_id=%@&authcode=%@"
 
+///t台评论接口
+#define TTAI_COMMENTS_URL @"http://182.92.158.32/?d=api&c=tplat&m=listReply&page=%d&count=20&tt_id=%@"
+//T台评论
 
+#define TTAI_COMMENT @"http://182.92.158.32/?d=api&c=tplat&m=comment"
 
 //T台点赞
 
@@ -188,7 +201,7 @@ typedef enum {
 //个人信息相关
 #define PERSON_CHANGEUSERBANNER @"http://182.92.158.32/index.php?d=api&c=user_api&m=update_user_banner"
 #define PERSON_GETUSERINFO @"http://182.92.158.32/index.php?d=api&c=user_api&m=get_user_info"
-
+#define PERSON_CHANGEUSERFACE @"http://182.92.158.32/index.php?d=api&c=user_api&m=update_user_info"
 
 
 #pragma mark - 搭配师相关接口 ******************************add by sn
@@ -199,7 +212,7 @@ typedef enum {
  page(页数 默认1)
  perpage(每页显示数量 默认10)
  */
-#define GET_DAPEISHI_URL @"http://182.92.158.32/index.php?d=api&c=division_t&m=get_division_teachers&action=%@&authcode=%@&tagid=%@&page=%d&perpage=%d"
+#define GET_DAPEISHI_URL @"http://182.92.158.32/index.php?d=api&c=division_t&m=get_division_teachers&action=%@&authcode=%@&tagid=%d&page=%d&perpage=%d"
 ///搭配师界面获取话题接口
 #define GET_TOPIC_DATA_URL @"http://182.92.158.32/index.php?d=api&c=topic&m=get_topics&uid=%@&page=%d&per_page=%d"
 ///搭配师界面获取搭配师搭配接口
@@ -210,12 +223,23 @@ typedef enum {
  */
 #define GET_MATCH_DATA_URL @"http://182.92.158.32/index.php?d=api&c=division_t&m=get_division_tts&t_uid=%@&page=%d&per_page=%d"
 
+///申请搭配师
+/*
+ authcode(uid加密串) string
+ mobile（手机号码）string
+ code(验证码) int
+ qq(qq号码) int
+ weixin(微信号码，可不填) int
+ pic(身份证照片) string
+ */
+#define APPLY_MATCH_URL @"http://182.92.158.32/index.php?d=api&c=division_t&m=apply_division_teacher"
+
 ///话题详情接口
-#define GET_TOPIC_DETAIL_URL @"http://182.92.158.32/index.php?d=api&c=topic&m=get_topic_info&topic_id=%@"
+#define GET_TOPIC_DETAIL_URL @"http://182.92.158.32/index.php?d=api&c=topic&m=get_topic_info&topic_id=%@&authcode=%@"
 ///获取话题评论接口
 #define GET_TOPIC_COMMENTS_URL @"http://182.92.158.32/index.php?d=api&c=topic&m=get_replies&topic_id=%@&page=%d&per_page=20"
 ///获取搭配师个人信息
-#define GET_MATCH_INFOMATION_URL @"http://182.92.158.32/index.php?d=api&c=division_t&m=get_division_t_info&t_uid=%@"
+#define GET_MATCH_INFOMATION_URL @"http://182.92.158.32/index.php?d=api&c=division_t&m=get_division_t_info&t_uid=%@&authcode=%@"
 ///话题点赞接口
 #define TOPIC_ADDFAV_URL @"http://182.92.158.32/index.php?d=api&c=topic&m=like_topic&authcode=%@&topic_id=%@"
 ///话题取消赞接口
@@ -232,6 +256,14 @@ typedef enum {
  */
 #define TOPIC_COMMENTS_URL @"http://182.92.158.32/index.php?d=api&c=topic&m=reply_topic"
 
+///关注取消关注接口
+/*
+ 参数解释依次为:
+ authcode(uid的加密串) string
+ action(取消还是关注 at_friend⇒关注某人 can_friend⇒取消关注某人) str
+ friend_uid(操作的对象uid) int
+ */
+#define ATTENTTION_SOMEBODY_URL @"http://182.92.158.32/index.php?d=api&c=my_api&m=attention&authcode=%@&action=%@&friend_uid=%@"
 
 #pragma mark - 搭配师相关接口 ******************************add by sn
 
@@ -331,6 +363,22 @@ typedef enum {
 #pragma - mark 搭配师话题
 
 #define TOPIC_ADD @"http://182.92.158.32/index.php?d=api&c=topic&m=publish_topic"//添加话题
+
+
+
+
+
+#pragma mark-----设置
+#define	APP_RATING_URL	 @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=951259287"
+
+#pragma mark-------------编辑个人资料
+#define GET_UPDATEMYINFO_URL @"http://182.92.158.32/index.php?d=api&c=user_api&m=get_user_info"  //获取个人资料
+
+#define POST_UPDATEMYINFO_URL @"http://182.92.158.32/index.php?d=api&c=user_api&m=update_user_info"  //修改个人资料
+
+#define POST_GETMYINFO_URL @"http://182.92.158.32/index.php?d=api&c=user_api&m=get_user_info"  //获取个人资料
+
+#define POST_TLIST_URL @"http://182.92.158.32/?d=api&c=tplat&m=listT"  //获取个人资料
 
 
 #endif

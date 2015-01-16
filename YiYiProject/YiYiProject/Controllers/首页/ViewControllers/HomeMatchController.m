@@ -20,6 +20,7 @@
 #import "ApplyForViewController.h"
 #import "TopicDetailViewController.h"
 #import "MatchInfoViewController.h"
+#import "LoginViewController.h"
 
 @interface HomeMatchController ()<SNRefreshDelegate,UITableViewDataSource,TMQuiltViewDataSource,WaterFlowDelegate>
 {
@@ -59,7 +60,10 @@
     topic_data_page = 1;
     match_data_page = 1;
     
-    _myTableView = [[SNRefreshTableView alloc] initWithFrame:CGRectMake(0,0,DEVICE_WIDTH,DEVICE_HEIGHT-64-49) showLoadMore:YES];
+    self.myTitleLabel.text = @"搭配师";
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
+    
+    _myTableView = [[SNRefreshTableView alloc] initWithFrame:CGRectMake(0,0,DEVICE_WIDTH,DEVICE_HEIGHT-64- (self.isNormal ? 0 : 49)) showLoadMore:YES];
     _myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _myTableView.dataSource = self;
     _myTableView.refreshDelegate = self;
@@ -82,10 +86,10 @@
     NSString * fullUrl;
     if (atype == HomeMatchRequestTypeHot)
     {
-        fullUrl = [NSString stringWithFormat:GET_DAPEISHI_URL,@"popu",@"",@"0",1,100];
+        fullUrl = [NSString stringWithFormat:GET_DAPEISHI_URL,@"popu",@"",teacher_type,1,100];
     }else
     {
-        fullUrl = [NSString stringWithFormat:GET_DAPEISHI_URL,@"my",[GMAPI getAuthkey],@"0",1,100];
+        fullUrl = [NSString stringWithFormat:GET_DAPEISHI_URL,@"my",[GMAPI getAuthkey],0,1,100];
     }
     
     NSLog(@"fullUrl ----   %@",fullUrl);
@@ -185,12 +189,20 @@
                 }
                 
                 NSArray * array = [allDic objectForKey:@"tt_list"];
+                if (array.count == 0)
+                {
+                    waterFlow.hiddenLoadMore = YES;
+                    return ;
+                }
                 
                 for (NSDictionary * dic in array) {
                     MatchCaseModel * model = [[MatchCaseModel alloc] initWithDictionary:dic];
                     [bself.array_matchCase addObject:model];
                 }
-                [bself.myTableView finishReloadigData];
+                [waterFlow reloadData:_array_matchCase total:100];
+            }else
+            {
+                [waterFlow loadFail];
             }
         }
         @catch (NSException *exception) {
@@ -200,7 +212,7 @@
             
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
+        [waterFlow loadFail];
     }];
     
     [request start];
@@ -215,31 +227,36 @@
     
     CGFloat height = 0;
     __weak typeof(self)bself = self;
-    if (self.hotMatch_array.count)
-    {
         
-        HomeMatchView * my_view = [[HomeMatchView alloc] initWithFrame:CGRectMake(0,0,DEVICE_WIDTH,165)];
-        [my_view setupWithArray:_hotMatch_array WithTitle:@"我的搭配师" WithShowApplyView:YES WithMyBlock:^(int index) {
-            
-            if (index == 0)///我要申请搭配师
+    HomeMatchView * my_view = [[HomeMatchView alloc] initWithFrame:CGRectMake(0,0,DEVICE_WIDTH,165)];
+    [my_view setupWithArray:_myMatch_array WithTitle:@"我的搭配师" WithShowApplyView:YES WithMyBlock:^(int index) {
+        
+        if (index == 0)///我要申请搭配师
+        {
+            if ([LTools cacheBoolForKey:USER_LONGIN] == NO) {
+                
+                LoginViewController *login = [[LoginViewController alloc]init];
+                
+                UINavigationController *unVc = [[UINavigationController alloc]initWithRootViewController:login];
+                [self.rootViewController presentViewController:unVc animated:YES completion:nil];
+            }else
             {
                 ApplyForViewController * applyVC = [[ApplyForViewController alloc] init];
                 applyVC.hidesBottomBarWhenPushed = YES;
                 [bself.rootViewController.navigationController pushViewController:applyVC animated:YES];
-            }else
-            {
-                HomeMatchModel * model = [bself.hotMatch_array objectAtIndex:index-1];
-                [bself pushToMatchInfoViewControllerWithUid:model.uid];
+
             }
-            
-        }];
-        [section_view addSubview:my_view];
+        }else
+        {
+            HomeMatchModel * model = [bself.hotMatch_array objectAtIndex:index-1];
+            [bself pushToMatchInfoViewControllerWithUid:model.uid];
+        }
         
-        height += 165;
-    }else
-    {
-        
-    }
+    }];
+    [section_view addSubview:my_view];
+    
+    height += 165;
+
     
     if (self.hotMatch_array.count) {
         HomeMatchView * hot_view = [[HomeMatchView alloc] initWithFrame:CGRectMake(0,height,DEVICE_WIDTH,165)];
@@ -325,7 +342,9 @@
 #pragma mark - 点击按钮
 -(void)buttonTap:(UIButton *)button
 {
+    teacher_type = (int)button.tag - 100;
     
+    [self getDapeishiDataWithType:HomeMatchRequestTypeHot];
 }
 
 #pragma mark - 跳转到搭配师界面
@@ -367,12 +386,10 @@
         
         selected_type = MatchSelectedTypeMatch;
         self.myTableView.tableFooterView.hidden = YES;
+        [self.myTableView finishReloadigData];
         if (_array_matchCase.count == 0)
         {
             [self getMatchData];
-        }else
-        {
-            [self.myTableView finishReloadigData];
         }
     }
     
