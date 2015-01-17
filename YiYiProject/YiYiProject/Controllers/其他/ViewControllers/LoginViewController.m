@@ -221,7 +221,7 @@
         
         //保存登录状态 yes
         
-        [LTools cacheBool:YES ForKey:USER_LONGIN];
+//        [LTools cacheBool:YES ForKey:USER_LONGIN];
         
         [LTools showMBProgressWithText:result[RESULT_INFO] addToView:self.view];
         

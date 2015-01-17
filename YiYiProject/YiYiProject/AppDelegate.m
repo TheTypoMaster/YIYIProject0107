@@ -30,14 +30,13 @@
 #define RONGCLOUD_IM_APPKEY    @"kj7swf8o7zaf2"
 #define RONGCLOUD_IM_APPSECRET @"2cCSWhaLcCm37"
 
-#define UmengAppkey @"5423e48cfd98c58eed00664f"
-
+#define UmengAppkey @"548bae91fd98c50d0c000b8b"//正式 umeng后台：mobile@jiruijia.com mobile2014
 
 #define SinaAppKey @"2208620241" //正式审核通过 微博开放平台账号szkyaojiayou@163.com 密码：mobile2014
 #define SinaAppSecret @"fe596bc4ac8c92316ad5f255fbc49432"
+#define QQAPPID @"1104065435" //十六进制:41CEB39B; 生成方法:echo 'ibase=10;obase=16;1104065435'|bc
+#define QQAPPKEY @"UgVWGacRoeo9NtZy" //正式的账号
 
-#define QQAPPID @"1103196390" //十六进制:41C170E6; 生成方法:echo 'ibase=10;obase=16;1103196390'|bc
-#define QQAPPKEY @"zc8ykXXrvWjKpyuh"
 
 //fbauto （没用）
 #define WXAPPID @"wx10280ad0d507a8933b9d"
@@ -45,8 +44,14 @@
 
 #define RedirectUrl @"http://sns.whalecloud.com/sina2/callback" //回调地址
 
+//sns.whalecloud.com
+
+
 
 //================正式
+
+//szkyaojiayou@163.com
+//Shizhongkun1988
 
 //umeng后台：mobile@jiruijia.com
 //密码:mobile2014
@@ -57,20 +62,10 @@
 //腾讯开放平台：2451479286
 //密码：mobile2014
 
-//boundlid com.fblife.yijiayi
+//boundlid:com.yijiayi.yijiayi
 
-//新浪
+//appid https://itunes.apple.com/us/app/id951259287?mt=8
 
-//#define SinaAppKey @"2208620241"
-//#define SinaAppSecret @"fe596bc4ac8c92316ad5f255fbc49432"
-
-//#define QQAPPID @"1103196390" //十六进制:41C170E6; 生成方法:echo 'ibase=10;obase=16;1103196390'|bc
-//#define QQAPPKEY @"zc8ykXXrvWjKpyuh"
-
-//#define WXAPPID @"wx47f54e431de32846"
-//#define WXAPPSECRET @"a71699732e3bef01aefdaf324e2f522c"
-//
-//#define RedirectUrl @"http://sns.whalecloud.com/sina2/callback" //回调地址
 
 @interface AppDelegate ()<BMKGeneralDelegate,RCIMConnectionStatusDelegate,RCConnectDelegate>
 {
