@@ -9,6 +9,11 @@
 #import "ShenQingDianPuViewController.h"
 #import "GRootScrollView.h"
 #import "GtopScrollView.h"
+#import "GChooseStoreViewController.h"
+#import "NSDictionary+GJson.h"
+#import "GchooseFloorPinpaiViewController.h"
+
+
 
 @interface ShenQingDianPuViewController ()<UIPickerViewDelegate,UIPickerViewDataSource>
 {
@@ -28,6 +33,26 @@
     NSString *_str1;
     NSString *_str2;
     BOOL _isChooseArea;//是否修改了地区
+    
+    
+    
+    
+    //商品店相关
+    //门牌号
+    UITextField *_menpaihaoTf;
+    //电话
+    UITextField *_phoneTf;
+    //验证码
+    UITextField *_yanzhengmaTf;
+    //验证码按钮
+    UIButton *_yanzhengBtn_shangchang;
+    
+    
+    
+    
+    //精品店相关
+    UIButton *_yanzhengBtn_jingpin;
+    
 
 }
 //地区相关
@@ -70,6 +95,8 @@
     //分配内存
     self.shuruTextFieldArray = [NSMutableArray arrayWithCapacity:1];
     self.chooseLabelArray = [NSMutableArray arrayWithCapacity:1];
+    self.chooseTextFieldArray = [NSMutableArray arrayWithCapacity:1];
+    
     
     //创建按钮view
     [self createSegButton];
@@ -95,10 +122,13 @@
 
 -(void)createAreaPickView{
     //地区pickview
-    _pickeView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, 20, DEVICE_WIDTH, 216)];
+    _pickeView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, 40, DEVICE_WIDTH, 216)];
     _pickeView.delegate = self;
     _pickeView.dataSource = self;
     _isChooseArea = NO;
+    
+    
+    NSLog(@"%@",NSStringFromCGRect(_pickeView.frame));
     
     
     //确定按钮
@@ -106,24 +136,21 @@
     quedingBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [quedingBtn setTitle:@"确定" forState:UIControlStateNormal];
     [quedingBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    quedingBtn.frame = CGRectMake(270, 0, 35, 30);
+    quedingBtn.frame = CGRectMake(DEVICE_WIDTH-70, 5, 60, 40);
+    quedingBtn.layer.borderWidth = 1;
+    quedingBtn.layer.borderColor = [[UIColor blackColor]CGColor];
+    quedingBtn.layer.cornerRadius = 5;
     [quedingBtn addTarget:self action:@selector(areaHidden) forControlEvents:UIControlEventTouchUpInside];
-    //上下横线
-    UIView *shangxian = [[UIView alloc]initWithFrame:CGRectMake(270, 5, 35, 0.5)];
-    shangxian.backgroundColor = [UIColor blackColor];
-    UIView *xiaxian = [[UIView alloc]initWithFrame:CGRectMake(270, 25, 35, 0.5)];
-    xiaxian.backgroundColor = [UIColor blackColor];
 
     //地区选择
-    self.backPickView = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT, DEVICE_WIDTH, 216+30)];
+    self.backPickView = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT, DEVICE_WIDTH, 310)];
     self.backPickView .backgroundColor = [UIColor whiteColor];
-    [self.backPickView addSubview:shangxian];
-    [self.backPickView addSubview:xiaxian];
+    
     [self.backPickView addSubview:quedingBtn];
     [self.backPickView addSubview:_pickeView];
     
     
-    NSString *path = [[NSBundle mainBundle]pathForResource:@"area" ofType:@"plist"];
+    NSString *path = [[NSBundle mainBundle]pathForResource:@"garea" ofType:@"plist"];
     _data = [NSArray arrayWithContentsOfFile:path];
     
     [self.view addSubview:self.backPickView];
@@ -138,7 +165,7 @@
     NSLog(@"_backPickView");
     __weak typeof (self)bself = self;
     [UIView animateWithDuration:0.3 animations:^{
-        bself.backPickView.frame = CGRectMake(0,DEVICE_HEIGHT-216-30, DEVICE_WIDTH, 216);
+        bself.backPickView.frame = CGRectMake(0,DEVICE_HEIGHT-310, DEVICE_WIDTH, 310);
     }];
     
     
@@ -146,8 +173,13 @@
 
 -(void)areaHidden{//地区隐藏
     __weak typeof (self)bself = self;
+    
+    NSLog(@"省:%@ 市:%@",self.province,self.city);
+    
     [UIView animateWithDuration:0.3 animations:^{
-        bself.backPickView.frame = CGRectMake(0, DEVICE_HEIGHT, DEVICE_WIDTH, iPhone5?444:360);
+        bself.backPickView.frame = CGRectMake(0, DEVICE_HEIGHT, DEVICE_WIDTH, 310);
+        UILabel *diquLabel = self.chooseLabelArray[0];
+        diquLabel.text = [NSString stringWithFormat:@"选择地区  %@%@",self.province,self.city];
         
     }];
     
@@ -195,7 +227,9 @@
         }
         NSString *cityStr = [NSString stringWithFormat:@"%@",cities[row][@"city"]];
         //字符转id
-        self.cityIn = [GMAPI cityIdForName:cityStr];//上传
+        NSString *pppccc = [NSString stringWithFormat:@"%@%@",self.province,self.city];
+        self.cityIn = [GMAPI cityIdForName:pppccc];//上传
+        
         return cityStr;
     }
     return 0;
@@ -286,6 +320,7 @@
     
     //商场店
     _shanchangdianView = [[UIScrollView alloc]initWithFrame:_jingpingdianView.frame];
+    _shanchangdianView.contentSize = CGSizeMake(DEVICE_WIDTH, DEVICE_HEIGHT+58*3);
     _shanchangdianView.hidden = YES;
     [self.view addSubview:_shanchangdianView];
     
@@ -299,14 +334,14 @@
 }
 
 -(void)createShangchangdianView{
-    UIView *witheBgView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 350)];
+    UIView *witheBgView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 300)];
     
     witheBgView.backgroundColor=[UIColor whiteColor];
     [_shanchangdianView addSubview:witheBgView];
     
-    NSArray *titleArr=@[@"选择地区",@"选择商场",@"选择楼层",@"选择品牌",@"门牌号",@"电话",@"验证码"];
+    NSArray *titleArr=@[@"选择地区",@"选择商场",@"选择楼层品牌",@"门牌号",@"电话",@"验证码"];
     
-    for (int i=0; i<7; i++) {
+    for (int i=0; i<6; i++) {
         
         
         UILabel *title_Label=[LTools createLabelFrame:CGRectMake(17, i*50, DEVICE_WIDTH-17-17, 50) title:titleArr[i] font:17 align:NSTextAlignmentLeft textColor:RGBCOLOR(95, 95, 95)];
@@ -325,14 +360,43 @@
         [witheBgView addSubview:lineView];
         
         
+        if (i == 3) {//门牌号
+            _menpaihaoTf = [[UITextField alloc]initWithFrame:CGRectMake(55, 0, title_Label.frame.size.width, title_Label.frame.size.height)];
+            _menpaihaoTf.font = [UIFont systemFontOfSize:17];
+            _menpaihaoTf.textColor = RGBCOLOR(95, 95, 95);
+            _menpaihaoTf.delegate = self;
+            [title_Label addSubview:_menpaihaoTf];
+            [self.chooseTextFieldArray addObject:_menpaihaoTf];
+        }else if (i == 4){//电话
+            _phoneTf = [[UITextField alloc]initWithFrame:CGRectMake(40, 0, title_Label.frame.size.width, title_Label.frame.size.height)];
+            _phoneTf.font = [UIFont systemFontOfSize:17];
+            _phoneTf.textColor = RGBCOLOR(95, 95, 95);
+            _phoneTf.delegate = self;
+            [title_Label addSubview:_phoneTf];
+            [self.chooseTextFieldArray addObject:_phoneTf];
+        }else if (i == 5){//验证码
+            _yanzhengmaTf = [[UITextField alloc]initWithFrame:CGRectMake(55, 0, title_Label.frame.size.width, title_Label.frame.size.height)];
+            _yanzhengmaTf.font = [UIFont systemFontOfSize:17];
+            _yanzhengmaTf.textColor = RGBCOLOR(95, 95, 95);
+            _yanzhengmaTf.delegate = self;
+            [title_Label addSubview:_yanzhengmaTf];
+            [self.chooseTextFieldArray addObject:_yanzhengmaTf];
+            
+            //获取验证码
+            _yanzhengBtn_shangchang = [UIButton buttonWithType:UIButtonTypeCustom];
+            [_yanzhengBtn_shangchang setTitle:@"获取验证码" forState:UIControlStateNormal];
+            [_yanzhengBtn_shangchang setTitleColor:RGBCOLOR(95, 95, 95) forState:UIControlStateNormal];
+            _yanzhengBtn_shangchang.titleLabel.font = [UIFont systemFontOfSize:17];
+            [_yanzhengBtn_shangchang setFrame:CGRectMake(DEVICE_WIDTH-100-17, 0, 90, title_Label.frame.size.height)];
+            [title_Label addSubview:_yanzhengBtn_shangchang];
+            
+        }
         
-//        UITextField *shuRuTextfield=[[UITextField alloc]initWithFrame:CGRectMake(100, i*50, DEVICE_WIDTH, 50)];
-//        shuRuTextfield.tag=200+i;
-//        [witheBgView addSubview:shuRuTextfield];
+        
         
     }
     
-    UIButton *commitButton=[LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(20, 390, DEVICE_WIDTH-40, 44) normalTitle:@"提交" image:nil backgroudImage:nil superView:witheBgView target:self action:@selector(tijiao:)];
+    UIButton *commitButton=[LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(20, 340, DEVICE_WIDTH-40, 44) normalTitle:@"提交" image:nil backgroudImage:nil superView:witheBgView target:self action:@selector(tijiao:)];
     
     commitButton.tag=300;
     commitButton.backgroundColor=RGBCOLOR(208, 40, 73);
@@ -349,9 +413,16 @@
 -(void)tapClicked:(UIGestureRecognizer *)sender{
     NSInteger tapIdTag = sender.view.tag;
     NSLog(@"sender.tag = %ld",(long)tapIdTag);
+    [self gShou];
     
     if (tapIdTag == 1000) {//地区选择
         [self areaShow];
+    }else if (tapIdTag == 1001){//选择商场
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [self prepareNetDataForStoreList];
+        
+    }else if (tapIdTag == 1002){//选择楼层品牌
+        [self prepareNetDataForFloorAndPinpai];
     }
 }
 
@@ -469,8 +540,10 @@
 - (void)textFieldDidBeginEditing:(UITextField *)textField;{
     NSLog(@"textField.tag = %ld",(long)textField.tag);
     
-    _jingpingdianView.scrollEnabled = YES;
-    if (textField.tag == 102||textField.tag == 103) {//电话 验证码
+    
+    //精品店相关
+    if (textField.tag == 102||textField.tag == 103) {//申请精品店的 电话 验证码 选项
+        _jingpingdianView.scrollEnabled = YES;
         if (_jingpingdianView.contentOffset.y>=58) {
             
         }else{
@@ -479,6 +552,33 @@
         
     }
     
+    
+    //商品店相关
+    if (textField == _menpaihaoTf) {//门牌号
+        _shanchangdianView.scrollEnabled = YES;
+        if (_shanchangdianView.contentOffset.y>=58) {
+            
+        }else{
+            _shanchangdianView.contentOffset = CGPointMake(0, 58);
+        }
+    }else if (textField == _phoneTf){//电话
+        _shanchangdianView.scrollEnabled = YES;
+        if (_shanchangdianView.contentOffset.y>=108) {
+            
+        }else{
+            _shanchangdianView.contentOffset = CGPointMake(0, 108);
+        }
+    }else if (textField == _yanzhengmaTf){//验证码
+        _shanchangdianView.scrollEnabled = YES;
+        if (_shanchangdianView.contentOffset.y>=158) {
+            
+        }else{
+            _shanchangdianView.contentOffset = CGPointMake(0, 158);
+        }
+    }
+    
+    
+    
 }
 
 
@@ -486,6 +586,8 @@
 
 -(void)gShou{
     NSLog(@"收键盘了");
+    
+    //精品店相关
     if (_jingpingdianView.contentOffset.y>=58) {
         _jingpingdianView.contentOffset = CGPointMake(0, 0);
     }
@@ -493,6 +595,110 @@
         [tf resignFirstResponder];
     }
     _jingpingdianView.scrollEnabled = NO;
+    
+    //商场店相关
+    if (_shanchangdianView.contentOffset.y >=58) {
+        _shanchangdianView.contentOffset = CGPointMake(0, 0);
+    }
+    for (UITextField *tf in self.chooseTextFieldArray) {
+        [tf resignFirstResponder];
+    }
+    _shanchangdianView.scrollEnabled = NO;
+    
 }
+
+
+
+//通过所选地区请求商店列表
+-(void)prepareNetDataForStoreList{
+    
+    NSLog(@"%d %d",self.provinceIn,self.cityIn);
+    
+    NSString *api = [NSString stringWithFormat:STORELISTWITHPROVINCEANDCITY,NSStringFromInt(self.provinceIn),NSStringFromInt(self.cityIn)];
+    GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+    
+    [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        
+        NSLog(@"%@",result);
+        if ([result isKindOfClass:[NSDictionary class]]) {
+            NSString *total = [result stringValueForKey:@"total"];
+            int totalInt = [total intValue];
+            if (totalInt == 0) {
+                [GMAPI showAutoHiddenMBProgressWithText:@"此地区暂无开通此项服务" addToView:self.view];
+            }else{
+                
+                NSDictionary *listDic = [result dictionaryValueForKey:@"list"];
+                NSArray *keysArray = [listDic allKeys];
+                
+                NSMutableArray *storeArray = [NSMutableArray arrayWithCapacity:1];
+                for (NSString *key in keysArray) {
+                    [storeArray addObject:[listDic objectForKey:key]];
+                }
+                
+                GChooseStoreViewController *ccc = [[GChooseStoreViewController alloc]init];
+                ccc.delegate = self;
+                UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:ccc];
+                ccc.dataArray = (NSArray *)storeArray;
+                [self presentViewController:navc animated:YES completion:^{
+                    
+                }];
+                
+            }
+        }
+        
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        
+        
+    }];
+    
+    
+    
+}
+
+
+//请求某一商场所有楼层品牌
+-(void)prepareNetDataForFloorAndPinpai{
+    
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    NSString *api = nil;
+    if (self.mallId) {
+        api = [NSString stringWithFormat:STOREALLFLOORPINPAI,self.mallId];
+    }else{
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        return;
+    }
+    
+    GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+    [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        
+        NSLog(@"%@",result);
+        
+        GchooseFloorPinpaiViewController *ccc = [[GchooseFloorPinpaiViewController alloc]init];
+        ccc.delegate = self;
+        ccc.havePinpaiFloordic = [result dictionaryValueForKey:@"list"];
+        
+        
+        UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:ccc];
+        
+        [self presentViewController:navc animated:YES completion:^{
+            
+        }];
+        
+        
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+    }];
+    
+}
+
+
+
+
 
 @end

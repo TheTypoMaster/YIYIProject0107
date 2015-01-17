@@ -208,6 +208,16 @@ typedef enum {
 #define PERSON_CHANGEUSERFACE @"http://182.92.158.32/index.php?d=api&c=user_api&m=update_user_info"
 
 
+
+
+//申请店铺界面 
+//根据省市区获取商城列表
+#define STORELISTWITHPROVINCEANDCITY @"http://182.92.158.32/api/mall/listMall?province_id=%@&city_id=%@"
+//某商场所有楼层的品牌列表
+#define STOREALLFLOORPINPAI @"http://182.92.158.32/?d=api&c=mall&m=listBrandFromMall&mall_id=%@"
+
+
+
 #pragma mark - 搭配师相关接口 ******************************add by sn
 /*
  action(该参数有两个值，等于my时表示获取我的搭配师，当popu时表示获取人气搭配师，默认为my)

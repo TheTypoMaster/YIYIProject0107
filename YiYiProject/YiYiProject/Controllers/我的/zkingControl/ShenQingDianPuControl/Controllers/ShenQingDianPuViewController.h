@@ -12,6 +12,14 @@
 
 @property(nonatomic,strong)NSMutableArray *shuruTextFieldArray;//精品店数组
 @property(nonatomic,strong)NSMutableArray *chooseLabelArray;//商场商店
+@property(nonatomic,strong)NSMutableArray *chooseTextFieldArray;//商场店textfield
+
+@property(nonatomic,strong)NSString *mallId;//商场id
+
+
+@property(nonatomic,strong)NSString *floor;//楼层
+@property(nonatomic,strong)NSString *pinpai;//品牌
+
 
 @end
 

@@ -416,6 +416,9 @@
 		E304794B1A6109DE00709985 /* GStorePinpaiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E304794A1A6109DE00709985 /* GStorePinpaiViewController.m */; };
 		E304794D1A6112E400709985 /* guserbannerdefaul@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E304794C1A6112E400709985 /* guserbannerdefaul@2x.png */; };
 		E34E3D671A615B8000DD95BB /* CustomSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = E34E3D661A615B8000DD95BB /* CustomSegmentView.m */; };
+		E35EF1131A6A4B9A00B493A9 /* garea.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = E35EF1121A6A4B9A00B493A9 /* garea.sqlite */; };
+		E35EF1161A6A54A900B493A9 /* GChooseStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E35EF1151A6A54A900B493A9 /* GChooseStoreViewController.m */; };
+		E35EF1231A6A756900B493A9 /* GchooseFloorPinpaiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E35EF1221A6A756900B493A9 /* GchooseFloorPinpaiViewController.m */; };
 		E3601E6F1A61716100CC41FE /* GView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3601E6E1A61716100CC41FE /* GView.m */; };
 		E3601E751A61733300CC41FE /* gdownname@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3601E701A61733300CC41FE /* gdownname@3x.png */; };
 		E3601E761A61733300CC41FE /* gdownname1@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3601E711A61733300CC41FE /* gdownname1@3x.png */; };
@@ -427,8 +430,7 @@
 		E3601E821A61A75700CC41FE /* gcustomstore@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3601E811A61A75700CC41FE /* gcustomstore@3x.png */; };
 		E36BFC841A693974009DAF81 /* DataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = E36BFC831A693974009DAF81 /* DataBase.m */; };
 		E36BFC871A6939FC009DAF81 /* FBCity.m in Sources */ = {isa = PBXBuildFile; fileRef = E36BFC861A6939FC009DAF81 /* FBCity.m */; };
-		E36BFC8E1A69465B009DAF81 /* area 21-14-49-589.plist in Resources */ = {isa = PBXBuildFile; fileRef = E36BFC8C1A69465B009DAF81 /* area 21-14-49-589.plist */; };
-		E36BFC8F1A69465B009DAF81 /* garea.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = E36BFC8D1A69465B009DAF81 /* garea.sqlite */; };
+		E36BFC8E1A69465B009DAF81 /* garea.plist in Resources */ = {isa = PBXBuildFile; fileRef = E36BFC8C1A69465B009DAF81 /* garea.plist */; };
 		E3996EBA1A5E1DBA00673147 /* GEditPersonInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E2F1A5E1DBA00673147 /* GEditPersonInfoViewController.m */; };
 		E3996EBB1A5E1DBA00673147 /* GLeadBuyMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E311A5E1DBA00673147 /* GLeadBuyMapViewController.m */; };
 		E3996EBC1A5E1DBA00673147 /* GMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E331A5E1DBA00673147 /* GMapViewController.m */; };
@@ -1080,6 +1082,11 @@
 		E304794C1A6112E400709985 /* guserbannerdefaul@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "guserbannerdefaul@2x.png"; sourceTree = "<group>"; };
 		E34E3D651A615B8000DD95BB /* CustomSegmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomSegmentView.h; sourceTree = "<group>"; };
 		E34E3D661A615B8000DD95BB /* CustomSegmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomSegmentView.m; sourceTree = "<group>"; };
+		E35EF1121A6A4B9A00B493A9 /* garea.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = garea.sqlite; sourceTree = "<group>"; };
+		E35EF1141A6A54A900B493A9 /* GChooseStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GChooseStoreViewController.h; sourceTree = "<group>"; };
+		E35EF1151A6A54A900B493A9 /* GChooseStoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GChooseStoreViewController.m; sourceTree = "<group>"; };
+		E35EF1211A6A756900B493A9 /* GchooseFloorPinpaiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GchooseFloorPinpaiViewController.h; sourceTree = "<group>"; };
+		E35EF1221A6A756900B493A9 /* GchooseFloorPinpaiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GchooseFloorPinpaiViewController.m; sourceTree = "<group>"; };
 		E3601E6D1A61716100CC41FE /* GView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GView.h; sourceTree = "<group>"; };
 		E3601E6E1A61716100CC41FE /* GView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GView.m; sourceTree = "<group>"; };
 		E3601E701A61733300CC41FE /* gdownname@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gdownname@3x.png"; sourceTree = "<group>"; };
@@ -1095,8 +1102,7 @@
 		E36BFC831A693974009DAF81 /* DataBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataBase.m; sourceTree = "<group>"; };
 		E36BFC851A6939FC009DAF81 /* FBCity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBCity.h; sourceTree = "<group>"; };
 		E36BFC861A6939FC009DAF81 /* FBCity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBCity.m; sourceTree = "<group>"; };
-		E36BFC8C1A69465B009DAF81 /* area 21-14-49-589.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "area 21-14-49-589.plist"; sourceTree = "<group>"; };
-		E36BFC8D1A69465B009DAF81 /* garea.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = garea.sqlite; sourceTree = "<group>"; };
+		E36BFC8C1A69465B009DAF81 /* garea.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = garea.plist; sourceTree = "<group>"; };
 		E3996E2E1A5E1DBA00673147 /* GEditPersonInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GEditPersonInfoViewController.h; sourceTree = "<group>"; };
 		E3996E2F1A5E1DBA00673147 /* GEditPersonInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GEditPersonInfoViewController.m; sourceTree = "<group>"; };
 		E3996E301A5E1DBA00673147 /* GLeadBuyMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLeadBuyMapViewController.h; sourceTree = "<group>"; };
@@ -2731,6 +2737,10 @@
 				E3996E3D1A5E1DBA00673147 /* GViewController.mm */,
 				E30479491A6109DE00709985 /* GStorePinpaiViewController.h */,
 				E304794A1A6109DE00709985 /* GStorePinpaiViewController.m */,
+				E35EF1141A6A54A900B493A9 /* GChooseStoreViewController.h */,
+				E35EF1151A6A54A900B493A9 /* GChooseStoreViewController.m */,
+				E35EF1211A6A756900B493A9 /* GchooseFloorPinpaiViewController.h */,
+				E35EF1221A6A756900B493A9 /* GchooseFloorPinpaiViewController.m */,
 			);
 			path = Gcontrollers;
 			sourceTree = "<group>";
@@ -2738,8 +2748,8 @@
 		E3996E3E1A5E1DBA00673147 /* Gmodels */ = {
 			isa = PBXGroup;
 			children = (
-				E36BFC8C1A69465B009DAF81 /* area 21-14-49-589.plist */,
-				E36BFC8D1A69465B009DAF81 /* garea.sqlite */,
+				E36BFC8C1A69465B009DAF81 /* garea.plist */,
+				E35EF1121A6A4B9A00B493A9 /* garea.sqlite */,
 				E3601E811A61A75700CC41FE /* gcustomstore@3x.png */,
 				E3601E7A1A61733C00CC41FE /* gimv1_back@3x.png */,
 				E3601E701A61733300CC41FE /* gdownname@3x.png */,
@@ -3203,7 +3213,7 @@
 				E3601E7B1A61733C00CC41FE /* gimv1_back@3x.png in Resources */,
 				137B086A1A4EAC9900DE7DCC /* xiaoxi_down@2x.png in Resources */,
 				137B07CE1A4E6FDF00DE7DCC /* fenxiangb@3x.png in Resources */,
-				E36BFC8E1A69465B009DAF81 /* area 21-14-49-589.plist in Resources */,
+				E36BFC8E1A69465B009DAF81 /* garea.plist in Resources */,
 				E304794D1A6112E400709985 /* guserbannerdefaul@2x.png in Resources */,
 				13963F511A4FE3A5007BE68B /* fabu@3x.png in Resources */,
 				137B08631A4EAC9900DE7DCC /* home_up@2x.png in Resources */,
@@ -3268,7 +3278,6 @@
 				138986161A6A18C600F187C9 /* my_tixing@2x.png in Resources */,
 				137B08081A4E6FDF00DE7DCC /* qiu_down@3x.png in Resources */,
 				13684A791A37583E00A508FB /* LaunchScreen.xib in Resources */,
-				E36BFC8F1A69465B009DAF81 /* garea.sqlite in Resources */,
 				13B6904D1A564BF6007FE152 /* t_dapei@2x.png in Resources */,
 				19F7B4391A67FFA600087BCB /* item_ok@2x.png in Resources */,
 				137B07DB1A4E6FDF00DE7DCC /* stianjia@3x.png in Resources */,
@@ -3404,6 +3413,7 @@
 				E3B139171A5EAEE200B9189A /* gjiantouright@2x.png in Resources */,
 				DF6855821A592181004D924F /* ZYQAssetPicker.Bundle in Resources */,
 				13681C891A453DE600671D07 /* login_phone@2x.png in Resources */,
+				E35EF1131A6A4B9A00B493A9 /* garea.sqlite in Resources */,
 				13B690781A580291007FE152 /* BrandViewCell.xib in Resources */,
 				137B07DC1A4E6FDF00DE7DCC /* sweiixn_icon@3x.png in Resources */,
 				137B08641A4EAC9900DE7DCC /* my_down@2x.png in Resources */,
@@ -3589,6 +3599,7 @@
 				19D5E6B51A4FE8E1008401E0 /* YichuListTableViewCell.m in Sources */,
 				13A389961A3893D000ABBACB /* TTaiViewController.m in Sources */,
 				5658C79A1A4C486E00DC86F8 /* MatchWaterflowView.m in Sources */,
+				E35EF1231A6A756900B493A9 /* GchooseFloorPinpaiViewController.m in Sources */,
 				DF626D651A6964E200093568 /* TMPhotoViewQuiltViewCell.m in Sources */,
 				DF6855831A592181004D924F /* ZYQAssetPickerController.m in Sources */,
 				565321431A59769300E43F80 /* FBHelper.m in Sources */,
@@ -3606,6 +3617,7 @@
 				E3996ED11A5E1DBA00673147 /* GmPrepareNetData.m in Sources */,
 				E34E3D671A615B8000DD95BB /* CustomSegmentView.m in Sources */,
 				EF932A191A6236AD00A8BD18 /* WaterFCell.m in Sources */,
+				E35EF1161A6A54A900B493A9 /* GChooseStoreViewController.m in Sources */,
 				E3996EDE1A5E1DBA00673147 /* GStarsView.m in Sources */,
 				E3E832441A666F7600026DAC /* GrootScrollViewFloorTableViewCell.m in Sources */,
 				E3996ED61A5E1DBA00673147 /* MLImageCrop.m in Sources */,
@@ -3731,8 +3743,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iOS Development: Bing Jin (KMZ2AD5LZY)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iOS Development: Bing Jin (KMZ2AD5LZY)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -3752,7 +3764,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "96c93639-ff5c-44ac-ad74-809c23c1de89";
+				PROVISIONING_PROFILE = "0c1b68b6-94ba-43b9-b1d3-dea4d4ca3175";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -3774,8 +3786,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iOS Development: Bing Jin (KMZ2AD5LZY)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iOS Development: Bing Jin (KMZ2AD5LZY)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3788,7 +3800,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "96c93639-ff5c-44ac-ad74-809c23c1de89";
+				PROVISIONING_PROFILE = "0c1b68b6-94ba-43b9-b1d3-dea4d4ca3175";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -3801,8 +3813,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: HAO WANG (PWZU4H562Q)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: HAO WANG (PWZU4H562Q)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YiYiProject/UMengShare/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
@@ -3823,7 +3835,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "96c93639-ff5c-44ac-ad74-809c23c1de89";
+				PROVISIONING_PROFILE = "0c1b68b6-94ba-43b9-b1d3-dea4d4ca3175";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Debug;
@@ -3835,8 +3847,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: HAO WANG (PWZU4H562Q)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: HAO WANG (PWZU4H562Q)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YiYiProject/UMengShare/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
@@ -3857,7 +3869,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "96c93639-ff5c-44ac-ad74-809c23c1de89";
+				PROVISIONING_PROFILE = "0c1b68b6-94ba-43b9-b1d3-dea4d4ca3175";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Release;

@@ -64,12 +64,7 @@
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     }
     
-    //添加商场信息view
-    [self creatUpStoreInfoView];
     
-    
-    //请求网络数据
-    [self prepareNetData];
 }
 
 
@@ -82,12 +77,17 @@
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeText];
     self.rightString = @"关注";
     
-//    UIButton *guanzhuBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [guanzhuBtn setTitle:@"+关注" forState:UIControlStateNormal];
-//    [guanzhuBtn setFrame:CGRectMake(0, 0, 50, 40)];
-//    UIBarButtonItem *righItem = [[UIBarButtonItem alloc]initWithCustomView:guanzhuBtn];
-//    self.navigationItem.rightBarButtonItem = righItem;
-//    [guanzhuBtn addTarget:self action:@selector(ggGuanzhu) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    //添加商场信息view
+    [self creatUpStoreInfoView];
+    
+    
+    //请求网络数据
+    [self prepareNetData];
+    
+    
+    
     
     
     self.myTitleLabel.textColor = [UIColor whiteColor];
