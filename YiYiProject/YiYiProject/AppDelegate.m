@@ -280,7 +280,7 @@
 {
     
     if (headImage.length == 0) {
-        headImage = @"";
+        headImage = @"nnn";
     }
     
     NSString *url = [NSString stringWithFormat:RONCLOUD_GET_TOKEN,userId,userName,headImage];
