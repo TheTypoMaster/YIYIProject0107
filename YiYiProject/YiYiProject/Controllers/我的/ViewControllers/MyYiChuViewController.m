@@ -127,7 +127,7 @@
         for(int j = 0 ;j < columnNum ; j++)
         {
             UIImageView *classificationImageView = [[UIImageView alloc] initWithFrame:CGRectMake(sourceX, sourceY, imageViewWindth, imageViewWindth)];
-            classificationImageView.backgroundColor = RGBCOLOR(180, 180, 180);
+            classificationImageView.backgroundColor = RGBCOLOR(255,155,155);
             CGColorSpaceRef colorSpace=CGColorSpaceCreateDeviceRGB();
             CGColorRef colorRef=CGColorCreate(colorSpace, (CGFloat[]){204/255.0,204/255.0,204/255.0,1});
             [classificationImageView.layer setCornerRadius:5];//设置矩形是个圆角半径
@@ -146,6 +146,16 @@
             UILabel *titleLabel = [LTools createLabelFrame:titleView.bounds title:@"" font:13 align:NSTextAlignmentCenter textColor:[UIColor colorWithHexString:@"ffffff"]];
             [titleView addSubview:titleLabel];
             
+            UIView *titleViewLeft = [[UIView alloc] initWithFrame:CGRectMake(10, classificationImageView.height-10-22, 30, 22)];
+            titleViewLeft.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
+            titleViewLeft.layer.cornerRadius = 10.f;
+            titleViewLeft.clipsToBounds = YES;
+            [classificationImageView addSubview:titleViewLeft];
+            
+            
+            UILabel *titleLabelLeft = [LTools createLabelFrame:titleViewLeft.bounds title:@"" font:13 align:NSTextAlignmentCenter textColor:[UIColor colorWithHexString:@"ffffff"]];
+            [titleViewLeft addSubview:titleLabelLeft];
+            
             sourceX = sourceX+imageViewWindth+11;
             //如果数组是奇数个 那么移除最后一个视图
             if(array.count%2 != 0)
@@ -157,11 +167,27 @@
                 else
                 {
                     titleLabel.text = [[_dataSourceArray objectAtIndex:j +i*2] objectForKey:@"sort_name"];
+                    NSDictionary *dic = [array objectAtIndex:j +i*2];
+                    NSArray * array = [dic objectForKey:@"clothes"];
+                    if(array.count > 0)
+                    {
+                        NSDictionary *dicSmall = [array objectAtIndex:0];
+                        [classificationImageView sd_setImageWithURL:[NSURL URLWithString:[dicSmall objectForKey:@"image_url"]]];
+                    }
+                    titleLabelLeft.text = [NSString stringWithFormat:@"%ld",array.count];
                 }
             }
             else
             {
-                 titleLabel.text = [[_dataSourceArray objectAtIndex:j +i*2] objectForKey:@"sort_name"];
+                titleLabel.text = [[_dataSourceArray objectAtIndex:j +i*2] objectForKey:@"sort_name"];
+                NSDictionary *dic = [array objectAtIndex:j +i*2];
+                NSArray * array = [dic objectForKey:@"clothes"];
+                if(array.count > 0)
+                {
+                    NSDictionary *dicSmall = [array objectAtIndex:0];
+                    [classificationImageView sd_setImageWithURL:[NSURL URLWithString:[dicSmall objectForKey:@"image_url"]]];
+                }
+                 titleLabelLeft.text = [NSString stringWithFormat:@"%ld",array.count];
             }
             
             //点击事件

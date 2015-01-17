@@ -20,6 +20,7 @@
 #import "ApplyForViewController.h"
 #import "TopicDetailViewController.h"
 #import "MatchInfoViewController.h"
+#import "LoginViewController.h"
 
 @interface HomeMatchController ()<SNRefreshDelegate,UITableViewDataSource,TMQuiltViewDataSource,WaterFlowDelegate>
 {
@@ -91,7 +92,7 @@
         fullUrl = [NSString stringWithFormat:GET_DAPEISHI_URL,@"my",[GMAPI getAuthkey],0,1,100];
     }
     
-    NSLog(@"fullUrl ----   %@",[GMAPI getUid]);
+    NSLog(@"fullUrl ----   %@",fullUrl);
     AFHTTPRequestOperation * request = [[AFHTTPRequestOperation alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:fullUrl]]];
     __weak typeof(self)bself = self;
     [request setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -232,9 +233,19 @@
         
         if (index == 0)///我要申请搭配师
         {
-            ApplyForViewController * applyVC = [[ApplyForViewController alloc] init];
-            applyVC.hidesBottomBarWhenPushed = YES;
-            [bself.rootViewController.navigationController pushViewController:applyVC animated:YES];
+            if ([LTools cacheBoolForKey:USER_LONGIN] == NO) {
+                
+                LoginViewController *login = [[LoginViewController alloc]init];
+                
+                UINavigationController *unVc = [[UINavigationController alloc]initWithRootViewController:login];
+                [self.rootViewController presentViewController:unVc animated:YES completion:nil];
+            }else
+            {
+                ApplyForViewController * applyVC = [[ApplyForViewController alloc] init];
+                applyVC.hidesBottomBarWhenPushed = YES;
+                [bself.rootViewController.navigationController pushViewController:applyVC animated:YES];
+
+            }
         }else
         {
             HomeMatchModel * model = [bself.hotMatch_array objectAtIndex:index-1];

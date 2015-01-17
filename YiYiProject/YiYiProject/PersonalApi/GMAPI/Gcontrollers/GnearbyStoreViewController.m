@@ -178,7 +178,7 @@
     
     GtopScrollView *topScrollView = [[GtopScrollView alloc]initWithFrame:CGRectMake(0, 0, floorView.frame.size.width, 28)];
     GRootScrollView *rootScrollView = [[GRootScrollView alloc]initWithFrame:CGRectMake(0, 28, topScrollView.frame.size.width, DEVICE_HEIGHT-_upStoreInfoView.frame.size.height-topScrollView.frame.size.height-64)];
-    rootScrollView.theGRootScrollType = GROOTFLOOR;
+    
     NSLog(@"%@",NSStringFromCGRect(rootScrollView.frame));
     topScrollView.myRootScrollView = rootScrollView;
     rootScrollView.myTopScrollView = topScrollView;
