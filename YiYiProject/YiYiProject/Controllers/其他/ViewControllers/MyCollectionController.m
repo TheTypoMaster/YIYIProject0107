@@ -48,11 +48,11 @@
 //    self.navigationController.navigationBarHidden = YES;
 //}
 
--(void)leftButtonTap:(UIButton *)sender
-{
-    self.navigationController.navigationBarHidden = YES;
-    [self.navigationController popViewControllerAnimated:YES];
-}
+//-(void)leftButtonTap:(UIButton *)sender
+//{
+//    self.navigationController.navigationBarHidden = YES;
+//    [self.navigationController popViewControllerAnimated:YES];
+//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

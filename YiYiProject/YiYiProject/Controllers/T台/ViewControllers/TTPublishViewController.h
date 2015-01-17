@@ -18,6 +18,6 @@
 @property (strong, nonatomic) IBOutlet UITextField *modelTF;
 @property (strong, nonatomic) IBOutlet UITextField *priceTF;
 
-
+@property (nonatomic,retain)UIImage *publishImage;//发布图片
 
 @end

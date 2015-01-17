@@ -18,7 +18,17 @@
 
 #import "PublishHuatiController.h"
 
-@interface RootViewController ()<UITabBarControllerDelegate>
+#import "MyMatchViewController.h"//搭配
+
+#import "MyYiChuViewController.h"//衣橱
+
+#import "MyConcernController.h" //关注
+
+#import "TTPublishViewController.h"//T台发布
+
+#import "MenuView.h"
+
+@interface RootViewController ()<UITabBarControllerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
 @end
 
@@ -152,47 +162,13 @@
     
 }
 
+
 - (void)clickToSelectForIndex:(UIButton *)sender
 {
     if (sender.tag - 100 == 2) {
         NSLog(@"点击加号");
         
-        CHTumblrMenuView *menuView = [[CHTumblrMenuView alloc] init];
-        [menuView addMenuItemWithTitle:@"拍照" andIcon:[UIImage imageNamed:@"t_paizhao"] andSelectedBlock:^{
-            NSLog(@"Text selected");
-            
-            [self clickToPublish:nil];
-            
-        }];
-        [menuView addMenuItemWithTitle:@"相册" andIcon:[UIImage imageNamed:@"t_xiangce"] andSelectedBlock:^{
-            NSLog(@"Photo selected");
-        }];
-        [menuView addMenuItemWithTitle:@"搭配" andIcon:[UIImage imageNamed:@"t_dapei"] andSelectedBlock:^{
-            NSLog(@"Quote selected");
-            
-        }];
-        [menuView addMenuItemWithTitle:@"衣橱" andIcon:[UIImage imageNamed:@"t_yichu"] andSelectedBlock:^{
-            NSLog(@"Link selected");
-            
-        }];
-        [menuView addMenuItemWithTitle:@"收藏" andIcon:[UIImage imageNamed:@"t_shoucang"] andSelectedBlock:^{
-            NSLog(@"Chat selected");
-            
-            MyCollectionController *collection = [[MyCollectionController alloc]init];
-            [self.navigationController pushViewController:collection animated:YES];
-            
-        }];
-        [menuView addMenuItemWithTitle:@"日记" andIcon:[UIImage imageNamed:@"t_rizhi"] andSelectedBlock:^{
-            NSLog(@"Video selected");
-            
-        }];
-        
-        
-        
-        [menuView show];
-        
-//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"点击中间按钮" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-//        [alert show];
+        [self showMenu];
         
         return;
     }
@@ -200,6 +176,36 @@
     self.selectedIndex = sender.tag - 100;
 }
 
+- (void)showMenu {
+    NSMutableArray *items = [[NSMutableArray alloc] initWithCapacity:3];
+    MenuItem *menuItem = [[MenuItem alloc] initWithTitle:@"拍照" iconName:@"t_paizhao" glowColor:[UIColor grayColor] index:0];
+    [items addObject:menuItem];
+    
+    menuItem = [[MenuItem alloc] initWithTitle:@"相册" iconName:@"t_xiangce" glowColor:[UIColor colorWithRed:0.000 green:0.840 blue:0.000 alpha:1.000] index:0];
+    [items addObject:menuItem];
+    
+    menuItem = [[MenuItem alloc] initWithTitle:@"搭配" iconName:@"t_dapei" glowColor:[UIColor colorWithRed:0.687 green:0.000 blue:0.000 alpha:1.000] index:0];
+    [items addObject:menuItem];
+    
+    menuItem = [[MenuItem alloc] initWithTitle:@"衣橱" iconName:@"t_yichu" glowColor:[UIColor colorWithRed:0.687 green:0.000 blue:0.000 alpha:1.000] index:0];
+    [items addObject:menuItem];
+    
+    menuItem = [[MenuItem alloc] initWithTitle:@"收藏" iconName:@"t_shoucang" glowColor:[UIColor colorWithRed:0.687 green:0.000 blue:0.000 alpha:1.000] index:0];
+    [items addObject:menuItem];
+    
+    menuItem = [[MenuItem alloc] initWithTitle:@"关注" iconName:@"t_rizhi" glowColor:[UIColor colorWithRed:0.687 green:0.000 blue:0.000 alpha:1.000] index:0];
+    [items addObject:menuItem];
+    
+    
+    __weak typeof(self)weakSelf = self;
+    MenuView *centerButton = [[MenuView alloc] initWithFrame:self.view.bounds items:items];
+    centerButton.didSelectedItemCompletion = ^(MenuItem *selectedItem) {
+        
+        [weakSelf swapToIndex:selectedItem.index];
+        
+    };
+    [centerButton showMenuAtView:self.view];
+}
 
 - (void)clickToPublish:(UIButton *)sender
 {
@@ -207,5 +213,156 @@
     publish.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:publish animated:YES];
 }
+
+- (void)swapToIndex:(int)index
+{
+    if (![LTools isLogin:self]) {
+        
+        return;
+    }
+    
+    index --;
+    switch (index) {
+        case 0:
+        {
+            NSLog(@"拍照--发布T台");
+            [self clickToPhoto:nil];
+        }
+            break;
+        case 1:
+        {
+            NSLog(@"相册--发布T台");
+            
+            [self clickToAddAlbum:nil];
+        }
+            break;
+        case 2:
+        {
+            NSLog(@"搭配");
+            MyMatchViewController *myMatchVC = [[MyMatchViewController alloc] init];
+            [self pushToViewController:myMatchVC];
+            
+        }
+            break;
+        case 3:
+        {
+            NSLog(@"衣橱");
+            MyYiChuViewController *_myyichuVC=[[MyYiChuViewController alloc]init];
+            [self pushToViewController:_myyichuVC];
+        }
+            break;
+        case 4:
+        {
+            NSLog(@"收藏");
+            MyCollectionController *collection = [[MyCollectionController alloc]init];
+            [self pushToViewController:collection];
+        }
+            break;
+        case 5:
+        {
+            NSLog(@"关注");
+            MyConcernController *concern = [[MyConcernController alloc]init];
+            [self pushToViewController:concern];
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)pushToViewController:(UIViewController *)viewController
+{
+    viewController.hidesBottomBarWhenPushed = YES;
+    [(UINavigationController *)self.selectedViewController pushViewController:viewController animated:YES];
+}
+
+#pragma mark - UITabBarControllerDelegate
+
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
+{
+    NSLog(@"--> %d  %@",tabBarController.selectedIndex,viewController);
+    
+}
+
+#pragma mark - 图片选择
+
+/**
+ *  添加添加图片
+ */
+
+- (void)clickToAddAlbum:(UIButton *)sender
+{
+    UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    picker.delegate = self;
+    [self presentViewController:picker animated:YES completion:nil];
+}
+
+/**
+ *  拍照
+ */
+
+- (void)clickToPhoto:(UIButton *)sender
+{
+    UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    picker.delegate = self;
+    [self presentViewController:picker animated:YES completion:nil];
+}
+
+#pragma mark - UIImagePickerDelegate
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
+    
+    if ([mediaType isEqualToString:@"public.image"]) {
+        
+        //压缩图片 不展示原图
+        UIImage *originImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+        
+        
+        UIImage * scaleImage = [LTools scaleToSizeWithImage:originImage size:CGSizeMake(originImage.size.width>1024?1024:originImage.size.width,originImage.size.width>1024?originImage.size.height*1024/originImage.size.width:originImage.size.height)];
+        //        UIImage *scaleImage = [self scaleImage:originImage toScale:0.5];
+        
+        NSData *data;
+        
+        //以下这两步都是比较耗时的操作，最好开一个HUD提示用户，这样体验会好些，不至于阻塞界面
+        if (UIImagePNGRepresentation(scaleImage) == nil) {
+            //将图片转换为JPG格式的二进制数据
+            data = UIImageJPEGRepresentation(scaleImage, 0.4);
+        } else {
+            //将图片转换为PNG格式的二进制数据
+            data = UIImagePNGRepresentation(scaleImage);
+        }
+        
+        //将二进制数据生成UIImage
+        UIImage *image = [UIImage imageWithData:data];
+        
+        //        [self addPhoto:image];
+        
+        TTPublishViewController *publish = [[TTPublishViewController alloc]init];
+        publish.publishImage = image;
+        
+        [self pushToViewController:publish];
+        
+        
+        [picker dismissViewControllerAnimated:NO completion:^{
+            
+            
+        }];
+        
+    }
+    
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
+
 
 @end

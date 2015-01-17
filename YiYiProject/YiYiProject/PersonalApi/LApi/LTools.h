@@ -154,6 +154,8 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
 
 #pragma mark - 验证有效性
 
++ (BOOL) isEmpty:(NSString *) str;//是否为空
+
 + (BOOL)isDictinary:(id)object;//是否是字典
 
 /**

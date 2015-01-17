@@ -8,6 +8,10 @@
 
 #import "MyCollectionController.h"
 
-@interface ShenQingDianPuViewController : MyViewController
+@interface ShenQingDianPuViewController : MyViewController<UITextFieldDelegate>
+
+@property(nonatomic,strong)NSMutableArray *shuruTextFieldArray;//精品店数组
+@property(nonatomic,strong)NSMutableArray *chooseLabelArray;//商场商店
 
 @end
+

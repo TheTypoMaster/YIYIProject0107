@@ -112,6 +112,9 @@ typedef void(^ GCllocationBlock)(NSDictionary *theLocationDic);
 
 
 
+//地区选择相关
++ (int)cityIdForName:(NSString *)cityName;
+
 
 
 @end

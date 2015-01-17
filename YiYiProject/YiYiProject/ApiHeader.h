@@ -36,7 +36,11 @@ alpha:(a)]
 #define USER_NAME @"username"
 #define USER_PWD @"userPw"
 #define USER_UID @"useruid"
-#define USER_LONGIN @"user_in" //no是未登陆  yes是已登陆
+
+//两个登陆标识
+#define LOGIN_SERVER_STATE @"user_login_state" //登陆衣加衣服务器 no是未登陆  yes是已登陆
+#define LOGIN_RONGCLOUD_STATE @"rongcloudLoginState"//融云登陆状态
+
 #define USER_AUTHOD @"user_authod"
 #define USER_CHECKUSER @"checkfbuser"
 #define USER_HEAD_IMAGEURL @"userHeadImageUrl"//头像url
@@ -114,7 +118,11 @@ typedef enum {
 #define RONCLOUD_GET_TOKEN @"http://182.92.158.32/index.php?d=api&c=chat&m=get_token&user_id=%@&name=%@&portrait_uri=%@"//获取融云 token
 
 //登录
-#define USER_LOGIN_ACTION @"http://182.92.158.32/index.php?d=api&c=user_api&m=login&type=%@&password=%@&thirdid=%@&nickname=%@&thirdphoto=%@&gender=%d&devicetoken=%@&mobile=%@"
+#define USER_LOGIN_ACTION @"http://182.92.158.32/index.php?d=api&c=user_api&m=login&type=%@&password=%@&thirdid=%@&nickname=%@&third_photo=%@&gender=%d&devicetoken=%@&mobile=%@"
+
+//退出登录
+
+#define USER_LOGOUT_ACTION @"http://182.92.158.32/index.php?d=api&c=user_api&m=login_out&authcode=%@"
 
 //注册
 #define USER_REGISTER_ACTION @"http://182.92.158.32/index.php?d=api&c=user_api&m=register&username=%@&password=%@&gender=%d&type=%d&code=%d&mobile=%@"
