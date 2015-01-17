@@ -149,7 +149,7 @@
     
     
     UIImageView * background_imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,DEVICE_WIDTH,150)];
-    background_imageView.image = [UIImage imageNamed:@"dapeishi_bg"];
+    background_imageView.image = [UIImage imageNamed:@"my_bg.png"];
     background_imageView.userInteractionEnabled = YES;
     [sectionView addSubview:background_imageView];
     
