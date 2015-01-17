@@ -13,7 +13,7 @@
 #import "LShareSheetView.h"
 
 #import "CustomInputView.h"
-
+#import "TopicCommentsModel.h"
 @interface TTaiDetailController ()<RefreshDelegate,UITableViewDataSource>
 {
     TDetailModel *detail_model;
@@ -160,6 +160,29 @@
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"请求t台评论数据 ---  %@",result);
+        
+        NSArray * commentsArray = [result objectForKey:@"list"];
+        
+        for (NSDictionary * dic in commentsArray)
+        {
+//            TopicCommentsModel * model = [[TopicCommentsModel alloc] init];
+//            model.reply_id = [NSString stringWithFormat:@"%@",[dic objectForKey:@"post_id"]];
+//            model.repost_uid = [NSString stringWithFormat:@"%@",[dic objectForKey:@"uid"]];
+//            model.reply_id = [NSString stringWithFormat:@"%@",[dic objectForKey:@"post_id"]];
+//            model.reply_id = [NSString stringWithFormat:@"%@",[dic objectForKey:@"post_id"]];
+//            model.reply_id = [NSString stringWithFormat:@"%@",[dic objectForKey:@"post_id"]];
+//            model.reply_id = [NSString stringWithFormat:@"%@",[dic objectForKey:@"post_id"]];
+//            model.reply_id = [NSString stringWithFormat:@"%@",[dic objectForKey:@"post_id"]];
+//            model.reply_id = [NSString stringWithFormat:@"%@",[dic objectForKey:@"post_id"]];
+            
+            
+            
+            
+        }
+        
+        
+        
+        
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
