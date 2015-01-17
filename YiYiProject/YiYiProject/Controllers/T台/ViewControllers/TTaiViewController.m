@@ -60,7 +60,7 @@
 {
     
     //判断是否登录
-    if ([LTools cacheBoolForKey:USER_LONGIN] == NO) {
+    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
         
         LoginViewController *login = [[LoginViewController alloc]init];
         
@@ -233,12 +233,16 @@
 
 - (CGFloat)waterHeightForCellIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat aHeight = 0.f;
     TPlatModel *aModel = waterFlow.dataArray[indexPath.row];
-    aHeight = [aModel.image[@"height"]floatValue];
-    CGFloat aWidth = [aModel.image[@"width"]floatValue];
+    CGFloat image_height = [aModel.image[@"height"]floatValue];
+    CGFloat image_width = [aModel.image[@"width"]floatValue];
     
-    return [self height:aHeight / 2.f aWidth:aWidth] + 55 + 36;
+    if (image_width == 0.0) {
+        image_width = image_height;
+    }
+    float rate = image_height/image_width;
+    
+    return (DEVICE_WIDTH-30)/2.0*rate + 55 + 36;
 }
 - (CGFloat)waterViewNumberOfColumns
 {

@@ -8,6 +8,8 @@
 
 #import "HuoDongListTableViewCell.h"
 
+//#import "LTools.h"
+
 @implementation HuoDongListTableViewCell
 
 - (void)awakeFromNib {
@@ -28,7 +30,7 @@
 
 -(void)setAllViews{
     
-    self.titleLabel=[LTools createLabelFrame:CGRectMake(0, 0, 0, 0) title:@"" font:16 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
+//    self.titleLabel=[LTools createLabelFrame:CGRectMake(0, 0, 0, 0) title:@"" font:16 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
     
     
 

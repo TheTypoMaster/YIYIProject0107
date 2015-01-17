@@ -17,7 +17,7 @@
 #import "GShowStarsView.h"
 #import "YIYIChatViewController.h"
 
-@interface MatchInfoViewController ()<UITableViewDataSource,SNRefreshDelegate,WaterFlowDelegate,TMQuiltViewDataSource>
+@interface MatchInfoViewController ()<UIAlertViewDelegate,UITableViewDataSource,SNRefreshDelegate,WaterFlowDelegate,TMQuiltViewDataSource>
 {
     int topic_data_page;
     int match_data_page;
@@ -56,6 +56,9 @@
 {
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+    
+    [waterFlow removeObserver:self forKeyPath:@"isShowUp"];
+    [_myTableView removeObserver:self forKeyPath:@"offsetY"];
 }
 
 
@@ -77,7 +80,7 @@
     [_myTableView addObserver:self forKeyPath:@"offsetY" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
 
     
-    [self loadSectionView];
+//    [self loadSectionView];
     [self getMatchInfo];
     [self getTopicData];
     
@@ -120,28 +123,26 @@
 #pragma mark - 返回
 -(void)back:(UIButton *)button
 {
-    @try{
-        [waterFlow removeObserver:self forKeyPath:@"isShowUp"];
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-    @catch(NSException *exception) {
-        NSLog(@"exception:%@", exception);
-    }
-    @finally {
-        
-    }
+    [waterFlow removeObserver:self forKeyPath:@"isShowUp"];
+    [self.navigationController popViewControllerAnimated:YES];
     
 }
 #pragma mark - 邀请搭配
 -(void)rightButtonTap:(UIButton *)button
 {
-    
+    UIAlertView * myAlertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:[NSString stringWithFormat:@"将向%@搭配师开放我的体型和衣橱",_theInfo.name] delegate:self cancelButtonTitle:@"不同意" otherButtonTitles:@"同意",nil];
+    [myAlertView show];
 }
 
 #pragma mark - Section View
 -(void)loadSectionView
 {
     float height = 150;
+    
+    if (sectionView)
+    {
+        [sectionView removeFromSuperview];
+    }
     
     sectionView = [[UIView alloc] init];
     sectionView.backgroundColor = [UIColor whiteColor];
@@ -201,6 +202,7 @@
     attention_button.titleLabel.font = [UIFont boldSystemFontOfSize:14];
     attention_button.layer.masksToBounds = YES;
     attention_button.layer.cornerRadius = 12;
+    [attention_button setTitle:@"+关注" forState:UIControlStateNormal];
     [attention_button addTarget:self action:@selector(attentionTap:) forControlEvents:UIControlEventTouchUpInside];
     [background_imageView addSubview:attention_button];
     
@@ -408,7 +410,7 @@
     fullUrl = [NSString stringWithFormat:ATTENTTION_SOMEBODY_URL,[GMAPI getAuthkey],isAttention?@"can_friend":@"at_friend",_theInfo.uid];
     
     AFHTTPRequestOperation * request = [[AFHTTPRequestOperation alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:fullUrl]]];
-    
+    __weak typeof(self)bself = self;
     [request setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSDictionary * allDic = [operation.responseString objectFromJSONString];
@@ -416,7 +418,7 @@
         if ([errcode intValue] == 0)
         {
             [hud hide:YES];
-            
+            bself.theInfo.relation = isAttention?@"2":@"1";
             [LTools showMBProgressWithText:isAttention?@"成功取消关注":@"关注成功" addToView:self.view];
             [attention_button setTitle:isAttention?@"+关注":@"-关注" forState:UIControlStateNormal];
         }else
@@ -518,16 +520,16 @@
         
         _myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
-        waterFlow = [[MatchWaterflowView alloc]initWithFrame:CGRectMake(0,0,DEVICE_WIDTH,DEVICE_HEIGHT-64) waterDelegate:self waterDataSource:self];
-        waterFlow.backgroundColor = RGBCOLOR(240, 230, 235);
-        [cell.contentView addSubview:waterFlow];
-        [waterFlow removeHeaderView];
-        [waterFlow showRefreshHeader:NO];
-        [waterFlow reloadData:_array_matchCase total:100];
-        
-        [waterFlow addObserver:self forKeyPath:@"isShowUp" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
-        
-        
+        if (_array_matchCase.count) {
+            waterFlow = [[MatchWaterflowView alloc]initWithFrame:CGRectMake(0,0,DEVICE_WIDTH,DEVICE_HEIGHT-64) waterDelegate:self waterDataSource:self];
+            waterFlow.backgroundColor = RGBCOLOR(240, 230, 235);
+            [cell.contentView addSubview:waterFlow];
+            [waterFlow removeHeaderView];
+            [waterFlow showRefreshHeader:NO];
+            [waterFlow reloadData:_array_matchCase total:100];
+            
+            [waterFlow addObserver:self forKeyPath:@"isShowUp" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+        }
         return cell;
     }
 }
@@ -806,6 +808,41 @@
     return cell;
 }
 
+-(void)dealloc
+{
+    _array_matchCase = nil;
+    _array_topic = nil;
+    _myTableView = nil;
+    waterFlow = nil;
+}
+
+
+#pragma mark - UIAlertViewDelegate
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1)
+    {
+        BOOL isAttention;
+        if ([_theInfo.relation intValue] == 1)///已关注
+        {
+            isAttention = YES;
+        }else if ([_theInfo.relation intValue] == 2)///未关注
+        {
+            isAttention = NO;
+        }else if ([_theInfo.relation intValue] == 3)///已互相关注
+        {
+            isAttention = YES;
+        }
+        
+        if (isAttention) {
+            [LTools showMBProgressWithText:@"邀请成功" addToView:self.view];
+        }else
+        {
+            [self attentionTap:nil];
+        }
+        
+    }
+}
 
 
 - (void)didReceiveMemoryWarning {

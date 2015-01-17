@@ -9,7 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+
+
 #import "MBProgressHUD.h"
+
+
 
 #import "AppDelegate.h"
 
@@ -153,6 +157,8 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
 + (BOOL)NSStringIsNull:(NSString *)string;//判断字符串是否全为空格
 
 #pragma mark - 验证有效性
+
++ (BOOL) isEmpty:(NSString *) str;//是否为空
 
 + (BOOL)isDictinary:(id)object;//是否是字典
 

@@ -233,7 +233,7 @@
         
         if (index == 0)///我要申请搭配师
         {
-            if ([LTools cacheBoolForKey:USER_LONGIN] == NO) {
+            if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
                 
                 LoginViewController *login = [[LoginViewController alloc]init];
                 

@@ -84,7 +84,7 @@ typedef enum{
     
     
     //判断是否登录
-    if ([LTools cacheBoolForKey:USER_LONGIN] == NO) {
+    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
         
         LoginViewController *login = [[LoginViewController alloc]init];
         
@@ -126,7 +126,7 @@ typedef enum{
     [self.view addSubview:_tableView];
     
     
-    if ([LTools cacheBoolForKey:USER_LONGIN] == YES){
+    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == YES){
         [self GgetUserInfo];
     }
     
@@ -339,7 +339,7 @@ typedef enum{
     
     
     //判断是否登录
-    if ([LTools cacheBoolForKey:USER_LONGIN] == NO) {
+    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
         
         LoginViewController *login = [[LoginViewController alloc]init];
         
