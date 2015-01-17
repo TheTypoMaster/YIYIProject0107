@@ -120,6 +120,10 @@ typedef enum {
 //登录
 #define USER_LOGIN_ACTION @"http://182.92.158.32/index.php?d=api&c=user_api&m=login&type=%@&password=%@&thirdid=%@&nickname=%@&third_photo=%@&gender=%d&devicetoken=%@&mobile=%@"
 
+//退出登录
+
+#define USER_LOGOUT_ACTION @"http://182.92.158.32/index.php?d=api&c=user_api&m=login_out&authcode=%@"
+
 //注册
 #define USER_REGISTER_ACTION @"http://182.92.158.32/index.php?d=api&c=user_api&m=register&username=%@&password=%@&gender=%d&type=%d&code=%d&mobile=%@"
 //获取验证码
@@ -394,6 +398,12 @@ typedef enum {
 
 #define POST_TLIST_URL @"http://182.92.158.32/?d=api&c=tplat&m=listT"  //获取个人资料
 
+
+#pragma mark - 消息
+
+#define MESSAGE_GET_MINE @"http://182.92.158.32/index.php?d=api&c=msg&m=get_my_msg&authcode=%@"//我的消息
+
+#define MESSAGE_GET_LIST @"http://182.92.158.32/index.php?d=api&c=msg&m=get_special_msg&action=%@&authcode=%@"//action= yy(衣加衣) shop（商家） dynamic（动态）
 
 #endif
 

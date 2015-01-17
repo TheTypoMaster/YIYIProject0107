@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+
+#import "MessageModel.h"
 /**
  *  消息
  */
@@ -16,5 +18,9 @@
 @property (strong, nonatomic) IBOutlet UILabel *timeLabel;
 @property (strong, nonatomic) IBOutlet UILabel *messageLabel;
 @property (strong, nonatomic) IBOutlet UIButton *clickButton;
+@property (strong, nonatomic) IBOutlet UILabel *unreadNumLabel;
+
+- (void)setCellWithModel:(MessageModel *)aModel
+             placeHolder:(NSString *)placeHolder;
 
 @end
