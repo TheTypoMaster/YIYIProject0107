@@ -350,8 +350,6 @@
 		19F7B44C1A67FFA600087BCB /* UMFeedbackTableViewCellRight.m in Sources */ = {isa = PBXBuildFile; fileRef = 19F7B42F1A67FFA600087BCB /* UMFeedbackTableViewCellRight.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		19F7B44D1A67FFA600087BCB /* UMFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19F7B4311A67FFA600087BCB /* UMFeedbackViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		19F7B44E1A67FFA600087BCB /* UMFeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 19F7B4321A67FFA600087BCB /* UMFeedbackViewController.xib */; };
-		19F7B4531A6A775600087BCB /* HuoDongListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19F7B4521A6A775600087BCB /* HuoDongListTableViewCell.m */; };
-		19F7B4541A6A775600087BCB /* HuoDongListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19F7B4521A6A775600087BCB /* HuoDongListTableViewCell.m */; };
 		5640317A1A4ED57100680E08 /* TopicDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 564031791A4ED57100680E08 /* TopicDetailViewController.m */; };
 		5640317E1A4EEBC800680E08 /* stars_half_image@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5640317B1A4EEBC800680E08 /* stars_half_image@3x.png */; };
 		5640317F1A4EEBC800680E08 /* stars_selected_image@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5640317C1A4EEBC800680E08 /* stars_selected_image@3x.png */; };
@@ -989,8 +987,6 @@
 		19F7B4301A67FFA600087BCB /* UMFeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMFeedbackViewController.h; sourceTree = "<group>"; };
 		19F7B4311A67FFA600087BCB /* UMFeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMFeedbackViewController.m; sourceTree = "<group>"; };
 		19F7B4321A67FFA600087BCB /* UMFeedbackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UMFeedbackViewController.xib; sourceTree = "<group>"; };
-		19F7B4511A6A775600087BCB /* HuoDongListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuoDongListTableViewCell.h; sourceTree = "<group>"; };
-		19F7B4521A6A775600087BCB /* HuoDongListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HuoDongListTableViewCell.m; sourceTree = "<group>"; };
 		316989CEF30908957578BF60 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		454167C7D51D19BFE1D2B4D2 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		564031781A4ED57100680E08 /* TopicDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopicDetailViewController.h; sourceTree = "<group>"; };
@@ -2536,7 +2532,6 @@
 		19B9372C1A5ACF5F009B359F /* zkingControl */ = {
 			isa = PBXGroup;
 			children = (
-				19F7B4501A6A76E900087BCB /* HuodongControl */,
 				19F7B40F1A67FFA600087BCB /* chat */,
 				19B9372D1A5ACF93009B359F /* ShenQingDianPuControl */,
 			);
@@ -2650,15 +2645,6 @@
 				19F7B4281A67FFA600087BCB /* umeng_logo1.png */,
 			);
 			path = Images;
-			sourceTree = "<group>";
-		};
-		19F7B4501A6A76E900087BCB /* HuodongControl */ = {
-			isa = PBXGroup;
-			children = (
-				19F7B4511A6A775600087BCB /* HuoDongListTableViewCell.h */,
-				19F7B4521A6A775600087BCB /* HuoDongListTableViewCell.m */,
-			);
-			path = HuodongControl;
 			sourceTree = "<group>";
 		};
 		565321311A59769300E43F80 /* RichViewAndGif */ = {
@@ -3603,7 +3589,6 @@
 				13CD364A1A3C6A870068C12A /* EGORefreshTableHeaderView.m in Sources */,
 				56DAB2131A46C66E00273140 /* MatchCaseModel.m in Sources */,
 				E3996ED51A5E1DBA00673147 /* GtopScrollView.m in Sources */,
-				19F7B4531A6A775600087BCB /* HuoDongListTableViewCell.m in Sources */,
 				E3996EBC1A5E1DBA00673147 /* GMapViewController.m in Sources */,
 				13684A711A37583E00A508FB /* ViewController.m in Sources */,
 				E3996ECD1A5E1DBA00673147 /* CWSegmentedControl.m in Sources */,
@@ -3762,7 +3747,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				19F7B4541A6A775600087BCB /* HuoDongListTableViewCell.m in Sources */,
 				13684A851A37583E00A508FB /* YiYiProjectTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
