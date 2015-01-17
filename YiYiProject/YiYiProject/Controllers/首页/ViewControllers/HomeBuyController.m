@@ -74,7 +74,7 @@
 
 - (void)clickToZan:(UIButton *)sender
 {
-    if (![LTools isLogin:self]) {
+    if (![LTools isLogin:self.rootViewController]) {
         
         return;
     }

@@ -36,7 +36,11 @@ alpha:(a)]
 #define USER_NAME @"username"
 #define USER_PWD @"userPw"
 #define USER_UID @"useruid"
-#define USER_LONGIN @"user_in" //no是未登陆  yes是已登陆
+
+//两个登陆标识
+#define LOGIN_SERVER_STATE @"user_login_state" //登陆衣加衣服务器 no是未登陆  yes是已登陆
+#define LOGIN_RONGCLOUD_STATE @"rongcloudLoginState"//融云登陆状态
+
 #define USER_AUTHOD @"user_authod"
 #define USER_CHECKUSER @"checkfbuser"
 #define USER_HEAD_IMAGEURL @"userHeadImageUrl"//头像url

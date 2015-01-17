@@ -261,37 +261,35 @@
  */
 - (IBAction)clickToContact:(id)sender {
     
-    //判断是否登录
-//    if ([LTools cacheBoolForKey:USER_LONGIN] == NO) {
-//        
-//        LoginViewController *login = [[LoginViewController alloc]init];
-//        
-//        UINavigationController *unVc = [[UINavigationController alloc]initWithRootViewController:login];
-//        
-//        [self presentViewController:unVc animated:YES completion:nil];
-//        
-//        return;
-//        
-//    }
+    BOOL rong_login = [LTools cacheBoolForKey:LOGIN_RONGCLOUD_STATE];
     
+    //服务器登陆成功
     if ([LTools isLogin:self]) {
         
-        NSString *useriId;
-        NSString *userName;
-        if ([aModel.mall_info isKindOfClass:[NSDictionary class]]) {
+        //融云登陆成功
+        if (rong_login) {
             
-            useriId = aModel.mall_info[@"uid"];
-            userName = aModel.mall_info[@"mall_name"];
+            NSString *useriId;
+            NSString *userName;
+            if ([aModel.mall_info isKindOfClass:[NSDictionary class]]) {
+                
+                useriId = aModel.mall_info[@"uid"];
+                userName = aModel.mall_info[@"mall_name"];
+            }
+            
+            YIYIChatViewController *contact = [[YIYIChatViewController alloc]init];
+            contact.currentTarget = useriId;
+            contact.currentTargetName = userName;
+            contact.portraitStyle = RCUserAvatarCycle;
+            contact.enableSettings = NO;
+            contact.conversationType = ConversationType_PRIVATE;
+            
+            [self.navigationController pushViewController:contact animated:YES];
+        }else
+        {
+            NSLog(@"服务器登陆成功了,融云未登陆");
         }
         
-        YIYIChatViewController *contact = [[YIYIChatViewController alloc]init];
-        contact.currentTarget = useriId;
-        contact.currentTargetName = userName;
-        contact.portraitStyle = RCUserAvatarCycle;
-        contact.enableSettings = NO;
-        contact.conversationType = ConversationType_PRIVATE;
-        
-        [self.navigationController pushViewController:contact animated:YES];
     }
 }
 
