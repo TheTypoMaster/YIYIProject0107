@@ -120,6 +120,10 @@ typedef enum {
 //登录
 #define USER_LOGIN_ACTION @"http://182.92.158.32/index.php?d=api&c=user_api&m=login&type=%@&password=%@&thirdid=%@&nickname=%@&third_photo=%@&gender=%d&devicetoken=%@&mobile=%@"
 
+//退出登录
+
+#define USER_LOGOUT_ACTION @"http://182.92.158.32/index.php?d=api&c=user_api&m=login_out&authcode=%@"
+
 //注册
 #define USER_REGISTER_ACTION @"http://182.92.158.32/index.php?d=api&c=user_api&m=register&username=%@&password=%@&gender=%d&type=%d&code=%d&mobile=%@"
 //获取验证码
