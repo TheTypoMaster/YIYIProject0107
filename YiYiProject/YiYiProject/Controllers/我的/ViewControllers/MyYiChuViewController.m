@@ -47,6 +47,7 @@
     [self createRootScrollView];
     [self createHeadView];
     [self createRightBarItem];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(prepareMyYiChuListData) name:@"refreshMyYiChuList" object:nil];
     
     // Do any additional setup after loading the view.
 }
@@ -469,7 +470,7 @@
             UIImagePickerController *picker=[[UIImagePickerController alloc]init];
             picker.delegate=self;
             picker.sourceType=sourceType;
-            picker.allowsEditing=YES;
+            //picker.allowsEditing=YES;
             [self presentViewController:picker animated:YES completion:^{
                 
             }];

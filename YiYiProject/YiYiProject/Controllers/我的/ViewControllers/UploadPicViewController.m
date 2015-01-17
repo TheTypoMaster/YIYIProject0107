@@ -276,6 +276,7 @@
     NSString *str = [chooseDic objectForKey:@"sort_id"];
     if(str.length == 0)
     {
+        [LTools showMBProgressWithText:@"请选择分类" addToView:self.view];
         return;
     }
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -308,6 +309,8 @@
                                        if (erroCode == 0) {
                                            NSString *str = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
                                            NSLog(@"....str = %@",str);
+                                           [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshMyYiChuList" object:nil];
+                                           [self.navigationController popViewControllerAnimated:YES];
                                        }
                                        
                                    }
@@ -372,7 +375,7 @@
         UIImagePickerController *picker=[[UIImagePickerController alloc]init];
         picker.delegate=self;
         picker.sourceType=sourceType;
-        picker.allowsEditing=YES;
+        //picker.allowsEditing=YES;
         [self presentViewController:picker animated:YES completion:^{
             
         }];
