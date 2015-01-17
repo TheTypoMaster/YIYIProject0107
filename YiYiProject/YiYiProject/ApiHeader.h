@@ -393,6 +393,7 @@ typedef enum {
 
 #define MESSAGE_GET_MINE @"http://182.92.158.32/index.php?d=api&c=msg&m=get_my_msg&authcode=%@"//我的消息
 
+#define MESSAGE_GET_LIST @"http://182.92.158.32/index.php?d=api&c=msg&m=get_special_msg&action=%@&authcode=%@"//action= yy(衣加衣) shop（商家） dynamic（动态）
 
 #endif
 

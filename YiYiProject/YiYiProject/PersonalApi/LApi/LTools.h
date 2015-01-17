@@ -128,6 +128,8 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
 +(NSString *)timechange2:(NSString *)placetime;
 +(NSString *)timechange3:(NSString *)placetime;
 
++(NSString *)timechangeMMDD:(NSString *)placetime;
+
 +(NSString *)timechangeAll:(NSString *)placetime;//时间戳 显示全
 
 +(NSString*)showTimeWithTimestamp:(NSString*)myTime;//不满一天显示时、分 大于一天显示时间间隔

@@ -748,6 +748,19 @@
     NSString *confromTimespStr = [formatter stringFromDate:confromTimesp];
     return confromTimespStr;
 }
+/**
+ *  时间转化格式:MM月dd日
+ */
++(NSString *)timechangeMMDD:(NSString *)placetime
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init] ;
+    [formatter setDateStyle:NSDateFormatterMediumStyle];
+    [formatter setTimeStyle:NSDateFormatterShortStyle];
+    [formatter setDateFormat:@"MM月dd日"];
+    NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[placetime doubleValue]];
+    NSString *confromTimespStr = [formatter stringFromDate:confromTimesp];
+    return confromTimespStr;
+}
 
 +(NSString *)timechangeAll:(NSString *)placetime
 {
