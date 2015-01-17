@@ -28,7 +28,12 @@
 
 #import "MenuView.h"
 
+#import "RCIM.h"
+
 @interface RootViewController ()<UITabBarControllerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+{
+    MessageViewController *messageVc;
+}
 
 @end
 
@@ -38,6 +43,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self prepareItems];
+    
+    [self getMyMessage];
     
     self.delegate = self;
 }
@@ -364,5 +371,76 @@
     }];
 }
 
+
+#pragma mark - 获取未读消息
+
+#pragma mark - 网络请求
+
+- (void)getMyMessage
+{
+    __weak typeof(self)weakSelf = self;
+    NSString *url = [NSString stringWithFormat:MESSAGE_GET_MINE,[GMAPI getAuthkey]];
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        NSLog(@"result %@",result);
+        
+        if ([LTools isDictinary:result]) {
+            
+            MessageModel *a_yiyi_model = [[MessageModel alloc]initWithDictionary:[result objectForKey:@"yy_msg"]];
+            MessageModel *a_shop_model = [[MessageModel alloc]initWithDictionary:[result objectForKey:@"shop_msg"]];
+            MessageModel *a_other_model = [[MessageModel alloc]initWithDictionary:[result objectForKey:@"dynamic_msg"]];
+            
+            [LDataInstance shareInstance].shop_model = a_yiyi_model;
+            [LDataInstance shareInstance].yiyi_model = a_shop_model;
+            [LDataInstance shareInstance].other_model = a_other_model;
+            
+            [weakSelf updateTabbarNumber:[weakSelf unreadMessgeNum]];
+        }
+        
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        
+    }];
+}
+/**
+ *  获取未读消息条数
+ */
+- (int)unreadMessgeNum
+{
+    int sum = 0;
+    
+    MessageModel *yiyi_model = [LDataInstance shareInstance].yiyi_model;
+    MessageModel *shop_model = [LDataInstance shareInstance].shop_model;
+    MessageModel *other_model = [LDataInstance shareInstance].other_model;
+    
+    int rong_num = [[RCIM sharedRCIM] getTotalUnreadCount];
+    
+    if (rong_num <= 0) {
+        rong_num = 0;
+    }
+    
+    sum = yiyi_model.unread_msg_num + shop_model.unread_msg_num + other_model.unread_msg_num + rong_num;
+    
+    return sum;
+}
+
+/**
+ *  更新未读消息显示
+ *
+ *  @param number 未读数
+ */
+- (void)updateTabbarNumber:(int)number
+{
+    NSString *number_str = nil;
+    if (number > 0) {
+        number_str = [NSString stringWithFormat:@"%d",number];
+    }
+    
+    UINavigationController *unvc = [self.viewControllers objectAtIndex:3];
+    unvc.tabBarItem.badgeValue = number_str;
+    
+    [UIApplication sharedApplication].applicationIconBadgeNumber = [number_str intValue];
+}
 
 @end

@@ -191,6 +191,8 @@
 		1389862A1A6A433D00F187C9 /* sQQ_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 138986271A6A433D00F187C9 /* sQQ_icon@2x.png */; };
 		1389862B1A6A433D00F187C9 /* stianjia@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 138986281A6A433D00F187C9 /* stianjia@2x.png */; };
 		1389862C1A6A433D00F187C9 /* sweiixn_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 138986291A6A433D00F187C9 /* sweiixn_icon@2x.png */; };
+		138986301A6A5DDF00F187C9 /* MessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1389862F1A6A5DDF00F187C9 /* MessageModel.m */; };
+		138986331A6A6A5B00F187C9 /* LDataInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = 138986321A6A6A5B00F187C9 /* LDataInstance.m */; };
 		138C2BF41A39E09200EA59F5 /* UMSocialLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 138C2BCB1A39E09200EA59F5 /* UMSocialLocalizable.strings */; };
 		138C2BF51A39E09200EA59F5 /* libUMSocial_Sdk_4.2.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 138C2BD91A39E09200EA59F5 /* libUMSocial_Sdk_4.2.1.a */; };
 		138C2BF61A39E09200EA59F5 /* UMSCommentDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 138C2BDB1A39E09200EA59F5 /* UMSCommentDetailController.xib */; };
@@ -742,6 +744,10 @@
 		138986271A6A433D00F187C9 /* sQQ_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sQQ_icon@2x.png"; sourceTree = "<group>"; };
 		138986281A6A433D00F187C9 /* stianjia@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stianjia@2x.png"; sourceTree = "<group>"; };
 		138986291A6A433D00F187C9 /* sweiixn_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sweiixn_icon@2x.png"; sourceTree = "<group>"; };
+		1389862E1A6A5DDF00F187C9 /* MessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageModel.h; sourceTree = "<group>"; };
+		1389862F1A6A5DDF00F187C9 /* MessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageModel.m; sourceTree = "<group>"; };
+		138986311A6A6A5B00F187C9 /* LDataInstance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDataInstance.h; sourceTree = "<group>"; };
+		138986321A6A6A5B00F187C9 /* LDataInstance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDataInstance.m; sourceTree = "<group>"; };
 		138C2BCC1A39E09200EA59F5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/UMSocialLocalizable.strings; sourceTree = "<group>"; };
 		138C2BCE1A39E09200EA59F5 /* UMSocial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocial.h; sourceTree = "<group>"; };
 		138C2BCF1A39E09200EA59F5 /* UMSocialAccountManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialAccountManager.h; sourceTree = "<group>"; };
@@ -1906,6 +1912,15 @@
 			path = "申请搭配师";
 			sourceTree = "<group>";
 		};
+		1389862D1A6A5DD000F187C9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1389862E1A6A5DDF00F187C9 /* MessageModel.h */,
+				1389862F1A6A5DDF00F187C9 /* MessageModel.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		138C2BC91A39E08500EA59F5 /* UMengShare */ = {
 			isa = PBXGroup;
 			children = (
@@ -2206,6 +2221,7 @@
 		13A389791A3877C800ABBACB /* 消息 */ = {
 			isa = PBXGroup;
 			children = (
+				1389862D1A6A5DD000F187C9 /* Models */,
 				13A8A38A1A65585B008D3D44 /* Views */,
 				13A389981A3893EC00ABBACB /* ViewControllers */,
 			);
@@ -2336,6 +2352,8 @@
 				13A389A61A38974F00ABBACB /* EGORefresh */,
 				13A389AB1A38974F00ABBACB /* LTools.h */,
 				13A389AC1A38974F00ABBACB /* LTools.m */,
+				138986311A6A6A5B00F187C9 /* LDataInstance.h */,
+				138986321A6A6A5B00F187C9 /* LDataInstance.m */,
 				13A389AD1A38974F00ABBACB /* LToolsHeader.h */,
 				13A389AE1A38974F00ABBACB /* NSString+Emoji.h */,
 				13A389AF1A38974F00ABBACB /* NSString+Emoji.m */,
@@ -3599,6 +3617,7 @@
 				13A389BC1A38974F00ABBACB /* NSString+Emoji.m in Sources */,
 				56DAB2101A46A8E100273140 /* SNRefreshTableView.m in Sources */,
 				EF9329F51A617DD500A8BD18 /* AboutTailCircleViewController.m in Sources */,
+				138986301A6A5DDF00F187C9 /* MessageModel.m in Sources */,
 				565321471A59769300E43F80 /* RegexKitLite.m in Sources */,
 				138986231A6A36EC00F187C9 /* MenuButton.m in Sources */,
 				E3996EC01A5E1DBA00673147 /* GSettingViewController.m in Sources */,
@@ -3721,6 +3740,7 @@
 				19D5E6B21A4FE39B008401E0 /* YiChuListModel.m in Sources */,
 				E3FC8DE71A3C4B430025525D /* GeditUserInfoViewController.m in Sources */,
 				5653214F1A59785F00E43F80 /* OHLableHelper.m in Sources */,
+				138986331A6A6A5B00F187C9 /* LDataInstance.m in Sources */,
 				13B690451A564825007FE152 /* CHTumblrMenuView.m in Sources */,
 				EFDCC9DF1A62A3F300911782 /* GmyMainViewController.m in Sources */,
 			);

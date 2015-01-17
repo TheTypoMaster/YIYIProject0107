@@ -630,6 +630,51 @@
     return mu_str;
 }
 
++(NSString*)showTimeWithTimestamp:(NSString*)myTime{
+    
+    NSString *timestamp;
+    time_t now;
+    time(&now);
+    
+    int distance = (int)difftime(now,  [myTime integerValue]);
+    
+    //小于一天的显示时、分
+    
+    if (distance < 60 * 60 * 24) {
+    
+        static NSDateFormatter *dateFormatter = nil;
+        if (dateFormatter == nil) {
+            dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"HH:mm"];
+        }
+        NSDate *date = [NSDate dateWithTimeIntervalSince1970: [myTime integerValue]];
+        
+        timestamp = [dateFormatter stringFromDate:date];
+        
+    }
+    else if (distance < 60 * 60 * 24 * 7) {
+        distance = distance / 60 / 60 / 24;
+        timestamp = [NSString stringWithFormat:@"%d%@", distance,@"天前"];
+    }
+    else if (distance < 60 * 60 * 24 * 7 * 4) {
+        distance = distance / 60 / 60 / 24 / 7;
+        timestamp = [NSString stringWithFormat:@"%d%@", distance, @"周前"];
+    }else
+    {
+        static NSDateFormatter *dateFormatter = nil;
+        if (dateFormatter == nil) {
+            dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+        }
+        NSDate *date = [NSDate dateWithTimeIntervalSince1970: [myTime integerValue]];
+        
+        timestamp = [dateFormatter stringFromDate:date];
+    }
+    
+    return timestamp;
+}
+
+
 +(NSString*)timestamp:(NSString*)myTime{
     
     NSString *timestamp;
@@ -699,6 +744,17 @@
     [formatter setDateStyle:NSDateFormatterMediumStyle];
     [formatter setTimeStyle:NSDateFormatterShortStyle];
     [formatter setDateFormat:@"YYYY-MM-dd"];
+    NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[placetime doubleValue]];
+    NSString *confromTimespStr = [formatter stringFromDate:confromTimesp];
+    return confromTimespStr;
+}
+
++(NSString *)timechangeAll:(NSString *)placetime
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init] ;
+    [formatter setDateStyle:NSDateFormatterMediumStyle];
+    [formatter setTimeStyle:NSDateFormatterShortStyle];
+    [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
     NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[placetime doubleValue]];
     NSString *confromTimespStr = [formatter stringFromDate:confromTimesp];
     return confromTimespStr;

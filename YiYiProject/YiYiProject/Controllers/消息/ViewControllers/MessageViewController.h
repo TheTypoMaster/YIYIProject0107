@@ -10,4 +10,6 @@
 
 @interface MessageViewController : RCChatListViewController
 
+- (void)getMyMessage;
+
 @end

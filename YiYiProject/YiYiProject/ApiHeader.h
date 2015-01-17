@@ -389,6 +389,11 @@ typedef enum {
 #define POST_TLIST_URL @"http://182.92.158.32/?d=api&c=tplat&m=listT"  //获取个人资料
 
 
+#pragma mark - 消息
+
+#define MESSAGE_GET_MINE @"http://182.92.158.32/index.php?d=api&c=msg&m=get_my_msg&authcode=%@"//我的消息
+
+
 #endif
 
 

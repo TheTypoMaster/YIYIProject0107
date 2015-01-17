@@ -17,6 +17,8 @@
 
 #import "AppDelegate.h"
 
+#import "LDataInstance.h"
+
 #define RESULT_INFO @"msg" //错误信息
 
 #define RESULT_CODE @"errorcode" //错误code
@@ -125,6 +127,10 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
 +(NSString *)timechange:(NSString *)placetime;
 +(NSString *)timechange2:(NSString *)placetime;
 +(NSString *)timechange3:(NSString *)placetime;
+
++(NSString *)timechangeAll:(NSString *)placetime;//时间戳 显示全
+
++(NSString*)showTimeWithTimestamp:(NSString*)myTime;//不满一天显示时、分 大于一天显示时间间隔
 
 +(NSString *)timechangeToDateline;//转换为时间戳
 

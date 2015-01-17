@@ -22,6 +22,8 @@
 
 #import "RCIMClient.h"
 
+#import "LDataInstance.h"
+
 //融云cloud
 
 #define RONGCLOUD_IM_APPKEY    @"kj7swf8o7zaf2" //正式 融云账号 18600912932 cocos2d
@@ -56,6 +58,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+   
+#pragma mark 融云
     
     [RCIM initWithAppKey:RONGCLOUD_IM_APPKEY deviceToken:nil];
     [[RCIM sharedRCIM]setConnectionStatusDelegate:self];//监控连接状态
@@ -65,6 +69,8 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginToRongCloud) name:NOTIFICATION_LOGIN object:nil];
     
     [self rongCloudDefaultLoginWithToken:[LTools cacheForKey:RONGCLOUD_TOKEN]];
+    
+#pragma mark 远程通知
     
     if (IOS7_OR_LATER) {
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
@@ -94,12 +100,7 @@
         NSLog(@"infoDic %@",infoDic);
         
     }
-
-    
-    [self umengShare];
-    
-    RootViewController *root = [[RootViewController alloc]init];
-    
+#pragma mark 百度地图相关
     
     if( ([[[UIDevice currentDevice] systemVersion] doubleValue]>=8.0)) {
         _locationManager = [[CLLocationManager alloc] init];
@@ -107,7 +108,7 @@
         [_locationManager startUpdatingLocation];
     }
     
-#pragma mark 百度地图相关
+
     // 要使用百度地图，请先启动BaiduMapManager
     _mapManager = [[BMKMapManager alloc]init];
     // 如果要关注网络及授权验证事件，请设定     generalDelegate参数
@@ -115,6 +116,12 @@
     if (!ret) {
         NSLog(@"manager start failed!");
     }
+    
+#pragma mark 友盟
+    
+    [self umengShare];
+    
+    RootViewController *root = [[RootViewController alloc]init];
     
     UINavigationController *unVc = [[UINavigationController alloc]initWithRootViewController:root];
     unVc.navigationBarHidden = YES;
@@ -383,5 +390,6 @@
 {
     NSLog(@"rongCloud重新连接失败--- %d",(int)errorCode);
 }
+
 
 @end
