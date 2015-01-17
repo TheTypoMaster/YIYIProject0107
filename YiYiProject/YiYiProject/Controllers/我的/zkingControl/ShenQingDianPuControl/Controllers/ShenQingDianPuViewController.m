@@ -181,7 +181,7 @@
             }
         
         NSString *provinceStr = [NSString stringWithFormat:@"%@",_data[row][@"State"]];
-//        //字符转id
+        //字符转id
         self.provinceIn = [GMAPI cityIdForName:provinceStr];//上传
         return provinceStr;
         
@@ -194,7 +194,7 @@
             self.city = cities[row][@"city"];
         }
         NSString *cityStr = [NSString stringWithFormat:@"%@",cities[row][@"city"]];
-//        //字符转id
+        //字符转id
         self.cityIn = [GMAPI cityIdForName:cityStr];//上传
         return cityStr;
     }
