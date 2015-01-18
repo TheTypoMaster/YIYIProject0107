@@ -148,6 +148,7 @@
 		137B088E1A4EBAAB00DE7DCC /* xihuanb_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 137B08891A4EBAAB00DE7DCC /* xihuanb_down@2x.png */; };
 		137B08921A4ECDD100DE7DCC /* shaixuan_boy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 137B08901A4ECDD100DE7DCC /* shaixuan_boy@2x.png */; };
 		137B08931A4ECDD100DE7DCC /* shaixuan_girl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 137B08911A4ECDD100DE7DCC /* shaixuan_girl@2x.png */; };
+		137B6FE31A6B682E007035DE /* MessageDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 137B6FE21A6B682E007035DE /* MessageDetailController.m */; };
 		137E0AC11A4C559500B59F64 /* LShareSheetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 137E0AC01A4C559500B59F64 /* LShareSheetView.m */; };
 		137E0AD81A4C567500B59F64 /* pengyouquan72_7222x.png in Resources */ = {isa = PBXBuildFile; fileRef = 137E0AD21A4C567500B59F64 /* pengyouquan72_7222x.png */; };
 		137E0AD91A4C567500B59F64 /* QQ72_72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 137E0AD31A4C567500B59F64 /* QQ72_72@2x.png */; };
@@ -659,6 +660,8 @@
 		137B08891A4EBAAB00DE7DCC /* xihuanb_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xihuanb_down@2x.png"; sourceTree = "<group>"; };
 		137B08901A4ECDD100DE7DCC /* shaixuan_boy@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shaixuan_boy@2x.png"; sourceTree = "<group>"; };
 		137B08911A4ECDD100DE7DCC /* shaixuan_girl@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shaixuan_girl@2x.png"; sourceTree = "<group>"; };
+		137B6FE11A6B682E007035DE /* MessageDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageDetailController.h; sourceTree = "<group>"; };
+		137B6FE21A6B682E007035DE /* MessageDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageDetailController.m; sourceTree = "<group>"; };
 		137E0ABF1A4C559500B59F64 /* LShareSheetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LShareSheetView.h; sourceTree = "<group>"; };
 		137E0AC01A4C559500B59F64 /* LShareSheetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LShareSheetView.m; sourceTree = "<group>"; };
 		137E0AD21A4C567500B59F64 /* pengyouquan72_7222x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pengyouquan72_7222x.png; sourceTree = "<group>"; };
@@ -2311,6 +2314,8 @@
 				13A3899B1A3893FC00ABBACB /* MessageViewController.xib */,
 				139A051E1A66ADB100A8EB49 /* MailMessageViewController.h */,
 				139A051F1A66ADB100A8EB49 /* MailMessageViewController.m */,
+				137B6FE11A6B682E007035DE /* MessageDetailController.h */,
+				137B6FE21A6B682E007035DE /* MessageDetailController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -3627,6 +3632,7 @@
 				13CEC8931A5D96CF00FE273F /* TTPublishViewController.m in Sources */,
 				13AD17B11A603E4300AB24F5 /* TopicParseModel.m in Sources */,
 				13684A901A37585200A508FB /* RootViewController.m in Sources */,
+				137B6FE31A6B682E007035DE /* MessageDetailController.m in Sources */,
 				13CD36361A3C51BE0068C12A /* ForgetPwdController.m in Sources */,
 				EF932A181A6236AD00A8BD18 /* WaterFallHeader.m in Sources */,
 				13A389BB1A38974F00ABBACB /* LTools.m in Sources */,

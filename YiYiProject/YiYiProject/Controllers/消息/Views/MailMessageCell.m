@@ -20,7 +20,14 @@
     // Configure the view for the selected state
 }
 
-- (void)setCellWithModel:(MessageModel *)aModel cellType:(Cell_Type)aType
+/**
+ *  <#Description#>
+ *
+ *  @param aModel 消息model
+ *  @param aType  是否有头像
+ *  @param seeAll 是否有 查看全文
+ */
+- (void)setCellWithModel:(MessageModel *)aModel cellType:(Cell_Type)aType seeAll:(BOOL)seeAll
 {
     CGFloat top = 12;
     
@@ -74,21 +81,35 @@
     self.contentLabel.height = height;
     _contentLabel.text = aModel.content;
     
-    //底部
     
-    self.bottomBackView.top = _contentLabel.bottom + 15;
+    if (seeAll) {
+        //底部
+        
+        self.bottomBackView.top = _contentLabel.bottom + 15;
+        
+        //背景view
+        self.bigBackView.height = _bottomBackView.bottom;
+        
+        self.bottomBackView.hidden = NO;
+    }else
+    {
+        
+        self.bottomBackView.hidden = YES;
+        
+        //背景view
+        self.bigBackView.height = _contentLabel.bottom + 15;
+    }
     
-    //背景view
-    self.bigBackView.height = _bottomBackView.bottom;
+    
 }
 
-+ (CGFloat)heightForModel:(MessageModel *)aModel cellType:(Cell_Type)aType
++ (CGFloat)heightForModel:(MessageModel *)aModel cellType:(Cell_Type)aType  seeAll:(BOOL)seeAll
 {
     CGFloat aHeight = 0;
     
     if (aType == icon_Yes) {
         
-        aHeight += (35 + 12);//用户信息view高度 + 间距12
+        aHeight += (55 + 12);//用户信息view高度 + 间距12
     }
     //标题高度
     CGFloat aWidth = DEVICE_WIDTH/2.f - 23;
@@ -118,7 +139,13 @@
     
     aHeight += height;
     
-    aHeight += (15 + 45 + 15);
+    if (seeAll) {
+        
+       aHeight += (15 + 45 + 15);
+    }else
+    {
+        aHeight += (15 + 15);
+    }
     
     return aHeight;
 }

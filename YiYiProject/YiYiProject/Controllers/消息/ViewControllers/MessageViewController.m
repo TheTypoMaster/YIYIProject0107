@@ -91,7 +91,7 @@
     other_cell.nameLabel.text = @"动态消息";
     other_cell.messageLabel.text = @"";
     other_cell.iconImageView.image = [UIImage imageNamed:@"t_shoucang"];
-    [other_cell.clickButton addTarget:self action:@selector(tapToMail:) forControlEvents:UIControlEventTouchUpInside];
+    [other_cell.clickButton addTarget:self action:@selector(tapToDynamic:) forControlEvents:UIControlEventTouchUpInside];
     
 }
 
@@ -189,6 +189,10 @@
 - (void)tapToYIJiaYi:(UITapGestureRecognizer *)tap
 {
     NSLog(@"衣加衣团队");
+    MailMessageViewController *mail = [[MailMessageViewController alloc]init];
+    mail.aType = Message_Yy;
+    mail.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:mail animated:YES];
 }
 
 /**
@@ -198,6 +202,19 @@
 {
     NSLog(@"商家消息");
     MailMessageViewController *mail = [[MailMessageViewController alloc]init];
+    mail.aType = Message_Shop;
+    mail.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:mail animated:YES];
+}
+
+/**
+ *  衣加衣团队
+ */
+- (void)tapToDynamic:(UITapGestureRecognizer *)tap
+{
+    NSLog(@"动态消息");
+    MailMessageViewController *mail = [[MailMessageViewController alloc]init];
+    mail.aType = Message_Dynamic;
     mail.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:mail animated:YES];
 }

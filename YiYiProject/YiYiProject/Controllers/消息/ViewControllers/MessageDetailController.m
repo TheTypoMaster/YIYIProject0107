@@ -1,41 +1,39 @@
 //
-//  MailMessageViewController.m
+//  MessageDetailController.m
 //  YiYiProject
 //
-//  Created by lichaowei on 15/1/14.
+//  Created by lichaowei on 15/1/18.
 //  Copyright (c) 2015年 lcw. All rights reserved.
 //
 
-#import "MailMessageViewController.h"
-#import "RefreshTableView.h"
-
+#import "MessageDetailController.h"
 #import "MailMessageCell.h"
 
-#import "MessageDetailController.h"
-
-@interface MailMessageViewController ()<RefreshDelegate,UITableViewDataSource>
+@interface MessageDetailController ()<UITableViewDataSource,UITableViewDelegate>
 {
-    RefreshTableView *_table;
+    UITableView *_table;
+    MessageModel *detail_model;
 }
+
 @end
 
-@implementation MailMessageViewController
+@implementation MessageDetailController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
-    self.myTitleLabel.text = @"商家消息";
+    self.myTitleLabel.text = @"消息详情";
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     
-    _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH,DEVICE_HEIGHT - 64)];
-    _table.refreshDelegate = self;
+    _table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH,DEVICE_HEIGHT - 64) style:UITableViewStylePlain];
+    _table.delegate = self;
     _table.dataSource = self;
     [self.view addSubview:_table];
     _table.backgroundColor = [UIColor colorWithHexString:@"f2f2f2"];
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    [_table showRefreshHeader:YES];
+    [self getMessageInfo];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -46,34 +44,24 @@
 #pragma mark - 网络请求
 
 //action= yy(衣加衣) shop（商家） dynamic（动态）
-- (void)getMailInfo
+- (void)getMessageInfo
 {
     NSString *key = [GMAPI getAuthkey];
     
-    NSString *type;
-    if (self.aType == Message_Yy) {
-        type = @"yy";
-    }else if (self.aType == Message_Shop){
-        type = @"shop";
-    }else if (self.aType == Message_Dynamic){
-        type = @"dynamic";
-    }
-    
     key = @"WiVbIgF4BeMEvwabALBajQWgB+VUoVWkBShRYFUwXGkGOAAyB2FSZgczBjYAbAp6AjZSaQ==";
-    NSString *url = [NSString stringWithFormat:MESSAGE_GET_LIST,type,key];
+    NSString *url = [NSString stringWithFormat:MESSAGE_GET_DETAIL,self.msg_id,key];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"");
         
-        NSArray *data = result[@"data"];
         
-        NSMutableArray *arr = [NSMutableArray arrayWithCapacity:data.count];
-        for (NSDictionary *aDic in data) {
-            MessageModel *aModel = [[MessageModel alloc]initWithDictionary:aDic];
-            [arr addObject:aModel];
+        if ([LTools isDictinary:result]) {
+            
+            detail_model = [[MessageModel alloc]initWithDictionary:result];
+            
+            [_table reloadData];
         }
-        [_table reloadData:arr isHaveMore:NO];
-        
+    
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
@@ -85,7 +73,7 @@
 
 - (void)loadNewData
 {
-    [self getMailInfo];
+    
 }
 - (void)loadMoreData
 {
@@ -96,23 +84,24 @@
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
     NSLog(@"详情");
-    MessageModel *aModel = _table.dataArray[indexPath.row];
-    MessageDetailController *detail = [[MessageDetailController alloc]init];
-    detail.msg_id = aModel.msg_id;
-    [self.navigationController pushViewController:detail animated:YES];
-    
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
-    MessageModel *aModel = _table.dataArray[indexPath.row];
-    return [MailMessageCell heightForModel:aModel cellType:icon_Yes seeAll:YES];
+    return [MailMessageCell heightForModel:detail_model cellType:icon_Yes seeAll:NO];
+}
+
+#pragma mark - UITableDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [MailMessageCell heightForModel:detail_model cellType:icon_Yes seeAll:NO];
 }
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _table.dataArray.count;
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -120,13 +109,13 @@
     static NSString *identify = @"MailMessageCell";
     MailMessageCell *cell = (MailMessageCell *)[LTools cellForIdentify:identify cellName:identify forTable:tableView];
     
-    MessageModel *aModel = _table.dataArray[indexPath.row];
-    [cell setCellWithModel:aModel cellType:icon_Yes seeAll:YES];
+    [cell setCellWithModel:detail_model cellType:icon_Yes seeAll:NO];
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
 }
+
 
 
 @end

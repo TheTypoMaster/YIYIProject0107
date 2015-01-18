@@ -29,8 +29,8 @@ typedef enum{
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UIView *bottomBackView;
 
-- (void)setCellWithModel:(MessageModel *)aModel cellType:(Cell_Type)aType;
+- (void)setCellWithModel:(MessageModel *)aModel cellType:(Cell_Type)aType seeAll:(BOOL)seeAll;
 
-+ (CGFloat)heightForModel:(MessageModel *)aModel cellType:(Cell_Type)aType;
++ (CGFloat)heightForModel:(MessageModel *)aModel cellType:(Cell_Type)aType seeAll:(BOOL)seeAll;
 
 @end
