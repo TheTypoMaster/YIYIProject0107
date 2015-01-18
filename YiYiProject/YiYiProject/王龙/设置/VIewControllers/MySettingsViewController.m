@@ -9,6 +9,7 @@
 #import "MySettingsViewController.h"
 #import "MyseetingTableViewCell.h"
 #import "AboutTailCircleViewController.h"
+
 //RBG color
 #define RGBA(r,g,b,a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 @interface MySettingsViewController ()
@@ -159,8 +160,6 @@
 
 }
 
-
-
 #pragma mark------------------UItableVIewDelegate
 -(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -195,7 +194,7 @@
     
     if (indexPath.row == 1) {
         /////////清理缓存
-//        [XDTools showProgressWithText:@"正在清理..." hasMask:NO];
+        [GMAPI showProgressWithText:@"正在清理..." hasMask:NO];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSString *cachPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
             NSArray *files = [[NSFileManager defaultManager] subpathsAtPath:cachPath];
@@ -208,7 +207,7 @@
                 }
             }
             dispatch_async(dispatch_get_main_queue(), ^{
-//                [XDTools hiddenProgress];
+                [GMAPI hiddenProgress];
                 
                 catchSize = @"0KB";
                 

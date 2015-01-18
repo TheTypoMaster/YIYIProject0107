@@ -222,6 +222,9 @@
         gender = @"2";
     }
 
+
+    /////先判断网络
+    
     NSDictionary *dic = @{
                           @"authcode":[GMAPI getAuthkey],
                           @"user_name":user_name,

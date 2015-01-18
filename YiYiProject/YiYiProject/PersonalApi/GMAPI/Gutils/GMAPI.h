@@ -18,6 +18,11 @@
 
 #import "BMapKit.h"
 
+
+//from  wl
+#import "SVProgressHUD.h"        //提示层
+
+
 typedef void(^ GCllocationBlock)(NSDictionary *theLocationDic);
 
 
@@ -111,6 +116,46 @@ typedef void(^ GCllocationBlock)(NSDictionary *theLocationDic);
 - (void)GgetCllocation:(void(^)(CLLocation *theLocation))completionBlock;
 
 
+
+
+
+#pragma mark ---------------------提示层
+/**
+ *  显示正在加载提示层
+ */
++(void)showProgressHasMask:(BOOL)ismask;
+
+/**
+ *  隐藏提示层
+ */
++(void)hiddenProgress;
+
+/**
+ *  显示加载动画和提示语
+ */
++(void)showProgressWithText:(NSString *)string hasMask:(BOOL)ismask;
+
+/**
+ *  显示提示语
+ */
++(void)showProgressText:(NSString *)string hasMask:(BOOL)ismask;
+
+/**
+ *  显示成功提示语
+ */
++(void)showSuccessProgessWithText:(NSString *)string hasMask:(BOOL)ismask;
+
+/**
+ *  显示失败提示语
+ */
++(void)showFailProgessWithText:(NSString *)string hasMask:(BOOL)ismask;
+
+/**
+ *  显示自定义提示层
+ *
+ *  @image 图片  string 提示语
+ */
++(void)showCustomProgessWithImage:(UIImage *)image andText:(NSString *)string hasMask:(BOOL)ismask;
 
 
 
