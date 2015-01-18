@@ -13,6 +13,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GupClothesViewController : UIViewController
-
+@interface GupClothesViewController : MyViewController
+{
+    UIScrollView *_mainScrollView;//主scrollview
+    
+}
 @end
