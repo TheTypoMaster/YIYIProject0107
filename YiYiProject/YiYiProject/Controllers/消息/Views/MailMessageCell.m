@@ -101,6 +101,8 @@
     }
     
     
+    self.clickButton.userInteractionEnabled = NO;
+    
 }
 
 + (CGFloat)heightForModel:(MessageModel *)aModel cellType:(Cell_Type)aType  seeAll:(BOOL)seeAll

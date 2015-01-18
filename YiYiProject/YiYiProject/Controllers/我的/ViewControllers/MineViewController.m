@@ -33,9 +33,13 @@
 //#import "ShenQingDianPuViewController.h"
 #import "ShenQingDianPuViewController.h"
 
+#import "MyShopViewController.h"//我的店铺
+
 #import "ParallaxHeaderView.h"
 #import "UIImage+ImageEffects.h"
 #import "NSDictionary+GJson.h"
+
+#import "UserInfo.h"
 
 typedef enum{
     USERFACE = 0,//头像
@@ -57,6 +61,9 @@ typedef enum{
     NSArray *_logoImageArray;//title前面的logo图数组
     NSDictionary *_customInfo_tabelViewCell;//cell数据源
     ParallaxHeaderView *_backView;//banner
+    
+    UserInfo *_userInfo;//用户信息model
+    
 }
 @end
 
@@ -157,6 +164,8 @@ typedef enum{
         
         NSLog(@"%@",result);
         NSDictionary *dic = [result dictionaryValueForKey:@"user_info"];
+        
+        _userInfo = [[UserInfo alloc]initWithDictionary:dic];
         
         NSString *name = [dic stringValueForKey:@"user_name"];
         NSString *score = [dic stringValueForKey:@"score"];
@@ -336,8 +345,6 @@ typedef enum{
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    
-    
     //判断是否登录
     if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
         
@@ -433,9 +440,33 @@ typedef enum{
             
             if (indexPath.row==0) {
                 
-                ShenQingDianPuViewController *_shenqingVC = [[ShenQingDianPuViewController alloc]init];
-                _shenqingVC.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:_shenqingVC animated:YES];
+                NSLog(@"申请店铺");
+                
+                int shopMan = [_userInfo.shopman intValue];
+                
+                //test
+                
+                shopMan = 2;
+                
+                if (shopMan == 2) {
+                    NSLog(@"店主");
+                    
+                    MyShopViewController *shop = [[MyShopViewController alloc]init];
+                    shop.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:shop animated:YES];
+                    
+                }else if (shopMan == 1){
+                    NSLog(@"店铺申请");
+                    [LTools showMBProgressWithText:@"您已申请店铺,正在审核中..." addToView:self.view];
+                }else if (shopMan == 0){
+                    
+                    NSLog(@"普通");
+                    
+                    ShenQingDianPuViewController *_shenqingVC = [[ShenQingDianPuViewController alloc]init];
+                    _shenqingVC.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:_shenqingVC animated:YES];
+
+                }
                 
             }
             

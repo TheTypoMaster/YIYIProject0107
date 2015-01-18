@@ -378,11 +378,14 @@
 
 - (void)getMyMessage
 {
+    if ([GMAPI getAuthkey].length == 0) {
+        return;
+    }
     __weak typeof(self)weakSelf = self;
     NSString *url = [NSString stringWithFormat:MESSAGE_GET_MINE,[GMAPI getAuthkey]];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
-        NSLog(@"result %@",result);
+        NSLog(@"未读消息 result %@",result);
         
         if ([LTools isDictinary:result]) {
             
