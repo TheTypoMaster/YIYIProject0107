@@ -33,9 +33,13 @@
 //#import "ShenQingDianPuViewController.h"
 #import "ShenQingDianPuViewController.h"
 
+#import "MyShopViewController.h"//我的店铺
+
 #import "ParallaxHeaderView.h"
 #import "UIImage+ImageEffects.h"
 #import "NSDictionary+GJson.h"
+
+#import "UserInfo.h"
 
 typedef enum{
     USERFACE = 0,//头像
@@ -57,6 +61,9 @@ typedef enum{
     NSArray *_logoImageArray;//title前面的logo图数组
     NSDictionary *_customInfo_tabelViewCell;//cell数据源
     ParallaxHeaderView *_backView;//banner
+    
+    UserInfo *_userInfo;//用户信息model
+    
 }
 @end
 
@@ -81,10 +88,10 @@ typedef enum{
     // Do any additional setup after loading the view from its nib.
     self.myTitleLabel.text = @"我的";
     
-    
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     
     //判断是否登录
-    if ([LTools cacheBoolForKey:USER_LONGIN] == NO) {
+    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
         
         LoginViewController *login = [[LoginViewController alloc]init];
         
@@ -126,7 +133,7 @@ typedef enum{
     [self.view addSubview:_tableView];
     
     
-    if ([LTools cacheBoolForKey:USER_LONGIN] == YES){
+    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == YES){
         [self GgetUserInfo];
     }
     
@@ -158,14 +165,21 @@ typedef enum{
         NSLog(@"%@",result);
         NSDictionary *dic = [result dictionaryValueForKey:@"user_info"];
         
+        _userInfo = [[UserInfo alloc]initWithDictionary:dic];
+        
         NSString *name = [dic stringValueForKey:@"user_name"];
         NSString *score = [dic stringValueForKey:@"score"];
         self.userNameLabel.text = [NSString stringWithFormat:@"昵称:%@",name];
         self.userScoreLabel.text = [NSString stringWithFormat:@"积分:%@",score];
-        [_backView.imageView sd_setImageWithURL:[NSURL URLWithString:[dic stringValueForKey:@"user_banner"]] placeholderImage:[UIImage imageNamed:@"my_bg.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        
+        user_bannerUrl = [dic stringValueForKey:@"user_banner"];
+        [_backView.imageView sd_setImageWithURL:[NSURL URLWithString:user_bannerUrl] placeholderImage:[UIImage imageNamed:@"my_bg.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             [GMAPI setUserBannerImageWithData:UIImagePNGRepresentation(_backView.imageView.image)];
         }];
+        
+        
         NSString *userFaceUrl = [NSString stringWithFormat:@"%@",[dic stringValueForKey:@"photo"]];
+        headImageUrl = userFaceUrl;
         
         [self.userFaceImv sd_setImageWithURL:[NSURL URLWithString:userFaceUrl] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             [GMAPI setUserFaceImageWithData:UIImagePNGRepresentation(self.userFaceImv.image)];
@@ -336,10 +350,8 @@ typedef enum{
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    
-    
     //判断是否登录
-    if ([LTools cacheBoolForKey:USER_LONGIN] == NO) {
+    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
         
         LoginViewController *login = [[LoginViewController alloc]init];
         
@@ -360,6 +372,8 @@ typedef enum{
         {
             GmyMainViewController *dd = [[GmyMainViewController alloc]init];
             dd.theType = GMYSELF;
+            dd.bannerUrl = user_bannerUrl;
+            dd.headImageUrl = headImageUrl;
             dd.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:dd animated:YES];
             
@@ -433,9 +447,33 @@ typedef enum{
             
             if (indexPath.row==0) {
                 
-                ShenQingDianPuViewController *_shenqingVC = [[ShenQingDianPuViewController alloc]init];
-                _shenqingVC.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:_shenqingVC animated:YES];
+                NSLog(@"申请店铺");
+                
+                int shopMan = [_userInfo.shopman intValue];
+                
+                //test
+                
+                shopMan = 2;
+                
+                if (shopMan == 2) {
+                    NSLog(@"店主");
+                    
+                    MyShopViewController *shop = [[MyShopViewController alloc]init];
+                    shop.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:shop animated:YES];
+                    
+                }else if (shopMan == 1){
+                    NSLog(@"店铺申请");
+                    [LTools showMBProgressWithText:@"您已申请店铺,正在审核中..." addToView:self.view];
+                }else if (shopMan == 0){
+                    
+                    NSLog(@"普通");
+                    
+                    ShenQingDianPuViewController *_shenqingVC = [[ShenQingDianPuViewController alloc]init];
+                    _shenqingVC.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:_shenqingVC animated:YES];
+
+                }
                 
             }
             
@@ -466,7 +504,7 @@ typedef enum{
     
     
     
-    NSLog(@"xxxx==%ld=row=%ld=",indexPath.section,indexPath.row);
+    NSLog(@"xxxx==%zi=row=%zi=",indexPath.section,indexPath.row);
     
     NSLog(@"在这里进行跳转");
 }
@@ -476,10 +514,14 @@ typedef enum{
 ///编辑资料
 -(void)goToEdit{
     
-    //编辑
-    EditMyInfoViewController *editInfoVC = [[EditMyInfoViewController alloc] init];
-    editInfoVC.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:editInfoVC animated:YES];
+    
+    if ([LTools isLogin:self]) {
+        //编辑
+        EditMyInfoViewController *editInfoVC = [[EditMyInfoViewController alloc] init];
+        editInfoVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:editInfoVC animated:YES];
+    }
+    
     
 }
 

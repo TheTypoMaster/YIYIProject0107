@@ -74,7 +74,7 @@ typedef void(^ GCllocationBlock)(NSDictionary *theLocationDic);
 
 
 //获取document路径
-+ (NSString *)documentFolder;
++ (NSString *)getDocumentFolderPath;
 
 //清除banner和头像
 +(BOOL)cleanUserFaceAndBanner;
@@ -116,6 +116,9 @@ typedef void(^ GCllocationBlock)(NSDictionary *theLocationDic);
 - (void)GgetCllocation:(void(^)(CLLocation *theLocation))completionBlock;
 
 
+
+//地区选择相关
++ (int)cityIdForName:(NSString *)cityName;
 
 
 

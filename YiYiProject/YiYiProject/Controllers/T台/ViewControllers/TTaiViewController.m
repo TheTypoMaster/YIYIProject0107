@@ -42,20 +42,6 @@
     
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateTTai:) name:NOTIFICATION_TTAI_PUBLISE_SUCCESS object:nil];
-    
-    //    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    //    btn.frame = CGRectMake(100, 100, 50, 30);
-    //    [btn setTitle:@"登录" forState:UIControlStateNormal];
-    //    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    //    [btn addTarget:self action:@selector(clickToPush:) forControlEvents:UIControlEventTouchUpInside];
-    //    [self.view addSubview:btn];
-    //
-    //    UIButton *btn2 = [UIButton buttonWithType:UIButtonTypeCustom];
-    //    btn2.frame = CGRectMake(100, 200, 100, 30);
-    //    [btn2 setTitle:@"发布话题" forState:UIControlStateNormal];
-    //    [btn2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    //    [btn2 addTarget:self action:@selector(clickToPublish:) forControlEvents:UIControlEventTouchUpInside];
-    //    [self.view addSubview:btn2];
 }
 
 #pragma mark 事件处理
@@ -74,7 +60,7 @@
 {
     
     //判断是否登录
-    if ([LTools cacheBoolForKey:USER_LONGIN] == NO) {
+    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
         
         LoginViewController *login = [[LoginViewController alloc]init];
         
@@ -130,6 +116,47 @@
 }
 
 #pragma mark 网络请求
+
+//T台赞 或 取消
+
+- (void)zanTTaiDetail:(UIButton *)zan_btn
+{
+    if (![LTools isLogin:self]) {
+        return;
+    }
+    
+    NSString *authkey = [GMAPI getAuthkey];
+    
+    TPlatModel *detail_model = waterFlow.dataArray[zan_btn.tag - 100];
+    NSString *t_id = detail_model.tt_id;
+    NSString *post = [NSString stringWithFormat:@"tt_id=%@&authcode=%@",t_id,authkey];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    
+    NSString * url = TTAI_ZAN;
+    
+    
+    TPlatCell *cell = (TPlatCell *)[waterFlow.quitView cellAtIndexPath:[NSIndexPath indexPathForRow:zan_btn.tag - 100 inSection:0]];
+    
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"-->%@",result);
+        
+        zan_btn.selected = YES;
+        
+        int like_num = [detail_model.tt_like_num intValue];
+        detail_model.tt_like_num = [NSString stringWithFormat:@"%d",like_num + 1];
+        cell.like_label.text = detail_model.tt_like_num;
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        if ([failDic[RESULT_CODE] intValue] == -11) {
+            [LTools showMBProgressWithText:failDic[@"msg"] addToView:self.view];
+        }
+        
+    }];
+}
+
 
 - (void)getTTaiData
 {
@@ -206,12 +233,16 @@
 
 - (CGFloat)waterHeightForCellIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat aHeight = 0.f;
     TPlatModel *aModel = waterFlow.dataArray[indexPath.row];
-    aHeight = [aModel.image[@"height"]floatValue];
-    CGFloat aWidth = [aModel.image[@"width"]floatValue];
+    CGFloat image_height = [aModel.image[@"height"]floatValue];
+    CGFloat image_width = [aModel.image[@"width"]floatValue];
     
-    return [self height:aHeight / 2.f aWidth:aWidth] + 55 + 36;
+    if (image_width == 0.0) {
+        image_width = image_height;
+    }
+    float rate = image_height/image_width;
+    
+    return (DEVICE_WIDTH-30)/2.0*rate + 55 + 36;
 }
 - (CGFloat)waterViewNumberOfColumns
 {
@@ -235,6 +266,8 @@
     
     TPlatModel *aMode = waterFlow.dataArray[indexPath.row];
     [cell setCellWithModel:aMode];
+    cell.like_btn.tag = 100 + indexPath.row;
+    [cell.like_btn addTarget:self action:@selector(zanTTaiDetail:) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
 }

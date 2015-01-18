@@ -105,13 +105,15 @@
     if (theType == MyViewControllerLeftbuttonTypeBack)
     {
         UIBarButtonItem * spaceButton1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-        spaceButton1.width = MY_MACRO_NAME?-13:5;
+//        spaceButton1.width = MY_MACRO_NAME?-10:5;
         
-        UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(MY_MACRO_NAME? -5:5,8,40,44)];
+        UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(0,8,40,44)];
         [button_back addTarget:self action:@selector(leftButtonTap:) forControlEvents:UIControlEventTouchUpInside];
         [button_back setImage:BACK_DEFAULT_IMAGE forState:UIControlStateNormal];
+//        button_back.backgroundColor = [UIColor orangeColor];
+        [button_back setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
         UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
-        self.navigationItem.leftBarButtonItems=@[spaceButton1,back_item];
+        self.navigationItem.leftBarButtonItems=@[back_item];
     }else if (theType == MyViewControllerLeftbuttonTypelogo)
     {
         UIImageView * leftImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ios7logo"]];

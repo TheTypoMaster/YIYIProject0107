@@ -17,6 +17,8 @@
 #import "GRootScrollView.h"
 #import "GStorePinpaiViewController.h"
 
+#import "LoginViewController.h"
+
 
 @interface GnearbyStoreViewController ()<CWSegmentDelegate,UIScrollViewDelegate>
 {
@@ -32,6 +34,10 @@
     UIScrollView *_downScrollView;
     
     UITableView *_tabelView;
+    
+    
+    UIButton *_my_right_button;
+    UIBarButtonItem *_spaceButton;
     
 
     
@@ -64,12 +70,9 @@
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     }
     
-    //添加商场信息view
-    [self creatUpStoreInfoView];
     
     
-    //请求网络数据
-    [self prepareNetData];
+    
 }
 
 
@@ -79,15 +82,31 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeText];
-    self.rightString = @"关注";
     
-//    UIButton *guanzhuBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [guanzhuBtn setTitle:@"+关注" forState:UIControlStateNormal];
-//    [guanzhuBtn setFrame:CGRectMake(0, 0, 50, 40)];
-//    UIBarButtonItem *righItem = [[UIBarButtonItem alloc]initWithCustomView:guanzhuBtn];
-//    self.navigationItem.rightBarButtonItem = righItem;
-//    [guanzhuBtn addTarget:self action:@selector(ggGuanzhu) forControlEvents:UIControlEventTouchUpInside];
+    
+    _spaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    
+    
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeText];
+    
+    _my_right_button = [UIButton buttonWithType:UIButtonTypeCustom];
+    _my_right_button.frame = CGRectMake(0,0,60,44);
+    _my_right_button.titleLabel.textAlignment = NSTextAlignmentRight;
+    _my_right_button.titleLabel.font = [UIFont systemFontOfSize:15];
+    [_my_right_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_my_right_button addTarget:self action:@selector(rightButtonTap:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
+    
+    
+    //添加商场信息view
+    [self creatUpStoreInfoView];
+    
+    
+    //请求网络数据
+    [self prepareNetData];
+    
+    
+    
     
     
     self.myTitleLabel.textColor = [UIColor whiteColor];
@@ -103,7 +122,74 @@
 
 -(void)rightButtonTap:(UIButton *)sender
 {
+    
     NSLog(@"在这里添加关注");
+    
+    
+    //判断是否登录
+    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
+        
+        LoginViewController *login = [[LoginViewController alloc]init];
+        
+        UINavigationController *unVc = [[UINavigationController alloc]initWithRootViewController:login];
+        
+        [self presentViewController:unVc animated:YES completion:nil];
+        
+        
+        return;
+        
+    }else{
+        NSString *api = [NSString stringWithFormat:@"%@&mall_id=%@&authcode=%@",HOME_CLOTH_NEARBYSTORE_DETAIL,self.storeIdStr,[GMAPI getAuthkey]];
+        GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+        [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
+             NSLog(@"%@",result);
+            self.guanzhu = [result stringValueForKey:@"following"];
+            if ([self.guanzhu intValue]==0) {//未关注
+                [_my_right_button setTitle:@"关注" forState:UIControlStateNormal];
+                self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
+            }else if ([self.guanzhu intValue] == 1){//已关注
+                [_my_right_button setTitle:@"已关注" forState:UIControlStateNormal];
+                self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
+            }
+        } failBlock:^(NSDictionary *failDic, NSError *erro) {
+            
+        }];
+    }
+    
+    if ([self.guanzhu intValue] == 0) {//未关注
+        NSString *post = [NSString stringWithFormat:@"&mall_id=%@&authcode=%@",self.mall_id,[GMAPI getAuthkey]];
+        NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+        NSString *url = [NSString stringWithFormat:GUANZHUSHANGCHANG];
+        GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
+        [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
+            
+            [GMAPI showAutoHiddenMBProgressWithText:@"关注成功" addToView:self.view];
+            [_my_right_button setTitle:@"已关注" forState:UIControlStateNormal];
+            self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
+            self.guanzhu = @"1";
+        } failBlock:^(NSDictionary *failDic, NSError *erro) {
+            [GMAPI showAutoHiddenMBProgressWithText:@"关注失败" addToView:self.view];
+        }];
+    }else if ([self.guanzhu intValue] == 1){
+        NSString *post = [NSString stringWithFormat:@"&mall_id=%@&authcode=%@",self.mall_id,[GMAPI getAuthkey]];
+        NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+        NSString *url = [NSString stringWithFormat:QUXIAOGUANZHU_SHANGCHANG];
+        GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
+        [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
+            
+            [GMAPI showAutoHiddenMBProgressWithText:@"取消关注成功" addToView:self.view];
+            [_my_right_button setTitle:@"关注" forState:UIControlStateNormal];
+            self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
+            self.guanzhu = @"0";
+        } failBlock:^(NSDictionary *failDic, NSError *erro) {
+            [GMAPI showAutoHiddenMBProgressWithText:@"取消关注失败" addToView:self.view];
+        }];
+    }
+    
+    
+    
+    
+    
 }
 
 
@@ -193,6 +279,7 @@
     [topScrollView initWithNameButtons];
     [rootScrollView initWithViews];
     
+    
     //设置跳转block
     __weak typeof (self)bself = self;
     
@@ -236,9 +323,16 @@
 
 //请求网络数据
 -(void)prepareNetData{
+    
     //请求地址
-    NSString *api = [NSString stringWithFormat:@"%@&mall_id=%@",HOME_CLOTH_NEARBYSTORE_DETAIL,self.storeIdStr];
-
+    NSString *api = nil;
+    
+    //判断是否登录
+    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
+        api = [NSString stringWithFormat:@"%@&mall_id=%@",HOME_CLOTH_NEARBYSTORE_DETAIL,self.storeIdStr];
+    }else{
+        api = [NSString stringWithFormat:@"%@&mall_id=%@&authcode=%@",HOME_CLOTH_NEARBYSTORE_DETAIL,self.storeIdStr,[GMAPI getAuthkey]];
+    }
     
     NSLog(@"请求的接口:%@",api);
 
@@ -251,6 +345,16 @@
         _mallNameLabel.text = [NSString stringWithFormat:@"%@",[result stringValueForKey:@"mall_name"]];
         _huodongLabel.text = [NSString stringWithFormat:@"活动：%@",[result stringValueForKey:@"doorno"]];
         _adressLabel.text = [NSString stringWithFormat:@"地址：%@",[result stringValueForKey:@"address"]];
+        self.mall_id = [result stringValueForKey:@"mall_id"];
+        self.guanzhu = [result stringValueForKey:@"following"];
+        if ([self.guanzhu intValue]==0) {//未关注
+            [_my_right_button setTitle:@"关注" forState:UIControlStateNormal];
+            self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
+        }else if ([self.guanzhu intValue] == 1){//已关注
+            [_my_right_button setTitle:@"已关注" forState:UIControlStateNormal];
+            self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
+        }
+        
         
         self.coordinate_store = CLLocationCoordinate2DMake([[result stringValueForKey:@"latitude"]floatValue], [[result stringValueForKey:@"longitude"]floatValue]);
         

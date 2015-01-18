@@ -20,6 +20,7 @@
 #import "ApplyForViewController.h"
 #import "TopicDetailViewController.h"
 #import "MatchInfoViewController.h"
+#import "LoginViewController.h"
 
 @interface HomeMatchController ()<SNRefreshDelegate,UITableViewDataSource,TMQuiltViewDataSource,WaterFlowDelegate>
 {
@@ -232,9 +233,19 @@
         
         if (index == 0)///我要申请搭配师
         {
-            ApplyForViewController * applyVC = [[ApplyForViewController alloc] init];
-            applyVC.hidesBottomBarWhenPushed = YES;
-            [bself.rootViewController.navigationController pushViewController:applyVC animated:YES];
+            if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
+                
+                LoginViewController *login = [[LoginViewController alloc]init];
+                
+                UINavigationController *unVc = [[UINavigationController alloc]initWithRootViewController:login];
+                [self.rootViewController presentViewController:unVc animated:YES completion:nil];
+            }else
+            {
+                ApplyForViewController * applyVC = [[ApplyForViewController alloc] init];
+                applyVC.hidesBottomBarWhenPushed = YES;
+                [bself.rootViewController.navigationController pushViewController:applyVC animated:YES];
+
+            }
         }else
         {
             HomeMatchModel * model = [bself.hotMatch_array objectAtIndex:index-1];

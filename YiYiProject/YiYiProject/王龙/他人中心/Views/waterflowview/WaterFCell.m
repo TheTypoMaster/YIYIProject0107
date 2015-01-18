@@ -15,7 +15,7 @@
 }
 @end
 
-const CGFloat kTMPhotoQuiltViewMargin = 0;
+const CGFloat PhotoQuiltViewMargin = 0;
 @implementation WaterFCell
 
 
@@ -130,7 +130,7 @@ const CGFloat kTMPhotoQuiltViewMargin = 0;
     CGRect aBound = self.bounds;
     aBound.size.height -= 33;
     
-    self.photoView.frame = CGRectInset(aBound, kTMPhotoQuiltViewMargin, kTMPhotoQuiltViewMargin);
+    self.photoView.frame = CGRectInset(aBound, PhotoQuiltViewMargin, PhotoQuiltViewMargin);
     
     self.timeView.frame = CGRectMake(0, _photoView.bottom - 20, _photoView.width, 20);
     _timeLabel.frame = CGRectMake(0, 0, _photoView.width-5, 20);

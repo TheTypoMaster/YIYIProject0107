@@ -23,7 +23,9 @@
 @end
 
 @interface SNRefreshTableView : UITableView<L_EGORefreshTableDelegate,UITableViewDataSource,UITableViewDelegate>
-
+{
+    float offsetY;
+}
 
 @property (nonatomic,retain)LRefreshTableHeaderView * refreshHeaderView;
 

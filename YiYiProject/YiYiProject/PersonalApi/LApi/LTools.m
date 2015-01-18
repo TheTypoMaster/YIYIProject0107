@@ -494,6 +494,38 @@
     return NO;
 }
 
+#pragma - mark 判断为空或者是空格
+
++ (BOOL) isEmpty:(NSString *) str {
+    
+    if (!str) {
+        
+        return YES;
+        
+    } else {
+        
+        //A character set containing only the whitespace characters space (U+0020) and tab (U+0009) and the newline and nextline characters (U+000A–U+000D, U+0085).
+        
+        NSCharacterSet *set = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+        
+        //Returns a new string made by removing from both ends of the receiver characters contained in a given character set.
+        
+        NSString *trimedString = [str stringByTrimmingCharactersInSet:set];
+        
+        if ([trimedString length] == 0) {
+            
+            return YES;
+            
+        } else {
+            
+            return NO;
+            
+        }
+        
+    }
+    
+}
+
 #pragma - mark 验证邮箱、电话等有效性
 
 /*匹配正整数*/
@@ -598,6 +630,51 @@
     return mu_str;
 }
 
++(NSString*)showTimeWithTimestamp:(NSString*)myTime{
+    
+    NSString *timestamp;
+    time_t now;
+    time(&now);
+    
+    int distance = (int)difftime(now,  [myTime integerValue]);
+    
+    //小于一天的显示时、分
+    
+    if (distance < 60 * 60 * 24) {
+    
+        static NSDateFormatter *dateFormatter = nil;
+        if (dateFormatter == nil) {
+            dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"HH:mm"];
+        }
+        NSDate *date = [NSDate dateWithTimeIntervalSince1970: [myTime integerValue]];
+        
+        timestamp = [dateFormatter stringFromDate:date];
+        
+    }
+    else if (distance < 60 * 60 * 24 * 7) {
+        distance = distance / 60 / 60 / 24;
+        timestamp = [NSString stringWithFormat:@"%d%@", distance,@"天前"];
+    }
+    else if (distance < 60 * 60 * 24 * 7 * 4) {
+        distance = distance / 60 / 60 / 24 / 7;
+        timestamp = [NSString stringWithFormat:@"%d%@", distance, @"周前"];
+    }else
+    {
+        static NSDateFormatter *dateFormatter = nil;
+        if (dateFormatter == nil) {
+            dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+        }
+        NSDate *date = [NSDate dateWithTimeIntervalSince1970: [myTime integerValue]];
+        
+        timestamp = [dateFormatter stringFromDate:date];
+    }
+    
+    return timestamp;
+}
+
+
 +(NSString*)timestamp:(NSString*)myTime{
     
     NSString *timestamp;
@@ -667,6 +744,30 @@
     [formatter setDateStyle:NSDateFormatterMediumStyle];
     [formatter setTimeStyle:NSDateFormatterShortStyle];
     [formatter setDateFormat:@"YYYY-MM-dd"];
+    NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[placetime doubleValue]];
+    NSString *confromTimespStr = [formatter stringFromDate:confromTimesp];
+    return confromTimespStr;
+}
+/**
+ *  时间转化格式:MM月dd日
+ */
++(NSString *)timechangeMMDD:(NSString *)placetime
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init] ;
+    [formatter setDateStyle:NSDateFormatterMediumStyle];
+    [formatter setTimeStyle:NSDateFormatterShortStyle];
+    [formatter setDateFormat:@"MM月dd日"];
+    NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[placetime doubleValue]];
+    NSString *confromTimespStr = [formatter stringFromDate:confromTimesp];
+    return confromTimespStr;
+}
+
++(NSString *)timechangeAll:(NSString *)placetime
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init] ;
+    [formatter setDateStyle:NSDateFormatterMediumStyle];
+    [formatter setTimeStyle:NSDateFormatterShortStyle];
+    [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
     NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[placetime doubleValue]];
     NSString *confromTimespStr = [formatter stringFromDate:confromTimesp];
     return confromTimespStr;
@@ -807,7 +908,7 @@
 
 + (BOOL)isLogin:(UIViewController *)viewController
 {
-    if ([LTools cacheBoolForKey:USER_LONGIN] == NO) {
+    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
         
         LoginViewController *login = [[LoginViewController alloc]init];
         

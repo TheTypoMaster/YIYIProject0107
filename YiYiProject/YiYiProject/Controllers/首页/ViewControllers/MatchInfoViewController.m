@@ -15,8 +15,9 @@
 #import "HomeMatchController.h"
 #import "MatchCaseCell.h"
 #import "GShowStarsView.h"
+#import "YIYIChatViewController.h"
 
-@interface MatchInfoViewController ()<UITableViewDataSource,SNRefreshDelegate,WaterFlowDelegate,TMQuiltViewDataSource>
+@interface MatchInfoViewController ()<UIAlertViewDelegate,UITableViewDataSource,SNRefreshDelegate,WaterFlowDelegate,TMQuiltViewDataSource>
 {
     int topic_data_page;
     int match_data_page;
@@ -26,7 +27,9 @@
     NSInteger current_page;
     UIView * sectionView2;
     UIImageView * navigation_view;
-
+    CGFloat currentOffY;
+    ///加关注取消关注
+    UIButton * attention_button;
 }
 
 @property(nonatomic,strong)SNRefreshTableView * myTableView;
@@ -53,6 +56,9 @@
 {
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+    
+    [waterFlow removeObserver:self forKeyPath:@"isShowUp"];
+    [_myTableView removeObserver:self forKeyPath:@"offsetY"];
 }
 
 
@@ -71,7 +77,10 @@
     _myTableView.refreshDelegate = self;
     [self.view addSubview:_myTableView];
     
-    [self loadSectionView];
+    [_myTableView addObserver:self forKeyPath:@"offsetY" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+
+    
+//    [self loadSectionView];
     [self getMatchInfo];
     [self getTopicData];
     
@@ -114,22 +123,15 @@
 #pragma mark - 返回
 -(void)back:(UIButton *)button
 {
-    @try{
-        [waterFlow removeObserver:self forKeyPath:@"isShowUp"];
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-    @catch(NSException *exception) {
-        NSLog(@"exception:%@", exception);
-    }
-    @finally {
-        
-    }
+    [waterFlow removeObserver:self forKeyPath:@"isShowUp"];
+    [self.navigationController popViewControllerAnimated:YES];
     
 }
 #pragma mark - 邀请搭配
 -(void)rightButtonTap:(UIButton *)button
 {
-    
+    UIAlertView * myAlertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:[NSString stringWithFormat:@"将向%@搭配师开放我的体型和衣橱",_theInfo.name] delegate:self cancelButtonTitle:@"不同意" otherButtonTitles:@"同意",nil];
+    [myAlertView show];
 }
 
 #pragma mark - Section View
@@ -137,12 +139,18 @@
 {
     float height = 150;
     
+    if (sectionView)
+    {
+        [sectionView removeFromSuperview];
+    }
+    
     sectionView = [[UIView alloc] init];
     sectionView.backgroundColor = [UIColor whiteColor];
     
     
     UIImageView * background_imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,DEVICE_WIDTH,150)];
-    background_imageView.image = [UIImage imageNamed:@"dapeishi_bg"];
+    background_imageView.image = [UIImage imageNamed:@"my_bg.png"];
+    background_imageView.userInteractionEnabled = YES;
     [sectionView addSubview:background_imageView];
     
     
@@ -183,18 +191,31 @@
     [chat_button setTitle:@"交流" forState:UIControlStateNormal];
     chat_button.titleLabel.font = [UIFont boldSystemFontOfSize:14];
     [chat_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [chat_button addTarget:self action:@selector(chatTap:) forControlEvents:UIControlEventTouchUpInside];
     [background_imageView addSubview:chat_button];
     
     
-    UIButton * attention_button = [UIButton buttonWithType:UIButtonTypeCustom];
+    attention_button = [UIButton buttonWithType:UIButtonTypeCustom];
     attention_button.frame = CGRectMake(DEVICE_WIDTH-150,100,60,26);
     attention_button.backgroundColor = RGBCOLOR(227,202,45);
-    [attention_button setTitle:@"+关注" forState:UIControlStateNormal];
     [attention_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     attention_button.titleLabel.font = [UIFont boldSystemFontOfSize:14];
     attention_button.layer.masksToBounds = YES;
     attention_button.layer.cornerRadius = 12;
+    [attention_button setTitle:@"+关注" forState:UIControlStateNormal];
+    [attention_button addTarget:self action:@selector(attentionTap:) forControlEvents:UIControlEventTouchUpInside];
     [background_imageView addSubview:attention_button];
+    
+    if ([_theInfo.relation intValue] == 1)///已关注
+    {
+        [attention_button setTitle:@"-关注" forState:UIControlStateNormal];
+    }else if ([_theInfo.relation intValue] == 2)///未关注
+    {
+        [attention_button setTitle:@"+关注" forState:UIControlStateNormal];
+    }else if ([_theInfo.relation intValue] == 3)///已互相关注
+    {
+        [attention_button setTitle:@"-关注" forState:UIControlStateNormal];
+    }
     
     
     
@@ -246,7 +267,7 @@
 ///获取搭配师个人信息
 -(void)getMatchInfo
 {
-    NSString * fullUrl = [NSString stringWithFormat:GET_MATCH_INFOMATION_URL,_match_uid];
+    NSString * fullUrl = [NSString stringWithFormat:GET_MATCH_INFOMATION_URL,_match_uid,[GMAPI getAuthkey]];
     
     AFHTTPRequestOperation * request = [[AFHTTPRequestOperation alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:fullUrl]]];
     __weak typeof(self)bself = self;
@@ -258,7 +279,8 @@
             
             if ([[allDic objectForKey:@"errorcode"] intValue] == 0) {
                 
-                _theInfo = [[MatchInfoModel alloc] initWithDic:allDic];
+                bself.theInfo = [[MatchInfoModel alloc] initWithDic:allDic];
+                
                 
                 [bself.myTableView finishReloadigData];
                 NSLog(@"我勒个擦 -----   %@",bself.theInfo.t_tags);
@@ -334,11 +356,13 @@
             NSString * errcode = [allDic objectForKey:@"errorcode"];
             if ([errcode intValue] == 0)
             {
+                NSArray * array = [allDic objectForKey:@"tt_list"];
                 if (match_data_page == 1) {
                     [bself.array_matchCase removeAllObjects];
+                    if ([array isKindOfClass:[NSArray class]] && array.count == 0) {
+                        [LTools showMBProgressWithText:@"该搭配师暂无搭配数据" addToView:self.view];
+                    }
                 }
-                
-                NSArray * array = [allDic objectForKey:@"tt_list"];
                 
                 for (NSDictionary * dic in array) {
                     MatchCaseModel * model = [[MatchCaseModel alloc] initWithDictionary:dic];
@@ -359,6 +383,69 @@
     
     [request start];
     
+}
+///加关注
+-(void)attentionTap:(UIButton *)sender
+{
+    NSString * fullUrl;
+    BOOL isAttention;
+    if ([_theInfo.relation intValue] == 1)///已关注
+    {
+        isAttention = YES;
+    }else if ([_theInfo.relation intValue] == 2)///未关注
+    {
+        isAttention = NO;
+    }else if ([_theInfo.relation intValue] == 3)///已互相关注
+    {
+        isAttention = YES;
+    }
+    
+    MBProgressHUD * hud;
+    if ([LTools isLogin:self])
+    {
+        hud = [LTools MBProgressWithText:isAttention?@"取消关注...":@"关注..." addToView:self.view];
+        hud.mode = MBProgressHUDModeIndeterminate;
+    }
+    
+    fullUrl = [NSString stringWithFormat:ATTENTTION_SOMEBODY_URL,[GMAPI getAuthkey],isAttention?@"can_friend":@"at_friend",_theInfo.uid];
+    
+    AFHTTPRequestOperation * request = [[AFHTTPRequestOperation alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:fullUrl]]];
+    __weak typeof(self)bself = self;
+    [request setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary * allDic = [operation.responseString objectFromJSONString];
+        NSString * errcode = [allDic objectForKey:@"errorcode"];
+        if ([errcode intValue] == 0)
+        {
+            [hud hide:YES];
+            bself.theInfo.relation = isAttention?@"2":@"1";
+            [LTools showMBProgressWithText:isAttention?@"成功取消关注":@"关注成功" addToView:self.view];
+            [attention_button setTitle:isAttention?@"+关注":@"-关注" forState:UIControlStateNormal];
+        }else
+        {
+            [LTools showMBProgressWithText:[allDic objectForKey:@"msg"] addToView:self.view];
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [LTools showMBProgressWithText:@"请求失败，请检查您当前网络" addToView:self.view];
+    }];
+    
+    [request start];
+}
+///交流
+-(void)chatTap:(UIButton *)button
+{
+    if ([LTools isLogin:self]) {
+        
+        YIYIChatViewController *contact = [[YIYIChatViewController alloc]init];
+        contact.currentTarget = self.theInfo.uid;
+        contact.currentTargetName = self.theInfo.name;
+        contact.portraitStyle = RCUserAvatarCycle;
+        contact.enableSettings = NO;
+        contact.conversationType = ConversationType_PRIVATE;
+        
+        [self.navigationController pushViewController:contact animated:YES];
+    }
 }
 
 
@@ -433,40 +520,55 @@
         
         _myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
-        waterFlow = [[MatchWaterflowView alloc]initWithFrame:CGRectMake(0,0,DEVICE_WIDTH,DEVICE_HEIGHT-64) waterDelegate:self waterDataSource:self];
-        waterFlow.backgroundColor = RGBCOLOR(240, 230, 235);
-        [cell.contentView addSubview:waterFlow];
-        [waterFlow removeHeaderView];
-        [waterFlow showRefreshHeader:NO];
-        [waterFlow reloadData:_array_matchCase total:100];
-        
-        [waterFlow addObserver:self forKeyPath:@"isShowUp" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
-        
-        
+        if (_array_matchCase.count) {
+            waterFlow = [[MatchWaterflowView alloc]initWithFrame:CGRectMake(0,0,DEVICE_WIDTH,DEVICE_HEIGHT-64) waterDelegate:self waterDataSource:self];
+            waterFlow.backgroundColor = RGBCOLOR(240, 230, 235);
+            [cell.contentView addSubview:waterFlow];
+            [waterFlow removeHeaderView];
+            [waterFlow showRefreshHeader:NO];
+            [waterFlow reloadData:_array_matchCase total:100];
+            
+            [waterFlow addObserver:self forKeyPath:@"isShowUp" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+        }
         return cell;
     }
 }
 
 // 只要MatchWaterflowView类的"offSet_string"属性发生的变化都会触发到以下的方法
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    
-    float isShowUp = [[change objectForKey:@"new"] intValue];
-    NSLog(@"wilage ----   %f",isShowUp);
-    if (isShowUp)
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"isShowUp"])
     {
-        // 输出改变后的值
-        [_myTableView setContentOffset:CGPointMake(0,0) animated:YES];
-    }else
+        float isShowUp = [[change objectForKey:@"new"] intValue];
+        NSLog(@"wilage ----   %f",isShowUp);
+        if (isShowUp)
+        {
+            // 输出改变后的值
+            [_myTableView setContentOffset:CGPointMake(0,0) animated:YES];
+        }else
+        {
+            [_myTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        }
+        
+        
+        [UIView animateWithDuration:0.5f animations:^{
+            navigation_view.top = isShowUp?0:-64;
+        } completion:^(BOOL finished) {
+            
+        }];
+    }else if ([keyPath isEqualToString:@"offsetY"])
     {
-        [_myTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        NSString * new = [change objectForKey:@"new"];
+        
+        if (50 < [new floatValue])
+        {
+            [self setNavigationViewHiddenWith:YES];
+        }else
+        {
+            [self setNavigationViewHiddenWith:NO];
+        }
     }
     
-    
-    [UIView animateWithDuration:0.5f animations:^{
-        navigation_view.top = isShowUp?0:-64;
-    } completion:^(BOOL finished) {
-        
-    }];
 }
 
 
@@ -568,6 +670,33 @@
         return 74;
     }
 }
+#pragma mark - UIScrollViewDelegate
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat offset = scrollView.contentOffset.y;
+    
+    if (offset > currentOffY) {
+        
+        [self setNavigationViewHiddenWith:YES];
+        
+    }else
+    {
+        [self setNavigationViewHiddenWith:NO];
+    }
+    
+    currentOffY = offset;
+}
+
+
+-(void)setNavigationViewHiddenWith:(BOOL)isHidden
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        navigation_view.top = isHidden?-64:0;
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+
 
 #pragma mark - 点击按钮切换搭配、话题
 -(void)clickForChange:(UIButton *)button
@@ -679,6 +808,41 @@
     return cell;
 }
 
+-(void)dealloc
+{
+    _array_matchCase = nil;
+    _array_topic = nil;
+    _myTableView = nil;
+    waterFlow = nil;
+}
+
+
+#pragma mark - UIAlertViewDelegate
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1)
+    {
+        BOOL isAttention;
+        if ([_theInfo.relation intValue] == 1)///已关注
+        {
+            isAttention = YES;
+        }else if ([_theInfo.relation intValue] == 2)///未关注
+        {
+            isAttention = NO;
+        }else if ([_theInfo.relation intValue] == 3)///已互相关注
+        {
+            isAttention = YES;
+        }
+        
+        if (isAttention) {
+            [LTools showMBProgressWithText:@"邀请成功" addToView:self.view];
+        }else
+        {
+            [self attentionTap:nil];
+        }
+        
+    }
+}
 
 
 - (void)didReceiveMemoryWarning {

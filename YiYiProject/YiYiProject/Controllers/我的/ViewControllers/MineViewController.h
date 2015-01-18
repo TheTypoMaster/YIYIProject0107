@@ -9,7 +9,10 @@
 #import "MyViewController.h"
 
 @interface MineViewController : MyViewController
-
+{
+    NSString *user_bannerUrl;
+    NSString *headImageUrl;
+}
 //@property(nonatomic,strong)UIImageView *userBannerImv;//bannerImv
 @property(nonatomic,strong)UIImageView *userFaceImv;//头像Imv
 

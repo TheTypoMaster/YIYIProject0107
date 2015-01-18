@@ -10,6 +10,7 @@
 #import "MyseetingTableViewCell.h"
 #import "AboutTailCircleViewController.h"
 
+#import "UMFeedbackViewController.h"
 //RBG color
 #define RGBA(r,g,b,a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 @interface MySettingsViewController ()
@@ -88,7 +89,7 @@
     [_mTableVIew registerNib:cellNib forCellReuseIdentifier:cellIdentifer];
     
      //隐藏多余的分割线
-    UIView *footView = [[UIView alloc] init];
+    UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 50)];
     footView.backgroundColor = RGBA(248, 248, 248, 1);
     
     ///退出登录
@@ -207,7 +208,7 @@
                 }
             }
             dispatch_async(dispatch_get_main_queue(), ^{
-                [GMAPI hiddenProgress];
+                [GMAPI showSuccessProgessWithText:@"清理成功!" hasMask:NO];
                 
                 catchSize = @"0KB";
                 
@@ -231,6 +232,11 @@
     if (indexPath.row == 4) {
         //意见反馈
         
+        UMFeedbackViewController *_feedbackVC=[[UMFeedbackViewController alloc]init];
+        
+        [self.navigationController pushViewController:_feedbackVC animated:YES];
+        
+        
         //TODO:  还没做
     }
     
@@ -245,6 +251,31 @@
 
 -(void)logOutActon{
     //TODO:
+    
+    //清除用户数据,返回我的,弹出登录界面,融云退出登录
+    
+    
+    [LTools cache:@"" ForKey:USER_NAME];
+    [LTools cache:@"" ForKey:USER_UID];
+    [LTools cache:@"" ForKey:USER_AUTHOD];
+    [LTools cache:@"" ForKey:USER_HEAD_IMAGEURL];
+    
+    //保存登录状态 yes
+    
+    [LTools cacheBool:NO ForKey:LOGIN_SERVER_STATE];
+    
+    [GMAPI showSuccessProgessWithText:@"退出登录成功！" hasMask:NO];
+    [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_LOGOUT object:nil];
+    [self logout];
+    [self performSelector:@selector(leftButtonTap:) withObject:nil afterDelay:0.2];
+    
+    
+    
+}
+
+- (void)leftButtonTap:(UIButton *)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -252,14 +283,27 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
+#pragma mark - 网络请求
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)logout
+{
+    __weak typeof(self)weakSelf = self;
+    
+    NSString *url = [NSString stringWithFormat:USER_LOGOUT_ACTION,[GMAPI getAuthkey]];
+    
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"result %@ erro %@",result,erro);
+        
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        NSLog(@"failDic %@ erro %@",failDic,erro);
+        
+//        [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
+    }];
 }
-*/
+
 
 @end

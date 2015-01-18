@@ -138,11 +138,16 @@
 - (void)setCellWithModel:(TPlatModel *)aModel
 {
     NSString *imageUrl = aModel.image[@"url"];
-    CGFloat aWidth = [aModel.image[@"width"]floatValue];
-    CGFloat aHeight = [aModel.image[@"height"]floatValue];
+    CGFloat image_width = [aModel.image[@"width"]floatValue];
+    CGFloat image_height = [aModel.image[@"height"]floatValue];
+    if (image_width == 0.0) {
+        image_width = image_height;
+    }
+    float rate = image_height/image_width;
+    
     
     [self.photoView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
-    _photoView.height = [self height:aHeight / 2.f aWidth:aWidth];
+    _photoView.height = (DEVICE_WIDTH-30)/2.0*rate;
     
     NSString *userImageUrl = aModel.uinfo[@"photo"];
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:userImageUrl] placeholderImage:nil];

@@ -34,6 +34,8 @@
         qtmquitView.dataSource = waterDatasource;
         self.waterDelegate = waterDelegate;
         
+        self.quitView = qtmquitView;
+        
         [self addSubview:qtmquitView];
                 
 //        [qtmquitView reloadData];
@@ -42,7 +44,6 @@
     }
     return self;
 }
-
 
 //成功加载
 - (void)reloadData:(NSArray *)data total:(int)totalPage
@@ -257,6 +258,11 @@
     if (_refreshFooterView)
     {
         [_refreshFooterView egoRefreshScrollViewDidScroll:scrollView];
+    }
+    
+    if (_waterDelegate && [_waterDelegate respondsToSelector:@selector(waterScrollViewDidScroll:)]) {
+        
+        [_waterDelegate waterScrollViewDidScroll:scrollView];
     }
 }
 

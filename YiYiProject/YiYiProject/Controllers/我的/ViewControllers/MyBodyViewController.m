@@ -79,7 +79,7 @@
 //    UILabel *label1 = [LTools createLabelFrame:CGRectMake(shenGaoTextField.frame.origin.x+shenGaoTextField.frame.size.width, shenGaoTextField.frame.origin.y, 30, 40) title:@"cm" font:15 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"000000"]];
 //    [jiBenInfoView addSubview:label1];
     
-    tiZhongTextField = [[UITextField alloc] initWithFrame:CGRectMake(68, (50-15)/2.0+50, 100, 15)];
+    tiZhongTextField = [[UITextField alloc] initWithFrame:CGRectMake(68, (50-40)/2.0+50, 100, 40)];
     tiZhongTextField.backgroundColor = [UIColor clearColor];
     tiZhongTextField.font = [UIFont systemFontOfSize:15];
     tiZhongTextField.placeholder = @"单位:kg";
@@ -88,7 +88,7 @@
     //tiZhongTextField.textAlignment = NSTextAlignmentRight;
     [jiBenInfoView addSubview:tiZhongTextField];
     
-    jianKuanTextField = [[UITextField alloc] initWithFrame:CGRectMake(68, (50-15)/2.0+100, 100, 15)];
+    jianKuanTextField = [[UITextField alloc] initWithFrame:CGRectMake(68, (50-40)/2.0+100, 100, 40)];
     jianKuanTextField.backgroundColor = [UIColor clearColor];
     jianKuanTextField.font = [UIFont systemFontOfSize:15];
     jianKuanTextField.keyboardType = UIKeyboardTypeDecimalPad;
@@ -117,7 +117,7 @@
     }
     
     
-    xiongWeiTextField = [[UITextField alloc] initWithFrame:CGRectMake(68, (50-15)/2.0, 100, 15)];
+    xiongWeiTextField = [[UITextField alloc] initWithFrame:CGRectMake(68, (50-40)/2.0, 100, 40)];
     xiongWeiTextField.backgroundColor = [UIColor clearColor];
     xiongWeiTextField.placeholder = @"单位:cm";
     xiongWeiTextField.delegate = self;
@@ -126,7 +126,7 @@
     //xiongWeiTextField.textAlignment = NSTextAlignmentRight;
     [sanWeiView addSubview:xiongWeiTextField];
     
-    yaoWeiTextField = [[UITextField alloc] initWithFrame:CGRectMake(68, (50-15)/2.0+50, 100, 15)];
+    yaoWeiTextField = [[UITextField alloc] initWithFrame:CGRectMake(68, (50-40)/2.0+50, 100, 40)];
     yaoWeiTextField.backgroundColor = [UIColor clearColor];
     yaoWeiTextField.font = [UIFont systemFontOfSize:15];
     yaoWeiTextField.placeholder = @"单位:cm";
@@ -135,7 +135,7 @@
     //yaoWeiTextField.textAlignment = NSTextAlignmentRight;
     [sanWeiView addSubview:yaoWeiTextField];
     
-    TunWeiTextField = [[UITextField alloc] initWithFrame:CGRectMake(68, (50-15)/2.0+100, 100, 15)];
+    TunWeiTextField = [[UITextField alloc] initWithFrame:CGRectMake(68, (50-40)/2.0+100, 100, 40)];
     TunWeiTextField.backgroundColor = [UIColor clearColor];
     TunWeiTextField.font = [UIFont systemFontOfSize:15];
     TunWeiTextField.placeholder = @"单位:cm";
@@ -154,7 +154,7 @@
     imageView = [[UIImageView alloc] initWithFrame:CGRectMake(labelShengHuo.frame.origin.x, labelShengHuo.frame.origin.y+labelShengHuo.frame.size.height+15, 80, 80)];
     imageView.backgroundColor = [UIColor colorWithHexString:@"cccccc"];
     imageView.userInteractionEnabled = YES;
-    imageView.image = [UIImage imageNamed:@"navigationBarBackground"];
+    //imageView.image = [UIImage imageNamed:@"navigationBarBackground"];
     [shengHuoZhaoView addSubview:imageView];
     
     UITapGestureRecognizer *addImageTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addImageTapGesture:)];
@@ -180,7 +180,7 @@
         UIImagePickerController *picker=[[UIImagePickerController alloc]init];
         picker.delegate=self;
         picker.sourceType=sourceType;
-        picker.allowsEditing=YES;
+        //picker.allowsEditing=YES;
         [self presentViewController:picker animated:YES completion:^{
             
         }];
@@ -292,7 +292,7 @@
     GmPrepareNetData *gg = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
     [gg requestCompletion:^(NSDictionary *result, NSError *erro) {
         
-        if(result && [[result objectForKey:@"errorcode"] integerValue] == 0)
+        if(result && [[result objectForKey:@"errorcode"] integerValue] == 0 && ![self isFirstShowWithDic:result])
         {
             sourceDic = result;
             shenGaoTextField.text = [[sourceDic objectForKey:@"height"] stringByAppendingString:@" cm"];
@@ -312,6 +312,15 @@
         
     }];
     
+}
+//是否是第一次进来，没有体型数据
+-(BOOL)isFirstShowWithDic:(NSDictionary *) dic
+{
+   if([[dic objectForKey:@"shoulder_width"] intValue] == 0 && [[dic objectForKey:@"chest_width"] intValue] == 0 && [[dic objectForKey:@"waistline"] intValue] == 0 && [[dic objectForKey:@"weight"] intValue] == 0)
+   {
+       return YES;
+   }
+    return NO;
 }
 -(void)createPickView
 {

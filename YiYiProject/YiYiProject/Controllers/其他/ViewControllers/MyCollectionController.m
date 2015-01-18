@@ -41,19 +41,6 @@
     self.navigationController.navigationBarHidden = NO;
 }
 
-//-(void)viewWillDisappear:(BOOL)animated
-//{
-//    [super viewWillDisappear:animated];
-//    
-//    self.navigationController.navigationBarHidden = YES;
-//}
-
--(void)leftButtonTap:(UIButton *)sender
-{
-    self.navigationController.navigationBarHidden = YES;
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -72,12 +59,61 @@
     
 }
 
+- (void)dealloc
+{
+//    waterFlow.
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 #pragma mark 事件处理
+
+/**
+ *  赞 取消赞 收藏 取消收藏
+ */
+
+- (void)clickToZan:(UIButton *)sender
+{
+    //直接变状态
+    //更新数据
+    
+    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[waterFlow.quitView cellAtIndexPath:[NSIndexPath indexPathForRow:sender.tag - 100 inSection:0]];
+    
+    ProductModel *aMode = waterFlow.dataArray[sender.tag - 100];
+    
+    NSString *productId = aMode.product_id;
+    __weak typeof(self)weakSelf = self;
+    
+    NSString *api = HOME_PRODUCT_ZAN_ADD;
+    
+    NSString *post = [NSString stringWithFormat:@"product_id=%@&authcode=%@",productId,[GMAPI getAuthkey]];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    
+    NSString *url = api;
+    
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"result %@",result);
+        sender.selected = YES;
+        aMode.is_like = 1;
+        aMode.product_like_num = NSStringFromInt([aMode.product_like_num intValue] + 1);
+        cell.like_label.text = aMode.product_like_num;
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+        if ([failDic[RESULT_CODE] intValue] == -11) {
+            
+            [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
+        }
+        
+    }];
+}
+
 
 
 /**
@@ -183,6 +219,8 @@
     ProductModel *aMode = waterFlow.dataArray[indexPath.row];
     [cell setCellWithModel:aMode];
     
+    cell.like_btn.tag = 100 + indexPath.row;
+    [cell.like_btn addTarget:self action:@selector(clickToZan:) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
 }

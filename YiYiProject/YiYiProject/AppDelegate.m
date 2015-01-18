@@ -22,55 +22,28 @@
 
 #import "RCIMClient.h"
 
+#import "LDataInstance.h"
+
 //融云cloud
 
-//18600912932
-//cocos2d
-
-#define RONGCLOUD_IM_APPKEY    @"kj7swf8o7zaf2"
+#define RONGCLOUD_IM_APPKEY    @"kj7swf8o7zaf2" //正式 融云账号 18600912932 cocos2d
 #define RONGCLOUD_IM_APPSECRET @"2cCSWhaLcCm37"
 
-#define UmengAppkey @"5423e48cfd98c58eed00664f"
-
+#define UmengAppkey @"548bae91fd98c50d0c000b8b"//正式 umeng后台：mobile@jiruijia.com mobile2014
 
 #define SinaAppKey @"2208620241" //正式审核通过 微博开放平台账号szkyaojiayou@163.com 密码：mobile2014
 #define SinaAppSecret @"fe596bc4ac8c92316ad5f255fbc49432"
+#define QQAPPID @"1104065435" //十六进制:41CEB39B; 生成方法:echo 'ibase=10;obase=16;1104065435'|bc
+#define QQAPPKEY @"UgVWGacRoeo9NtZy" //正式的账号
 
-#define QQAPPID @"1103196390" //十六进制:41C170E6; 生成方法:echo 'ibase=10;obase=16;1103196390'|bc
-#define QQAPPKEY @"zc8ykXXrvWjKpyuh"
+#define WXAPPID @"wx47f54e431de32846" //正式
+#define WXAPPSECRET @"a71699732e3bef01aefdaf324e2f522c"
 
-//fbauto （没用）
-#define WXAPPID @"wx10280ad0d507a8933b9d"
-#define WXAPPSECRET @"SADSDAS"
 
 #define RedirectUrl @"http://sns.whalecloud.com/sina2/callback" //回调地址
 
+//sns.whalecloud.com
 
-//================正式
-
-//umeng后台：mobile@jiruijia.com
-//密码:mobile2014
-//微博开放平台账号szkyaojiayou@163.com
-//密码：mobile2014
-//微信开放平台账号：mobile@jiruijia.com
-//密码：mobile2014
-//腾讯开放平台：2451479286
-//密码：mobile2014
-
-//boundlid com.fblife.yijiayi
-
-//新浪
-
-//#define SinaAppKey @"2208620241"
-//#define SinaAppSecret @"fe596bc4ac8c92316ad5f255fbc49432"
-
-//#define QQAPPID @"1103196390" //十六进制:41C170E6; 生成方法:echo 'ibase=10;obase=16;1103196390'|bc
-//#define QQAPPKEY @"zc8ykXXrvWjKpyuh"
-
-//#define WXAPPID @"wx47f54e431de32846"
-//#define WXAPPSECRET @"a71699732e3bef01aefdaf324e2f522c"
-//
-//#define RedirectUrl @"http://sns.whalecloud.com/sina2/callback" //回调地址
 
 @interface AppDelegate ()<BMKGeneralDelegate,RCIMConnectionStatusDelegate,RCConnectDelegate>
 {
@@ -85,14 +58,19 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+   
+#pragma mark 融云
     
     [RCIM initWithAppKey:RONGCLOUD_IM_APPKEY deviceToken:nil];
+    [[RCIM sharedRCIM]setConnectionStatusDelegate:self];//监控连接状态
     
     //系统登录成功通知 登录融云
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginToRongCloud) name:NOTIFICATION_LOGIN object:nil];
     
-    [self rondCloudDefaultLoginWithToken:[LTools cacheForKey:RONGCLOUD_TOKEN]];
+    [self rongCloudDefaultLoginWithToken:[LTools cacheForKey:RONGCLOUD_TOKEN]];
+    
+#pragma mark 远程通知
     
     if (IOS7_OR_LATER) {
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
@@ -122,12 +100,7 @@
         NSLog(@"infoDic %@",infoDic);
         
     }
-
-    
-    [self umengShare];
-    
-    RootViewController *root = [[RootViewController alloc]init];
-    
+#pragma mark 百度地图相关
     
     if( ([[[UIDevice currentDevice] systemVersion] doubleValue]>=8.0)) {
         _locationManager = [[CLLocationManager alloc] init];
@@ -135,7 +108,7 @@
         [_locationManager startUpdatingLocation];
     }
     
-#pragma mark 百度地图相关
+
     // 要使用百度地图，请先启动BaiduMapManager
     _mapManager = [[BMKMapManager alloc]init];
     // 如果要关注网络及授权验证事件，请设定     generalDelegate参数
@@ -143,6 +116,12 @@
     if (!ret) {
         NSLog(@"manager start failed!");
     }
+    
+#pragma mark 友盟
+    
+    [self umengShare];
+    
+    RootViewController *root = [[RootViewController alloc]init];
     
     UINavigationController *unVc = [[UINavigationController alloc]initWithRootViewController:root];
     unVc.navigationBarHidden = YES;
@@ -285,7 +264,7 @@
 {
     
     if (headImage.length == 0) {
-        headImage = @"";
+        headImage = @"nnn";
     }
     
     NSString *url = [NSString stringWithFormat:RONCLOUD_GET_TOKEN,userId,userName,headImage];
@@ -296,25 +275,7 @@
         
         [LTools cache:result[@"token"] ForKey:RONGCLOUD_TOKEN];
         
-        [RCIM connectWithToken:result[@"token"] completion:^(NSString *userId) {
-            
-            NSLog(@"------> rongCloud success %@",userId);
-            
-//            [LTools showMBProgressWithText:@"聊天登录成功!" addToView:self.window];
-
-            
-        } error:^(RCConnectErrorCode status) {
-            
-            NSString *errInfo = @"融云错误";
-            
-            if (status == ConnectErrorCode_TOKEN_INCORRECT) {
-                
-                errInfo = @"融云token无效";
-            }
-            
-            NSLog(@"------> rongCloud fail %@",errInfo);
-            
-        }];
+        [self rongCloudDefaultLoginWithToken:result[@"token"]];
         
         
     } failBlock:^(NSDictionary *result, NSError *erro) {
@@ -336,7 +297,7 @@
     [alert show];
 }
 
-- (void)rondCloudDefaultLoginWithToken:(NSString *)loginToken
+- (void)rongCloudDefaultLoginWithToken:(NSString *)loginToken
 {
     //测试token
     
@@ -348,15 +309,15 @@
         
         [RCIM connectWithToken:loginToken completion:^(NSString *userId) {
             
-            NSLog(@"------> rongCloud success %@",userId);
+            NSLog(@"------> rongCloud 登陆成功 %@",userId);
             
-            [LTools cacheBool:YES ForKey:USER_LONGIN];
+            [LTools cacheBool:YES ForKey:LOGIN_RONGCLOUD_STATE];
             
         } error:^(RCConnectErrorCode status) {
            
-            NSLog(@"------> rongCloud fail %d",(int)status);
+            NSLog(@"------> rongCloud 登陆失败 %d",(int)status);
             
-            [LTools cacheBool:NO ForKey:USER_LONGIN];
+            [LTools cacheBool:NO ForKey:LOGIN_RONGCLOUD_STATE];
             
         }];
     }
@@ -367,13 +328,15 @@
  */
 -(void)rongCloudConnectionState{
     
-    [[RCIM sharedRCIM]setConnectionStatusDelegate:self];
+    
 }
 
 -(void)viewDidDisappear:(BOOL)animated
 {
     [[RCIM sharedRCIM] setConnectionStatusDelegate:nil];
 }
+
+#pragma mark - RCIMConnectionStatusDelegate <NSObject>
 
 -(void)responseConnectionStatus:(RCConnectionStatus)status{
     if (ConnectionStatus_KICKED_OFFLINE_BY_OTHER_CLIENT == status) {
@@ -383,6 +346,8 @@
             alert.tag = 2000;
             [alert show];
         });
+        
+        [LTools cacheBool:NO ForKey:LOGIN_RONGCLOUD_STATE];
     }
 }
 
@@ -425,5 +390,6 @@
 {
     NSLog(@"rongCloud重新连接失败--- %d",(int)errorCode);
 }
+
 
 @end

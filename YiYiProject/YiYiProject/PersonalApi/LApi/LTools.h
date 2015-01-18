@@ -9,9 +9,15 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+
+
 #import "MBProgressHUD.h"
 
+
+
 #import "AppDelegate.h"
+
+#import "LDataInstance.h"
 
 #define RESULT_INFO @"msg" //错误信息
 
@@ -122,6 +128,12 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
 +(NSString *)timechange2:(NSString *)placetime;
 +(NSString *)timechange3:(NSString *)placetime;
 
++(NSString *)timechangeMMDD:(NSString *)placetime;
+
++(NSString *)timechangeAll:(NSString *)placetime;//时间戳 显示全
+
++(NSString*)showTimeWithTimestamp:(NSString*)myTime;//不满一天显示时、分 大于一天显示时间间隔
+
 +(NSString *)timechangeToDateline;//转换为时间戳
 
 +(NSString*)timestamp:(NSString*)myTime;//模糊时间,如几天前
@@ -153,6 +165,8 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
 + (BOOL)NSStringIsNull:(NSString *)string;//判断字符串是否全为空格
 
 #pragma mark - 验证有效性
+
++ (BOOL) isEmpty:(NSString *) str;//是否为空
 
 + (BOOL)isDictinary:(id)object;//是否是字典
 

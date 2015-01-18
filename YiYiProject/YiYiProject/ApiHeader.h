@@ -36,7 +36,11 @@ alpha:(a)]
 #define USER_NAME @"username"
 #define USER_PWD @"userPw"
 #define USER_UID @"useruid"
-#define USER_LONGIN @"user_in" //no是未登陆  yes是已登陆
+
+//两个登陆标识
+#define LOGIN_SERVER_STATE @"user_login_state" //登陆衣加衣服务器 no是未登陆  yes是已登陆
+#define LOGIN_RONGCLOUD_STATE @"rongcloudLoginState"//融云登陆状态
+
 #define USER_AUTHOD @"user_authod"
 #define USER_CHECKUSER @"checkfbuser"
 #define USER_HEAD_IMAGEURL @"userHeadImageUrl"//头像url
@@ -114,7 +118,11 @@ typedef enum {
 #define RONCLOUD_GET_TOKEN @"http://182.92.158.32/index.php?d=api&c=chat&m=get_token&user_id=%@&name=%@&portrait_uri=%@"//获取融云 token
 
 //登录
-#define USER_LOGIN_ACTION @"http://182.92.158.32/index.php?d=api&c=user_api&m=login&type=%@&password=%@&thirdid=%@&nickname=%@&thirdphoto=%@&gender=%d&devicetoken=%@&mobile=%@"
+#define USER_LOGIN_ACTION @"http://182.92.158.32/index.php?d=api&c=user_api&m=login&type=%@&password=%@&thirdid=%@&nickname=%@&third_photo=%@&gender=%d&devicetoken=%@&mobile=%@"
+
+//退出登录
+
+#define USER_LOGOUT_ACTION @"http://182.92.158.32/index.php?d=api&c=user_api&m=login_out&authcode=%@"
 
 //注册
 #define USER_REGISTER_ACTION @"http://182.92.158.32/index.php?d=api&c=user_api&m=register&username=%@&password=%@&gender=%d&type=%d&code=%d&mobile=%@"
@@ -181,7 +189,11 @@ typedef enum {
 
 #define TTAI_DETAIL @"http://182.92.158.32/?d=api&c=tplat&m=ttinfo&tt_id=%@&authcode=%@"
 
+///t台评论接口
+#define TTAI_COMMENTS_URL @"http://182.92.158.32/?d=api&c=tplat&m=listReply&page=%d&count=20&tt_id=%@"
+//T台评论
 
+#define TTAI_COMMENT @"http://182.92.158.32/?d=api&c=tplat&m=comment"
 
 //T台点赞
 
@@ -198,6 +210,30 @@ typedef enum {
 #define PERSON_CHANGEUSERBANNER @"http://182.92.158.32/index.php?d=api&c=user_api&m=update_user_banner"
 #define PERSON_GETUSERINFO @"http://182.92.158.32/index.php?d=api&c=user_api&m=get_user_info"
 #define PERSON_CHANGEUSERFACE @"http://182.92.158.32/index.php?d=api&c=user_api&m=update_user_info"
+
+
+//关注商场
+#define GUANZHUSHANGCHANG @"http://182.92.158.32/?d=api&c=friendship&m=mallShipCreate"
+//取消关注商场
+#define QUXIAOGUANZHU_SHANGCHANG @"http://182.92.158.32/?d=api&c=friendship&m=mallDestory"
+
+
+
+//申请店铺界面 
+//根据省市区获取商城列表
+#define STORELISTWITHPROVINCEANDCITY @"http://182.92.158.32/api/mall/listMall?province_id=%@&city_id=%@"
+//某商场所有楼层的品牌列表
+#define STOREALLFLOORPINPAI @"http://182.92.158.32/?d=api&c=mall&m=listBrandFromMall&mall_id=%@"
+
+//获取手机验证码
+#define PHONE_YANZHENGMA_SHENQINGSHANGCHANGDIAN @"http://182.92.158.32/index.php?d=api&c=user_api&m=get_code&mobile=%@&type=5"
+
+//申请店铺
+#define SHENQINGJINGPINDIAN @"182.92.158.32/?d=api&c=mall&m=addMall"
+//申请商场店
+#define SHENQINGSHANGCHANGDIAN @"http://182.92.158.32/?d=api&c=mall&m=addShop"
+
+
 
 
 #pragma mark - 搭配师相关接口 ******************************add by sn
@@ -219,12 +255,23 @@ typedef enum {
  */
 #define GET_MATCH_DATA_URL @"http://182.92.158.32/index.php?d=api&c=division_t&m=get_division_tts&t_uid=%@&page=%d&per_page=%d"
 
+///申请搭配师
+/*
+ authcode(uid加密串) string
+ mobile（手机号码）string
+ code(验证码) int
+ qq(qq号码) int
+ weixin(微信号码，可不填) int
+ pic(身份证照片) string
+ */
+#define APPLY_MATCH_URL @"http://182.92.158.32/index.php?d=api&c=division_t&m=apply_division_teacher"
+
 ///话题详情接口
 #define GET_TOPIC_DETAIL_URL @"http://182.92.158.32/index.php?d=api&c=topic&m=get_topic_info&topic_id=%@&authcode=%@"
 ///获取话题评论接口
 #define GET_TOPIC_COMMENTS_URL @"http://182.92.158.32/index.php?d=api&c=topic&m=get_replies&topic_id=%@&page=%d&per_page=20"
 ///获取搭配师个人信息
-#define GET_MATCH_INFOMATION_URL @"http://182.92.158.32/index.php?d=api&c=division_t&m=get_division_t_info&t_uid=%@"
+#define GET_MATCH_INFOMATION_URL @"http://182.92.158.32/index.php?d=api&c=division_t&m=get_division_t_info&t_uid=%@&authcode=%@"
 ///话题点赞接口
 #define TOPIC_ADDFAV_URL @"http://182.92.158.32/index.php?d=api&c=topic&m=like_topic&authcode=%@&topic_id=%@"
 ///话题取消赞接口
@@ -241,6 +288,14 @@ typedef enum {
  */
 #define TOPIC_COMMENTS_URL @"http://182.92.158.32/index.php?d=api&c=topic&m=reply_topic"
 
+///关注取消关注接口
+/*
+ 参数解释依次为:
+ authcode(uid的加密串) string
+ action(取消还是关注 at_friend⇒关注某人 can_friend⇒取消关注某人) str
+ friend_uid(操作的对象uid) int
+ */
+#define ATTENTTION_SOMEBODY_URL @"http://182.92.158.32/index.php?d=api&c=my_api&m=attention&authcode=%@&action=%@&friend_uid=%@"
 
 #pragma mark - 搭配师相关接口 ******************************add by sn
 
@@ -335,8 +390,6 @@ typedef enum {
 
 
 
-#define KAITONG_DIANPU_URL @"http://182.92.158.32/?d=api&c=mall&m=addMall"
-
 #pragma - mark 搭配师话题
 
 #define TOPIC_ADD @"http://182.92.158.32/index.php?d=api&c=topic&m=publish_topic"//添加话题
@@ -357,6 +410,14 @@ typedef enum {
 
 #define POST_TLIST_URL @"http://182.92.158.32/?d=api&c=tplat&m=listT"  //获取个人资料
 
+
+#pragma mark - 消息
+
+#define MESSAGE_GET_MINE @"http://182.92.158.32/index.php?d=api&c=msg&m=get_my_msg&authcode=%@"//我的消息
+
+#define MESSAGE_GET_LIST @"http://182.92.158.32/index.php?d=api&c=msg&m=get_special_msg&action=%@&authcode=%@"//action= yy(衣加衣) shop（商家） dynamic（动态）
+
+#define MESSAGE_GET_DETAIL @"http://182.92.158.32/index.php?d=api&c=msg&m=get_msg_info&msg_id=%@&authcode=%@"
 
 #endif
 

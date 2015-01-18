@@ -428,7 +428,7 @@
     
     NSLog(@"点击的是%ld",(long)sender.tag);
     //判断是否登录
-    if ([LTools cacheBoolForKey:USER_LONGIN] == NO) {
+    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
         LoginViewController *login = [[LoginViewController alloc]init];
         UINavigationController *unVc = [[UINavigationController alloc]initWithRootViewController:login];
 //        [self presentViewController:unVc animated:YES completion:nil];

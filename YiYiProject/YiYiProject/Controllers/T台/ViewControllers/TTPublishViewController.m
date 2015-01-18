@@ -11,7 +11,10 @@
 #import "AFNetworking.h"
 
 
-@interface TTPublishViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface TTPublishViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate>
+{
+    BOOL imageIsValid;//图片是否有效
+}
 
 @end
 
@@ -25,7 +28,16 @@
     self.rightString = @"发送";
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeText];
     
-    [self.addImageButton addTarget:self action:@selector(clickToAddAlbum:) forControlEvents:UIControlEventTouchUpInside];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapToHiddenKeyboard:)];
+    [self.view addGestureRecognizer:tap];
+    
+    [self.addImageButton addTarget:self action:@selector(clickToAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    if (self.publishImage) {
+        
+        imageIsValid = YES;
+        [self.addImageButton setImage:self.publishImage forState:UIControlStateNormal];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -119,6 +131,14 @@
 
 #pragma mark 事件处理
 
+- (void)tapToHiddenKeyboard:(UITapGestureRecognizer *)tap
+{
+    [self.contentTF resignFirstResponder];
+    [self.brandTF resignFirstResponder];
+    [self.modelTF resignFirstResponder];
+    [self.priceTF resignFirstResponder];
+}
+
 - (void)leftButtonTap:(UIButton *)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
@@ -128,7 +148,48 @@
 {
     NSLog(@"发送");
     
-    [self upLoadImage:self.addImageButton.imageView.image];
+    [self tapToHiddenKeyboard:nil];
+    
+//    self.brandTF.text,self.modelTF.text,self.priceTF.text
+    
+    if ([LTools isEmpty:self.brandTF.text]) {
+        
+        [LTools showMBProgressWithText:@"品牌不能为空" addToView:self.view];
+        return;
+    }
+    if ([LTools isEmpty:self.modelTF.text]) {
+        
+        [LTools showMBProgressWithText:@"型号不能为空" addToView:self.view];
+        return;
+    }
+    
+    if ([LTools isEmpty:self.priceTF.text]) {
+        
+        [LTools showMBProgressWithText:@"价格不能为空" addToView:self.view];
+        return;
+    }
+    
+    if ([LTools isValidateFloat:self.priceTF.text]) {
+        
+        [LTools showMBProgressWithText:@"请填写有效价格" addToView:self.view];
+        return;
+    }
+    
+    
+    if (imageIsValid) {
+        
+       [self upLoadImage:self.addImageButton.imageView.image];
+    }else
+    {
+        [LTools showMBProgressWithText:@"请添加有效照片" addToView:self.view];
+    }
+    
+}
+
+- (void)clickToAction:(UIButton *)sender
+{
+    UIActionSheet *sheet = [[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"相册", nil];
+    [sheet showInView:self.view];
 }
 
 /**
@@ -139,6 +200,18 @@
 {
     UIImagePickerController *picker = [[UIImagePickerController alloc]init];
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    picker.delegate = self;
+    [self presentViewController:picker animated:YES completion:nil];
+}
+
+/**
+ *  拍照
+ */
+
+- (void)clickToPhoto:(UIButton *)sender
+{
+    UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     picker.delegate = self;
     [self presentViewController:picker animated:YES completion:nil];
 }
@@ -219,6 +292,11 @@
         
 //        [self addPhoto:image];
         
+        if (image) {
+            
+            imageIsValid = YES;
+        }
+        
         [self.addImageButton setImage:image forState:UIControlStateNormal];
         
         [picker dismissViewControllerAnimated:NO completion:^{
@@ -235,6 +313,19 @@
     [picker dismissViewControllerAnimated:YES completion:^{
         
     }];
+}
+    
+#pragma mark - UIActionSheetDelegate <NSObject>
+
+// Called when a button is clicked. The view will be automatically dismissed after this call returns
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        
+        [self clickToAddAlbum:nil];
+    }else if (buttonIndex == 0){
+        [self clickToPhoto:nil];
+    }
 }
 
 @end
