@@ -155,6 +155,7 @@
     [self dismissViewControllerAnimated:YES completion:^{
         self.delegate.floor = [dicInfo objectForKey:@"floor"];
         self.delegate.pinpai = [dicInfo objectForKey:@"brand_name"];
+        self.delegate.pinpaiId = [dicInfo objectForKey:@"brand_id"];
         UILabel *titleLabel = self.delegate.chooseLabelArray[2];
         titleLabel.text = [NSString stringWithFormat:@"选择楼层品牌  %@ %@",title,[dicInfo objectForKey:@"brand_name"]];
     }];

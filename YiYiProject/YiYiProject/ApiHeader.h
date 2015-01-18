@@ -212,6 +212,11 @@ typedef enum {
 #define PERSON_CHANGEUSERFACE @"http://182.92.158.32/index.php?d=api&c=user_api&m=update_user_info"
 
 
+//关注商场
+#define GUANZHUSHANGCHANG @"http://182.92.158.32/?d=api&c=friendship&m=mallShipCreate"
+//取消关注商场
+#define QUXIAOGUANZHU_SHANGCHANG @"http://182.92.158.32/?d=api&c=friendship&m=mallDestory"
+
 
 
 //申请店铺界面 
@@ -219,6 +224,15 @@ typedef enum {
 #define STORELISTWITHPROVINCEANDCITY @"http://182.92.158.32/api/mall/listMall?province_id=%@&city_id=%@"
 //某商场所有楼层的品牌列表
 #define STOREALLFLOORPINPAI @"http://182.92.158.32/?d=api&c=mall&m=listBrandFromMall&mall_id=%@"
+
+//获取手机验证码
+#define PHONE_YANZHENGMA_SHENQINGSHANGCHANGDIAN @"http://182.92.158.32/index.php?d=api&c=user_api&m=get_code&mobile=%@&type=5"
+
+//申请店铺
+#define SHENQINGJINGPINDIAN @"182.92.158.32/?d=api&c=mall&m=addMall"
+//申请商场店
+#define SHENQINGSHANGCHANGDIAN @"http://182.92.158.32/?d=api&c=mall&m=addShop"
+
 
 
 
@@ -375,8 +389,6 @@ typedef enum {
 
 
 
-
-#define KAITONG_DIANPU_URL @"http://182.92.158.32/?d=api&c=mall&m=addMall"
 
 #pragma - mark 搭配师话题
 

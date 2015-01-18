@@ -12,6 +12,7 @@
 #import "GChooseStoreViewController.h"
 #import "NSDictionary+GJson.h"
 #import "GchooseFloorPinpaiViewController.h"
+#import "LTools.h"
 
 
 
@@ -46,12 +47,20 @@
     UITextField *_yanzhengmaTf;
     //验证码按钮
     UIButton *_yanzhengBtn_shangchang;
+    //计时器
+    NSTimer *_timer_shangchang;
+    //计时数
+    int _timeNum_shangchang;
     
     
     
     
     //精品店相关
     UIButton *_yanzhengBtn_jingpin;
+    //计时器
+    NSTimer *_timer_jingpin;
+    //计时数
+    int _timeNum_jingpin;
     
 
 }
@@ -333,6 +342,7 @@
     
 }
 
+//创建商场店view
 -(void)createShangchangdianView{
     UIView *witheBgView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 300)];
     
@@ -370,6 +380,7 @@
         }else if (i == 4){//电话
             _phoneTf = [[UITextField alloc]initWithFrame:CGRectMake(40, 0, title_Label.frame.size.width, title_Label.frame.size.height)];
             _phoneTf.font = [UIFont systemFontOfSize:17];
+            _phoneTf.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
             _phoneTf.textColor = RGBCOLOR(95, 95, 95);
             _phoneTf.delegate = self;
             [title_Label addSubview:_phoneTf];
@@ -386,7 +397,8 @@
             _yanzhengBtn_shangchang = [UIButton buttonWithType:UIButtonTypeCustom];
             [_yanzhengBtn_shangchang setTitle:@"获取验证码" forState:UIControlStateNormal];
             [_yanzhengBtn_shangchang setTitleColor:RGBCOLOR(95, 95, 95) forState:UIControlStateNormal];
-            _yanzhengBtn_shangchang.titleLabel.font = [UIFont systemFontOfSize:17];
+            _yanzhengBtn_shangchang.titleLabel.font = [UIFont systemFontOfSize:12];
+            [_yanzhengBtn_shangchang addTarget:self action:@selector(yanzheng_shangchang) forControlEvents:UIControlEventTouchUpInside];
             [_yanzhengBtn_shangchang setFrame:CGRectMake(DEVICE_WIDTH-100-17, 0, 90, title_Label.frame.size.height)];
             [title_Label addSubview:_yanzhengBtn_shangchang];
             
@@ -409,6 +421,66 @@
 
 }
 
+
+
+//申请商场店获取验证码
+-(void)yanzheng_shangchang{
+    
+    
+    //网络请求
+    
+    
+    if ([LTools isValidateMobile:_yanzhengmaTf.text]) {
+        NSString *api = [NSString stringWithFormat:PHONE_YANZHENGMA_SHENQINGSHANGCHANGDIAN,_yanzhengmaTf.text];
+        GmPrepareNetData *ccc =[[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+        [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
+            
+        } failBlock:^(NSDictionary *failDic, NSError *erro) {
+            
+        }];
+        
+        
+        _timer_shangchang = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(changeBtnTitle_shangchang) userInfo:nil repeats:YES];
+        [_timer_shangchang fire];
+        
+        _timeNum_shangchang = 60;
+        
+        [_yanzhengBtn_shangchang setTitle:[NSString stringWithFormat:@"%d秒后重新发送",_timeNum_shangchang] forState:UIControlStateNormal];
+        _yanzhengBtn_shangchang.userInteractionEnabled = NO;
+        
+        
+    }else{
+        [GMAPI showAutoHiddenMBProgressWithText:@"请输入正确的手机号" addToView:self.view];
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+}
+
+-(void)changeBtnTitle_shangchang{//商场
+    
+    
+    
+    _yanzhengBtn_shangchang.titleLabel.font = [UIFont systemFontOfSize:12];
+    _timeNum_shangchang--;
+    [_yanzhengBtn_shangchang setTitle:[NSString stringWithFormat:@"%d秒后重新发送",_timeNum_shangchang] forState:UIControlStateNormal];
+    
+    if (_timeNum_shangchang == 0) {
+        [_yanzhengBtn_shangchang setTitle:@"获取验证码" forState:UIControlStateNormal];
+        [_timer_shangchang invalidate];
+        _yanzhengBtn_shangchang.userInteractionEnabled = YES;
+    }
+}
+
+
+
 //商场店选择手势
 -(void)tapClicked:(UIGestureRecognizer *)sender{
     NSInteger tapIdTag = sender.view.tag;
@@ -427,6 +499,7 @@
 }
 
 
+//创建精品店view
 -(void)createJingPinDianView{
     
     //收键盘
@@ -457,10 +530,29 @@
         [_jingpingdianView addSubview:lineView];
         
         UITextField *shuRuTextfield=[[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(title_Label.frame), i*50, DEVICE_WIDTH-17-title_Label.frame.size.width-17, 50)];
+        
         shuRuTextfield.tag=100+i;
         [self.shuruTextFieldArray addObject:shuRuTextfield];
         shuRuTextfield.delegate = self;
         [_jingpingdianView addSubview:shuRuTextfield];
+        
+        
+        //获取验证码
+        if (i == 3) {
+            [shuRuTextfield setFrame:CGRectMake(CGRectGetMaxX(title_Label.frame), i*50, DEVICE_WIDTH-17-title_Label.frame.size.width-17-90, 50)];
+            //获取验证码
+            _yanzhengBtn_jingpin = [UIButton buttonWithType:UIButtonTypeCustom];
+            [_yanzhengBtn_jingpin setTitle:@"获取验证码" forState:UIControlStateNormal];
+            [_yanzhengBtn_jingpin setTitleColor:RGBCOLOR(95, 95, 95) forState:UIControlStateNormal];
+            _yanzhengBtn_jingpin.titleLabel.font = [UIFont systemFontOfSize:12];
+            [_yanzhengBtn_jingpin addTarget:self action:@selector(yanzheng_jingpin) forControlEvents:UIControlEventTouchUpInside];
+            [_yanzhengBtn_jingpin setFrame:CGRectMake(DEVICE_WIDTH-100, shuRuTextfield.frame.origin.y, 90, shuRuTextfield.frame.size.height)];
+            NSLog(@"%@",NSStringFromCGRect(_yanzhengBtn_jingpin.frame));
+            NSLog(@"%@",NSStringFromCGRect(shuRuTextfield.frame));
+            [_jingpingdianView addSubview:_yanzhengBtn_jingpin];
+        }
+        
+        
         
         
         
@@ -479,10 +571,60 @@
 
 }
 
+//获取验证码 精品店
+-(void)yanzheng_jingpin{
+    //网络请求
+    
+    UITextField *tf = (UITextField*)[self.view viewWithTag:102];
+    NSLog(@"%@",tf.text);
+    if ([LTools isValidateMobile:tf.text]) {
+        
+        NSString *api = [NSString stringWithFormat:PHONE_YANZHENGMA_SHENQINGSHANGCHANGDIAN,tf.text];
+        GmPrepareNetData *ccc =[[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+        [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
+            
+        } failBlock:^(NSDictionary *failDic, NSError *erro) {
+            
+        }];
+        
+        
+        _timer_jingpin = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(changeBtnTitle_jingpin) userInfo:nil repeats:YES];
+        [_timer_jingpin fire];
+        
+        _timeNum_jingpin = 60;
+        
+        [_yanzhengBtn_jingpin setTitle:[NSString stringWithFormat:@"%d秒后重新发送",_timeNum_jingpin] forState:UIControlStateNormal];
+        _yanzhengBtn_jingpin.userInteractionEnabled = NO;
+        
+        
+    }else{
+        [GMAPI showAutoHiddenMBProgressWithText:@"请输入正确的手机号" addToView:self.view];
+    }
+}
 
+
+//更改精品店验证码按钮状态
+-(void)changeBtnTitle_jingpin{
+    _yanzhengBtn_jingpin.titleLabel.font = [UIFont systemFontOfSize:12];
+    _timeNum_jingpin--;
+    [_yanzhengBtn_jingpin setTitle:[NSString stringWithFormat:@"%d秒后重新发送",_timeNum_jingpin] forState:UIControlStateNormal];
+    
+    if (_timeNum_jingpin == 0) {
+        [_yanzhengBtn_jingpin setTitle:@"获取验证码" forState:UIControlStateNormal];
+        [_timer_jingpin invalidate];
+        _yanzhengBtn_jingpin.userInteractionEnabled = YES;
+    }
+}
+
+
+
+
+
+
+//提交申请
 -(void)tijiao:(UIButton *)sender{
     
-    
+    [self gShou];
     
     /*mall_name 商铺名称 string 限制30字以内
      mall_type 商铺类型(商场小店), 1 商场 2 精品店
@@ -496,23 +638,29 @@
      authcode 约定好的code 判断店铺所有人*/
     
     
-    if (sender.tag==400)//申请普通精品小店
+    if (sender.tag==400)//申请精品店
     {
-        [self gShou];
-        
+        //authkey
         NSString *authkey = [GMAPI getAuthkey];
+        //店铺名
+        UITextField *tf = (UITextField*)[self.view viewWithTag:100];
+        NSString *mall_name =tf.text;
+        //地址
+        UITextField *tf1 = (UITextField*)[self.view viewWithTag:101];
+        NSString *street = tf1.text;
+        //电话
+        UITextField *tf2 = (UITextField*)[self.view viewWithTag:102];
+        NSString *mobile = tf2.text;
         
-        
-        
-        NSString *post = [NSString stringWithFormat:@"&mall_name=%@&street=%@&mobile=%@&code=%@&mall_type=%@&authkey=%@",@"SS",@"知春路",@"18600912932",@"213",@"1",authkey];
+        NSString *post = [NSString stringWithFormat:@"&mall_name=%@&street=%@&mobile=%@&code=%@&mall_type=%@&authkey=%@",mall_name,street,mobile,@"213",@"2",authkey];
         NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
         
-        NSString *url = [NSString stringWithFormat:KAITONG_DIANPU_URL];
+        NSString *url = [NSString stringWithFormat:SHENQINGJINGPINDIAN];
         LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
         [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
             
             NSLog(@"-->%@",result);
-            
+            [GMAPI showAutoHiddenMBProgressWithText:@"提交成功" addToView:self.view];
             
             
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
@@ -524,10 +672,29 @@
         }];
         
         
-    }else if(sender.tag==300)//申请商场店
-    {
+    }else if(sender.tag==300){//申请商场店
+        //商场id
+        NSString *mall_id = self.mallId;
+        //楼层id
+        NSString *floor_id = self.floor;
+        //品牌id
+        NSString *brand_id = self.pinpaiId;
+        //门牌号
+        NSString *door_num = _menpaihaoTf.text;
+        //手机号
+        NSString *mobile = _phoneTf.text;
         
-    
+        NSString *post = [NSString stringWithFormat:@"&mall_id=%@&floor_id=%@&brand_id=%@&door_num=%@&mobile=%@&authkey=%@",mall_id,floor_id,brand_id,door_num,mobile,[GMAPI getAuthkey]];
+        NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+        NSString *url = [NSString stringWithFormat:SHENQINGJINGPINDIAN];
+        GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
+        [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
+            [GMAPI showAutoHiddenMBProgressWithText:@"提交成功" addToView:self.view];
+        } failBlock:^(NSDictionary *failDic, NSError *erro) {
+            NSLog(@"faildic==%@",failDic);
+            [LTools showMBProgressWithText:failDic[@"msg"] addToView:self.view];
+        }];
+        
     }
     
 

@@ -19,6 +19,7 @@
 
 @property(nonatomic,strong)NSString *floor;//楼层
 @property(nonatomic,strong)NSString *pinpai;//品牌
+@property(nonatomic,strong)NSString *pinpaiId;//品牌id
 
 
 @end

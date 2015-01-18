@@ -75,7 +75,7 @@
     // Do any additional setup after loading the view.
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeText];
-    self.rightString = @"关注";
+    
     
     
     
@@ -103,7 +103,38 @@
 
 -(void)rightButtonTap:(UIButton *)sender
 {
+    
     NSLog(@"在这里添加关注");
+    
+    
+    if ([self.guanzhu intValue] == 0) {//未关注
+        NSString *post = [NSString stringWithFormat:@"&mall_id=%@&authcode=%@",self.mall_id,[GMAPI getAuthkey]];
+        NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+        NSString *url = [NSString stringWithFormat:GUANZHUSHANGCHANG];
+        GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
+        [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
+            [GMAPI showAutoHiddenMBProgressWithText:@"关注成功" addToView:self.view];
+            self.rightString = @"已关注";
+        } failBlock:^(NSDictionary *failDic, NSError *erro) {
+            [GMAPI showAutoHiddenMBProgressWithText:@"关注失败" addToView:self.view];
+        }];
+    }else if ([self.guanzhu intValue] == 1){
+        NSString *post = [NSString stringWithFormat:@"&mall_id=%@&authcode=%@",self.mall_id,[GMAPI getAuthkey]];
+        NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+        NSString *url = [NSString stringWithFormat:QUXIAOGUANZHU_SHANGCHANG];
+        GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
+        [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
+            [GMAPI showAutoHiddenMBProgressWithText:@"取消关注成功" addToView:self.view];
+            self.rightString = @"关注";
+        } failBlock:^(NSDictionary *failDic, NSError *erro) {
+            [GMAPI showAutoHiddenMBProgressWithText:@"取消关注失败" addToView:self.view];
+        }];
+    }
+    
+    
+    
+    
+    
 }
 
 
@@ -252,6 +283,14 @@
         _mallNameLabel.text = [NSString stringWithFormat:@"%@",[result stringValueForKey:@"mall_name"]];
         _huodongLabel.text = [NSString stringWithFormat:@"活动：%@",[result stringValueForKey:@"doorno"]];
         _adressLabel.text = [NSString stringWithFormat:@"地址：%@",[result stringValueForKey:@"address"]];
+        self.mall_id = [result stringValueForKey:@"mall_id"];
+        self.guanzhu = [result stringValueForKey:@"following"];
+        if ([self.guanzhu intValue]==0) {//未关注
+            self.rightString = @"关注";
+        }else if ([self.guanzhu intValue] == 1){//已关注
+            self.rightString = @"已关注";
+        }
+        
         
         self.coordinate_store = CLLocationCoordinate2DMake([[result stringValueForKey:@"latitude"]floatValue], [[result stringValueForKey:@"longitude"]floatValue]);
         
