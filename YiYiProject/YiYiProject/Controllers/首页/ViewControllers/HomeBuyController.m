@@ -130,6 +130,9 @@
     
 }
 
+
+#pragma mark---------网络请求
+
 /**
  *  long 经度 非空
  lat 维度 非空
@@ -251,13 +254,5 @@
     
     return cell;
 }
-
-
-
-
-#pragma mark-------------获取数据
-
-
-
 
 @end

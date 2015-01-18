@@ -88,7 +88,7 @@ typedef enum{
     // Do any additional setup after loading the view from its nib.
     self.myTitleLabel.text = @"我的";
     
-    
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     
     //判断是否登录
     if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {

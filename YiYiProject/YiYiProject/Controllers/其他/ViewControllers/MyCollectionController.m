@@ -41,19 +41,6 @@
     self.navigationController.navigationBarHidden = NO;
 }
 
-//-(void)viewWillDisappear:(BOOL)animated
-//{
-//    [super viewWillDisappear:animated];
-//    
-//    self.navigationController.navigationBarHidden = YES;
-//}
-
-//-(void)leftButtonTap:(UIButton *)sender
-//{
-//    self.navigationController.navigationBarHidden = YES;
-//    [self.navigationController popViewControllerAnimated:YES];
-//}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -70,6 +57,11 @@
     
     [waterFlow showRefreshHeader:YES];
     
+}
+
+- (void)dealloc
+{
+//    waterFlow.
 }
 
 - (void)didReceiveMemoryWarning {
