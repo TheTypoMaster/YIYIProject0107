@@ -297,6 +297,24 @@
     
     GLeadBuyMapViewController *ll = [[GLeadBuyMapViewController alloc]init];
     ll.aModel = aModel;
+    
+    ll.theType = LEADYOUTYPE_STORE;
+    
+//    ////商城相关
+//    @property(nonatomic,strong)NSString *storeName;
+//    @property(nonatomic,assign)CLLocationCoordinate2D coordinate_store;
+//    
+//    
+//    //产品相关
+//    @property(nonatomic,strong)NSString *chanpinName;
+//    @property(nonatomic,assign)CLLocationCoordinate2D coordinate_chanpin;
+    if ([LTools isDictinary:aModel.mall_info]) {
+        
+        ll.storeName = aModel.mall_info[@"mall_name"];
+        ll.coordinate_store = CLLocationCoordinate2DMake([aModel.mall_info[@"latitude"]floatValue], [aModel.mall_info[@"longitude"]floatValue]);
+    }
+    
+    
     [self.navigationController pushViewController:ll animated:YES];
 }
 

@@ -310,23 +310,7 @@
     {
         // pass the current offset of the UITableView so that the ParallaxHeaderView layouts the subViews.
         [(ParallaxHeaderView *)_tableView.tableHeaderView layoutHeaderViewForScrollViewOffset:scrollView.contentOffset];
-    }else
-    {
-        
-        
-        if (scrollView.contentOffset.y <= -50)
-        {
-            
-            // 输出改变后的值
-            [_tableView setContentOffset:CGPointMake(0,0) animated:YES];
-            
-        }else if(scrollView.contentOffset.y > 50)
-        {
-            [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
-        }
-        
     }
-    
     NSLog(@"---->%f",scrollView.contentOffset.y);
     if (scrollView.contentOffset.y <= 130) {
         
@@ -340,7 +324,7 @@
 #pragma mark - WaterFlowDelegate
 - (void)waterScrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (scrollView.contentOffset.y <= -50)
+    if (scrollView.contentOffset.y <= -10)
     {
         
         // 输出改变后的值
@@ -348,7 +332,7 @@
         
     }else if(scrollView.contentOffset.y > 50)
     {
-        [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
         
     }
     
@@ -361,7 +345,7 @@
     NSLog(@"scrollView %f",scrollView.contentOffset.y);
     if (scrollView == rightTable) {
         
-        if (scrollView.contentOffset.y <= -50)
+        if (scrollView.contentOffset.y <= -10)
         {
             
             // 输出改变后的值
@@ -369,7 +353,7 @@
             
         }else if(scrollView.contentOffset.y > 50)
         {
-            [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+            [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
             
         }
     }
@@ -402,7 +386,7 @@
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
     MessageModel *aModel = rightTable.dataArray[indexPath.row];
-    return [MailMessageCell heightForModel:aModel cellType:icon_Yes seeAll:YES];
+    return [MailMessageCell heightForModel:aModel cellType:icon_No seeAll:YES];
 }
 
 #pragma mark - UITableViewDelegate && UITableViewDataSource
@@ -500,7 +484,7 @@
         MailMessageCell *cell = (MailMessageCell *)[LTools cellForIdentify:identify cellName:identify forTable:tableView];
         
         MessageModel *aModel = rightTable.dataArray[indexPath.row];
-        [cell setCellWithModel:aModel cellType:icon_Yes seeAll:YES];
+        [cell setCellWithModel:aModel cellType:icon_No seeAll:YES];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
