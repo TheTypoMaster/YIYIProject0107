@@ -31,6 +31,9 @@
     LWaterflowView *waterFlow;
     
     RefreshTableView *rightTable;//活动
+    
+    CGFloat water_offset_y;
+    CGFloat right_offset_y;
 }
 
 @property(nonatomic,strong)UIImageView *userFaceImv;//头像Imv
@@ -77,6 +80,58 @@
 #pragma mark - 网络请求
 
 #pragma mark - 网络请求
+
+#pragma mark 事件处理
+
+
+/**
+ *  赞 取消赞 收藏 取消收藏
+ */
+
+- (void)clickToZan:(UIButton *)sender
+{
+    if (![LTools isLogin:self]) {
+        
+        return;
+    }
+    //直接变状态
+    //更新数据
+    
+    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[waterFlow.quitView cellAtIndexPath:[NSIndexPath indexPathForRow:sender.tag - 1000 inSection:0]];
+    cell.like_label.text = @"";
+    
+    ProductModel *aMode = waterFlow.dataArray[sender.tag - 1000];
+    
+    NSString *productId = aMode.product_id;
+    __weak typeof(self)weakSelf = self;
+    
+    NSString *api = HOME_PRODUCT_ZAN_ADD;
+    
+    NSString *post = [NSString stringWithFormat:@"product_id=%@&authcode=%@",productId,[GMAPI getAuthkey]];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    
+    NSString *url = api;
+    
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"result %@",result);
+        sender.selected = YES;
+        aMode.is_like = 1;
+        aMode.product_like_num = NSStringFromInt([aMode.product_like_num intValue] + 1);
+        cell.like_label.text = aMode.product_like_num;
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+        if ([failDic[RESULT_CODE] intValue] == -11) {
+            
+            [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
+        }
+        
+    }];
+}
+
 
 //action= yy(衣加衣) shop（商家） dynamic（动态）
 - (void)getMailInfo
@@ -158,7 +213,7 @@
     NSLog(@"%@",NSStringFromCGRect(_backView.frame));
     
     //标题
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 33, 70, 17)];
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 33, 100, 17)];
     titleLabel.font = [UIFont systemFontOfSize:16*GscreenRatio_320];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.text = @"我是店主";
@@ -324,17 +379,36 @@
 #pragma mark - WaterFlowDelegate
 - (void)waterScrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (scrollView.contentOffset.y <= 50)
-    {
+//    if (scrollView.contentOffset.y <= 100)
+//    {
+//        
+//        // 输出改变后的值
+//        [_tableView setContentOffset:CGPointMake(0,0) animated:YES];
+//        
+//    }else if(scrollView.contentOffset.y > 100)
+//    {
+//        [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+//        
+//    }
+    CGFloat offset = scrollView.contentOffset.y;
+    
+    [UIView animateWithDuration:0.2 animations:^{
+       
+        if (offset > 20 && offset > water_offset_y) {
+            
+            _tableView.contentOffset = CGPointMake(0, 194);
+        }else if (offset > 100 && offset < water_offset_y){
+            
+            _tableView.contentOffset = CGPointMake(0, 0);
+        }
         
-        // 输出改变后的值
-        [_tableView setContentOffset:CGPointMake(0,0) animated:YES];
+    }];
+    
+    if (scrollView.contentOffset.y <= ((scrollView.contentSize.height - scrollView.frame.size.height-40))) {
         
-    }else if(scrollView.contentOffset.y > 50)
-    {
-        [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
-        
+        water_offset_y = scrollView.contentOffset.y;
     }
+    
     
     NSLog(@"water--> %f",scrollView.contentOffset.y);
 }
@@ -345,17 +419,38 @@
     NSLog(@"scrollView %f",scrollView.contentOffset.y);
     if (scrollView == rightTable) {
         
-        if (scrollView.contentOffset.y <= -10)
-        {
+//        if (scrollView.contentOffset.y <= 100)
+//        {
+//            
+//            // 输出改变后的值
+//            [_tableView setContentOffset:CGPointMake(0,0) animated:YES];
+//            
+//        }else if(scrollView.contentOffset.y > 100)
+//        {
+//            [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+//            
+//        }
+        
+        
+        CGFloat offset = scrollView.contentOffset.y;
+        
+        [UIView animateWithDuration:0.2 animations:^{
             
-            // 输出改变后的值
-            [_tableView setContentOffset:CGPointMake(0,0) animated:YES];
+            if (offset > 20 && offset > water_offset_y) {
+                
+                _tableView.contentOffset = CGPointMake(0, 194);
+            }else if (offset > 100 && offset < water_offset_y){
+                
+                _tableView.contentOffset = CGPointMake(0, 0);
+            }
             
-        }else if(scrollView.contentOffset.y > 50)
-        {
-            [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+        }];
+        
+        if (scrollView.contentOffset.y <= ((scrollView.contentSize.height - scrollView.frame.size.height-40))) {
             
+            water_offset_y = scrollView.contentOffset.y;
         }
+
     }
     
 }
@@ -410,11 +505,15 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return DEVICE_HEIGHT - 57;
+    return DEVICE_HEIGHT - 57 + 20;
 }
 
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    
+    if (section == 0) {
+        return 0;
+    }
     return 47 + 10;
 }
 
@@ -465,27 +564,28 @@
     
     if (tableView == _tableView) {
         
-        static NSString *waterIdentify = @"waterFlow";
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:waterIdentify];
-        if (!cell) {
-            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:waterIdentify];
+        if (indexPath.section == 1) {
+            static NSString *waterIdentify = @"waterFlow";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:waterIdentify];
+            if (!cell) {
+                cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:waterIdentify];
+            }
+            
+            waterFlow = [[LWaterflowView alloc]initWithFrame:CGRectMake(0,0,DEVICE_WIDTH,DEVICE_HEIGHT - 57 + 20) waterDelegate:self waterDataSource:self];
+            waterFlow.backgroundColor = RGBCOLOR(240, 230, 235);
+            [cell.contentView addSubview:waterFlow];
+            
+            rightTable = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH,DEVICE_HEIGHT - 57 + 20)];
+            rightTable.refreshDelegate = self;
+            rightTable.dataSource = self;
+            [cell.contentView addSubview:rightTable];
+            rightTable.backgroundColor = [UIColor colorWithHexString:@"f2f2f2"];
+            rightTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+            
+            rightTable.hidden = YES;
+            
+            return cell;
         }
-        
-        waterFlow = [[LWaterflowView alloc]initWithFrame:CGRectMake(0,0,DEVICE_WIDTH,DEVICE_HEIGHT - 57) waterDelegate:self waterDataSource:self];
-        waterFlow.backgroundColor = RGBCOLOR(240, 230, 235);
-        [cell.contentView addSubview:waterFlow];
-
-        
-        rightTable = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH,DEVICE_HEIGHT - 57)];
-        rightTable.refreshDelegate = self;
-        rightTable.dataSource = self;
-        [cell.contentView addSubview:rightTable];
-        rightTable.backgroundColor = [UIColor colorWithHexString:@"f2f2f2"];
-        rightTable.separatorStyle = UITableViewCellSeparatorStyleNone;
-        
-        rightTable.hidden = YES;
-        
-        return cell;
     }
     
     if (tableView == rightTable) {

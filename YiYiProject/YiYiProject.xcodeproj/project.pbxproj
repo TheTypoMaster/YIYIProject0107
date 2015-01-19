@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1357D91E1A6D52D900A284A7 /* t_guanzhu@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1357D91D1A6D52D900A284A7 /* t_guanzhu@3x.png */; };
+		1357D9201A6D530400A284A7 /* t_guanzhu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1357D91F1A6D530400A284A7 /* t_guanzhu@2x.png */; };
 		13681C711A4527A200671D07 /* navigationBarBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13681C701A4527A200671D07 /* navigationBarBackground@2x.png */; };
 		13681C811A453B3200671D07 /* share_QQ@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13681C7E1A453B3200671D07 /* share_QQ@2x.png */; };
 		13681C821A453B3200671D07 /* share_sina@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13681C7F1A453B3200671D07 /* share_sina@2x.png */; };
@@ -528,6 +530,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1357D91D1A6D52D900A284A7 /* t_guanzhu@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "t_guanzhu@3x.png"; sourceTree = "<group>"; };
+		1357D91F1A6D530400A284A7 /* t_guanzhu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "t_guanzhu@2x.png"; sourceTree = "<group>"; };
 		13681C701A4527A200671D07 /* navigationBarBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigationBarBackground@2x.png"; sourceTree = "<group>"; };
 		13681C7E1A453B3200671D07 /* share_QQ@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_QQ@2x.png"; sourceTree = "<group>"; };
 		13681C7F1A453B3200671D07 /* share_sina@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_sina@2x.png"; sourceTree = "<group>"; };
@@ -1673,6 +1677,7 @@
 		137B07971A4E6FDF00DE7DCC /* 首页弹出 */ = {
 			isa = PBXGroup;
 			children = (
+				1357D91D1A6D52D900A284A7 /* t_guanzhu@3x.png */,
 				13B690531A564EBF007FE152 /* t_xiangce@3x.png */,
 				137B07981A4E6FDF00DE7DCC /* t_dapei@3x.png */,
 				137B07991A4E6FDF00DE7DCC /* t_paizhao@3x.png */,
@@ -2481,6 +2486,7 @@
 		13B690461A564BF6007FE152 /* 首页弹出 */ = {
 			isa = PBXGroup;
 			children = (
+				1357D91F1A6D530400A284A7 /* t_guanzhu@2x.png */,
 				13B690551A564EEB007FE152 /* t_xiangce@2x.png */,
 				13B690471A564BF6007FE152 /* t_dapei@2x.png */,
 				13B690481A564BF6007FE152 /* t_paizhao@2x.png */,
@@ -3540,6 +3546,7 @@
 				13684A761A37583E00A508FB /* Images.xcassets in Resources */,
 				137B6FED1A6B97A3007035DE /* my_bg@2x.png in Resources */,
 				564031891A4EFF6000680E08 /* apply_ver_image@2x.png in Resources */,
+				1357D9201A6D530400A284A7 /* t_guanzhu@2x.png in Resources */,
 				564031801A4EEBC800680E08 /* stars_unselected_image@3x.png in Resources */,
 				137B6FE81A6B9113007035DE /* clearBackground@2x.png in Resources */,
 				137B08651A4EAC9900DE7DCC /* my_up@2x.png in Resources */,
@@ -3609,6 +3616,7 @@
 				13A3898C1A38937600ABBACB /* HomeViewController.xib in Resources */,
 				13CEC89E1A5D974900FE273F /* dapei_jiantou@2x.png in Resources */,
 				139A05171A66AC0600A8EB49 /* sjxx150_150@3x.png in Resources */,
+				1357D91E1A6D52D900A284A7 /* t_guanzhu@3x.png in Resources */,
 				19F7B44E1A67FFA600087BCB /* UMFeedbackViewController.xib in Resources */,
 				138C2BF81A39E09200EA59F5 /* UMSCommentInputControlleriPad.xib in Resources */,
 				137E0ADC1A4C567500B59F64 /* weibo90_72@2x.png in Resources */,
@@ -3933,8 +3941,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -3954,7 +3962,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "96c93639-ff5c-44ac-ad74-809c23c1de89";
+				PROVISIONING_PROFILE = "05e58578-ed00-4390-bbde-75729a7dd237";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -3976,8 +3984,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3990,7 +3998,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "96c93639-ff5c-44ac-ad74-809c23c1de89";
+				PROVISIONING_PROFILE = "05e58578-ed00-4390-bbde-75729a7dd237";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -4003,8 +4011,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YiYiProject/UMengShare/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
@@ -4025,7 +4033,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "96c93639-ff5c-44ac-ad74-809c23c1de89";
+				PROVISIONING_PROFILE = "05e58578-ed00-4390-bbde-75729a7dd237";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Debug;
@@ -4037,8 +4045,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YiYiProject/UMengShare/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
@@ -4059,7 +4067,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "96c93639-ff5c-44ac-ad74-809c23c1de89";
+				PROVISIONING_PROFILE = "05e58578-ed00-4390-bbde-75729a7dd237";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Release;

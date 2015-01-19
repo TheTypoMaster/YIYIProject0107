@@ -217,7 +217,7 @@
 
 - (void)clickToShare:(UIButton *)sender
 {
-    [[LShareSheetView shareInstance] showShareContent:@"分享的内容" shareUrl:@"http://www.baidu.com" shareImage:[UIImage imageNamed:@"product_like_cancel"] targetViewController:self];
+    [[LShareSheetView shareInstance] showShareContent:aModel.product_name title:@"值得买分享" shareUrl:@"https://itunes.apple.com/us/app/id951259287?mt=8" shareImage:self.bigImageView.image targetViewController:self];
     [[LShareSheetView shareInstance]actionBlock:^(NSInteger buttonIndex, Share_Type shareType) {
        
         if (shareType == Share_QQ) {
@@ -396,7 +396,16 @@
     [self.bigImageView sd_setImageWithURL:[NSURL URLWithString:[self thumbImageForArr:aProductModel.images]] placeholderImage:[UIImage imageNamed:nil]];
     
     self.priceLabel.text = [NSString stringWithFormat:@" %.2f  ",[aProductModel.product_price floatValue]];
-    self.discountLabel.text = [NSString stringWithFormat:@"%.f折",aProductModel.discount_num * 10];
+    
+    if (aProductModel.discount_num * 10 == 10) {
+        
+        self.discountLabel.hidden = YES;
+        
+    }else
+    {
+        self.discountLabel.text = [NSString stringWithFormat:@"%.f折",aProductModel.discount_num * 10];
+    }
+    
     
     self.titleLabel.text = aProductModel.product_name;
     self.xingHaoLabel.text = [NSString stringWithFormat:@"型号: %@",aProductModel.product_sku];

@@ -121,10 +121,12 @@
 }
 
 - (void)showShareContent:(NSString *)content
+                   title:(NSString *)title
                 shareUrl:(NSString *)url
               shareImage:(UIImage *)aImage
     targetViewController:(UIViewController *)targetViewController
 {
+    _shareTitle = title;
     _shareContent = content;
     _shareUrl = url;
     _shareImage = aImage;
@@ -236,6 +238,7 @@
         }
     }
     
+    NSString *title = _shareTitle;
     
     NSString *content = _shareContent;
     
@@ -247,6 +250,7 @@
     
     if ([type isEqualToString:UMShareToQQ]) {
         
+        [UMSocialData defaultData].extConfig.qqData.title = title;
         [UMSocialData defaultData].extConfig.qqData.url = url; //设置你自己的url地址;
         
         [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[type] content:content image:shareImage location:nil urlResource:nil presentedController:root completion:^(UMSocialResponseEntity *shareResponse){
@@ -272,6 +276,7 @@
     }else if ([type isEqualToString:UMShareToQzone]){
         
         //qqzone
+        [UMSocialData defaultData].extConfig.qzoneData.title = title;
         [UMSocialData defaultData].extConfig.qzoneData.url = url; //设置你自己的url地址;
         
         [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[type] content:content image:shareImage location:nil urlResource:nil presentedController:root completion:^(UMSocialResponseEntity *shareResponse){
@@ -291,6 +296,7 @@
         
     }else if ([type isEqualToString:UMShareToWechatSession]){
         
+        [UMSocialData defaultData].extConfig.wechatSessionData.title = title;
         [UMSocialData defaultData].extConfig.wechatSessionData.url = url; //设置你自己的url地址;
         
         [[UMSocialControllerService defaultControllerService] setShareText:content shareImage:shareImage socialUIDelegate:self];
@@ -299,6 +305,7 @@
         
     }else if ([type isEqualToString:UMShareToWechatTimeline]){ //朋友圈
         
+        [UMSocialData defaultData].extConfig.wechatTimelineData.title = title;
         [UMSocialData defaultData].extConfig.wechatTimelineData.url = url; //设置你自己的url地址;
         
         [[UMSocialControllerService defaultControllerService] setShareText:content shareImage:shareImage socialUIDelegate:self];

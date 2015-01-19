@@ -50,6 +50,7 @@ typedef void(^ ShareResultBlock) (Share_Result result,Share_Type type);//分享�
     UIView *bgView;
     NSArray *items;
    
+    NSString *_shareTitle;//标题
     //分享内容
     NSString *_shareContent;
     NSString *_shareUrl;
@@ -65,6 +66,7 @@ typedef void(^ ShareResultBlock) (Share_Result result,Share_Type type);//分享�
 - (void)shareResult:(ShareResultBlock)aBlock;//分享结果的block
 
 - (void)showShareContent:(NSString *)content
+                   title:(NSString *)title
                 shareUrl:(NSString *)url
               shareImage:(UIImage *)aImage
     targetViewController:(UIViewController *)targetViewController;

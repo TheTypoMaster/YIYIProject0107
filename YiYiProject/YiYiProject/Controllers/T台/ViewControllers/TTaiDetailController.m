@@ -25,6 +25,8 @@
     UILabel *zan_num_label;//赞 个数
     UILabel *comment_num_label;//底部评论个数
     MBProgressHUD *loading;
+    
+    UIImageView *bigImageView;
 }
 
 ///评论界面
@@ -58,7 +60,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = RGBCOLOR(246, 246, 246);
     
     self.myTitleLabel.text = @"T台详情";
     
@@ -113,7 +115,7 @@
 
 - (void)clickToZhuanFa:(UIButton *)sender
 {
-    [[LShareSheetView shareInstance] showShareContent:@"分享的内容" shareUrl:@"http://www.baidu.com" shareImage:[UIImage imageNamed:@"product_like_cancel"] targetViewController:self];
+    [[LShareSheetView shareInstance] showShareContent:detail_model.tt_content title:@"衣加衣T台详情" shareUrl:@"https://itunes.apple.com/us/app/id951259287?mt=8" shareImage:bigImageView.image targetViewController:self];
     [[LShareSheetView shareInstance]actionBlock:^(NSInteger buttonIndex, Share_Type shareType) {
         
         if (shareType == Share_QQ) {
@@ -381,6 +383,8 @@
     
     UIImageView *iconView = [[UIImageView alloc]initWithFrame:CGRectMake(12, 12, 50, 50)];
     iconView.layer.cornerRadius = 25.f;
+    iconView.layer.borderColor = [UIColor whiteColor].CGColor;
+    iconView.layer.borderWidth = 1.f;
     iconView.clipsToBounds = YES;
     [head_view addSubview:iconView];
     [iconView sd_setImageWithURL:[NSURL URLWithString:iconUrl] placeholderImage:nil];
@@ -436,7 +440,16 @@
     }
     image_height = image_height * (DEVICE_WIDTH - 10 * 2) / image_width;
     
-    UIImageView *bigImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, contentLabel.bottom + 15, DEVICE_WIDTH - 10*2, image_height)];
+    CGFloat content_top = 0.f;
+    if ([LTools isEmpty:aModel.tt_content]) {
+        
+        content_top = contentLabel.top;
+    }else
+    {
+        content_top = contentLabel.bottom + 15;
+    }
+    
+    bigImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, content_top, DEVICE_WIDTH - 10*2, image_height)];
     [bigImageView sd_setImageWithURL:[NSURL URLWithString:image_url] placeholderImage:nil];
     [head_view addSubview:bigImageView];
     
@@ -524,11 +537,13 @@
 
 - (void)loadNewData
 {
-    
+    [self getTTaiDetail];
+    [self getTTaiComments];
 }
 - (void)loadMoreData
 {
-    
+    [self getTTaiDetail];
+    [self getTTaiComments];
 }
 
 //新加
@@ -569,6 +584,8 @@
         cell = [[[NSBundle mainBundle] loadNibNamed:@"TopicCommentsCell" owner:self options:nil] objectAtIndex:0];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    cell.backgroundColor = [UIColor clearColor];
     
     TopicCommentsModel * model = [_comments_array objectAtIndex:indexPath.row];
     
