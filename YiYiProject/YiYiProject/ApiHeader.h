@@ -299,43 +299,7 @@ typedef enum {
 
 #pragma mark - 搭配师相关接口 ******************************add by sn
 
-
 #pragma mark--我的衣橱接口
-
-
-#define GET_MYYICHU_LIST_URL @"http://182.92.158.32/index.php?d=api&c=wardrobe&m=get_my_wardrobe&authcode=%@"
-
-
-
-
-
-#pragma mark--我的衣橱接口
-
-
-#define GET_MYYICHU_LIST_URL @"http://182.92.158.32/index.php?d=api&c=wardrobe&m=get_my_wardrobe&authcode=%@"
-
-
-
-
-#pragma mark--我的衣橱接口
-
-
-#define GET_MYYICHU_LIST_URL @"http://182.92.158.32/index.php?d=api&c=wardrobe&m=get_my_wardrobe&authcode=%@"
-
-
-
-
-#pragma mark--我的衣橱接口
-
-
-#define GET_MYYICHU_LIST_URL @"http://182.92.158.32/index.php?d=api&c=wardrobe&m=get_my_wardrobe&authcode=%@"
-
-
-
-#pragma mark--我的衣橱接口
-
-
-#define GET_MYYICHU_LIST_URL @"http://182.92.158.32/index.php?d=api&c=wardrobe&m=get_my_wardrobe&authcode=%@"
 
 #define GET_MY_CILLECTION @"http://182.92.158.32/?d=api&c=products&m=listFavors&long=%@&lat=%@&page=%d&count=%d&authcode=%@"//我的收藏（只有单品）
 
@@ -343,7 +307,7 @@ typedef enum {
 #pragma mark--我的衣橱接口
 
 
-#define GET_MYYICHU_LIST_URL @"http://182.92.158.32/index.php?d=api&c=wardrobe&m=get_my_wardrobe&authcode=%@"
+#define GET_MYYICHU_LIST_URL @"http://182.92.158.32/index.php?d=api&c=wardrobe&m=get_wardrobe&authcode=%@"
 
 #define UPLOAD_IMAGE_URL @"http://182.92.158.32/index.php?d=api&c=upload&m=upload_pic"//action(等于topic_pic为上传话题图片，等于ttinfo为上传T台图片)
 
@@ -355,7 +319,7 @@ typedef enum {
 //编辑分类
 #define GET_EDITCLASSICATION_URL @"http://182.92.158.32/index.php?d=api&c=wardrobe&m=update_sort&sort_id=%@&sort_name=%@&authcode=%@"
 //获取分类
-#define GET_GETCLASSTCATION_URL @"http://182.92.158.32/index.php?d=api&c=wardrobe&m=get_my_sort&authcode=%@"
+#define GET_GETCLASSTCATION_URL @"http://182.92.158.32/index.php?d=api&c=wardrobe&m=get_sort&authcode=%@"
 //衣橱里面添加衣服
 #define POST_ADDCLOTHES_URL     @"http://182.92.158.32/index.php?d=api&c=wardrobe&m=add_clothes"
 //获取某个分类下的衣服
