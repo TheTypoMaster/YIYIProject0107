@@ -35,6 +35,8 @@
 {
     [super viewWillAppear:animated];
     
+    [self refreshChatListView];//刷新列表
+    
     [self updateTabbarNumber:[self unreadMessgeNum]];
     
 }

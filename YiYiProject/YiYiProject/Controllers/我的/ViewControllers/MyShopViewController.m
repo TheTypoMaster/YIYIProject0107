@@ -324,7 +324,7 @@
 #pragma mark - WaterFlowDelegate
 - (void)waterScrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (scrollView.contentOffset.y <= -10)
+    if (scrollView.contentOffset.y <= 50)
     {
         
         // 输出改变后的值
@@ -336,7 +336,7 @@
         
     }
     
-    NSLog(@"water-->");
+    NSLog(@"water--> %f",scrollView.contentOffset.y);
 }
 
 #pragma mark - RefreshDelegate
@@ -391,7 +391,7 @@
 
 #pragma mark - UITableViewDelegate && UITableViewDataSource
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
+    return 1 + 1;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -399,6 +399,11 @@
     if (tableView == rightTable) {
         
         return rightTable.dataArray.count;
+    }
+    
+    if (section == 0) {
+        
+        return 0;
     }
     
     return 1;
@@ -414,6 +419,11 @@
 }
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    
+    if (section == 0) {
+        return [UIView new];
+    }
+    
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 47 + 10)];
     view.backgroundColor = [UIColor colorWithHexString:@"f2f2f2"];
     
