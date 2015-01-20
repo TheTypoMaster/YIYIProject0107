@@ -364,7 +364,7 @@
     if (scrollView == _tableView)
     {
         // pass the current offset of the UITableView so that the ParallaxHeaderView layouts the subViews.
-        [(ParallaxHeaderView *)_tableView.tableHeaderView layoutHeaderViewForScrollViewOffset:scrollView.contentOffset];
+//        [(ParallaxHeaderView *)_backView layoutHeaderViewForScrollViewOffset:scrollView.contentOffset];
     }
     NSLog(@"---->%f",scrollView.contentOffset.y);
     if (scrollView.contentOffset.y <= 130) {

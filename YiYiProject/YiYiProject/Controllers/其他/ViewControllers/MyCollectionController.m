@@ -27,7 +27,8 @@
     
     SORT_SEX_TYPE sex_type;
     SORT_Discount_TYPE discount_type;
-    //    NSArray *dataArray;
+
+    LTools *tool_collection_list;//收藏列表
 }
 
 @end
@@ -40,6 +41,7 @@
     
     self.navigationController.navigationBarHidden = NO;
 }
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -61,7 +63,10 @@
 
 - (void)dealloc
 {
-//    waterFlow.
+    NSLog(@"%@ dealloc",NSStringFromClass([self class]));
+    waterFlow.waterDelegate = nil;
+    waterFlow = nil;
+    [tool_collection_list cancelRequest];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -121,12 +126,16 @@
  */
 - (void)getMyCollection
 {
+    if (tool_collection_list) {
+        [tool_collection_list cancelRequest];
+    }
+    
     NSString *longtitud = @"116.42111721";
     NSString *latitude = @"39.90304099";
     
     NSString *url = [NSString stringWithFormat:GET_MY_CILLECTION,longtitud,latitude,waterFlow.pageNum,L_PAGE_SIZE,[GMAPI getAuthkey]];
-    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
-    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+    tool_collection_list = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool_collection_list requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSMutableArray *arr;
         if ([result isKindOfClass:[NSDictionary class]]) {

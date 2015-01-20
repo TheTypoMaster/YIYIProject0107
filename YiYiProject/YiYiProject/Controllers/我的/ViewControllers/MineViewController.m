@@ -35,6 +35,8 @@
 
 #import "MyShopViewController.h"//我的店铺
 
+#import "LShareSheetView.h"
+
 #import "ParallaxHeaderView.h"
 #import "UIImage+ImageEffects.h"
 #import "NSDictionary+GJson.h"
@@ -295,6 +297,38 @@ typedef enum{
 }
 
 
+#pragma mark 事件处理
+
+- (void)clickToShare:(UIButton *)sender
+{
+    [[LShareSheetView shareInstance] showShareContent:@"我在使用衣+衣,我们一起来用吧!" title:nil shareUrl:@"https://itunes.apple.com/us/app/id951259287?mt=8" shareImage:[UIImage imageNamed:@"about_icon"] targetViewController:self];
+    [[LShareSheetView shareInstance]actionBlock:^(NSInteger buttonIndex, Share_Type shareType) {
+        
+        if (shareType == Share_QQ) {
+            
+            NSLog(@"Share_QQ");
+            
+        }else if (shareType == Share_QQZone){
+            
+            NSLog(@"Share_QQZone");
+            
+        }else if (shareType == Share_WeiBo){
+            
+            NSLog(@"Share_WeiBo");
+            
+        }else if (shareType == Share_WX_HaoYou){
+            
+            NSLog(@"Share_WX_HaoYou");
+            
+        }else if (shareType == Share_WX_PengYouQuan){
+            
+            NSLog(@"Share_WX_PengYouQuan");
+            
+        }
+        
+    }];
+}
+
 
 #pragma mark - UITableViewDelegate && UITableViewDataSource
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -483,7 +517,11 @@ typedef enum{
             
         case 5:
         {
-            
+            if (indexPath.row == 0){
+                
+                
+                [self clickToShare:nil];
+            }
             
         }
             break;

@@ -222,6 +222,19 @@
          //检测新版本
         
         //TODO:
+        
+        //版本更新
+        
+        [[LTools shareInstance]versionForAppid:@"951259287" Block:^(BOOL isNewVersion, NSString *updateUrl, NSString *updateContent) {
+            
+            NSLog(@"updateContent %@ %@",updateUrl,updateContent);
+            
+            if (isNewVersion == NO) {
+                
+                [LTools alertText:@"已是最新版本" viewController:self];
+            }
+            
+        }];
     }
     
     if (indexPath.row == 3) {

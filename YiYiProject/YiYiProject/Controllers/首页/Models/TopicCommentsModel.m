@@ -30,6 +30,8 @@
         _child_array = [NSMutableArray array];
         
         NSArray * array = [dic objectForKey:@"child"];
+
+        
         if ([array isKindOfClass:[NSArray class]] && array.count > 0) {
             for (NSDictionary * aDic in array) {
                 TopicSubCommentsModel * model = [[TopicSubCommentsModel alloc] initWithDictionary:aDic];

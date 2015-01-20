@@ -22,6 +22,9 @@
     
     BOOL isEditing;//是否处于编辑状态
     
+    LTools *tool_shop;
+    LTools *tool_brand;
+    
 }
 
 @end
@@ -34,6 +37,22 @@
     
     self.navigationController.navigationBarHidden=NO;
     
+}
+
+- (void)dealloc
+{
+    [tool_shop cancelRequest];
+    [tool_brand cancelRequest];
+    
+    heartButton = nil;
+    indicator = nil;
+    shopTable.dataSource = nil;
+    shopTable.refreshDelegate = nil;
+    shopTable = nil;
+    
+    brandTable.dataSource = nil;
+    brandTable.refreshDelegate = nil;
+    brandTable = nil;
 }
 
 - (void)viewDidLoad {
@@ -131,9 +150,14 @@
 {
     //关注接口:http://182.92.158.32/index.php?d=api&c=brand&m=attend_brand&authcode=AX4BeFojV7EBulfKVuYJ3lP2V7UB9Ar7Ay5WZ1YzBDJabAAyWzhcZgM1V2RTMgp6BTFWaA==&brand_id=
     
+    if (tool_brand) {
+        
+        [tool_brand cancelRequest];
+    }
+    
     NSString *url = [NSString stringWithFormat:MY_CONCERN_BRAND,[GMAPI getAuthkey],brandTable.pageNum];
-    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
-    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+    tool_brand = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool_brand requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"-->%@",result);
         
@@ -168,10 +192,15 @@
  */
 - (void)getShop
 {
+    
+    if (tool_shop) {
+        [tool_shop cancelRequest];
+    }
+    
     NSString *url = [NSString stringWithFormat:MY_CONCERN_SHOP,[GMAPI getAuthkey],shopTable.pageNum,L_PAGE_SIZE];
     
-    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
-    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+    tool_shop = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool_shop requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"-->%@",result);
         

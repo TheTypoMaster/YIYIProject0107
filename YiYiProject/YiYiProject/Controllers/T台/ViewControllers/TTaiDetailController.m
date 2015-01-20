@@ -596,13 +596,19 @@
         bself.parent_post = reply_id;
         bself.r_reply_uid = uid;
         bself.r_reply_userName = userName;
+        
+        _input_view.text_input_view.text = [NSString stringWithFormat:@"回复 %@:",userName];
         [bself clickToComment:nil];
+        
+        NSLog(@"userName %@",userName);
     }];
     [cell.second_view setSeconForwardViewBlock:^(TopicCommentsCellClickType aType, NSString *userName, NSString *uid, NSString *reply_id) {
         bself.parent_post = reply_id;
         bself.r_reply_uid = uid;
         bself.r_reply_userName = userName;
+        _input_view.text_input_view.text = [NSString stringWithFormat:@"回复 %@:",userName];
         [bself clickToComment:nil];
+        NSLog(@"userName2 %@",userName);
     }];
     
     return cell;
