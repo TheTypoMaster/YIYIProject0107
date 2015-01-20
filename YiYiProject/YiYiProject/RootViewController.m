@@ -200,7 +200,7 @@
     menuItem = [[MenuItem alloc] initWithTitle:@"收藏" iconName:@"t_shoucang" glowColor:[UIColor colorWithRed:0.687 green:0.000 blue:0.000 alpha:1.000] index:0];
     [items addObject:menuItem];
     
-    menuItem = [[MenuItem alloc] initWithTitle:@"关注" iconName:@"t_rizhi" glowColor:[UIColor colorWithRed:0.687 green:0.000 blue:0.000 alpha:1.000] index:0];
+    menuItem = [[MenuItem alloc] initWithTitle:@"关注" iconName:@"t_guanzhu" glowColor:[UIColor colorWithRed:0.687 green:0.000 blue:0.000 alpha:1.000] index:0];
     [items addObject:menuItem];
     
     

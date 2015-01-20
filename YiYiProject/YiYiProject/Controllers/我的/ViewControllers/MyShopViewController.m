@@ -11,10 +11,31 @@
 #import "GupClothesViewController.h"
 #import "GupHuoDongViewController.h"
 
-@interface MyShopViewController ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate>
+#import "TMQuiltViewCell.h"
+#import "ProductModel.h"
+
+#import "LWaterflowView.h"
+
+#import "RefreshTableView.h"
+
+#import "MessageDetailController.h"
+
+#import "ProductDetailController.h"
+
+#import "MailMessageCell.h"
+
+#import "MessageModel.h"
+
+@interface MyShopViewController ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,WaterFlowDelegate,TMQuiltViewDataSource,RefreshDelegate>
 {
     UITableView *_tableView;
     ParallaxHeaderView *_backView;//banner
+    LWaterflowView *waterFlow;
+    
+    RefreshTableView *rightTable;//活动
+    
+    CGFloat water_offset_y;
+    CGFloat right_offset_y;
 }
 
 @property(nonatomic,strong)UIImageView *userFaceImv;//头像Imv
@@ -29,6 +50,12 @@
 
 @implementation MyShopViewController
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBarHidden = YES;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -40,12 +67,140 @@
     _tableView.dataSource = self;
     _tableView.tableHeaderView = [self creatTableViewHeaderView];
     [self.view addSubview:_tableView];
+    
+    [self deserveBuyForSex:Sort_Sex_No discount:Sort_Discount_No page:1];
+    
+    [self getMailInfo];
 
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - 网络请求
+
+#pragma mark - 网络请求
+
+#pragma mark 事件处理
+
+
+/**
+ *  赞 取消赞 收藏 取消收藏
+ */
+
+- (void)clickToZan:(UIButton *)sender
+{
+    if (![LTools isLogin:self]) {
+        
+        return;
+    }
+    //直接变状态
+    //更新数据
+    
+    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[waterFlow.quitView cellAtIndexPath:[NSIndexPath indexPathForRow:sender.tag - 1000 inSection:0]];
+    cell.like_label.text = @"";
+    
+    ProductModel *aMode = waterFlow.dataArray[sender.tag - 1000];
+    
+    NSString *productId = aMode.product_id;
+    __weak typeof(self)weakSelf = self;
+    
+    NSString *api = HOME_PRODUCT_ZAN_ADD;
+    
+    NSString *post = [NSString stringWithFormat:@"product_id=%@&authcode=%@",productId,[GMAPI getAuthkey]];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    
+    NSString *url = api;
+    
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"result %@",result);
+        sender.selected = YES;
+        aMode.is_like = 1;
+        aMode.product_like_num = NSStringFromInt([aMode.product_like_num intValue] + 1);
+        cell.like_label.text = aMode.product_like_num;
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+        if ([failDic[RESULT_CODE] intValue] == -11) {
+            
+            [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
+        }
+        
+    }];
+}
+
+
+//action= yy(衣加衣) shop（商家） dynamic（动态）
+- (void)getMailInfo
+{
+    NSString *key = [GMAPI getAuthkey];
+    
+    key = @"WiVbIgF4BeMEvwabALBajQWgB+VUoVWkBShRYFUwXGkGOAAyB2FSZgczBjYAbAp6AjZSaQ==";
+    
+    NSString *url = [NSString stringWithFormat:MESSAGE_GET_LIST,@"dynamic",key];
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        NSLog(@"");
+        
+        NSArray *data = result[@"data"];
+        
+        NSMutableArray *arr = [NSMutableArray arrayWithCapacity:data.count];
+        for (NSDictionary *aDic in data) {
+            MessageModel *aModel = [[MessageModel alloc]initWithDictionary:aDic];
+            [arr addObject:aModel];
+        }
+        [rightTable reloadData:arr isHaveMore:NO];
+        
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        
+    }];
+}
+
+
+- (void)deserveBuyForSex:(SORT_SEX_TYPE)sortType
+                discount:(SORT_Discount_TYPE)discountType
+                    page:(int)pageNum
+{
+    NSString *longtitud = @"116.42111721";
+    NSString *latitude = @"39.90304099";
+    NSString *url = [NSString stringWithFormat:HOME_DESERVE_BUY,longtitud,latitude,sortType,discountType,pageNum,L_PAGE_SIZE,[GMAPI getAuthkey]];
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSMutableArray *arr;
+        if ([result isKindOfClass:[NSDictionary class]]) {
+            
+            NSArray *list = result[@"list"];
+            arr = [NSMutableArray arrayWithCapacity:list.count];
+            if ([list isKindOfClass:[NSArray class]]) {
+                
+                for (NSDictionary *aDic in list) {
+                    
+                    ProductModel *aModel = [[ProductModel alloc]initWithDictionary:aDic];
+                    
+                    [arr addObject:aModel];
+                }
+                
+            }
+            
+        }
+        
+        [waterFlow reloadData:arr total:100];
+        
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+        [waterFlow loadFail];
+        
+    }];
 }
 
 #pragma mark - 创建视图
@@ -60,7 +215,7 @@
     NSLog(@"%@",NSStringFromCGRect(_backView.frame));
     
     //标题
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 33, 70, 17)];
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 33, 100, 17)];
     titleLabel.font = [UIFont systemFontOfSize:16*GscreenRatio_320];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.text = @"我是店主";
@@ -117,6 +272,33 @@
 
 #pragma mark - 事件处理
 
+//更新状态栏颜色
+
+- (void)pushViewController:(UIViewController *)viewController
+{
+    [self.navigationController pushViewController:viewController animated:YES];
+    
+    self.navigationController.navigationBarHidden = NO;
+
+}
+
+- (void)updateStatusBarColor:(BOOL)isWhite
+{
+    if (isWhite) {
+        if (IOS7_OR_LATER) {
+            [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+            [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+        }
+    }else
+    {
+        if (IOS7_OR_LATER) {
+            [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+            [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+        }
+    }
+    
+}
+
 - (UIButton *)buttonForTag:(int)tag
 {
     return (UIButton *)[self.view viewWithTag:tag];
@@ -126,6 +308,24 @@
 {
     UIButton *btn1 = [self buttonForTag:100];
     UIButton *btn2 = [self buttonForTag:101];
+    sender.selected = YES;
+    
+    sender.backgroundColor = [UIColor colorWithHexString:@"eb4d68"];
+    
+    if (sender == btn1) {
+        
+        btn2.selected = NO;
+        btn2.backgroundColor = [UIColor colorWithHexString:@"f2f2f2"];
+        
+        waterFlow.hidden = NO;
+        rightTable.hidden = YES;
+    }else
+    {
+        btn1.selected = NO;
+        btn1.backgroundColor = [UIColor colorWithHexString:@"f2f2f2"];
+        waterFlow.hidden = YES;
+        rightTable.hidden = NO;
+    }
 }
 
 -(void)clickToBack:(UIButton *)sender
@@ -173,39 +373,169 @@
     if (scrollView == _tableView)
     {
         // pass the current offset of the UITableView so that the ParallaxHeaderView layouts the subViews.
-        [(ParallaxHeaderView *)_tableView.tableHeaderView layoutHeaderViewForScrollViewOffset:scrollView.contentOffset];
+//        [(ParallaxHeaderView *)_backView layoutHeaderViewForScrollViewOffset:scrollView.contentOffset];
     }
+    NSLog(@"---->%f",scrollView.contentOffset.y);
+    if (scrollView.contentOffset.y <= 130) {
+        
+        [self updateStatusBarColor:YES];
+    }else
+    {
+        [self updateStatusBarColor:NO];
+    }
+}
+
+#pragma mark - WaterFlowDelegate
+- (void)waterScrollViewDidScroll:(UIScrollView *)scrollView
+{
+//    if (scrollView.contentOffset.y <= 100)
+//    {
+//        
+//        // 输出改变后的值
+//        [_tableView setContentOffset:CGPointMake(0,0) animated:YES];
+//        
+//    }else if(scrollView.contentOffset.y > 100)
+//    {
+//        [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+//        
+//    }
+    CGFloat offset = scrollView.contentOffset.y;
+    
+    [UIView animateWithDuration:0.2 animations:^{
+       
+        if (offset > 20 && offset > water_offset_y) {
+            
+            _tableView.contentOffset = CGPointMake(0, 194);
+        }else if (offset > 100 && offset < water_offset_y){
+            
+            _tableView.contentOffset = CGPointMake(0, 0);
+        }
+        
+    }];
+    
+    if (scrollView.contentOffset.y <= ((scrollView.contentSize.height - scrollView.frame.size.height-40))) {
+        
+        water_offset_y = scrollView.contentOffset.y;
+    }
+    
+    
+    NSLog(@"water--> %f",scrollView.contentOffset.y);
+}
+
+#pragma mark - RefreshDelegate
+- (void)refreshScrollViewDidScroll:(UIScrollView *)scrollView
+{
+    NSLog(@"scrollView %f",scrollView.contentOffset.y);
+    if (scrollView == rightTable) {
+        
+//        if (scrollView.contentOffset.y <= 100)
+//        {
+//            
+//            // 输出改变后的值
+//            [_tableView setContentOffset:CGPointMake(0,0) animated:YES];
+//            
+//        }else if(scrollView.contentOffset.y > 100)
+//        {
+//            [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+//            
+//        }
+        
+        
+        CGFloat offset = scrollView.contentOffset.y;
+        
+        [UIView animateWithDuration:0.2 animations:^{
+            
+            if (offset > 20 && offset > water_offset_y) {
+                
+                _tableView.contentOffset = CGPointMake(0, 194);
+            }else if (offset > 100 && offset < water_offset_y){
+                
+                _tableView.contentOffset = CGPointMake(0, 0);
+            }
+            
+        }];
+        
+        if (scrollView.contentOffset.y <= ((scrollView.contentSize.height - scrollView.frame.size.height-40))) {
+            
+            water_offset_y = scrollView.contentOffset.y;
+        }
+
+    }
+    
+}
+
+#pragma mark - RefreshDelegate
+
+- (void)loadNewData
+{
+    [self getMailInfo];
+}
+- (void)loadMoreData
+{
+    
+}
+
+//新加
+- (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
+{
+    NSLog(@"详情");
+    MessageModel *aModel = rightTable.dataArray[indexPath.row];
+    MessageDetailController *detail = [[MessageDetailController alloc]init];
+    detail.msg_id = aModel.msg_id;
+//    [self.navigationController pushViewController:detail animated:YES];
+    
+    [self pushViewController:detail];
+    
+}
+- (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
+{
+    MessageModel *aModel = rightTable.dataArray[indexPath.row];
+    return [MailMessageCell heightForModel:aModel cellType:icon_No seeAll:YES];
 }
 
 #pragma mark - UITableViewDelegate && UITableViewDataSource
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
+    return 1 + 1;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 20;
+    if (tableView == rightTable) {
+        
+        return rightTable.dataArray.count;
+    }
+    
+    if (section == 0) {
+        
+        return 0;
+    }
+    
+    return 1;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 56;
+    return DEVICE_HEIGHT - 57 + 20;
 }
 
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 47;
+    
+    if (section == 0) {
+        return 0;
+    }
+    return 47 + 10;
 }
-
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 10;
-}
-
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 47)];
+    
+    if (section == 0) {
+        return [UIView new];
+    }
+    
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 47 + 10)];
     view.backgroundColor = [UIColor colorWithHexString:@"f2f2f2"];
     
-    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(13, 12, DEVICE_WIDTH - 13 * 2, 47 - 12)];
+    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(10, 12 + 10, DEVICE_WIDTH - 10 * 2, 47 - 12)];
     sectionView.layer.cornerRadius = 5.f;
     sectionView.layer.borderWidth = 1.f;
     sectionView.layer.borderColor = [UIColor colorWithHexString:@"eb4d68"].CGColor;
@@ -240,16 +570,50 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (tableView == _tableView) {
+        
+        if (indexPath.section == 1) {
+            static NSString *waterIdentify = @"waterFlow";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:waterIdentify];
+            if (!cell) {
+                cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:waterIdentify];
+            }
+            
+            waterFlow = [[LWaterflowView alloc]initWithFrame:CGRectMake(0,0,DEVICE_WIDTH,DEVICE_HEIGHT - 57 + 20) waterDelegate:self waterDataSource:self];
+            waterFlow.backgroundColor = RGBCOLOR(240, 230, 235);
+            [cell.contentView addSubview:waterFlow];
+            
+            rightTable = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH,DEVICE_HEIGHT - 57 + 20)];
+            rightTable.refreshDelegate = self;
+            rightTable.dataSource = self;
+            [cell.contentView addSubview:rightTable];
+            rightTable.backgroundColor = [UIColor colorWithHexString:@"f2f2f2"];
+            rightTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+            
+            rightTable.hidden = YES;
+            
+            return cell;
+        }
+    }
+    
+    if (tableView == rightTable) {
+        
+        static NSString *identify = @"MailMessageCell";
+        MailMessageCell *cell = (MailMessageCell *)[LTools cellForIdentify:identify cellName:identify forTable:tableView];
+        
+        MessageModel *aModel = rightTable.dataArray[indexPath.row];
+        [cell setCellWithModel:aModel cellType:icon_No seeAll:YES];
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+    }
+    
     static NSString *identifier = @"identifier";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-    for (UIView *view in cell.contentView.subviews) {
-        [view removeFromSuperview];
-    }
-    
-    NSLog(@"indexpath.section:%ld row:%ld",(long)indexPath.section,(long)indexPath.row);
 
     return cell;
 }
@@ -257,8 +621,83 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+}
+
+
+#pragma mark - WaterFlowDelegate
+
+- (void)waterLoadNewData
+{
+    [self deserveBuyForSex:Sort_Sex_No discount:Sort_Discount_No page:1];
+}
+- (void)waterLoadMoreData
+{
+}
+
+- (void)waterDidSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ProductModel *aMode = waterFlow.dataArray[indexPath.row];
+    ProductDetailController *detail = [[ProductDetailController alloc]init];
+    detail.product_id = aMode.product_id;
+    detail.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:detail animated:YES];
+    
+    [self pushViewController:detail];
     
 }
+
+- (CGFloat)waterHeightForCellIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat imageH = 0.f;
+    ProductModel *aMode = waterFlow.dataArray[indexPath.row];
+    if (aMode.imagelist.count >= 1) {
+        
+        
+        NSDictionary *imageDic = aMode.imagelist[0];
+        NSDictionary *middleImage = imageDic[@"540Middle"];
+        float image_width = [middleImage[@"width"]floatValue];
+        float image_height = [middleImage[@"height"]floatValue];
+        
+        if (image_width == 0.0) {
+            image_width = image_height;
+        }
+        float rate = image_height/image_width;
+        
+        imageH = (DEVICE_WIDTH-30)/2.0*rate+33;
+        
+    }
+    
+    return imageH;
+}
+- (CGFloat)waterViewNumberOfColumns
+{
+    
+    return 2;
+}
+
+#pragma mark - TMQuiltViewDataSource
+
+- (NSInteger)quiltViewNumberOfCells:(TMQuiltView *)TMQuiltView {
+    return [waterFlow.dataArray count];
+}
+
+- (TMQuiltViewCell *)quiltView:(TMQuiltView *)quiltView cellAtIndexPath:(NSIndexPath *)indexPath {
+    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[quiltView dequeueReusableCellWithReuseIdentifier:@"PhotoCell"];
+    if (!cell) {
+        cell = [[TMPhotoQuiltViewCell alloc] initWithReuseIdentifier:@"PhotoCell"];
+    }
+    
+    cell.layer.cornerRadius = 3.f;
+    
+    ProductModel *aMode = waterFlow.dataArray[indexPath.row];
+    [cell setCellWithModel:aMode];
+    
+    cell.like_btn.tag = 1000 + indexPath.row;
+    [cell.like_btn addTarget:self action:@selector(clickToZan:) forControlEvents:UIControlEventTouchUpInside];
+    
+    return cell;
+}
+
 
 
 @end

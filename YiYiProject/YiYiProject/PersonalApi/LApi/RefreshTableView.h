@@ -26,6 +26,8 @@
 - (UIView *)viewForHeaderInSection:(NSInteger)section;
 - (CGFloat)heightForHeaderInSection:(NSInteger)section;
 
+- (void)refreshScrollViewDidScroll:(UIScrollView *)scrollView;
+
 @end
 
 @interface RefreshTableView : UITableView<L_EGORefreshTableDelegate,UITableViewDataSource,UITableViewDelegate>

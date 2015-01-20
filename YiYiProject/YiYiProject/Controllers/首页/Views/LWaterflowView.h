@@ -21,6 +21,7 @@
 - (void)waterDidSelectRowAtIndexPath:(NSIndexPath *)indexPath;
 - (CGFloat)waterHeightForCellIndexPath:(NSIndexPath *)indexPath;
 - (CGFloat)waterViewNumberOfColumns;
+- (void)waterScrollViewDidScroll:(UIScrollView *)scrollView;
 
 @end
 

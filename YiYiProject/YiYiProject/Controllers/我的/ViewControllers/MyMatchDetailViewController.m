@@ -8,6 +8,7 @@
 
 #import "MyMatchDetailViewController.h"
 #import "MyMatchDivisionDetailViewController.h"
+#import "UIImageView+LBBlurredImage.h"
 @interface MyMatchDetailViewController ()
 {
     NSMutableArray * _dataSourceArray;
@@ -88,10 +89,32 @@
         imageView.backgroundColor = RGBCOLOR(180, 180, 180);
         [cell addSubview:imageView];
         
+        
+        UIView *maskView = [[UIView alloc] initWithFrame:imageView.bounds];
+        maskView.backgroundColor = [UIColor blackColor];
+        maskView.alpha  = 0.5;
+        [imageView addSubview:maskView];
+        
+        UILabel *lable = [LTools createLabelFrame:CGRectMake(0, 0, imageView.width, imageView.height) title:@"共8件衣服" font:15 align:(NSTextAlignmentCenter) textColor:[UIColor whiteColor]];
+        lable.tag = 1002;
+        [imageView addSubview:lable];
+        
     }
     cell.layer.cornerRadius = 3.f;
-    UIImageView *imageView = (UIImageView *)[cell viewWithTag:1001];
-    [imageView sd_setImageWithURL:[NSURL URLWithString:[[_dataSourceArray objectAtIndex:indexPath.row] objectForKey:@"first_photo"] ] placeholderImage:[UIImage imageNamed:@"dapei_jiantou"]];
+   __weak UIImageView *imageView = (UIImageView *)[cell viewWithTag:1001];
+    imageView.hidden = YES;
+    [imageView sd_setImageWithURL:[NSURL URLWithString:[[_dataSourceArray objectAtIndex:indexPath.row] objectForKey:@"first_photo"] ] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        [imageView setImageToBlur:image blurRadius:kLBBlurredImageDefaultBlurRadius completionBlock:^{
+            imageView.hidden = NO;
+            NSLog(@"The blurred image has been set");
+        }];
+    }];
+    
+    UILabel *label =(UILabel *) [imageView viewWithTag:1002];
+    NSString * str = [[_dataSourceArray objectAtIndex:indexPath.row] objectForKey:@"detail"];
+    NSArray *array = [str componentsSeparatedByString:@","];
+    label.text  = [NSString stringWithFormat:@"共%ld件衣服",array.count];
+    
     NSLog(@".......%@",[[_dataSourceArray objectAtIndex:indexPath.row] objectForKey:@"first_photo"]);
     return cell;
 }

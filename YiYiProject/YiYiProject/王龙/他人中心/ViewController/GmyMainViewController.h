@@ -27,4 +27,6 @@ typedef enum{
 
 @property(nonatomic,assign)GMAINVIEWTYPE theType;//类型  自己的 别人的
 @property (nonatomic,strong) WaterF* waterfall;
+@property (nonatomic,strong) NSString *bannerUrl;
+@property (nonatomic,strong) NSString *headImageUrl;
 @end

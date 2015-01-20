@@ -89,7 +89,7 @@
     [_mTableVIew registerNib:cellNib forCellReuseIdentifier:cellIdentifer];
     
      //隐藏多余的分割线
-    UIView *footView = [[UIView alloc] init];
+    UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 50)];
     footView.backgroundColor = RGBA(248, 248, 248, 1);
     
     ///退出登录
@@ -161,8 +161,6 @@
 
 }
 
-
-
 #pragma mark------------------UItableVIewDelegate
 -(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -197,7 +195,7 @@
     
     if (indexPath.row == 1) {
         /////////清理缓存
-//        [XDTools showProgressWithText:@"正在清理..." hasMask:NO];
+        [GMAPI showProgressWithText:@"正在清理..." hasMask:NO];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSString *cachPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
             NSArray *files = [[NSFileManager defaultManager] subpathsAtPath:cachPath];
@@ -210,7 +208,7 @@
                 }
             }
             dispatch_async(dispatch_get_main_queue(), ^{
-//                [XDTools hiddenProgress];
+                [GMAPI showSuccessProgessWithText:@"清理成功!" hasMask:NO];
                 
                 catchSize = @"0KB";
                 
@@ -224,6 +222,19 @@
          //检测新版本
         
         //TODO:
+        
+        //版本更新
+        
+        [[LTools shareInstance]versionForAppid:@"951259287" Block:^(BOOL isNewVersion, NSString *updateUrl, NSString *updateContent) {
+            
+            NSLog(@"updateContent %@ %@",updateUrl,updateContent);
+            
+            if (isNewVersion == NO) {
+                
+                [LTools alertText:@"已是最新版本" viewController:self];
+            }
+            
+        }];
     }
     
     if (indexPath.row == 3) {
@@ -256,7 +267,6 @@
     
     //清除用户数据,返回我的,弹出登录界面,融云退出登录
     
-    [self logOutActon];
     
     [LTools cache:@"" ForKey:USER_NAME];
     [LTools cache:@"" ForKey:USER_UID];
@@ -267,9 +277,12 @@
     
     [LTools cacheBool:NO ForKey:LOGIN_SERVER_STATE];
     
+    [GMAPI showSuccessProgessWithText:@"退出登录成功！" hasMask:NO];
     [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_LOGOUT object:nil];
-    
+    [self logout];
     [self performSelector:@selector(leftButtonTap:) withObject:nil afterDelay:0.2];
+    
+    
     
 }
 

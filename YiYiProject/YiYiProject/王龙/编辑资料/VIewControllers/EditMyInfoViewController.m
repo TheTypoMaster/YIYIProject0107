@@ -70,25 +70,25 @@
     
     
     UIView *topTool = [[UIView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 44)];
-    topTool.backgroundColor = [UIColor grayColor];
+    topTool.backgroundColor = [UIColor blackColor];
     [dateView addSubview:topTool];
     
     UIButton *sureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     sureBtn.frame = CGRectMake(DEVICE_WIDTH-44,0,44,44);
 
-    [sureBtn setTitle:@"确定" forState:UIControlStateNormal];
-    [sureBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     [sureBtn addTarget:self action:@selector(sureBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    sureBtn.imageEdgeInsets = UIEdgeInsetsMake((44-14)/2.0, (44-21)/2.0, (44-14)/2.0, (44-21)/2.0);
+    [sureBtn setImage:[UIImage imageNamed:@"my_sc_dui"] forState:UIControlStateNormal];
+    
     [topTool addSubview:sureBtn];
     
     
     
     UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     cancelBtn.frame = CGRectMake(0,0,44,44);
-    
-    [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
-    [cancelBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [cancelBtn setImage:[UIImage imageNamed:@"my_sc_guanbi"] forState:UIControlStateNormal];
     [cancelBtn addTarget:self action:@selector(cancelBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    cancelBtn.imageEdgeInsets = UIEdgeInsetsMake((44-14)/2.0, (44-21)/2.0, (44-14)/2.0, (44-21)/2.0);
     [topTool addSubview:cancelBtn];
     
     ////// 日期滚轮
@@ -222,6 +222,9 @@
         gender = @"2";
     }
 
+
+    /////先判断网络
+    
     NSDictionary *dic = @{
                           @"authcode":[GMAPI getAuthkey],
                           @"user_name":user_name,

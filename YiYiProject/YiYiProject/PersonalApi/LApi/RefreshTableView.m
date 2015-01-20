@@ -262,6 +262,10 @@
     if (_refreshHeaderView) {
         [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
     }
+    
+    if (_refreshDelegate && [_refreshDelegate respondsToSelector:@selector(refreshScrollViewDidScroll:)]) {
+        [_refreshDelegate refreshScrollViewDidScroll:scrollView];
+    }
 }
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {

@@ -24,6 +24,8 @@
     UIButton *collectButton;//收藏 与 取消收藏
 
     MBProgressHUD *loading;
+    
+    LTools *tool_detail;
 }
 
 @end
@@ -43,6 +45,14 @@
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     }
+}
+
+- (void)dealloc
+{
+    NSLog(@"dealloc %@",self);
+    [tool_detail cancelRequest];
+    heartButton = nil;
+    collectButton = nil;
 }
 
 - (void)viewDidLoad {
@@ -85,23 +95,30 @@
 - (void)networkForDetail
 {
     
+    if (tool_detail) {
+        [tool_detail cancelRequest];
+    }
     [loading show:YES];
     __weak typeof(self)weakSelf = self;
+    
+    __weak typeof(loading)weakLoading = loading;
+        
     NSString *url = [NSString stringWithFormat:HOME_PRODUCT_DETAIL,self.product_id,[GMAPI getAuthkey]];
-    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
-    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+    tool_detail = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    
+    [tool_detail requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"result %@",result);
         
-        [loading hide:YES];
+        [weakLoading hide:YES];
         
         if ([result isKindOfClass:[NSDictionary class]]) {
             
             NSDictionary *dic = result[@"pinfo"];
             
-            aModel = [[ProductModel alloc]initWithDictionary:dic];
+            ProductModel *aModel1 = [[ProductModel alloc]initWithDictionary:dic];
             
-            [weakSelf prepareViewWithModel:aModel];
+            [weakSelf prepareViewWithModel:aModel1];
         }
         
         
@@ -109,9 +126,9 @@
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
         
-        [loading hide:YES];
+        [weakLoading hide:YES];
         
-        [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
+        [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:weakSelf.view];
         
     }];
 }
@@ -217,7 +234,7 @@
 
 - (void)clickToShare:(UIButton *)sender
 {
-    [[LShareSheetView shareInstance] showShareContent:@"分享的内容" shareUrl:@"http://www.baidu.com" shareImage:[UIImage imageNamed:@"product_like_cancel"] targetViewController:self];
+    [[LShareSheetView shareInstance] showShareContent:aModel.product_name title:@"值得买分享" shareUrl:@"https://itunes.apple.com/us/app/id951259287?mt=8" shareImage:self.bigImageView.image targetViewController:self];
     [[LShareSheetView shareInstance]actionBlock:^(NSInteger buttonIndex, Share_Type shareType) {
        
         if (shareType == Share_QQ) {
@@ -297,6 +314,24 @@
     
     GLeadBuyMapViewController *ll = [[GLeadBuyMapViewController alloc]init];
     ll.aModel = aModel;
+    
+    ll.theType = LEADYOUTYPE_STORE;
+    
+//    ////商城相关
+//    @property(nonatomic,strong)NSString *storeName;
+//    @property(nonatomic,assign)CLLocationCoordinate2D coordinate_store;
+//    
+//    
+//    //产品相关
+//    @property(nonatomic,strong)NSString *chanpinName;
+//    @property(nonatomic,assign)CLLocationCoordinate2D coordinate_chanpin;
+    if ([LTools isDictinary:aModel.mall_info]) {
+        
+        ll.storeName = aModel.mall_info[@"mall_name"];
+        ll.coordinate_store = CLLocationCoordinate2DMake([aModel.mall_info[@"latitude"]floatValue], [aModel.mall_info[@"longitude"]floatValue]);
+    }
+    
+    
     [self.navigationController pushViewController:ll animated:YES];
 }
 
@@ -356,6 +391,7 @@
 - (void)prepareViewWithModel:(ProductModel *)aProductModel
 {
     
+    aModel = aProductModel;
     //赞 与 收藏 状态
     
     heartButton.selected = aProductModel.is_like == 1 ? YES : NO;
@@ -378,7 +414,16 @@
     [self.bigImageView sd_setImageWithURL:[NSURL URLWithString:[self thumbImageForArr:aProductModel.images]] placeholderImage:[UIImage imageNamed:nil]];
     
     self.priceLabel.text = [NSString stringWithFormat:@" %.2f  ",[aProductModel.product_price floatValue]];
-    self.discountLabel.text = [NSString stringWithFormat:@"%.f折",aProductModel.discount_num * 10];
+    
+    if (aProductModel.discount_num * 10 == 10) {
+        
+        self.discountLabel.hidden = YES;
+        
+    }else
+    {
+        self.discountLabel.text = [NSString stringWithFormat:@"%.f折",aProductModel.discount_num * 10];
+    }
+    
     
     self.titleLabel.text = aProductModel.product_name;
     self.xingHaoLabel.text = [NSString stringWithFormat:@"型号: %@",aProductModel.product_sku];

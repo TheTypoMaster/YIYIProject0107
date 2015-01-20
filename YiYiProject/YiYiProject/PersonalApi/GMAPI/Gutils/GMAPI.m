@@ -10,6 +10,10 @@
 #import "DataBase.h"
 #import "FBCity.h"
 
+//RBG color
+#define RGBA(r,g,b,a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
+#define HUDBACKGOUNDCOLOR  RGBA(0, 0, 0, 0.6)
+#define HUDFOREGROUNDCOLOR  RGBA(255, 255, 255, 1)
 @implementation GMAPI
 
 //获取用户的devicetoken
@@ -332,6 +336,63 @@
 
 
 
+
+#pragma mark--------------------------------提示层
+
+#pragma mark - HUD Metod  提示层
+
++(void)showProgressHasMask:(BOOL)ismask
+{
+    [SVProgressHUD setBackgroundColor:HUDBACKGOUNDCOLOR];
+    [SVProgressHUD setForegroundColor:HUDFOREGROUNDCOLOR];
+    [SVProgressHUD setDefaultMaskType:(ismask==YES?SVProgressHUDMaskTypeClear:SVProgressHUDMaskTypeNone)];
+    [SVProgressHUD show];
+}
+
++(void)showProgressWithText:(NSString *)string hasMask:(BOOL)ismask
+{
+    [SVProgressHUD setBackgroundColor:HUDBACKGOUNDCOLOR];
+    [SVProgressHUD setForegroundColor:HUDFOREGROUNDCOLOR];
+    [SVProgressHUD setDefaultMaskType:(ismask==YES?SVProgressHUDMaskTypeClear:SVProgressHUDMaskTypeNone)];
+    [SVProgressHUD showWithStatus:string];
+}
+
++(void)showProgressText:(NSString *)string hasMask:(BOOL)ismask
+{
+    [SVProgressHUD setBackgroundColor:HUDBACKGOUNDCOLOR];
+    [SVProgressHUD setForegroundColor:HUDFOREGROUNDCOLOR];
+    [SVProgressHUD setDefaultMaskType:(ismask==YES?SVProgressHUDMaskTypeClear:SVProgressHUDMaskTypeNone)];
+    [SVProgressHUD showImage:nil status:string];
+}
+
++(void)showSuccessProgessWithText:(NSString *)string hasMask:(BOOL)ismask
+{
+    [SVProgressHUD setBackgroundColor:HUDBACKGOUNDCOLOR];
+    [SVProgressHUD setForegroundColor:HUDFOREGROUNDCOLOR];
+    [SVProgressHUD setDefaultMaskType:(ismask==YES?SVProgressHUDMaskTypeClear:SVProgressHUDMaskTypeNone)];
+    [SVProgressHUD showSuccessWithStatus:string];
+}
+
++(void)showFailProgessWithText:(NSString *)string hasMask:(BOOL)ismask
+{
+    [SVProgressHUD setBackgroundColor:HUDBACKGOUNDCOLOR];
+    [SVProgressHUD setForegroundColor:HUDFOREGROUNDCOLOR];
+    [SVProgressHUD setDefaultMaskType:(ismask==YES?SVProgressHUDMaskTypeClear:SVProgressHUDMaskTypeNone)];
+    [SVProgressHUD showErrorWithStatus:string];
+}
+
++(void)showCustomProgessWithImage:(UIImage *)image andText:(NSString *)string hasMask:(BOOL)ismask
+{
+    [SVProgressHUD setBackgroundColor:HUDBACKGOUNDCOLOR];
+    [SVProgressHUD setForegroundColor:HUDFOREGROUNDCOLOR];
+    [SVProgressHUD setDefaultMaskType:(ismask==YES?SVProgressHUDMaskTypeClear:SVProgressHUDMaskTypeNone)];
+    [SVProgressHUD showImage:image status:string];
+}
+
++(void)hiddenProgress
+{
+    [SVProgressHUD dismiss];
+}
 //地区相关
 + (NSArray *)getSubCityWithProvinceId:(int)privinceId
 {

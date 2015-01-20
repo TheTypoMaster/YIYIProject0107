@@ -60,7 +60,7 @@
     NSMutableArray *showImageArray = [NSMutableArray arrayWithArray:imageArray];
     if(imageArray.count < 9)
     {
-        UIImage *image = [UIImage imageNamed:@"dapei_jiantou"];
+        UIImage *image = [UIImage imageNamed:@"yc_sc_tj"];
         [showImageArray addObject:image];
         
     }

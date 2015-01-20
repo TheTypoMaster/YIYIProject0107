@@ -43,6 +43,8 @@
     }else
     {
         self.userView.hidden = YES;
+        
+        top = 12;
     }
     //标题
     self.aTitleLabel.top = top;
@@ -112,6 +114,9 @@
     if (aType == icon_Yes) {
         
         aHeight += (55 + 12);//用户信息view高度 + 间距12
+    }else
+    {
+        aHeight = 12;
     }
     //标题高度
     CGFloat aWidth = DEVICE_WIDTH/2.f - 23;

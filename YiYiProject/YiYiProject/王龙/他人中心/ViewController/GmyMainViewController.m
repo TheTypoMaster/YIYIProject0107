@@ -73,11 +73,13 @@
     }
     headerView = [ParallaxHeaderView parallaxHeaderViewWithCGSize:CGSizeMake(DEVICE_WIDTH, 150.00)];
     
+    [headerView.imageView sd_setImageWithURL:[NSURL URLWithString:_bannerUrl] placeholderImage:[UIImage imageNamed:@"my_bg.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    }];
     self.waterfall.headerView = headerView;
     
     headerView.userInteractionEnabled = YES;
     
-    headerView.headerImage = [UIImage imageNamed:@"guserbannerdefaul.png"];
+//    headerView.headerImage = [UIImage imageNamed:@"guserbannerdefaul.png"];
     
     if (self.theType == GSOMEONE) {
         [headerView addSubview:[self creatUpUserInfoView]];
@@ -150,6 +152,8 @@
     _userFaceImv.layer.borderWidth = 1;
     _userFaceImv.layer.borderColor = [[UIColor whiteColor]CGColor];
     _userFaceImv.layer.masksToBounds = YES;
+    [_userFaceImv sd_setImageWithURL:[NSURL URLWithString:_headImageUrl] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    }];
     [_upUserInfoView addSubview:_userFaceImv];
     
     //用户名

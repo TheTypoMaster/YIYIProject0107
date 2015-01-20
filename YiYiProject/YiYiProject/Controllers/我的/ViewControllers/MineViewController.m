@@ -35,6 +35,8 @@
 
 #import "MyShopViewController.h"//我的店铺
 
+#import "LShareSheetView.h"
+
 #import "ParallaxHeaderView.h"
 #import "UIImage+ImageEffects.h"
 #import "NSDictionary+GJson.h"
@@ -88,7 +90,7 @@ typedef enum{
     // Do any additional setup after loading the view from its nib.
     self.myTitleLabel.text = @"我的";
     
-    
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     
     //判断是否登录
     if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
@@ -171,10 +173,15 @@ typedef enum{
         NSString *score = [dic stringValueForKey:@"score"];
         self.userNameLabel.text = [NSString stringWithFormat:@"昵称:%@",name];
         self.userScoreLabel.text = [NSString stringWithFormat:@"积分:%@",score];
-        [_backView.imageView sd_setImageWithURL:[NSURL URLWithString:[dic stringValueForKey:@"user_banner"]] placeholderImage:[UIImage imageNamed:@"my_bg.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        
+        user_bannerUrl = [dic stringValueForKey:@"user_banner"];
+        [_backView.imageView sd_setImageWithURL:[NSURL URLWithString:user_bannerUrl] placeholderImage:[UIImage imageNamed:@"my_bg.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             [GMAPI setUserBannerImageWithData:UIImagePNGRepresentation(_backView.imageView.image)];
         }];
+        
+        
         NSString *userFaceUrl = [NSString stringWithFormat:@"%@",[dic stringValueForKey:@"photo"]];
+        headImageUrl = userFaceUrl;
         
         [self.userFaceImv sd_setImageWithURL:[NSURL URLWithString:userFaceUrl] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             [GMAPI setUserFaceImageWithData:UIImagePNGRepresentation(self.userFaceImv.image)];
@@ -290,6 +297,38 @@ typedef enum{
 }
 
 
+#pragma mark 事件处理
+
+- (void)clickToShare:(UIButton *)sender
+{
+    [[LShareSheetView shareInstance] showShareContent:@"我在使用衣+衣,我们一起来用吧!" title:nil shareUrl:@"https://itunes.apple.com/us/app/id951259287?mt=8" shareImage:[UIImage imageNamed:@"about_icon"] targetViewController:self];
+    [[LShareSheetView shareInstance]actionBlock:^(NSInteger buttonIndex, Share_Type shareType) {
+        
+        if (shareType == Share_QQ) {
+            
+            NSLog(@"Share_QQ");
+            
+        }else if (shareType == Share_QQZone){
+            
+            NSLog(@"Share_QQZone");
+            
+        }else if (shareType == Share_WeiBo){
+            
+            NSLog(@"Share_WeiBo");
+            
+        }else if (shareType == Share_WX_HaoYou){
+            
+            NSLog(@"Share_WX_HaoYou");
+            
+        }else if (shareType == Share_WX_PengYouQuan){
+            
+            NSLog(@"Share_WX_PengYouQuan");
+            
+        }
+        
+    }];
+}
+
 
 #pragma mark - UITableViewDelegate && UITableViewDataSource
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -367,6 +406,8 @@ typedef enum{
         {
             GmyMainViewController *dd = [[GmyMainViewController alloc]init];
             dd.theType = GMYSELF;
+            dd.bannerUrl = user_bannerUrl;
+            dd.headImageUrl = headImageUrl;
             dd.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:dd animated:YES];
             
@@ -480,7 +521,11 @@ typedef enum{
             
         case 5:
         {
-            
+            if (indexPath.row == 0){
+                
+                
+                [self clickToShare:nil];
+            }
             
         }
             break;
@@ -501,7 +546,7 @@ typedef enum{
     
     
     
-    NSLog(@"xxxx==%ld=row=%ld=",indexPath.section,indexPath.row);
+    NSLog(@"xxxx==%zi=row=%zi=",indexPath.section,indexPath.row);
     
     NSLog(@"在这里进行跳转");
 }
@@ -511,10 +556,14 @@ typedef enum{
 ///编辑资料
 -(void)goToEdit{
     
-    //编辑
-    EditMyInfoViewController *editInfoVC = [[EditMyInfoViewController alloc] init];
-    editInfoVC.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:editInfoVC animated:YES];
+    
+    if ([LTools isLogin:self]) {
+        //编辑
+        EditMyInfoViewController *editInfoVC = [[EditMyInfoViewController alloc] init];
+        editInfoVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:editInfoVC animated:YES];
+    }
+    
     
 }
 
