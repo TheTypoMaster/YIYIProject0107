@@ -233,6 +233,9 @@ typedef enum {
 //申请商场店
 #define SHENQINGSHANGCHANGDIAN @"http://182.92.158.32/?d=api&c=mall&m=addShop"
 
+//我是店主 发布单品
+#define GFABUDIANPIN @"http://182.92.158.32/?d=api&c=products&m=addProducts"
+
 
 
 

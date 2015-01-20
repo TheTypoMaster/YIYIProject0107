@@ -704,7 +704,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField;{
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
     NSLog(@"textField.tag = %ld",(long)textField.tag);
     
     

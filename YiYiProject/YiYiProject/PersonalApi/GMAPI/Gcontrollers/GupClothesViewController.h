@@ -9,7 +9,7 @@
 
 
 
-//上传衣服
+//店主上传衣服
 
 #import <UIKit/UIKit.h>
 

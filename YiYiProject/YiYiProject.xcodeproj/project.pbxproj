@@ -433,6 +433,10 @@
 		E30479481A6109B800709985 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = E30479461A6109B800709985 /* UIImage+ImageEffects.m */; };
 		E304794B1A6109DE00709985 /* GStorePinpaiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E304794A1A6109DE00709985 /* GStorePinpaiViewController.m */; };
 		E304794D1A6112E400709985 /* guserbannerdefaul@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E304794C1A6112E400709985 /* guserbannerdefaul@2x.png */; };
+		E30522261A6E9962007BEAFD /* gaddphoto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E30522241A6E9962007BEAFD /* gaddphoto@2x.png */; };
+		E30522271A6E9962007BEAFD /* gremovephoto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E30522251A6E9962007BEAFD /* gremovephoto@2x.png */; };
+		E305222A1A6ECD3A007BEAFD /* GupHuoDongViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E30522291A6ECD3A007BEAFD /* GupHuoDongViewController.m */; };
+		E305222D1A6ED1B5007BEAFD /* GHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E305222C1A6ED1B5007BEAFD /* GHolderTextView.m */; };
 		E34E3D671A615B8000DD95BB /* CustomSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = E34E3D661A615B8000DD95BB /* CustomSegmentView.m */; };
 		E35EF1161A6A54A900B493A9 /* GChooseStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E35EF1151A6A54A900B493A9 /* GChooseStoreViewController.m */; };
 		E35EF1231A6A756900B493A9 /* GchooseFloorPinpaiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E35EF1221A6A756900B493A9 /* GchooseFloorPinpaiViewController.m */; };
@@ -1125,6 +1129,12 @@
 		E30479491A6109DE00709985 /* GStorePinpaiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GStorePinpaiViewController.h; sourceTree = "<group>"; };
 		E304794A1A6109DE00709985 /* GStorePinpaiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GStorePinpaiViewController.m; sourceTree = "<group>"; };
 		E304794C1A6112E400709985 /* guserbannerdefaul@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "guserbannerdefaul@2x.png"; sourceTree = "<group>"; };
+		E30522241A6E9962007BEAFD /* gaddphoto@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gaddphoto@2x.png"; sourceTree = "<group>"; };
+		E30522251A6E9962007BEAFD /* gremovephoto@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gremovephoto@2x.png"; sourceTree = "<group>"; };
+		E30522281A6ECD3A007BEAFD /* GupHuoDongViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GupHuoDongViewController.h; sourceTree = "<group>"; };
+		E30522291A6ECD3A007BEAFD /* GupHuoDongViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GupHuoDongViewController.m; sourceTree = "<group>"; };
+		E305222B1A6ED1B5007BEAFD /* GHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHolderTextView.h; sourceTree = "<group>"; };
+		E305222C1A6ED1B5007BEAFD /* GHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHolderTextView.m; sourceTree = "<group>"; };
 		E34E3D651A615B8000DD95BB /* CustomSegmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomSegmentView.h; sourceTree = "<group>"; };
 		E34E3D661A615B8000DD95BB /* CustomSegmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomSegmentView.m; sourceTree = "<group>"; };
 		E35EF1141A6A54A900B493A9 /* GChooseStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GChooseStoreViewController.h; sourceTree = "<group>"; };
@@ -2864,6 +2874,8 @@
 				E35EF1221A6A756900B493A9 /* GchooseFloorPinpaiViewController.m */,
 				E35EF15D1A6B947800B493A9 /* GupClothesViewController.h */,
 				E35EF15E1A6B947800B493A9 /* GupClothesViewController.m */,
+				E30522281A6ECD3A007BEAFD /* GupHuoDongViewController.h */,
+				E30522291A6ECD3A007BEAFD /* GupHuoDongViewController.m */,
 			);
 			path = Gcontrollers;
 			sourceTree = "<group>";
@@ -2871,6 +2883,8 @@
 		E3996E3E1A5E1DBA00673147 /* Gmodels */ = {
 			isa = PBXGroup;
 			children = (
+				E30522241A6E9962007BEAFD /* gaddphoto@2x.png */,
+				E30522251A6E9962007BEAFD /* gremovephoto@2x.png */,
 				E35EF1561A6B6E0700B493A9 /* garea.plist */,
 				E35EF1571A6B6E0700B493A9 /* garea.sqlite */,
 				E3601E811A61A75700CC41FE /* gcustomstore@3x.png */,
@@ -3023,6 +3037,8 @@
 		E3996EA41A5E1DBA00673147 /* utilsView */ = {
 			isa = PBXGroup;
 			children = (
+				E305222B1A6ED1B5007BEAFD /* GHolderTextView.h */,
+				E305222C1A6ED1B5007BEAFD /* GHolderTextView.m */,
 				E34E3D651A615B8000DD95BB /* CustomSegmentView.h */,
 				E34E3D661A615B8000DD95BB /* CustomSegmentView.m */,
 				E30479421A6109B800709985 /* GBigSmallTabHeaderView */,
@@ -3408,6 +3424,7 @@
 				138C2BFA1A39E09200EA59F5 /* UMShareEditViewControlleriPad.xib in Resources */,
 				19F7B43A1A67FFA600087BCB /* item_ok_selected@2x.png in Resources */,
 				137B07EA1A4E6FDF00DE7DCC /* sh_jiantou_right@3x.png in Resources */,
+				E30522271A6E9962007BEAFD /* gremovephoto@2x.png in Resources */,
 				137B087F1A4EADFE00DE7DCC /* xiaoxi_up@3x.png in Resources */,
 				139607B81A46A0BB00AACAC4 /* product_shoucang@2x.png in Resources */,
 				1389862B1A6A433D00F187C9 /* stianjia@2x.png in Resources */,
@@ -3599,6 +3616,7 @@
 				1387B0911A5EDFA8006365D8 /* apply_wechat_image@2x.png in Resources */,
 				138C2BFD1A39E09200EA59F5 /* UMSShareListController.xib in Resources */,
 				565321421A59769300E43F80 /* emotionImage.plist in Resources */,
+				E30522261A6E9962007BEAFD /* gaddphoto@2x.png in Resources */,
 				5640317F1A4EEBC800680E08 /* stars_selected_image@3x.png in Resources */,
 				137B088A1A4EBAAB00DE7DCC /* fenxiangb@2x.png in Resources */,
 				137B084F1A4E8D6700DE7DCC /* dapeishi_botton_up@3x.png in Resources */,
@@ -3791,6 +3809,7 @@
 				19F7B4331A67FFA600087BCB /* UMEGORefreshTableHeaderView.m in Sources */,
 				DF6855861A592CD2004D924F /* UploadPicViewController.m in Sources */,
 				DF5E89A71A5E115900535EBA /* MyBodyViewController.m in Sources */,
+				E305222D1A6ED1B5007BEAFD /* GHolderTextView.m in Sources */,
 				566FE2571A503B1000A96B5F /* MatchInfoModel.m in Sources */,
 				EF932A011A617E2B00A8BD18 /* EditInfoView.m in Sources */,
 				13B690671A56797E007FE152 /* TPlatCell.m in Sources */,
@@ -3799,6 +3818,7 @@
 				E3996EBA1A5E1DBA00673147 /* GEditPersonInfoViewController.m in Sources */,
 				E3996EE31A5E1DBA00673147 /* GTableViewCell.m in Sources */,
 				19F7B44C1A67FFA600087BCB /* UMFeedbackTableViewCellRight.m in Sources */,
+				E305222A1A6ECD3A007BEAFD /* GupHuoDongViewController.m in Sources */,
 				13A3897E1A3878FE00ABBACB /* MyViewController.m in Sources */,
 				13B690631A56784D007FE152 /* TPlatModel.m in Sources */,
 				E3996ED71A5E1DBA00673147 /* NSDictionary+GJson.m in Sources */,
@@ -3955,8 +3975,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YiYiProject/UMengShare/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
@@ -3977,7 +3997,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "96c93639-ff5c-44ac-ad74-809c23c1de89";
+				PROVISIONING_PROFILE = "0c1b68b6-94ba-43b9-b1d3-dea4d4ca3175";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Debug;
@@ -3989,8 +4009,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YiYiProject/UMengShare/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
@@ -4011,7 +4031,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "96c93639-ff5c-44ac-ad74-809c23c1de89";
+				PROVISIONING_PROFILE = "0c1b68b6-94ba-43b9-b1d3-dea4d4ca3175";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Release;

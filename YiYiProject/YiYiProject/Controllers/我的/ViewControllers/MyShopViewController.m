@@ -8,6 +8,8 @@
 
 #import "MyShopViewController.h"
 #import "ParallaxHeaderView.h"
+#import "GupClothesViewController.h"
+#import "GupHuoDongViewController.h"
 
 @interface MyShopViewController ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate>
 {
@@ -147,11 +149,18 @@
     if (buttonIndex == 1) {
         
         NSLog(@"发布活动");
+        
+        GupHuoDongViewController *ccc = [[GupHuoDongViewController alloc]init];
+        [self.navigationController pushViewController:ccc animated:YES];
 
     }else if (buttonIndex == 0){
         
         NSLog(@"发布单品");
+        
 
+        GupClothesViewController *ccc = [[GupClothesViewController alloc]init];
+        [self.navigationController pushViewController:ccc animated:YES];
+        
     }
 }
 

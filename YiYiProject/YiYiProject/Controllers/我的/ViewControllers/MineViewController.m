@@ -468,6 +468,10 @@ typedef enum{
 
                 }
                 
+//                ShenQingDianPuViewController *_shenqingVC = [[ShenQingDianPuViewController alloc]init];
+//                _shenqingVC.hidesBottomBarWhenPushed = YES;
+//                [self.navigationController pushViewController:_shenqingVC animated:YES];
+                
             }
             
             
