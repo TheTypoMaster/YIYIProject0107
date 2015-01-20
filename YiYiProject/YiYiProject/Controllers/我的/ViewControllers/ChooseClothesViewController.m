@@ -108,7 +108,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MyIdentifier] ;
         
         UIImageView *imageView =[[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 50, 50)];
-        imageView.backgroundColor = [UIColor grayColor];
+        imageView.backgroundColor = RGBCOLOR(255,155,155);
         imageView.tag = 101;
         [cell addSubview:imageView];
         UILabel *nameLabel = [LTools createLabelFrame:CGRectMake(imageView.frame.origin.x + imageView.width +10, (70-15)/2.0, 100, 15) title:@"测试数据" font:15 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"686868"]];
