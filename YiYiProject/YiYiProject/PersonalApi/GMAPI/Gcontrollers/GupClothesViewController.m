@@ -19,7 +19,7 @@
     
     
     NSMutableArray *_imageArray;//所选图片数组
-    NSMutableArray *_showPicsArray;//展示图片的btn
+    NSMutableArray *_showPicsBtnArray;//展示图片的btn
     NSMutableArray *_deleteImageIndexArray;//删除的图片在_imageArray中的下标
     
     
@@ -63,7 +63,7 @@
     
     //初始化
     _shurukuangArray = [NSMutableArray arrayWithCapacity:1];
-    
+    _showPicsBtnArray = [NSMutableArray arrayWithCapacity:1];
     
     
     //主scrollview
@@ -380,7 +380,7 @@
         }else{
             [btn setBackgroundImage:[UIImage imageNamed:@"gremovephoto.png"] forState:UIControlStateNormal];
             [btn addTarget:self action:@selector(removeSelf:) forControlEvents:UIControlEventTouchUpInside];
-            [_showPicsArray addObject:btn];
+            [_showPicsBtnArray addObject:btn];
         }
         
         
@@ -488,7 +488,7 @@
     NSInteger chooseImageCount = _imageArray.count;
     chooseImageCount = chooseImageCount>3?3:chooseImageCount;
     for (int i = 0; i<chooseImageCount; i++) {
-        UIButton *btn = _showPicsArray[i];
+        UIButton *btn = _showPicsBtnArray[i];
         [btn setBackgroundImage:_imageArray[i] forState:UIControlStateNormal];
     }
     
