@@ -8,8 +8,11 @@
 
 #import "GupHuoDongViewController.h"
 #import "GHolderTextView.h"
+#import "MLImageCrop.h"
 
-@interface GupHuoDongViewController ()<UITextFieldDelegate>
+#import "AFNetworking.h"
+
+@interface GupHuoDongViewController ()<UITextFieldDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,MLImageCropDelegate>
 {
     GHolderTextView *_gholderTextView;
     
@@ -19,6 +22,11 @@
     
     UIView *_view3;//图片
     
+    UIButton *_showPicBtn;//展示图片的button
+    
+    UIImage *_showImage;//选择的图片
+    
+    NSData *_showImageData;//需要上传的图片
 }
 @end
 
@@ -53,6 +61,7 @@
     
     [self creatView3];
     
+    [self creatTijiaoBtn];
     
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(gShou) name:UIKeyboardWillHideNotification object:nil];
@@ -100,12 +109,31 @@
 }
 
 
+//提交按钮
+-(void)creatTijiaoBtn{
+    UIButton *tijiaoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [tijiaoBtn setTitle:@"提  交" forState:UIControlStateNormal];
+    [tijiaoBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [tijiaoBtn setBackgroundColor:RGBCOLOR(217, 66, 93)];
+    tijiaoBtn.layer.cornerRadius = 5;
+    [tijiaoBtn setFrame:CGRectMake(20, CGRectGetMaxY(_view3.frame)+13, DEVICE_WIDTH-40, 44)];
+    [tijiaoBtn addTarget:self action:@selector(tijiao) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.view addSubview:tijiaoBtn];
+}
+
+
+-(void)tijiao{
+    
+}
+
+
 
 //活动内容
 -(void)creatView2{
     
     _view2 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_view1.frame), DEVICE_WIDTH, 170)];
-    _view2.backgroundColor = [UIColor orangeColor];
+    
     
     
     //收键盘
@@ -127,25 +155,51 @@
 
 
 -(void)creatView3{
-    _view3 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_view2.frame), DEVICE_WIDTH, 200)];
-    _view3.backgroundColor = [UIColor lightGrayColor];
+    _view3 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_view2.frame), DEVICE_WIDTH, 130)];
+    _view3.backgroundColor = RGBCOLOR(242, 242, 242);
+    //收键盘
+    UIControl *tapshou = [[UIControl alloc]initWithFrame:_view3.bounds];
+    [tapshou addTarget:self action:@selector(gShou) forControlEvents:UIControlEventTouchDown];
+    [_view3 addSubview:tapshou];
     [self.view addSubview:_view3];
+    
+    //上传图片
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 15, 80, 20)];
+    titleLabel.text = @"上传图片";
+    [_view3 addSubview:titleLabel];
+    
+    
+    //加号
+    UIButton *addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [addBtn setBackgroundImage:[UIImage imageNamed:@"gaddphoto.png"] forState:UIControlStateNormal];
+    [addBtn setFrame:CGRectMake(15, CGRectGetMaxY(titleLabel.frame)+10, 60, 60)];
+    [addBtn addTarget:self action:@selector(tianjiatupian) forControlEvents:UIControlEventTouchUpInside];
+    [_view3 addSubview:addBtn];
+    
+    //图片
+    _showPicBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_showPicBtn setBackgroundImage:[UIImage imageNamed:@"gremovephoto.png"] forState:UIControlStateNormal];
+    [_showPicBtn setFrame:CGRectMake(CGRectGetMaxX(addBtn.frame)+15, addBtn.frame.origin.y, 60, 60)];
+    [_showPicBtn addTarget:self action:@selector(removeSelf) forControlEvents:UIControlEventTouchUpInside];
+    [_view3 addSubview:_showPicBtn];
+    
+    
+    
+    
+    
 }
 
 
 
-
-
+//收键盘开始====
 -(void)gShou{
     NSLog(@"收键盘了");
    
     UITextField *tf = (UITextField*)[self.view viewWithTag:200];
     [tf resignFirstResponder];
     
-    UITextView *tv = [(UITextView*)self.view viewWithTag:300];
+    UITextView *tv = (UITextView*)[self.view viewWithTag:300];
     [tv resignFirstResponder];
-    
-    
     
 }
 
@@ -155,7 +209,7 @@
     
 }
 
-
+//收键盘结束====
 
 
 
@@ -164,8 +218,166 @@
     // Dispose of any resources that can be recreated.
 }
 
+//添加图片
+-(void)tianjiatupian{
+    //图片选择器
+    UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+    picker.delegate = self;
+    picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+    
+    [self presentViewController:picker animated:YES completion:^{
+        
+    }];
+}
+
+//删除图片
+-(void)removeSelf{
+    [_showPicBtn setBackgroundImage:[UIImage imageNamed:@"gremovephoto.png"] forState:UIControlStateNormal];
+    _showImage = nil;
+    
+}
 
 
+
+#pragma mark- 缩放图片
+//按比例缩放
+-(UIImage *)scaleImage:(UIImage *)image toScale:(float)scaleSize
+{
+    UIGraphicsBeginImageContext(CGSizeMake(image.size.width*scaleSize,image.size.height*scaleSize));
+    [image drawInRect:CGRectMake(0, 0, image.size.width * scaleSize, image.size.height *scaleSize)];
+    UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return scaledImage;
+}
+
+//按像素缩放
+-(UIImage *)scaleToSize:(UIImage *)img size:(CGSize)size{
+    // 创建一个bitmap的context
+    // 并把它设置成为当前正在使用的context
+    UIGraphicsBeginImageContext(size);
+    // 绘制改变大小的图片
+    [img drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    // 从当前context中创建一个改变大小后的图片
+    UIImage* scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    // 使当前的context出堆栈
+    UIGraphicsEndImageContext();
+    // 返回新的改变大小后的图片
+    return scaledImage;
+}
+#pragma mark - UIImagePickerControllerDelegate 拍照选择照片协议方法
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+    NSLog(@"%s",__FUNCTION__);
+    [UIApplication sharedApplication].statusBarHidden = NO;
+    NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
+    
+    if ([mediaType isEqualToString:@"public.image"]) {
+        
+        //压缩图片 不展示原图
+        UIImage *originImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+        
+        //按比例缩放
+        UIImage *scaleImage = [self scaleImage:originImage toScale:0.3];
+        
+        
+        //将图片传递给截取界面进行截取并设置回调方法（协议）
+        MLImageCrop *imageCrop = [[MLImageCrop alloc]init];
+        imageCrop.delegate = self;
+        
+        //按像素缩放  //设置缩放比例
+        imageCrop.ratioOfWidthAndHeight = 1;
+        imageCrop.image = scaleImage;
+        //[imageCrop showWithAnimation:NO];
+        picker.navigationBar.hidden = YES;
+        [picker pushViewController:imageCrop animated:YES];
+        
+    }
+}
+
+
+#pragma mark - MLImageCropDelegate
+- (void)cropImage:(UIImage*)cropImage forOriginalImage:(UIImage*)originalImage
+{
+    
+    
+    UIImage *doneImage = [self scaleToSize:cropImage size:CGSizeMake(DEVICE_WIDTH, DEVICE_HEIGHT)];//按像素缩放
+    _showImage = doneImage;
+    _showImageData = UIImageJPEGRepresentation(_showImage, 0.8);
+    
+    
+    
+    
+    [_showPicBtn setBackgroundImage:doneImage forState:UIControlStateNormal];
+    
+    //ASI上传
+//    [self upLoadImage];
+
+}
+
+//上传
+-(void)upLoadImage{
+    
+    //上传的url
+    NSString *uploadImageUrlStr = nil;
+    
+    
+    //设置接收响应类型为标准HTTP类型(默认为响应类型为JSON)
+    AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    AFHTTPRequestOperation  * o2= [manager
+                                   POST:uploadImageUrlStr
+                                   parameters:@{
+                                                @"authcode":[GMAPI getAuthkey]
+                                                }
+                                   constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
+                                   {
+                                       //开始拼接表单
+                                       //获取图片的二进制形式
+                                       NSData * data= _showImageData;
+                                       
+                                       NSLog(@"%ld",(unsigned long)data.length);
+                                       
+                                       //将得到的二进制图片拼接到表单中
+                                       /**
+                                        *  data,指定上传的二进制流
+                                        *  name,服务器端所需参数名
+                                        *  fileName,指定文件名
+                                        *  mimeType,指定文件格式
+                                        */
+                                       [formData appendPartWithFileData:data name:@"pic" fileName:@"icon.jpg" mimeType:@"image/jpg"];
+                                       //多用途互联网邮件扩展（MIME，Multipurpose Internet Mail Extensions）
+                                   }
+                                   success:^(AFHTTPRequestOperation *operation, id responseObject)
+                                   {
+                                       
+                                       [GMAPI showAutoHiddenMBProgressWithText:@"更改成功" addToView:self.view];
+                                       
+                                       NSLog(@"%@",responseObject);
+                                       
+                                       NSError * myerr;
+                                       
+                                       NSDictionary *mydic=[NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:NSJSONReadingAllowFragments error:&myerr];
+                                       
+                                       
+                                       NSLog(@"%@",mydic);
+                                      
+                                       
+                                   }
+                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       
+                                       [GMAPI showAutoHiddenMBProgressWithText:@"更改失败,联网自动上传" addToView:self.view];
+                                       
+                                       
+                                       NSLog(@"%@",error);
+                                       
+                                       
+                                   }];
+    //设置上传操作的进度
+    [o2 setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+        
+    }];
+    
+    
+}
 
 
 
