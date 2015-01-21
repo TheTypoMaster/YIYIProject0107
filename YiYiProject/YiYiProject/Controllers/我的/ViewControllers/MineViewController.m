@@ -493,6 +493,7 @@ typedef enum{
                     NSLog(@"店主");
                     
                     MyShopViewController *shop = [[MyShopViewController alloc]init];
+                    shop.userInfo = _userInfo;
                     shop.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:shop animated:YES];
                     
