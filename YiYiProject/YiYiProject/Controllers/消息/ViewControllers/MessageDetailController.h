@@ -14,4 +14,9 @@
 
 @property(nonatomic,retain)NSString *msg_id;
 
+@property(nonatomic,assign)BOOL isActivity;//是否活动
+
+@property(nonatomic,retain)NSString *shopName;
+@property(nonatomic,retain)NSString *shopImageUrl;
+
 @end

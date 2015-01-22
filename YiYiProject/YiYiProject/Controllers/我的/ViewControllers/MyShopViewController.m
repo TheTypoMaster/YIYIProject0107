@@ -28,6 +28,8 @@
 
 #import "ActivityModel.h"
 
+#import "MailInfoModel.h"
+
 @interface MyShopViewController ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,WaterFlowDelegate,TMQuiltViewDataSource,RefreshDelegate>
 {
     UITableView *_tableView;
@@ -38,6 +40,8 @@
     
     CGFloat water_offset_y;
     CGFloat right_offset_y;
+    
+    MailInfoModel *aMailModel;
 }
 
 @property(nonatomic,strong)UIImageView *userFaceImv;//头像Imv
@@ -70,9 +74,11 @@
     _tableView.tableHeaderView = [self creatTableViewHeaderView];
     [self.view addSubview:_tableView];
     
-    [self getMailProduct];
+    [self getMailDetailInfo];//店铺详情
     
-    [self getMailActivity];
+    [self getMailProduct];//店铺产品列表
+    
+    [self getMailActivity];//店铺活动列表
 
 }
 
@@ -83,14 +89,32 @@
 
 #pragma mark - 网络请求
 
-- (void)getDanpin
+/**
+ *  获取店铺详情
+ */
+- (void)getMailDetailInfo
 {
+    NSString *key = [GMAPI getAuthkey];
     
+    key = @"WiVbIgF4BeMEvwabALBajQWgB+VUoVWkBShRYFUwXGkGOAAyB2FSZgczBjYAbAp6AjZSaQ==";
+    
+    __weak typeof(self)weakSelf = self;
+    
+    NSString *url = [NSString stringWithFormat:GET_MAIL_DETAIL_INFO,self.userInfo.shop_id];
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        NSLog(@"");
+        
+        MailInfoModel *mail = [[MailInfoModel alloc]initWithDictionary:result];
+
+        [weakSelf setViewWithModel:mail];
+        
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        
+    }];
 }
-
-#pragma mark - 网络请求
-
-#pragma mark 事件处理
 
 
 /**
@@ -112,7 +136,8 @@
     ProductModel *aMode = waterFlow.dataArray[sender.tag - 1000];
     
     NSString *productId = aMode.product_id;
-    __weak typeof(self)weakSelf = self;
+    
+//    __weak typeof(self)weakSelf = self;
     
     NSString *api = HOME_PRODUCT_ZAN_ADD;
     
@@ -142,7 +167,9 @@
 }
 
 
-//action= yy(衣加衣) shop（商家） dynamic（动态）
+/**
+ *  获取店铺活动
+ */
 - (void)getMailActivity
 {
     NSString *key = [GMAPI getAuthkey];
@@ -219,6 +246,8 @@
     _backView = [ParallaxHeaderView parallaxHeaderViewWithCGSize:CGSizeMake(DEVICE_WIDTH, 150.00*DEVICE_WIDTH/320)];
     _backView.headerImage = [UIImage imageNamed:@"my_bg"];
     
+    _backView.headerImage = [GMAPI getUserBannerImage];
+    
     NSLog(@"%@",NSStringFromCGRect(_backView.frame));
     
     //标题
@@ -249,13 +278,13 @@
     self.userFaceImv.backgroundColor = RGBCOLOR_ONE;
     self.userFaceImv.layer.cornerRadius = 25;
     self.userFaceImv.layer.masksToBounds = YES;
-    self.userFaceImv.image = [GMAPI getUserFaceImage];
+//    self.userFaceImv.image = [GMAPI getUserFaceImage];
     
     
     NSLog(@"%@",NSStringFromCGRect(self.userFaceImv.frame));
     
     //昵称
-    self.userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.userFaceImv.frame)+10, self.userFaceImv.frame.origin.y+6, 120*GscreenRatio_320, 14)];
+    self.userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.userFaceImv.frame)+10, self.userFaceImv.frame.origin.y+6, DEVICE_WIDTH - self.userFaceImv.right - 20, 14)];
     self.userNameLabel.text = @"昵称";
     self.userNameLabel.font = [UIFont systemFontOfSize:14*GscreenRatio_320];
     self.userNameLabel.textColor = [UIColor whiteColor];
@@ -264,7 +293,7 @@
     //地址
     self.userScoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.userNameLabel.frame.origin.x, CGRectGetMaxY(self.userNameLabel.frame)+10, self.userNameLabel.frame.size.width, self.userNameLabel.frame.size.height)];
     self.userScoreLabel.font = [UIFont systemFontOfSize:14*GscreenRatio_320];
-    self.userScoreLabel.text = @"地址";
+//    self.userScoreLabel.text = @"地址";
     self.userScoreLabel.textColor = [UIColor whiteColor];
 
     //    //添加视图
@@ -278,6 +307,14 @@
 }
 
 #pragma mark - 事件处理
+
+- (void)setViewWithModel:(MailInfoModel *)aModel
+{
+    aMailModel = aModel;
+    [self.userFaceImv sd_setImageWithURL:[NSURL URLWithString:aModel.logo] placeholderImage:nil];
+    self.userNameLabel.text = aModel.shop_name;
+    self.userScoreLabel.text = aModel.address;
+}
 
 //更新状态栏颜色
 
@@ -489,8 +526,9 @@
     ActivityModel *aModel = rightTable.dataArray[indexPath.row];
     MessageDetailController *detail = [[MessageDetailController alloc]init];
     detail.msg_id = aModel.id;
-//    [self.navigationController pushViewController:detail animated:YES];
-    
+    detail.isActivity = YES;
+    detail.shopName = aMailModel.shop_name;
+    detail.shopImageUrl = aMailModel.logo;
     [self pushViewController:detail];
     
 }
@@ -706,6 +744,8 @@
     
     cell.like_btn.tag = 1000 + indexPath.row;
     [cell.like_btn addTarget:self action:@selector(clickToZan:) forControlEvents:UIControlEventTouchUpInside];
+    
+    cell.titleView.hidden = YES;
     
     return cell;
 }
