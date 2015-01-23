@@ -386,6 +386,17 @@ typedef enum {
 
 #define MESSAGE_GET_DETAIL @"http://182.92.158.32/index.php?d=api&c=msg&m=get_msg_info&msg_id=%@&authcode=%@"
 
+//店主活动列表
+#define GET_MAIL_ACTIVITY_LIST @"http://182.92.158.32/index.php?d=api&c=mall&m=get_activities&authcode=%@"
+//店主单品列表
+#define GET_MAIL_PRODUCT_LIST @"http://182.92.158.32/index.php?d=api&c=products&m=getProductList&action=%@&mb_id=%@&page=%d&per_page=%d"
+
+//店铺详情
+#define GET_MAIL_DETAIL_INFO @"http://182.92.158.32/index.php?d=api&c=mall&m=get_shop_info&shop_id=%@"
+
+//活动详情
+#define GET_MAIL_ACTIVITY_DETAIL @"http://182.92.158.32/index.php?d=api&c=mall&m=get_activity_info&activity_id=%@"
+
 #endif
 
 

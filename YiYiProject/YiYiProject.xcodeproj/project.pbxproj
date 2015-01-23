@@ -161,6 +161,7 @@
 		137B6FF91A6B995D007035DE /* dz_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 137B6FF61A6B995D007035DE /* dz_bg@2x.png */; };
 		137B6FFA1A6B995D007035DE /* dz_jiantou@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 137B6FF71A6B995D007035DE /* dz_jiantou@2x.png */; };
 		137B6FFB1A6B995D007035DE /* dz_tianjia@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 137B6FF81A6B995D007035DE /* dz_tianjia@2x.png */; };
+		137C39131A714ABA00CE3971 /* MailInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 137C39121A714ABA00CE3971 /* MailInfoModel.m */; };
 		137E0AC11A4C559500B59F64 /* LShareSheetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 137E0AC01A4C559500B59F64 /* LShareSheetView.m */; };
 		137E0AD81A4C567500B59F64 /* pengyouquan72_7222x.png in Resources */ = {isa = PBXBuildFile; fileRef = 137E0AD21A4C567500B59F64 /* pengyouquan72_7222x.png */; };
 		137E0AD91A4C567500B59F64 /* QQ72_72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 137E0AD31A4C567500B59F64 /* QQ72_72@2x.png */; };
@@ -309,6 +310,7 @@
 		13B6907C1A580430007FE152 /* ShopViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B6907A1A580430007FE152 /* ShopViewCell.m */; };
 		13B6907D1A580430007FE152 /* ShopViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B6907B1A580430007FE152 /* ShopViewCell.xib */; };
 		13B690801A580B76007FE152 /* MailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B6907F1A580B76007FE152 /* MailModel.m */; };
+		13C404D81A6FF42100C4B516 /* ActivityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 13C404D71A6FF42100C4B516 /* ActivityModel.m */; };
 		13CD36361A3C51BE0068C12A /* ForgetPwdController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CD36341A3C51BE0068C12A /* ForgetPwdController.m */; };
 		13CD36371A3C51BE0068C12A /* ForgetPwdController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13CD36351A3C51BE0068C12A /* ForgetPwdController.xib */; };
 		13CD36401A3C69860068C12A /* TMQuiltView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CD363B1A3C69860068C12A /* TMQuiltView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -699,6 +701,8 @@
 		137B6FF61A6B995D007035DE /* dz_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dz_bg@2x.png"; sourceTree = "<group>"; };
 		137B6FF71A6B995D007035DE /* dz_jiantou@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dz_jiantou@2x.png"; sourceTree = "<group>"; };
 		137B6FF81A6B995D007035DE /* dz_tianjia@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dz_tianjia@2x.png"; sourceTree = "<group>"; };
+		137C39111A714ABA00CE3971 /* MailInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MailInfoModel.h; sourceTree = "<group>"; };
+		137C39121A714ABA00CE3971 /* MailInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MailInfoModel.m; sourceTree = "<group>"; };
 		137E0ABF1A4C559500B59F64 /* LShareSheetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LShareSheetView.h; sourceTree = "<group>"; };
 		137E0AC01A4C559500B59F64 /* LShareSheetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LShareSheetView.m; sourceTree = "<group>"; };
 		137E0AD21A4C567500B59F64 /* pengyouquan72_7222x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pengyouquan72_7222x.png; sourceTree = "<group>"; };
@@ -949,6 +953,8 @@
 		13B6907B1A580430007FE152 /* ShopViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShopViewCell.xib; sourceTree = "<group>"; };
 		13B6907E1A580B76007FE152 /* MailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MailModel.h; sourceTree = "<group>"; };
 		13B6907F1A580B76007FE152 /* MailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MailModel.m; sourceTree = "<group>"; };
+		13C404D61A6FF42100C4B516 /* ActivityModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityModel.h; sourceTree = "<group>"; };
+		13C404D71A6FF42100C4B516 /* ActivityModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityModel.m; sourceTree = "<group>"; };
 		13CD36331A3C51BE0068C12A /* ForgetPwdController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetPwdController.h; sourceTree = "<group>"; };
 		13CD36341A3C51BE0068C12A /* ForgetPwdController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgetPwdController.m; sourceTree = "<group>"; };
 		13CD36351A3C51BE0068C12A /* ForgetPwdController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ForgetPwdController.xib; sourceTree = "<group>"; };
@@ -2675,6 +2681,10 @@
 			children = (
 				19D5E6B01A4FE39B008401E0 /* YiChuListModel.h */,
 				19D5E6B11A4FE39B008401E0 /* YiChuListModel.m */,
+				13C404D61A6FF42100C4B516 /* ActivityModel.h */,
+				13C404D71A6FF42100C4B516 /* ActivityModel.m */,
+				137C39111A714ABA00CE3971 /* MailInfoModel.h */,
+				137C39121A714ABA00CE3971 /* MailInfoModel.m */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -3735,6 +3745,7 @@
 				DFC7812D1A615FF700776C62 /* MyMatchDivisionDetailViewController.m in Sources */,
 				DFB196EA1A6D3D900006633F /* UIImage+ImageEffects.m in Sources */,
 				138986241A6A36EC00F187C9 /* MenuItem.m in Sources */,
+				137C39131A714ABA00CE3971 /* MailInfoModel.m in Sources */,
 				565321461A59769300E43F80 /* OHAttributedLabel.m in Sources */,
 				13CD364A1A3C6A870068C12A /* EGORefreshTableHeaderView.m in Sources */,
 				56DAB2131A46C66E00273140 /* MatchCaseModel.m in Sources */,
@@ -3809,6 +3820,7 @@
 				566FE2541A503A9E00A96B5F /* MatchInfoViewController.m in Sources */,
 				565321521A59896600E43F80 /* TopicModel.m in Sources */,
 				EF932A161A6236AD00A8BD18 /* WaterF.m in Sources */,
+				13C404D81A6FF42100C4B516 /* ActivityModel.m in Sources */,
 				19D5E6B51A4FE8E1008401E0 /* YichuListTableViewCell.m in Sources */,
 				13A389961A3893D000ABBACB /* TTaiViewController.m in Sources */,
 				5658C79A1A4C486E00DC86F8 /* MatchWaterflowView.m in Sources */,
@@ -4057,7 +4069,11 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+
 				PROVISIONING_PROFILE = "0c1b68b6-94ba-43b9-b1d3-dea4d4ca3175";
+
+				PROVISIONING_PROFILE = "05e58578-ed00-4390-bbde-75729a7dd237";
+
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Debug;
@@ -4091,7 +4107,11 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+
 				PROVISIONING_PROFILE = "0c1b68b6-94ba-43b9-b1d3-dea4d4ca3175";
+
+				PROVISIONING_PROFILE = "05e58578-ed00-4390-bbde-75729a7dd237";
+
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Release;

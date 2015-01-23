@@ -26,6 +26,10 @@
 
 #import "MessageModel.h"
 
+#import "ActivityModel.h"
+
+#import "MailInfoModel.h"
+
 @interface MyShopViewController ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,WaterFlowDelegate,TMQuiltViewDataSource,RefreshDelegate>
 {
     UITableView *_tableView;
@@ -36,6 +40,8 @@
     
     CGFloat water_offset_y;
     CGFloat right_offset_y;
+    
+    MailInfoModel *aMailModel;
 }
 
 @property(nonatomic,strong)UIImageView *userFaceImv;//头像Imv
@@ -68,9 +74,11 @@
     _tableView.tableHeaderView = [self creatTableViewHeaderView];
     [self.view addSubview:_tableView];
     
-    [self deserveBuyForSex:Sort_Sex_No discount:Sort_Discount_No page:1];
+    [self getMailDetailInfo];//店铺详情
     
-    [self getMailInfo];
+    [self getMailProduct];//店铺产品列表
+    
+    [self getMailActivity];//店铺活动列表
 
 }
 
@@ -81,9 +89,32 @@
 
 #pragma mark - 网络请求
 
-#pragma mark - 网络请求
+/**
+ *  获取店铺详情
+ */
+- (void)getMailDetailInfo
+{
+    NSString *key = [GMAPI getAuthkey];
+    
+    key = @"WiVbIgF4BeMEvwabALBajQWgB+VUoVWkBShRYFUwXGkGOAAyB2FSZgczBjYAbAp6AjZSaQ==";
+    
+    __weak typeof(self)weakSelf = self;
+    
+    NSString *url = [NSString stringWithFormat:GET_MAIL_DETAIL_INFO,self.userInfo.shop_id];
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        NSLog(@"");
+        
+        MailInfoModel *mail = [[MailInfoModel alloc]initWithDictionary:result];
 
-#pragma mark 事件处理
+        [weakSelf setViewWithModel:mail];
+        
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        
+    }];
+}
 
 
 /**
@@ -105,7 +136,8 @@
     ProductModel *aMode = waterFlow.dataArray[sender.tag - 1000];
     
     NSString *productId = aMode.product_id;
-    __weak typeof(self)weakSelf = self;
+    
+//    __weak typeof(self)weakSelf = self;
     
     NSString *api = HOME_PRODUCT_ZAN_ADD;
     
@@ -135,23 +167,25 @@
 }
 
 
-//action= yy(衣加衣) shop（商家） dynamic（动态）
-- (void)getMailInfo
+/**
+ *  获取店铺活动
+ */
+- (void)getMailActivity
 {
     NSString *key = [GMAPI getAuthkey];
     
     key = @"WiVbIgF4BeMEvwabALBajQWgB+VUoVWkBShRYFUwXGkGOAAyB2FSZgczBjYAbAp6AjZSaQ==";
     
-    NSString *url = [NSString stringWithFormat:MESSAGE_GET_LIST,@"dynamic",key];
+    NSString *url = [NSString stringWithFormat:GET_MAIL_ACTIVITY_LIST,key];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"");
         
-        NSArray *data = result[@"data"];
+        NSArray *data = result[@"activities"];
         
         NSMutableArray *arr = [NSMutableArray arrayWithCapacity:data.count];
         for (NSDictionary *aDic in data) {
-            MessageModel *aModel = [[MessageModel alloc]initWithDictionary:aDic];
+            ActivityModel *aModel = [[ActivityModel alloc]initWithDictionary:aDic];
             [arr addObject:aModel];
         }
         [rightTable reloadData:arr isHaveMore:NO];
@@ -164,13 +198,13 @@
 }
 
 
-- (void)deserveBuyForSex:(SORT_SEX_TYPE)sortType
-                discount:(SORT_Discount_TYPE)discountType
-                    page:(int)pageNum
+- (void)getMailProduct
 {
-    NSString *longtitud = @"116.42111721";
-    NSString *latitude = @"39.90304099";
-    NSString *url = [NSString stringWithFormat:HOME_DESERVE_BUY,longtitud,latitude,sortType,discountType,pageNum,L_PAGE_SIZE,[GMAPI getAuthkey]];
+    //action=%@&mb_id=%@&page=%d&per_page=%d"
+    
+    //by_time为按时间排序（新品），by_discount为按折扣排序，by_hot为是否热销，默认为by_time
+    
+    NSString *url = [NSString stringWithFormat:GET_MAIL_PRODUCT_LIST,@"by_time",self.userInfo.shop_id,waterFlow.pageNum,20];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
@@ -212,6 +246,8 @@
     _backView = [ParallaxHeaderView parallaxHeaderViewWithCGSize:CGSizeMake(DEVICE_WIDTH, 150.00*DEVICE_WIDTH/320)];
     _backView.headerImage = [UIImage imageNamed:@"my_bg"];
     
+    _backView.headerImage = [GMAPI getUserBannerImage];
+    
     NSLog(@"%@",NSStringFromCGRect(_backView.frame));
     
     //标题
@@ -242,13 +278,13 @@
     self.userFaceImv.backgroundColor = RGBCOLOR_ONE;
     self.userFaceImv.layer.cornerRadius = 25;
     self.userFaceImv.layer.masksToBounds = YES;
-    self.userFaceImv.image = [GMAPI getUserFaceImage];
+//    self.userFaceImv.image = [GMAPI getUserFaceImage];
     
     
     NSLog(@"%@",NSStringFromCGRect(self.userFaceImv.frame));
     
     //昵称
-    self.userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.userFaceImv.frame)+10, self.userFaceImv.frame.origin.y+6, 120*GscreenRatio_320, 14)];
+    self.userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.userFaceImv.frame)+10, self.userFaceImv.frame.origin.y+6, DEVICE_WIDTH - self.userFaceImv.right - 20, 14)];
     self.userNameLabel.text = @"昵称";
     self.userNameLabel.font = [UIFont systemFontOfSize:14*GscreenRatio_320];
     self.userNameLabel.textColor = [UIColor whiteColor];
@@ -257,7 +293,7 @@
     //地址
     self.userScoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.userNameLabel.frame.origin.x, CGRectGetMaxY(self.userNameLabel.frame)+10, self.userNameLabel.frame.size.width, self.userNameLabel.frame.size.height)];
     self.userScoreLabel.font = [UIFont systemFontOfSize:14*GscreenRatio_320];
-    self.userScoreLabel.text = @"地址";
+//    self.userScoreLabel.text = @"地址";
     self.userScoreLabel.textColor = [UIColor whiteColor];
 
     //    //添加视图
@@ -271,6 +307,14 @@
 }
 
 #pragma mark - 事件处理
+
+- (void)setViewWithModel:(MailInfoModel *)aModel
+{
+    aMailModel = aModel;
+    [self.userFaceImv sd_setImageWithURL:[NSURL URLWithString:aModel.logo] placeholderImage:nil];
+    self.userNameLabel.text = aModel.shop_name;
+    self.userScoreLabel.text = aModel.address;
+}
 
 //更新状态栏颜色
 
@@ -468,7 +512,7 @@
 
 - (void)loadNewData
 {
-    [self getMailInfo];
+    [self getMailActivity];
 }
 - (void)loadMoreData
 {
@@ -479,22 +523,27 @@
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
     NSLog(@"详情");
-    MessageModel *aModel = rightTable.dataArray[indexPath.row];
+    ActivityModel *aModel = rightTable.dataArray[indexPath.row];
     MessageDetailController *detail = [[MessageDetailController alloc]init];
-    detail.msg_id = aModel.msg_id;
-//    [self.navigationController pushViewController:detail animated:YES];
-    
+    detail.msg_id = aModel.id;
+    detail.isActivity = YES;
+    detail.shopName = aMailModel.shop_name;
+    detail.shopImageUrl = aMailModel.logo;
     [self pushViewController:detail];
     
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
-    MessageModel *aModel = rightTable.dataArray[indexPath.row];
+    ActivityModel *aModel = rightTable.dataArray[indexPath.row];
     return [MailMessageCell heightForModel:aModel cellType:icon_No seeAll:YES];
 }
 
 #pragma mark - UITableViewDelegate && UITableViewDataSource
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    if (tableView == rightTable) {
+        return 1;
+    }
+    
     return 1 + 1;
 }
 
@@ -602,7 +651,7 @@
         static NSString *identify = @"MailMessageCell";
         MailMessageCell *cell = (MailMessageCell *)[LTools cellForIdentify:identify cellName:identify forTable:tableView];
         
-        MessageModel *aModel = rightTable.dataArray[indexPath.row];
+        ActivityModel *aModel = rightTable.dataArray[indexPath.row];
         [cell setCellWithModel:aModel cellType:icon_No seeAll:YES];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -628,10 +677,11 @@
 
 - (void)waterLoadNewData
 {
-    [self deserveBuyForSex:Sort_Sex_No discount:Sort_Discount_No page:1];
+    [self getMailProduct];
 }
 - (void)waterLoadMoreData
 {
+    [self getMailProduct];
 }
 
 - (void)waterDidSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -694,6 +744,8 @@
     
     cell.like_btn.tag = 1000 + indexPath.row;
     [cell.like_btn addTarget:self action:@selector(clickToZan:) forControlEvents:UIControlEventTouchUpInside];
+    
+    cell.titleView.hidden = YES;
     
     return cell;
 }

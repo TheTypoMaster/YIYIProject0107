@@ -9,10 +9,14 @@
 #import "MessageDetailController.h"
 #import "MailMessageCell.h"
 
+#import "ActivityModel.h"
+
 @interface MessageDetailController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *_table;
-    MessageModel *detail_model;
+    
+    id detail_model;
+//    ActivityModel *aModel;
 }
 
 @end
@@ -23,7 +27,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
-    self.myTitleLabel.text = @"消息详情";
+    
+    self.myTitleLabel.text = self.isActivity ? @"活动详情" : @"消息详情";
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     
     _table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH,DEVICE_HEIGHT - 64) style:UITableViewStylePlain];
@@ -50,6 +55,12 @@
     
     key = @"WiVbIgF4BeMEvwabALBajQWgB+VUoVWkBShRYFUwXGkGOAAyB2FSZgczBjYAbAp6AjZSaQ==";
     NSString *url = [NSString stringWithFormat:MESSAGE_GET_DETAIL,self.msg_id,key];
+    
+    if (self.isActivity) {
+        
+        url = [NSString stringWithFormat:GET_MAIL_ACTIVITY_DETAIL,self.msg_id];
+    }
+    
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"");
@@ -57,7 +68,14 @@
         
         if ([LTools isDictinary:result]) {
             
-            detail_model = [[MessageModel alloc]initWithDictionary:result];
+            if (self.isActivity) {
+                
+                detail_model = [[ActivityModel alloc]initWithDictionary:result];
+            }else
+            {
+                detail_model = [[MessageModel alloc]initWithDictionary:result];
+
+            }
             
             [_table reloadData];
         }
@@ -87,6 +105,7 @@
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
+    
     return [MailMessageCell heightForModel:detail_model cellType:icon_Yes seeAll:NO];
 }
 
@@ -109,7 +128,14 @@
     static NSString *identify = @"MailMessageCell";
     MailMessageCell *cell = (MailMessageCell *)[LTools cellForIdentify:identify cellName:identify forTable:tableView];
     
-    [cell setCellWithModel:detail_model cellType:icon_Yes seeAll:NO];
+    if (_isActivity) {
+        
+        [cell setCellWithModel:detail_model cellType:icon_No seeAll:NO];
+    }else
+    {
+        [cell setCellWithModel:detail_model cellType:icon_Yes seeAll:NO];
+    }
+    
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
