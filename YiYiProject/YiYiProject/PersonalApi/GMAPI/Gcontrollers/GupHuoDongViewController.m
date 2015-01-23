@@ -117,13 +117,13 @@
     [tijiaoBtn setBackgroundColor:RGBCOLOR(217, 66, 93)];
     tijiaoBtn.layer.cornerRadius = 5;
     [tijiaoBtn setFrame:CGRectMake(20, CGRectGetMaxY(_view3.frame)+13, DEVICE_WIDTH-40, 44)];
-    [tijiaoBtn addTarget:self action:@selector(tijiao) forControlEvents:UIControlEventTouchUpInside];
+    [tijiaoBtn addTarget:self action:@selector(gtijiao) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:tijiaoBtn];
 }
 
 
--(void)tijiao{
+-(void)gtijiao{
     
 }
 
