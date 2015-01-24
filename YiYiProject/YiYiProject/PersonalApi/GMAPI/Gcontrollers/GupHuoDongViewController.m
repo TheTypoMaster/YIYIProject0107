@@ -292,10 +292,11 @@
     
     //开始时间
     UILabel *startTimeLabel = [[UILabel alloc]initWithFrame:CGRectMake(16, CGRectGetMaxY(_gholderTextView.frame)+5, 70, 25)];
+    startTimeLabel.textColor = RGBCOLOR(114, 114, 114);
     startTimeLabel.text = @"开始时间";
-    startTimeLabel.backgroundColor = [UIColor orangeColor];
     
     _startTime = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(startTimeLabel.frame)+5, startTimeLabel.frame.origin.y, DEVICE_WIDTH-16-16-5-70, 25)];
+    _startTime.textColor = RGBCOLOR(114, 114, 114);
     _startTime.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(chooseStartTime:)];
     [_startTime addGestureRecognizer:tap];
@@ -306,10 +307,11 @@
     
     //结束时间
     UILabel *endTimeLabel = [[UILabel alloc]initWithFrame:CGRectMake(16, CGRectGetMaxY(startTimeLabel.frame)+5, 70, 25)];
-    endTimeLabel.backgroundColor = [UIColor orangeColor];
+    endTimeLabel.textColor = RGBCOLOR(114, 114, 114);
     endTimeLabel.text = @"结束时间";
     
     _endTime = [[UILabel alloc]initWithFrame:CGRectMake(_startTime.frame.origin.x, endTimeLabel.frame.origin.y, _startTime.frame.size.width, _startTime.frame.size.height)];
+    _endTime.textColor = RGBCOLOR(114, 114, 114);
     _endTime.userInteractionEnabled = YES;
     UITapGestureRecognizer *tapc = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(chooseEndTime:)];
     [_endTime addGestureRecognizer:tapc];
@@ -391,6 +393,12 @@
     
     UITextView *tv = (UITextView*)[self.view viewWithTag:300];
     [tv resignFirstResponder];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        _dateChooseView.frame = CGRectMake(0, DEVICE_HEIGHT, DEVICE_WIDTH, 300);
+    } completion:^(BOOL finished) {
+        
+    }];
     
 }
 
