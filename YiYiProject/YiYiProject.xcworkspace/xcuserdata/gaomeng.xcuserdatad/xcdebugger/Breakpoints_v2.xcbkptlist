@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "YiYiProject/Controllers/&#x9996;&#x9875;/ViewControllers/HomeClothController.m"
-            timestampString = "443268751.731202"
+            filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/zkingControl/ShenQingDianPuControl/Controllers/ShenQingDianPuViewController.m"
+            timestampString = "443779020.974403"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "152"
-            endingLineNumber = "152"
-            landmarkName = "-prepareGuanzhuStore"
+            startingLineNumber = "729"
+            endingLineNumber = "729"
+            landmarkName = "-tijiao:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,13 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/ViewControllers/UploadPicViewController.m"
-            timestampString = "443452934.166052"
+            filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/zkingControl/ShenQingDianPuControl/Controllers/ShenQingDianPuViewController.m"
+            timestampString = "443779016.439919"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "271"
-            endingLineNumber = "271"
-            landmarkName = "-rightBtnClick:"
+            startingLineNumber = "450"
+            endingLineNumber = "450"
+            landmarkName = "-yanzheng_shangchang"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -41,13 +41,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/ViewControllers/MyYiChuViewController.m"
-            timestampString = "443454127.401879"
+            filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/zkingControl/ShenQingDianPuControl/Controllers/ShenQingDianPuViewController.m"
+            timestampString = "443779189.920009"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "501"
-            endingLineNumber = "501"
-            landmarkName = "-assetPickerController:didFinishPickingAssets:"
+            startingLineNumber = "761"
+            endingLineNumber = "761"
+            landmarkName = "-tijiao:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -57,45 +57,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/ViewControllers/MyYiChuViewController.m"
-            timestampString = "443454184.819631"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gutils/GMAPI.m"
+            timestampString = "443793703.511627"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "508"
-            endingLineNumber = "508"
-            landmarkName = "-assetPickerController:didFinishPickingAssets:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GupClothesViewController.m"
-            timestampString = "443469240.569557"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "472"
-            endingLineNumber = "472"
-            landmarkName = "-assetPickerController:didFinishPickingAssets:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GupClothesViewController.m"
-            timestampString = "443469240.569557"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "483"
-            endingLineNumber = "483"
-            landmarkName = "-assetPickerController:didFinishPickingAssets:"
+            startingLineNumber = "507"
+            endingLineNumber = "507"
+            landmarkName = "+getTimeWithDate:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

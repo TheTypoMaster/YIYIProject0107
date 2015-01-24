@@ -10,7 +10,10 @@
 
 //店主发布活动
 #import <UIKit/UIKit.h>
+#import "MailInfoModel.h"
 
 @interface GupHuoDongViewController : MyViewController
+
+@property(nonatomic,strong)MailInfoModel *mallInfo;//店铺信息
 
 @end

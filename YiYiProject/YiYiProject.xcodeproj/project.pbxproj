@@ -461,6 +461,7 @@
 		E3601E821A61A75700CC41FE /* gcustomstore@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3601E811A61A75700CC41FE /* gcustomstore@3x.png */; };
 		E36BFC841A693974009DAF81 /* DataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = E36BFC831A693974009DAF81 /* DataBase.m */; };
 		E36BFC871A6939FC009DAF81 /* FBCity.m in Sources */ = {isa = PBXBuildFile; fileRef = E36BFC861A6939FC009DAF81 /* FBCity.m */; };
+		E37A2E2E1A7349C300145608 /* GchooseAdressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E37A2E2D1A7349C300145608 /* GchooseAdressViewController.m */; };
 		E3996EBA1A5E1DBA00673147 /* GEditPersonInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E2F1A5E1DBA00673147 /* GEditPersonInfoViewController.m */; };
 		E3996EBB1A5E1DBA00673147 /* GLeadBuyMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E311A5E1DBA00673147 /* GLeadBuyMapViewController.m */; };
 		E3996EBC1A5E1DBA00673147 /* GMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E331A5E1DBA00673147 /* GMapViewController.m */; };
@@ -1182,6 +1183,8 @@
 		E36BFC831A693974009DAF81 /* DataBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataBase.m; sourceTree = "<group>"; };
 		E36BFC851A6939FC009DAF81 /* FBCity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBCity.h; sourceTree = "<group>"; };
 		E36BFC861A6939FC009DAF81 /* FBCity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBCity.m; sourceTree = "<group>"; };
+		E37A2E2C1A7349C300145608 /* GchooseAdressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GchooseAdressViewController.h; sourceTree = "<group>"; };
+		E37A2E2D1A7349C300145608 /* GchooseAdressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GchooseAdressViewController.m; sourceTree = "<group>"; };
 		E3996E2E1A5E1DBA00673147 /* GEditPersonInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GEditPersonInfoViewController.h; sourceTree = "<group>"; };
 		E3996E2F1A5E1DBA00673147 /* GEditPersonInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GEditPersonInfoViewController.m; sourceTree = "<group>"; };
 		E3996E301A5E1DBA00673147 /* GLeadBuyMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLeadBuyMapViewController.h; sourceTree = "<group>"; };
@@ -2923,6 +2926,8 @@
 				E35EF15E1A6B947800B493A9 /* GupClothesViewController.m */,
 				E30522281A6ECD3A007BEAFD /* GupHuoDongViewController.h */,
 				E30522291A6ECD3A007BEAFD /* GupHuoDongViewController.m */,
+				E37A2E2C1A7349C300145608 /* GchooseAdressViewController.h */,
+				E37A2E2D1A7349C300145608 /* GchooseAdressViewController.m */,
 			);
 			path = Gcontrollers;
 			sourceTree = "<group>";
@@ -3744,6 +3749,7 @@
 				56726C491A55A9A90085D77C /* TopicSubCommentsModel.m in Sources */,
 				DFC7812D1A615FF700776C62 /* MyMatchDivisionDetailViewController.m in Sources */,
 				DFB196EA1A6D3D900006633F /* UIImage+ImageEffects.m in Sources */,
+				E37A2E2E1A7349C300145608 /* GchooseAdressViewController.m in Sources */,
 				138986241A6A36EC00F187C9 /* MenuItem.m in Sources */,
 				137C39131A714ABA00CE3971 /* MailInfoModel.m in Sources */,
 				565321461A59769300E43F80 /* OHAttributedLabel.m in Sources */,
@@ -4069,11 +4075,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-
 				PROVISIONING_PROFILE = "0c1b68b6-94ba-43b9-b1d3-dea4d4ca3175";
-
-				PROVISIONING_PROFILE = "05e58578-ed00-4390-bbde-75729a7dd237";
-
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Debug;
@@ -4107,11 +4109,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-
 				PROVISIONING_PROFILE = "0c1b68b6-94ba-43b9-b1d3-dea4d4ca3175";
-
-				PROVISIONING_PROFILE = "05e58578-ed00-4390-bbde-75729a7dd237";
-
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Release;

@@ -16,4 +16,6 @@
 
 @property(nonatomic,retain)UserInfo *userInfo;
 
+
+
 @end

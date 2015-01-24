@@ -13,7 +13,7 @@
 #import "NSDictionary+GJson.h"
 #import "GchooseFloorPinpaiViewController.h"
 #import "LTools.h"
-
+#import "GchooseAdressViewController.h"
 
 
 @interface ShenQingDianPuViewController ()<UIPickerViewDelegate,UIPickerViewDataSource>
@@ -35,6 +35,13 @@
     NSString *_str2;
     BOOL _isChooseArea;//是否修改了地区
     
+    
+    
+    
+    
+    
+    //精品店相关
+    UILabel *_diquLabel_jingpin;
     
     
     
@@ -187,8 +194,14 @@
     
     [UIView animateWithDuration:0.3 animations:^{
         bself.backPickView.frame = CGRectMake(0, DEVICE_HEIGHT, DEVICE_WIDTH, 310);
-        UILabel *diquLabel = self.chooseLabelArray[0];
-        diquLabel.text = [NSString stringWithFormat:@"选择地区  %@%@",self.province,self.city];
+        if (_jingpingdianView.hidden) {
+            UILabel *diquLabel = self.chooseLabelArray[0];
+            diquLabel.text = [NSString stringWithFormat:@"选择地区  %@%@",self.province,self.city];
+        }else if (_shanchangdianView.hidden){
+            _diquLabel_jingpin.text = [NSString stringWithFormat:@"%@%@",self.province,self.city];
+
+        }
+        
         
     }];
     
@@ -430,11 +443,12 @@
     //网络请求
     
     
-    if ([LTools isValidateMobile:_yanzhengmaTf.text]) {
-        NSString *api = [NSString stringWithFormat:PHONE_YANZHENGMA_SHENQINGSHANGCHANGDIAN,_yanzhengmaTf.text];
+    if ([LTools isValidateMobile:_phoneTf.text]) {
+        NSString *api = [NSString stringWithFormat:PHONE_YANZHENGMA_SHENQINGSHANGCHANGDIAN,_phoneTf.text];
         GmPrepareNetData *ccc =[[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
             
+            NSLog(@"%@",result);
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
             
         }];
@@ -510,15 +524,15 @@
     
     
     //背景色
-    UIView *witheBgView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 200)];
+    UIView *witheBgView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 300)];
     witheBgView.backgroundColor=[UIColor whiteColor];
     witheBgView.userInteractionEnabled = NO;
     [_jingpingdianView addSubview:witheBgView];
     
     
-    NSArray *titleArr=@[@"名称",@"地址",@"电话",@"验证码"];
+    NSArray *titleArr=@[@"地区",@"名称",@"经纬度",@"地址",@"电话",@"验证码"];
 
-    for (int i=0; i<4; i++) {
+    for (int i=0; i<6; i++) {
         
         
         
@@ -531,14 +545,35 @@
         
         UITextField *shuRuTextfield=[[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(title_Label.frame), i*50, DEVICE_WIDTH-17-title_Label.frame.size.width-17, 50)];
         
-        shuRuTextfield.tag=100+i;
+        shuRuTextfield.tag=10000+i;
         [self.shuruTextFieldArray addObject:shuRuTextfield];
         shuRuTextfield.delegate = self;
         [_jingpingdianView addSubview:shuRuTextfield];
         
+        if (i ==2) {
+            shuRuTextfield.hidden = YES;
+            UILabel *jingweiduLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(title_Label.frame), i*50, DEVICE_WIDTH-17-title_Label.frame.size.width-17, 50)];
+            jingweiduLabel.userInteractionEnabled = YES;
+            UITapGestureRecognizer *labelTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(jingweiduTap:)];
+            [jingweiduLabel addGestureRecognizer:labelTap];
+            [_jingpingdianView addSubview:jingweiduLabel];
+            
+            
+        }
+        
+        
+        if (i == 0) {
+            shuRuTextfield.hidden = YES;
+            _diquLabel_jingpin = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(title_Label.frame), i*50, DEVICE_WIDTH-17-title_Label.frame.size.width-17, 50)];
+            _diquLabel_jingpin.userInteractionEnabled = YES;
+            UITapGestureRecognizer *tap_diqu = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(diqu_jingpin)];
+            [_diquLabel_jingpin addGestureRecognizer:tap_diqu];
+            [_jingpingdianView addSubview:_diquLabel_jingpin];
+            
+        }
         
         //获取验证码
-        if (i == 3) {
+        if (i == 5) {
             [shuRuTextfield setFrame:CGRectMake(CGRectGetMaxX(title_Label.frame), i*50, DEVICE_WIDTH-17-title_Label.frame.size.width-17-90, 50)];
             //获取验证码
             _yanzhengBtn_jingpin = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -559,7 +594,7 @@
         
     }
     
-    UIButton *commitButton=[LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(20, 290, DEVICE_WIDTH-40, 44) normalTitle:@"提交" image:nil backgroudImage:nil superView:_jingpingdianView target:self action:@selector(tijiao:)];
+    UIButton *commitButton=[LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(20, 340, DEVICE_WIDTH-40, 44) normalTitle:@"提交" image:nil backgroudImage:nil superView:_jingpingdianView target:self action:@selector(tijiao:)];
     commitButton.tag=400;
     commitButton.backgroundColor=RGBCOLOR(208, 40, 73);
     
@@ -571,11 +606,18 @@
 
 }
 
+
+-(void)diqu_jingpin{
+    [self areaShow];
+}
+
+
+
 //获取验证码 精品店
 -(void)yanzheng_jingpin{
     //网络请求
     
-    UITextField *tf = (UITextField*)[self.view viewWithTag:102];
+    UITextField *tf = (UITextField*)[self.view viewWithTag:10004];
     NSLog(@"%@",tf.text);
     if ([LTools isValidateMobile:tf.text]) {
         
@@ -618,7 +660,14 @@
 
 
 
-
+//跳地图选点
+-(void)jingweiduTap:(UITapGestureRecognizer*)sender{
+    GchooseAdressViewController *ccc = [[GchooseAdressViewController alloc]init];
+    ccc.delegate = (UILabel *)sender.view;
+    ccc.delegate2 = self;
+    
+    [self.navigationController pushViewController:ccc animated:YES];
+}
 
 
 //提交申请
@@ -643,24 +692,44 @@
         //authkey
         NSString *authkey = [GMAPI getAuthkey];
         //店铺名
-        UITextField *tf = (UITextField*)[self.view viewWithTag:100];
+        UITextField *tf = (UITextField*)[self.view viewWithTag:10001];
         NSString *mall_name =tf.text;
         //地址
-        UITextField *tf1 = (UITextField*)[self.view viewWithTag:101];
+        UITextField *tf1 = (UITextField*)[self.view viewWithTag:10003];
         NSString *street = tf1.text;
         //电话
-        UITextField *tf2 = (UITextField*)[self.view viewWithTag:102];
+        UITextField *tf2 = (UITextField*)[self.view viewWithTag:10004];
         NSString *mobile = tf2.text;
+        //验证码
+        UITextField *tf3 = (UITextField *)[self.view viewWithTag:10005];
+        NSString *code = tf3.text;
+        //维度
+        CGFloat lat = self.location_jingpindian.latitude;
+        //经度
+        CGFloat lon = self.location_jingpindian.longitude;
+        //省份id
+        NSInteger province_id = 0;
+        if (_jingpingdianView.hidden == NO) {
+            province_id = self.provinceIn;
+        }
         
-        NSString *post = [NSString stringWithFormat:@"&mall_name=%@&street=%@&mobile=%@&code=%@&mall_type=%@&authkey=%@",mall_name,street,mobile,@"213",@"2",authkey];
+        //城市id
+        NSInteger city_id = 0;
+        if (_jingpingdianView.hidden == NO) {
+            city_id = self.cityIn;
+        }
+        
+        NSString *post = [NSString stringWithFormat:@"&mall_name=%@&street=%@&mobile=%@&code=%@&mall_type=%@&latitude=%f&longitude=%f&province_id=%ld&city_id=%ld&authcode=%@",mall_name,street,mobile,code,@"2",lat,lon,(long)province_id,(long)city_id,authkey];
+        
         NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
         
         NSString *url = [NSString stringWithFormat:SHENQINGJINGPINDIAN];
-        LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
-        [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
+        [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
             
             NSLog(@"-->%@",result);
-            [GMAPI showAutoHiddenMBProgressWithText:@"提交成功" addToView:self.view];
+            NSLog(@"msg:%@",[result objectForKey:@"msg"]);
+            [GMAPI showAutoHiddenMBProgressWithText:[result objectForKey:@"msg"] addToView:self.view];
             
             
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
@@ -684,15 +753,17 @@
         //手机号
         NSString *mobile = _phoneTf.text;
         
-        NSString *post = [NSString stringWithFormat:@"&mall_id=%@&floor_id=%@&brand_id=%@&door_num=%@&mobile=%@&authkey=%@",mall_id,floor_id,brand_id,door_num,mobile,[GMAPI getAuthkey]];
+        NSString *post = [NSString stringWithFormat:@"&mall_id=%@&floor_id=%@&brand_id=%@&door_num=%@&mobile=%@&authcode=%@",mall_id,floor_id,brand_id,door_num,mobile,[GMAPI getAuthkey]];
         NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-        NSString *url = [NSString stringWithFormat:SHENQINGJINGPINDIAN];
+        NSString *url = [NSString stringWithFormat:SHENQINGSHANGCHANGDIAN];
         GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
+            
+            NSLog(@"%@",result);
             [GMAPI showAutoHiddenMBProgressWithText:@"提交成功" addToView:self.view];
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
             NSLog(@"faildic==%@",failDic);
-            [LTools showMBProgressWithText:failDic[@"msg"] addToView:self.view];
+            [GMAPI showMBProgressWithText:failDic[@"msg"] addToView:self.view];
         }];
         
     }
@@ -704,12 +775,17 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+
+
+
+
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     NSLog(@"textField.tag = %ld",(long)textField.tag);
     
     
     //精品店相关
-    if (textField.tag == 102||textField.tag == 103) {//申请精品店的 电话 验证码 选项
+    if (textField.tag == 102||textField.tag == 103 || textField.tag == 104) {//申请精品店的 电话 验证码 选项
         _jingpingdianView.scrollEnabled = YES;
         if (_jingpingdianView.contentOffset.y>=58) {
             
@@ -782,6 +858,7 @@
     NSLog(@"%d %d",self.provinceIn,self.cityIn);
     
     NSString *api = [NSString stringWithFormat:STORELISTWITHPROVINCEANDCITY,NSStringFromInt(self.provinceIn),NSStringFromInt(self.cityIn)];
+    
     GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
     
     [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
