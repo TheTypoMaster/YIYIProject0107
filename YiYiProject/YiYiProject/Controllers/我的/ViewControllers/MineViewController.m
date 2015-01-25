@@ -487,7 +487,7 @@ typedef enum{
                 
                 //test
                 
-                shopMan = 2;
+//                shopMan = 2;
                 
                 if (shopMan == 2) {
                     NSLog(@"店主");
