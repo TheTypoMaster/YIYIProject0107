@@ -30,6 +30,8 @@
 
 #import "RCIM.h"
 
+#import "MessageListController.h"//消息列表 分四个
+
 @interface RootViewController ()<UITabBarControllerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
     MessageViewController *messageVc;
@@ -57,7 +59,7 @@
 - (void)prepareItems
 {
     
-    NSArray *classNames = @[@"HomeViewController",@"TTaiViewController",@"UIViewController",@"MessageViewController",@"MineViewController"];
+    NSArray *classNames = @[@"HomeViewController",@"TTaiViewController",@"UIViewController",@"MessageListController",@"MineViewController"];
     
     NSArray *item_names = @[@"首页",@"T台",@"+",@"消息",@"我的"];
     NSMutableArray *items = [NSMutableArray arrayWithCapacity:5];

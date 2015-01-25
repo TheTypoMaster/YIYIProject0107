@@ -279,6 +279,10 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     
     
+    NSString *str = [[NSString alloc]initWithData:_data encoding:NSUTF8StringEncoding];
+    
+    NSLog(@"response string %@",str);
+    
     if (_data.length > 0) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:_data options:0 error:nil];
         
@@ -426,6 +430,33 @@
 }
 
 #pragma mark - NSUserDefault缓存
+
+#pragma mark 缓存融云用户数据
+
++ (void)cacheRongCloudUserName:(NSString *)userName forUserId:(NSString *)userId
+{
+    NSString *key = [NSString stringWithFormat:@"userName_%@",userId];
+    [LTools cache:userName ForKey:key];
+}
+
++ (NSString *)rongCloudUserNameWithUid:(NSString *)userId
+{
+    NSString *key = [NSString stringWithFormat:@"userName_%@",userId];
+    return [LTools cacheForKey:key];
+}
+
++ (void)cacheRongCloudUserIcon:(NSString *)iconUrl forUserId:(NSString *)userId
+{
+    NSString *key = [NSString stringWithFormat:@"userIcon_%@",userId];
+    [LTools cache:iconUrl ForKey:key];
+}
+
++ (NSString *)rongCloudUserIconWithUid:(NSString *)userId
+{
+    NSString *key = [NSString stringWithFormat:@"userIcon_%@",userId];
+    return [LTools cacheForKey:key];
+}
+
 
 //存
 + (void)cache:(id)dataInfo ForKey:(NSString *)key

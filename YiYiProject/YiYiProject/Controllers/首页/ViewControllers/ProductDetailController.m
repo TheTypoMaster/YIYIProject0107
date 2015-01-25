@@ -294,6 +294,10 @@
                 userName = aModel.mall_info[@"mall_name"];
             }
             
+            //test
+            
+//            useriId = @"38";
+            
             YIYIChatViewController *contact = [[YIYIChatViewController alloc]init];
             contact.currentTarget = useriId;
             contact.currentTargetName = userName;

@@ -472,6 +472,12 @@ typedef enum{
                 
                 int shopMan = [_userInfo.shopman intValue];
                 
+
+                //test
+                
+//                shopMan = 2;
+                
+
                 if (shopMan == 2) {
                     NSLog(@"店主");
                     
