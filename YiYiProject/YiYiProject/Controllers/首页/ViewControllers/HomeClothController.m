@@ -29,11 +29,13 @@
     UIView *_nearbyView;//附近的view
     GScrollView *_scrollview_nearbyView;//附近的view上面的scrollview
     NSMutableArray *_nearByStoreDataArray;//附近的商城数据数组
+    NSMutableArray *_guanzhuStoreDataArray;//我关注的商家数据数组
     
     //第三行
     UIView *_pinpaiView;//品牌的view
     GScrollView *_scrollView_pinpai;//品牌的scrollview
     NSMutableArray *_pinpaiScrollViewModelInfoArray;//品牌信息数组
+    NSMutableArray *_guanzhuPinpaiDataArray;//我关注的品牌数组
     
     
     //四个按钮
@@ -146,6 +148,15 @@
 
 //请求附近的商店
 -(void)prepareNearbyStore{
+    
+    
+    if (_nearByStoreDataArray.count>0) {
+        _scrollview_nearbyView.dataArray = _nearByStoreDataArray;
+        [_scrollview_nearbyView gReloadData];
+        return;
+    }
+    
+    
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     NSString *api = [NSString stringWithFormat:@"%@&page=1&count=100",HOME_CLOTH_NEARBYSTORE];
     GmPrepareNetData *dd = [[GmPrepareNetData alloc]initWithUrl:api isPost:YES postData:nil];
@@ -169,6 +180,15 @@
 
 //请求我关注的商店
 -(void)prepareGuanzhuStore{
+    
+    
+    
+    if (_guanzhuStoreDataArray.count>0) {
+        _scrollview_nearbyView.dataArray = _guanzhuStoreDataArray;
+        [_scrollview_nearbyView gReloadData];
+        return;
+    }
+    
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     NSString *url = [NSString stringWithFormat:HOME_CLOTH_GUANZHUSTORE_MINE,[GMAPI getAuthkey]];
     
@@ -179,9 +199,9 @@
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         NSLog(@"%@",result);
         
-        _nearByStoreDataArray = [result objectForKey:@"list"];
-        _scrollview_nearbyView.dataArray = _nearByStoreDataArray;
-        if (_nearByStoreDataArray.count == 0) {
+        _guanzhuStoreDataArray = [result objectForKey:@"list"];
+        _scrollview_nearbyView.dataArray = _guanzhuStoreDataArray;
+        if (_guanzhuStoreDataArray.count == 0) {
             [GMAPI showAutoHiddenMBProgressWithText:@"您还没有关注任何商场" addToView:self.view];
         }
         
@@ -197,6 +217,16 @@
 //请求附近的品牌
 -(void)prepareNearbyPinpai{
 //    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    
+    if (_pinpaiScrollViewModelInfoArray.count>0) {
+        _scrollView_pinpai.dataArray = _pinpaiScrollViewModelInfoArray;
+        [_scrollView_pinpai gReloadData];
+        return;
+    }
+    
+    
+    
     NSString *api = HOME_CLOTH_NEARBYPINPAI;
     GmPrepareNetData *gg = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
     [gg requestCompletion:^(NSDictionary *result, NSError *erro) {
@@ -224,9 +254,9 @@
     [gg requestCompletion:^(NSDictionary *result, NSError *erro) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         NSLog(@"%@",result);
-        _pinpaiScrollViewModelInfoArray = [result objectForKey:@"brand_data"];
-        _scrollView_pinpai.dataArray = _pinpaiScrollViewModelInfoArray;
-        if (_pinpaiScrollViewModelInfoArray.count == 0) {
+        _guanzhuPinpaiDataArray = [result objectForKey:@"brand_data"];
+        _scrollView_pinpai.dataArray = _guanzhuPinpaiDataArray;
+        if (_guanzhuPinpaiDataArray.count == 0) {
             [GMAPI showAutoHiddenMBProgressWithText:@"您还没有关注任何品牌" addToView:self.view];
         }
         [_scrollView_pinpai gReloadData];
@@ -687,6 +717,13 @@
 
 - (void)egoRefreshTableDidTriggerRefresh:(EGORefreshPos)aRefreshPos{
     
+    
+    _nearByStoreDataArray = nil;
+    _guanzhuStoreDataArray = nil;
+    _pinpaiScrollViewModelInfoArray = nil;
+    _guanzhuPinpaiDataArray = nil;
+    
+    
     //网络请求
     //请求顶部滚动广告栏
     [self prepareTopScrollViewIms];
@@ -698,6 +735,11 @@
     [self prepareNearbyStore];
     _nearbyBtn.selected = YES;
     _guanzhuBtn_Store.selected = NO;
+    
+    
+    
+    
+    
 }
 
 - (BOOL)egoRefreshTableDataSourceIsLoading:(UIView*)view;{

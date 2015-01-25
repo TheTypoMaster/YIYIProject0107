@@ -246,8 +246,8 @@
             }
             
         }
-        
-        [_waterFlow reloadData:arr total:100];
+    
+        [_waterFlow reloadData:arr pageSize:_per_page];
         
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
@@ -299,7 +299,7 @@
             
         }
         
-        [_waterFlow reloadData:arr total:100];
+        [_waterFlow reloadData:arr pageSize:_per_page];
         
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
