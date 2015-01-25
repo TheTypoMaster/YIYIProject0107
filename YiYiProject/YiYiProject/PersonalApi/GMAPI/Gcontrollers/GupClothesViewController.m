@@ -214,7 +214,7 @@
                                                 @"product_gender":@"男",//产品适用性别
                                                 @"product_price":tf3.text,//产品价格
                                                 @"product_brand_id":@"123",//产品品牌id
-                                                @"product_mall_id":@"1",//商店id
+                                                @"product_mall_id":self.userInfo.shop_id,//商店id
                                                 @"product_sku":@"1",//产品唯一标示
                                                 }
                                    constructingBodyWithBlock:^(id<AFMultipartFormData> formData)

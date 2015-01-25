@@ -191,7 +191,7 @@
     //上传的url
     NSString *uploadImageUrlStr = GFABUDIANPIN;
     
-    NSString *mall_id = @"";//商场id
+    NSString *mall_id = self.mallInfo.mall_id;//商场id
     NSString *shop_id = @"";//店铺id
     NSString *activity_info = @"";//活动内容
     NSString *start_time = @"";//活动开始时间

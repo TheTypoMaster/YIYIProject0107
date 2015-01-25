@@ -15,14 +15,23 @@
 
 @interface GStorePinpaiViewController ()<CustomSegmentViewDelegate,TMQuiltViewDataSource,WaterFlowDelegate>
 {
-    CustomSegmentView *_mysegment;
+    
     int _page;
     int _per_page;
     
     LWaterflowView *_waterFlow;
     
     int _paixuIndex;
+    
+    
+    UIView *_menu_view;//按钮底层view
+    NSMutableArray *_btnArray;//按钮数组
+    
+    
 }
+
+
+
 @end
 
 @implementation GStorePinpaiViewController
@@ -30,6 +39,10 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+    
+    if( ([[[UIDevice currentDevice] systemVersion] doubleValue]>=7.0)) {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
     
 }
 
@@ -69,13 +82,21 @@
     self.myTitleLabel.attributedText = title;
     
     
-    _mysegment=[[CustomSegmentView alloc]initWithFrame:CGRectMake(12, 12, DEVICE_WIDTH-24, 30)];
-    _mysegment.backgroundColor = [UIColor lightGrayColor];
-    [_mysegment setAllViewWithArray:[NSArray arrayWithObjects:@"ios7_newsunselect.png",@"ios7_fbunselect.png",@"ios7_userunselect.png", @"ios7_newsselected.png",@"ios7_fbselected.png",@"userselected.png",nil]];
-    [_mysegment settitleWitharray:[NSArray arrayWithObjects:@"新品",@"折扣",@"热销", nil]];
-    // mysegment.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"segbackground.png"]];
-    [self.view addSubview:_mysegment];
-    _mysegment.delegate=self;
+//    _mysegment=[[CustomSegmentView alloc]initWithFrame:CGRectMake(12, 12, DEVICE_WIDTH-24, 30)];
+//    _mysegment.backgroundColor = [UIColor lightGrayColor];
+//    [_mysegment settitleWitharray:[NSArray arrayWithObjects:@"新品",@"折扣",@"热销", nil]];
+//    [self.view addSubview:_mysegment];
+//    _mysegment.delegate=self;
+    
+    
+    
+    //初始化
+    _btnArray = [NSMutableArray arrayWithCapacity:1];
+    
+    //创建3个选项
+    [self createMemuView];
+    
+    
     
     
     _page = 1;
@@ -83,7 +104,7 @@
     _paixuIndex = 0;
     
     
-    _waterFlow = [[LWaterflowView alloc]initWithFrame:CGRectMake(12, CGRectGetMaxY(_mysegment.frame)+12, ALL_FRAME_WIDTH-24, ALL_FRAME_HEIGHT - _mysegment.frame.size.height - 12-12) waterDelegate:self waterDataSource:self];
+    _waterFlow = [[LWaterflowView alloc]initWithFrame:CGRectMake(12, CGRectGetMaxY(_menu_view.frame)+12, ALL_FRAME_WIDTH-24, ALL_FRAME_HEIGHT - _menu_view.frame.size.height - 12-12) waterDelegate:self waterDataSource:self];
     _waterFlow.backgroundColor = RGBCOLOR(240, 230, 235);
     [self.view addSubview:_waterFlow];
     [_waterFlow showRefreshHeader:YES];
@@ -94,6 +115,69 @@
 -(void)rightButtonTap:(UIButton *)sender{
     NSLog(@"在这里点击的添加关注");
 }
+
+
+
+
+- (void)createMemuView
+{
+    
+    CGFloat aWidth = (ALL_FRAME_WIDTH - 24)/ 3.f;
+    _menu_view = [[UIView alloc]initWithFrame:CGRectMake(12, 12, aWidth * 3, 30)];
+    _menu_view.clipsToBounds = YES;
+    _menu_view.layer.cornerRadius = 15.f;
+    _menu_view.backgroundColor = RGBCOLOR(212, 59, 85);
+    
+//    self.navigationItem.titleView = menu_view;
+    [self.view addSubview:_menu_view];
+    NSLog(@"%@",NSStringFromCGRect(_menu_view.frame));
+    
+    NSArray *titles = @[@"新品",@"折扣",@"热销"];
+    
+    for (int i = 0; i < titles.count; i ++) {
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        btn.frame = CGRectMake(aWidth * i + 0.5 * i, 0, aWidth, 30);
+        
+        [btn setTitle:titles[i] forState:UIControlStateNormal];
+        btn.backgroundColor = [UIColor clearColor];
+        [btn setHighlighted:NO];
+        [btn.titleLabel setFont:[UIFont systemFontOfSize:13]];
+        btn.tag = 100 + i;
+        [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor colorWithHexString:@"d7425c"] forState:UIControlStateSelected];
+        
+        [_menu_view addSubview:btn];
+        [_btnArray addObject:btn];
+        [btn addTarget:self action:@selector(GbtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    UIButton *btn = (UIButton *)[_menu_view viewWithTag:100];
+    btn.backgroundColor = RGBCOLOR(240, 122, 142);
+    
+}
+
+
+#pragma mark - 事件处理
+
+- (void)GbtnClicked:(UIButton *)sender
+{
+    int tag = (int)sender.tag;
+    
+    //改变点击颜色
+    for (UIButton *btn in _btnArray) {
+        btn.backgroundColor = RGBCOLOR(212, 59, 85);
+    }
+    sender.backgroundColor = RGBCOLOR(240, 122, 142);
+    
+    //请求数据  _paixuIndex 0新品 1
+    _paixuIndex = tag - 100;
+    [self waterLoadNewData];
+}
+
+
+
+
+
 
 
 /**
@@ -318,9 +402,7 @@
 #pragma mark - CustomSegmentViewDelegate
 -(void)buttonClick:(int)buttonSelected{
     NSLog(@"buttonSelect:%d",buttonSelected);
-    _paixuIndex = buttonSelected;
-
-    [self waterLoadNewData];
+    
     
     
     

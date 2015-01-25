@@ -141,6 +141,7 @@ typedef enum{
     
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GgetUserInfo) name:NOTIFICATION_LOGIN object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GgetUserInfo) name:NOTIFICATION_SHENQINGDIANPU_SUCCESS object:nil];
     
     
     NSLog(@"%@",NSStringFromCGRect(_tableView.frame));
@@ -204,20 +205,6 @@ typedef enum{
     _backView.headerImage = [UIImage imageNamed:@"my_bg.png"];
     
     NSLog(@"%@",NSStringFromCGRect(_backView.frame));
-    
-    //banner
-//    self.userBannerImv = [[UIImageView alloc]initWithFrame:backView.frame];
-//    [self.userBannerImv setImage:[UIImage imageNamed:@"1.png"]];
-//    backView.imageView = self.userBannerImv;
-//    //模糊效果
-//    //    self.userBannerImv.layer.masksToBounds = NO;
-//    //    self.userBannerImv.layer.shadowColor = [UIColor blackColor].CGColor;
-//    //    self.userBannerImv.layer.shadowOffset = CGSizeMake(0.0f, 5.0f);//shadowOffset阴影偏移,x向右偏移4，y向下偏移4，默认(0, -3),这个跟shadowRadius配合使用
-//    //    self.userBannerImv.layer.shadowOpacity = 0.5f;//阴影透明度，默认0
-//    //    self.userBannerImv.layer.shadowRadius = 4;//阴影半径，默认3
-
-    
-    
     
     
     //标题
@@ -480,43 +467,10 @@ typedef enum{
             
             
             if (indexPath.row==0) {
-                
-
-//                NSLog(@"申请店铺");
-//                
-//                int shopMan = [_userInfo.shopman intValue];
-//                
-//                //test
-//                
-//                shopMan = 2;
-//                
-//                if (shopMan == 2) {
-//                    NSLog(@"店主");
-//                    
-//                    MyShopViewController *shop = [[MyShopViewController alloc]init];
-//                    shop.hidesBottomBarWhenPushed = YES;
-//                    [self.navigationController pushViewController:shop animated:YES];
-//                    
-//                }else if (shopMan == 1){
-//                    NSLog(@"店铺申请");
-//                    [LTools showMBProgressWithText:@"您已申请店铺,正在审核中..." addToView:self.view];
-//                }else if (shopMan == 0){
-//                    
-//                    NSLog(@"普通");
-//                    
-//                    ShenQingDianPuViewController *_shenqingVC = [[ShenQingDianPuViewController alloc]init];
-//                    _shenqingVC.hidesBottomBarWhenPushed = YES;
-//                    [self.navigationController pushViewController:_shenqingVC animated:YES];
-//
-//                }
 
                 NSLog(@"申请店铺");
                 
                 int shopMan = [_userInfo.shopman intValue];
-                
-                //test
-                
-                shopMan = 2;
                 
                 if (shopMan == 2) {
                     NSLog(@"店主");
@@ -530,19 +484,12 @@ typedef enum{
                     NSLog(@"店铺申请");
                     [LTools showMBProgressWithText:@"您已申请店铺,正在审核中..." addToView:self.view];
                 }else if (shopMan == 0){
-                    
                     NSLog(@"普通");
-                    
                     ShenQingDianPuViewController *_shenqingVC = [[ShenQingDianPuViewController alloc]init];
                     _shenqingVC.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:_shenqingVC animated:YES];
 
                 }
-
-                
-//                ShenQingDianPuViewController *_shenqingVC = [[ShenQingDianPuViewController alloc]init];
-//                _shenqingVC.hidesBottomBarWhenPushed = YES;
-//                [self.navigationController pushViewController:_shenqingVC animated:YES];
                 
             }
             

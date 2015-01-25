@@ -59,6 +59,8 @@ alpha:(a)]
 
 #define NOTIFICATION_TTAI_PUBLISE_SUCCESS @"TTAI_PUBLISE_SUCCESS"//t台发布成功
 
+#define NOTIFICATION_SHENQINGDIANPU_SUCCESS @"GSHENQINGDIANPU_SUCCESS"//申请店铺成功
+
 //错误提示信息 
 
 #define ALERT_ERRO_PHONE @"请输入有效手机号"
@@ -67,6 +69,12 @@ alpha:(a)]
 #define ALERT_ERRO_FINDPWD @"两次密码不一致"
 
 #define L_PAGE_SIZE 20
+
+
+
+
+
+
 
 //登录类型 normal为正常手机登陆，sweibo、qq、weixin分别代表新浪微博、qq、微信登陆
 typedef enum{

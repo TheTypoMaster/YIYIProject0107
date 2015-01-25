@@ -730,7 +730,8 @@
             NSLog(@"-->%@",result);
             NSLog(@"msg:%@",[result objectForKey:@"msg"]);
             [GMAPI showAutoHiddenMBProgressWithText:[result objectForKey:@"msg"] addToView:self.view];
-            
+            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_SHENQINGDIANPU_SUCCESS object:nil];
+            [self.navigationController popViewControllerAnimated:YES];
             
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
             
@@ -761,8 +762,13 @@
             
             NSLog(@"%@",result);
             [GMAPI showAutoHiddenMBProgressWithText:@"提交成功" addToView:self.view];
+            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_SHENQINGDIANPU_SUCCESS object:nil];
+            [self.navigationController popViewControllerAnimated:YES];
+            
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
+            
             NSLog(@"faildic==%@",failDic);
+            
             [GMAPI showMBProgressWithText:failDic[@"msg"] addToView:self.view];
         }];
         
@@ -855,7 +861,7 @@
 //通过所选地区请求商店列表
 -(void)prepareNetDataForStoreList{
     
-    NSLog(@"%d %d",self.provinceIn,self.cityIn);
+    NSLog(@"%ld %ld",(long)self.provinceIn,(long)self.cityIn);
     
     NSString *api = [NSString stringWithFormat:STORELISTWITHPROVINCEANDCITY,NSStringFromInt(self.provinceIn),NSStringFromInt(self.cityIn)];
     

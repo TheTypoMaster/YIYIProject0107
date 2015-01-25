@@ -111,8 +111,8 @@
     
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
-        NSLog(@"");
         
+        NSLog(@"获取店铺详情:%@",result);
         
         MailInfoModel *mail = [[MailInfoModel alloc]initWithDictionary:result];
         self.mallInfo = mail;
@@ -405,6 +405,7 @@
         
         GupHuoDongViewController *ccc = [[GupHuoDongViewController alloc]init];
         ccc.mallInfo = self.mallInfo;
+        ccc.userInfo = self.userInfo;
         [self.navigationController pushViewController:ccc animated:YES];
 
     }else if (buttonIndex == 0){
@@ -413,6 +414,8 @@
         
 
         GupClothesViewController *ccc = [[GupClothesViewController alloc]init];
+        ccc.userInfo = self.userInfo;
+        
         [self.navigationController pushViewController:ccc animated:YES];
         
     }
