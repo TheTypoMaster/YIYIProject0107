@@ -8,6 +8,9 @@
 
 #import "MailMessageCell.h"
 
+#import "MessageModel.h"
+#import "ActivityModel.h"
+
 @implementation MailMessageCell
 
 - (void)awakeFromNib {
@@ -27,9 +30,37 @@
  *  @param aType  是否有头像
  *  @param seeAll 是否有 查看全文
  */
-- (void)setCellWithModel:(MessageModel *)aModel cellType:(Cell_Type)aType seeAll:(BOOL)seeAll
+- (void)setCellWithModel:(id)aModel cellType:(Cell_Type)aType seeAll:(BOOL)seeAll
 {
     CGFloat top = 12;
+    
+    NSString *name;
+    NSString *photo;
+    NSString *title;
+    NSString *image_url;
+    NSString *content;
+    NSString *time;
+    
+    //消息
+    if ([aModel isKindOfClass:[MessageModel class]]) {
+        
+        MessageModel *model = (MessageModel *)aModel;
+        title = model.title;
+        image_url = model.pic;
+        content = model.content;
+        name = model.from_username;
+        photo = model.photo;
+        time = model.send_time;
+    }
+    //活动
+    else if ([aModel isKindOfClass:[ActivityModel class]]){
+        
+        ActivityModel *model = (ActivityModel *)aModel;
+        title = model.activity_title;
+        image_url = model.pic;
+        content = model.activity_info;
+        time = model.add_time;
+    }
     
     if (aType == icon_Yes) {
         
@@ -37,8 +68,8 @@
         
         self.iconImageView.layer.cornerRadius = _iconImageView.width / 2.f;
         _iconImageView.layer.masksToBounds = YES;
-        self.nameLabel.text = aModel.from_username;
-        [_iconImageView sd_setImageWithURL:[NSURL URLWithString:aModel.photo] placeholderImage:nil];
+        self.nameLabel.text = name;
+        [_iconImageView sd_setImageWithURL:[NSURL URLWithString:photo] placeholderImage:nil];
         
     }else
     {
@@ -46,20 +77,21 @@
         
         top = 12;
     }
+    
     //标题
     self.aTitleLabel.top = top;
-    self.aTitleLabel.text = aModel.title;
-    CGFloat height = [LTools heightForText:aModel.title width:_aTitleLabel.width font:16];
+    self.aTitleLabel.text = title;
+    CGFloat height = [LTools heightForText:title width:_aTitleLabel.width font:16];
     _aTitleLabel.height = height;
     
     //时间
-    self.timeLabel.text = [LTools timechangeMMDD:aModel.send_time];
+    self.timeLabel.text = [LTools timechangeMMDD:time];
     _timeLabel.top = _aTitleLabel.bottom + 10;
     
     //图片
     self.centerImageView.top = _timeLabel.bottom + 12;
     //有图
-    if (aModel.pic.length > 0 && [aModel.pic hasPrefix:@"http://"]) {
+    if (image_url.length > 0 && [image_url hasPrefix:@"http://"]) {
         
         CGFloat ratio = 274 / 156;
         CGFloat realWidth = (DEVICE_WIDTH - 46) / 2.f;
@@ -69,7 +101,7 @@
         
         top = _centerImageView.bottom + 10;
         
-        [_centerImageView sd_setImageWithURL:[NSURL URLWithString:aModel.pic] placeholderImage:nil];
+        [_centerImageView sd_setImageWithURL:[NSURL URLWithString:image_url] placeholderImage:nil];
         
     }else
     {
@@ -79,9 +111,9 @@
     //摘要
     
     _contentLabel.top = top;
-    height = [LTools heightForText:aModel.content width:_contentLabel.width font:13];
+    height = [LTools heightForText:content width:_contentLabel.width font:13];
     self.contentLabel.height = height;
-    _contentLabel.text = aModel.content;
+    _contentLabel.text = content;
     
     
     if (seeAll) {
@@ -107,7 +139,7 @@
     
 }
 
-+ (CGFloat)heightForModel:(MessageModel *)aModel cellType:(Cell_Type)aType  seeAll:(BOOL)seeAll
++ (CGFloat)heightForModel:(id)aModel cellType:(Cell_Type)aType  seeAll:(BOOL)seeAll
 {
     CGFloat aHeight = 0;
     
@@ -118,9 +150,32 @@
     {
         aHeight = 12;
     }
+    
+    NSString *title;
+    NSString *image_url;
+    NSString *content;
+    
+    //消息
+    if ([aModel isKindOfClass:[MessageModel class]]) {
+        
+        MessageModel *model = (MessageModel *)aModel;
+        title = model.title;
+        image_url = model.pic;
+        content = model.content;
+        
+    }
+    //活动
+    else if ([aModel isKindOfClass:[ActivityModel class]]){
+        
+        ActivityModel *model = (ActivityModel *)aModel;
+        title = model.activity_title;
+        image_url = model.pic;
+        content = model.activity_info;
+    }
+    
     //标题高度
     CGFloat aWidth = DEVICE_WIDTH/2.f - 23;
-    CGFloat height = [LTools heightForText:aModel.title width:aWidth font:16];
+    CGFloat height = [LTools heightForText:title width:aWidth font:16];
     
     aHeight += height;
     
@@ -129,7 +184,7 @@
     aHeight += (15 + 10);
     
     //图片
-    if (aModel.pic.length > 0 && [aModel.pic hasPrefix:@"http://"])
+    if (image_url.length > 0 && [image_url hasPrefix:@"http://"])
     {
         CGFloat ratio = 274 / 156;
         CGFloat realWidth = (DEVICE_WIDTH - 46) / 2.f;
@@ -142,7 +197,7 @@
     }
     
     //内容高度
-    height = [LTools heightForText:aModel.content width:aWidth font:13];
+    height = [LTools heightForText:content width:aWidth font:13];
     
     aHeight += height;
     

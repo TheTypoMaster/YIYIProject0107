@@ -70,6 +70,17 @@
     
     [self rongCloudDefaultLoginWithToken:[LTools cacheForKey:RONGCLOUD_TOKEN]];
     
+    
+#pragma mark 版本检测
+    
+    //版本更新
+    
+    [[LTools shareInstance]versionForAppid:@"951259287" Block:^(BOOL isNewVersion, NSString *updateUrl, NSString *updateContent) {
+        
+        NSLog(@"updateContent %@ %@",updateUrl,updateContent);
+        
+    }];
+    
 #pragma mark 远程通知
     
     if (IOS7_OR_LATER) {

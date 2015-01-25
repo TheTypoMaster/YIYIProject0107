@@ -35,6 +35,8 @@
 
 #import "MyShopViewController.h"//我的店铺
 
+#import "LShareSheetView.h"
+
 #import "ParallaxHeaderView.h"
 #import "UIImage+ImageEffects.h"
 #import "NSDictionary+GJson.h"
@@ -108,7 +110,7 @@ typedef enum{
     
     _tabelViewCellTitleArray = @[@[@"我的主页"]
                                  ,@[@"我的收藏",@"我的搭配"]
-                                 ,@[@"我的衣橱",@"我的体型",@"穿衣日记"]
+                                 ,@[@"我的衣橱",@"我的体型"]
                                  ,@[@"我的关注"]
                                  ,@[@"我是店主，申请衣+衣店铺"]
                                  ,@[@"邀请好友"]];
@@ -295,6 +297,38 @@ typedef enum{
 }
 
 
+#pragma mark 事件处理
+
+- (void)clickToShare:(UIButton *)sender
+{
+    [[LShareSheetView shareInstance] showShareContent:@"我在使用衣+衣,我们一起来用吧!" title:nil shareUrl:@"https://itunes.apple.com/us/app/id951259287?mt=8" shareImage:[UIImage imageNamed:@"about_icon"] targetViewController:self];
+    [[LShareSheetView shareInstance]actionBlock:^(NSInteger buttonIndex, Share_Type shareType) {
+        
+        if (shareType == Share_QQ) {
+            
+            NSLog(@"Share_QQ");
+            
+        }else if (shareType == Share_QQZone){
+            
+            NSLog(@"Share_QQZone");
+            
+        }else if (shareType == Share_WeiBo){
+            
+            NSLog(@"Share_WeiBo");
+            
+        }else if (shareType == Share_WX_HaoYou){
+            
+            NSLog(@"Share_WX_HaoYou");
+            
+        }else if (shareType == Share_WX_PengYouQuan){
+            
+            NSLog(@"Share_WX_PengYouQuan");
+            
+        }
+        
+    }];
+}
+
 
 #pragma mark - UITableViewDelegate && UITableViewDataSource
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -447,6 +481,35 @@ typedef enum{
             
             if (indexPath.row==0) {
                 
+
+//                NSLog(@"申请店铺");
+//                
+//                int shopMan = [_userInfo.shopman intValue];
+//                
+//                //test
+//                
+//                shopMan = 2;
+//                
+//                if (shopMan == 2) {
+//                    NSLog(@"店主");
+//                    
+//                    MyShopViewController *shop = [[MyShopViewController alloc]init];
+//                    shop.hidesBottomBarWhenPushed = YES;
+//                    [self.navigationController pushViewController:shop animated:YES];
+//                    
+//                }else if (shopMan == 1){
+//                    NSLog(@"店铺申请");
+//                    [LTools showMBProgressWithText:@"您已申请店铺,正在审核中..." addToView:self.view];
+//                }else if (shopMan == 0){
+//                    
+//                    NSLog(@"普通");
+//                    
+//                    ShenQingDianPuViewController *_shenqingVC = [[ShenQingDianPuViewController alloc]init];
+//                    _shenqingVC.hidesBottomBarWhenPushed = YES;
+//                    [self.navigationController pushViewController:_shenqingVC animated:YES];
+//
+//                }
+
                 NSLog(@"申请店铺");
                 
                 int shopMan = [_userInfo.shopman intValue];
@@ -459,6 +522,7 @@ typedef enum{
                     NSLog(@"店主");
                     
                     MyShopViewController *shop = [[MyShopViewController alloc]init];
+                    shop.userInfo = _userInfo;
                     shop.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:shop animated:YES];
                     
@@ -474,6 +538,11 @@ typedef enum{
                     [self.navigationController pushViewController:_shenqingVC animated:YES];
 
                 }
+
+                
+//                ShenQingDianPuViewController *_shenqingVC = [[ShenQingDianPuViewController alloc]init];
+//                _shenqingVC.hidesBottomBarWhenPushed = YES;
+//                [self.navigationController pushViewController:_shenqingVC animated:YES];
                 
             }
             
@@ -483,7 +552,11 @@ typedef enum{
             
         case 5:
         {
-            
+            if (indexPath.row == 0){
+                
+                
+                [self clickToShare:nil];
+            }
             
         }
             break;

@@ -97,7 +97,7 @@
     }
     cell.layer.cornerRadius = 3.f;
     UIImageView *imageView = (UIImageView *)[cell viewWithTag:1001];
-    [imageView sd_setImageWithURL:[NSURL URLWithString:[[_dataSourceArray objectAtIndex:indexPath.row] objectForKey:@"image_url"]] placeholderImage:[UIImage imageNamed:@"dapei_jiantou"]];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:[[_dataSourceArray objectAtIndex:indexPath.row] objectForKey:@"image_url"]] placeholderImage:nil];
     NSLog(@".......%@",[[_dataSourceArray objectAtIndex:indexPath.row] objectForKey:@"image_url"]);
     return cell;
 }

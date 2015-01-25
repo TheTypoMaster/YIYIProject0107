@@ -116,7 +116,9 @@
         
         //单双信息分组
         for (int i = 0; i<countNum_info; i++) {
+            
             NSDictionary *dic = self.dataArray[i];
+            
             if (i%2==0) {//下
                 [downDataArray addObject:dic];
             }else if (i%2==1){//上

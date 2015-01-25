@@ -149,7 +149,10 @@
 -(void)prepareGuanzhuStore{
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     NSString *url = [NSString stringWithFormat:HOME_CLOTH_GUANZHUSTORE_MINE,[GMAPI getAuthkey]];
-    GmPrepareNetData *dd = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:nil];
+    
+    NSLog(@"我关注的商店:%@",url);
+    
+    GmPrepareNetData *dd = [[GmPrepareNetData alloc]initWithUrl:url isPost:NO postData:nil];
     [dd requestCompletion:^(NSDictionary *result, NSError *erro) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         NSLog(@"%@",result);

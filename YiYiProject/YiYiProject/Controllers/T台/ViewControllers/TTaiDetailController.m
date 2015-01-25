@@ -110,7 +110,9 @@
 
 - (void)clickToComment:(UIButton *)sender
 {
-    [_input_view showInputView:nil];
+    if ([LTools isLogin:self]) {
+        [_input_view showInputView:nil];
+    }
 }
 
 - (void)clickToZhuanFa:(UIButton *)sender
@@ -174,16 +176,29 @@
         
         NSLog(@"请求t台评论数据 ---  %@",result);
         
+        int total = [[result objectForKey:@"total"] intValue];
         NSArray * commentsArray = [result objectForKey:@"list"];
+        
+        NSMutableArray *arr = [NSMutableArray arrayWithCapacity:commentsArray.count];
         
         for (NSDictionary * dic in commentsArray)
         {
             TopicCommentsModel * model = [[TopicCommentsModel alloc] initWithDictionary:dic];
             model.reply_id = [NSString stringWithFormat:@"%@",[dic objectForKey:@"post_id"]];
             model.repost_uid = [NSString stringWithFormat:@"%@",[dic objectForKey:@"uid"]];
-            [bself.comments_array addObject:model];
+//            [bself.comments_array addObject:model];
+            [arr addObject:model];
         }
-        [_table finishReloadigData];
+//        [_table finishReloadigData];
+        
+        int sum = (int)(arr.count + _table.dataArray.count);
+        
+        BOOL haveMore = NO;
+        if (sum < total) {
+            haveMore = YES;
+        }
+        
+        [_table reloadData:arr isHaveMore:haveMore];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
@@ -200,6 +215,8 @@
     NSString *post = [NSString stringWithFormat:@"authcode=%@&tt_id=%@&parent_post=%@&content=%@",[GMAPI getAuthkey],self.tt_id,_parent_post,content];
     NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     
+    __weak typeof(_table)weakTable = _table;
+    
     NSString *url = [NSString stringWithFormat:TTAI_COMMENT];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
     
@@ -209,6 +226,8 @@
         NSLog(@"-->%@",result);
         
         [LTools showMBProgressWithText:result[RESULT_INFO] addToView:self.view];
+        
+        [weakTable showRefreshHeader:YES];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
@@ -286,6 +305,11 @@
 - (void)zhuanFaTTaiDetail
 {
     NSString *authkey = [GMAPI getAuthkey];
+    
+    if (authkey.length == 0) {
+        return;
+    }
+    
     NSString *post = [NSString stringWithFormat:@"tt_id=%@&authcode=%@",self.tt_id,authkey];
     NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     
@@ -549,16 +573,19 @@
 //新加
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
-    TopicCommentsModel * model = [_comments_array objectAtIndex:indexPath.row];
+    TopicCommentsModel * model = [_table.dataArray objectAtIndex:indexPath.row];
     _parent_post = model.reply_id;
     _r_reply_uid = model.repost_uid;
     _r_reply_userName = model.user_name;
+    
+    _input_view.text_input_view.text = [NSString stringWithFormat:@"回复 %@:",model.user_name];
+    
     [self clickToComment:nil];
 }
 
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
-    TopicCommentsModel * model = [_comments_array objectAtIndex:indexPath.row];
+    TopicCommentsModel * model = [_table.dataArray objectAtIndex:indexPath.row];
     NSString * content_string = model.repost_content;
     
     CGFloat string_height = [LTools heightForText:content_string width:DEVICE_WIDTH-60-12 font:14];
@@ -587,7 +614,7 @@
     
     cell.backgroundColor = [UIColor clearColor];
     
-    TopicCommentsModel * model = [_comments_array objectAtIndex:indexPath.row];
+    TopicCommentsModel * model = [_table.dataArray objectAtIndex:indexPath.row];
     
     [cell setInfoWithCommentsModel:model];
     
@@ -596,13 +623,19 @@
         bself.parent_post = reply_id;
         bself.r_reply_uid = uid;
         bself.r_reply_userName = userName;
+        
+        _input_view.text_input_view.text = [NSString stringWithFormat:@"回复 %@:",userName];
         [bself clickToComment:nil];
+        
+        NSLog(@"userName %@",userName);
     }];
     [cell.second_view setSeconForwardViewBlock:^(TopicCommentsCellClickType aType, NSString *userName, NSString *uid, NSString *reply_id) {
         bself.parent_post = reply_id;
         bself.r_reply_uid = uid;
         bself.r_reply_userName = userName;
+        _input_view.text_input_view.text = [NSString stringWithFormat:@"回复 %@:",userName];
         [bself clickToComment:nil];
+        NSLog(@"userName2 %@",userName);
     }];
     
     return cell;
@@ -610,7 +643,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _comments_array.count;
+    return _table.dataArray.count;
 }
 
 @end

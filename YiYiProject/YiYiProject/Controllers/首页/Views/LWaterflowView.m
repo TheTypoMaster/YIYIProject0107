@@ -15,6 +15,15 @@
 
 @implementation LWaterflowView
 
+- (void)dealloc
+{
+    NSLog(@"%@ dealloc",NSStringFromClass([self class]));
+    qtmquitView.delegate = nil;
+    qtmquitView.dataSource = nil;
+    _refreshFooterView = nil;
+    _refreshHeaderView = nil;
+}
+
 - (void)reloadData
 {
     [qtmquitView reloadData];

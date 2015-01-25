@@ -24,6 +24,8 @@
     UIButton *collectButton;//收藏 与 取消收藏
 
     MBProgressHUD *loading;
+    
+    LTools *tool_detail;
 }
 
 @end
@@ -43,6 +45,14 @@
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     }
+}
+
+- (void)dealloc
+{
+    NSLog(@"dealloc %@",self);
+    [tool_detail cancelRequest];
+    heartButton = nil;
+    collectButton = nil;
 }
 
 - (void)viewDidLoad {
@@ -85,23 +95,30 @@
 - (void)networkForDetail
 {
     
+    if (tool_detail) {
+        [tool_detail cancelRequest];
+    }
     [loading show:YES];
     __weak typeof(self)weakSelf = self;
+    
+    __weak typeof(loading)weakLoading = loading;
+        
     NSString *url = [NSString stringWithFormat:HOME_PRODUCT_DETAIL,self.product_id,[GMAPI getAuthkey]];
-    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
-    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+    tool_detail = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    
+    [tool_detail requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"result %@",result);
         
-        [loading hide:YES];
+        [weakLoading hide:YES];
         
         if ([result isKindOfClass:[NSDictionary class]]) {
             
             NSDictionary *dic = result[@"pinfo"];
             
-            aModel = [[ProductModel alloc]initWithDictionary:dic];
+            ProductModel *aModel1 = [[ProductModel alloc]initWithDictionary:dic];
             
-            [weakSelf prepareViewWithModel:aModel];
+            [weakSelf prepareViewWithModel:aModel1];
         }
         
         
@@ -109,9 +126,9 @@
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
         
-        [loading hide:YES];
+        [weakLoading hide:YES];
         
-        [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
+        [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:weakSelf.view];
         
     }];
 }
@@ -374,6 +391,7 @@
 - (void)prepareViewWithModel:(ProductModel *)aProductModel
 {
     
+    aModel = aProductModel;
     //赞 与 收藏 状态
     
     heartButton.selected = aProductModel.is_like == 1 ? YES : NO;
