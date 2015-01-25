@@ -73,7 +73,6 @@
         type = @"dynamic";
     }
     
-    key = @"WiVbIgF4BeMEvwabALBajQWgB+VUoVWkBShRYFUwXGkGOAAyB2FSZgczBjYAbAp6AjZSaQ==";
     NSString *url = [NSString stringWithFormat:MESSAGE_GET_LIST,type,key];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {

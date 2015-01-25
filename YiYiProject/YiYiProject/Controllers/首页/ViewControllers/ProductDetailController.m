@@ -15,6 +15,9 @@
 
 #import "HomeMatchController.h"
 
+#import "MJPhotoBrowser.h"
+#import "MJPhoto.h"
+
 @interface ProductDetailController ()
 {
     ProductModel *aModel;
@@ -26,6 +29,8 @@
     MBProgressHUD *loading;
     
     LTools *tool_detail;
+    
+    NSArray *image_urls;//图片链接数组
 }
 
 @end
@@ -71,7 +76,6 @@
     loading = [LTools MBProgressWithText:@"加载..." addToView:self.view];
     
     [self networkForDetail];
-    
 }
 
 - (void)viewWillLayoutSubviews NS_AVAILABLE_IOS(5_0)
@@ -194,6 +198,27 @@
 
 
 #pragma mark - 事件处理
+
+- (void)tapImage:(UITapGestureRecognizer *)tap
+{
+    int count = image_urls.count;
+    // 1.封装图片数据
+    NSMutableArray *photos = [NSMutableArray arrayWithCapacity:count];
+    for (int i = 0; i < count; i++) {
+        // 替换为中等尺寸图片
+        NSString *url = image_urls[i];
+        MJPhoto *photo = [[MJPhoto alloc] init];
+        photo.url = [NSURL URLWithString:url]; // 图片路径
+        photo.srcImageView = self.bigImageView; // 来源于哪个UIImageView
+        [photos addObject:photo];
+    }
+    
+    // 2.显示相册
+    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
+    browser.currentPhotoIndex = 0; // 弹出相册时显示的第一张图片是？
+    browser.photos = photos; // 设置所有的图片
+    [browser show];
+}
 
 /*
    是否喜欢
@@ -372,6 +397,9 @@
 
 - (CGFloat)thumbImageHeightForArr:(NSArray *)imagesArr
 {
+    
+    
+    NSLog(@"--->%d",imagesArr.count);
     CGFloat aHeight = 0.f;
     CGFloat aWidth = 0.f;
     if (imagesArr.count >= 1) {
@@ -395,6 +423,17 @@
 - (void)prepareViewWithModel:(ProductModel *)aProductModel
 {
     
+    //解析 原图
+    NSArray *arr = aProductModel.images;
+    NSMutableArray *temp_arr = [NSMutableArray arrayWithCapacity:arr.count];
+    for (NSDictionary *aDic in arr) {
+        
+        NSDictionary *original = aDic[@"original"];
+        NSString *src = original[@"src"];
+        [temp_arr addObject:src];
+    }
+    image_urls = [NSArray arrayWithArray:temp_arr];
+    
     aModel = aProductModel;
     //赞 与 收藏 状态
     
@@ -416,6 +455,12 @@
     
 //    self.bigImageView.height = aHeight;
     [self.bigImageView sd_setImageWithURL:[NSURL URLWithString:[self thumbImageForArr:aProductModel.images]] placeholderImage:[UIImage imageNamed:nil]];
+    
+    //点击图片
+    self.bigImageView.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapImage:)];
+    [_bigImageView addGestureRecognizer:tap];
+    
     
     self.priceLabel.text = [NSString stringWithFormat:@" %.2f  ",[aProductModel.product_price floatValue]];
     

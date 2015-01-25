@@ -20,6 +20,13 @@
 		133B17631A74EF3D005B8B3F /* xia_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 133B17581A74EF3D005B8B3F /* xia_down@2x.png */; };
 		133B17641A74EF3D005B8B3F /* xia_up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 133B17591A74EF3D005B8B3F /* xia_up@2x.png */; };
 		133B17651A74EF3D005B8B3F /* yc_sc_tj@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 133B175A1A74EF3D005B8B3F /* yc_sc_tj@2x.png */; };
+		133B17741A750988005B8B3F /* MJPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 133B17681A750988005B8B3F /* MJPhoto.m */; };
+		133B17751A750988005B8B3F /* MJPhotoBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 133B17691A750988005B8B3F /* MJPhotoBrowser.bundle */; };
+		133B17761A750988005B8B3F /* MJPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 133B176B1A750988005B8B3F /* MJPhotoBrowser.m */; };
+		133B17771A750988005B8B3F /* MJPhotoLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 133B176D1A750988005B8B3F /* MJPhotoLoadingView.m */; };
+		133B17781A750988005B8B3F /* MJPhotoProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 133B176F1A750988005B8B3F /* MJPhotoProgressView.m */; };
+		133B17791A750988005B8B3F /* MJPhotoToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 133B17711A750988005B8B3F /* MJPhotoToolbar.m */; };
+		133B177D1A751C1C005B8B3F /* MJPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 133B177C1A751C1C005B8B3F /* MJPhotoView.m */; };
 		1357D91E1A6D52D900A284A7 /* t_guanzhu@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1357D91D1A6D52D900A284A7 /* t_guanzhu@3x.png */; };
 		1357D9201A6D530400A284A7 /* t_guanzhu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1357D91F1A6D530400A284A7 /* t_guanzhu@2x.png */; };
 		13681C711A4527A200671D07 /* navigationBarBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13681C701A4527A200671D07 /* navigationBarBackground@2x.png */; };
@@ -564,6 +571,19 @@
 		133B17581A74EF3D005B8B3F /* xia_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xia_down@2x.png"; sourceTree = "<group>"; };
 		133B17591A74EF3D005B8B3F /* xia_up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xia_up@2x.png"; sourceTree = "<group>"; };
 		133B175A1A74EF3D005B8B3F /* yc_sc_tj@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yc_sc_tj@2x.png"; sourceTree = "<group>"; };
+		133B17671A750988005B8B3F /* MJPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhoto.h; sourceTree = "<group>"; };
+		133B17681A750988005B8B3F /* MJPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhoto.m; sourceTree = "<group>"; };
+		133B17691A750988005B8B3F /* MJPhotoBrowser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJPhotoBrowser.bundle; sourceTree = "<group>"; };
+		133B176A1A750988005B8B3F /* MJPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoBrowser.h; sourceTree = "<group>"; };
+		133B176B1A750988005B8B3F /* MJPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoBrowser.m; sourceTree = "<group>"; };
+		133B176C1A750988005B8B3F /* MJPhotoLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoLoadingView.h; sourceTree = "<group>"; };
+		133B176D1A750988005B8B3F /* MJPhotoLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoLoadingView.m; sourceTree = "<group>"; };
+		133B176E1A750988005B8B3F /* MJPhotoProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoProgressView.h; sourceTree = "<group>"; };
+		133B176F1A750988005B8B3F /* MJPhotoProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoProgressView.m; sourceTree = "<group>"; };
+		133B17701A750988005B8B3F /* MJPhotoToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoToolbar.h; sourceTree = "<group>"; };
+		133B17711A750988005B8B3F /* MJPhotoToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoToolbar.m; sourceTree = "<group>"; };
+		133B177B1A751C1C005B8B3F /* MJPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoView.h; sourceTree = "<group>"; };
+		133B177C1A751C1C005B8B3F /* MJPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoView.m; sourceTree = "<group>"; };
 		1357D91D1A6D52D900A284A7 /* t_guanzhu@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "t_guanzhu@3x.png"; sourceTree = "<group>"; };
 		1357D91F1A6D530400A284A7 /* t_guanzhu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "t_guanzhu@2x.png"; sourceTree = "<group>"; };
 		13681C701A4527A200671D07 /* navigationBarBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigationBarBackground@2x.png"; sourceTree = "<group>"; };
@@ -1444,6 +1464,26 @@
 			path = "我的搭配";
 			sourceTree = "<group>";
 		};
+		133B17661A750988005B8B3F /* MJPhotoBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				133B17671A750988005B8B3F /* MJPhoto.h */,
+				133B17681A750988005B8B3F /* MJPhoto.m */,
+				133B17691A750988005B8B3F /* MJPhotoBrowser.bundle */,
+				133B176A1A750988005B8B3F /* MJPhotoBrowser.h */,
+				133B176B1A750988005B8B3F /* MJPhotoBrowser.m */,
+				133B176C1A750988005B8B3F /* MJPhotoLoadingView.h */,
+				133B176D1A750988005B8B3F /* MJPhotoLoadingView.m */,
+				133B176E1A750988005B8B3F /* MJPhotoProgressView.h */,
+				133B176F1A750988005B8B3F /* MJPhotoProgressView.m */,
+				133B17701A750988005B8B3F /* MJPhotoToolbar.h */,
+				133B17711A750988005B8B3F /* MJPhotoToolbar.m */,
+				133B177B1A751C1C005B8B3F /* MJPhotoView.h */,
+				133B177C1A751C1C005B8B3F /* MJPhotoView.m */,
+			);
+			path = MJPhotoBrowser;
+			sourceTree = "<group>";
+		};
 		13681C6F1A4527A200671D07 /* AllImages */ = {
 			isa = PBXGroup;
 			children = (
@@ -2233,6 +2273,7 @@
 		13A389511A38768400ABBACB /* PublicClasses */ = {
 			isa = PBXGroup;
 			children = (
+				133B17661A750988005B8B3F /* MJPhotoBrowser */,
 				138986191A6A36EC00F187C9 /* SinaMenuView */,
 				565321311A59769300E43F80 /* RichViewAndGif */,
 				13B690421A564825007FE152 /* TumblrMenu */,
@@ -3462,6 +3503,7 @@
 				19F7B43C1A67FFA600087BCB /* messages_right_bubble@2x.png in Resources */,
 				133B17641A74EF3D005B8B3F /* xia_up@2x.png in Resources */,
 				13A3899D1A3893FC00ABBACB /* MessageViewController.xib in Resources */,
+				133B17751A750988005B8B3F /* MJPhotoBrowser.bundle in Resources */,
 				13CEC8941A5D96CF00FE273F /* TTPublishViewController.xib in Resources */,
 				E3996ECC1A5E1DBA00673147 /* mapapi.bundle in Resources */,
 				139562CC1A3C11EC007BB183 /* RegisterViewController.xib in Resources */,
@@ -3742,6 +3784,7 @@
 				13A389BC1A38974F00ABBACB /* NSString+Emoji.m in Sources */,
 				56DAB2101A46A8E100273140 /* SNRefreshTableView.m in Sources */,
 				138986301A6A5DDF00F187C9 /* MessageModel.m in Sources */,
+				133B17761A750988005B8B3F /* MJPhotoBrowser.m in Sources */,
 				565321471A59769300E43F80 /* RegexKitLite.m in Sources */,
 				138986231A6A36EC00F187C9 /* MenuButton.m in Sources */,
 				E3996EC01A5E1DBA00673147 /* GSettingViewController.m in Sources */,
@@ -3763,6 +3806,7 @@
 				5640317A1A4ED57100680E08 /* TopicDetailViewController.m in Sources */,
 				139562CB1A3C11EC007BB183 /* RegisterViewController.m in Sources */,
 				E304794B1A6109DE00709985 /* GStorePinpaiViewController.m in Sources */,
+				133B17771A750988005B8B3F /* MJPhotoLoadingView.m in Sources */,
 				139562C31A3BF41B007BB183 /* LoginViewController.m in Sources */,
 				EF932A1A1A6236AD00A8BD18 /* WaterFLayout.m in Sources */,
 				566FE2471A5018BA00A96B5F /* TopicCommentsModel.m in Sources */,
@@ -3798,6 +3842,7 @@
 				DF626D651A6964E200093568 /* TMPhotoViewQuiltViewCell.m in Sources */,
 				DF6855831A592181004D924F /* ZYQAssetPickerController.m in Sources */,
 				565321431A59769300E43F80 /* FBHelper.m in Sources */,
+				133B17741A750988005B8B3F /* MJPhoto.m in Sources */,
 				E3996EE01A5E1DBA00673147 /* GClothWaveCustomView.m in Sources */,
 				E3996EC41A5E1DBA00673147 /* Gmodel.m in Sources */,
 				DF5E89B61A5E7E6C00535EBA /* MyMatchViewController.m in Sources */,
@@ -3823,6 +3868,7 @@
 				139886A51A45673500241962 /* ProductDetailController.m in Sources */,
 				13EA3D241A3B2E13002AF7D6 /* HomeMatchController.m in Sources */,
 				E3996EDA1A5E1DBA00673147 /* GcustomActionSheet.m in Sources */,
+				133B177D1A751C1C005B8B3F /* MJPhotoView.m in Sources */,
 				DFB196EB1A6D3D900006633F /* UIImageView+LBBlurredImage.m in Sources */,
 				56A8A8311A45946000E85F6B /* MatchTopicModel.m in Sources */,
 				EFD42C841A6A8FE600E5C5E3 /* SVProgressHUD.m in Sources */,
@@ -3830,6 +3876,7 @@
 				1387B08D1A5EC2D0006365D8 /* TopicImageModel.m in Sources */,
 				E35EF15F1A6B947800B493A9 /* GupClothesViewController.m in Sources */,
 				E3996ED41A5E1DBA00673147 /* GRootScrollView.m in Sources */,
+				133B17781A750988005B8B3F /* MJPhotoProgressView.m in Sources */,
 				EF9329F91A617DD500A8BD18 /* MyseetingTableViewCell.m in Sources */,
 				139A05201A66ADB100A8EB49 /* MailMessageViewController.m in Sources */,
 				13CEC8891A5D956B00FE273F /* TTaiDetailController.m in Sources */,
@@ -3858,6 +3905,7 @@
 				13684A6B1A37583E00A508FB /* main.m in Sources */,
 				13CD36541A3C732D0068C12A /* LWaterflowView.m in Sources */,
 				E3996EBA1A5E1DBA00673147 /* GEditPersonInfoViewController.m in Sources */,
+				133B17791A750988005B8B3F /* MJPhotoToolbar.m in Sources */,
 				E3996EE31A5E1DBA00673147 /* GTableViewCell.m in Sources */,
 				19F7B44C1A67FFA600087BCB /* UMFeedbackTableViewCellRight.m in Sources */,
 				E305222A1A6ECD3A007BEAFD /* GupHuoDongViewController.m in Sources */,

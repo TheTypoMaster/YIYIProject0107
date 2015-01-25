@@ -289,6 +289,9 @@
                                     <include reference="anb-mO-1j5"/>
                                 </mask>
                             </variation>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="zbJ-lQ-cuo"/>
+                            </connections>
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="例如：BH1431938" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ocP-8G-0pM">
                             <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
@@ -307,6 +310,9 @@
                                     <include reference="RWo-5A-IpH"/>
                                 </mask>
                             </variation>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="ezM-YI-psA"/>
+                            </connections>
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="例如：1000元" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3po-YX-eay">
                             <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
@@ -325,6 +331,9 @@
                                     <include reference="52r-q5-PY9"/>
                                 </mask>
                             </variation>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="xrf-XE-T3Z"/>
+                            </connections>
                         </textField>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -475,7 +484,7 @@
                     <include reference="ajG-CF-70h"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="177.5" y="68.5"/>
+            <point key="canvasLocation" x="17.5" y="71.5"/>
         </view>
     </objects>
     <resources>

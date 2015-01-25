@@ -93,8 +93,6 @@
     
     NSString *key = [GMAPI getAuthkey];
     
-    key = @"WiVbIgF4BeMEvwabALBajQWgB+VUoVWkBShRYFUwXGkGOAAyB2FSZgczBjYAbAp6AjZSaQ==";
-    
     NSString *url = [NSString stringWithFormat:MESSAGE_GET_MINE,key];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {

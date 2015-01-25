@@ -141,6 +141,8 @@
     [self.brandTF resignFirstResponder];
     [self.modelTF resignFirstResponder];
     [self.priceTF resignFirstResponder];
+    
+    [self updateViewFrameY:64];
 }
 
 - (void)leftButtonTap:(UIButton *)sender
@@ -222,7 +224,61 @@
     [self presentViewController:picker animated:YES completion:nil];
 }
 
+- (void)updateViewFrameY:(CGFloat)frameY
+{
+    [UIView animateWithDuration:0.2 animations:^{
+       
+        self.view.top = frameY;
+    }];
+}
+
 #pragma mark 代理
+
+#pragma - mark UITextFieldDelegate
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    return YES;
+}
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    
+    if (textField == self.brandTF) {
+        
+        [self updateViewFrameY:_brandTF.top * -1];
+
+    }else if (textField == _modelTF){
+        
+        [self updateViewFrameY:_modelTF.top * -1];
+
+    }else if (textField == _priceTF){
+        
+        [self updateViewFrameY:_priceTF.top * -1];
+    }
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if (textField == self.brandTF) {
+        
+        [_modelTF becomeFirstResponder];
+    }else if (textField == _modelTF){
+        [_priceTF becomeFirstResponder];
+    }else if (textField == _priceTF){
+        
+        [self tapToHiddenKeyboard:nil];
+    }
+    
+    return YES;
+}
+
 
 #pragma - mark UITextViewDelegate
 
