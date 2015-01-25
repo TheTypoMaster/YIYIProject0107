@@ -11,7 +11,7 @@
 #import "UploadPicViewController.h"
 #import "AFNetworking.h"
 
-@interface GupClothesViewController ()<UIActionSheetDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,ZYQAssetPickerControllerDelegate,UITextFieldDelegate>
+@interface GupClothesViewController ()<UIActionSheetDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,ZYQAssetPickerControllerDelegate,UITextFieldDelegate,UIAlertViewDelegate>
 {
     UIView *_view1;//填写信息view
     UIView *_view2;//上传图片view
@@ -28,6 +28,13 @@
     
     NSMutableArray *_shurukuangArray;//输入框的数组
     
+    
+    //单品类型 打折 新品 热销
+    UILabel *_leixingLabel;
+    
+    
+    //性别
+    UILabel *_genderLabel;
     
     
     
@@ -68,7 +75,7 @@
     
     //主scrollview
     _mainScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT-15)];
-    _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH, DEVICE_HEIGHT+58);
+    _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH, DEVICE_HEIGHT+58+50+15);
     
     _mainScrollView.backgroundColor = RGBCOLOR(242, 242, 242);
     [self.view addSubview:_mainScrollView];
@@ -107,14 +114,14 @@
     for (UITextField *tf in _shurukuangArray) {
         [tf resignFirstResponder];
     }
-    _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH, DEVICE_HEIGHT+58);
+    _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH, DEVICE_HEIGHT+58+50+15);
     
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     
     NSLog(@"%ld",(long)textField.tag);
-    _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH, DEVICE_HEIGHT+300);
+    _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH, DEVICE_HEIGHT+360);
     _mainScrollView.userInteractionEnabled = YES;
     if (textField.tag == 203) {//价格
         if (_mainScrollView.contentOffset.y<58) {
@@ -129,6 +136,11 @@
         if (_mainScrollView.contentOffset.y<158) {
             _mainScrollView.contentOffset = CGPointMake(0, 158);
         }
+    }else if (textField.tag == 206){//类型
+        if (_mainScrollView.contentOffset.y<208) {
+            _mainScrollView.contentOffset = CGPointMake(0, 208);
+        }
+        
     }
 }
 
@@ -168,14 +180,14 @@
     
     
     
-    //判断信息完整性
-    for (UITextField *tf in _shurukuangArray) {
-        if (tf.text.length == 0 || _upImagesArray.count == 0) {
-            [GMAPI showAutoHiddenMBProgressWithText:@"请完善信息" addToView:self.view];
-            return;
-        }
-        
-    }
+//    //判断信息完整性
+//    for (UITextField *tf in _shurukuangArray) {
+//        if (tf.text.length == 0 || _upImagesArray.count == 0) {
+//            [GMAPI showAutoHiddenMBProgressWithText:@"请完善信息" addToView:self.view];
+//            return;
+//        }
+//        
+//    }
     
     
     //上传信息 多图上传
@@ -202,6 +214,30 @@
     UITextField *tf5 = _shurukuangArray[5];//标签
     
     
+    //类型
+    NSString *product_hotsale = nil;//热销
+    NSString *product_new = nil;//新品
+    
+    
+    NSString *gengder = nil;
+    if ([_genderLabel.text isEqualToString:@"男"]) {
+        gengder = @"2";
+    }else if ([_genderLabel.text isEqualToString:@"女"]){
+        gengder = @"1";
+    }
+    
+    if ([_leixingLabel.text isEqualToString:@"折扣"]) {
+        product_new = @"0";
+        product_hotsale = @"0";
+    }else if ([_leixingLabel.text isEqualToString:@"新品"]){
+        product_new = @"1";
+        product_hotsale = @"0";
+    }else if ([_leixingLabel.text isEqualToString:@"畅销"]){
+        product_new = @"0";
+        product_hotsale = @"0";
+    }
+    
+    
     
     
     //设置接收响应类型为标准HTTP类型(默认为响应类型为JSON)
@@ -211,11 +247,17 @@
                                    POST:uploadImageUrlStr
                                    parameters:@{
                                                 @"product_name":tf1.text,//产品名
-                                                @"product_gender":@"男",//产品适用性别
+                                                @"product_gender":gengder,//产品适用性别
                                                 @"product_price":tf3.text,//产品价格
-                                                @"product_brand_id":@"123",//产品品牌id
-                                                @"product_mall_id":self.userInfo.shop_id,//商店id
-                                                @"product_sku":@"1",//产品唯一标示
+                                                @"product_brand_id":self.mallInfo.brand_id,//产品品牌id
+                                                @"product_brand_name":tf.text,//品牌名称
+                                                @"product_shop_id":self.userInfo.shop_id,//商店id
+                                                @"product_sku":tf2.text,//产品唯一标示
+                                                @"product_hotsale":product_hotsale,//是否热销
+                                                @"product_new":product_new,//是否新品
+                                                @"discount_num":tf4.text,//打折力度
+                                                @"product_tag":tf5.text,//标签
+                                                @"authcode":[GMAPI getAuthkey]//用户标示
                                                 }
                                    constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
                                    {
@@ -250,10 +292,15 @@
                                        
                                        NSLog(@"mydic == %@ err0 = %@",mydic,myerr);
                                        
+                                       if ([[mydic objectForKey:@"errorcode"]intValue]==0) {
+                                           [GMAPI showAutoHiddenMBProgressWithText:@"添加成功" addToView:self.view];
+                                           [self.navigationController popViewControllerAnimated:YES];
+                                       }
+                                       
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        
-                                       
+                                       [GMAPI showAutoHiddenMBProgressWithText:@"添加失败请重新上传" addToView:self.view];
                                        
                                        NSLog(@"失败 : %@",error);
                                        
@@ -282,14 +329,21 @@
 //    topGrayView.backgroundColor = RGBCOLOR(242, 242, 242);
     
     
-    _view1 = [[UIView alloc]initWithFrame:CGRectMake(0, 15, DEVICE_WIDTH, 303)];
+    _view1 = [[UIView alloc]initWithFrame:CGRectMake(0, 15, DEVICE_WIDTH, 353)];
     _view1.backgroundColor = [UIColor whiteColor];
     [_mainScrollView addSubview:_view1];
     
     
-    NSArray *titleNameArray = @[@"品牌",@"品名",@"型号",@"价格",@"折扣",@"标签"];
+    NSString *pinpai = nil;
+    if ([self.mallInfo.brand_id isEqualToString:@"0"]) {//精品店
+        
+    }else{//商场店
+        pinpai = self.mallInfo.shop_name;//品牌
+    }
     
-    for (int i = 0; i<6; i++) {
+    NSArray *titleNameArray = @[@"品牌",@"品名",@"型号",@"价格",@"折扣",@"标签",@"类型"];
+    
+    for (int i = 0; i<7; i++) {
         UIView *backView = [[UIView alloc]initWithFrame:CGRectMake(0, 0+i*50.5, DEVICE_WIDTH, 50)];
         //收键盘
         UIControl *tapshou = [[UIControl alloc]initWithFrame:backView.bounds];
@@ -329,21 +383,68 @@
         [backView addSubview:shuruTf];
         
         
+        if (i == 0) {
+            if (pinpai) {
+                shuruTf.text = pinpai;
+                shuruTf.userInteractionEnabled = NO;
+            }
+        }
+        
+        
+        if (i == 6) {
+            shuruTf.hidden = YES;
+            _leixingLabel = [[UILabel alloc]initWithFrame:shuruTf.frame];
+            _leixingLabel.userInteractionEnabled = YES;
+            UITapGestureRecognizer *ttt = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(chooseLeixing)];
+            [_leixingLabel addGestureRecognizer:ttt];
+            [backView addSubview:_leixingLabel];
+        }
+        
+        
+        
+        
+        if (i == 3) {
+            shuruTf.placeholder = @"单位:元";
+        }else if (i == 4){
+            shuruTf.placeholder = @"如:8.8即为88折扣";
+        }else if (i == 5){
+            shuruTf.placeholder = @"如:运动,休闲,时尚,商务";
+        }
+        
+        
+        
         [_view1 addSubview:backView];
         
     }
     
 }
 
+//选择类型
+-(void)chooseLeixing{
+    UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"选择商品类型" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"折扣",@"新品",@"畅销", nil];
+    
+    [al show];
+}
 
-
-
-
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    NSLog(@"%d",buttonIndex);
+    
+    if (buttonIndex == 1) {
+        _leixingLabel.text = @"折扣";
+    }else if (buttonIndex == 2){
+        _leixingLabel.text = @"新品";
+    }else if (buttonIndex == 3){
+        _leixingLabel.text = @"畅销";
+    }else{
+        _leixingLabel.text = @"";
+    }
+    
+}
 
 
 
 -(void)creatView2{
-    _view2 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_view1.frame)+12, DEVICE_WIDTH, 145)];
+    _view2 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_view1.frame)+12, DEVICE_WIDTH, 160)];
     _view2.backgroundColor = [UIColor whiteColor];
     [_mainScrollView addSubview:_view2];
     
@@ -390,13 +491,39 @@
     }
     
     
+    
+    //选择性别
+    UILabel *ttt = [[UILabel alloc]initWithFrame:CGRectMake(17, CGRectGetMaxY(titleLabel.frame)+btnWeight+25, 70, 20)];
+    ttt.text = @"选择性别";
+    ttt.textColor = RGBCOLOR(114, 114, 114);
+    UISwitch *ggg = [[UISwitch alloc]initWithFrame:CGRectMake(CGRectGetMaxX(ttt.frame)+5, ttt.frame.origin.y-5, 50, 50)];
+    [ggg addTarget:self action:@selector(nnnn:) forControlEvents:UIControlEventValueChanged];
+    _genderLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(ggg.frame)+10, ttt.frame.origin.y, 50, 20)];
+    _genderLabel.text = @"男";
+    _genderLabel.textColor = RGBCOLOR(114, 114, 114);
+    [_view2 addSubview:ttt];
+    [_view2 addSubview:ggg];
+    [_view2 addSubview:_genderLabel];
+    
+    
+    
+    
+}
+
+
+-(void)nnnn:(UISwitch*)sender{
+    if (sender.on) {
+        _genderLabel.text = @"女";
+    }else{
+        _genderLabel.text = @"男";
+    }
 }
 
 
 
 
 -(void)removeSelf:(UIButton *)sender{
-    NSString *tagIndex = [NSString stringWithFormat:@"%ld",sender.tag-100-1];
+    NSString *tagIndex = [NSString stringWithFormat:@"%d",sender.tag-100-1];
     BOOL have = NO;
     for (NSString *str in _deleteImageIndexArray) {
         if ([str isEqualToString:tagIndex]) {
@@ -418,7 +545,7 @@
 //弹出action提示
 -(void)tianjiatupian:(UIButton *) sender
 {
-    UIActionSheet *selectPhotoSheet=[[UIActionSheet alloc]initWithTitle:@"选择照片" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"从相册选取", nil];
+    UIActionSheet *selectPhotoSheet=[[UIActionSheet alloc]initWithTitle:@"选择照片" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"从相册选取", nil];
     selectPhotoSheet.actionSheetStyle=UIActionSheetStyleDefault;
     [selectPhotoSheet showInView:self.view];
 }
@@ -429,21 +556,6 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if(buttonIndex==0)
-    {
-        UIImagePickerControllerSourceType sourceType=UIImagePickerControllerSourceTypeCamera;
-        if(![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
-        {
-            sourceType=UIImagePickerControllerSourceTypePhotoLibrary;
-        }
-        UIImagePickerController *picker=[[UIImagePickerController alloc]init];
-        picker.delegate=self;
-        picker.sourceType=sourceType;
-        //picker.allowsEditing=YES;
-        [self presentViewController:picker animated:YES completion:^{
-            
-        }];
-        
-    }else if(buttonIndex==1)
     {
         ZYQAssetPickerController *picker = [[ZYQAssetPickerController alloc] init];
         picker.maximumNumberOfSelection = 9 - _imageArray.count;

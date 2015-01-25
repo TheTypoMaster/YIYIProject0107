@@ -188,84 +188,169 @@
 -(void)gtijiao{
     
     
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
     //上传的url
     NSString *uploadImageUrlStr = GFABUDIANPIN;
     
+    NSString *type = nil;
+    if ([self.mallInfo.brand_id isEqualToString:@"0"]) {//精品店
+        type = @"2";
+    }else if ([self.mallInfo.brand_id isEqualToString:@"1"]){//商场店
+        type = @"1";
+    }
+    
     NSString *mall_id = self.mallInfo.mall_id;//商场id
-    NSString *shop_id = @"";//店铺id
-    NSString *activity_info = @"";//活动内容
-    NSString *start_time = @"";//活动开始时间
-    NSString *end_time = @"";//活动结束时间
+    NSString *shop_id = self.userInfo.shop_id;//店铺id
+    NSString *activity_info = _gholderTextView.text;//活动内容
+    NSString *start_time = _startTime.text;//活动开始时间
+    NSString *end_time = _endTime.text;//活动结束时间
     
-    //设置接收响应类型为标准HTTP类型(默认为响应类型为JSON)
-    AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    AFHTTPRequestOperation  * o2= [manager
-                                   POST:uploadImageUrlStr
-                                   parameters:@{
-                                                @"type":@"2",
-                                                @"mall_id":mall_id,
-                                                @"shop_id":shop_id,
-                                                @"activity_info":activity_info,
-                                                @"start_time":start_time,
-                                                @"end_time":end_time,
-                                                }
-                                   constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
-                                   {
-                                       //开始拼接表单
-                                       //获取图片的二进制形式
-                                       NSData * data= _showImageData;
-                                       
-                                       NSLog(@"%ld",(unsigned long)data.length);
-                                       
-                                       //将得到的二进制图片拼接到表单中
-                                       /**
-                                        *  data,指定上传的二进制流
-                                        *  name,服务器端所需参数名
-                                        *  fileName,指定文件名
-                                        *  mimeType,指定文件格式
-                                        */
-                                       [formData appendPartWithFileData:data name:@"pic" fileName:@"icon.jpg" mimeType:@"image/jpg"];
-                                       //多用途互联网邮件扩展（MIME，Multipurpose Internet Mail Extensions）
-                                      
-                                       
-                                       
-                                   }
-                                   success:^(AFHTTPRequestOperation *operation, id responseObject)
-                                   {
-                                       
-                                       [GMAPI showAutoHiddenMBProgressWithText:@"发布成功" addToView:self.view];
-                                       
-                                       NSLog(@"%@",responseObject);
-                                       
-                                       NSError * myerr;
-                                       
-                                       NSDictionary *mydic=[NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:NSJSONReadingAllowFragments error:&myerr];
-                                       
-                                       
-                                       NSLog(@"%@",mydic);
-                                       
-                                   }
-                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       
-                                       [GMAPI showAutoHiddenMBProgressWithText:@"更改失败,联网自动上传" addToView:self.view];
-                                       
-                                       NSLog(@"%@",error);
-                                       
-                                       
-                                   }];
     
-    //设置上传操作的进度
-    [o2 setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+    
+    if ([type isEqualToString:@"2"]) {//精品店
+        //设置接收响应类型为标准HTTP类型(默认为响应类型为JSON)
+        AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        AFHTTPRequestOperation  * o2= [manager
+                                       POST:uploadImageUrlStr
+                                       parameters:@{
+                                                    @"type":type,
+                                                    @"shop_id":shop_id,
+                                                    @"activity_info":activity_info,
+                                                    @"start_time":start_time,
+                                                    @"end_time":end_time,
+                                                    }
+                                       constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
+                                       {
+                                           //开始拼接表单
+                                           //获取图片的二进制形式
+                                           NSData * data= _showImageData;
+                                           
+                                           NSLog(@"%ld",(unsigned long)data.length);
+                                           
+                                           //将得到的二进制图片拼接到表单中
+                                           /**
+                                            *  data,指定上传的二进制流
+                                            *  name,服务器端所需参数名
+                                            *  fileName,指定文件名
+                                            *  mimeType,指定文件格式
+                                            */
+                                           [formData appendPartWithFileData:data name:@"pic" fileName:@"icon.jpg" mimeType:@"image/jpg"];
+                                           //多用途互联网邮件扩展（MIME，Multipurpose Internet Mail Extensions）
+                                           
+                                           
+                                           
+                                       }
+                                       success:^(AFHTTPRequestOperation *operation, id responseObject)
+                                       {
+                                           
+                                           
+                                           [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                           
+                                           [GMAPI showAutoHiddenMBProgressWithText:@"发布成功" addToView:self.view];
+                                           
+                                           NSLog(@"%@",responseObject);
+                                           
+                                           NSError * myerr;
+                                           
+                                           NSDictionary *mydic=[NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:NSJSONReadingAllowFragments error:&myerr];
+                                           
+                                           
+                                           NSLog(@"%@",mydic);
+                                           
+                                       }
+                                       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                           
+                                           [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                           [GMAPI showAutoHiddenMBProgressWithText:@"发布失败请重新发布" addToView:self.view];
+                                           
+                                           NSLog(@"%@",error);
+                                           
+                                           
+                                       }];
         
-    }];
-    
-    
-    
+        //设置上传操作的进度
+        [o2 setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+            
+        }];
+    }else if ([type isEqualToString:@"1"]){//商场店
+        //设置接收响应类型为标准HTTP类型(默认为响应类型为JSON)
+        AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        AFHTTPRequestOperation  * o2= [manager
+                                       POST:uploadImageUrlStr
+                                       parameters:@{
+                                                    @"type":type,
+                                                    @"mall_id":mall_id,
+                                                    @"shop_id":shop_id,
+                                                    @"activity_info":activity_info,
+                                                    @"start_time":start_time,
+                                                    @"end_time":end_time,
+                                                    }
+                                       constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
+                                       {
+                                           //开始拼接表单
+                                           //获取图片的二进制形式
+                                           NSData * data= _showImageData;
+                                           
+                                           NSLog(@"%ld",(unsigned long)data.length);
+                                           
+                                           //将得到的二进制图片拼接到表单中
+                                           /**
+                                            *  data,指定上传的二进制流
+                                            *  name,服务器端所需参数名
+                                            *  fileName,指定文件名
+                                            *  mimeType,指定文件格式
+                                            */
+                                           [formData appendPartWithFileData:data name:@"pic" fileName:@"icon.jpg" mimeType:@"image/jpg"];
+                                           //多用途互联网邮件扩展（MIME，Multipurpose Internet Mail Extensions）
+                                           
+                                           
+                                           
+                                       }
+                                       success:^(AFHTTPRequestOperation *operation, id responseObject)
+                                       {
+                                           
+                                           
+                                           [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                           
+                                           [GMAPI showAutoHiddenMBProgressWithText:@"发布成功" addToView:self.view];
+                                           
+                                           NSLog(@"%@",responseObject);
+                                           
+                                           NSError * myerr;
+                                           
+                                           NSDictionary *mydic=[NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:NSJSONReadingAllowFragments error:&myerr];
+                                           
+                                           
+                                           NSLog(@"%@",mydic);
+                                           
+                                       }
+                                       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                           
+                                           [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                           [GMAPI showAutoHiddenMBProgressWithText:@"发布失败请重新发布" addToView:self.view];
+                                           
+                                           NSLog(@"%@",error);
+                                           
+                                           
+                                           
+                                       }];
+        
+        //设置上传操作的进度
+        [o2 setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+            
+        }];
+    }
     
     
     
 }
+
+
+
+
 
 
 

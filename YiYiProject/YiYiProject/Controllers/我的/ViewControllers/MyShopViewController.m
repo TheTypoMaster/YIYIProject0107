@@ -414,6 +414,7 @@
 
         GupClothesViewController *ccc = [[GupClothesViewController alloc]init];
         ccc.userInfo = self.userInfo;
+        ccc.mallInfo = self.mallInfo;
         
         [self.navigationController pushViewController:ccc animated:YES];
         

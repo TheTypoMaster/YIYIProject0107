@@ -13,6 +13,7 @@
 
 #import <UIKit/UIKit.h>
 #import "UserInfo.h"
+#import "MailInfoModel.h"
 
 @interface GupClothesViewController : MyViewController
 {
@@ -21,7 +22,8 @@
 }
 
 
-@property(nonatomic,strong)UserInfo *userInfo;
+@property(nonatomic,strong)UserInfo *userInfo;//用户信息
+@property(nonatomic,strong)MailInfoModel *mallInfo;//店铺信息
 
 
 @end
