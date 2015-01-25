@@ -162,4 +162,8 @@ typedef void(^ GCllocationBlock)(NSDictionary *theLocationDic);
 
 
 
+//时间戳相关
++(NSString*)getTimeWithDate:(NSDate*)theDate;
+
+
 @end

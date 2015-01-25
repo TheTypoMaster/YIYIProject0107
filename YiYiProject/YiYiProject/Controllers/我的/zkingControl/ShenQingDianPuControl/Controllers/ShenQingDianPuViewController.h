@@ -22,5 +22,9 @@
 @property(nonatomic,strong)NSString *pinpaiId;//品牌id
 
 
+
+@property(nonatomic,assign)CLLocationCoordinate2D location_jingpindian;//精品店经纬度
+
+
 @end
 

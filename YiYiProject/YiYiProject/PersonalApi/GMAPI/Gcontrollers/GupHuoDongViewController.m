@@ -27,6 +27,17 @@
     UIImage *_showImage;//选择的图片
     
     NSData *_showImageData;//需要上传的图片
+    
+    UILabel *_startTime;//开始时间
+    UILabel *_endTime;//结束时间
+    
+    NSDate* _date_start;//开始时间
+    NSDate *_date_end;//结束时间
+    
+    
+    UIView *_dateChooseView;//时间选择view
+    UIDatePicker *_datePicker;//时间选择器
+    
 }
 @end
 
@@ -63,10 +74,61 @@
     
     [self creatTijiaoBtn];
     
+    [self creatDatePickerChooseView];
+    
+    
+    
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(gShou) name:UIKeyboardWillHideNotification object:nil];
     
 }
+
+//时间选择器view
+-(void)creatDatePickerChooseView{
+    _dateChooseView = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT, DEVICE_WIDTH, 300)];
+    _dateChooseView.backgroundColor = [UIColor whiteColor];
+    
+    _datePicker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, 40, DEVICE_WIDTH, 260)];
+    [_dateChooseView addSubview:_datePicker];
+    
+    //确定按钮
+    UIButton *quedingBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    quedingBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    [quedingBtn setTitle:@"确定" forState:UIControlStateNormal];
+    [quedingBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    quedingBtn.frame = CGRectMake(DEVICE_WIDTH-70, 5, 60, 40);
+    quedingBtn.layer.borderWidth = 1;
+    quedingBtn.layer.borderColor = [[UIColor blackColor]CGColor];
+    quedingBtn.layer.cornerRadius = 5;
+    [quedingBtn addTarget:self action:@selector(datePickerHideen) forControlEvents:UIControlEventTouchUpInside];
+    [_dateChooseView addSubview:quedingBtn];
+    
+    
+    
+    
+    [self.view addSubview:_dateChooseView];
+    
+    
+}
+
+
+-(void)datePickerHideen{
+    [UIView animateWithDuration:0.3 animations:^{
+        _dateChooseView.frame = CGRectMake(0, DEVICE_HEIGHT, DEVICE_WIDTH, _dateChooseView.frame.size.height);
+        if (_dateChooseView.tag == 1000) {//开始时间
+            _date_start = _datePicker.date;
+            _startTime.text = [GMAPI getTimeWithDate:_datePicker.date];
+        }else if (_dateChooseView.tag == 1001){//结束时间
+            _date_end = _datePicker.date;
+            _endTime.text = [GMAPI getTimeWithDate:_datePicker.date];
+        }
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+
+
+
 
 //活动标题
 -(void)creatView1{
@@ -125,6 +187,84 @@
 
 -(void)gtijiao{
     
+    
+    //上传的url
+    NSString *uploadImageUrlStr = GFABUDIANPIN;
+    
+    NSString *mall_id = @"";//商场id
+    NSString *shop_id = @"";//店铺id
+    NSString *activity_info = @"";//活动内容
+    NSString *start_time = @"";//活动开始时间
+    NSString *end_time = @"";//活动结束时间
+    
+    //设置接收响应类型为标准HTTP类型(默认为响应类型为JSON)
+    AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    AFHTTPRequestOperation  * o2= [manager
+                                   POST:uploadImageUrlStr
+                                   parameters:@{
+                                                @"type":@"2",
+                                                @"mall_id":mall_id,
+                                                @"shop_id":shop_id,
+                                                @"activity_info":activity_info,
+                                                @"start_time":start_time,
+                                                @"end_time":end_time,
+                                                }
+                                   constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
+                                   {
+                                       //开始拼接表单
+                                       //获取图片的二进制形式
+                                       NSData * data= _showImageData;
+                                       
+                                       NSLog(@"%ld",(unsigned long)data.length);
+                                       
+                                       //将得到的二进制图片拼接到表单中
+                                       /**
+                                        *  data,指定上传的二进制流
+                                        *  name,服务器端所需参数名
+                                        *  fileName,指定文件名
+                                        *  mimeType,指定文件格式
+                                        */
+                                       [formData appendPartWithFileData:data name:@"pic" fileName:@"icon.jpg" mimeType:@"image/jpg"];
+                                       //多用途互联网邮件扩展（MIME，Multipurpose Internet Mail Extensions）
+                                      
+                                       
+                                       
+                                   }
+                                   success:^(AFHTTPRequestOperation *operation, id responseObject)
+                                   {
+                                       
+                                       [GMAPI showAutoHiddenMBProgressWithText:@"发布成功" addToView:self.view];
+                                       
+                                       NSLog(@"%@",responseObject);
+                                       
+                                       NSError * myerr;
+                                       
+                                       NSDictionary *mydic=[NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:NSJSONReadingAllowFragments error:&myerr];
+                                       
+                                       
+                                       NSLog(@"%@",mydic);
+                                       
+                                   }
+                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       
+                                       [GMAPI showAutoHiddenMBProgressWithText:@"更改失败,联网自动上传" addToView:self.view];
+                                       
+                                       NSLog(@"%@",error);
+                                       
+                                       
+                                   }];
+    
+    //设置上传操作的进度
+    [o2 setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+        
+    }];
+    
+    
+    
+    
+    
+    
 }
 
 
@@ -132,7 +272,7 @@
 //活动内容
 -(void)creatView2{
     
-    _view2 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_view1.frame), DEVICE_WIDTH, 170)];
+    _view2 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_view1.frame), DEVICE_WIDTH, 180)];
     
     
     
@@ -141,7 +281,7 @@
     [tapshou addTarget:self action:@selector(gShou) forControlEvents:UIControlEventTouchDown];
     [_view2 addSubview:tapshou];
     
-    _gholderTextView = [[GHolderTextView alloc]initWithFrame:CGRectMake(16, 10, DEVICE_WIDTH-32, 150) placeholder:@"活动内容..." holderSize:15];
+    _gholderTextView = [[GHolderTextView alloc]initWithFrame:CGRectMake(16, 10, DEVICE_WIDTH-32, 100) placeholder:@"活动内容..." holderSize:15];
     _gholderTextView.tag = 300;
     
     _gholderTextView.font = [UIFont systemFontOfSize:15];
@@ -149,9 +289,62 @@
     
     [_view2 addSubview:_gholderTextView];
     
+    
+    //开始时间
+    UILabel *startTimeLabel = [[UILabel alloc]initWithFrame:CGRectMake(16, CGRectGetMaxY(_gholderTextView.frame)+5, 70, 25)];
+    startTimeLabel.textColor = RGBCOLOR(114, 114, 114);
+    startTimeLabel.text = @"开始时间";
+    
+    _startTime = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(startTimeLabel.frame)+5, startTimeLabel.frame.origin.y, DEVICE_WIDTH-16-16-5-70, 25)];
+    _startTime.textColor = RGBCOLOR(114, 114, 114);
+    _startTime.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(chooseStartTime:)];
+    [_startTime addGestureRecognizer:tap];
+    
+    
+    [_view2 addSubview:startTimeLabel];
+    [_view2 addSubview:_startTime];
+    
+    //结束时间
+    UILabel *endTimeLabel = [[UILabel alloc]initWithFrame:CGRectMake(16, CGRectGetMaxY(startTimeLabel.frame)+5, 70, 25)];
+    endTimeLabel.textColor = RGBCOLOR(114, 114, 114);
+    endTimeLabel.text = @"结束时间";
+    
+    _endTime = [[UILabel alloc]initWithFrame:CGRectMake(_startTime.frame.origin.x, endTimeLabel.frame.origin.y, _startTime.frame.size.width, _startTime.frame.size.height)];
+    _endTime.textColor = RGBCOLOR(114, 114, 114);
+    _endTime.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tapc = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(chooseEndTime:)];
+    [_endTime addGestureRecognizer:tapc];
+    
+    
+    
+    
+    [_view2 addSubview:endTimeLabel];
+    [_view2 addSubview:_endTime];
+    
     [self.view addSubview:_view2];
     
 }
+
+
+-(void)chooseStartTime:(UITapGestureRecognizer*)sender{
+    [UIView animateWithDuration:0.3 animations:^{
+        _dateChooseView.frame = CGRectMake(0, DEVICE_HEIGHT-_dateChooseView.frame.size.height, DEVICE_WIDTH, _dateChooseView.frame.size.height);
+        _dateChooseView.tag = 1000;
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+
+-(void)chooseEndTime:(UITapGestureRecognizer*)sender{
+    [UIView animateWithDuration:0.3 animations:^{
+        _dateChooseView.frame = CGRectMake(0, DEVICE_HEIGHT-_dateChooseView.frame.size.height, DEVICE_WIDTH, _dateChooseView.frame.size.height);
+        _dateChooseView.tag = 1001;
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+
 
 
 -(void)creatView3{
@@ -200,6 +393,12 @@
     
     UITextView *tv = (UITextView*)[self.view viewWithTag:300];
     [tv resignFirstResponder];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        _dateChooseView.frame = CGRectMake(0, DEVICE_HEIGHT, DEVICE_WIDTH, 300);
+    } completion:^(BOOL finished) {
+        
+    }];
     
 }
 
@@ -307,77 +506,9 @@
     
     
     [_showPicBtn setBackgroundImage:doneImage forState:UIControlStateNormal];
-    
-    //ASI上传
-//    [self upLoadImage];
 
 }
 
-//上传
--(void)upLoadImage{
-    
-    //上传的url
-    NSString *uploadImageUrlStr = nil;
-    
-    
-    //设置接收响应类型为标准HTTP类型(默认为响应类型为JSON)
-    AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    AFHTTPRequestOperation  * o2= [manager
-                                   POST:uploadImageUrlStr
-                                   parameters:@{
-                                                @"authcode":[GMAPI getAuthkey]
-                                                }
-                                   constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
-                                   {
-                                       //开始拼接表单
-                                       //获取图片的二进制形式
-                                       NSData * data= _showImageData;
-                                       
-                                       NSLog(@"%ld",(unsigned long)data.length);
-                                       
-                                       //将得到的二进制图片拼接到表单中
-                                       /**
-                                        *  data,指定上传的二进制流
-                                        *  name,服务器端所需参数名
-                                        *  fileName,指定文件名
-                                        *  mimeType,指定文件格式
-                                        */
-                                       [formData appendPartWithFileData:data name:@"pic" fileName:@"icon.jpg" mimeType:@"image/jpg"];
-                                       //多用途互联网邮件扩展（MIME，Multipurpose Internet Mail Extensions）
-                                   }
-                                   success:^(AFHTTPRequestOperation *operation, id responseObject)
-                                   {
-                                       
-                                       [GMAPI showAutoHiddenMBProgressWithText:@"更改成功" addToView:self.view];
-                                       
-                                       NSLog(@"%@",responseObject);
-                                       
-                                       NSError * myerr;
-                                       
-                                       NSDictionary *mydic=[NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:NSJSONReadingAllowFragments error:&myerr];
-                                       
-                                       
-                                       NSLog(@"%@",mydic);
-                                      
-                                       
-                                   }
-                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       
-                                       [GMAPI showAutoHiddenMBProgressWithText:@"更改失败,联网自动上传" addToView:self.view];
-                                       
-                                       
-                                       NSLog(@"%@",error);
-                                       
-                                       
-                                   }];
-    //设置上传操作的进度
-    [o2 setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
-        
-    }];
-    
-    
-}
 
 
 

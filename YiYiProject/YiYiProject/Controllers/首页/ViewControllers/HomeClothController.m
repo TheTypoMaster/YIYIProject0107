@@ -74,6 +74,7 @@
     
     UIScrollView *scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT -  64 - 44)];
     scrollView.delegate = self;
+    scrollView.tag = 10000;
     scrollView.backgroundColor = RGBCOLOR(242, 242, 242);
     scrollView.contentSize = CGSizeMake(DEVICE_WIDTH, 180+218+155);
     
@@ -575,10 +576,20 @@
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    
+    NSLog(@"scrollView.contentOffset.y:%f",scrollView.contentOffset.y);
+    
+    
     if (scrollView.tag == 10) {
         NSLog(@"附近 x:%f,y:%f",scrollView.contentOffset.x,scrollView.contentOffset.y);
     }else if (scrollView.tag == 11){
         NSLog(@"品牌 x:%f,y:%f",scrollView.contentOffset.x,scrollView.contentOffset.y);
+    }
+    
+    if (scrollView.tag == 10000) {//主scrollview
+        if (scrollView.contentOffset.y <= -60) {
+            NSLog(@"该刷新了");
+        }
     }
     
     

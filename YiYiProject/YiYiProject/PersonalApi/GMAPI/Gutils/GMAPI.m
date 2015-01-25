@@ -503,7 +503,13 @@
 
 
 
-
++(NSString*)getTimeWithDate:(NSDate*)theDate{
+    //获取当前时间
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yy-MM-dd HH:mm"];
+    NSString *theTime = [formatter stringFromDate:theDate];
+    return theTime;
+}
 
 
 
