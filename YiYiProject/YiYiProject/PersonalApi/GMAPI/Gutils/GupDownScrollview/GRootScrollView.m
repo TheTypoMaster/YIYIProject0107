@@ -168,7 +168,7 @@
     
         NSArray *dataArray = self.dataArray[tableView.tag-200];
         NSDictionary *dicInfo = dataArray[indexPath.row];
-        NSString *storeIdStr = [dicInfo stringValueForKey:@"brand_id"];
+        NSString *storeIdStr = [dicInfo stringValueForKey:@"shop_id"];
         NSLog(@"商城id:%@",storeIdStr);
         NSDictionary *dic = dataArray[indexPath.row];
         NSString *pinpaiNameStr = [dic stringValueForKey:@"brand_name"];

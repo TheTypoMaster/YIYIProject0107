@@ -530,7 +530,7 @@
     [_jingpingdianView addSubview:witheBgView];
     
     
-    NSArray *titleArr=@[@"地区",@"名称",@"经纬度",@"地址",@"电话",@"验证码"];
+    NSArray *titleArr=@[@"地区",@"名称",@"地图选址",@"地址",@"电话",@"验证码"];
 
     for (int i=0; i<6; i++) {
         
@@ -552,7 +552,8 @@
         
         if (i ==2) {
             shuRuTextfield.hidden = YES;
-            UILabel *jingweiduLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(title_Label.frame), i*50, DEVICE_WIDTH-17-title_Label.frame.size.width-17, 50)];
+            title_Label.frame = CGRectMake(17, i*50, 70, 50);
+            UILabel *jingweiduLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(title_Label.frame)+10, i*50, DEVICE_WIDTH-17-title_Label.frame.size.width-17, 50)];
             jingweiduLabel.userInteractionEnabled = YES;
             UITapGestureRecognizer *labelTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(jingweiduTap:)];
             [jingweiduLabel addGestureRecognizer:labelTap];
@@ -791,7 +792,7 @@
     
     
     //精品店相关
-    if (textField.tag == 102||textField.tag == 103 || textField.tag == 104) {//申请精品店的 电话 验证码 选项
+    if (textField.tag == 10005||textField.tag == 10003 || textField.tag == 10004) {//申请精品店的 电话 验证码 选项
         _jingpingdianView.scrollEnabled = YES;
         if (_jingpingdianView.contentOffset.y>=58) {
             

@@ -1866,68 +1866,6 @@
 			path = UM_share;
 			sourceTree = "<group>";
 		};
-
-		137FC2B51A4DB2C90039E3FF /* RongCloud */ = {
-			isa = PBXGroup;
-			children = (
-				137FC2B61A4DB2DC0039E3FF /* IMKit */,
-			);
-			path = RongCloud;
-			sourceTree = "<group>";
-		};
-		137FC2B61A4DB2DC0039E3FF /* IMKit */ = {
-			isa = PBXGroup;
-			children = (
-				137FC2B71A4DB2DC0039E3FF /* Headers */,
-				137FC2DC1A4DB2DC0039E3FF /* RongCloud.bundle */,
-			);
-			path = IMKit;
-			sourceTree = "<group>";
-		};
-		137FC2B71A4DB2DC0039E3FF /* Headers */ = {
-			isa = PBXGroup;
-			children = (
-				137FC2B81A4DB2DC0039E3FF /* AmrDataConverter.h */,
-				137FC2B91A4DB2DC0039E3FF /* dec_if.h */,
-				137FC2BA1A4DB2DC0039E3FF /* if_rom.h */,
-				137FC2BB1A4DB2DC0039E3FF /* interf_dec.h */,
-				137FC2BC1A4DB2DC0039E3FF /* interf_enc.h */,
-				137FC2BD1A4DB2DC0039E3FF /* RCBasicViewController.h */,
-				137FC2BE1A4DB2DC0039E3FF /* RCChatListViewController.h */,
-				137FC2BF1A4DB2DC0039E3FF /* RCChatSettingViewController.h */,
-				137FC2C01A4DB2DC0039E3FF /* RCChatViewController.h */,
-				137FC2C11A4DB2DC0039E3FF /* RCClientDelegate.h */,
-				137FC2C21A4DB2DC0039E3FF /* RCConversation.h */,
-				137FC2C31A4DB2DC0039E3FF /* RCDiscussion.h */,
-				137FC2C41A4DB2DC0039E3FF /* RCDiscussionNotification.h */,
-				137FC2C51A4DB2DC0039E3FF /* RCGroup.h */,
-				137FC2C61A4DB2DC0039E3FF /* RCGroupListViewController.h */,
-				137FC2C71A4DB2DC0039E3FF /* RCHandShakeMessage.h */,
-				137FC2C81A4DB2DC0039E3FF /* RCIM.h */,
-				137FC2C91A4DB2DC0039E3FF /* RCImageMessage.h */,
-				137FC2CA1A4DB2DC0039E3FF /* RCIMClient.h */,
-				137FC2CB1A4DB2DC0039E3FF /* RCIMClientHeader.h */,
-				137FC2CC1A4DB2DC0039E3FF /* RCLocationMessage.h */,
-				137FC2CD1A4DB2DC0039E3FF /* RCLocationPickerViewController.h */,
-				137FC2CE1A4DB2DC0039E3FF /* RCLocationViewController.h */,
-				137FC2CF1A4DB2DC0039E3FF /* RCMessage.h */,
-				137FC2D01A4DB2DC0039E3FF /* RCMessageContent.h */,
-				137FC2D11A4DB2DC0039E3FF /* RCNotificationMessage.h */,
-				137FC2D21A4DB2DC0039E3FF /* RCPreviewViewController.h */,
-				137FC2D31A4DB2DC0039E3FF /* RCRenameViewController.h */,
-				137FC2D41A4DB2DC0039E3FF /* RCRichContentMessage.h */,
-				137FC2D51A4DB2DC0039E3FF /* RCSelectPersonViewController.h */,
-				137FC2D61A4DB2DC0039E3FF /* RCStatusDefine.h */,
-				137FC2D71A4DB2DC0039E3FF /* RCTextMessage.h */,
-				137FC2D81A4DB2DC0039E3FF /* RCThemeDefine.h */,
-				137FC2D91A4DB2DC0039E3FF /* RCUserInfo.h */,
-				137FC2DA1A4DB2DC0039E3FF /* RCVoiceMessage.h */,
-			);
-			path = Headers;
-			sourceTree = "<group>";
-		};
-
-
 		1387B08A1A5EC2BB006365D8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -3974,7 +3912,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "4353f1cb-16f6-4e1b-9102-ff517290a80a";
+				PROVISIONING_PROFILE = "0c1b68b6-94ba-43b9-b1d3-dea4d4ca3175";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -4010,7 +3948,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "4353f1cb-16f6-4e1b-9102-ff517290a80a";
+				PROVISIONING_PROFILE = "0c1b68b6-94ba-43b9-b1d3-dea4d4ca3175";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -4045,7 +3983,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4353f1cb-16f6-4e1b-9102-ff517290a80a";
+				PROVISIONING_PROFILE = "0c1b68b6-94ba-43b9-b1d3-dea4d4ca3175";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Debug;
@@ -4079,7 +4017,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4353f1cb-16f6-4e1b-9102-ff517290a80a";
+				PROVISIONING_PROFILE = "0c1b68b6-94ba-43b9-b1d3-dea4d4ca3175";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Release;

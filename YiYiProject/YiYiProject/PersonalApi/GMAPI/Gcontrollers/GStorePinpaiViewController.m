@@ -28,6 +28,13 @@
     NSMutableArray *_btnArray;//按钮数组
     
     
+    //网络数据
+    NSMutableArray *_netDataArray;//网络数据数组
+    NSMutableArray *_dataArray_xinpin;//新品数组
+    NSMutableArray *_dataArray_zhekou;//折扣数组
+    NSMutableArray *_dataArray_rexiao;//热销数组
+    
+    
 }
 
 
@@ -104,9 +111,14 @@
     _paixuIndex = 0;
     
     
-    _waterFlow = [[LWaterflowView alloc]initWithFrame:CGRectMake(12, CGRectGetMaxY(_menu_view.frame)+12, ALL_FRAME_WIDTH-24, ALL_FRAME_HEIGHT - _menu_view.frame.size.height - 12-12) waterDelegate:self waterDataSource:self];
+    UIView *backView_water = [[UIView alloc]initWithFrame:CGRectMake(12, CGRectGetMaxY(_menu_view.frame)+12, ALL_FRAME_WIDTH-24, ALL_FRAME_HEIGHT - _menu_view.frame.size.height - 12-12-64)];
+    backView_water.backgroundColor = RGBCOLOR(240, 230, 235);
+    [self.view addSubview:backView_water];
+    
+    
+    _waterFlow = [[LWaterflowView alloc]initWithFrame:backView_water.bounds waterDelegate:self waterDataSource:self];
     _waterFlow.backgroundColor = RGBCOLOR(240, 230, 235);
-    [self.view addSubview:_waterFlow];
+    [backView_water addSubview:_waterFlow];
     [_waterFlow showRefreshHeader:YES];
     
 }
@@ -177,55 +189,6 @@
 
 
 
-
-
-
-/**
- *  long 经度 非空
- lat 维度 非空
- sex 性别 1 女士 2男士 0 不按照性别 默认为0
- discount 折扣排序 1 是 0 否 默认为0
- */
-- (void)deserveBuyForSex:(SORT_SEX_TYPE)sortType
-                discount:(SORT_Discount_TYPE)discountType
-                    page:(int)pageNum
-{
-    NSString *longtitud = @"116.42111721";
-    NSString *latitude = @"39.90304099";
-    NSString *url = [NSString stringWithFormat:HOME_DESERVE_BUY,longtitud,latitude,sortType,discountType,pageNum,L_PAGE_SIZE,[GMAPI getAuthkey]];
-    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
-    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
-        
-        NSMutableArray *arr;
-        if ([result isKindOfClass:[NSDictionary class]]) {
-            
-            NSArray *list = result[@"list"];
-            arr = [NSMutableArray arrayWithCapacity:list.count];
-            if ([list isKindOfClass:[NSArray class]]) {
-                
-                for (NSDictionary *aDic in list) {
-                    
-                    ProductModel *aModel = [[ProductModel alloc]initWithDictionary:aDic];
-                    
-                    [arr addObject:aModel];
-                }
-                
-            }
-            
-        }
-        
-        [_waterFlow reloadData:arr total:100];
-        
-        
-    } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        
-        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-        [_waterFlow loadFail];
-        
-    }];
-}
-
-
 #pragma mark - _waterFlowDelegate
 
 - (void)waterLoadNewData
@@ -234,6 +197,7 @@
     
     //初始化
     _waterFlow.pageNum = 1;
+    _waterFlow.dataArray = [NSMutableArray arrayWithCapacity:1];
     
     //请求网络数据
     NSString *api = nil;

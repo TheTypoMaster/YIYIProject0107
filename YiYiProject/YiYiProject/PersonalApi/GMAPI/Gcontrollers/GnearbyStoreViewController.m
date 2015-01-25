@@ -235,29 +235,32 @@
 //创建楼层滚动view
 -(void)creatFloorScrollViewWithDic:(NSDictionary *)dic{
 
-    id brandDic = nil;
+    id brandArray = nil;
     if (dic) {
-        brandDic = [dic objectForKey:@"brand"];
+        brandArray = [dic objectForKey:@"brand"];
     }
     
     //取出brand字段中所有的key
-    NSArray *keys = nil;
-    if ([brandDic isKindOfClass:[NSDictionary class]]) {
-        keys = [brandDic allKeys];
+    NSArray *floorArray = nil;
+    if ([brandArray isKindOfClass:[NSArray class]]) {
+        floorArray = brandArray;
     }else{
         return;
     }
     //楼层数
     NSMutableArray *floorsNameArray = [NSMutableArray arrayWithCapacity:1];
-    for (NSString *str in keys) {
+    for (NSArray *arr in floorArray) {
+        NSDictionary *dic = arr[0];
+        NSString *str = [dic stringValueForKey:@"floor_name"];
         [floorsNameArray addObject:[NSString stringWithFormat:@"%@",str]];
     }
     
     //每层的数据的二维数组
     NSMutableArray *data_2Array = [NSMutableArray arrayWithCapacity:1];
-    for (NSString *key in keys) {
-        [data_2Array addObject:[brandDic objectForKey:key]];
-    }
+    data_2Array = [NSMutableArray arrayWithArray:floorArray];
+//    for (NSString *key in keys) {
+//        [data_2Array addObject:[brandDic objectForKey:key]];
+//    }
     
     
     UIView *floorView = [[UIView alloc]initWithFrame:CGRectMake(12, 185, DEVICE_WIDTH-24, DEVICE_HEIGHT-_upStoreInfoView.frame.size.height)];
