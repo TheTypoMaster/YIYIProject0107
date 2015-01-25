@@ -45,7 +45,7 @@
 //sns.whalecloud.com
 
 
-@interface AppDelegate ()<BMKGeneralDelegate,RCIMConnectionStatusDelegate,RCConnectDelegate>
+@interface AppDelegate ()<BMKGeneralDelegate,RCIMConnectionStatusDelegate,RCConnectDelegate,RCIMConnectionStatusDelegate,RCConnectDelegate,RCIMReceiveMessageDelegate,RCIMUserInfoFetcherDelegagte>
 {
     BMKMapManager* _mapManager;
     CLLocationManager *_locationManager;
@@ -63,6 +63,8 @@
     
     [RCIM initWithAppKey:RONGCLOUD_IM_APPKEY deviceToken:nil];
     [[RCIM sharedRCIM]setConnectionStatusDelegate:self];//监控连接状态
+    [[RCIM sharedRCIM] setReceiveMessageDelegate:self];//接受消息
+    [RCIM setUserInfoFetcherWithDelegate:self isCacheUserInfo:YES];
     
     //系统登录成功通知 登录融云
     
@@ -400,6 +402,68 @@
 - (void)responseConnectError:(RCConnectErrorCode)errorCode
 {
     NSLog(@"rongCloud重新连接失败--- %d",(int)errorCode);
+}
+
+
+
+#pragma mark - RCIMReceiveMessageDelegate
+
+-(void)didReceivedMessage:(RCMessage *)message left:(int)nLeft
+{
+    if (0 == nLeft) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UIApplication sharedApplication].applicationIconBadgeNumber = [UIApplication sharedApplication].applicationIconBadgeNumber+1;
+        });
+    }
+    
+    [[RCIM sharedRCIM] invokeVoIPCall:self.window.rootViewController message:message];
+}
+
+#pragma mark - RCIMUserInfoFetcherDelegagte method
+
+- (void)getUserInfoWithUserId:(NSString *)userId completion:(void(^)(RCUserInfo* userInfo))completion
+{
+    NSString *userName = [LTools rongCloudUserNameWithUid:userId];
+    NSString *userIcon = [LTools rongCloudUserIconWithUid:userId];
+    
+    
+    NSLog(@"userId %@",userId);
+    NSLog(@"userIcon %@",userIcon);
+    if ([userId isEqualToString:[GMAPI getUid]]) {
+        
+        userName = [GMAPI getUsername];
+    }
+    
+    if (userName.length == 0) {
+        
+        NSString *url = [NSString stringWithFormat:GET_PERSONINFO_WITHID,userId];
+        LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+        [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+            
+            NSString *name = result[@"user_name"];
+            NSString *icon = result[@"photo"];
+            
+            if (name.length > 0) {
+                
+                [LTools cacheRongCloudUserName:name forUserId:userId];
+            }
+            
+            [LTools cacheRongCloudUserIcon:icon forUserId:userId];
+            
+            RCUserInfo *userInfo = [[RCUserInfo alloc]initWithUserId:userId name:name portrait:icon];
+            
+            return completion(userInfo);
+            
+        } failBlock:^(NSDictionary *failDic, NSError *erro) {
+            
+        }];
+    }
+    
+    NSLog(@"userId %@ %@",userId,userName);
+    
+    RCUserInfo *userInfo = [[RCUserInfo alloc]initWithUserId:userId name:userName portrait:userIcon];
+    
+    return completion(userInfo);
 }
 
 

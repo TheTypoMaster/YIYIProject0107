@@ -211,6 +211,8 @@ typedef enum {
 #define PERSON_GETUSERINFO @"http://182.92.158.32/index.php?d=api&c=user_api&m=get_user_info"
 #define PERSON_CHANGEUSERFACE @"http://182.92.158.32/index.php?d=api&c=user_api&m=update_user_info"
 
+//根据id获取用户信息
+#define GET_PERSONINFO_WITHID @"http://182.92.158.32/index.php?d=api&c=user_api&m=get_user_by_uid&uid=%@"
 
 //关注商场
 #define GUANZHUSHANGCHANG @"http://182.92.158.32/?d=api&c=friendship&m=mallShipCreate"

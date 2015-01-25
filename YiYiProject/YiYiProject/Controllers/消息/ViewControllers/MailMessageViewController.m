@@ -25,7 +25,21 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
-    self.myTitleLabel.text = @"商家消息";
+    
+    if (self.aType == Message_Yy) {
+        
+        self.myTitleLabel.text = @"衣+衣团队消息";
+        
+    }else if (self.aType == Message_Shop){
+        
+        self.myTitleLabel.text = @"商家消息";
+
+        
+    }else if (self.aType == Message_Dynamic){
+        
+        self.myTitleLabel.text = @"动态消息";
+    }
+    
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     
     _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH,DEVICE_HEIGHT - 64)];

@@ -57,44 +57,68 @@
         [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:MY_MACRO_NAME?IOS7DAOHANGLANBEIJING_PUSH:IOS6DAOHANGLANBEIJING] forBarMetrics: UIBarMetricsDefault];
     }
     
-    self.hidesDefaultBackView = YES;
     self.portraitStyle = RCUserAvatarCycle;
     
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 65 * 3)];
-    view.backgroundColor = [UIColor whiteColor];
-    self.conversationListView.tableHeaderView = view;
-    
-    
-    [self getMyMessage];//获取我的消息
-    
-    yiyi_cell = [[[NSBundle mainBundle]loadNibNamed:@"MessageViewCell" owner:self options:nil]lastObject];
-    yiyi_cell.frame = CGRectMake(0, 0, DEVICE_WIDTH, 65);
-    [view addSubview:yiyi_cell];
-    yiyi_cell.iconImageView.layer.cornerRadius = 43/2.f;
-    yiyi_cell.iconImageView.image = [UIImage imageNamed:@"yixx150_150"];
-    yiyi_cell.nameLabel.text = @"衣+衣团队";
-    yiyi_cell.messageLabel.text = @"";
-    [yiyi_cell.clickButton addTarget:self action:@selector(tapToYIJiaYi:) forControlEvents:UIControlEventTouchUpInside];
-    
+    if (self.only_rongcloud == NO) {
+        
+        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 65 * 3)];
+        view.backgroundColor = [UIColor whiteColor];
+        self.conversationListView.tableHeaderView = view;
+        
+        
+        [self getMyMessage];//获取我的消息
+        
+        yiyi_cell = [[[NSBundle mainBundle]loadNibNamed:@"MessageViewCell" owner:self options:nil]lastObject];
+        yiyi_cell.frame = CGRectMake(0, 0, DEVICE_WIDTH, 65);
+        [view addSubview:yiyi_cell];
+        yiyi_cell.iconImageView.layer.cornerRadius = 43/2.f;
+        yiyi_cell.iconImageView.image = [UIImage imageNamed:@"yixx150_150"];
+        yiyi_cell.nameLabel.text = @"衣+衣团队";
+        yiyi_cell.messageLabel.text = @"";
+        [yiyi_cell.clickButton addTarget:self action:@selector(tapToYIJiaYi:) forControlEvents:UIControlEventTouchUpInside];
+        
+        
+        shop_cell = [[[NSBundle mainBundle]loadNibNamed:@"MessageViewCell" owner:self options:nil]lastObject];
+        shop_cell.frame = CGRectMake(0, 65, DEVICE_WIDTH, 65);
+        [view addSubview:shop_cell];
+        shop_cell.iconImageView.layer.cornerRadius = 43/2.f;
+        shop_cell.nameLabel.text = @"商家消息";
+        shop_cell.messageLabel.text = @"";
+        shop_cell.iconImageView.image = [UIImage imageNamed:@"sjxx150_150"];
+        [shop_cell.clickButton addTarget:self action:@selector(tapToMail:) forControlEvents:UIControlEventTouchUpInside];
+        
+        other_cell = [[[NSBundle mainBundle]loadNibNamed:@"MessageViewCell" owner:self options:nil]lastObject];
+        other_cell.frame = CGRectMake(0, 65 * 2, DEVICE_WIDTH, 65);
+        [view addSubview:other_cell];
+        other_cell.iconImageView.layer.cornerRadius = 43/2.f;
+        other_cell.nameLabel.text = @"动态消息";
+        other_cell.messageLabel.text = @"";
+        other_cell.iconImageView.image = [UIImage imageNamed:@"t_shoucang"];
+        [other_cell.clickButton addTarget:self action:@selector(tapToDynamic:) forControlEvents:UIControlEventTouchUpInside];
+        
+    }else
+    {
+        UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(0,8,40,44)];
+        [button_back addTarget:self action:@selector(leftButtonTap:) forControlEvents:UIControlEventTouchUpInside];
+        [button_back setImage:BACK_DEFAULT_IMAGE forState:UIControlStateNormal];
+        [button_back setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+        UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
+        self.navigationItem.leftBarButtonItems=@[back_item];
+        
+        [self setNavigationTitle:@"即时消息" textColor:[UIColor whiteColor]];
 
-    shop_cell = [[[NSBundle mainBundle]loadNibNamed:@"MessageViewCell" owner:self options:nil]lastObject];
-    shop_cell.frame = CGRectMake(0, 65, DEVICE_WIDTH, 65);
-    [view addSubview:shop_cell];
-    shop_cell.iconImageView.layer.cornerRadius = 43/2.f;
-    shop_cell.nameLabel.text = @"商家消息";
-    shop_cell.messageLabel.text = @"";
-    shop_cell.iconImageView.image = [UIImage imageNamed:@"sjxx150_150"];
-    [shop_cell.clickButton addTarget:self action:@selector(tapToMail:) forControlEvents:UIControlEventTouchUpInside];
+    }
     
-    other_cell = [[[NSBundle mainBundle]loadNibNamed:@"MessageViewCell" owner:self options:nil]lastObject];
-    other_cell.frame = CGRectMake(0, 65 * 2, DEVICE_WIDTH, 65);
-    [view addSubview:other_cell];
-    other_cell.iconImageView.layer.cornerRadius = 43/2.f;
-    other_cell.nameLabel.text = @"动态消息";
-    other_cell.messageLabel.text = @"";
-    other_cell.iconImageView.image = [UIImage imageNamed:@"t_shoucang"];
-    [other_cell.clickButton addTarget:self action:@selector(tapToDynamic:) forControlEvents:UIControlEventTouchUpInside];
-    
+}
+
+-(BOOL)showCustomEmptyBackView
+{
+    return YES;
+}
+
+- (void)leftButtonTap:(UIButton *)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
