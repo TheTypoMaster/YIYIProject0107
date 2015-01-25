@@ -231,7 +231,7 @@ typedef enum {
 #define PHONE_YANZHENGMA_SHENQINGSHANGCHANGDIAN @"http://182.92.158.32/index.php?d=api&c=user_api&m=get_code&mobile=%@&type=5"
 
 //申请店铺
-#define SHENQINGJINGPINDIAN @"182.92.158.32/?d=api&c=mall&m=addMall"
+#define SHENQINGJINGPINDIAN @"http://182.92.158.32/?d=api&c=mall&m=addMall"
 //申请商场店
 #define SHENQINGSHANGCHANGDIAN @"http://182.92.158.32/?d=api&c=mall&m=addShop"
 
@@ -398,6 +398,11 @@ typedef enum {
 
 //活动详情
 #define GET_MAIL_ACTIVITY_DETAIL @"http://182.92.158.32/index.php?d=api&c=mall&m=get_activity_info&activity_id=%@"
+
+//发起活动
+#define GADD_MAIL_ACTIVITY @"http://182.92.158.32/index.php?d=api&c=mall&m=publish_activity"
+
+
 
 #endif
 

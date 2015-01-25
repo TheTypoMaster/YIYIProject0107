@@ -30,6 +30,9 @@
 
 #import "MailInfoModel.h"
 
+#import "NSDictionary+GJson.h"
+
+
 @interface MyShopViewController ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,WaterFlowDelegate,TMQuiltViewDataSource,RefreshDelegate>
 {
     UITableView *_tableView;
@@ -51,6 +54,8 @@
 
 @property(nonatomic,strong)UILabel *userNameLabel;//昵称label
 @property(nonatomic,strong)UILabel *userScoreLabel;//积分
+
+@property(nonatomic,strong)MailInfoModel *mallInfo;//店铺信息
 
 @end
 
@@ -101,12 +106,16 @@
     __weak typeof(self)weakSelf = self;
     
     NSString *url = [NSString stringWithFormat:GET_MAIL_DETAIL_INFO,self.userInfo.shop_id];
+    
+    NSLog(@"%@",url);
+    
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"");
         
+        
         MailInfoModel *mail = [[MailInfoModel alloc]initWithDictionary:result];
-
+        self.mallInfo = mail;
         [weakSelf setViewWithModel:mail];
         
         
@@ -395,6 +404,7 @@
         NSLog(@"发布活动");
         
         GupHuoDongViewController *ccc = [[GupHuoDongViewController alloc]init];
+        ccc.mallInfo = self.mallInfo;
         [self.navigationController pushViewController:ccc animated:YES];
 
     }else if (buttonIndex == 0){

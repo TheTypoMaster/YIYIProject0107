@@ -204,8 +204,6 @@
     
     
     
-    
-    
     //设置接收响应类型为标准HTTP类型(默认为响应类型为JSON)
     AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
