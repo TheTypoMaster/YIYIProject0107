@@ -153,10 +153,9 @@
                 
             }
             
+            [waterFlow reloadData:arr pageSize:L_PAGE_SIZE];
+            
         }
-        
-        [waterFlow reloadData:arr total:100];
-        
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         

@@ -38,6 +38,13 @@
     waterFlow.backgroundColor = RGBCOLOR(240, 230, 235);
     [self.view addSubview:waterFlow];
     
+    
+    NSDictionary *dic = [LTools cacheForKey:CACHE_YIYI];
+    if (dic) {
+        
+        [self parseDataWithResult:dic];
+    }
+    
     [waterFlow showRefreshHeader:YES];
     
     
@@ -115,6 +122,34 @@
     self.navigationItem.rightBarButtonItem = comment_item;
 }
 
+#pragma mark 数据解析
+
+- (void)parseDataWithResult:(NSDictionary *)result
+{
+    NSMutableArray *arr;
+    int total;
+    if ([result isKindOfClass:[NSDictionary class]]) {
+        
+        NSArray *list = result[@"list"];
+        
+        total = [result[@"total"]intValue];
+        arr = [NSMutableArray arrayWithCapacity:list.count];
+        if ([list isKindOfClass:[NSArray class]]) {
+            
+            for (NSDictionary *aDic in list) {
+                
+                TPlatModel *aModel = [[TPlatModel alloc]initWithDictionary:aDic];
+                
+                [arr addObject:aModel];
+            }
+            
+        }
+        
+        [waterFlow reloadData:arr pageSize:L_PAGE_SIZE];
+        
+    }
+}
+
 #pragma mark 网络请求
 
 //T台赞 或 取消
@@ -147,10 +182,11 @@
         int like_num = [detail_model.tt_like_num intValue];
         detail_model.tt_like_num = [NSString stringWithFormat:@"%d",like_num + 1];
         cell.like_label.text = detail_model.tt_like_num;
+        detail_model.is_like = 1;
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
-        if ([failDic[RESULT_CODE] intValue] == -11) {
+        if ([failDic[RESULT_CODE] intValue] == -11 || [failDic[RESULT_CODE] intValue] == 2003) {
             [LTools showMBProgressWithText:failDic[@"msg"] addToView:self.view];
         }
         
@@ -160,40 +196,17 @@
 
 - (void)getTTaiData
 {
+    
+    __weak typeof(self)weakSelf = self;
     NSString *url = [NSString stringWithFormat:TTAI_LIST,waterFlow.pageNum,L_PAGE_SIZE,[GMAPI getAuthkey]];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
-        NSMutableArray *arr;
-        int total;
-        if ([result isKindOfClass:[NSDictionary class]]) {
-            
-            NSArray *list = result[@"list"];
-            
-            total = [result[@"total"]intValue];
-            arr = [NSMutableArray arrayWithCapacity:list.count];
-            if ([list isKindOfClass:[NSArray class]]) {
-                
-                for (NSDictionary *aDic in list) {
-                    
-                    TPlatModel *aModel = [[TPlatModel alloc]initWithDictionary:aDic];
-                    
-                    [arr addObject:aModel];
-                }
-                
-            }
-            
+        [weakSelf parseDataWithResult:result];
+        
+        if (waterFlow.pageNum == 1) {
+            [LTools cache:result ForKey:CACHE_YIYI];
         }
-        
-        if (total % L_PAGE_SIZE == 0) {
-            total = total / L_PAGE_SIZE;
-        }else
-        {
-            total = total / L_PAGE_SIZE + 1;
-        }
-        
-        [waterFlow reloadData:arr total:total];
-        
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         

@@ -173,6 +173,8 @@ const CGFloat kTMPhotoQuiltViewMargin = 0;
         imageurl = middleImage[@"src"];
     }
 
+    self.photoView.backgroundColor = [UIColor lightGrayColor];
+    
     [self.photoView sd_setImageWithURL:[NSURL URLWithString:imageurl] placeholderImage:nil];
     self.dianPuName_Label.text = aModel.mall_name;
     

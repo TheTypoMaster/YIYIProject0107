@@ -35,6 +35,8 @@
     BOOL _reloading;
     
     TMQuiltView *qtmquitView;
+    
+    UIView *tableFooterView;
 }
 
 @property (nonatomic,assign)id<WaterFlowDelegate>waterDelegate;
@@ -60,7 +62,10 @@
 - (void)reloadData;
 -(void)showRefreshHeader:(BOOL)animated;
 
-- (void)reloadData:(NSArray *)data total:(int)totalPage;//更新数据
+- (void)reloadData:(NSArray *)data pageSize:(int)pageSize;
+//成功加载
+- (void)reloadData:(NSArray *)data isHaveMore:(BOOL)isHaveMore;
+- (void)reloadData:(NSArray *)data total:(int)totalPage;//更新数据 //根据总页数获取是否有更多
 - (void)loadFail;//请求数据失败
 
 @end

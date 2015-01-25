@@ -51,6 +51,11 @@ alpha:(a)]
 
 #define RONGCLOUD_TOKEN @"rongCloudToken"//融云对应的token
 
+//本地数据保存
+
+#define CACHE_DESERVE_BUY @"deserveBuy"//值得买
+#define CACHE_YIYI @"YIYI"//衣+衣
+
 
 //通知 信息相关
 
@@ -118,6 +123,8 @@ typedef enum {
     Sort_Discount_Yes
     
 }SORT_Discount_TYPE; //排序方式
+
+
 
 //接口地址
 

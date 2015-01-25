@@ -58,7 +58,7 @@
     
     self.navigationItem.titleView = menu_view;
     
-    NSArray *titles = @[@"值得买",@"衣+衣"];
+    NSArray *titles = @[@"衣+衣",@"值得买"];
     
     for (int i = 0; i < titles.count; i ++) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -139,7 +139,7 @@
     
     CGFloat aFrameY = 0;
     switch (tag) {
-        case 100:
+        case 101:
         {
             if (buy_viewcontroller)
             {
@@ -159,7 +159,7 @@
             
         }
             break;
-        case 101:
+        case 100:
         {
             if (cloth_viewcontroller)
             {
@@ -217,8 +217,8 @@
     UIColor *normalColor = [UIColor colorWithHexString:@"f07a8e"];
     UIColor *selectColor = [UIColor colorWithHexString:@"d43b55"];
     
-    ((UIButton *)[menu_view viewWithTag:100]).backgroundColor = [vc isKindOfClass:[HomeBuyController class]] ? normalColor : selectColor;//服务介绍;
-    ((UIButton *)[menu_view viewWithTag:101]).backgroundColor = [vc isKindOfClass:[HomeClothController class]] ? normalColor : selectColor;//服务介绍;
+    ((UIButton *)[menu_view viewWithTag:101]).backgroundColor = [vc isKindOfClass:[HomeBuyController class]] ? normalColor : selectColor;//服务介绍;
+    ((UIButton *)[menu_view viewWithTag:100]).backgroundColor = [vc isKindOfClass:[HomeClothController class]] ? normalColor : selectColor;//服务介绍;
     ((UIButton *)[menu_view viewWithTag:102]).backgroundColor = [vc isKindOfClass:[HomeMatchController class]] ? normalColor : selectColor;//服务介绍;
 }
 
