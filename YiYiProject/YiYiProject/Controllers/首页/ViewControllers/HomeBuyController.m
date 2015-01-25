@@ -46,7 +46,13 @@
     waterFlow = [[LWaterflowView alloc]initWithFrame:CGRectMake(0, 0, ALL_FRAME_WIDTH, ALL_FRAME_HEIGHT - 49 - 44) waterDelegate:self waterDataSource:self];
     waterFlow.backgroundColor = RGBCOLOR(240, 230, 235);
     [self.view addSubview:waterFlow];
+    
+    NSDictionary *result = [LTools cacheForKey:CACHE_DESERVE_BUY];
+    if (result) {
         
+        [self parseDataWithResult:result];
+    }
+    
     [waterFlow showRefreshHeader:YES];
     
     UIButton *filterButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -129,6 +135,31 @@
     }];
     
 }
+#pragma mark --解析数据
+
+- (void)parseDataWithResult:(NSDictionary *)result
+{
+    NSMutableArray *arr;
+    if ([result isKindOfClass:[NSDictionary class]]) {
+        
+        NSArray *list = result[@"list"];
+        arr = [NSMutableArray arrayWithCapacity:list.count];
+        if ([list isKindOfClass:[NSArray class]]) {
+            
+            for (NSDictionary *aDic in list) {
+                
+                ProductModel *aModel = [[ProductModel alloc]initWithDictionary:aDic];
+                
+                [arr addObject:aModel];
+            }
+            
+            
+            [waterFlow reloadData:arr total:L_PAGE_SIZE];
+        }
+        
+    }
+    
+}
 
 
 #pragma mark---------网络请求
@@ -146,28 +177,19 @@
     NSString *longtitud = @"116.42111721";
     NSString *latitude = @"39.90304099";
     NSString *url = [NSString stringWithFormat:HOME_DESERVE_BUY,longtitud,latitude,sortType,discountType,pageNum,L_PAGE_SIZE,[GMAPI getAuthkey]];
+    
+    __weak typeof(self)weakSelf = self;
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
-        NSMutableArray *arr;
-        if ([result isKindOfClass:[NSDictionary class]]) {
+        [weakSelf parseDataWithResult:result];
+        
+        if (pageNum == 1) {
             
-            NSArray *list = result[@"list"];
-            arr = [NSMutableArray arrayWithCapacity:list.count];
-            if ([list isKindOfClass:[NSArray class]]) {
-                
-                for (NSDictionary *aDic in list) {
-                    
-                    ProductModel *aModel = [[ProductModel alloc]initWithDictionary:aDic];
-                    
-                    [arr addObject:aModel];
-                }
-                
-            }
+            //本地存储
             
+            [LTools cache:result ForKey:CACHE_DESERVE_BUY];
         }
-                
-        [waterFlow reloadData:arr total:100];
         
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {

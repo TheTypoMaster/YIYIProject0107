@@ -227,7 +227,8 @@
         
         [LTools showMBProgressWithText:result[RESULT_INFO] addToView:self.view];
         
-        [weakTable showRefreshHeader:YES];
+        weakTable.pageNum = 1;
+        [bself getTTaiComments];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
@@ -411,7 +412,7 @@
     iconView.layer.borderWidth = 1.f;
     iconView.clipsToBounds = YES;
     [head_view addSubview:iconView];
-    [iconView sd_setImageWithURL:[NSURL URLWithString:iconUrl] placeholderImage:nil];
+    [iconView sd_setImageWithURL:[NSURL URLWithString:iconUrl] placeholderImage:DEFAULT_HEADIMAGE];
     //名称 375 240
     UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(iconView.right + 12, 0, DEVICE_WIDTH - 135, 13)];
     nameLabel.font = [UIFont systemFontOfSize:13];
@@ -447,7 +448,8 @@
     contentLabel.numberOfLines = 0;
     contentLabel.font = [UIFont systemFontOfSize:13];
     contentLabel.lineBreakMode = NSLineBreakByCharWrapping;
-    contentLabel.textColor = [UIColor colorWithHexString:@"9f9f9f"];
+//    contentLabel.textColor = [UIColor colorWithHexString:@"9f9f9f"];
+    contentLabel.textColor = [UIColor blackColor];
     [head_view addSubview:contentLabel];
     contentLabel.text = aModel.tt_content;
 

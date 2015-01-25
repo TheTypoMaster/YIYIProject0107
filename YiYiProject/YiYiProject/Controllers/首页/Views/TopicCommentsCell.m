@@ -126,7 +126,7 @@
 {
     aModel = model;
     
-    [_header_imageView sd_setImageWithURL:[NSURL URLWithString:model.photo] placeholderImage:nil];
+    [_header_imageView sd_setImageWithURL:[NSURL URLWithString:model.photo] placeholderImage:DEFAULT_HEADIMAGE];
     _userName_label.text = model.user_name;
     _date_label.text = [ZSNApi timechange:model.post_time WithFormat:@"MM月dd日 HH:mm"];
     

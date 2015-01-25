@@ -150,7 +150,8 @@
     _photoView.height = (DEVICE_WIDTH-30)/2.0*rate;
     
     NSString *userImageUrl = aModel.uinfo[@"photo"];
-    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:userImageUrl] placeholderImage:nil];
+    
+    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:userImageUrl] placeholderImage:DEFAULT_HEADIMAGE];
     self.userNameLabel.text = aModel.uinfo[@"user_name"];
     self.timeLabel.text = [LTools timechange:aModel.add_time];
     

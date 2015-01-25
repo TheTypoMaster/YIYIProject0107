@@ -213,7 +213,7 @@
     
     //by_time为按时间排序（新品），by_discount为按折扣排序，by_hot为是否热销，默认为by_time
     
-    NSString *url = [NSString stringWithFormat:GET_MAIL_PRODUCT_LIST,@"by_time",self.userInfo.shop_id,waterFlow.pageNum,20];
+    NSString *url = [NSString stringWithFormat:GET_MAIL_PRODUCT_LIST,@"by_time",self.userInfo.shop_id,waterFlow.pageNum,L_PAGE_SIZE];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
@@ -233,10 +233,9 @@
                 
             }
             
+            [waterFlow reloadData:arr pageSize:L_PAGE_SIZE];
+            
         }
-        
-        [waterFlow reloadData:arr total:100];
-        
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         

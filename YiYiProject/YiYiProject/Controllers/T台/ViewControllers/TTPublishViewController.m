@@ -103,6 +103,7 @@
                                            
                                            NSLog(@"成功了");
                                            
+                                           
                                            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_TTAI_PUBLISE_SUCCESS object:nil];
                                            
                                            [self performSelector:@selector(leftButtonTap:) withObject:nil afterDelay:0.5];
@@ -116,11 +117,14 @@
                                        
                                        NSLog(@"失败 : %@",error);
                                        
+                                       self.my_right_button.userInteractionEnabled = YES;
+                                       
                                        
                                    }];
     
     //设置上传操作的进度
     [o2 setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+        
         
     }];
     
@@ -175,6 +179,8 @@
         return;
     }
     
+    
+    self.my_right_button.userInteractionEnabled = NO;
     
     if (imageIsValid) {
         
