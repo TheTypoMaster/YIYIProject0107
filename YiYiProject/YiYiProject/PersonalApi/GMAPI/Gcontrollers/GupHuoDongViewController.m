@@ -191,7 +191,7 @@
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     //上传的url
-    NSString *uploadImageUrlStr = GFABUDIANPIN;
+    NSString *uploadImageUrlStr = GFABUHUODONG;
     
     NSString *type = nil;
     if ([self.mallInfo.brand_id isEqualToString:@"0"]) {//精品店
@@ -220,6 +220,7 @@
                                                     @"activity_info":activity_info,
                                                     @"start_time":start_time,
                                                     @"end_time":end_time,
+                                                    @"authcode":[GMAPI getAuthkey],
                                                     }
                                        constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
                                        {
@@ -248,16 +249,26 @@
                                            
                                            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                                            
-                                           [GMAPI showAutoHiddenMBProgressWithText:@"发布成功" addToView:self.view];
+                                           
                                            
                                            NSLog(@"%@",responseObject);
                                            
                                            NSError * myerr;
                                            
                                            NSDictionary *mydic=[NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:NSJSONReadingAllowFragments error:&myerr];
-                                           
-                                           
                                            NSLog(@"%@",mydic);
+                                           
+                                           
+                                           if ([[mydic objectForKey:@"errorcode"]intValue]==0) {
+                                               [GMAPI showAutoHiddenMBProgressWithText:@"发布成功" addToView:self.view];
+                                               [self performSelector:@selector(fabuSuccessToGoBack) withObject:[NSNumber numberWithBool:YES] afterDelay:1];
+                                           }else{
+                                               [GMAPI showAutoHiddenMBProgressWithText:[mydic objectForKey:@"msg"] addToView:self.view];
+                                           }
+                                           
+                                           
+                                           
+                                           
                                            
                                        }
                                        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -287,6 +298,7 @@
                                                     @"activity_info":activity_info,
                                                     @"start_time":start_time,
                                                     @"end_time":end_time,
+                                                    @"authcode":[GMAPI getAuthkey],
                                                     }
                                        constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
                                        {
@@ -313,9 +325,7 @@
                                        {
                                            
                                            
-                                           [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                                           
-                                           [GMAPI showAutoHiddenMBProgressWithText:@"发布成功" addToView:self.view];
+                                           [MBProgressHUD hideHUDForView:self.view animated:YES];
                                            
                                            NSLog(@"%@",responseObject);
                                            
@@ -325,6 +335,15 @@
                                            
                                            
                                            NSLog(@"%@",mydic);
+                                           
+                                           if ([[mydic objectForKey:@"errorcode"]intValue]==0) {
+                                               [GMAPI showAutoHiddenMBProgressWithText:@"发布成功" addToView:self.view];
+                                               
+                                               [self performSelector:@selector(fabuSuccessToGoBack) withObject:[NSNumber numberWithBool:YES] afterDelay:1];
+                                           }else{
+                                               [GMAPI showAutoHiddenMBProgressWithText:[mydic objectForKey:@"msg"] addToView:self.view];
+                                               NSLog(@"%@",[mydic objectForKey:@"msg"]);
+                                           }
                                            
                                        }
                                        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -349,8 +368,10 @@
 }
 
 
-
-
+//发布成功之后返回上一个界面
+-(void)fabuSuccessToGoBack{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 
 

@@ -106,6 +106,14 @@
     
     [self.view addSubview:_mainScrollView];
     
+    
+    
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(notificationOfLogOut) name:NOTIFICATION_LOGOUT object:nil];
+    
+    
+    
+    
     //网络请求
     //请求顶部滚动广告栏
     [self prepareTopScrollViewIms];
@@ -122,6 +130,26 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+//退出登录后清空我关注的商家 和 我关注的品牌 数据数组
+-(void)notificationOfLogOut{
+    //附近的商场
+    _guanzhuStoreDataArray = nil;
+    _nearbyBtn.selected = YES;
+    _guanzhuBtn_Store.selected = NO;
+    _scrollview_nearbyView.dataArray = _nearByStoreDataArray;
+    [_scrollview_nearbyView gReloadData];
+    
+    //附近的品牌
+    _guanzhuPinpaiDataArray = nil;
+    _pinpaiBtn.selected = YES;
+    _guanzhuBtn_pinpai.selected = NO;
+    _scrollView_pinpai.dataArray = _pinpaiScrollViewModelInfoArray;
+    [_scrollView_pinpai gReloadData];
+    
+    
 }
 
 
@@ -494,16 +522,6 @@
     
     
     NSLog(@"点击的是%ld",(long)sender.tag);
-    //判断是否登录
-    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
-        LoginViewController *login = [[LoginViewController alloc]init];
-        UINavigationController *unVc = [[UINavigationController alloc]initWithRootViewController:login];
-//        [self presentViewController:unVc animated:YES completion:nil];
-        [self.rootViewController presentViewController:unVc animated:YES completion:^{
-            
-        }];
-        return;
-    }
     
     
     if (sender.tag == 60) {//附近的品牌
@@ -511,17 +529,43 @@
         _guanzhuBtn_pinpai.selected = NO;
         [self prepareNearbyPinpai];
     }else if (sender.tag == 61){//我关注的品牌
-        _guanzhuBtn_pinpai.selected = YES;
-        _pinpaiBtn.selected = NO;
-        [self prepareGuanzhuPinpai];
+        
+        
+        //判断是否登录
+        if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
+            LoginViewController *login = [[LoginViewController alloc]init];
+            UINavigationController *unVc = [[UINavigationController alloc]initWithRootViewController:login];
+            [self.rootViewController presentViewController:unVc animated:YES completion:^{
+                
+            }];
+            return;
+        }else{
+            _guanzhuBtn_pinpai.selected = YES;
+            _pinpaiBtn.selected = NO;
+            [self prepareGuanzhuPinpai];
+        }
+        
     }else if (sender.tag == 62){//附近的商家
         _nearbyBtn.selected = YES;
         _guanzhuBtn_Store.selected = NO;
         [self prepareNearbyStore];
     }else if (sender.tag == 63){//我关注的商家
-        _guanzhuBtn_Store.selected = YES;
-        _nearbyBtn.selected = NO;
-        [self prepareGuanzhuStore];
+        
+        
+        //判断是否登录
+        if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
+            LoginViewController *login = [[LoginViewController alloc]init];
+            UINavigationController *unVc = [[UINavigationController alloc]initWithRootViewController:login];
+            [self.rootViewController presentViewController:unVc animated:YES completion:^{
+                
+            }];
+            return;
+        }else{
+            _guanzhuBtn_Store.selected = YES;
+            _nearbyBtn.selected = NO;
+            [self prepareGuanzhuStore];
+        }
+        
         
     }
     

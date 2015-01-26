@@ -203,6 +203,8 @@
 //上传
 -(void)upLoadImage:(NSArray *)aImage_arr{
     
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
     //上传的url
     NSString *uploadImageUrlStr = GFABUDIANPIN;
     
@@ -283,6 +285,9 @@
                                    success:^(AFHTTPRequestOperation *operation, id responseObject)
                                    {
                                        
+                                       
+                                       [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                       
                                        NSLog(@"success %@",responseObject);
                                        
                                        NSError * myerr;
@@ -294,11 +299,14 @@
                                        
                                        if ([[mydic objectForKey:@"errorcode"]intValue]==0) {
                                            [GMAPI showAutoHiddenMBProgressWithText:@"添加成功" addToView:self.view];
-                                           [self.navigationController popViewControllerAnimated:YES];
+                                           [self performSelector:@selector(fabuyifuSuccessToGoBack) withObject:[NSNumber numberWithBool:YES] afterDelay:1];
+                                           
                                        }
                                        
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       
+                                       [MBProgressHUD hideHUDForView:self.view animated:YES];
                                        
                                        [GMAPI showAutoHiddenMBProgressWithText:@"添加失败请重新上传" addToView:self.view];
                                        
@@ -317,7 +325,9 @@
 
 
 
-
+-(void)fabuyifuSuccessToGoBack{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 
 

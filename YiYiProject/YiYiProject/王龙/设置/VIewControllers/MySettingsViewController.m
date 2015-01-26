@@ -277,7 +277,12 @@
     
     [LTools cacheBool:NO ForKey:LOGIN_SERVER_STATE];
     
+    
+    [GMAPI cleanUserFaceAndBanner];//清除banner和头像
+    [GMAPI setUpUserBannerNo];//重置上传banner标志位
+    [GMAPI setUpUserFaceNo];//重置上传用户头像标志位
     [GMAPI showSuccessProgessWithText:@"退出登录成功！" hasMask:NO];
+    
     [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_LOGOUT object:nil];
     [self logout];
     [self performSelector:@selector(leftButtonTap:) withObject:nil afterDelay:0.2];

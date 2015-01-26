@@ -163,7 +163,9 @@
     
     
     //document路径
-    NSString *documentPathStr = [GMAPI documentFolder];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *pathD = paths[0];
+    NSString *documentPathStr =pathD;
     NSString *userFace = @"/guserFaceImage.png";
     NSString *userBanner = @"/guserBannerImage.png";
     

@@ -269,6 +269,7 @@
     GRootScrollView *rootScrollView = [[GRootScrollView alloc]initWithFrame:CGRectMake(0, 28, topScrollView.frame.size.width, DEVICE_HEIGHT-_upStoreInfoView.frame.size.height-topScrollView.frame.size.height-64)];
     
     NSLog(@"%@",NSStringFromCGRect(rootScrollView.frame));
+    rootScrollView.backgroundColor = RGBCOLOR(248, 248, 248);
     topScrollView.myRootScrollView = rootScrollView;
     rootScrollView.myTopScrollView = topScrollView;
     

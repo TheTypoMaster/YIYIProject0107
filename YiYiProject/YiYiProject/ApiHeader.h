@@ -253,6 +253,9 @@ typedef enum {
 //我是店主 发布单品
 #define GFABUDIANPIN @"http://182.92.158.32/?d=api&c=products&m=addProducts"
 
+//我是店主 发布活动
+#define GFABUHUODONG @"http://182.92.158.32/index.php?d=api&c=mall&m=publish_activity"
+
 
 
 

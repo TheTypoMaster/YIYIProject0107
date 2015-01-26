@@ -83,6 +83,9 @@ typedef enum{
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     }
     
+    
+    
+    
 }
 
 - (void)viewDidLoad {
@@ -91,6 +94,9 @@ typedef enum{
     self.myTitleLabel.text = @"我的";
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeNull];
+    
+    //加载视图
+    [self loadMineView];
     
     //判断是否登录
     if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
@@ -101,50 +107,10 @@ typedef enum{
         
         [self presentViewController:unVc animated:YES completion:nil];
         
-    }
-    
-    
-    
-    //初始化相关
-    _changeImageType = USERIMAGENULL;
-    
-    _tabelViewCellTitleArray = @[@[@"我的主页"]
-                                 ,@[@"我的收藏",@"我的搭配"]
-                                 ,@[@"我的衣橱",@"我的体型"]
-                                 ,@[@"我的关注"]
-                                 ,@[@"我是店主，申请衣+衣店铺"]
-                                 ,@[@"邀请好友"]];
-    _logoImageArray = @[@[[UIImage imageNamed:@"my_zhuye.png"]]
-                        ,@[[UIImage imageNamed:@"my_shoucang.png"],[UIImage imageNamed:@"my_dapei.png"]]
-                        ,@[[UIImage imageNamed:@"my_yichu.png"],[UIImage imageNamed:@"my_tixing.png"],[UIImage imageNamed:@"my_rizhi.png"]]
-                        ,@[[UIImage imageNamed:@"my_guanzhu.png"]]
-                        ,@[[UIImage imageNamed:@"my_shenqing.png"]]
-                        ,@[[UIImage imageNamed:@"my_haoyou.png"]]
-                        ];
-    _customInfo_tabelViewCell = @{@"titleLogo":_logoImageArray,
-                                  @"titleArray":_tabelViewCellTitleArray
-                                  };
-    
-    
-    
-    
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT-49) style:UITableViewStyleGrouped];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    _tableView.tableHeaderView = [self creatTableViewHeaderView];
-    [self.view addSubview:_tableView];
-    
-    
-    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == YES){
+    }else{
         [self GgetUserInfo];
     }
     
-    
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GgetUserInfo) name:NOTIFICATION_LOGIN object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GgetUserInfo) name:NOTIFICATION_SHENQINGDIANPU_SUCCESS object:nil];
-    
-    
-    NSLog(@"%@",NSStringFromCGRect(_tableView.frame));
     
     
 }
@@ -154,6 +120,99 @@ typedef enum{
     // Dispose of any resources that can be recreated.
 }
 
+
+//加载视图
+-(void)loadMineView{
+    //初始化相关
+    _changeImageType = USERIMAGENULL;
+
+    _logoImageArray = @[@[[UIImage imageNamed:@"my_zhuye.png"]]
+                        ,@[[UIImage imageNamed:@"my_shoucang.png"],[UIImage imageNamed:@"my_guanzhu.png"]]
+                        ,@[[UIImage imageNamed:@"my_yichu.png"],[UIImage imageNamed:@"my_dapei.png"],[UIImage imageNamed:@"my_tixing.png"]]
+                        ,@[[UIImage imageNamed:@"my_shenqing.png"]]
+                        ,@[[UIImage imageNamed:@"my_haoyou.png"]]
+                        ];
+    
+    _tabelViewCellTitleArray = @[@[@"我的主页"]
+                                 ,@[@"我的收藏",@"我的关注"]
+                                 ,@[@"我的衣橱",@"我的搭配",@"我的体型"]
+                                 ,@[@"我是店主，申请衣+衣店铺"]
+                                 ,@[@"邀请好友"]];
+    
+    _customInfo_tabelViewCell = @{@"titleLogo":_logoImageArray,
+                                  @"titleArray":_tabelViewCellTitleArray
+                                  };
+    
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT-49) style:UITableViewStyleGrouped];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.tableHeaderView = [self creatTableViewHeaderView];
+    [self.view addSubview:_tableView];
+    
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GgetUserInfo) name:NOTIFICATION_LOGIN object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GgetUserInfo) name:NOTIFICATION_SHENQINGDIANPU_SUCCESS object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GLogoutAction) name:NOTIFICATION_LOGOUT object:nil];
+}
+
+
+
+
+//退出登录成功后的页面调整
+
+-(void)GLogoutAction{
+
+    for (UIView *view in self.view.subviews) {
+        [view removeFromSuperview];
+    }
+    
+    [self loadMineView];
+}
+
+
+
+//请求到userinfo之后根据shopman参数判断是否拥有店铺 调整 标题和图标二维数组
+-(void)changeTheTitleAndPicArray_dianzhu{//已经是店主
+    _logoImageArray = @[@[[UIImage imageNamed:@"my_zhuye.png"],[UIImage imageNamed:@"my_shenqing.png"]]
+                        ,@[[UIImage imageNamed:@"my_shoucang.png"],[UIImage imageNamed:@"my_guanzhu.png"]]
+                        ,@[[UIImage imageNamed:@"my_yichu.png"],[UIImage imageNamed:@"my_dapei.png"],[UIImage imageNamed:@"my_tixing.png"]]
+                        ,@[[UIImage imageNamed:@"my_haoyou.png"]]
+                        ];
+    
+    _tabelViewCellTitleArray = @[@[@"我的主页",@"我的店铺"]
+                                 ,@[@"我的收藏",@"我的关注"]
+                                 ,@[@"我的衣橱",@"我的搭配",@"我的体型"]
+                                 ,@[@"邀请好友"]];
+    
+    
+    
+    
+    _customInfo_tabelViewCell = @{@"titleLogo":_logoImageArray,
+                                  @"titleArray":_tabelViewCellTitleArray
+                                  };
+}
+
+-(void)changeTheTitleAndPicArray_shenhe{//正在审核
+    _logoImageArray = @[@[[UIImage imageNamed:@"my_zhuye.png"]]
+                        ,@[[UIImage imageNamed:@"my_shoucang.png"],[UIImage imageNamed:@"my_guanzhu.png"]]
+                        ,@[[UIImage imageNamed:@"my_yichu.png"],[UIImage imageNamed:@"my_dapei.png"],[UIImage imageNamed:@"my_tixing.png"]]
+                        ,@[[UIImage imageNamed:@"my_shenqing.png"]]
+                        ,@[[UIImage imageNamed:@"my_haoyou.png"]]
+                        ];
+    
+    _tabelViewCellTitleArray = @[@[@"我的主页"]
+                                 ,@[@"我的收藏",@"我的关注"]
+                                 ,@[@"我的衣橱",@"我的搭配",@"我的体型"]
+                                 ,@[@"店铺审核中"]
+                                 ,@[@"邀请好友"]];
+    
+    
+    
+    
+    _customInfo_tabelViewCell = @{@"titleLogo":_logoImageArray,
+                                  @"titleArray":_tabelViewCellTitleArray
+                                  };
+}
 
 
 
@@ -166,9 +225,15 @@ typedef enum{
     [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"%@",result);
+        
         NSDictionary *dic = [result dictionaryValueForKey:@"user_info"];
         
         _userInfo = [[UserInfo alloc]initWithDictionary:dic];
+        if ([_userInfo.shopman intValue] == 2) {//已经是店主
+            [self changeTheTitleAndPicArray_dianzhu];
+        }else if ([_userInfo.shopman intValue]==1){//正在审核
+            
+        }
         
         NSString *name = [dic stringValueForKey:@"user_name"];
         NSString *score = [dic stringValueForKey:@"score"];
@@ -233,18 +298,18 @@ typedef enum{
     NSLog(@"%@",NSStringFromCGRect(self.userFaceImv.frame));
     
     //昵称
-    self.userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.userFaceImv.frame)+10, self.userFaceImv.frame.origin.y+6, 120*GscreenRatio_320, 14)];
-    self.userNameLabel.text = @"昵称";
+    self.userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.userFaceImv.frame)+10, self.userFaceImv.frame.origin.y+6, DEVICE_WIDTH-CGRectGetMaxX(self.userFaceImv.frame)-10-17, 14)];
+    self.userNameLabel.text = @"昵称：";
     self.userNameLabel.font = [UIFont systemFontOfSize:14*GscreenRatio_320];
     self.userNameLabel.textColor = [UIColor whiteColor];
-    //    self.userNameLabel.backgroundColor = [UIColor lightGrayColor];
+//        self.userNameLabel.backgroundColor = [UIColor lightGrayColor];
 
     //积分
-    self.userScoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.userNameLabel.frame.origin.x, CGRectGetMaxY(self.userNameLabel.frame)+10, self.userNameLabel.frame.size.width, self.userNameLabel.frame.size.height)];
+    self.userScoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.userNameLabel.frame.origin.x, CGRectGetMaxY(self.userNameLabel.frame)+10, 150, self.userNameLabel.frame.size.height)];
     self.userScoreLabel.font = [UIFont systemFontOfSize:14*GscreenRatio_320];
     self.userScoreLabel.text = @"积分：";
     self.userScoreLabel.textColor = [UIColor whiteColor];
-    //    self.userScoreLabel.backgroundColor = [UIColor orangeColor];
+//        self.userScoreLabel.backgroundColor = [UIColor orangeColor];
 
     //编辑按钮
     UIButton *editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -391,110 +456,21 @@ typedef enum{
     switch (indexPath.section) {
         case 0:
         {
-            GmyMainViewController *dd = [[GmyMainViewController alloc]init];
-            dd.theType = GMYSELF;
-            dd.bannerUrl = user_bannerUrl;
-            dd.headImageUrl = headImageUrl;
-            dd.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:dd animated:YES];
-            
-        }
-            break;
-            
-        case 1:
-        {
-            
-            if (indexPath.row == 0) {
-                NSLog(@"我的收藏");
-                
-                MyCollectionController *myMatchVC = [[MyCollectionController alloc] init];
-                myMatchVC.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:myMatchVC animated:YES];
-                
-            }else if (indexPath.row == 1){
-                NSLog(@"我的搭配");
-                
-                MyMatchViewController *myMatchVC = [[MyMatchViewController alloc] init];
-                myMatchVC.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:myMatchVC animated:YES];
-            }
-        }
-            break;
-            
-        case 2:
-        {
-            
-            if (indexPath.row==0) {
-                
-                MyYiChuViewController *_myyichuVC=[[MyYiChuViewController alloc]init];
-                
-                _myyichuVC.hidesBottomBarWhenPushed = YES;
-                
-                [self.navigationController pushViewController:_myyichuVC animated:YES];
-                
-                NSLog(@"我的衣橱");
-                
-                
-            }else if(indexPath.row==1){
-                
-                MyBodyViewController *_myBodyVC =[[MyBodyViewController alloc] init];
-                _myBodyVC.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:_myBodyVC animated:YES];
-                NSLog(@"我的体型");
-                
-                
-            }else if(indexPath.row==2){
-                
-                NSLog(@"穿衣日记");
-                
-                
-            }
-            
-            
-        }
-            break;
-            
-        case 3:
-        {
-            MyConcernController *concern = [[MyConcernController alloc]init];
-            concern.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:concern animated:YES];
-        }
-            break;
-            
-        case 4:
-        {
-            
-            
-            if (indexPath.row==0) {
-
-                NSLog(@"申请店铺");
-                
+            if (indexPath.row == 0) {//我的主页
+                GmyMainViewController *dd = [[GmyMainViewController alloc]init];
+                dd.theType = GMYSELF;
+                dd.bannerUrl = user_bannerUrl;
+                dd.headImageUrl = headImageUrl;
+                dd.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:dd animated:YES];
+            }else if (indexPath.row == 1){//已经为店主时候的我的店铺
                 int shopMan = [_userInfo.shopman intValue];
-                
-
-                //test
-                
-//                shopMan = 2;
-                
-
                 if (shopMan == 2) {
                     NSLog(@"店主");
-                    
                     MyShopViewController *shop = [[MyShopViewController alloc]init];
                     shop.userInfo = _userInfo;
                     shop.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:shop animated:YES];
-                    
-                }else if (shopMan == 1){
-                    NSLog(@"店铺申请");
-                    [LTools showMBProgressWithText:@"您已申请店铺,正在审核中..." addToView:self.view];
-                }else if (shopMan == 0){
-                    NSLog(@"普通");
-                    ShenQingDianPuViewController *_shenqingVC = [[ShenQingDianPuViewController alloc]init];
-                    _shenqingVC.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:_shenqingVC animated:YES];
-
                 }
                 
             }
@@ -503,13 +479,83 @@ typedef enum{
         }
             break;
             
-        case 5:
+        case 1:
         {
+            
+            if (indexPath.row == 0) {//我的收藏
+                
+                MyCollectionController *myMatchVC = [[MyCollectionController alloc] init];
+                myMatchVC.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:myMatchVC animated:YES];
+                
+            }else if (indexPath.row == 1){//我的关注
+                
+                MyConcernController *concern = [[MyConcernController alloc]init];
+                concern.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:concern animated:YES];
+                
+            }
+        }
+            break;
+            
+        case 2:
+        {
+            
+            if (indexPath.row==0) {//我的衣橱
+                MyYiChuViewController *_myyichuVC=[[MyYiChuViewController alloc]init];
+                _myyichuVC.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:_myyichuVC animated:YES];
+            }else if(indexPath.row==1){//我的搭配
+                MyMatchViewController *myMatchVC = [[MyMatchViewController alloc] init];
+                myMatchVC.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:myMatchVC animated:YES];
+                
+            }else if(indexPath.row==2){//我的体型
+                MyBodyViewController *_myBodyVC =[[MyBodyViewController alloc] init];
+                _myBodyVC.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:_myBodyVC animated:YES];
+            }
+            
+            
+        }
+            break;
+            
+        case 3://我是店主，申请衣加衣店铺  或 邀请好友
+        {
+            if (indexPath.row==0) {
+                
+                int shopMan = [_userInfo.shopman intValue];
+                if (shopMan == 1){
+                    NSLog(@"店铺申请");
+                    [LTools showMBProgressWithText:@"您已申请店铺,正在审核中..." addToView:self.view];
+                }else if (shopMan == 0){
+                    NSLog(@"普通");
+                    ShenQingDianPuViewController *_shenqingVC = [[ShenQingDianPuViewController alloc]init];
+                    _shenqingVC.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:_shenqingVC animated:YES];
+                }else if (shopMan == 2){//已经是店主
+                    //邀请好友
+                    [self clickToShare:nil];
+                }
+                
+            }
+            
+            
+            
+            
+        }
+            break;
+            
+        case 4://邀请好友 或没有
+        {
+            
             if (indexPath.row == 0){
                 
                 
                 [self clickToShare:nil];
             }
+            
+            
             
         }
             break;
