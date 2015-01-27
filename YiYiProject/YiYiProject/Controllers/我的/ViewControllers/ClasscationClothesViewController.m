@@ -31,23 +31,24 @@
 }
 -(void)getNetData
 {
-    NSString *api = [NSString stringWithFormat:GET_CLASSICATIONCLOTHES_URL,[sourceDic objectForKey:@"sort_id"],[GMAPI getAuthkey]];
-    
-    NSLog(@"api===%@",api);
-    GmPrepareNetData *gg = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
-    [gg requestCompletion:^(NSDictionary *result, NSError *erro) {
-        
-        if(result && [[result objectForKey:@"errorcode"] integerValue] == 0)
-        {
-            _dataSourceArray = [result objectForKey:@"list"];
-        }
-        [waterFlow reloadData:_dataSourceArray total:100];
-        NSLog(@"%@",result);
-        
-    } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        NSLog(@"%@",failDic);
-        
-    }];
+//    NSString *api = [NSString stringWithFormat:GET_CLASSICATIONCLOTHES_URL,[sourceDic objectForKey:@"sort_id"],[GMAPI getAuthkey]];
+//    NSLog(@"api===%@",api);
+//    GmPrepareNetData *gg = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+//    [gg requestCompletion:^(NSDictionary *result, NSError *erro) {
+//        
+//        if(result && [[result objectForKey:@"errorcode"] integerValue] == 0)
+//        {
+//            _dataSourceArray = [result objectForKey:@"list"];
+//        }
+//        [waterFlow reloadData:_dataSourceArray total:100];
+//        NSLog(@"%@",result);
+//        
+//    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+//        NSLog(@"%@",failDic);
+//        
+//    }];
+    _dataSourceArray = [sourceDic objectForKey:@"clothes"];
+    [waterFlow reloadData:_dataSourceArray total:100];
 }
 
 #pragma mark - WaterFlowDelegate

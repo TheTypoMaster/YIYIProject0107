@@ -35,6 +35,11 @@
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     self.view.backgroundColor = [UIColor whiteColor];
     [self createRootScrollView];
+   _sourceDic = [[NSUserDefaults standardUserDefaults] objectForKey:@"MyMatchcach"];
+    if(_sourceDic)
+    {
+       [self createViewsWithDic:_sourceDic];
+    }
     [self getNetData];
 }
 -(void)createViewsWithDic:(NSDictionary *) dic
@@ -467,6 +472,8 @@ GmPrepareNetData *gg = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postDa
     if(result && [[result objectForKey:@"errorcode"] integerValue] == 0)
     {
         _sourceDic = result;
+        [[NSUserDefaults standardUserDefaults] setObject:_sourceDic forKey:@"MyMatchcach"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         [self createViewsWithDic:result];
     }
     NSLog(@"%@",result);

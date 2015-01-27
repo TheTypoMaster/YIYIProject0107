@@ -43,12 +43,17 @@
     self.rightImageName = @"chun_down";
     _dataSourceArray = [[NSMutableArray alloc] init];
     self.view.backgroundColor=[UIColor whiteColor];
-    [self prepareMyYiChuListData];
     [self createRootScrollView];
     [self createHeadView];
     [self createRightBarItem];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(prepareMyYiChuListData) name:@"refreshMyYiChuList" object:nil];
-    
+    //先读取缓存 然后网络请求数据 更新缓存
+    _dataSourceArray = [[[NSUserDefaults standardUserDefaults] objectForKey:@"myYiChuCaCh"] objectForKey:@"list"];
+    if(_dataSourceArray.count > 0)
+    {
+        [self createListViewWithFrame:_fenGeView.frame listArray:_dataSourceArray];
+    }
+    [self prepareMyYiChuListData];
     // Do any additional setup after loading the view.
 }
 -(void)createRightBarItem
@@ -535,6 +540,10 @@
         if(result && [[result objectForKey:@"errorcode"] integerValue] == 0)
         {
             _dataSourceArray = [result objectForKey:@"list"];
+            //缓存
+            [[NSUserDefaults standardUserDefaults] setObject:result forKey:@"myYiChuCaCh"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
             [self createListViewWithFrame:_fenGeView.frame listArray:_dataSourceArray];
         }
         
