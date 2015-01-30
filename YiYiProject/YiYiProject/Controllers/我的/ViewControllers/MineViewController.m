@@ -66,6 +66,9 @@ typedef enum{
     
     UserInfo *_userInfo;//用户信息model
     
+    
+    BOOL _getUserinfoSuccess;//加载用户数据是否成功
+    
 }
 @end
 

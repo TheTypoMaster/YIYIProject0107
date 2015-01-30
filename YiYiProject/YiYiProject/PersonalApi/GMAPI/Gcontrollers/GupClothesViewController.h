@@ -26,4 +26,9 @@
 @property(nonatomic,strong)MailInfoModel *mallInfo;//店铺信息
 
 
+//选择图片相关
+@property (nonatomic, strong) NSMutableArray   *assetsArray;
+@property(nonatomic,strong)NSMutableArray *uploadImageArray;
+
+
 @end

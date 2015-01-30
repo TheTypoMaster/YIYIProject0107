@@ -7,11 +7,12 @@
 //
 
 #import "GupClothesViewController.h"
-#import "ZYQAssetPickerController.h"
 #import "UploadPicViewController.h"
 #import "AFNetworking.h"
+#import "JKImagePickerController.h"
+#import "PhotoCell.h"
 
-@interface GupClothesViewController ()<UIActionSheetDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,ZYQAssetPickerControllerDelegate,UITextFieldDelegate,UIAlertViewDelegate>
+@interface GupClothesViewController ()<UIActionSheetDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,UITextFieldDelegate,UIAlertViewDelegate,JKImagePickerControllerDelegate>
 {
     UIView *_view1;//填写信息view
     UIView *_view2;//上传图片view
@@ -162,43 +163,24 @@
 
 
 -(void)tijiao{
-    _upImagesArray = [NSMutableArray arrayWithCapacity:1];
-    NSInteger _imageArrayCount = _imageArray.count;
     
-    for (int i = 0; i<_imageArrayCount; i++) {
-        BOOL have = NO;
-        for (NSString *str in _deleteImageIndexArray) {
-            if ([str intValue]==i) {
-                have = YES;
-                break;
-            }
+    //判断信息完整性
+    for (UITextField *tf in _shurukuangArray) {
+        if (tf.text.length == 0 || self.uploadImageArray.count == 0) {
+            [GMAPI showAutoHiddenMBProgressWithText:@"请完善信息" addToView:self.view];
+            return;
         }
-        if (!have) {
-            [_upImagesArray addObject:_imageArray[i]];
-        }
+        
     }
     
-    
-    
-//    //判断信息完整性
-//    for (UITextField *tf in _shurukuangArray) {
-//        if (tf.text.length == 0 || _upImagesArray.count == 0) {
-//            [GMAPI showAutoHiddenMBProgressWithText:@"请完善信息" addToView:self.view];
-//            return;
-//        }
-//        
-//    }
-    
-    
-    //上传信息 多图上传
-    [self upLoadImage:_upImagesArray];
-    
+    //获取需要上传的图片
+    [self getChoosePics];
     
 }
 
 
 
-#pragma mark - 上传图片
+#pragma mark - 上传图片 & 上传信息
 
 //上传
 -(void)upLoadImage:(NSArray *)aImage_arr{
@@ -402,9 +384,12 @@
         
         
         if (i == 6) {
+            shuruTf.text = @"123";
             shuruTf.hidden = YES;
             _leixingLabel = [[UILabel alloc]initWithFrame:shuruTf.frame];
             _leixingLabel.userInteractionEnabled = YES;
+            _leixingLabel.textColor = RGBCOLOR(199, 199, 205);
+            _leixingLabel.text = @"请选择单品类型";
             UITapGestureRecognizer *ttt = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(chooseLeixing)];
             [_leixingLabel addGestureRecognizer:ttt];
             [backView addSubview:_leixingLabel];
@@ -419,6 +404,10 @@
             shuruTf.placeholder = @"如:8.8即为88折扣";
         }else if (i == 5){
             shuruTf.placeholder = @"如:运动,休闲,时尚,商务";
+        }else if (i == 1){
+            shuruTf.placeholder = @"请填写单品名称";
+        }else if (i == 2){
+            shuruTf.placeholder = @"请填写单品型号";
         }
         
         
@@ -437,8 +426,9 @@
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    NSLog(@"%d",buttonIndex);
     
+    
+    _leixingLabel.textColor = [UIColor blackColor];
     if (buttonIndex == 1) {
         _leixingLabel.text = @"折扣";
     }else if (buttonIndex == 2){
@@ -446,7 +436,8 @@
     }else if (buttonIndex == 3){
         _leixingLabel.text = @"畅销";
     }else{
-        _leixingLabel.text = @"";
+        _leixingLabel.textColor = RGBCOLOR(199, 199, 205);
+        _leixingLabel.text = @"请选择单品类型";
     }
     
 }
@@ -532,26 +523,6 @@
 
 
 
--(void)removeSelf:(UIButton *)sender{
-    NSString *tagIndex = [NSString stringWithFormat:@"%d",sender.tag-100-1];
-    BOOL have = NO;
-    for (NSString *str in _deleteImageIndexArray) {
-        if ([str isEqualToString:tagIndex]) {
-            have = YES;
-            break;
-        }
-    }
-    
-    if (!have) {
-        [_deleteImageIndexArray addObject:tagIndex];
-    }
-    
-    UIButton *btn = (UIButton *)[_view2 viewWithTag:sender.tag];
-    [btn setBackgroundImage:[UIImage imageNamed:@"gremovephoto.png"] forState:UIControlStateNormal];
-    
-}
-
-
 //弹出action提示
 -(void)tianjiatupian:(UIButton *) sender
 {
@@ -567,54 +538,105 @@
 {
     if(buttonIndex==0)
     {
-        ZYQAssetPickerController *picker = [[ZYQAssetPickerController alloc] init];
-        picker.maximumNumberOfSelection = 9 - _imageArray.count;
-        picker.assetsFilter = [ALAssetsFilter allPhotos];
-        picker.showEmptyGroups=NO;
-        picker.delegate=self;
-        picker.selectionFilter = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-            if ([[(ALAsset*)evaluatedObject valueForProperty:ALAssetPropertyType] isEqual:ALAssetTypeVideo]) {
-                NSTimeInterval duration = [[(ALAsset*)evaluatedObject valueForProperty:ALAssetPropertyDuration] doubleValue];
-                return duration >= 5;
-            } else {
-                return YES;
-            }
-        }];
-        
-        [self presentViewController:picker animated:YES completion:NULL];
+        [self composePicAdd];
     }
-    
-}
-#pragma mark--ZYQAssetPickerControllerDelegate
--(void)assetPickerController:(ZYQAssetPickerController *)picker didFinishPickingAssets:(NSArray *)assets;
-{
-    
-    
-    
-    _imageArray = [NSMutableArray arrayWithCapacity:1];
-    _deleteImageIndexArray = [NSMutableArray arrayWithCapacity:1];
-    
-    for (int i=0; i<assets.count; i++) {
-        ALAsset *asset=assets[i];
-        UIImage *tempImg=[UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage];
-        [_imageArray addObject:tempImg];
-    }
-    
-    
-    
-    NSLog(@"imageArray:%lu",(unsigned long)_imageArray.count);
-    
-    
-    NSInteger chooseImageCount = _imageArray.count;
-    chooseImageCount = chooseImageCount>3?3:chooseImageCount;
-    for (int i = 0; i<chooseImageCount; i++) {
-        UIButton *btn = _showPicsBtnArray[i];
-        [btn setBackgroundImage:_imageArray[i] forState:UIControlStateNormal];
-    }
-    
     
 }
 
+
+
+
+#pragma mark - 获取所选图片
+-(void)getChoosePics{
+    
+    self.uploadImageArray = [NSMutableArray arrayWithCapacity:1];
+    
+    NSLog(@"-------%lu",(unsigned long)self.assetsArray.count);
+    
+    for (int i = 0;i<self.assetsArray.count;i++) {
+        
+        JKAssets* jkAsset = self.assetsArray[i];
+        
+        ALAssetsLibrary   *lib = [[ALAssetsLibrary alloc] init];
+        [lib assetForURL:jkAsset.assetPropertyURL resultBlock:^(ALAsset *asset) {
+            
+            if (asset) {
+                
+                UIImage *image = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]];
+                [self.uploadImageArray addObject:image];
+                
+                if (self.uploadImageArray.count == self.assetsArray.count) {
+                    [self upLoadImage:self.uploadImageArray];
+                }
+            }
+            
+        } failureBlock:^(NSError *error) {
+            
+            
+        }];
+    }
+    
+}
+
+
+
+
+-(void)shangChuan{
+    NSLog(@"let is begin to upload data");
+    [self upLoadImage:self.uploadImageArray];
+}
+
+
+- (void)composePicAdd
+{
+    JKImagePickerController *imagePickerController = [[JKImagePickerController alloc] init];
+    imagePickerController.delegate = self;
+    imagePickerController.showsCancelButton = YES;
+    imagePickerController.allowsMultipleSelection = YES;
+    imagePickerController.minimumNumberOfSelection = 0;
+    imagePickerController.maximumNumberOfSelection = 3;
+    imagePickerController.selectedAssetArray = self.assetsArray;
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:imagePickerController];
+    [self presentViewController:navigationController animated:YES completion:NULL];
+}
+
+#pragma mark - JKImagePickerControllerDelegate
+- (void)imagePickerController:(JKImagePickerController *)imagePicker didSelectAsset:(JKAssets *)asset isSource:(BOOL)source
+{
+    [imagePicker dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
+
+- (void)imagePickerController:(JKImagePickerController *)imagePicker didSelectAssets:(NSArray *)assets isSource:(BOOL)source
+{
+    self.assetsArray = [NSMutableArray arrayWithArray:assets];
+    
+    [imagePicker dismissViewControllerAnimated:YES completion:^{
+        
+        ALAssetsLibrary   *lib = [[ALAssetsLibrary alloc] init];
+        for (int i = 0; i<self.assetsArray.count; i++) {
+            JKAssets *asset = self.assetsArray[i];
+            [lib assetForURL:asset.assetPropertyURL resultBlock:^(ALAsset *asset) {
+                if (asset) {
+                    UIButton *btn = _showPicsBtnArray[i];
+                    [btn setBackgroundImage:[UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]] forState:UIControlStateNormal];
+                }
+            } failureBlock:^(NSError *error) {
+                
+            }];
+        }
+        
+        
+    }];
+}
+
+- (void)imagePickerControllerDidCancel:(JKImagePickerController *)imagePicker
+{
+    [imagePicker dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
 
 
 
