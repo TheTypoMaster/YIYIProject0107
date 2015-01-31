@@ -158,7 +158,7 @@
         }
         
         for (int i =0; i<upArrayNum; i++) {//上
-            UIView *view = [[UIView alloc]initWithFrame:CGRectMake(80+i*(38+80), 0, 80, 60)];
+            UIView *view = [[UIView alloc]initWithFrame:CGRectMake(75+i*(37+80), 0, 80, 60)];
 //            view.backgroundColor = [UIColor redColor];
             NSDictionary *dic = upDataArray[i];
             //距离

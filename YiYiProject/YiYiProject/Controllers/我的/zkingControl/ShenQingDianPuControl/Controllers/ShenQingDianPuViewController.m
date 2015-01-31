@@ -392,6 +392,7 @@
             [self.chooseTextFieldArray addObject:_menpaihaoTf];
         }else if (i == 4){//电话
             _phoneTf = [[UITextField alloc]initWithFrame:CGRectMake(40, 0, title_Label.frame.size.width, title_Label.frame.size.height)];
+            _phoneTf.keyboardType = UIKeyboardTypePhonePad;
             _phoneTf.font = [UIFont systemFontOfSize:17];
             _phoneTf.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
             _phoneTf.textColor = RGBCOLOR(95, 95, 95);
@@ -400,6 +401,7 @@
             [self.chooseTextFieldArray addObject:_phoneTf];
         }else if (i == 5){//验证码
             _yanzhengmaTf = [[UITextField alloc]initWithFrame:CGRectMake(55, 0, title_Label.frame.size.width, title_Label.frame.size.height)];
+            _yanzhengmaTf.keyboardType = UIKeyboardTypePhonePad;
             _yanzhengmaTf.font = [UIFont systemFontOfSize:17];
             _yanzhengmaTf.textColor = RGBCOLOR(95, 95, 95);
             _yanzhengmaTf.delegate = self;
@@ -502,12 +504,27 @@
     [self gShou];
     
     if (tapIdTag == 1000) {//地区选择
+        UILabel *shangchangLabel = (UILabel*)[self.view viewWithTag:1001];
+        UILabel *loucengpinpaiLabel = (UILabel *)[self.view viewWithTag:1002];
+        shangchangLabel.text = @"选择商场";
+        loucengpinpaiLabel.text = @"选择楼层品牌";
         [self areaShow];
     }else if (tapIdTag == 1001){//选择商场
+        UILabel *diquLabel = (UILabel*)[self.view viewWithTag:1000];
+        if (diquLabel.text.length<=4) {
+            [GMAPI showAutoHiddenMBProgressWithText:@"请先选择地区" addToView:self.view];
+            return;
+        }
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         [self prepareNetDataForStoreList];
         
     }else if (tapIdTag == 1002){//选择楼层品牌
+        UILabel *shangchangLabel = (UILabel*)[self.view viewWithTag:1001];
+        if (shangchangLabel.text.length<=4) {
+            [GMAPI showAutoHiddenMBProgressWithText:@"请先选择商场" addToView:self.view];
+            return;
+        }
+        
         [self prepareNetDataForFloorAndPinpai];
     }
 }
@@ -573,9 +590,17 @@
             
         }
         
+        
+        //电话
+        if (i == 4) {
+            shuRuTextfield.keyboardType = UIKeyboardTypePhonePad;
+        }
+        
+        
         //获取验证码
         if (i == 5) {
             [shuRuTextfield setFrame:CGRectMake(CGRectGetMaxX(title_Label.frame), i*50, DEVICE_WIDTH-17-title_Label.frame.size.width-17-90, 50)];
+            shuRuTextfield.keyboardType = UIKeyboardTypePhonePad;
             //获取验证码
             _yanzhengBtn_jingpin = [UIButton buttonWithType:UIButtonTypeCustom];
             [_yanzhengBtn_jingpin setTitle:@"获取验证码" forState:UIControlStateNormal];

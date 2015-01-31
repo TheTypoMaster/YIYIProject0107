@@ -159,6 +159,7 @@
     
     //输入框
     UITextField *shuruTf = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(titleLabel.frame)+20, titleLabel.frame.origin.y, DEVICE_WIDTH-17-17-20-titleLabel.frame.size.width, titleLabel.frame.size.height)];
+    shuruTf.placeholder = @"请输入活动标题";
     shuruTf.font = [UIFont systemFontOfSize:17];
     shuruTf.textColor = RGBCOLOR(3, 3, 3);
     shuruTf.tag = 200;
@@ -434,6 +435,14 @@
 
 
 -(void)chooseStartTime:(UITapGestureRecognizer*)sender{
+    
+    UITextField *tf = (UITextField*)[self.view viewWithTag:200];
+    [tf resignFirstResponder];
+    
+    UITextView *tv = (UITextView*)[self.view viewWithTag:300];
+    [tv resignFirstResponder];
+    
+    
     [UIView animateWithDuration:0.3 animations:^{
         _dateChooseView.frame = CGRectMake(0, DEVICE_HEIGHT-_dateChooseView.frame.size.height, DEVICE_WIDTH, _dateChooseView.frame.size.height);
         _dateChooseView.tag = 1000;
@@ -443,6 +452,13 @@
 }
 
 -(void)chooseEndTime:(UITapGestureRecognizer*)sender{
+    
+    UITextField *tf = (UITextField*)[self.view viewWithTag:200];
+    [tf resignFirstResponder];
+    
+    UITextView *tv = (UITextView*)[self.view viewWithTag:300];
+    [tv resignFirstResponder];
+    
     [UIView animateWithDuration:0.3 animations:^{
         _dateChooseView.frame = CGRectMake(0, DEVICE_HEIGHT-_dateChooseView.frame.size.height, DEVICE_WIDTH, _dateChooseView.frame.size.height);
         _dateChooseView.tag = 1001;
