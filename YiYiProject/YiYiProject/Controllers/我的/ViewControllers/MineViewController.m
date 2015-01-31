@@ -254,7 +254,7 @@ typedef enum{
         if ([_userInfo.shopman intValue] == 2) {//已经是店主
             [self changeTheTitleAndPicArray_dianzhu];
         }else if ([_userInfo.shopman intValue]==1){//正在审核
-            
+            [self changeTheTitleAndPicArray_shenhe];
         }
         
         NSString *name = [dic stringValueForKey:@"user_name"];
@@ -309,8 +309,8 @@ typedef enum{
     
     //小齿轮设置按钮
     UIButton *chilunBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [chilunBtn setFrame:CGRectMake(DEVICE_WIDTH - 40, 30, 25, 25)];
-    [chilunBtn setBackgroundImage:[UIImage imageNamed:@"my_shezhi.png"] forState:UIControlStateNormal];
+    [chilunBtn setFrame:CGRectMake(DEVICE_WIDTH - 55, 20, 40, 40)];
+    [chilunBtn setImage:[UIImage imageNamed:@"my_shezhi.png"] forState:UIControlStateNormal];
     [chilunBtn addTarget:self action:@selector(xiaochilun) forControlEvents:UIControlEventTouchUpInside];
     
     

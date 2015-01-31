@@ -55,7 +55,8 @@
     activeLabel.textColor = RGBCOLOR(114, 114, 114);
     activeLabel.text = [dic stringValueForKey:@"activity_info"];
     [activeLabel sizeToFit];
-    cellHeight += distanceLabel.frame.size.height;
+    
+    cellHeight += distanceLabel.frame.size.height+activeLabel.frame.size.height;
     
     cellHeight += 20;
     
@@ -71,6 +72,8 @@
     return cellHeight;
     
 }
+
+
 
 
 

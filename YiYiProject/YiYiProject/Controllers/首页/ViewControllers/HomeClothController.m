@@ -119,7 +119,16 @@
     
     
     
+    //退出登录通知
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(notificationOfLogOut) name:NOTIFICATION_LOGOUT object:nil];
+    
+    //关注通知
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(notificationGuanzhupinpai) name:NOTIFICATION_GUANZHU_PINPAI object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(notificationGuanzhustore) name:NOTIFICATION_GUANZHU_STORE object:nil];
+    //取消关注通知
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(notificationquxiaoguanzhupinpai) name:NOTIFICATION_GUANZHU_PINPAI_QUXIAO object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(notificationquxiaoguanzhustore) name:NOTIFICATION_GUANZHU_STORE_QUXIAO object:nil];
+    
     
     
     
@@ -136,6 +145,28 @@
     
     
 }
+
+
+//关注
+-(void)notificationGuanzhupinpai{
+    _guanzhuPinpaiDataArray = nil;
+}
+
+-(void)notificationGuanzhustore{
+    _guanzhuStoreDataArray = nil;
+}
+
+
+//取消关注
+-(void)notificationquxiaoguanzhustore{
+    _guanzhuStoreDataArray = nil;
+    [self prepareGuanzhuStore];
+}
+-(void)notificationquxiaoguanzhupinpai{
+    _guanzhuPinpaiDataArray = nil;
+    [self prepareGuanzhuPinpai];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -332,6 +363,13 @@
 
 //请求我关注的品牌
 -(void)prepareGuanzhuPinpai{
+    
+    if (_guanzhuPinpaiDataArray.count>0) {
+        _scrollView_pinpai.dataArray = _guanzhuPinpaiDataArray;
+        [_scrollView_pinpai gReloadData];
+        return;
+    }
+    
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     NSString *url = [NSString stringWithFormat:HOME_CLOTH_GUANZHUPINPAI_MINE,[GMAPI getAuthkey],1];
     GmPrepareNetData *gg = [[GmPrepareNetData alloc]initWithUrl:url isPost:NO postData:nil];

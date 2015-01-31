@@ -701,6 +701,8 @@
     
     [self gShou];
     
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
     /*mall_name 商铺名称 string 限制30字以内
      mall_type 商铺类型(商场小店), 1 商场 2 精品店
      mobile 手机号 code 验证码 latitude 维度, 小数点后8
@@ -752,15 +754,15 @@
         NSString *url = [NSString stringWithFormat:SHENQINGJINGPINDIAN];
         GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
-            
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
             NSLog(@"-->%@",result);
             NSLog(@"msg:%@",[result objectForKey:@"msg"]);
             [GMAPI showAutoHiddenMBProgressWithText:[result objectForKey:@"msg"] addToView:self.view];
             [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_SHENQINGDIANPU_SUCCESS object:nil];
-            [self.navigationController popViewControllerAnimated:YES];
+            [self performSelector:@selector(shenqingtijiao) withObject:[NSNumber numberWithBool:YES] afterDelay:2];
             
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
-            
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
             
             NSLog(@"faildic==%@",failDic);
             
@@ -779,20 +781,25 @@
         NSString *door_num = _menpaihaoTf.text;
         //手机号
         NSString *mobile = _phoneTf.text;
+        //验证码
+        NSString *code = _yanzhengmaTf.text;
         
-        NSString *post = [NSString stringWithFormat:@"&mall_id=%@&floor_id=%@&brand_id=%@&door_num=%@&mobile=%@&authcode=%@",mall_id,floor_id,brand_id,door_num,mobile,[GMAPI getAuthkey]];
+        NSString *post = [NSString stringWithFormat:@"&mall_id=%@&floor_id=%@&brand_id=%@&door_num=%@&mobile=%@&code=%@&authcode=%@",mall_id,floor_id,brand_id,door_num,mobile,code,[GMAPI getAuthkey]];
         NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
         NSString *url = [NSString stringWithFormat:SHENQINGSHANGCHANGDIAN];
         GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
-            
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
             NSLog(@"%@",result);
-            [GMAPI showAutoHiddenMBProgressWithText:@"提交成功" addToView:self.view];
-            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_SHENQINGDIANPU_SUCCESS object:nil];
-            [self.navigationController popViewControllerAnimated:YES];
+            if ([[result stringValueForKey:@"errorcode"]intValue] == 0) {
+                [GMAPI showAutoHiddenMBProgressWithText:@"提交成功" addToView:self.view];
+                [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_SHENQINGDIANPU_SUCCESS object:nil];
+                [self performSelector:@selector(shenqingtijiao) withObject:[NSNumber numberWithBool:YES] afterDelay:2];
+            }
+            
             
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
-            
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
             NSLog(@"faildic==%@",failDic);
             
             [GMAPI showMBProgressWithText:failDic[@"msg"] addToView:self.view];
@@ -802,6 +809,13 @@
     
 
 }
+
+
+-(void)shenqingtijiao{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

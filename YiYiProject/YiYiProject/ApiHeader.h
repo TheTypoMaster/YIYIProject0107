@@ -76,6 +76,14 @@ alpha:(a)]
 #define L_PAGE_SIZE 20
 
 
+//关注商场
+#define NOTIFICATION_GUANZHU_STORE @"guanzhu_store"
+//取消关注商场
+#define NOTIFICATION_GUANZHU_STORE_QUXIAO @"guanzhu_store_quxiao"
+//关注品牌
+#define NOTIFICATION_GUANZHU_PINPAI @"guanzhu_pinpai"
+#define NOTIFICATION_GUANZHU_PINPAI_QUXIAO @"guanzhu_pinpai_quxiao"
+
 
 
 
@@ -238,6 +246,8 @@ typedef enum {
 #define GUANZHUPINPAI @"http://182.92.158.32/index.php?d=api&c=brand&m=attend_brand"
 //取消关注品牌
 #define QUXIAOGUANZHUPINPAI @"http://182.92.158.32/index.php?d=api&c=brand&m=cancel_attend_brand"
+//查询品牌是否关注
+#define GUANZHUPINPAI_ISORNO @"http://182.92.158.32/index.php?d=api&c=brand&m=isBrandFriend"
 
 
 

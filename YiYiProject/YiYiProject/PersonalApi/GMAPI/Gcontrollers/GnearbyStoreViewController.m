@@ -164,6 +164,7 @@
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
             
             [GMAPI showAutoHiddenMBProgressWithText:@"关注成功" addToView:self.view];
+            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_STORE object:nil];
             [_my_right_button setTitle:@"已关注" forState:UIControlStateNormal];
             self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
             self.guanzhu = @"1";
@@ -178,6 +179,7 @@
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
             
             [GMAPI showAutoHiddenMBProgressWithText:@"取消关注成功" addToView:self.view];
+            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_STORE_QUXIAO object:nil];
             [_my_right_button setTitle:@"关注" forState:UIControlStateNormal];
             self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
             self.guanzhu = @"0";

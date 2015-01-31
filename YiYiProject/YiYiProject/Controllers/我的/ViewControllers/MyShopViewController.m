@@ -183,7 +183,7 @@
 {
     NSString *key = [GMAPI getAuthkey];
     
-    key = @"WiVbIgF4BeMEvwabALBajQWgB+VUoVWkBShRYFUwXGkGOAAyB2FSZgczBjYAbAp6AjZSaQ==";
+//    key = @"WiVbIgF4BeMEvwabALBajQWgB+VUoVWkBShRYFUwXGkGOAAyB2FSZgczBjYAbAp6AjZSaQ==";
     
     NSString *url = [NSString stringWithFormat:GET_MAIL_ACTIVITY_LIST,key];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
