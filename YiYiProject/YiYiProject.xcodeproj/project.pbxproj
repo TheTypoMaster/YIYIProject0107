@@ -506,7 +506,6 @@
 		E3996EBC1A5E1DBA00673147 /* GMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E331A5E1DBA00673147 /* GMapViewController.m */; };
 		E3996EBE1A5E1DBA00673147 /* GnearbyStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E371A5E1DBA00673147 /* GnearbyStoreViewController.m */; };
 		E3996EBF1A5E1DBA00673147 /* GpinpaiDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E391A5E1DBA00673147 /* GpinpaiDetailViewController.m */; };
-		E3996EC01A5E1DBA00673147 /* GSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E3B1A5E1DBA00673147 /* GSettingViewController.m */; };
 		E3996EC11A5E1DBA00673147 /* GViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = E3996E3D1A5E1DBA00673147 /* GViewController.mm */; };
 		E3996EC41A5E1DBA00673147 /* Gmodel.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E421A5E1DBA00673147 /* Gmodel.m */; };
 		E3996EC61A5E1DBA00673147 /* gpin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3996E441A5E1DBA00673147 /* gpin@2x.png */; };
@@ -1260,8 +1259,6 @@
 		E3996E371A5E1DBA00673147 /* GnearbyStoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GnearbyStoreViewController.m; sourceTree = "<group>"; };
 		E3996E381A5E1DBA00673147 /* GpinpaiDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GpinpaiDetailViewController.h; sourceTree = "<group>"; };
 		E3996E391A5E1DBA00673147 /* GpinpaiDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GpinpaiDetailViewController.m; sourceTree = "<group>"; };
-		E3996E3A1A5E1DBA00673147 /* GSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSettingViewController.h; sourceTree = "<group>"; };
-		E3996E3B1A5E1DBA00673147 /* GSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSettingViewController.m; sourceTree = "<group>"; };
 		E3996E3C1A5E1DBA00673147 /* GViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GViewController.h; sourceTree = "<group>"; };
 		E3996E3D1A5E1DBA00673147 /* GViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GViewController.mm; sourceTree = "<group>"; };
 		E3996E411A5E1DBA00673147 /* Gmodel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Gmodel.h; sourceTree = "<group>"; };
@@ -3033,8 +3030,6 @@
 				E3996E371A5E1DBA00673147 /* GnearbyStoreViewController.m */,
 				E3996E381A5E1DBA00673147 /* GpinpaiDetailViewController.h */,
 				E3996E391A5E1DBA00673147 /* GpinpaiDetailViewController.m */,
-				E3996E3A1A5E1DBA00673147 /* GSettingViewController.h */,
-				E3996E3B1A5E1DBA00673147 /* GSettingViewController.m */,
 				E3996E3C1A5E1DBA00673147 /* GViewController.h */,
 				E3996E3D1A5E1DBA00673147 /* GViewController.mm */,
 				E30479491A6109DE00709985 /* GStorePinpaiViewController.h */,
@@ -3928,7 +3923,6 @@
 				133B17761A750988005B8B3F /* MJPhotoBrowser.m in Sources */,
 				565321471A59769300E43F80 /* RegexKitLite.m in Sources */,
 				138986231A6A36EC00F187C9 /* MenuButton.m in Sources */,
-				E3996EC01A5E1DBA00673147 /* GSettingViewController.m in Sources */,
 				E38AFE061A7A967E009C2C0C /* JKAssetsThumbnailView.m in Sources */,
 				56A8A8351A45BB1300E85F6B /* MatchTopicCell.m in Sources */,
 				139558D61A40781C00CABC9E /* ProductModel.m in Sources */,

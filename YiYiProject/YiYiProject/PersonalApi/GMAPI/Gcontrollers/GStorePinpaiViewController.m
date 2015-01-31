@@ -12,6 +12,8 @@
 #import "CustomSegmentView.h"
 #import "LwaterFlowView.h"
 #import "ProductDetailController.h"
+#import "LoginViewController.h"
+#import "NSDictionary+GJson.h"
 
 @interface GStorePinpaiViewController ()<CustomSegmentViewDelegate,TMQuiltViewDataSource,WaterFlowDelegate>
 {
@@ -33,6 +35,11 @@
     NSMutableArray *_dataArray_xinpin;//新品数组
     NSMutableArray *_dataArray_zhekou;//折扣数组
     NSMutableArray *_dataArray_rexiao;//热销数组
+    
+    
+    //关注相关
+    UIButton *_my_right_button;
+    UIBarButtonItem *_spaceButton;
     
     
 }
@@ -66,13 +73,15 @@
     
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeText];
-    self.rightString = @"关注";
-//    UIButton *guanzhuBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [guanzhuBtn setTitle:@"+关注" forState:UIControlStateNormal];
-//    [guanzhuBtn setFrame:CGRectMake(5, 0, 50, 40)];
-//    UIBarButtonItem *righItem = [[UIBarButtonItem alloc]initWithCustomView:guanzhuBtn];
-//    self.navigationItem.rightBarButtonItem = righItem;
-//    [guanzhuBtn addTarget:self action:@selector(gGuanzhu) forControlEvents:UIControlEventTouchUpInside];
+    _spaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    
+    _my_right_button = [UIButton buttonWithType:UIButtonTypeCustom];
+    _my_right_button.frame = CGRectMake(0,0,60,44);
+    _my_right_button.titleLabel.textAlignment = NSTextAlignmentRight;
+    _my_right_button.titleLabel.font = [UIFont systemFontOfSize:15];
+    [_my_right_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_my_right_button addTarget:self action:@selector(rightButtonTap:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
     
     self.view.backgroundColor = RGBCOLOR(242, 242, 242);
     
@@ -88,12 +97,7 @@
     self.myTitleLabel.textAlignment = NSTextAlignmentCenter;
     self.myTitleLabel.attributedText = title;
     
-    
-//    _mysegment=[[CustomSegmentView alloc]initWithFrame:CGRectMake(12, 12, DEVICE_WIDTH-24, 30)];
-//    _mysegment.backgroundColor = [UIColor lightGrayColor];
-//    [_mysegment settitleWitharray:[NSArray arrayWithObjects:@"新品",@"折扣",@"热销", nil]];
-//    [self.view addSubview:_mysegment];
-//    _mysegment.delegate=self;
+
     
     
     
@@ -124,8 +128,73 @@
 }
 
 
--(void)rightButtonTap:(UIButton *)sender{
-    NSLog(@"在这里点击的添加关注");
+-(void)rightButtonTap:(UIButton *)sender
+{
+    
+    NSLog(@"在这里添加关注");
+    
+    
+    //判断是否登录
+    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
+        
+        LoginViewController *login = [[LoginViewController alloc]init];
+        
+        UINavigationController *unVc = [[UINavigationController alloc]initWithRootViewController:login];
+        
+        [self presentViewController:unVc animated:YES completion:nil];
+        
+        
+        return;
+        
+    }else{
+//        NSString *api = [NSString stringWithFormat:@"%@&brand_id=%@&authcode=%@",HOME_CLOTH_NEARBYSTORE_DETAIL,self.pinpaiId,[GMAPI getAuthkey]];
+//        GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+//        [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
+//            NSLog(@"%@",result);
+//            self.guanzhu = [result stringValueForKey:@"following"];
+//            if ([self.guanzhu intValue]==0) {//未关注
+//                [_my_right_button setTitle:@"关注" forState:UIControlStateNormal];
+//                self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
+//            }else if ([self.guanzhu intValue] == 1){//已关注
+//                [_my_right_button setTitle:@"已关注" forState:UIControlStateNormal];
+//                self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
+//            }
+//        } failBlock:^(NSDictionary *failDic, NSError *erro) {
+//            
+//        }];
+    }
+    
+    if ([self.guanzhu intValue] == 0) {//未关注
+        NSString *post = [NSString stringWithFormat:@"&mall_id=%@&authcode=%@",self.storeIdStr,[GMAPI getAuthkey]];
+        NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+        NSString *url = [NSString stringWithFormat:GUANZHUPINPAI];
+        GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
+        [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
+            
+            [GMAPI showAutoHiddenMBProgressWithText:@"关注成功" addToView:self.view];
+            [_my_right_button setTitle:@"已关注" forState:UIControlStateNormal];
+            self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
+            self.guanzhu = @"1";
+        } failBlock:^(NSDictionary *failDic, NSError *erro) {
+            [GMAPI showAutoHiddenMBProgressWithText:@"关注失败" addToView:self.view];
+        }];
+    }else if ([self.guanzhu intValue] == 1){
+        NSString *post = [NSString stringWithFormat:@"&mall_id=%@&authcode=%@",self.storeIdStr,[GMAPI getAuthkey]];
+        NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+        NSString *url = [NSString stringWithFormat:QUXIAOGUANZHUPINPAI];
+        GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
+        [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
+            
+            [GMAPI showAutoHiddenMBProgressWithText:@"取消关注成功" addToView:self.view];
+            [_my_right_button setTitle:@"关注" forState:UIControlStateNormal];
+            self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
+            self.guanzhu = @"0";
+        } failBlock:^(NSDictionary *failDic, NSError *erro) {
+            [GMAPI showAutoHiddenMBProgressWithText:@"取消关注失败" addToView:self.view];
+        }];
+    }
+
+    
 }
 
 

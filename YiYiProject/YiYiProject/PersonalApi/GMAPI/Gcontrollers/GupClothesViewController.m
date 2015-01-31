@@ -164,9 +164,10 @@
 
 -(void)tijiao{
     
+    
     //判断信息完整性
     for (UITextField *tf in _shurukuangArray) {
-        if (tf.text.length == 0 || self.uploadImageArray.count == 0) {
+        if (tf.text.length == 0 || _showPicsBtnArray.count == 0) {
             [GMAPI showAutoHiddenMBProgressWithText:@"请完善信息" addToView:self.view];
             return;
         }
@@ -176,7 +177,11 @@
     //获取需要上传的图片
     [self getChoosePics];
     
+    
+    
 }
+
+
 
 
 
@@ -184,6 +189,9 @@
 
 //上传
 -(void)upLoadImage:(NSArray *)aImage_arr{
+    
+    
+    NSLog(@"uploadImage and info");
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
@@ -479,7 +487,7 @@
             [btn addTarget:self action:@selector(tianjiatupian:) forControlEvents:UIControlEventTouchUpInside];
         }else{
             [btn setBackgroundImage:[UIImage imageNamed:@"gremovephoto.png"] forState:UIControlStateNormal];
-            [btn addTarget:self action:@selector(removeSelf:) forControlEvents:UIControlEventTouchUpInside];
+//            [btn addTarget:self action:@selector(removeSelf:) forControlEvents:UIControlEventTouchUpInside];
             [_showPicsBtnArray addObject:btn];
         }
         
@@ -557,7 +565,7 @@
         
         JKAssets* jkAsset = self.assetsArray[i];
         
-        ALAssetsLibrary   *lib = [[ALAssetsLibrary alloc] init];
+        ALAssetsLibrary* lib = [[ALAssetsLibrary alloc] init];
         [lib assetForURL:jkAsset.assetPropertyURL resultBlock:^(ALAsset *asset) {
             
             if (asset) {
@@ -566,6 +574,7 @@
                 [self.uploadImageArray addObject:image];
                 
                 if (self.uploadImageArray.count == self.assetsArray.count) {
+                    
                     [self upLoadImage:self.uploadImageArray];
                 }
             }
@@ -581,10 +590,7 @@
 
 
 
--(void)shangChuan{
-    NSLog(@"let is begin to upload data");
-    [self upLoadImage:self.uploadImageArray];
-}
+
 
 
 - (void)composePicAdd

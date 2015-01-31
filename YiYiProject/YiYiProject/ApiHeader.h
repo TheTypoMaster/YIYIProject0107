@@ -234,6 +234,11 @@ typedef enum {
 //取消关注商场
 #define QUXIAOGUANZHU_SHANGCHANG @"http://182.92.158.32/?d=api&c=friendship&m=mallDestory"
 
+//关注品牌
+#define GUANZHUPINPAI @"http://182.92.158.32/index.php?d=api&c=brand&m=attend_brand"
+//取消关注品牌
+#define QUXIAOGUANZHUPINPAI @"http://182.92.158.32/index.php?d=api&c=brand&m=cancel_attend_brand"
+
 
 
 //申请店铺界面 

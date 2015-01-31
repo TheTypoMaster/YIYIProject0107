@@ -17,7 +17,6 @@
 
 #import "GmyMainViewController.h"//我的主页
 
-#import "GSettingViewController.h"
 
 #import "MyYiChuViewController.h"//我的衣橱
 
@@ -68,6 +67,10 @@ typedef enum{
     
     
     BOOL _getUserinfoSuccess;//加载用户数据是否成功
+    
+    
+    
+    UIActivityIndicatorView *_hud;
     
 }
 @end
@@ -150,6 +153,7 @@ typedef enum{
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.tableHeaderView = [self creatTableViewHeaderView];
+//    _tableView.userInteractionEnabled = NO;
     [self.view addSubview:_tableView];
     
     
@@ -221,6 +225,16 @@ typedef enum{
 
 //网络请求获取用户信息
 -(void)GgetUserInfo{
+    
+    if (!_hud) {
+        _hud = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        _hud.frame = CGRectMake(20, 35, 0, 0);
+    }
+    [self.view addSubview:_hud];
+    [_hud startAnimating];
+    
+    
+    
     NSString *URLstr = [NSString stringWithFormat:@"%@&authcode=%@",PERSON_GETUSERINFO,[GMAPI getAuthkey]];
     
     
@@ -228,6 +242,11 @@ typedef enum{
     [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"%@",result);
+        
+        
+        _getUserinfoSuccess = YES;
+        
+        [_hud stopAnimating];
         
         NSDictionary *dic = [result dictionaryValueForKey:@"user_info"];
         
@@ -257,9 +276,13 @@ typedef enum{
         }];
         
         [_tableView reloadData];
+//        _tableView.userInteractionEnabled = YES;
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        
+        if (!_getUserinfoSuccess) {
+            
+            [self performSelector:@selector(GgetUserInfo) withObject:[NSNumber numberWithBool:YES] afterDelay:2];
+        }
     }];
     
 }
@@ -346,6 +369,11 @@ typedef enum{
 
 //跳转个人设置界面
 -(void)xiaochilun{
+    
+    if (!_getUserinfoSuccess) {
+        return;
+    }
+    
     MySettingsViewController *mySettingVC = [[MySettingsViewController alloc]init];
     mySettingVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:mySettingVC animated:YES];
@@ -451,6 +479,11 @@ typedef enum{
         
         return;
         
+    }
+    
+    
+    if (!_getUserinfoSuccess) {
+        return;
     }
     
     
@@ -589,6 +622,10 @@ typedef enum{
 ///编辑资料
 -(void)goToEdit{
     
+    if (!_getUserinfoSuccess) {
+        return;
+    }
+    
     
     if ([LTools isLogin:self]) {
         //编辑
@@ -604,6 +641,9 @@ typedef enum{
 //修改banner&&头像
 -(void)userBannerClicked{
     NSLog(@"点击用户banner");
+    if (!_getUserinfoSuccess) {
+        return;
+    }
     _changeImageType = USERBANNER;
     GcustomActionSheet *aaa = [[GcustomActionSheet alloc]initWithTitle:nil
                                                           buttonTitles:@[@"更换相册封面"]
@@ -621,6 +661,9 @@ typedef enum{
 }
 -(void)userFaceClicked{
     NSLog(@"点击头像");
+    if (!_getUserinfoSuccess) {
+        return;
+    }
     _changeImageType = USERFACE;
     GcustomActionSheet *aaa = [[GcustomActionSheet alloc]initWithTitle:nil
                                                           buttonTitles:@[@"更换头像"]

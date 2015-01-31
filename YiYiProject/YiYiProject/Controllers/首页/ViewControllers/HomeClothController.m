@@ -54,6 +54,12 @@
     UIScrollView *_mainScrollView;//主滚动视图
     
     
+    //加载数据是否完成
+    BOOL _isLoadUpPicSuccess;
+    BOOL _isLoadNearbyStoreSuccess;
+    BOOL _isLoadNearPinpaiSuccess;
+    
+    
 
 }
 @end
@@ -158,6 +164,7 @@
 //请求顶部scrollview一组图片
 -(void)prepareTopScrollViewIms{
     NSString *api = HOME_CLOTH_TOPSCROLLVIEW;
+    
     GmPrepareNetData *gg = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
     [gg requestCompletion:^(NSDictionary *result, NSError *erro) {
         
@@ -165,10 +172,14 @@
         _topScrollviewImvInfoArray = [result objectForKey:@"advertisements_data"];
         [_gscrollView reloadData];
         
-        [self doneLoadingTableViewData];
+        _isLoadUpPicSuccess = YES;
+        
+        if (_isLoadUpPicSuccess && _isLoadNearbyStoreSuccess && _isLoadNearPinpaiSuccess) {
+            [self doneLoadingTableViewData];
+        }
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        
+        _isLoadUpPicSuccess = NO;
     }];
     
 }
@@ -190,6 +201,7 @@
     GmPrepareNetData *dd = [[GmPrepareNetData alloc]initWithUrl:api isPost:YES postData:nil];
     [dd requestCompletion:^(NSDictionary *result, NSError *erro) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
+        
         NSLog(@"%@",result);
         
         _nearByStoreDataArray = [result objectForKey:@"list"];
@@ -198,9 +210,14 @@
             [GMAPI showAutoHiddenMBProgressWithText:@"附近没有符合条件的商场" addToView:self.view];
         }
         [_scrollview_nearbyView gReloadData];
-        [self doneLoadingTableViewData];
+        
+        _isLoadNearbyStoreSuccess = YES;
+        if (_isLoadUpPicSuccess && _isLoadNearbyStoreSuccess && _isLoadNearPinpaiSuccess) {
+            [self doneLoadingTableViewData];
+        }
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        _isLoadNearbyStoreSuccess = NO;
         [MBProgressHUD hideHUDForView:self.view animated:YES];
     }];
     
@@ -244,7 +261,7 @@
 
 //请求附近的品牌
 -(void)prepareNearbyPinpai{
-//    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+
     
     
     if (_pinpaiScrollViewModelInfoArray.count>0) {
@@ -256,6 +273,7 @@
     
     
     NSString *api = HOME_CLOTH_NEARBYPINPAI;
+    
     GmPrepareNetData *gg = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
     [gg requestCompletion:^(NSDictionary *result, NSError *erro) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -266,9 +284,14 @@
             [GMAPI showAutoHiddenMBProgressWithText:@"附近没有符合条件的品牌" addToView:self.view];
         }
         [_scrollView_pinpai gReloadData];
-        [self doneLoadingTableViewData];
+        
+        _isLoadNearPinpaiSuccess = YES;
+        if (_isLoadUpPicSuccess && _isLoadNearbyStoreSuccess && _isLoadNearPinpaiSuccess) {
+            [self doneLoadingTableViewData];
+        }
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        _isLoadNearPinpaiSuccess = NO;
         [MBProgressHUD hideHUDForView:self.view animated:YES];
     }];
 }
@@ -303,7 +326,7 @@
     _gscrollView.theGcycelScrollViewType = GCYCELNORMORL;
     [_gscrollView loadGcycleScrollView];
     _gscrollView.tag = 200;
-    _gscrollView.backgroundColor = [UIColor orangeColor];
+    _gscrollView.backgroundColor =  RGBCOLOR(242, 242, 242);
     _gscrollView.delegate = self;
     _gscrollView.datasource = self;
     return _gscrollView;
