@@ -273,16 +273,16 @@
     return sharedAccountManagerInstance;
 }
 
-- (void)GgetCllocation:(void(^)(CLLocation *theLocation))completionBlock{
-    _theLocationDic = nil;
+//开启定位
+-(void)startDingwei{
+    
     [self startLocation];
-    if (_theLocationDic) {
-        gcllocationBlock(_theLocationDic);
-    }
 }
+
 
 ///开始定位
 -(void)startLocation{
+    
     _locService = [[BMKLocationService alloc]init];
     _locService.delegate = self;
     [_locService startUserLocationService];
@@ -290,6 +290,8 @@
 
 ///停止定位
 -(void)stopLocation{
+    
+    
     [_locService stopUserLocationService];
     if (_locService) {
         _locService = nil;
@@ -305,7 +307,14 @@
                             @"lat":[NSString stringWithFormat:@"%f",userLocation.location.coordinate.latitude],
                             @"long":[NSString stringWithFormat:@"%f",userLocation.location.coordinate.longitude]
                             };
+        
+        
         [self stopLocation];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(theLocationDictionary:)]) {
+            [self.delegate theLocationDictionary:_theLocationDic];
+        }
+        
+        
     }
     
 }

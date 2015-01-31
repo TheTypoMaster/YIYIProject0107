@@ -156,7 +156,7 @@ typedef enum {
 //获取附近品牌
 #define HOME_CLOTH_NEARBYPINPAI @"http://182.92.158.32/index.php?d=api&c=brand&m=get_nearby_brands"
 //获取附近商铺
-#define HOME_CLOTH_NEARBYSTORE @"http://182.92.158.32/?d=api&c=mall&m=gerNearMalls&long=116.33232544&lat=39.98189909"
+#define HOME_CLOTH_NEARBYSTORE @"http://182.92.158.32/?d=api&c=mall&m=gerNearMalls"
 //获取我关注的店铺
 #define HOME_CLOTH_GUANZHUSTORE_MINE @"http://182.92.158.32/?d=api&c=friendship&m=listMall&authcode=%@&page=1&count=100"
 //获取我关注的品牌

@@ -18,7 +18,7 @@
 #import "LoginViewController.h"
 #import "EGORefreshTableHeaderView.h"
 
-@interface HomeClothController ()<GCycleScrollViewDatasource,GCycleScrollViewDelegate,UIScrollViewDelegate,EGORefreshTableDelegate>
+@interface HomeClothController ()<GCycleScrollViewDatasource,GCycleScrollViewDelegate,UIScrollViewDelegate,EGORefreshTableDelegate,GgetllocationDelegate>
 {
     
     //第一行
@@ -59,6 +59,10 @@
     BOOL _isLoadNearbyStoreSuccess;
     BOOL _isLoadNearPinpaiSuccess;
     
+    
+    
+    //定位相关
+    NSDictionary *_locationDic;
     
 
 }
@@ -119,14 +123,14 @@
     
     
     
+    //获取经纬度
+    [self getjingweidu];
+    
     
     //网络请求
     //请求顶部滚动广告栏
     [self prepareTopScrollViewIms];
-    //请求附近的品牌
-    [self prepareNearbyPinpai];
-    //请求附近的商店
-    [self prepareNearbyStore];
+    
     
     
     
@@ -136,6 +140,30 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)getjingweidu{
+    
+    GMAPI *aaa = [GMAPI sharedManager];
+    aaa.delegate = self;
+    [aaa startDingwei];
+}
+
+
+- (void)theLocationDictionary:(NSDictionary *)dic{
+    
+    NSLog(@"%@",dic);
+    _locationDic = dic;
+    
+    
+    if (dic) {
+        //请求附近的品牌
+        [self prepareNearbyPinpai];
+        //请求附近的商店
+        [self prepareNearbyStore];
+    }
+    
+    
 }
 
 
@@ -174,9 +202,9 @@
         
         _isLoadUpPicSuccess = YES;
         
-        if (_isLoadUpPicSuccess && _isLoadNearbyStoreSuccess && _isLoadNearPinpaiSuccess) {
+//        if (_isLoadUpPicSuccess && _isLoadNearbyStoreSuccess && _isLoadNearPinpaiSuccess) {
             [self doneLoadingTableViewData];
-        }
+//        }
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         _isLoadUpPicSuccess = NO;
@@ -197,7 +225,12 @@
     
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    NSString *api = [NSString stringWithFormat:@"%@&page=1&count=100",HOME_CLOTH_NEARBYSTORE];
+    
+    
+    NSString *lon = [_locationDic stringValueForKey:@"long"];
+    NSString *lat = [_locationDic stringValueForKey:@"lat"];
+    NSString *api = [NSString stringWithFormat:@"%@&long=%@&lat=%@&page=1&count=100",HOME_CLOTH_NEARBYSTORE,lon,lat];
+    
     GmPrepareNetData *dd = [[GmPrepareNetData alloc]initWithUrl:api isPost:YES postData:nil];
     [dd requestCompletion:^(NSDictionary *result, NSError *erro) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -212,9 +245,9 @@
         [_scrollview_nearbyView gReloadData];
         
         _isLoadNearbyStoreSuccess = YES;
-        if (_isLoadUpPicSuccess && _isLoadNearbyStoreSuccess && _isLoadNearPinpaiSuccess) {
+//        if (_isLoadUpPicSuccess && _isLoadNearbyStoreSuccess && _isLoadNearPinpaiSuccess) {
             [self doneLoadingTableViewData];
-        }
+//        }
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         _isLoadNearbyStoreSuccess = NO;
@@ -286,9 +319,9 @@
         [_scrollView_pinpai gReloadData];
         
         _isLoadNearPinpaiSuccess = YES;
-        if (_isLoadUpPicSuccess && _isLoadNearbyStoreSuccess && _isLoadNearPinpaiSuccess) {
+//        if (_isLoadUpPicSuccess && _isLoadNearbyStoreSuccess && _isLoadNearPinpaiSuccess) {
             [self doneLoadingTableViewData];
-        }
+//        }
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         _isLoadNearPinpaiSuccess = NO;

@@ -22,16 +22,25 @@
 //from  wl
 #import "SVProgressHUD.h"        //提示层
 
+@protocol GgetllocationDelegate <NSObject>
 
-typedef void(^ GCllocationBlock)(NSDictionary *theLocationDic);
+@optional
+
+- (void)theLocationDictionary:(NSDictionary *)dic;
+
+
+@end
+
 
 
 @interface GMAPI : NSObject<BMKMapViewDelegate,BMKLocationServiceDelegate>
 {
     BMKLocationService* _locService;//定位服务
     NSDictionary *_theLocationDic;//经纬度
-    GCllocationBlock gcllocationBlock;
+    
 }
+
+@property(nonatomic,assign)id<GgetllocationDelegate> delegate;
 
 +(NSString *)getUsername;
 
@@ -111,10 +120,8 @@ typedef void(^ GCllocationBlock)(NSDictionary *theLocationDic);
 
 //获取单例
 + (GMAPI *)sharedManager;
-
-//获取经纬度
-- (void)GgetCllocation:(void(^)(CLLocation *theLocation))completionBlock;
-
+//开启定位
+-(void)startDingwei;
 
 
 //地区选择相关
