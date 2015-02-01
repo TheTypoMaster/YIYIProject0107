@@ -82,6 +82,7 @@ alpha:(a)]
 #define NOTIFICATION_GUANZHU_STORE_QUXIAO @"guanzhu_store_quxiao"
 //关注品牌
 #define NOTIFICATION_GUANZHU_PINPAI @"guanzhu_pinpai"
+//取消关注品牌
 #define NOTIFICATION_GUANZHU_PINPAI_QUXIAO @"guanzhu_pinpai_quxiao"
 
 

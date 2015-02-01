@@ -454,6 +454,9 @@
 
 -(void)creatView2{
     _view2 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_view1.frame)+12, DEVICE_WIDTH, 160)];
+    if (DEVICE_WIDTH>320) {
+        [_view2 setFrame:CGRectMake(0, CGRectGetMaxY(_view1.frame)+12, DEVICE_WIDTH, 180)];
+    }
     _view2.backgroundColor = [UIColor whiteColor];
     [_mainScrollView addSubview:_view2];
     
@@ -507,8 +510,9 @@
     ttt.textColor = RGBCOLOR(114, 114, 114);
     UISwitch *ggg = [[UISwitch alloc]initWithFrame:CGRectMake(CGRectGetMaxX(ttt.frame)+5, ttt.frame.origin.y-5, 50, 50)];
     [ggg addTarget:self action:@selector(nnnn:) forControlEvents:UIControlEventValueChanged];
+    ggg.on = YES;
     _genderLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(ggg.frame)+10, ttt.frame.origin.y, 50, 20)];
-    _genderLabel.text = @"男";
+    _genderLabel.text = @"女";
     _genderLabel.textColor = RGBCOLOR(114, 114, 114);
     [_view2 addSubview:ttt];
     [_view2 addSubview:ggg];

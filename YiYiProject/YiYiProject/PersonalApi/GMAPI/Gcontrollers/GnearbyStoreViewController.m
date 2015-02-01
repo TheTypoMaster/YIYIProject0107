@@ -39,7 +39,12 @@
     UIButton *_my_right_button;
     UIBarButtonItem *_spaceButton;
     
-
+    
+    UILabel *_huodongTitleLabel;//活动title
+    
+    UILabel *_dizhiTitleLabel;//地址title
+    
+    UIButton *_dainimaiBtn;//带你去买
     
 }
 
@@ -98,8 +103,7 @@
     self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
     
     
-    //添加商场信息view
-    [self creatUpStoreInfoView];
+    
     
     
     //请求网络数据
@@ -205,28 +209,40 @@
     _mallNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 30, DEVICE_WIDTH-15-15, 18)];
     
     //活动
-    _huodongLabel = [[UILabel alloc]initWithFrame:CGRectMake(_mallNameLabel.frame.origin.x, CGRectGetMaxY(_mallNameLabel.frame)+13, _mallNameLabel.frame.size.width, 15)];
+    _huodongTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(_mallNameLabel.frame.origin.x, CGRectGetMaxY(_mallNameLabel.frame)+13, 45, 15)];
+    _huodongTitleLabel.font = [UIFont systemFontOfSize:15];
+//    _huodongTitleLabel.backgroundColor = [UIColor orangeColor];
+    _huodongTitleLabel.text = @"活动：";
+    _huodongLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_huodongTitleLabel.frame)+10, CGRectGetMaxY(_mallNameLabel.frame)+13, DEVICE_WIDTH -15-15-10-_huodongTitleLabel.frame.size.width, 15)];
+//    _huodongLabel.backgroundColor = [UIColor purpleColor];
     _huodongLabel.font = [UIFont systemFontOfSize:15];
     
     //地址
-    _adressLabel = [[UILabel alloc]initWithFrame:CGRectMake(_mallNameLabel.frame.origin.x, CGRectGetMaxY(_huodongLabel.frame)+8, _mallNameLabel.frame.size.width, 15)];
+    _dizhiTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(_mallNameLabel.frame.origin.x, CGRectGetMaxY(_huodongTitleLabel.frame)+8, 45, 15)];
+//    _dizhiTitleLabel.backgroundColor = [UIColor orangeColor];
+    _dizhiTitleLabel.text = @"地址：";
+    _dizhiTitleLabel.font = [UIFont systemFontOfSize:15];
+    _adressLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_dizhiTitleLabel.frame)+10, CGRectGetMaxY(_huodongLabel.frame)+8, DEVICE_WIDTH -15-15-10-_huodongTitleLabel.frame.size.width, 15)];
+//    _adressLabel.backgroundColor = [UIColor purpleColor];
     _adressLabel.font = [UIFont systemFontOfSize:15];
     
     //带你买
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setTitle:@"带你去买" forState:UIControlStateNormal];
-    btn.titleLabel.font = [UIFont systemFontOfSize:15];
-    [btn setTitleColor:RGBCOLOR(114, 114, 114) forState:UIControlStateNormal];
-    [btn setFrame:CGRectMake(_mallNameLabel.frame.origin.x, CGRectGetMaxY(_adressLabel.frame)+22, 83, 37)];
-    btn.layer.borderWidth = 1;
-    btn.layer.cornerRadius = 7;
-    btn.layer.borderColor = [RGBCOLOR(114, 114, 114)CGColor];
-    [btn addTarget:self action:@selector(leadYouBuy) forControlEvents:UIControlEventTouchUpInside];
+    _dainimaiBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_dainimaiBtn setTitle:@"带你去买" forState:UIControlStateNormal];
+    _dainimaiBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    [_dainimaiBtn setTitleColor:RGBCOLOR(114, 114, 114) forState:UIControlStateNormal];
+    [_dainimaiBtn setFrame:CGRectMake(_mallNameLabel.frame.origin.x, CGRectGetMaxY(_adressLabel.frame)+15, 83, 37)];
+    _dainimaiBtn.layer.borderWidth = 1;
+    _dainimaiBtn.layer.cornerRadius = 7;
+    _dainimaiBtn.layer.borderColor = [RGBCOLOR(114, 114, 114)CGColor];
+    [_dainimaiBtn addTarget:self action:@selector(leadYouBuy) forControlEvents:UIControlEventTouchUpInside];
     
     [_upStoreInfoView addSubview:_mallNameLabel];
+    [_upStoreInfoView addSubview:_huodongTitleLabel];
     [_upStoreInfoView addSubview:_huodongLabel];
+    [_upStoreInfoView addSubview:_dizhiTitleLabel];
     [_upStoreInfoView addSubview:_adressLabel];
-    [_upStoreInfoView addSubview:btn];
+    [_upStoreInfoView addSubview:_dainimaiBtn];
     
     [self.view addSubview:_upStoreInfoView];
     
@@ -301,6 +317,7 @@
 
 -(void)rootScrollViewPushVcWithPinpaiId:(NSString *)theId pinpaiName:(NSString *)thePinpaiName{
     GStorePinpaiViewController *cc = [[GStorePinpaiViewController alloc]init];
+    cc.guanzhuleixing = @"品牌";
     cc.storeIdStr = theId;
     cc.storeNameStr = _mallNameLabel.text;
     cc.pinpaiNameStr = thePinpaiName;
@@ -344,18 +361,59 @@
         
         NSLog(@"%@",result);
         
+        
+        NSString *mallType = [result stringValueForKey:@"mall_type"];
+        if ([mallType isEqualToString:@"2"]) {//精品店
+            NSLog(@"精品店");
+            
+//            GStorePinpaiViewController *cc = [[GStorePinpaiViewController alloc]init];
+//            cc.guanzhuleixing = @"精品店";
+//            cc.guanzhu = self.guanzhu;
+//            [self.view addSubview:cc.view];
+//            return;
+            
+        }else if ([mallType isEqualToString:@"1"]){//商场店
+            NSLog(@"商场店");
+            
+        }
+        
+        
+        //添加商场信息view
+        [self creatUpStoreInfoView];
+        
+        
+        
         //活动
         NSDictionary *dic = [result dictionaryValueForKey:@"activity"];
         NSString *huodongStr = nil;
         if (dic) {
             huodongStr = [dic stringValueForKey:@"activity_title"];
-        }else{
-            huodongStr = @"地址：暂无";
+            if (huodongStr.length==0) {
+                huodongStr = @"";
+            }
         }
 
         _mallNameLabel.text = [NSString stringWithFormat:@"%@",[result stringValueForKey:@"mall_name"]];
         _huodongLabel.text = huodongStr;
-        _adressLabel.text = [NSString stringWithFormat:@"地址：%@",[result stringValueForKey:@"address"]];
+        
+        //根据内容调整活动和地址的高度=================start
+        if (_huodongLabel.text.length == 0) {
+            _huodongTitleLabel.hidden = YES;
+            _huodongLabel.hidden = YES;
+            [_dizhiTitleLabel setFrame:_huodongTitleLabel.frame];
+            [_adressLabel setFrame:_huodongLabel.frame];
+            
+        }else{
+            _huodongLabel.numberOfLines = 0;
+            [_huodongLabel sizeToFit];
+            
+        }
+        _adressLabel.text = [NSString stringWithFormat:@"%@",[result stringValueForKey:@"address"]];
+        _adressLabel.numberOfLines = 0;
+        [_adressLabel sizeToFit];
+        [_dainimaiBtn setFrame:CGRectMake(_mallNameLabel.frame.origin.x, CGRectGetMaxY(_adressLabel.frame)+15, 83, 37)];
+        //根据内容调整活动和地址的高度=================end
+        
         self.mall_id = [result stringValueForKey:@"mall_id"];
         self.guanzhu = [result stringValueForKey:@"following"];
         if ([self.guanzhu intValue]==0) {//未关注

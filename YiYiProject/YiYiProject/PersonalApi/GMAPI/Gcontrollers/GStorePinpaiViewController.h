@@ -14,7 +14,14 @@
 #import "ParallaxHeaderView.h"
 
 @interface GStorePinpaiViewController : MyViewController
-
+{
+    UIView *_upStoreInfoView;
+    UILabel *_mallNameLabel;
+    UILabel *_huodongTitleLabel;
+    UILabel *_huodongLabel;
+    UILabel *_dizhiTitleLabel;
+    UILabel *_adressLabel;
+}
 
 @property(nonatomic,strong)NSString *pinpaiNameStr;//品牌名称
 @property(nonatomic,strong)NSString *storeNameStr;//商家名称
@@ -23,5 +30,8 @@
 @property(nonatomic,strong)NSString *pinpaiId;//品牌id
 
 @property(nonatomic,strong)NSString *guanzhu;//0未关注  1已关注
+
+@property(nonatomic,strong)NSString *guanzhuleixing;//关注类型
+
 
 @end

@@ -104,6 +104,7 @@
             //红图
             UIImageView *nearStoreView = [[UIImageView alloc]initWithFrame:CGRectMake(0+i*118, 50, 118, 123)];
             [nearStoreView setImage:[UIImage imageNamed:@"gnearstorered.png"]];
+            
             [self addSubview:nearStoreView];
         }
         
@@ -134,8 +135,8 @@
             NSDictionary *dic = downDataArray[i];
             UIView *view = [[UIView alloc]initWithFrame:CGRectMake(22+i*(38+80), 102, 80, 60)];
             view.userInteractionEnabled = YES;
+//            view.backgroundColor = [UIColor orangeColor];
             UIButton *storeNameBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//            storeNameBtn.backgroundColor = [UIColor orangeColor];
             [storeNameBtn setFrame:CGRectMake(0, -8, view.frame.size.width, 35)];
             storeNameBtn.tag = [[dic stringValueForKey:@"mall_id"]integerValue]+10;
             [storeNameBtn addTarget:self action:@selector(goNearbyStoreVC:) forControlEvents:UIControlEventTouchUpInside];
@@ -159,11 +160,11 @@
         
         for (int i =0; i<upArrayNum; i++) {//上
             UIView *view = [[UIView alloc]initWithFrame:CGRectMake(76+i*(38+80), 0, 80, 60)];
-//            view.backgroundColor = [UIColor orangeColor];
+
             NSDictionary *dic = upDataArray[i];
             //距离
             UILabel *distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, view.frame.size.width, 18)];
-//            distanceLabel.backgroundColor = [UIColor orangeColor];
+
             distanceLabel.font = [UIFont systemFontOfSize:13];
             distanceLabel.textAlignment = NSTextAlignmentCenter;
             distanceLabel.textColor = [UIColor blackColor];
@@ -172,7 +173,7 @@
             
             //商城名字
             UIButton *storeNameBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-            //            storeNameBtn.backgroundColor = [UIColor orangeColor];
+
             [storeNameBtn setFrame:CGRectMake(0, CGRectGetMaxY(distanceLabel.frame), view.frame.size.width, 35)];
             storeNameBtn.tag = [[dic stringValueForKey:@"mall_id"]integerValue]+10;
             [storeNameBtn addTarget:self action:@selector(goNearbyStoreVC:) forControlEvents:UIControlEventTouchUpInside];

@@ -15,7 +15,8 @@
 #import "LoginViewController.h"
 #import "NSDictionary+GJson.h"
 
-@interface GStorePinpaiViewController ()<CustomSegmentViewDelegate,TMQuiltViewDataSource,WaterFlowDelegate>
+
+@interface GStorePinpaiViewController ()<CustomSegmentViewDelegate,TMQuiltViewDataSource,WaterFlowDelegate,UIScrollViewDelegate>
 {
     
     int _page;
@@ -45,6 +46,9 @@
     //瀑布流下层view
     UIView *_backView_water;
     
+    
+    //主scrollview
+    UIScrollView *_mainScrollview;
     
 }
 
@@ -79,6 +83,11 @@
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeText];
     _spaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     
+    
+    _mainScrollview = [[UIScrollView alloc]initWithFrame:self.view.bounds];
+    [self.view addSubview:_mainScrollview];
+    
+    
     _my_right_button = [UIButton buttonWithType:UIButtonTypeCustom];
 //    _my_right_button.backgroundColor = [UIColor orangeColor];
     _my_right_button.frame = CGRectMake(0,0,60,44);
@@ -108,37 +117,133 @@
     
     //初始化
     _btnArray = [NSMutableArray arrayWithCapacity:1];
-    
-    //创建3个选项
-    [self createMemuView];
-    
-    
-    
-    
+
     _page = 1;
     _per_page = 10;
     _paixuIndex = 0;
     
     
-    _backView_water = [[UIView alloc]initWithFrame:CGRectMake(12, CGRectGetMaxY(_menu_view.frame)+12, ALL_FRAME_WIDTH-24, ALL_FRAME_HEIGHT - _menu_view.frame.size.height - 12-12-64)];
-    _backView_water.backgroundColor = RGBCOLOR(240, 230, 235);
-    [self.view addSubview:_backView_water];
     
     
-    _waterFlow = [[LWaterflowView alloc]initWithFrame:_backView_water.bounds waterDelegate:self waterDataSource:self];
-    _waterFlow.backgroundColor = RGBCOLOR(240, 230, 235);
-    [_backView_water addSubview:_waterFlow];
     
     
-    [self getGuanzhuYesOrNo];
+
+    
+    
+    //获取店铺详情
+    
+    NSLog(@"品牌名称 %@",self.pinpaiNameStr);
+    NSLog(@"商家名称 %@",self.storeNameStr);
+    NSLog(@"商家id %@",self.storeIdStr);
+    NSLog(@"品牌id %@",self.pinpaiId);
+    
+    
+    
+    
+
+    [self prepareDianpuInfo];//获取店铺信息
     
     
 }
 
 
+//获取店铺详情
+-(void)prepareDianpuInfo{
+    NSString *api = [NSString stringWithFormat:GET_MAIL_DETAIL_INFO,self.storeIdStr];
+    GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+    [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
+        [self creatDianpuInfoView];
+        
+        NSLog(@"店铺信息 %@",result);
+        NSString *dizhi = [result stringValueForKey:@"address"];
+        
+        //品牌id
+        self.pinpaiId = [result stringValueForKey:@"brand_id"];
+        
+        //活动
+        NSDictionary *dic = [result dictionaryValueForKey:@"activity"];
+        NSString *huodongStr = nil;
+        if (dic) {
+            huodongStr = [dic stringValueForKey:@"activity_title"];
+            if (huodongStr.length==0) {
+                huodongStr = @"";
+            }
+        }
+        
+        _huodongLabel.text = huodongStr;
+        
+        //根据内容调整活动和地址的高度=================start
+        if (_huodongLabel.text.length == 0) {
+            _huodongTitleLabel.hidden = YES;
+            _huodongLabel.hidden = YES;
+            [_dizhiTitleLabel setFrame:_huodongTitleLabel.frame];
+            [_adressLabel setFrame:_huodongLabel.frame];
+            
+        }else{
+            _huodongLabel.numberOfLines = 0;
+            [_huodongLabel sizeToFit];
+            
+        }
+        _adressLabel.text = dizhi;
+        _adressLabel.numberOfLines = 0;
+        [_adressLabel sizeToFit];
+        //根据内容调整活动和地址的高度=================end
+        
+        [_upStoreInfoView setFrame:CGRectMake(0, 0, DEVICE_WIDTH, CGRectGetMaxY(_adressLabel.frame)+10)];
+        
+        
+        [self createMemuView];
+        
+        if ([self.guanzhuleixing isEqualToString:@"品牌"]) {
+            [self getGuanzhuYesOrNoForPinpai];
+        }else if ([self.guanzhuleixing isEqualToString:@"精品店"]){
+            
+        }
+        
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+    }];
+}
 
-//获取是否关注
--(void)getGuanzhuYesOrNo{
+//创建店铺信息view
+-(void)creatDianpuInfoView{
+    _upStoreInfoView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 100)];
+//        _upStoreInfoView.backgroundColor = [UIColor orangeColor];
+    
+    //商城名称
+    _mallNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 20, DEVICE_WIDTH-15-15, 18)];
+    _mallNameLabel.text = [NSString stringWithFormat:@"%@ %@",self.pinpaiNameStr,self.storeNameStr];
+    
+    //活动
+    _huodongTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(_mallNameLabel.frame.origin.x, CGRectGetMaxY(_mallNameLabel.frame)+13, 45, 15)];
+    _huodongTitleLabel.font = [UIFont systemFontOfSize:15];
+    _huodongTitleLabel.text = @"活动：";
+    _huodongLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_huodongTitleLabel.frame)+10, CGRectGetMaxY(_mallNameLabel.frame)+13, DEVICE_WIDTH -15-15-10-_huodongTitleLabel.frame.size.width, 15)];
+    _huodongLabel.font = [UIFont systemFontOfSize:15];
+    
+    //地址
+    _dizhiTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(_mallNameLabel.frame.origin.x, CGRectGetMaxY(_huodongTitleLabel.frame)+8, 45, 15)];
+    _dizhiTitleLabel.text = @"地址：";
+    _dizhiTitleLabel.font = [UIFont systemFontOfSize:15];
+    _adressLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_dizhiTitleLabel.frame)+10, CGRectGetMaxY(_huodongLabel.frame)+8, DEVICE_WIDTH -15-15-10-_huodongTitleLabel.frame.size.width, 15)];
+    _adressLabel.font = [UIFont systemFontOfSize:15];
+    
+    
+    
+    [_upStoreInfoView addSubview:_mallNameLabel];
+    [_upStoreInfoView addSubview:_huodongTitleLabel];
+    [_upStoreInfoView addSubview:_huodongLabel];
+    [_upStoreInfoView addSubview:_dizhiTitleLabel];
+    [_upStoreInfoView addSubview:_adressLabel];
+    
+    [_mainScrollview addSubview:_upStoreInfoView];
+}
+
+
+
+//获取是否关注 品牌
+-(void)getGuanzhuYesOrNoForPinpai{
     
     NSString *api = [NSString stringWithFormat:@"%@&brand_id=%@&authcode=%@",GUANZHUPINPAI_ISORNO,self.pinpaiId,[GMAPI getAuthkey]];
     GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
@@ -159,6 +264,10 @@
         
     }];
 }
+
+
+
+
 
 
 
@@ -207,7 +316,7 @@
             [GMAPI showAutoHiddenMBProgressWithText:@"关注失败" addToView:self.view];
         }];
     }else if ([self.guanzhu intValue] == 1){
-        NSString *post = [NSString stringWithFormat:@"&brand_id=%@&authcode=%@",self.storeIdStr,[GMAPI getAuthkey]];
+        NSString *post = [NSString stringWithFormat:@"&brand_id=%@&authcode=%@",self.pinpaiId,[GMAPI getAuthkey]];
         NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
         NSString *url = [NSString stringWithFormat:QUXIAOGUANZHUPINPAI];
         GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
@@ -238,13 +347,14 @@
 {
     
     CGFloat aWidth = (ALL_FRAME_WIDTH - 24)/ 3.f;
-    _menu_view = [[UIView alloc]initWithFrame:CGRectMake(12, 12, aWidth * 3, 30)];
+    _menu_view = [[UIView alloc]initWithFrame:CGRectMake(12, CGRectGetMaxY(_upStoreInfoView.frame)+12, aWidth * 3, 30)];
     _menu_view.clipsToBounds = YES;
     _menu_view.layer.cornerRadius = 15.f;
     _menu_view.backgroundColor = RGBCOLOR(212, 59, 85);
     
+    
 //    self.navigationItem.titleView = menu_view;
-    [self.view addSubview:_menu_view];
+    [_mainScrollview addSubview:_menu_view];
     NSLog(@"%@",NSStringFromCGRect(_menu_view.frame));
     
     NSArray *titles = @[@"新品",@"折扣",@"热销"];
@@ -254,7 +364,6 @@
         btn.frame = CGRectMake(aWidth * i + 0.5 * i, 0, aWidth, 30);
         
         [btn setTitle:titles[i] forState:UIControlStateNormal];
-        btn.backgroundColor = [UIColor clearColor];
         [btn setHighlighted:NO];
         [btn.titleLabel setFont:[UIFont systemFontOfSize:13]];
         btn.tag = 100 + i;
@@ -268,6 +377,17 @@
     
     UIButton *btn = (UIButton *)[_menu_view viewWithTag:100];
     btn.backgroundColor = RGBCOLOR(240, 122, 142);
+    
+    
+    //瀑布流相关
+    _backView_water = [[UIView alloc]initWithFrame:CGRectMake(12, CGRectGetMaxY(_menu_view.frame)+12, ALL_FRAME_WIDTH-24, ALL_FRAME_HEIGHT - _menu_view.frame.size.height - 12-12-64-_upStoreInfoView.frame.size.height)];
+    _backView_water.backgroundColor = RGBCOLOR(240, 230, 235);
+    [_mainScrollview addSubview:_backView_water];
+    _waterFlow = [[LWaterflowView alloc]initWithFrame:_backView_water.bounds waterDelegate:self waterDataSource:self];
+    _waterFlow.backgroundColor = RGBCOLOR(240, 230, 235);
+    [_backView_water addSubview:_waterFlow];
+    
+    
     
 }
 
@@ -477,6 +597,29 @@
     
 }
 
+
+
+- (void)waterScrollViewDidScroll:(UIScrollView *)scrollView{
+    NSLog(@"哈哈");
+    NSLog(@"%f",scrollView.contentOffset.y);
+    if (scrollView.contentOffset.y>0) {
+        CGFloat height = _upStoreInfoView.frame.size.height;
+        if (_mainScrollview.contentOffset.y<height) {
+            [_backView_water setFrame:CGRectMake(12, CGRectGetMaxY(_menu_view.frame)+12, ALL_FRAME_WIDTH-24, ALL_FRAME_HEIGHT - _menu_view.frame.size.height - 12-12-64)];
+            [_waterFlow setFrame:_backView_water.bounds];
+            
+            [_mainScrollview setContentOffset:CGPointMake(0, height)];
+        }
+        
+    }else if (scrollView.contentOffset.y<0){
+        CGFloat height = _upStoreInfoView.frame.size.height;
+        if (_mainScrollview.contentOffset.y>=height) {
+            [_backView_water setFrame:CGRectMake(12, CGRectGetMaxY(_menu_view.frame)+12, ALL_FRAME_WIDTH-24, ALL_FRAME_HEIGHT - _menu_view.frame.size.height - 12-12-64-_upStoreInfoView.frame.size.height)];
+            [_waterFlow setFrame:_backView_water.bounds];
+            [_mainScrollview setContentOffset:CGPointMake(0, 0)];
+        }
+    }
+}
 
 
 
