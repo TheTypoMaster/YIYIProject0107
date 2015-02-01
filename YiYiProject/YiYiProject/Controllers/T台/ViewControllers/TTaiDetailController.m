@@ -117,7 +117,7 @@
 
 - (void)clickToZhuanFa:(UIButton *)sender
 {
-    [[LShareSheetView shareInstance] showShareContent:detail_model.tt_content title:@"衣加衣T台详情" shareUrl:@"https://itunes.apple.com/us/app/id951259287?mt=8" shareImage:bigImageView.image targetViewController:self];
+    [[LShareSheetView shareInstance] showShareContent:detail_model.tt_content title:@"衣加衣" shareUrl:@"http://www.alayy.com" shareImage:bigImageView.image targetViewController:self];
     [[LShareSheetView shareInstance]actionBlock:^(NSInteger buttonIndex, Share_Type shareType) {
         
         if (shareType == Share_QQ) {

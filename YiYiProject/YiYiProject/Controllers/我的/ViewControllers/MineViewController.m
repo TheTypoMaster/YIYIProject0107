@@ -406,7 +406,7 @@ typedef enum{
 
 - (void)clickToShare:(UIButton *)sender
 {
-    [[LShareSheetView shareInstance] showShareContent:@"我在使用衣+衣,我们一起来用吧!" title:nil shareUrl:@"https://itunes.apple.com/us/app/id951259287?mt=8" shareImage:[UIImage imageNamed:@"about_icon"] targetViewController:self];
+    [[LShareSheetView shareInstance] showShareContent:@"我在使用衣+衣,我们一起来用吧!" title:nil shareUrl:@"http://www.alayy.com" shareImage:[UIImage imageNamed:@"about_icon"] targetViewController:self];
     [[LShareSheetView shareInstance]actionBlock:^(NSInteger buttonIndex, Share_Type shareType) {
         
         if (shareType == Share_QQ) {

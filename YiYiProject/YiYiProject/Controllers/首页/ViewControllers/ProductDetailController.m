@@ -259,7 +259,7 @@
 
 - (void)clickToShare:(UIButton *)sender
 {
-    [[LShareSheetView shareInstance] showShareContent:aModel.product_name title:@"值得买分享" shareUrl:@"https://itunes.apple.com/us/app/id951259287?mt=8" shareImage:self.bigImageView.image targetViewController:self];
+    [[LShareSheetView shareInstance] showShareContent:aModel.product_name title:@"衣加衣" shareUrl:@"http://www.alayy.com" shareImage:self.bigImageView.image targetViewController:self];
     [[LShareSheetView shareInstance]actionBlock:^(NSInteger buttonIndex, Share_Type shareType) {
        
         if (shareType == Share_QQ) {

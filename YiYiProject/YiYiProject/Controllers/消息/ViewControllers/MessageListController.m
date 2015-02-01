@@ -58,7 +58,7 @@
     self.myTitleLabel.text = @"消息";
     
     arr_images = @[@"yixx150_150",@"sjxx150_150",@"my_shoucang",@"my_shenqing"];
-    arr_titles = @[@"衣+衣团队",@"商家消息",@"动态消息",@"即时消息"];
+    arr_titles = @[@"衣+衣团队",@"商家消息",@"动态消息",@"聊天消息"];
     
     _table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT - 64) style:UITableViewStylePlain];
     _table.delegate = self;

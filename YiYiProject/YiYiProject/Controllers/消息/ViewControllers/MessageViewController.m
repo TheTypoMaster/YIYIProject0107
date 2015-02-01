@@ -105,7 +105,7 @@
         UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
         self.navigationItem.leftBarButtonItems=@[back_item];
         
-        [self setNavigationTitle:@"即时消息" textColor:[UIColor whiteColor]];
+        [self setNavigationTitle:@"聊天消息" textColor:[UIColor whiteColor]];
 
     }
     
