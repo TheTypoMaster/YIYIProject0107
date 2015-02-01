@@ -370,9 +370,26 @@ typedef enum{
 //跳转个人设置界面
 -(void)xiaochilun{
     
+    //判断是否登录
+    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
+        
+        LoginViewController *login = [[LoginViewController alloc]init];
+        
+        UINavigationController *unVc = [[UINavigationController alloc]initWithRootViewController:login];
+        
+        [self presentViewController:unVc animated:YES completion:nil];
+        
+        
+        return;
+        
+    }
+    
+    
     if (!_getUserinfoSuccess) {
         return;
     }
+    
+    
     
     MySettingsViewController *mySettingVC = [[MySettingsViewController alloc]init];
     mySettingVC.hidesBottomBarWhenPushed = YES;

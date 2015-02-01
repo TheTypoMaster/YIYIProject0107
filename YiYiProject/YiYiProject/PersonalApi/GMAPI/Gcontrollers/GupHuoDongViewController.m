@@ -63,6 +63,9 @@
     
     self.myTitle=@"发布活动";
     
+    
+    NSLog(@"type %@",self.mallInfo.brand_id);
+    
     self.view.backgroundColor = [UIColor whiteColor];
     
     
@@ -197,7 +200,7 @@
     NSString *type = nil;
     if ([self.mallInfo.brand_id isEqualToString:@"0"]) {//精品店
         type = @"2";
-    }else if ([self.mallInfo.brand_id isEqualToString:@"1"]){//商场店
+    }else {//商场店
         type = @"1";
     }
     
