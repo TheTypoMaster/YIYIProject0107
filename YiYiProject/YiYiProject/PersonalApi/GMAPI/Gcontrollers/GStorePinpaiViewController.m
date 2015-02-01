@@ -136,6 +136,7 @@
     NSLog(@"商家名称 %@",self.storeNameStr);
     NSLog(@"商家id %@",self.storeIdStr);
     NSLog(@"品牌id %@",self.pinpaiId);
+    NSLog(@"关注类型 %@",self.guanzhuleixing);
     
     
     
@@ -205,7 +206,7 @@
         
         [self createMemuView];
         
-        if ([self.guanzhuleixing isEqualToString:@"品牌"]) {
+        if ([self.guanzhuleixing isEqualToString:@"品牌"] || [self.guanzhuleixing isEqualToString:@"品牌店"]) {
             [self getGuanzhuYesOrNoForPinpai];
         }else if ([self.guanzhuleixing isEqualToString:@"精品店"]){
             
