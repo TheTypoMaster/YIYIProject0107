@@ -542,6 +542,7 @@
 		E3E3E84A1A3C6780001A1DD6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E3E8491A3C6780001A1DD6 /* QuartzCore.framework */; };
 		E3E3E84C1A3C678C001A1DD6 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E3E84B1A3C678C001A1DD6 /* OpenGLES.framework */; };
 		E3E832441A666F7600026DAC /* GrootScrollViewFloorTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3E832431A666F7600026DAC /* GrootScrollViewFloorTableViewCell.m */; };
+		E3ECC7021A7E07D60024A734 /* grzx150_150@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3ECC7011A7E07D60024A734 /* grzx150_150@3x.png */; };
 		E3FC8DE71A3C4B430025525D /* GeditUserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FC8DE61A3C4B430025525D /* GeditUserInfoViewController.m */; };
 		EF72DCD81A6BFEB50021F311 /* about_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EF72DCD71A6BFEB50021F311 /* about_icon@2x.png */; };
 		EF9329F31A617DD500A8BD18 /* MySettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9329E61A617DD500A8BD18 /* MySettingsViewController.m */; };
@@ -1378,6 +1379,7 @@
 		E3E3E84B1A3C678C001A1DD6 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		E3E832421A666F7600026DAC /* GrootScrollViewFloorTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrootScrollViewFloorTableViewCell.h; sourceTree = "<group>"; };
 		E3E832431A666F7600026DAC /* GrootScrollViewFloorTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrootScrollViewFloorTableViewCell.m; sourceTree = "<group>"; };
+		E3ECC7011A7E07D60024A734 /* grzx150_150@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grzx150_150@3x.png"; sourceTree = "<group>"; };
 		E3FC8DE51A3C4B430025525D /* GeditUserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeditUserInfoViewController.h; sourceTree = "<group>"; };
 		E3FC8DE61A3C4B430025525D /* GeditUserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeditUserInfoViewController.m; sourceTree = "<group>"; };
 		EF72DCD71A6BFEB50021F311 /* about_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about_icon@2x.png"; sourceTree = "<group>"; };
@@ -3051,6 +3053,7 @@
 		E3996E3E1A5E1DBA00673147 /* Gmodels */ = {
 			isa = PBXGroup;
 			children = (
+				E3ECC7011A7E07D60024A734 /* grzx150_150@3x.png */,
 				E3766AD11A74AED20009BECC /* g_redline_down@2x.png */,
 				E30522241A6E9962007BEAFD /* gaddphoto@2x.png */,
 				E30522251A6E9962007BEAFD /* gremovephoto@2x.png */,
@@ -3569,6 +3572,7 @@
 				564387C31A5ABD3A00499AD3 /* match_segment_unselected_image@2x.png in Resources */,
 				137B07D51A4E6FDF00DE7DCC /* share_pengyouquan@3x.png in Resources */,
 				137B07D31A4E6FDF00DE7DCC /* d_xinlang@3x.png in Resources */,
+				E3ECC7021A7E07D60024A734 /* grzx150_150@3x.png in Resources */,
 				137B07C51A4E6FDF00DE7DCC /* bianji_girl@3x.png in Resources */,
 				EF932A021A617E2B00A8BD18 /* EditInfoView.xib in Resources */,
 				137B07CB1A4E6FDF00DE7DCC /* xingji_kong@3x.png in Resources */,

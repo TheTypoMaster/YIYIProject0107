@@ -16,7 +16,8 @@
 @interface GchooseAdressViewController : MyViewController
 
 
-@property(nonatomic,assign)UILabel *delegate;
-@property(nonatomic,assign)ShenQingDianPuViewController *delegate2;
+@property(nonatomic,assign)UITextField *delegate;//地址
+@property(nonatomic,assign)ShenQingDianPuViewController *delegate2;//经纬度
+@property(nonatomic,assign)UILabel *delegate3;//已选择;
 
 @end

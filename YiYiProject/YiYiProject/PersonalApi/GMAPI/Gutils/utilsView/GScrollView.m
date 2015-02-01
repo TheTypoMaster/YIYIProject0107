@@ -132,7 +132,7 @@
         //信息
         for (int i = 0; i<downArrayNum; i++) {//下
             NSDictionary *dic = downDataArray[i];
-            UIView *view = [[UIView alloc]initWithFrame:CGRectMake(19+i*(38+80), 102, 80, 60)];
+            UIView *view = [[UIView alloc]initWithFrame:CGRectMake(22+i*(38+80), 102, 80, 60)];
             view.userInteractionEnabled = YES;
             UIButton *storeNameBtn = [UIButton buttonWithType:UIButtonTypeCustom];
 //            storeNameBtn.backgroundColor = [UIColor orangeColor];
@@ -158,8 +158,8 @@
         }
         
         for (int i =0; i<upArrayNum; i++) {//上
-            UIView *view = [[UIView alloc]initWithFrame:CGRectMake(75+i*(37+80), 0, 80, 60)];
-//            view.backgroundColor = [UIColor redColor];
+            UIView *view = [[UIView alloc]initWithFrame:CGRectMake(76+i*(38+80), 0, 80, 60)];
+//            view.backgroundColor = [UIColor orangeColor];
             NSDictionary *dic = upDataArray[i];
             //距离
             UILabel *distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, view.frame.size.width, 18)];

@@ -64,7 +64,7 @@
     self.myTitle=@"发布活动";
     
     
-    NSLog(@"type %@",self.mallInfo.brand_id);
+    NSLog(@"self.mallInfo.brand_id: %@",self.mallInfo.brand_id);
     
     self.view.backgroundColor = [UIColor whiteColor];
     
@@ -170,6 +170,7 @@
     [_view1 addSubview:shuruTf];
     
     
+    
     [self.view addSubview:_view1];
     
 }
@@ -198,11 +199,12 @@
     NSString *uploadImageUrlStr = GFABUHUODONG;
     
     NSString *type = nil;
-    if ([self.mallInfo.brand_id isEqualToString:@"0"]) {//精品店
-        type = @"2";
-    }else {//商场店
-        type = @"1";
-    }
+//    if ([self.mallInfo.brand_id isEqualToString:@"0"]) {//精品店
+//        
+//    }else {//商场店
+//        
+//    }
+    type = @"2";
     
     NSString *mall_id = self.mallInfo.mall_id;//商场id
     NSString *shop_id = self.userInfo.shop_id;//店铺id
@@ -210,6 +212,8 @@
     NSString *start_time = _startTime.text;//活动开始时间
     NSString *end_time = _endTime.text;//活动结束时间
     
+    UITextField *titleLabel = (UITextField *)[self.view viewWithTag:200];
+    NSString *activity_title = titleLabel.text;//活动标题
     
     
     if ([type isEqualToString:@"2"]) {//精品店
@@ -221,6 +225,7 @@
                                        parameters:@{
                                                     @"type":type,
                                                     @"shop_id":shop_id,
+                                                    @"activity_title":activity_title,
                                                     @"activity_info":activity_info,
                                                     @"start_time":start_time,
                                                     @"end_time":end_time,

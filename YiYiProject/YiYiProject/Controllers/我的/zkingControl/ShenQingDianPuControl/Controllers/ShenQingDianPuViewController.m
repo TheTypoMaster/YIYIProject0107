@@ -568,9 +568,11 @@
         [_jingpingdianView addSubview:shuRuTextfield];
         
         if (i ==2) {
+            shuRuTextfield.text = @"123";
             shuRuTextfield.hidden = YES;
             title_Label.frame = CGRectMake(17, i*50, 70, 50);
             UILabel *jingweiduLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(title_Label.frame)+10, i*50, DEVICE_WIDTH-17-title_Label.frame.size.width-17, 50)];
+            jingweiduLabel.tag = 5678;
             jingweiduLabel.userInteractionEnabled = YES;
             UITapGestureRecognizer *labelTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(jingweiduTap:)];
             [jingweiduLabel addGestureRecognizer:labelTap];
@@ -581,6 +583,7 @@
         
         
         if (i == 0) {
+            shuRuTextfield.text = @"123";
             shuRuTextfield.hidden = YES;
             _diquLabel_jingpin = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(title_Label.frame), i*50, DEVICE_WIDTH-17-title_Label.frame.size.width-17, 50)];
             _diquLabel_jingpin.userInteractionEnabled = YES;
@@ -689,7 +692,11 @@
 //跳地图选点
 -(void)jingweiduTap:(UITapGestureRecognizer*)sender{
     GchooseAdressViewController *ccc = [[GchooseAdressViewController alloc]init];
-    ccc.delegate = (UILabel *)sender.view;
+    
+    UITextField *tf = (UITextField *)[self.view viewWithTag:10003];
+    UILabel *label = (UILabel*)sender.view;
+    ccc.delegate3 = label;
+    ccc.delegate = tf;
     ccc.delegate2 = self;
     
     [self.navigationController pushViewController:ccc animated:YES];
@@ -701,7 +708,7 @@
     
     [self gShou];
     
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
     
     /*mall_name 商铺名称 string 限制30字以内
      mall_type 商铺类型(商场小店), 1 商场 2 精品店
@@ -717,6 +724,27 @@
     
     if (sender.tag==400)//申请精品店
     {
+        
+        
+        //判断信息填写完整性
+        for (UITextField*tf  in self.shuruTextFieldArray) {
+            if (tf.text.length==0) {
+                [GMAPI showAutoHiddenMBProgressWithText:@"请完善信息" addToView:self.view];
+                return;
+            }
+        }
+        
+        //地图选址
+        UILabel *lb = (UILabel *)[self.view viewWithTag:5678];
+        if (![lb.text isEqualToString:@"已选择"]) {
+            [GMAPI showAutoHiddenMBProgressWithText:@"请完善信息" addToView:self.view];
+            return;
+        }
+        
+        
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        
+        
         //authkey
         NSString *authkey = [GMAPI getAuthkey];
         //店铺名
@@ -755,22 +783,46 @@
         GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
             [MBProgressHUD hideHUDForView:self.view animated:YES];
-            NSLog(@"-->%@",result);
-            NSLog(@"msg:%@",[result objectForKey:@"msg"]);
-            [GMAPI showAutoHiddenMBProgressWithText:[result objectForKey:@"msg"] addToView:self.view];
-            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_SHENQINGDIANPU_SUCCESS object:nil];
-            [self performSelector:@selector(shenqingtijiao) withObject:[NSNumber numberWithBool:YES] afterDelay:2];
+            NSLog(@"申请精品店返回的dic:%@",result);
+            NSLog(@"申请精品店:msg:%@",[result objectForKey:@"msg"]);
+            if ([[result stringValueForKey:@"errorcode"]intValue]==0) {//成功
+                [GMAPI showAutoHiddenMBProgressWithText:[result objectForKey:@"msg"] addToView:self.view];
+                [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_SHENQINGDIANPU_SUCCESS object:nil];
+                [self performSelector:@selector(shenqingtijiao) withObject:[NSNumber numberWithBool:YES] afterDelay:2];
+            }
+            
             
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             
-            NSLog(@"faildic==%@",failDic);
+            NSLog(@"申请精品店faildic==%@",failDic);
             
             [LTools showMBProgressWithText:failDic[@"msg"] addToView:self.view];
         }];
         
         
     }else if(sender.tag==300){//申请商场店
+        
+        
+        //判断信息完整性
+        
+        //选择地区
+        UILabel *diquLabel = (UILabel *)[self.view viewWithTag:1000];
+        //选择商场
+        UILabel *shangchangLabel = (UILabel *)[self.view viewWithTag:1001];
+        //选择楼层品牌
+        UILabel *loucengpinpaiLabel  = (UILabel *)[self.view viewWithTag:1002];
+        
+        if (_menpaihaoTf.text.length == 0 || _phoneTf.text.length == 0 || _yanzhengmaTf.text.length == 0||[diquLabel.text isEqualToString:@"选择地区"] || [shangchangLabel.text isEqualToString:@"选择商场"] || [loucengpinpaiLabel.text isEqualToString:@"选择楼层品牌"] ) {
+            [GMAPI showAutoHiddenMBProgressWithText:@"请完善信息" addToView:self.view];
+            return;
+            
+        }
+        
+        
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        
+        
         //商场id
         NSString *mall_id = self.mallId;
         //楼层id
@@ -790,7 +842,8 @@
         GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
             [MBProgressHUD hideHUDForView:self.view animated:YES];
-            NSLog(@"%@",result);
+            NSLog(@"申请商场店:%@",result);
+            NSLog(@"申请商场店:%@",[result stringValueForKey:@"msg"]);
             if ([[result stringValueForKey:@"errorcode"]intValue] == 0) {
                 [GMAPI showAutoHiddenMBProgressWithText:@"提交成功" addToView:self.view];
                 [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_SHENQINGDIANPU_SUCCESS object:nil];
@@ -800,7 +853,7 @@
             
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
             [MBProgressHUD hideHUDForView:self.view animated:YES];
-            NSLog(@"faildic==%@",failDic);
+            NSLog(@"申请商场店faildic==%@",failDic);
             
             [GMAPI showMBProgressWithText:failDic[@"msg"] addToView:self.view];
         }];

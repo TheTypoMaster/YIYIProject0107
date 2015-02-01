@@ -242,7 +242,7 @@
         brandArray = [dic objectForKey:@"brand"];
     }
     
-    //取出brand字段中所有的key
+    //取出brand字段中的信息
     NSArray *floorArray = nil;
     if ([brandArray isKindOfClass:[NSArray class]]) {
         floorArray = brandArray;
@@ -260,10 +260,6 @@
     //每层的数据的二维数组
     NSMutableArray *data_2Array = [NSMutableArray arrayWithCapacity:1];
     data_2Array = [NSMutableArray arrayWithArray:floorArray];
-//    for (NSString *key in keys) {
-//        [data_2Array addObject:[brandDic objectForKey:key]];
-//    }
-    
     
     UIView *floorView = [[UIView alloc]initWithFrame:CGRectMake(12, 185, DEVICE_WIDTH-24, DEVICE_HEIGHT-_upStoreInfoView.frame.size.height)];
     
@@ -347,9 +343,18 @@
     [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"%@",result);
+        
+        //活动
+        NSDictionary *dic = [result dictionaryValueForKey:@"activity"];
+        NSString *huodongStr = nil;
+        if (dic) {
+            huodongStr = [dic stringValueForKey:@"activity_title"];
+        }else{
+            huodongStr = @"地址：暂无";
+        }
 
         _mallNameLabel.text = [NSString stringWithFormat:@"%@",[result stringValueForKey:@"mall_name"]];
-        _huodongLabel.text = [NSString stringWithFormat:@"活动：%@",[result stringValueForKey:@"doorno"]];
+        _huodongLabel.text = huodongStr;
         _adressLabel.text = [NSString stringWithFormat:@"地址：%@",[result stringValueForKey:@"address"]];
         self.mall_id = [result stringValueForKey:@"mall_id"];
         self.guanzhu = [result stringValueForKey:@"following"];

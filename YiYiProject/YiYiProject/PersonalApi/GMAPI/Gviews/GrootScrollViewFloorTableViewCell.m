@@ -45,9 +45,24 @@
     nameLabel.text = [dic stringValueForKey:@"brand_name"];
     
     
+    
+    NSLog(@"%@",dic);
+    
+    
+    //门牌号
+    NSString *menpaihao = [dic stringValueForKey:@"doorno"];
+    //活动
+    NSDictionary *huodongDic = [dic dictionaryValueForKey:@"activity"];
+    NSString *huodong = nil;
+    if (huodongDic) {
+        huodong = [huodongDic stringValueForKey:@"activity_title"];
+    }else{
+        huodong = @"";
+    }
+    
     //号码 活动
     UILabel *activeLabel = [[UILabel alloc]initWithFrame:CGRectMake(nameLabel.frame.origin.x, CGRectGetMaxY(nameLabel.frame)+7, nameLabel.frame.size.width, nameLabel.frame.size.height)];
-    activeLabel.text = @"B2016   满100减30";
+    activeLabel.text = [NSString stringWithFormat:@"%@   %@",menpaihao,huodong];
     
     
     [self.contentView addSubview:logoImv];

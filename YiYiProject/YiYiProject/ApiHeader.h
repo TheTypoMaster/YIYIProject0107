@@ -171,7 +171,7 @@ typedef enum {
 #define HOME_CLOTH_GUANZHUPINPAI_MINE @"http://182.92.158.32/index.php?d=api&c=brand&m=get_attend_brands&authcode=%@&page=%d"
 
 //获取店铺详情
-#define HOME_CLOTH_NEARBYSTORE_DETAIL @"http://182.92.158.32?d=api&c=mall&m=getMallDetail&mall_id=%@&authcode=123"
+#define HOME_CLOTH_NEARBYSTORE_DETAIL @"http://182.92.158.32?d=api&c=mall&m=getMallDetail"
 
 //点击品牌进入该品牌的商铺列表
 #define HOME_CLOTH_PINPAI_STORELIST @"http://182.92.158.32/index.php?d=api&c=mall&m=get_mall_by_brand"

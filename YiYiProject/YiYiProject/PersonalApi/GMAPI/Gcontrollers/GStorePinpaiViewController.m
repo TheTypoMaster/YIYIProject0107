@@ -42,6 +42,10 @@
     UIBarButtonItem *_spaceButton;
     
     
+    //瀑布流下层view
+    UIView *_backView_water;
+    
+    
 }
 
 
@@ -116,14 +120,14 @@
     _paixuIndex = 0;
     
     
-    UIView *backView_water = [[UIView alloc]initWithFrame:CGRectMake(12, CGRectGetMaxY(_menu_view.frame)+12, ALL_FRAME_WIDTH-24, ALL_FRAME_HEIGHT - _menu_view.frame.size.height - 12-12-64)];
-    backView_water.backgroundColor = RGBCOLOR(240, 230, 235);
-    [self.view addSubview:backView_water];
+    _backView_water = [[UIView alloc]initWithFrame:CGRectMake(12, CGRectGetMaxY(_menu_view.frame)+12, ALL_FRAME_WIDTH-24, ALL_FRAME_HEIGHT - _menu_view.frame.size.height - 12-12-64)];
+    _backView_water.backgroundColor = RGBCOLOR(240, 230, 235);
+    [self.view addSubview:_backView_water];
     
     
-    _waterFlow = [[LWaterflowView alloc]initWithFrame:backView_water.bounds waterDelegate:self waterDataSource:self];
+    _waterFlow = [[LWaterflowView alloc]initWithFrame:_backView_water.bounds waterDelegate:self waterDataSource:self];
     _waterFlow.backgroundColor = RGBCOLOR(240, 230, 235);
-    [backView_water addSubview:_waterFlow];
+    [_backView_water addSubview:_waterFlow];
     
     
     [self getGuanzhuYesOrNo];
@@ -282,7 +286,7 @@
     
     //请求数据  _paixuIndex 0新品 1
     _paixuIndex = tag - 100;
-    [self waterLoadNewData];
+    [_waterFlow showRefreshHeader:YES];
 }
 
 
@@ -329,7 +333,8 @@
             
             
             if (list.count == 0) {
-                [GMAPI showAutoHiddenMBProgressWithText:@"暂无" addToView:self.view];
+//                [GMAPI showAutoHiddenMBProgressWithText:@"暂无" addToView:self.view];
+                [GMAPI showAutoHiddenQuicklyMBProgressWithText:@"暂无" addToView:_backView_water];
             }
             
             arr = [NSMutableArray arrayWithCapacity:list.count];

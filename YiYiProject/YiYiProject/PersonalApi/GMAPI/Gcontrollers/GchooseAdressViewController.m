@@ -9,8 +9,10 @@
 #import "GchooseAdressViewController.h"
 #import "BMapKit.h"
 #import "ShenQingDianPuViewController.h"
+#import "GMAPI.h"
+#import "NSDictionary+GJson.h"
 
-@interface GchooseAdressViewController ()<BMKMapViewDelegate,BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate>
+@interface GchooseAdressViewController ()<BMKMapViewDelegate,BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate,GgetllocationDelegate>
 {
     BMKMapView* _mapView;//地图
     BMKPointAnnotation* _pointAnnotation;
@@ -58,11 +60,20 @@
         self.navigationController.navigationBar.translucent = NO;
     }
     
+    
+    
+    
+    
     //初始化地图
     [self setGMap];
     
     _geocodesearch = [[BMKGeoCodeSearch alloc]init];
     _geocodesearch.delegate = self;
+    
+    //获取用户当前经纬度
+    GMAPI *aaa =[GMAPI sharedManager];
+    aaa.delegate = self;
+    [aaa startDingwei];
     
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -72,6 +83,12 @@
     
     
     
+}
+
+
+
+- (void)theLocationDictionary:(NSDictionary *)dic{
+    [self addPointAnnotationWithDic:dic];
 }
 
 
@@ -93,12 +110,9 @@
 -(void)setGMap{
     _mapView = [[BMKMapView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT)];
     _mapView.delegate = self;
+    _mapView.zoomLevel = 18;
     [self.view addSubview:_mapView];
-    
-    // 添加一个PointAnnotation
-    if (_pointAnnotation == nil) {
-        [self addPointAnnotation];
-    }
+
     
     
     NSLog(@"%f,%f",_newAnnotation.annotation.coordinate.latitude,_newAnnotation.annotation.coordinate.longitude);
@@ -107,15 +121,16 @@
 
 
 //添加标注
-- (void)addPointAnnotation
+- (void)addPointAnnotationWithDic:(NSDictionary *)dic
 {
     _pointAnnotation = [[BMKPointAnnotation alloc]init];
     CLLocationCoordinate2D coor;
-    coor.latitude = 39.915;
-    coor.longitude = 116.404;
+    coor.latitude = [[dic stringValueForKey:@"lat"]floatValue];
+    coor.longitude = [[dic stringValueForKey:@"long"]floatValue];
     _pointAnnotation.coordinate = coor;
     _pointAnnotation.title = @"test";
     _pointAnnotation.subtitle = @"此Annotation可拖拽!";
+    _mapView.centerCoordinate = coor;
     [_mapView addAnnotation:_pointAnnotation];
     
     
@@ -177,7 +192,8 @@
         CLLocationCoordinate2D ccc = result.location;
         NSString* titleStr = @"地址";
         NSString* showmeg = result.address;
-        self.delegate.text = @"已选择";
+        self.delegate3.text = @"已选择";
+        self.delegate.text = showmeg;
         self.delegate2.location_jingpindian = ccc;
         UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:titleStr message:showmeg delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",nil];
         myAlertView.delegate = self;
