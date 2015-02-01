@@ -281,7 +281,7 @@
     
     NSString *str = [[NSString alloc]initWithData:_data encoding:NSUTF8StringEncoding];
     
-    NSLog(@"response string %@",str);
+//    NSLog(@"response string %@",str);
     
     if (_data.length > 0) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:_data options:0 error:nil];

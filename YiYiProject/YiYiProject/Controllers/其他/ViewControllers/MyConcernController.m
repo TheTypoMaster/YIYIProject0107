@@ -12,6 +12,9 @@
 #import "ShopViewCell.h"
 #import "BrandViewCell.h"
 
+#import "GpinpaiDetailViewController.h"
+#import "GnearbyStoreViewController.h"
+
 @interface MyConcernController ()<RefreshDelegate,UITableViewDataSource>
 {
     UIButton *heartButton;
@@ -220,8 +223,15 @@
             MailModel *aModel = [[MailModel alloc]initWithDictionary:aDic];
             [arr addObject:aModel];
         }
+
+        BOOL isHaveMore = YES;
         
-        [shopTable reloadData:arr total:100];
+        if (arr.count < L_PAGE_SIZE) {
+            
+            isHaveMore = NO;
+        }
+        
+        [shopTable reloadData:arr isHaveMore:isHaveMore];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
@@ -267,6 +277,10 @@
         [btn setBackgroundColor:[UIColor whiteColor]];
         [segView addSubview:btn];
         [btn addTarget:self action:@selector(clickToSwap:) forControlEvents:UIControlEventTouchUpInside];
+        
+        if (i == 0) {
+            btn.selected = YES;
+        }
     }
     
     indicator = [[UIView alloc]initWithFrame:CGRectMake(0, 43, DEVICE_WIDTH/2.f, 2)];
@@ -298,6 +312,25 @@
 }
 
 #pragma mark - 事件处理
+//品牌
+-(void)pushToPinpaiDetailVCWithIdStr:(NSString *)theID pinpaiName:(NSString *)theName{
+    
+    GpinpaiDetailViewController *cc = [[GpinpaiDetailViewController alloc]init];
+    cc.hidesBottomBarWhenPushed = YES;
+    cc.pinpaiIdStr = theID;
+    cc.pinpaiName = theName;
+    [self.navigationController pushViewController:cc animated:YES];
+    
+}
+//商场
+-(void)pushToNearbyStoreVCWithIdStr:(NSString *)theID theStoreName:(NSString *)nameStr{
+    GnearbyStoreViewController *dd = [[GnearbyStoreViewController alloc]init];
+    dd.storeIdStr = theID;
+    dd.storeNameStr = nameStr;
+    dd.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:dd animated:YES];
+}
+
 /**
  *  刷新品牌列表
  *
@@ -359,26 +392,24 @@
 
 - (void)loadNewData
 {
-    if ([self buttonForTag:100]) {
+    if ([self buttonForTag:100].selected) {
         
         [self getShop];
     }
     
-    if ([self buttonForTag:101]) {
+    if ([self buttonForTag:101].selected) {
         
         [self getBrand];
     }
 }
 - (void)loadMoreData
 {
-//    [self loadNewData];
-    
-    if ([self buttonForTag:100]) {
+    if ([self buttonForTag:100].selected) {
         
         [self getShop];
     }
     
-    if ([self buttonForTag:101]) {
+    if ([self buttonForTag:101].selected) {
         
         [self getBrand];
     }
@@ -387,7 +418,14 @@
 //新加
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
-    
+    if (tableView == brandTable) {
+        BrandModel *aBrand = brandTable.dataArray[indexPath.row];
+        [self pushToPinpaiDetailVCWithIdStr:aBrand.id pinpaiName:aBrand.brand_name];
+        
+    }else if (tableView == shopTable){
+        MailModel *aModel = shopTable.dataArray[indexPath.row];
+        [self pushToNearbyStoreVCWithIdStr:aModel.mall_id theStoreName:aModel.mall_name];
+    }
 }
 
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
@@ -418,6 +456,7 @@
         [cell.cancelButton addTarget:self action:@selector(cancelConcernMail:) forControlEvents:UIControlEventTouchUpInside];
         
         cell.cancelButton.hidden = !isEditing;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         return cell;
         
@@ -432,7 +471,7 @@
     cell.cancelButton.tag = 100000 + indexPath.row;
     
     [cell.cancelButton addTarget:self action:@selector(cancelConcernBrand:) forControlEvents:UIControlEventTouchUpInside];
-    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
 }

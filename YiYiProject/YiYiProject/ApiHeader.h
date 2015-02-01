@@ -85,7 +85,8 @@ alpha:(a)]
 //取消关注品牌
 #define NOTIFICATION_GUANZHU_PINPAI_QUXIAO @"guanzhu_pinpai_quxiao"
 
-
+//取消红点
+#define NOTIFICATION_CANCEL_HOTPOINT @"cancelHotPoint"
 
 
 
