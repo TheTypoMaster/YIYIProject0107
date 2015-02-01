@@ -147,6 +147,17 @@
 }
 
 
+
+-(id)initWithType:(NSString *)theType{
+    self = [super init];
+    if (self) {
+        self.guanzhuleixing = theType;
+    }
+    return self;
+}
+
+
+
 //获取店铺详情
 -(void)prepareDianpuInfo{
     NSString *api = [NSString stringWithFormat:GET_MAIL_DETAIL_INFO,self.storeIdStr];

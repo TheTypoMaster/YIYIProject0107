@@ -10,4 +10,9 @@
 
 @implementation UIView (Gstring)
 
+
+-(void)setGString:(NSString *)gString{
+    self.gString = gString;
+}
+
 @end

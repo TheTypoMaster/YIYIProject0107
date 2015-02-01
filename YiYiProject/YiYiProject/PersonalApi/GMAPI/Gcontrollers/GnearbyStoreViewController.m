@@ -366,9 +366,7 @@
         if ([mallType isEqualToString:@"2"]) {//精品店
             NSLog(@"精品店");
             
-//            GStorePinpaiViewController *cc = [[GStorePinpaiViewController alloc]init];
-//            cc.guanzhuleixing = @"精品店";
-//            cc.guanzhu = self.guanzhu;
+//            GStorePinpaiViewController *cc = [[GStorePinpaiViewController alloc]initWithType:@"精品店" isGuanzhu:self.guanzhu];
 //            [self.view addSubview:cc.view];
 //            return;
             

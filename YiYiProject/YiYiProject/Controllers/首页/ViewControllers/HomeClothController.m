@@ -17,6 +17,7 @@
 #import "GClothWaveCustomView.h"
 #import "LoginViewController.h"
 #import "EGORefreshTableHeaderView.h"
+#import "GStorePinpaiViewController.h"
 
 @interface HomeClothController ()<GCycleScrollViewDatasource,GCycleScrollViewDelegate,UIScrollViewDelegate,EGORefreshTableDelegate,GgetllocationDelegate>
 {
@@ -419,9 +420,9 @@
 //    titleLabel.text = @"附近";
 //    [_nearbyView addSubview:titleLabel];
     _nearbyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_nearbyBtn setTitle:@"附近" forState:UIControlStateNormal];
+    [_nearbyBtn setTitle:@"附近的商家" forState:UIControlStateNormal];
     [_nearbyBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_nearbyBtn setFrame:CGRectMake(15, 0, 30, 28)];
+    [_nearbyBtn setFrame:CGRectMake(15, 0, 75, 28)];
     _nearbyBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     _nearbyBtn.tag = 62;
     [_nearbyBtn addTarget:self action:@selector(nearOrGuanzhuBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -505,11 +506,11 @@
 //    [_pinpaiView addSubview:titleLabel];
     
     _pinpaiBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_pinpaiBtn setTitle:@"品牌" forState:UIControlStateNormal];
+    [_pinpaiBtn setTitle:@"附近的品牌" forState:UIControlStateNormal];
     [_pinpaiBtn setBackgroundImage:[UIImage imageNamed:@"g_redline_down.png"] forState:UIControlStateSelected];
     [_pinpaiBtn setBackgroundImage:nil forState:UIControlStateNormal];
     [_pinpaiBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_pinpaiBtn setFrame:CGRectMake(15, 0, 30, 30)];
+    [_pinpaiBtn setFrame:CGRectMake(15, 0, 75, 30)];
     _pinpaiBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     _pinpaiBtn.selected = YES;
     _pinpaiBtn.tag = 60;
@@ -826,12 +827,29 @@
 
 
 
--(void)pushToNearbyStoreVCWithIdStr:(NSString *)theID theStoreName:(NSString *)nameStr{
-    GnearbyStoreViewController *dd = [[GnearbyStoreViewController alloc]init];
-    dd.storeIdStr = theID;
-    dd.storeNameStr = nameStr;
-    dd.hidesBottomBarWhenPushed = YES;
-    [self.rootViewController.navigationController pushViewController:dd animated:YES];
+-(void)pushToNearbyStoreVCWithIdStr:(NSString *)theID theStoreName:(NSString *)nameStr theType:(NSString *)mallType{
+    
+    
+    
+    if ([mallType intValue]==2) {//精品店
+        
+        GStorePinpaiViewController *cc = [[GStorePinpaiViewController alloc]init];
+        cc.storeIdStr = theID;
+        cc.storeNameStr = nameStr;
+        cc.guanzhuleixing = @"精品店";
+        cc.hidesBottomBarWhenPushed = YES;
+        [self.rootViewController.navigationController pushViewController:cc animated:YES];
+        
+        
+    }else{
+        GnearbyStoreViewController *dd = [[GnearbyStoreViewController alloc]init];
+        dd.storeIdStr = theID;
+        dd.storeNameStr = nameStr;
+        NSLog(@"%@",mallType);
+        dd.hidesBottomBarWhenPushed = YES;
+        [self.rootViewController.navigationController pushViewController:dd animated:YES];
+    }
+    
 }
 
 
