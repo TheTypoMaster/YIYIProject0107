@@ -258,7 +258,7 @@
                                            
                                            UIImage *aImage = aImage_arr[i];
                                            
-                                           NSData * data= UIImageJPEGRepresentation(aImage, 1);
+                                           NSData * data= UIImageJPEGRepresentation(aImage, 0.8);
                                            
                                            NSLog(@"---> 大小 %ld",(unsigned long)data.length);
                                            

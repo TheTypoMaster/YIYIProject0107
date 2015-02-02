@@ -605,19 +605,23 @@
         UIImage *originImage = [info objectForKey:UIImagePickerControllerOriginalImage];
         
         //按比例缩放
-        UIImage *scaleImage = [self scaleImage:originImage toScale:0.3];
+//        UIImage *scaleImage = [self scaleImage:originImage toScale:0.3];
         
         
-        //将图片传递给截取界面进行截取并设置回调方法（协议）
-        MLImageCrop *imageCrop = [[MLImageCrop alloc]init];
-        imageCrop.delegate = self;
+        _showImage = originImage;
+        _showImageData = UIImageJPEGRepresentation(_showImage, 0.8);
+        [_showPicBtn setBackgroundImage:_showImage forState:UIControlStateNormal];
         
-        //按像素缩放  //设置缩放比例
-        imageCrop.ratioOfWidthAndHeight = 1;
-        imageCrop.image = scaleImage;
-        //[imageCrop showWithAnimation:NO];
-        picker.navigationBar.hidden = YES;
-        [picker pushViewController:imageCrop animated:YES];
+//        //将图片传递给截取界面进行截取并设置回调方法（协议）
+//        MLImageCrop *imageCrop = [[MLImageCrop alloc]init];
+//        imageCrop.delegate = self;
+//        
+//        //按像素缩放  //设置缩放比例
+//        imageCrop.ratioOfWidthAndHeight = 1;
+//        imageCrop.image = scaleImage;
+//        //[imageCrop showWithAnimation:NO];
+//        picker.navigationBar.hidden = YES;
+//        [picker pushViewController:imageCrop animated:YES];
         
     }
 }
