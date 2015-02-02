@@ -45,6 +45,8 @@
     CGFloat right_offset_y;
     
     MailInfoModel *aMailModel;
+    
+    BOOL scroll_OK;
 }
 
 @property(nonatomic,strong)UIImageView *userFaceImv;//头像Imv
@@ -78,13 +80,14 @@
     _tableView.dataSource = self;
     _tableView.tableHeaderView = [self creatTableViewHeaderView];
     [self.view addSubview:_tableView];
+    _tableView.bounces = NO;
     
     [self getMailDetailInfo];//店铺详情
     
     [self getMailProduct];//店铺产品列表
     
     [self getMailActivity];//店铺活动列表
-
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -146,7 +149,7 @@
     
     NSString *productId = aMode.product_id;
     
-//    __weak typeof(self)weakSelf = self;
+    //    __weak typeof(self)weakSelf = self;
     
     NSString *api = HOME_PRODUCT_ZAN_ADD;
     
@@ -183,7 +186,7 @@
 {
     NSString *key = [GMAPI getAuthkey];
     
-//    key = @"WiVbIgF4BeMEvwabALBajQWgB+VUoVWkBShRYFUwXGkGOAAyB2FSZgczBjYAbAp6AjZSaQ==";
+    key = @"WiVbIgF4BeMEvwabALBajQWgB+VUoVWkBShRYFUwXGkGOAAyB2FSZgczBjYAbAp6AjZSaQ==";
     
     NSString *url = [NSString stringWithFormat:GET_MAIL_ACTIVITY_LIST,key];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
@@ -286,7 +289,7 @@
     self.userFaceImv.backgroundColor = RGBCOLOR_ONE;
     self.userFaceImv.layer.cornerRadius = 25;
     self.userFaceImv.layer.masksToBounds = YES;
-//    self.userFaceImv.image = [GMAPI getUserFaceImage];
+    //    self.userFaceImv.image = [GMAPI getUserFaceImage];
     
     
     NSLog(@"%@",NSStringFromCGRect(self.userFaceImv.frame));
@@ -301,9 +304,9 @@
     //地址
     self.userScoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.userNameLabel.frame.origin.x, CGRectGetMaxY(self.userNameLabel.frame)+10, self.userNameLabel.frame.size.width, self.userNameLabel.frame.size.height)];
     self.userScoreLabel.font = [UIFont systemFontOfSize:14*GscreenRatio_320];
-//    self.userScoreLabel.text = @"地址";
+    //    self.userScoreLabel.text = @"地址";
     self.userScoreLabel.textColor = [UIColor whiteColor];
-
+    
     //    //添加视图
     //    [backView addSubview:self.userBannerImv];
     [_backView addSubview:self.userFaceImv];
@@ -331,7 +334,7 @@
     [self.navigationController pushViewController:viewController animated:YES];
     
     self.navigationController.navigationBarHidden = NO;
-
+    
 }
 
 - (void)updateStatusBarColor:(BOOL)isWhite
@@ -406,15 +409,14 @@
         ccc.mallInfo = self.mallInfo;
         ccc.userInfo = self.userInfo;
         [self.navigationController pushViewController:ccc animated:YES];
-
+        
     }else if (buttonIndex == 0){
         
         NSLog(@"发布单品");
         
-
+        
         GupClothesViewController *ccc = [[GupClothesViewController alloc]init];
         ccc.userInfo = self.userInfo;
-        ccc.mallInfo = self.mallInfo;
         
         [self.navigationController pushViewController:ccc animated:YES];
         
@@ -430,7 +432,7 @@
     if (scrollView == _tableView)
     {
         // pass the current offset of the UITableView so that the ParallaxHeaderView layouts the subViews.
-//        [(ParallaxHeaderView *)_backView layoutHeaderViewForScrollViewOffset:scrollView.contentOffset];
+        //        [(ParallaxHeaderView *)_backView layoutHeaderViewForScrollViewOffset:scrollView.contentOffset];
     }
     NSLog(@"---->%f",scrollView.contentOffset.y);
     if (scrollView.contentOffset.y <= 130) {
@@ -440,26 +442,41 @@
     {
         [self updateStatusBarColor:NO];
     }
+    
+    if (scrollView.contentOffset.y >= 20 && scrollView.contentOffset.y <= 190) {
+        
+        waterFlow.quitView.scrollEnabled = NO;
+        rightTable.scrollEnabled = NO;
+    }else
+    {
+        waterFlow.quitView.scrollEnabled = YES;
+        rightTable.scrollEnabled = YES;
+    }
 }
 
 #pragma mark - WaterFlowDelegate
 - (void)waterScrollViewDidScroll:(UIScrollView *)scrollView
 {
-//    if (scrollView.contentOffset.y <= 100)
-//    {
-//        
-//        // 输出改变后的值
-//        [_tableView setContentOffset:CGPointMake(0,0) animated:YES];
-//        
-//    }else if(scrollView.contentOffset.y > 100)
-//    {
-//        [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
-//        
-//    }
+    //    if (scrollView.contentOffset.y <= 100)
+    //    {
+    //
+    //        // 输出改变后的值
+    //        [_tableView setContentOffset:CGPointMake(0,0) animated:YES];
+    //
+    //    }else if(scrollView.contentOffset.y > 100)
+    //    {
+    //        [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    //
+    //    }
     CGFloat offset = scrollView.contentOffset.y;
     
     [UIView animateWithDuration:0.2 animations:^{
-       
+        
+        if (offset < 0 && offset < water_offset_y) {
+            
+            [_tableView setContentOffset:CGPointMake(0, 0) animated:YES];
+        }
+        
         if (offset > 20 && offset > water_offset_y) {
             
             _tableView.contentOffset = CGPointMake(0, 194);
@@ -485,22 +502,27 @@
     NSLog(@"scrollView %f",scrollView.contentOffset.y);
     if (scrollView == rightTable) {
         
-//        if (scrollView.contentOffset.y <= 100)
-//        {
-//            
-//            // 输出改变后的值
-//            [_tableView setContentOffset:CGPointMake(0,0) animated:YES];
-//            
-//        }else if(scrollView.contentOffset.y > 100)
-//        {
-//            [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
-//            
-//        }
+        //        if (scrollView.contentOffset.y <= 100)
+        //        {
+        //
+        //            // 输出改变后的值
+        //            [_tableView setContentOffset:CGPointMake(0,0) animated:YES];
+        //
+        //        }else if(scrollView.contentOffset.y > 100)
+        //        {
+        //            [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        //
+        //        }
         
         
         CGFloat offset = scrollView.contentOffset.y;
         
         [UIView animateWithDuration:0.2 animations:^{
+            
+            if (offset < 0 && offset < water_offset_y) {
+                
+                [_tableView setContentOffset:CGPointMake(0, 0) animated:YES];
+            }
             
             if (offset > 20 && offset > water_offset_y) {
                 
@@ -516,7 +538,7 @@
             
             water_offset_y = scrollView.contentOffset.y;
         }
-
+        
     }
     
 }
@@ -645,6 +667,8 @@
             waterFlow = [[LWaterflowView alloc]initWithFrame:CGRectMake(0,0,DEVICE_WIDTH,DEVICE_HEIGHT - 57 + 20) waterDelegate:self waterDataSource:self];
             waterFlow.backgroundColor = RGBCOLOR(240, 230, 235);
             [cell.contentView addSubview:waterFlow];
+
+            waterFlow.quitView.scrollEnabled = NO;
             
             rightTable = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH,DEVICE_HEIGHT - 57 + 20)];
             rightTable.refreshDelegate = self;
@@ -654,6 +678,8 @@
             rightTable.separatorStyle = UITableViewCellSeparatorStyleNone;
             
             rightTable.hidden = YES;
+            
+            rightTable.scrollEnabled = NO;
             
             return cell;
         }
@@ -676,7 +702,7 @@
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-
+    
     return cell;
 }
 
@@ -703,7 +729,7 @@
     ProductDetailController *detail = [[ProductDetailController alloc]init];
     detail.product_id = aMode.product_id;
     detail.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:detail animated:YES];
+    //    [self.navigationController pushViewController:detail animated:YES];
     
     [self pushViewController:detail];
     
@@ -766,3 +792,4 @@
 
 
 @end
+

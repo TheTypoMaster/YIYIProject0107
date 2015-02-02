@@ -66,7 +66,7 @@
 		[label release];
 		
 		CALayer *layer = [CALayer layer];
-		layer.frame = CGRectMake(25.0f, frame.size.height - 65.0f, 30.0f, 55.0f);
+		layer.frame = CGRectMake(25.0f, frame.size.height - 85.0f, 30.0f, 55.0f);
 		layer.contentsGravity = kCAGravityResizeAspect;
 		layer.contents = (id)[UIImage imageNamed:arrow].CGImage;
 		
@@ -192,9 +192,9 @@
 			_loading = [_delegate egoRefreshTableDataSourceIsLoading:self];
 		}
 		
-		if (_state == EGOOPullRefreshPulling && scrollView.contentOffset.y > -65.0f && scrollView.contentOffset.y < 0.0f && !_loading) {
+		if (_state == EGOOPullRefreshPulling && scrollView.contentOffset.y > -85.0f && scrollView.contentOffset.y < 0.0f && !_loading) {
 			[self setState:EGOOPullRefreshNormal];
-		} else if (_state == EGOOPullRefreshNormal && scrollView.contentOffset.y < -65.0f && !_loading) {
+		} else if (_state == EGOOPullRefreshNormal && scrollView.contentOffset.y < -85.0f && !_loading) {
 			[self setState:EGOOPullRefreshPulling];
 		}
 		
@@ -213,7 +213,7 @@
 		_loading = [_delegate egoRefreshTableDataSourceIsLoading:self];
 	}
 	
-	if (scrollView.contentOffset.y <= - 65.0f && !_loading) {
+	if (scrollView.contentOffset.y <= - 85.0f && !_loading) {
 		
 		if ([_delegate respondsToSelector:@selector(egoRefreshTableDidTriggerRefresh:)]) {
 			[_delegate egoRefreshTableDidTriggerRefresh:EGORefreshHeader];

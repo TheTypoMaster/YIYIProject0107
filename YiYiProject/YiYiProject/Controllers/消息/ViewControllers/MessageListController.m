@@ -138,6 +138,9 @@
         
         other_model.unread_msg_num = 0;
     }
+    
+    [self updateTabbarNumber:[self unreadMessgeNum]];
+    
     [_table reloadData];
 }
 

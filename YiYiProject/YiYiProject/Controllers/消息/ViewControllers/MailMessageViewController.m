@@ -42,7 +42,7 @@
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     
-    _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH,DEVICE_HEIGHT - 64)];
+    _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH,DEVICE_HEIGHT - 64) showLoadMore:NO];
     _table.refreshDelegate = self;
     _table.dataSource = self;
     [self.view addSubview:_table];
@@ -91,7 +91,9 @@
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
+        NSLog(@"faildic %@",failDic[RESULT_INFO]);
         
+        [_table loadFail];
     }];
 }
 

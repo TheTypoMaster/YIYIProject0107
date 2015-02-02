@@ -105,13 +105,13 @@
     {
         [UIView beginAnimations:nil context:NULL];
         [UIView setAnimationDuration:0.3];
-        self.contentInset = UIEdgeInsetsMake(65.0f, 0.0f, 0.0f, 0.0f);
+        self.contentInset = UIEdgeInsetsMake(85.0f, 0.0f, 0.0f, 0.0f);
         [self scrollRectToVisible:CGRectMake(0, 0.0f, 1, 1) animated:NO];
         [UIView commitAnimations];
     }
     else
     {
-        self.contentInset = UIEdgeInsetsMake(65.0f, 0.0f, 0.0f, 0.0f);
+        self.contentInset = UIEdgeInsetsMake(85.0f, 0.0f, 0.0f, 0.0f);
         [self scrollRectToVisible:CGRectMake(0, 0.0f, 1, 1) animated:NO];
     }
     
@@ -321,8 +321,8 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *aView;
-    if (_refreshDelegate && [_refreshDelegate respondsToSelector:@selector(viewForHeaderInSection:)]) {
-        aView = [_refreshDelegate viewForHeaderInSection:section];
+    if (_refreshDelegate && [_refreshDelegate respondsToSelector:@selector(viewForHeaderInSection:tableView:)]) {
+        aView = [_refreshDelegate viewForHeaderInSection:section tableView:tableView];
     }
     return aView;
 }
@@ -330,8 +330,8 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     CGFloat aHeight = 0.0;
-    if (_refreshDelegate && [_refreshDelegate respondsToSelector:@selector(heightForHeaderInSection:)]) {
-        aHeight = [_refreshDelegate heightForHeaderInSection:section];
+    if (_refreshDelegate && [_refreshDelegate respondsToSelector:@selector(heightForHeaderInSection:tableView:)]) {
+        aHeight = [_refreshDelegate heightForHeaderInSection:section tableView:tableView];
     }
     return aHeight;
 }

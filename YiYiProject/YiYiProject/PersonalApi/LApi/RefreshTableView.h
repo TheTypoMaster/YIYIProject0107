@@ -23,8 +23,8 @@
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView;
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView;
 
-- (UIView *)viewForHeaderInSection:(NSInteger)section;
-- (CGFloat)heightForHeaderInSection:(NSInteger)section;
+- (UIView *)viewForHeaderInSection:(NSInteger)section tableView:(UITableView *)tableView;
+- (CGFloat)heightForHeaderInSection:(NSInteger)section tableView:(UITableView *)tableView;
 
 - (void)refreshScrollViewDidScroll:(UIScrollView *)scrollView;
 
