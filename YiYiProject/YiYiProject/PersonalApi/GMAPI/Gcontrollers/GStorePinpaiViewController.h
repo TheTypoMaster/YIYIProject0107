@@ -31,7 +31,8 @@
 
 @property(nonatomic,strong)NSString *guanzhu;//0未关注  1已关注
 
-@property(nonatomic,strong)NSString *guanzhuleixing;//关注类型
+@property(nonatomic,strong)NSString *guanzhuleixing;//关注类型  品牌店 精品店  品牌
+
 
 
 @end

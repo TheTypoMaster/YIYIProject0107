@@ -317,7 +317,7 @@
 
 -(void)rootScrollViewPushVcWithPinpaiId:(NSString *)theId pinpaiName:(NSString *)thePinpaiName{
     GStorePinpaiViewController *cc = [[GStorePinpaiViewController alloc]init];
-    cc.guanzhuleixing = @"品牌";
+    cc.guanzhuleixing = @"品牌店";
     cc.storeIdStr = theId;
     cc.storeNameStr = _mallNameLabel.text;
     cc.pinpaiNameStr = thePinpaiName;
@@ -360,22 +360,6 @@
     [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"%@",result);
-        
-        
-        NSString *mallType = [result stringValueForKey:@"mall_type"];
-        if ([mallType isEqualToString:@"2"]) {//精品店
-            NSLog(@"精品店");
-            
-//            GStorePinpaiViewController *cc = [[GStorePinpaiViewController alloc]init];
-//            cc.guanzhuleixing = @"精品店";
-//            cc.guanzhu = self.guanzhu;
-//            [self.view addSubview:cc.view];
-//            return;
-            
-        }else if ([mallType isEqualToString:@"1"]){//商场店
-            NSLog(@"商场店");
-            
-        }
         
         
         //添加商场信息view

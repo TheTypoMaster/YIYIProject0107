@@ -11,6 +11,7 @@
 #import "NSDictionary+GJson.h"
 #import "HomeClothController.h"
 #import "UIView+Gstring.h"
+#import "GBtn.h"
 
 @implementation GScrollView
 
@@ -136,7 +137,7 @@
             UIView *view = [[UIView alloc]initWithFrame:CGRectMake(22+i*(38+80), 102, 80, 60)];
             view.userInteractionEnabled = YES;
 //            view.backgroundColor = [UIColor orangeColor];
-            UIButton *storeNameBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            GBtn *storeNameBtn = [GBtn buttonWithType:UIButtonTypeCustom];
             [storeNameBtn setFrame:CGRectMake(0, -8, view.frame.size.width, 35)];
             storeNameBtn.tag = [[dic stringValueForKey:@"mall_id"]integerValue]+10;
             [storeNameBtn addTarget:self action:@selector(goNearbyStoreVC:) forControlEvents:UIControlEventTouchUpInside];
@@ -172,7 +173,7 @@
             [view addSubview:distanceLabel];
             
             //商城名字
-            UIButton *storeNameBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            GBtn *storeNameBtn = [GBtn buttonWithType:UIButtonTypeCustom];
 
             [storeNameBtn setFrame:CGRectMake(0, CGRectGetMaxY(distanceLabel.frame), view.frame.size.width, 35)];
             storeNameBtn.tag = [[dic stringValueForKey:@"mall_id"]integerValue]+10;
@@ -183,6 +184,7 @@
             [storeNameBtn setBackgroundImage:[UIImage imageNamed:@"gupname.png"] forState:UIControlStateNormal];
             [storeNameBtn setBackgroundImage:[UIImage imageNamed:@"gupname1.png"] forState:UIControlStateSelected];
             [storeNameBtn setTitle:[dic stringValueForKey:@"mall_name"] forState:UIControlStateNormal];
+            storeNameBtn.shopType = [dic stringValueForKey:@"mall_type"];
             [view addSubview:storeNameBtn];
             
             
@@ -204,11 +206,11 @@
 
 
 //点击商城
--(void)goNearbyStoreVC:(UIButton*)sender{
+-(void)goNearbyStoreVC:(GBtn*)sender{
     NSString *ssidStr = [NSString stringWithFormat:@"%d",sender.tag-10];
     
     NSLog(@"%@",sender.titleLabel.text);
-    [self.delegate1 pushToNearbyStoreVCWithIdStr:ssidStr theStoreName:sender.titleLabel.text];
+    [self.delegate1 pushToNearbyStoreVCWithIdStr:ssidStr theStoreName:sender.titleLabel.text theType:sender.shopType];
 }
 
 
