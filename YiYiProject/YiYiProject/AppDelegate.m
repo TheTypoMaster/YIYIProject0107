@@ -110,6 +110,11 @@
     NSDictionary *infoDic = [launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"];
     if (infoDic)
     {
+        
+        
+        
+        
+        
         NSLog(@"infoDic %@",infoDic);
         
     }
@@ -130,6 +135,9 @@
         NSLog(@"manager start failed!");
     }
     
+    
+    
+
 #pragma mark 友盟
     
     [self umengShare];
@@ -231,6 +239,11 @@
 
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
+    
+    
+    
+    
+    
     NSLog(@"My token is: %@", deviceToken);
     
     [[RCIM sharedRCIM]setDeviceToken:deviceToken];//融云
@@ -244,7 +257,52 @@
         
     }
     
+    
+    
+    NSLog(@"mytoken==%@",string_pushtoken);
+    
+    
+    
+    [self PostDevicetoken:string_pushtoken];
+    
+    
     [LTools cache:string_pushtoken ForKey:USER_DEVICE_TOKEN];
+    
+    //给服务器token
+    
+    
+    
+    
+    
+    
+}
+
+#pragma mark--把devicetoken给后台传过去
+
+-(void)PostDevicetoken:(NSString*)thetoken{
+
+    NSString *post = [NSString stringWithFormat:@"&devicetoken=%@&authcode=%@",thetoken,[GMAPI getAuthkey]];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    NSString *url = [NSString stringWithFormat:ZPOSTDEVICETOKEN];
+    GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
+    [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"thedic==%@",result);
+        
+        UIAlertView *alertV=[[UIAlertView alloc]initWithTitle:[NSString stringWithFormat:@"%@",result] message:nil delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+        [alertV show];
+   
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        NSLog(@"faildic==%@",failDic);
+        
+        UIAlertView *alertV=[[UIAlertView alloc]initWithTitle:[NSString stringWithFormat:@"%@",failDic] message:nil delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+        [alertV show];
+
+    }];
+    
+    
+
 }
 
 
@@ -258,6 +316,12 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
+    
+    
+    
+    NSLog(@"userinf==%@",userInfo);
+    
+    
     
 }
 

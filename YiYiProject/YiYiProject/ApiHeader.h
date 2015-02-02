@@ -249,7 +249,7 @@ typedef enum {
 //查询品牌是否关注
 #define GUANZHUPINPAI_ISORNO @"http://182.92.158.32/index.php?d=api&c=brand&m=isBrandFriend"
 
-
+#define ZPOSTDEVICETOKEN @"http://182.92.158.32/index.php?d=api&c=user_api&m=update_user_info"
 
 //申请店铺界面 
 //根据省市区获取商城列表
