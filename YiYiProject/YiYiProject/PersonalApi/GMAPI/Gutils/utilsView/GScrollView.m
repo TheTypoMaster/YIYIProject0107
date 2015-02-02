@@ -103,7 +103,7 @@
         //红图和信息view
         for (int i = 0; i<countNum; i++) {
             //红图
-            UIImageView *nearStoreView = [[UIImageView alloc]initWithFrame:CGRectMake(0+i*118, 50, 118, 123)];
+            UIImageView *nearStoreView = [[UIImageView alloc]initWithFrame:CGRectMake(0+i*118, 60, 118, 113)];
             [nearStoreView setImage:[UIImage imageNamed:@"gnearstorered.png"]];
             
             [self addSubview:nearStoreView];
@@ -134,11 +134,19 @@
         //信息
         for (int i = 0; i<downArrayNum; i++) {//下
             NSDictionary *dic = downDataArray[i];
-            UIView *view = [[UIView alloc]initWithFrame:CGRectMake(22+i*(38+80), 102, 80, 60)];
+            UIView *view = [[UIView alloc]initWithFrame:CGRectMake(22+i*(38+80), 104, 80, 60)];
             view.userInteractionEnabled = YES;
 //            view.backgroundColor = [UIColor orangeColor];
+            
+            
+            //小红点
+            UIImageView *redPoint = [[UIImageView alloc]initWithFrame:CGRectMake(view.frame.size.width*0.5-8, -10, 12, 12)];
+            [redPoint setImage:[UIImage imageNamed:@"dian_da.png"]];
+            [view addSubview:redPoint];
+            
+            
             GBtn *storeNameBtn = [GBtn buttonWithType:UIButtonTypeCustom];
-            [storeNameBtn setFrame:CGRectMake(0, -8, view.frame.size.width, 35)];
+            [storeNameBtn setFrame:CGRectMake(0, 1, view.frame.size.width, 35)];
             storeNameBtn.tag = [[dic stringValueForKey:@"mall_id"]integerValue]+10;
             [storeNameBtn addTarget:self action:@selector(goNearbyStoreVC:) forControlEvents:UIControlEventTouchUpInside];
             [storeNameBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -160,7 +168,7 @@
         }
         
         for (int i =0; i<upArrayNum; i++) {//上
-            UIView *view = [[UIView alloc]initWithFrame:CGRectMake(76+i*(38+80), 0, 80, 60)];
+            UIView *view = [[UIView alloc]initWithFrame:CGRectMake(76+i*(38+80), 5, 80, 60)];
 
             NSDictionary *dic = upDataArray[i];
             //距离
@@ -186,6 +194,13 @@
             [storeNameBtn setTitle:[dic stringValueForKey:@"mall_name"] forState:UIControlStateNormal];
             storeNameBtn.shopType = [dic stringValueForKey:@"mall_type"];
             [view addSubview:storeNameBtn];
+            
+//            view.backgroundColor = [UIColor orangeColor];
+            
+            //小红点
+            UIImageView *redPoint = [[UIImageView alloc]initWithFrame:CGRectMake(storeNameBtn.frame.size.width*0.5-4, CGRectGetMaxY(storeNameBtn.frame), 15, 15)];
+            [redPoint setImage:[UIImage imageNamed:@"dian_da.png"]];
+            [view addSubview:redPoint];
             
             
             

@@ -172,8 +172,10 @@ typedef enum {
 //获取我关注的品牌
 #define HOME_CLOTH_GUANZHUPINPAI_MINE @"http://182.92.158.32/index.php?d=api&c=brand&m=get_attend_brands&authcode=%@&page=%d"
 
-//获取店铺详情  mall_id
+//店铺详情  mall_id
 #define HOME_CLOTH_NEARBYSTORE_DETAIL @"http://182.92.158.32?d=api&c=mall&m=getMallDetail"
+//店铺详情 shop_id
+#define GET_MAIL_DETAIL_INFO @"http://182.92.158.32/index.php?d=api&c=mall&m=get_shop_info&shop_id=%@"
 
 //点击品牌进入该品牌的商铺列表
 #define HOME_CLOTH_PINPAI_STORELIST @"http://182.92.158.32/index.php?d=api&c=mall&m=get_mall_by_brand"
@@ -428,8 +430,7 @@ typedef enum {
 //店主单品列表
 #define GET_MAIL_PRODUCT_LIST @"http://182.92.158.32/index.php?d=api&c=products&m=getProductList&action=%@&mb_id=%@&page=%d&per_page=%d"
 
-//店铺详情 shop_id
-#define GET_MAIL_DETAIL_INFO @"http://182.92.158.32/index.php?d=api&c=mall&m=get_shop_info&shop_id=%@"
+
 
 //活动详情
 #define GET_MAIL_ACTIVITY_DETAIL @"http://182.92.158.32/index.php?d=api&c=mall&m=get_activity_info&activity_id=%@"

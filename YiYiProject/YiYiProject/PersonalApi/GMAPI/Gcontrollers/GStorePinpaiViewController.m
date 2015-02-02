@@ -162,10 +162,17 @@
 //获取店铺详情
 -(void)prepareDianpuInfo{
     
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    //关注精品店
+    
     if ([self.guanzhuleixing isEqualToString:@"精品店"]) {
         NSString *api = [NSString stringWithFormat:@"%@&mall_id=%@",HOME_CLOTH_NEARBYSTORE_DETAIL,self.storeIdStr];
         GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
         [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
+            
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             
             NSLog(@"精品店信息%@",result);
             
@@ -217,7 +224,7 @@
             }
             
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
-            
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         }];
         
         
@@ -225,17 +232,16 @@
     }
     
     
-    //下面是获取品牌关注（商场店和品牌进入的界面）
-    NSString *api = [NSString stringWithFormat: GET_MAIL_DETAIL_INFO,self.storeIdStr];//商场店
+    
+    
+    //关注品牌
+    NSString *api = [NSString stringWithFormat: @"%@&mall_id=%@",HOME_CLOTH_NEARBYSTORE_DETAIL,self.storeIdStr];//商场店
     GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
     [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
         [self creatDianpuInfoView];
         
         NSLog(@"商场店信息 %@",result);
         NSString *dizhi = [result stringValueForKey:@"address"];
-        
-        //品牌id
-        self.pinpaiId = [result stringValueForKey:@"brand_id"];
         
         //活动
         NSDictionary *dic = [result dictionaryValueForKey:@"activity"];
@@ -274,7 +280,7 @@
         
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     }];
 }
 
@@ -320,6 +326,7 @@
     NSString *api = [NSString stringWithFormat:@"%@&brand_id=%@&authcode=%@",GUANZHUPINPAI_ISORNO,self.pinpaiId,[GMAPI getAuthkey]];
     GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
     [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         NSLog(@"%@",result);
         self.guanzhu = [result stringValueForKey:@"relation"];
         if ([self.guanzhu intValue]==0) {//未关注
@@ -333,7 +340,7 @@
         [_waterFlow showRefreshHeader:YES];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     }];
 }
 
@@ -357,7 +364,7 @@
         [_waterFlow showRefreshHeader:YES];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     }];
 }
 
@@ -409,6 +416,7 @@
                     self.guanzhu = @"1";
                 }
             } failBlock:^(NSDictionary *failDic, NSError *erro) {
+                
                 [GMAPI showAutoHiddenMBProgressWithText:@"关注失败" addToView:self.view];
             }];
         }else if ([self.guanzhu intValue] == 1){

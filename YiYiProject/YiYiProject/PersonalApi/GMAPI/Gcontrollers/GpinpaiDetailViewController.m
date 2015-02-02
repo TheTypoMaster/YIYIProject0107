@@ -12,11 +12,17 @@
 #import "GnearbyStoreViewController.h"
 #import "GStorePinpaiViewController.h"
 #import "GcustomStoreTableViewCell.h"
+#import "EGORefreshTableHeaderView.h"
 
-@interface GpinpaiDetailViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface GpinpaiDetailViewController ()<UITableViewDataSource,UITableViewDelegate,EGORefreshTableDelegate>
 {
     UITableView *_tableView;
     NSArray *_dataArray;
+    
+    
+    //下拉刷新
+    EGORefreshTableHeaderView *_refreshHeaderView;
+    BOOL _reloading;
     
     
     
@@ -51,11 +57,19 @@
     
     
     
+    
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT-44) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     
+    
+    
+    
+    //下拉刷新
+    _refreshHeaderView = [[EGORefreshTableHeaderView alloc]initWithFrame:CGRectMake(0, 0-_tableView.bounds.size.height, DEVICE_WIDTH, _tableView.bounds.size.height)];
+    _refreshHeaderView.delegate = self;
+    [_tableView addSubview:_refreshHeaderView];
     
     [self prepareNetData];
     
@@ -71,6 +85,9 @@
 
 -(void)prepareNetData{
     
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
     NSString *api = [NSString stringWithFormat:@"%@&brand_id=%@&page=1&per_page=100",HOME_CLOTH_PINPAI_STORELIST,self.pinpaiIdStr];
     
     NSLog(@"%@",api);
@@ -78,13 +95,17 @@
     GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
     
     [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
-        
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         NSLog(@"%@",result);
         _dataArray = [result objectForKey:@"mall_list"];
         
         [_tableView reloadData];
         
+        [self doneLoadingTableViewData];
+        
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [GMAPI showAutoHiddenMBProgressWithText:@"加载数据失败，请下拉列表重新加载" addToView:self.view];
         NSLog(@"失败");
     }];
 }
@@ -165,6 +186,49 @@
 }
 
 
+
+
+#pragma mark -  下拉刷新代理
+-(void)reloadTableViewDataSource{
+    
+    _reloading = YES;
+}
+
+-(void)doneLoadingTableViewData{
+    _reloading = NO;
+    [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:_tableView];
+    
+}
+
+-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    if (scrollView == _tableView) {
+        [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+    }
+    
+}
+
+
+#pragma mark - EGORefreshTableDelegate
+
+- (void)egoRefreshTableDidTriggerRefresh:(EGORefreshPos)aRefreshPos{
+    
+    
+    _dataArray = nil;
+    
+    //网络请求
+    [self prepareNetData];
+    
+    
+    
+}
+
+- (BOOL)egoRefreshTableDataSourceIsLoading:(UIView*)view;{
+    return _reloading;
+}
+
+- (NSDate*)egoRefreshTableDataSourceLastUpdated:(UIView*)view{
+    return [NSDate date];
+}
 
 
 

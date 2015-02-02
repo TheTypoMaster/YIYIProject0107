@@ -450,13 +450,13 @@
         
         
         for (int i = 0; i<4; i++) {
-            UIImageView *imv1_back = [[UIImageView alloc]initWithFrame:CGRectMake(0+i*120, 0, 120, 218-30-14-60)];
+            UIImageView *imv1_back = [[UIImageView alloc]initWithFrame:CGRectMake(0+i*120, 10, 120, 218-30-14-60-10)];
             [imv1_back setImage:[UIImage imageNamed:@"gimv1_back.png"]];
             [graypngBackview addSubview:imv1_back];
         }
     }else{
         for (int i = 0; i<3; i++) {
-            UIImageView *imv1_back = [[UIImageView alloc]initWithFrame:CGRectMake(0+i*120, 0, 120, 218-30-14-60)];
+            UIImageView *imv1_back = [[UIImageView alloc]initWithFrame:CGRectMake(0+i*120, 10, 120, 218-30-14-60-10)];
             [imv1_back setImage:[UIImage imageNamed:@"gimv1_back.png"]];
             [graypngBackview addSubview:imv1_back];
         }
