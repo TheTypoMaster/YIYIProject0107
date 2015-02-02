@@ -228,6 +228,7 @@
         [LTools showMBProgressWithText:result[RESULT_INFO] addToView:self.view];
         
         weakTable.pageNum = 1;
+        weakTable.isReloadData = YES;
         [bself getTTaiComments];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {

@@ -76,7 +76,8 @@
     NSString *url = [NSString stringWithFormat:MESSAGE_GET_LIST,type,key];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
-        NSLog(@"");
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_CANCEL_HOTPOINT object:type userInfo:nil];
         
         NSArray *data = result[@"data"];
         

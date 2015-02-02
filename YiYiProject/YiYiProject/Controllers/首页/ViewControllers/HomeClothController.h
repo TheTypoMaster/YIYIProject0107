@@ -20,8 +20,8 @@
 -(void)pushToPinpaiDetailVCWithIdStr:(NSString *)theID pinpaiName:(NSString *)theName;
 
 
-//跳转到附近的商场界面
--(void)pushToNearbyStoreVCWithIdStr:(NSString *)theID theStoreName:(NSString *)nameStr;
+//跳转到附近的商场界面   type 2 精品店   type 1商场店
+-(void)pushToNearbyStoreVCWithIdStr:(NSString *)theID theStoreName:(NSString *)nameStr theType:(NSString *)mallType;
 
 
 @end

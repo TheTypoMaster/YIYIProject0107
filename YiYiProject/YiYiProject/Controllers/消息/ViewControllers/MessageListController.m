@@ -57,6 +57,8 @@
     
     self.myTitleLabel.text = @"消息";
     
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateHotpoint:) name:NOTIFICATION_CANCEL_HOTPOINT object:Nil];
+    
     arr_images = @[@"yixx150_150",@"sjxx150_150",@"my_shoucang",@"my_shenqing"];
     arr_titles = @[@"衣+衣团队",@"商家消息",@"动态消息",@"聊天消息"];
     
@@ -118,7 +120,26 @@
 
 #pragma mark - 事件处理
 
+//更新红点
+- (void)updateHotpoint:(NSNotification *)notification
+{
+    NSLog(@"updateHotpoint %@ %@",notification.userInfo,notification.object);
+    
+    NSString *type = notification.object;
+    if ([type isEqualToString:@"yy"]) {
+        
+        yiyi_model.unread_msg_num = 0;
+        
+    }else if ([type isEqualToString:@"shop"]){
 
+        shop_model.unread_msg_num = 0;
+        
+    }else if ([type isEqualToString:@"dynamic"]){
+        
+        other_model.unread_msg_num = 0;
+    }
+    [_table reloadData];
+}
 
 /**
  *  获取未读消息条数

@@ -11,4 +11,9 @@
 @interface UIView (Gstring)
 
 @property(nonatomic,strong)NSString *gString;
+
+
+-(void)setGString:(NSString *)gString;
+
+
 @end

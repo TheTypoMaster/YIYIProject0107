@@ -158,6 +158,7 @@
     cc.pinpaiId = self.pinpaiIdStr;
     cc.pinpaiNameStr = self.pinpaiName;
     cc.storeNameStr = [dic stringValueForKey:@"mall_name"];
+    cc.guanzhuleixing = @"品牌";
     [self.navigationController pushViewController:cc animated:YES];
     
     

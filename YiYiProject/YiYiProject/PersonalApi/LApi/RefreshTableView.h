@@ -61,6 +61,7 @@
 - (void)reloadData:(NSArray *)data total:(int)totalPage;//更新数据
 - (void)reloadData:(NSArray *)data isHaveMore:(BOOL)isHave;
 
+
 - (void)loadFail;//请求数据失败
 
 -(id)initWithFrame:(CGRect)frame showLoadMore:(BOOL)show;

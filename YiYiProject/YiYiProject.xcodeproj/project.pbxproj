@@ -543,6 +543,7 @@
 		E3E3E84C1A3C678C001A1DD6 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E3E84B1A3C678C001A1DD6 /* OpenGLES.framework */; };
 		E3E832441A666F7600026DAC /* GrootScrollViewFloorTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3E832431A666F7600026DAC /* GrootScrollViewFloorTableViewCell.m */; };
 		E3ECC7021A7E07D60024A734 /* grzx150_150@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3ECC7011A7E07D60024A734 /* grzx150_150@3x.png */; };
+		E3ECC7051A7E7EA00024A734 /* GBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = E3ECC7041A7E7EA00024A734 /* GBtn.m */; };
 		E3FC8DE71A3C4B430025525D /* GeditUserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FC8DE61A3C4B430025525D /* GeditUserInfoViewController.m */; };
 		EF72DCD81A6BFEB50021F311 /* about_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EF72DCD71A6BFEB50021F311 /* about_icon@2x.png */; };
 		EF9329F31A617DD500A8BD18 /* MySettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9329E61A617DD500A8BD18 /* MySettingsViewController.m */; };
@@ -1380,6 +1381,8 @@
 		E3E832421A666F7600026DAC /* GrootScrollViewFloorTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrootScrollViewFloorTableViewCell.h; sourceTree = "<group>"; };
 		E3E832431A666F7600026DAC /* GrootScrollViewFloorTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrootScrollViewFloorTableViewCell.m; sourceTree = "<group>"; };
 		E3ECC7011A7E07D60024A734 /* grzx150_150@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grzx150_150@3x.png"; sourceTree = "<group>"; };
+		E3ECC7031A7E7EA00024A734 /* GBtn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBtn.h; sourceTree = "<group>"; };
+		E3ECC7041A7E7EA00024A734 /* GBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBtn.m; sourceTree = "<group>"; };
 		E3FC8DE51A3C4B430025525D /* GeditUserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeditUserInfoViewController.h; sourceTree = "<group>"; };
 		E3FC8DE61A3C4B430025525D /* GeditUserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeditUserInfoViewController.m; sourceTree = "<group>"; };
 		EF72DCD71A6BFEB50021F311 /* about_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about_icon@2x.png"; sourceTree = "<group>"; };
@@ -3252,6 +3255,8 @@
 				E3601E7F1A61A27900CC41FE /* GcustomStoreTableViewCell.m */,
 				E3E832421A666F7600026DAC /* GrootScrollViewFloorTableViewCell.h */,
 				E3E832431A666F7600026DAC /* GrootScrollViewFloorTableViewCell.m */,
+				E3ECC7031A7E7EA00024A734 /* GBtn.h */,
+				E3ECC7041A7E7EA00024A734 /* GBtn.m */,
 			);
 			path = Gviews;
 			sourceTree = "<group>";
@@ -3943,6 +3948,7 @@
 				137B6FE31A6B682E007035DE /* MessageDetailController.m in Sources */,
 				13CD36361A3C51BE0068C12A /* ForgetPwdController.m in Sources */,
 				EF932A181A6236AD00A8BD18 /* WaterFallHeader.m in Sources */,
+				E3ECC7051A7E7EA00024A734 /* GBtn.m in Sources */,
 				13A389BB1A38974F00ABBACB /* LTools.m in Sources */,
 				5640317A1A4ED57100680E08 /* TopicDetailViewController.m in Sources */,
 				139562CB1A3C11EC007BB183 /* RegisterViewController.m in Sources */,
@@ -4173,7 +4179,11 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+
 				PROVISIONING_PROFILE = "c0e78a4b-d0ce-43e3-aa60-53f011b81776";
+
+				PROVISIONING_PROFILE = "0c1b68b6-94ba-43b9-b1d3-dea4d4ca3175";
+
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -4209,7 +4219,11 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
+
 				PROVISIONING_PROFILE = "c0e78a4b-d0ce-43e3-aa60-53f011b81776";
+
+				PROVISIONING_PROFILE = "0c1b68b6-94ba-43b9-b1d3-dea4d4ca3175";
+
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -4244,7 +4258,11 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+
 				PROVISIONING_PROFILE = "c0e78a4b-d0ce-43e3-aa60-53f011b81776";
+
+				PROVISIONING_PROFILE = "0c1b68b6-94ba-43b9-b1d3-dea4d4ca3175";
+
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Debug;
@@ -4278,7 +4296,11 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+
 				PROVISIONING_PROFILE = "c0e78a4b-d0ce-43e3-aa60-53f011b81776";
+
+				PROVISIONING_PROFILE = "0c1b68b6-94ba-43b9-b1d3-dea4d4ca3175";
+
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Release;

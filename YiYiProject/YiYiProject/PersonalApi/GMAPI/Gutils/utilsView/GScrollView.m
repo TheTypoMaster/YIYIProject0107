@@ -11,6 +11,7 @@
 #import "NSDictionary+GJson.h"
 #import "HomeClothController.h"
 #import "UIView+Gstring.h"
+#import "GBtn.h"
 
 @implementation GScrollView
 
@@ -104,6 +105,7 @@
             //红图
             UIImageView *nearStoreView = [[UIImageView alloc]initWithFrame:CGRectMake(0+i*118, 50, 118, 123)];
             [nearStoreView setImage:[UIImage imageNamed:@"gnearstorered.png"]];
+            
             [self addSubview:nearStoreView];
         }
         
@@ -134,8 +136,8 @@
             NSDictionary *dic = downDataArray[i];
             UIView *view = [[UIView alloc]initWithFrame:CGRectMake(22+i*(38+80), 102, 80, 60)];
             view.userInteractionEnabled = YES;
-            UIButton *storeNameBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//            storeNameBtn.backgroundColor = [UIColor orangeColor];
+//            view.backgroundColor = [UIColor orangeColor];
+            GBtn *storeNameBtn = [GBtn buttonWithType:UIButtonTypeCustom];
             [storeNameBtn setFrame:CGRectMake(0, -8, view.frame.size.width, 35)];
             storeNameBtn.tag = [[dic stringValueForKey:@"mall_id"]integerValue]+10;
             [storeNameBtn addTarget:self action:@selector(goNearbyStoreVC:) forControlEvents:UIControlEventTouchUpInside];
@@ -159,11 +161,11 @@
         
         for (int i =0; i<upArrayNum; i++) {//上
             UIView *view = [[UIView alloc]initWithFrame:CGRectMake(76+i*(38+80), 0, 80, 60)];
-//            view.backgroundColor = [UIColor orangeColor];
+
             NSDictionary *dic = upDataArray[i];
             //距离
             UILabel *distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, view.frame.size.width, 18)];
-//            distanceLabel.backgroundColor = [UIColor orangeColor];
+
             distanceLabel.font = [UIFont systemFontOfSize:13];
             distanceLabel.textAlignment = NSTextAlignmentCenter;
             distanceLabel.textColor = [UIColor blackColor];
@@ -171,8 +173,8 @@
             [view addSubview:distanceLabel];
             
             //商城名字
-            UIButton *storeNameBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-            //            storeNameBtn.backgroundColor = [UIColor orangeColor];
+            GBtn *storeNameBtn = [GBtn buttonWithType:UIButtonTypeCustom];
+
             [storeNameBtn setFrame:CGRectMake(0, CGRectGetMaxY(distanceLabel.frame), view.frame.size.width, 35)];
             storeNameBtn.tag = [[dic stringValueForKey:@"mall_id"]integerValue]+10;
             [storeNameBtn addTarget:self action:@selector(goNearbyStoreVC:) forControlEvents:UIControlEventTouchUpInside];
@@ -182,6 +184,7 @@
             [storeNameBtn setBackgroundImage:[UIImage imageNamed:@"gupname.png"] forState:UIControlStateNormal];
             [storeNameBtn setBackgroundImage:[UIImage imageNamed:@"gupname1.png"] forState:UIControlStateSelected];
             [storeNameBtn setTitle:[dic stringValueForKey:@"mall_name"] forState:UIControlStateNormal];
+            storeNameBtn.shopType = [dic stringValueForKey:@"mall_type"];
             [view addSubview:storeNameBtn];
             
             
@@ -203,11 +206,11 @@
 
 
 //点击商城
--(void)goNearbyStoreVC:(UIButton*)sender{
+-(void)goNearbyStoreVC:(GBtn*)sender{
     NSString *ssidStr = [NSString stringWithFormat:@"%d",sender.tag-10];
     
     NSLog(@"%@",sender.titleLabel.text);
-    [self.delegate1 pushToNearbyStoreVCWithIdStr:ssidStr theStoreName:sender.titleLabel.text];
+    [self.delegate1 pushToNearbyStoreVCWithIdStr:ssidStr theStoreName:sender.titleLabel.text theType:sender.shopType];
 }
 
 

@@ -53,7 +53,6 @@
 {
     NSString *key = [GMAPI getAuthkey];
     
-    key = @"WiVbIgF4BeMEvwabALBajQWgB+VUoVWkBShRYFUwXGkGOAAyB2FSZgczBjYAbAp6AjZSaQ==";
     NSString *url = [NSString stringWithFormat:MESSAGE_GET_DETAIL,self.msg_id,key];
     
     if (self.isActivity) {
@@ -83,6 +82,7 @@
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
+        NSLog(@"failDic %@",failDic);
         
     }];
 }
