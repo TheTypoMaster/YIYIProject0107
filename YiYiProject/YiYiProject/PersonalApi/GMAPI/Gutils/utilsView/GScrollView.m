@@ -146,7 +146,7 @@
             
             
             GBtn *storeNameBtn = [GBtn buttonWithType:UIButtonTypeCustom];
-            [storeNameBtn setFrame:CGRectMake(0, 1, view.frame.size.width, 35)];
+            [storeNameBtn setFrame:CGRectMake(0, 2, view.frame.size.width, 35)];
             storeNameBtn.tag = [[dic stringValueForKey:@"mall_id"]integerValue]+10;
             [storeNameBtn addTarget:self action:@selector(goNearbyStoreVC:) forControlEvents:UIControlEventTouchUpInside];
             [storeNameBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

@@ -152,10 +152,10 @@
     //直接变状态
     //更新数据
     
-    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[waterFlow.quitView cellAtIndexPath:[NSIndexPath indexPathForRow:sender.tag - 1000 inSection:0]];
+    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[waterFlow.quitView cellAtIndexPath:[NSIndexPath indexPathForRow:sender.tag - 10000 inSection:0]];
     cell.like_label.text = @"";
     
-    ProductModel *aMode = waterFlow.dataArray[sender.tag - 1000];
+    ProductModel *aMode = waterFlow.dataArray[sender.tag - 10000];
     
     NSString *productId = aMode.product_id;
     
@@ -792,7 +792,7 @@
     ProductModel *aMode = waterFlow.dataArray[indexPath.row];
     [cell setCellWithModel:aMode];
     
-    cell.like_btn.tag = 1000 + indexPath.row;
+    cell.like_btn.tag = 10000 + indexPath.row;
     [cell.like_btn addTarget:self action:@selector(clickToZan:) forControlEvents:UIControlEventTouchUpInside];
     
     cell.titleView.hidden = YES;

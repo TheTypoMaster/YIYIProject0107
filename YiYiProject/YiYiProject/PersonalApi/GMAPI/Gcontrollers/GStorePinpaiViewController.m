@@ -717,6 +717,17 @@
 }
 
 - (TMQuiltViewCell *)quiltView:(TMQuiltView *)quiltView cellAtIndexPath:(NSIndexPath *)indexPath {
+//    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[quiltView dequeueReusableCellWithReuseIdentifier:@"PhotoCell"];
+//    if (!cell) {
+//        cell = [[TMPhotoQuiltViewCell alloc] initWithReuseIdentifier:@"PhotoCell"];
+//    }
+//    
+//    cell.layer.cornerRadius = 3.f;
+//    
+//    ProductModel *aMode = _waterFlow.dataArray[indexPath.row];
+//    [cell setCellWithModel:aMode];
+    
+    
     TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[quiltView dequeueReusableCellWithReuseIdentifier:@"PhotoCell"];
     if (!cell) {
         cell = [[TMPhotoQuiltViewCell alloc] initWithReuseIdentifier:@"PhotoCell"];
@@ -725,7 +736,10 @@
     cell.layer.cornerRadius = 3.f;
     
     ProductModel *aMode = _waterFlow.dataArray[indexPath.row];
+    cell.titleView.hidden = YES;
     [cell setCellWithModel:aMode];
+    
+    
     
     
     return cell;
