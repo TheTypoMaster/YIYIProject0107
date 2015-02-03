@@ -275,8 +275,8 @@
         
         NSLog(@"devicetoken给后台传过去 thedic==%@",result);
         
-        UIAlertView *alertV=[[UIAlertView alloc]initWithTitle:[NSString stringWithFormat:@"%@",@"token发送成功"] message:nil delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
-        [alertV show];
+//        UIAlertView *alertV=[[UIAlertView alloc]initWithTitle:[NSString stringWithFormat:@"%@",@"token发送成功"] message:nil delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+//        [alertV show];
    
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
@@ -286,11 +286,8 @@
         [alertV show];
 
     }];
-    
-    
 
 }
-
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {

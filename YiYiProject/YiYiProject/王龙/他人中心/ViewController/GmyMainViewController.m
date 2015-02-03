@@ -12,6 +12,7 @@
 #import "LWaterflowView.h"
 #import "TPlatModel.h"
 
+#import "TTaiDetailController.h"
 
 #define NORMAL_TEXT @"上拉加载更多"
 #define NOMORE_TEXT @"没有更多数据"
@@ -20,8 +21,6 @@
 
 @interface GmyMainViewController ()<TMQuiltViewDataSource,WaterFlowDelegate>
 {
-    
-    
     //第一层
     UIView *_upUserInfoView;//用户信息view
     UIImageView *_userFaceImv;//头像
@@ -34,9 +33,12 @@
     
     UIView *ttaiView;
     
-    
     BOOL _isHaveMore;
     int pageNum;
+    
+    UIActivityIndicatorView *refreshLoading;//刷新loading
+    
+    BOOL isReload;
 }
 
 @property(nonatomic,retain)UIActivityIndicatorView *loadingIndicator;
@@ -54,6 +56,12 @@
     self.navigationController.navigationBarHidden = YES;
 }
 
+- (void)dealloc
+{
+    [self.waterfall.collectionView removeObserver:self forKeyPath:@"contentSize" context:nil];
+
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -69,7 +77,10 @@
     //
     [self initWaterFlowView];
     [self initHeadBackView];
-    [self deserveBuyForSex:0 discount:0 page:1];
+    [self createFooterView];
+    
+    pageNum = 1;
+    [self deserveBuyForPage:1];
     
 }
 
@@ -104,6 +115,16 @@
     [self.waterfall.collectionView addSubview:headerView];
     
     
+    //刷新loading
+    
+    refreshLoading = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+//    refreshLoading.hidden = YES;
+    refreshLoading.backgroundColor = [UIColor clearColor];
+    refreshLoading.hidesWhenStopped = YES;
+    refreshLoading.frame = CGRectMake(50,50, 24, 24);
+    [self.view addSubview:refreshLoading];
+    
+    refreshLoading.center = CGPointMake(DEVICE_WIDTH/4.f, headerView.height/2.f);
     
     //返回按钮
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -241,7 +262,7 @@
         flowLayout.headerHeight = 150+25;
     }
     
-    flowLayout.footerHeight = 100;
+//    flowLayout.footerHeight = 100;
     
     
     self.waterfall = [[WaterF alloc]initWithCollectionViewLayout:flowLayout];
@@ -259,39 +280,53 @@
     
     self.waterfall.collectionView.backgroundColor = RGBCOLOR(239, 239, 239);
     
-    
     [self.waterfall.collectionView setAlwaysBounceVertical:YES];
-
     
     [self.view addSubview:self.waterfall.collectionView];
+    
+    [self.waterfall.collectionView addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 
+#pragma mark 监听UIScrollView的属性
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+//    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    
+    if ([@"contentSize" isEqualToString:keyPath]) {
+        [self adjustFrame];
+    }
+}
 
-
-
-
-
+#pragma mark 重写调整frame
+- (void)adjustFrame
+{
+    UICollectionView *collection = self.waterfall.collectionView;
+    // 内容的高度
+    CGFloat contentHeight = collection.contentSize.height;
+    // 表格的高度
+    CGFloat scrollHeight = collection.frame.size.height;
+    CGFloat y = MAX(contentHeight, scrollHeight);
+    // 设置边框
+    tableFooterView.top = y;
+}
 
 #pragma mark-----------------获取数据
 
 /**
  * 获取T台列表
  */
-- (void)deserveBuyForSex:(SORT_SEX_TYPE)sortType
-                discount:(SORT_Discount_TYPE)discountType
-                    page:(int)pageNum
+- (void)deserveBuyForPage:(int)page
 {
-//    NSString *longtitud = @"116.42111721";
-//    NSString *latitude = @"39.90304099";
-//
     NSString *url;
     if (self.theType == GSOMEONE) {
         
         //TODO:修改uid
-       url = [NSString stringWithFormat:@"%@&page=%d&count=%d&user_id=%@&authcode=%@",POST_TLIST_URL,1,10,@"user_id",[GMAPI getAuthkey]];
+       url = [NSString stringWithFormat:@"%@&page=%d&count=%d&user_id=%@&authcode=%@",POST_TLIST_URL,1,L_PAGE_SIZE,@"user_id",[GMAPI getAuthkey]];
     }else{
-        url = [NSString stringWithFormat:@"%@&page=%d&count=%d&authcode=%@",POST_TLIST_URL,1,10,[GMAPI getAuthkey]];
+        url = [NSString stringWithFormat:@"%@&page=%d&count=%d&authcode=%@&user_id=%@",POST_TLIST_URL,pageNum,L_PAGE_SIZE,[GMAPI getAuthkey],[GMAPI getUid]];
+        
+//         url = [NSString stringWithFormat:@"%@&page=%d&count=%d&authcode=%@",POST_TLIST_URL,page,5,[GMAPI getAuthkey]];
     }
 
 
@@ -313,25 +348,95 @@
                 }
                 
             }
-            
         }
         
-        self.waterfall.imagesArr = [[NSArray alloc] initWithArray:arr];
+        [refreshLoading stopAnimating];
+        
+        if (arr.count >= L_PAGE_SIZE) {
+            _isHaveMore = YES;
+            
+            [self stopLoading:1];
+            
+        }else
+        {
+            _isHaveMore = NO;
+            [self stopLoading:2];
+        }
+        
+        if (isReload) {
+            
+            self.waterfall.imagesArr = [[NSArray alloc] initWithArray:arr];
+        }else
+        {
+            NSMutableArray *temp = [NSMutableArray arrayWithArray:self.waterfall.imagesArr];
+            [temp addObjectsFromArray:arr];
+            self.waterfall.imagesArr = [[NSArray alloc] initWithArray:temp];
+        }
         
         [self.waterfall.collectionView reloadData];
-        
-        [self createFooterView];
-        
+    
+            
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-        
+        [refreshLoading stopAnimating];
     }];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - waterDelegate
+
+-(void)itemCick:(id)aModel andCount:(int)mcount
+{
+    TPlatModel *model = (TPlatModel *)aModel;
+    
+    TTaiDetailController *t_detail = [[TTaiDetailController alloc]init];
+    t_detail.tt_id = model.tt_id;
+    [self.navigationController pushViewController:t_detail animated:YES];
+}
+
+- (void)waterScrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (scrollView.contentOffset.y < -85) {
+        
+        isReload = YES;
+        [refreshLoading startAnimating];
+    }
+}
+
+- (void)waterScrollViewDidEndDragging:(UIScrollView *)scrollView
+{
+    NSLog(@"1: %f 2: %f 3: %f",scrollView.contentOffset.y,scrollView.contentSize.height,scrollView.frame.size.height-40);
+    
+    CGFloat aHeight = 0.f;
+    if (self.theType == GSOMEONE) {
+        aHeight = 150+58+25;
+        
+    }else{
+        aHeight = 150+25;
+    }
+    
+    if(_isHaveMore && scrollView.contentOffset.y > ((scrollView.contentSize.height - scrollView.frame.size.height-40)))
+    {
+        
+        [self startLoading];
+        
+        isReload = NO;
+        pageNum ++;
+        
+        [self deserveBuyForPage:pageNum];
+    }
+    
+    if (isReload) {
+        
+        pageNum = 1;
+        [self deserveBuyForPage:1];
+    }
+
 }
 
 
@@ -346,17 +451,6 @@
 {
     // 下拉到最底部时显示更多数据
     
-    if(_isHaveMore && scrollView.contentOffset.y > ((scrollView.contentSize.height - scrollView.frame.size.height-40)))
-    {
-        
-            [self startLoading];
-            
-//            _isLoadMoreData = YES;
-        
-            pageNum ++;
-//            [_refreshDelegate performSelector:@selector(loadMoreData)];
-//        }
-    }
 }
 
 
@@ -379,7 +473,7 @@
         [tableFooterView addSubview:self.loadingLabel];
         [tableFooterView addSubview:self.normalLabel];
         
-        tableFooterView.backgroundColor = [UIColor orangeColor];
+//        tableFooterView.backgroundColor = [UIColor orangeColor];
         
         [self.waterfall.collectionView addSubview:tableFooterView];
     }
@@ -440,7 +534,7 @@
 
 - (void)stopLoading:(int)loadingType
 {
-    _isHaveMore = NO;
+//    _isHaveMore = NO;
     
     [self.loadingIndicator stopAnimating];
     switch (loadingType) {
@@ -458,6 +552,5 @@
             break;
     }
 }
-
 
 @end

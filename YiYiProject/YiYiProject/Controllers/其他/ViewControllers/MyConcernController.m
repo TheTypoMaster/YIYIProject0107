@@ -28,6 +28,9 @@
     LTools *tool_shop;
     LTools *tool_brand;
     
+    BOOL cancel_mail_notification;//是否发送取消通知
+    BOOL cancel_brand_notification;//是否发送取消通知
+    
 }
 
 @end
@@ -81,6 +84,22 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)leftButtonTap:(UIButton *)sender
+{
+    if (cancel_mail_notification) {
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_STORE_QUXIAO object:nil];
+        
+    }
+    
+    if (cancel_brand_notification) {
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_PINPAI_QUXIAO object:nil];
+    }
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 #pragma mark - 网络请求
 
 /**
@@ -88,6 +107,9 @@
  */
 - (void)cancelConcernBrand:(UIButton *)sender
 {
+    
+    cancel_brand_notification = YES;
+    
     int index = (int)sender.tag - 100000;
     BrandModel *aModel = brandTable.dataArray[index];
     
@@ -119,6 +141,8 @@
  */
 - (void)cancelConcernMail:(UIButton *)sender
 {
+    cancel_mail_notification = YES;
+    
     int index = (int)sender.tag - 100;
     MailModel *aModel = shopTable.dataArray[index];
     

@@ -85,10 +85,10 @@
 
     if (_delegate!=nil && [_delegate respondsToSelector:@selector(itemCick:andCount:)]){
         
-//        WaterFlow *flow = [self.imagesArr objectAtIndex:indexPath.row];
-//        
-//        
-//        [_delegate itemCick:flow.ex_id andCount:flow.count];
+        TPlatModel *flow = [self.imagesArr objectAtIndex:indexPath.row];
+        
+        
+        [_delegate itemCick:flow andCount:(int)indexPath.row];
     }
 }
 #pragma mark - UICollectionViewDelegateFlowLayout
@@ -112,6 +112,20 @@
 {
     [_headerView layoutHeaderViewForScrollViewOffset:scrollView.contentOffset];
     
+    if (_delegate!=nil && [_delegate respondsToSelector:@selector(waterScrollViewDidScroll:)]){
+        
+        [_delegate waterScrollViewDidScroll:scrollView];
+        
+    }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (_delegate!=nil && [_delegate respondsToSelector:@selector(waterScrollViewDidEndDragging:)]){
+        
+        [_delegate waterScrollViewDidEndDragging:scrollView];
+        
+    }
 }
 
 - (void)didReceiveMemoryWarning

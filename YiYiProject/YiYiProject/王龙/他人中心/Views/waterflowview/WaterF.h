@@ -12,7 +12,10 @@
 #import "TPlatModel.h"
 @protocol CollectionClickDelegate <NSObject>
 
--(void)itemCick:(NSString *)good_id andCount:(NSString *)mcount;
+-(void)itemCick:(id)aModel andCount:(int)mcount;
+
+- (void)waterScrollViewDidScroll:(UIScrollView *)scrollView;
+- (void)waterScrollViewDidEndDragging:(UIScrollView *)scrollView;
 
 @end
 
