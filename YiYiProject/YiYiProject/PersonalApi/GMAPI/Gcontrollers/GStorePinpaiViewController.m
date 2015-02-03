@@ -165,10 +165,10 @@
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
-    //关注精品店
+    //关注精品店===========
     
     if ([self.guanzhuleixing isEqualToString:@"精品店"]) {
-        NSString *api = [NSString stringWithFormat:@"%@&mall_id=%@",HOME_CLOTH_NEARBYSTORE_DETAIL,self.storeIdStr];
+        NSString *api = [NSString stringWithFormat:@"%@&mall_id=%@&authcode=%@",HOME_CLOTH_NEARBYSTORE_DETAIL,self.storeIdStr,[GMAPI getAuthkey]];
         GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
         [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
             
@@ -178,6 +178,7 @@
             
             NSString *mallName = [result stringValueForKey:@"mall_name"];
             NSString *dizhi = [result stringValueForKey:@"address"];
+            self.guanzhu = [result stringValueForKey:@"following"];
             
             [self creatDianpuInfoView];
             _mallNameLabel.text = mallName;
@@ -225,6 +226,8 @@
             
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [GMAPI showAutoHiddenMBProgressWithText:@"加载失败" addToView:self.view];
+            
         }];
         
         
@@ -234,7 +237,7 @@
     
     
     
-    //关注品牌
+    //关注品牌==========
     NSString *api = [NSString stringWithFormat: @"%@&mall_id=%@",HOME_CLOTH_NEARBYSTORE_DETAIL,self.storeIdStr];//商场店
     GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
     [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
@@ -281,6 +284,7 @@
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [GMAPI showAutoHiddenMBProgressWithText:@"加载失败" addToView:self.view];
     }];
 }
 
@@ -344,29 +348,6 @@
     }];
 }
 
-//获取是否关注 店铺
--(void)getGuanzhuYesOrNoForStore{
-    
-   
-    NSString *api = [NSString stringWithFormat:@"%@&mall_id=%@&authcode=%@",HOME_CLOTH_NEARBYSTORE_DETAIL,self.storeIdStr,[GMAPI getAuthkey]];
-    GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
-    [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
-        NSLog(@"%@",result);
-        self.guanzhu = [result stringValueForKey:@"relation"];
-        if ([self.guanzhu intValue]==0) {//未关注
-            [_my_right_button setTitle:@"关注" forState:UIControlStateNormal];
-            self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
-        }else if ([self.guanzhu intValue] == 1){//已关注
-            [_my_right_button setTitle:@"已关注" forState:UIControlStateNormal];
-            self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
-        }
-        
-        [_waterFlow showRefreshHeader:YES];
-        
-    } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-    }];
-}
 
 
 
@@ -398,16 +379,18 @@
     }
     
     
+    
     //判断是否为精品店
     if ([self.guanzhuleixing isEqualToString:@"精品店"]) {
         if ([self.guanzhu intValue] == 0) {//未关注
             NSString *post = [NSString stringWithFormat:@"&mall_id=%@&authcode=%@",self.storeIdStr,[GMAPI getAuthkey]];
             NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
             NSString *url = [NSString stringWithFormat:GUANZHUSHANGCHANG];
-            
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
             [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
-                
+                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                 if ([[result stringValueForKey:@"errorcode"]intValue] == 0) {
                     [GMAPI showAutoHiddenMBProgressWithText:@"关注成功" addToView:self.view];
                     [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_STORE object:nil];
@@ -416,16 +399,18 @@
                     self.guanzhu = @"1";
                 }
             } failBlock:^(NSDictionary *failDic, NSError *erro) {
-                
+                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                 [GMAPI showAutoHiddenMBProgressWithText:@"关注失败" addToView:self.view];
             }];
         }else if ([self.guanzhu intValue] == 1){
             NSString *post = [NSString stringWithFormat:@"&mall_id=%@&authcode=%@",self.storeIdStr,[GMAPI getAuthkey]];
             NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
             NSString *url = [NSString stringWithFormat:QUXIAOGUANZHU_SHANGCHANG];
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
             [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
-                
+                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                 
                 if ([[result stringValueForKey:@"errorcode"]intValue]==0) {
                     [GMAPI showAutoHiddenMBProgressWithText:@"取消关注成功" addToView:self.view];
@@ -437,6 +422,7 @@
                 
                 
             } failBlock:^(NSDictionary *failDic, NSError *erro) {
+                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                 [GMAPI showAutoHiddenMBProgressWithText:@"取消关注失败" addToView:self.view];
             }];
         }
@@ -448,17 +434,19 @@
     
     
     
-    //判断是否关注
+    //判断是否关注品牌
     NSLog(@"self.guanzhu:%@",self.guanzhu);
     
     if ([self.guanzhu intValue] == 0) {//未关注
         NSString *post = [NSString stringWithFormat:@"&brand_id=%@&authcode=%@",self.pinpaiId,[GMAPI getAuthkey]];
         NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
         NSString *url = [NSString stringWithFormat:GUANZHUPINPAI];
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         
         GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
-            
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             if ([[result stringValueForKey:@"errorcode"]intValue] == 0) {
                 [GMAPI showAutoHiddenMBProgressWithText:@"关注成功" addToView:self.view];
                 [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_PINPAI object:nil];
@@ -467,15 +455,18 @@
                 self.guanzhu = @"1";
             }
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             [GMAPI showAutoHiddenMBProgressWithText:@"关注失败" addToView:self.view];
         }];
     }else if ([self.guanzhu intValue] == 1){
         NSString *post = [NSString stringWithFormat:@"&brand_id=%@&authcode=%@",self.pinpaiId,[GMAPI getAuthkey]];
         NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
         NSString *url = [NSString stringWithFormat:QUXIAOGUANZHUPINPAI];
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
-            
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             
             if ([[result stringValueForKey:@"errorcode"]intValue]==0) {
                 [GMAPI showAutoHiddenMBProgressWithText:@"取消关注成功" addToView:self.view];
@@ -487,6 +478,7 @@
             
             
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             [GMAPI showAutoHiddenMBProgressWithText:@"取消关注失败" addToView:self.view];
         }];
     }

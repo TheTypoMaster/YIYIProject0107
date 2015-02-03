@@ -155,6 +155,7 @@
             [storeNameBtn setBackgroundImage:[UIImage imageNamed:@"gdownname.png"] forState:UIControlStateNormal];
             [storeNameBtn setBackgroundImage:[UIImage imageNamed:@"gdownname1.png"] forState:UIControlStateSelected];
             [storeNameBtn setTitle:[dic stringValueForKey:@"mall_name"] forState:UIControlStateNormal];
+            storeNameBtn.shopType = [dic stringValueForKey:@"mall_type"];
             [view addSubview:storeNameBtn];
             //距离
             UILabel *distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(storeNameBtn.frame)+10, view.frame.size.width, 25)];
