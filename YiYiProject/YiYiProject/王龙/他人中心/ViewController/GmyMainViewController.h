@@ -23,6 +23,8 @@ typedef enum{
 @interface GmyMainViewController : MyViewController<UIScrollViewDelegate,CollectionClickDelegate,UICollectionViewDelegate>
 {
     ParallaxHeaderView *headerView;
+    
+    UIView *tableFooterView;
 }
 
 @property(nonatomic,assign)GMAINVIEWTYPE theType;//类型  自己的 别人的

@@ -12,6 +12,12 @@
 #import "LWaterflowView.h"
 #import "TPlatModel.h"
 
+
+#define NORMAL_TEXT @"上拉加载更多"
+#define NOMORE_TEXT @"没有更多数据"
+#define TABLEFOOTER_HEIGHT 50.f
+
+
 @interface GmyMainViewController ()<TMQuiltViewDataSource,WaterFlowDelegate>
 {
     
@@ -29,10 +35,14 @@
     UIView *ttaiView;
     
     
-    
-    
-    
+    BOOL _isHaveMore;
+    int pageNum;
 }
+
+@property(nonatomic,retain)UIActivityIndicatorView *loadingIndicator;
+@property(nonatomic,retain)UILabel *normalLabel;
+@property(nonatomic,retain)UILabel *loadingLabel;
+
 @end
 
 @implementation GmyMainViewController
@@ -160,30 +170,30 @@
     _userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0 , CGRectGetMaxY(_userFaceImv.frame)+5, DEVICE_WIDTH, 20)];
     _userNameLabel.backgroundColor = [UIColor clearColor];
     _userNameLabel.font = [UIFont systemFontOfSize:18];
-    _userNameLabel.text = @"longwang";
+    _userNameLabel.text = [GMAPI getUsername];
     _userNameLabel.textColor = [UIColor whiteColor];
     _userNameLabel.textAlignment = NSTextAlignmentCenter;
     [_upUserInfoView addSubview:_userNameLabel];
     
-    //关注 粉丝
-    _guanzhuLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_userNameLabel.frame)+10, DEVICE_WIDTH*0.5-10, 16)];
-    _guanzhuLabel.font = [UIFont systemFontOfSize:14];
-    _guanzhuLabel.textColor = [UIColor whiteColor];
-    _guanzhuLabel.textAlignment = NSTextAlignmentRight;
-    _guanzhuLabel.text = @"关注 300";
-    _guanzhuLabel.backgroundColor = [UIColor clearColor];
-    //分割线
-    UIView *fenView = [[UIView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_guanzhuLabel.frame)+10, _guanzhuLabel.frame.origin.y, 1, _guanzhuLabel.frame.size.height)];
-    fenView.backgroundColor = [UIColor whiteColor];
-    _fensiLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(fenView.frame)+10, fenView.frame.origin.y, _guanzhuLabel.frame.size.width, _guanzhuLabel.frame.size.height)];
-    _fensiLabel.font = [UIFont systemFontOfSize:14];
-    _fensiLabel.backgroundColor = [UIColor clearColor];
-    _fensiLabel.textColor = [UIColor whiteColor];
-    _fensiLabel.text = @"粉丝 300";
-    _fensiLabel.textAlignment = NSTextAlignmentLeft;
-    [_upUserInfoView addSubview:_guanzhuLabel];
-    [_upUserInfoView addSubview:fenView];
-    [_upUserInfoView addSubview:_fensiLabel];
+//    //关注 粉丝
+//    _guanzhuLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_userNameLabel.frame)+10, DEVICE_WIDTH*0.5-10, 16)];
+//    _guanzhuLabel.font = [UIFont systemFontOfSize:14];
+//    _guanzhuLabel.textColor = [UIColor whiteColor];
+//    _guanzhuLabel.textAlignment = NSTextAlignmentRight;
+//    _guanzhuLabel.text = @"关注 300";
+//    _guanzhuLabel.backgroundColor = [UIColor clearColor];
+//    //分割线
+//    UIView *fenView = [[UIView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_guanzhuLabel.frame)+10, _guanzhuLabel.frame.origin.y, 1, _guanzhuLabel.frame.size.height)];
+//    fenView.backgroundColor = [UIColor whiteColor];
+//    _fensiLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(fenView.frame)+10, fenView.frame.origin.y, _guanzhuLabel.frame.size.width, _guanzhuLabel.frame.size.height)];
+//    _fensiLabel.font = [UIFont systemFontOfSize:14];
+//    _fensiLabel.backgroundColor = [UIColor clearColor];
+//    _fensiLabel.textColor = [UIColor whiteColor];
+//    _fensiLabel.text = @"粉丝 300";
+//    _fensiLabel.textAlignment = NSTextAlignmentLeft;
+//    [_upUserInfoView addSubview:_guanzhuLabel];
+//    [_upUserInfoView addSubview:fenView];
+//    [_upUserInfoView addSubview:_fensiLabel];
     
     
     return _upUserInfoView;
@@ -230,6 +240,8 @@
     }else{
         flowLayout.headerHeight = 150+25;
     }
+    
+    flowLayout.footerHeight = 100;
     
     
     self.waterfall = [[WaterF alloc]initWithCollectionViewLayout:flowLayout];
@@ -308,6 +320,8 @@
         
         [self.waterfall.collectionView reloadData];
         
+        [self createFooterView];
+        
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
@@ -320,6 +334,130 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+#pragma - mark ScrollViewDelegate
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    // 下拉到最底部时显示更多数据
+    
+    if(_isHaveMore && scrollView.contentOffset.y > ((scrollView.contentSize.height - scrollView.frame.size.height-40)))
+    {
+        
+            [self startLoading];
+            
+//            _isLoadMoreData = YES;
+        
+            pageNum ++;
+//            [_refreshDelegate performSelector:@selector(loadMoreData)];
+//        }
+    }
+}
+
+
+- (void)createFooterView
+{
+    CGFloat height = MAX(self.waterfall.collectionView.contentSize.height, self.waterfall.collectionView.frame.size.height);
+    
+    NSLog(@"waterfall %f || %f",self.waterfall.collectionView.contentSize.height,self.waterfall.collectionView.frame.size.height);
+    
+    NSLog(@"maxHeight %f",height);
+    
+    if (tableFooterView && [tableFooterView superview]) {
+        
+        tableFooterView.frame = CGRectMake(0.0f,height,self.waterfall.collectionView.frame.size.width,self.view.bounds.size.height);
+    }else
+    {
+        tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, height, DEVICE_WIDTH, TABLEFOOTER_HEIGHT)];
+        
+        [tableFooterView addSubview:self.loadingIndicator];
+        [tableFooterView addSubview:self.loadingLabel];
+        [tableFooterView addSubview:self.normalLabel];
+        
+        tableFooterView.backgroundColor = [UIColor orangeColor];
+        
+        [self.waterfall.collectionView addSubview:tableFooterView];
+    }
+}
+
+
+#pragma - mark 创建所需label 和 UIActivityIndicatorView
+
+- (UIActivityIndicatorView*)loadingIndicator
+{
+    if (!_loadingIndicator) {
+        _loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        _loadingIndicator.hidden = YES;
+        _loadingIndicator.backgroundColor = [UIColor clearColor];
+        _loadingIndicator.hidesWhenStopped = YES;
+        _loadingIndicator.frame = CGRectMake(self.view.width/2 - 70 ,6+2 + (TABLEFOOTER_HEIGHT - 40)/2.0, 24, 24);
+    }
+    return _loadingIndicator;
+}
+
+- (UILabel*)normalLabel
+{
+    if (!_normalLabel) {
+        _normalLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 8 + (TABLEFOOTER_HEIGHT - 40)/2.0, self.view.width, 20)];
+        _normalLabel.text = NSLocalizedString(NORMAL_TEXT, nil);
+        _normalLabel.backgroundColor = [UIColor clearColor];
+        [_normalLabel setFont:[UIFont systemFontOfSize:14]];
+        _normalLabel.textAlignment = NSTextAlignmentCenter;
+        [_normalLabel setTextColor:[UIColor darkGrayColor]];
+    }
+    
+    return _normalLabel;
+    
+}
+
+- (UILabel*)loadingLabel
+{
+    if (!_loadingLabel) {
+        _loadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(320.f/2-80,8 + (TABLEFOOTER_HEIGHT - 40)/2.0, self.view.width/2+30, 20)];
+        _loadingLabel.text = NSLocalizedString(@"加载中...", nil);
+        _loadingLabel.backgroundColor = [UIColor clearColor];
+        [_loadingLabel setFont:[UIFont systemFontOfSize:14]];
+        _loadingLabel.textAlignment = NSTextAlignmentCenter;
+        [_loadingLabel setTextColor:[UIColor darkGrayColor]];
+        [_loadingLabel setHidden:YES];
+    }
+    
+    return _loadingLabel;
+}
+
+
+- (void)startLoading
+{
+    [self.loadingIndicator startAnimating];
+    [self.loadingLabel setHidden:NO];
+    [self.normalLabel setHidden:YES];
+}
+
+- (void)stopLoading:(int)loadingType
+{
+    _isHaveMore = NO;
+    
+    [self.loadingIndicator stopAnimating];
+    switch (loadingType) {
+        case 1:
+            [self.normalLabel setHidden:NO];
+            [self.normalLabel setText:NSLocalizedString(NORMAL_TEXT, nil)];
+            [self.loadingLabel setHidden:YES];
+            break;
+        case 2:
+            [self.normalLabel setHidden:NO];
+            [self.normalLabel setText:NSLocalizedString(NOMORE_TEXT, nil)];
+            [self.loadingLabel setHidden:YES];
+            break;
+        default:
+            break;
+    }
+}
 
 
 @end

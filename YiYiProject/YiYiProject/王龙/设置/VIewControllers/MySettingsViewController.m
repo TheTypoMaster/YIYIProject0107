@@ -11,6 +11,9 @@
 #import "AboutTailCircleViewController.h"
 
 #import "UMFeedbackViewController.h"
+
+#import "RCIM.h"
+
 //RBG color
 #define RGBA(r,g,b,a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 @interface MySettingsViewController ()
@@ -276,6 +279,11 @@
     //保存登录状态 yes
     
     [LTools cacheBool:NO ForKey:LOGIN_SERVER_STATE];
+    
+    //融云Token
+    
+    [LTools cache:@"" ForKey:RONGCLOUD_TOKEN];
+    [[RCIM sharedRCIM]disconnect];
     
     
     [GMAPI cleanUserFaceAndBanner];//清除banner和头像

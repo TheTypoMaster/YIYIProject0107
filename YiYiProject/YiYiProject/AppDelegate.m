@@ -287,16 +287,16 @@
     GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
     [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
         
-        NSLog(@"thedic==%@",result);
+        NSLog(@"devicetoken给后台传过去 thedic==%@",result);
         
-        UIAlertView *alertV=[[UIAlertView alloc]initWithTitle:[NSString stringWithFormat:@"%@",result] message:nil delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+        UIAlertView *alertV=[[UIAlertView alloc]initWithTitle:[NSString stringWithFormat:@"%@",@"token发送成功"] message:nil delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
         [alertV show];
    
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"faildic==%@",failDic);
         
-        UIAlertView *alertV=[[UIAlertView alloc]initWithTitle:[NSString stringWithFormat:@"%@",failDic] message:nil delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+        UIAlertView *alertV=[[UIAlertView alloc]initWithTitle:[NSString stringWithFormat:@"%@",@"token发送失败"] message:nil delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
         [alertV show];
 
     }];
@@ -310,18 +310,19 @@
 {
     NSString *str = [NSString stringWithFormat: @"Error: %@", error];
     NSLog(@"erro  %@",str);
-//    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"注册失败" message:str delegate:Nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
-//    [alert show];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"注册失败" message:str delegate:Nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+    [alert show];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     
-    
-    
     NSLog(@"userinf==%@",userInfo);
     
+    NSString *str = [NSString stringWithFormat:@"%@",userInfo];
     
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"注册失败" message:str delegate:Nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+    [alert show];
     
 }
 
