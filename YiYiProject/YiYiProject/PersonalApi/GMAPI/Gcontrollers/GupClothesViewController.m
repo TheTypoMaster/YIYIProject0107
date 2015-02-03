@@ -409,8 +409,10 @@
         
         if (i == 3) {
             shuruTf.placeholder = @"单位:元";
+            shuruTf.keyboardType = UIKeyboardTypeNumberPad;
         }else if (i == 4){
             shuruTf.placeholder = @"如:8.8即为88折扣";
+            shuruTf.keyboardType = UIKeyboardTypeNumberPad;
         }else if (i == 5){
             shuruTf.placeholder = @"如:运动,休闲,时尚,商务";
         }else if (i == 1){

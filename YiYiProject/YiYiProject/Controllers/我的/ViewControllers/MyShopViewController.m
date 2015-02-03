@@ -89,10 +89,25 @@
     [self getMailActivity];//店铺活动列表
     
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getMailProduct) name:NOTIFICATION_FABUDANPIN_SUCCESS object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getMailActivity) name:NOTIFICATION_FABUHUODONG_SUCCESS object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(gengxinDanpin) name:NOTIFICATION_FABUDANPIN_SUCCESS object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(gengxinHuodong) name:NOTIFICATION_FABUHUODONG_SUCCESS object:nil];
     
 }
+
+
+-(void)gengxinDanpin{
+    UIButton *btn1 = [self buttonForTag:100];
+    [self clickToAction:btn1];
+    [waterFlow showRefreshHeader:YES];
+}
+
+-(void)gengxinHuodong{
+    UIButton *btn1 = [self buttonForTag:101];
+    [self clickToAction:btn1];
+    [rightTable showRefreshHeader:YES];
+}
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -283,15 +298,17 @@
     //返回按钮
     
     UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(12,20,40,44)];
+//    button_back.backgroundColor = [UIColor orangeColor];
     [button_back addTarget:self action:@selector(clickToBack:) forControlEvents:UIControlEventTouchUpInside];
     [button_back setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
     [button_back setImage:BACK_DEFAULT_IMAGE forState:UIControlStateNormal];
+    [button_back setImageEdgeInsets:UIEdgeInsetsMake(0, 12, 0, 12)];
     [_backView addSubview:button_back];
     
     //小齿轮设置按钮 设置
     UIButton *chilunBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [chilunBtn setFrame:CGRectMake(DEVICE_WIDTH - 40, 30, 25, 25)];
-    [chilunBtn setBackgroundImage:[UIImage imageNamed:@"dz_tianjia"] forState:UIControlStateNormal];
+    [chilunBtn setFrame:CGRectMake(DEVICE_WIDTH - 55, 20, 40, 40)];
+    [chilunBtn setImage:[UIImage imageNamed:@"dz_tianjia.png"] forState:UIControlStateNormal];
     [chilunBtn addTarget:self action:@selector(clickToAdd:) forControlEvents:UIControlEventTouchUpInside];
     
     //头像

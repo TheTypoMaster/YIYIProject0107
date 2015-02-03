@@ -763,11 +763,13 @@
 - (void)waterScrollViewDidScroll:(UIScrollView *)scrollView{
     NSLog(@"哈哈");
     NSLog(@"%f",scrollView.contentOffset.y);
+    NSLog(@"-------------------------------------------%f",_backView_water.frame.size.height);
     if (scrollView.contentOffset.y>0) {
         CGFloat height = _upStoreInfoView.frame.size.height;
         if (_mainScrollview.contentOffset.y<height) {
             [_backView_water setFrame:CGRectMake(12, CGRectGetMaxY(_menu_view.frame)+12, ALL_FRAME_WIDTH-24, ALL_FRAME_HEIGHT - _menu_view.frame.size.height - 12-12-64)];
-            [_waterFlow setFrame:_backView_water.bounds];
+            [_waterFlow setFrame:CGRectMake(0, 0, _backView_water.frame.size.width, _backView_water.frame.size.height)];
+//            _waterFlow.backgroundColor = [UIColor orangeColor];
             
             [_mainScrollview setContentOffset:CGPointMake(0, height)];
         }
