@@ -9,6 +9,8 @@
 #import "AppDelegate.h"
 #import "RootViewController.h"
 
+#import "MailMessageViewController.h"
+
 #import "UMSocial.h"
 #import "MobClick.h"
 
@@ -135,14 +137,12 @@
         NSLog(@"manager start failed!");
     }
     
-    
-    
-
 #pragma mark 友盟
     
     [self umengShare];
     
     RootViewController *root = [[RootViewController alloc]init];
+    self.rootViewController = root;
     
     UINavigationController *unVc = [[UINavigationController alloc]initWithRootViewController:root];
     unVc.navigationBarHidden = YES;
@@ -240,10 +240,6 @@
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
     
-    
-    
-    
-    
     NSLog(@"My token is: %@", deviceToken);
     
     [[RCIM sharedRCIM]setDeviceToken:deviceToken];//融云
@@ -256,12 +252,7 @@
         string_pushtoken=[string_pushtoken stringByReplacingOccurrencesOfString:@" " withString:@""];
         
     }
-    
-    
-    
     NSLog(@"mytoken==%@",string_pushtoken);
-    
-    
     
     [self PostDevicetoken:string_pushtoken];
     
@@ -269,11 +260,6 @@
     [LTools cache:string_pushtoken ForKey:USER_DEVICE_TOKEN];
     
     //给服务器token
-    
-    
-    
-    
-    
     
 }
 
@@ -309,9 +295,9 @@
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
     NSString *str = [NSString stringWithFormat: @"Error: %@", error];
-    NSLog(@"erro  %@",str);
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"注册失败" message:str delegate:Nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
-    [alert show];
+    NSLog(@"远程注册 erro  %@",str);
+//    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"注册失败" message:str delegate:Nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+//    [alert show];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
@@ -319,11 +305,88 @@
     
     NSLog(@"userinf==%@",userInfo);
     
-    NSString *str = [NSString stringWithFormat:@"%@",userInfo];
+//    userinf=={
+//        aps =     {
+//            alert = "\U56de\U590d GoodMor2012:eeee";
+//            sound = default;
+//            type = 6;
+//        };
+//    }
     
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"注册失败" message:str delegate:Nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
-    [alert show];
+    UIApplicationState state = [application applicationState];
+    if (state == UIApplicationStateInactive){
+        NSLog(@"UIApplicationStateInactive %@",userInfo);
+        //点击消息进入走此处,做相应处理
+        
+        NSDictionary *aps = userInfo[@"aps"];
+        
+        [self dealMessageWithDictionary:aps];
+        
+    }
+    if (state == UIApplicationStateActive) {
+        NSLog(@"UIApplicationStateActive %@",userInfo);
+        //程序就在前台
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_REMOTE_MESSAGE object:nil];
+        
+        NSDictionary *aps = userInfo[@"aps"];
+        NSString *alertMessage = aps[@"alert"];//消息内容
+        
+        self.remote_message = [NSDictionary dictionaryWithDictionary:aps];
+        
+//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"消息提示" message:alertMessage delegate:self cancelButtonTitle:@"忽略" otherButtonTitles:@"查看", nil];
+//        alert.tag = 300;
+//        [alert show];
+        
+    }
+    if (state == UIApplicationStateBackground)
+    {
+        NSLog(@"UIApplicationStateBackground %@",userInfo);
+    }
     
+    
+
+}
+
+- (void)dealMessageWithDictionary:(NSDictionary *)aps
+{
+//    NSString *alert = aps[@"alert"];//消息内容
+    int type = [aps[@"type"] intValue];
+    //1 衣加衣通知消息 2 关注通知消息 3 回复主题消息 4 回复主题回复
+    //5 回复T台通知消息 6 回复T台回复通知消息 7 品牌促销通知消息 8 商场促销通知
+    
+    if (type == 1) {
+        
+        [self pushToMessageDetail:Message_Yy];
+        
+    }else if (type == 2 || type == 3 || type == 4 || type == 5 || type == 6)
+    {
+        [self pushToMessageDetail:Message_Dynamic];
+        
+    }else if (type == 7 || type == 8){
+        
+        [self pushToMessageDetail:Message_Shop];
+    }
+
+}
+
+/**
+ *  推送消息跳转
+ *
+ *  @param aType 消息类型
+ */
+
+- (void)pushToMessageDetail:(Message_Type)aType
+{
+    self.rootViewController.selectedIndex = 3;
+    
+    MailMessageViewController *mail = [[MailMessageViewController alloc]init];
+    mail.aType = aType;
+    mail.hidesBottomBarWhenPushed = YES;
+    
+    UINavigationController *unVc = [self.rootViewController.viewControllers objectAtIndex:3];
+    
+    [unVc pushViewController:mail animated:YES];
 }
 
 
@@ -443,6 +506,20 @@
             NSLog(@"YES");
             
             [RCIMClient reconnect:self];
+        }
+        
+    }else if (300 == alertView.tag){ //推送消息
+        
+        if (0 == buttonIndex) {
+            
+            NSLog(@"忽略");
+        }
+        
+        if (1 == buttonIndex) {
+            
+            NSLog(@"查看");
+            
+            [self dealMessageWithDictionary:self.remote_message];
         }
     }
     

@@ -92,7 +92,8 @@ alpha:(a)]
 //取消红点
 #define NOTIFICATION_CANCEL_HOTPOINT @"cancelHotPoint"
 
-
+//推送消息
+#define NOTIFICATION_REMOTE_MESSAGE @"remoteMessage"
 
 
 //登录类型 normal为正常手机登陆，sweibo、qq、weixin分别代表新浪微博、qq、微信登陆
@@ -138,6 +139,16 @@ typedef enum {
     
 }SORT_Discount_TYPE; //排序方式
 
+/**
+ *  商家消息列表
+ */
+//action= yy(衣加衣) shop（商家） dynamic（动态）
+
+typedef enum{
+    Message_Yy = 0,
+    Message_Shop,
+    Message_Dynamic
+}Message_Type;
 
 
 //接口地址
