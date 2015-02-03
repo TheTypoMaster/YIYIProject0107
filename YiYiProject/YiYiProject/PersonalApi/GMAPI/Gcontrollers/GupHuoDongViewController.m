@@ -270,6 +270,7 @@
                                            
                                            if ([[mydic objectForKey:@"errorcode"]intValue]==0) {
                                                [GMAPI showAutoHiddenMBProgressWithText:@"发布成功" addToView:self.view];
+                                               [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_FABUHUODONG_SUCCESS object:nil];
                                                [self performSelector:@selector(fabuSuccessToGoBack) withObject:[NSNumber numberWithBool:YES] afterDelay:1];
                                            }else{
                                                [GMAPI showAutoHiddenMBProgressWithText:[mydic objectForKey:@"msg"] addToView:self.view];
@@ -347,7 +348,7 @@
                                            
                                            if ([[mydic objectForKey:@"errorcode"]intValue]==0) {
                                                [GMAPI showAutoHiddenMBProgressWithText:@"发布成功" addToView:self.view];
-                                               
+                                               [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_FABUHUODONG_SUCCESS object:nil];
                                                [self performSelector:@selector(fabuSuccessToGoBack) withObject:[NSNumber numberWithBool:YES] afterDelay:1];
                                            }else{
                                                [GMAPI showAutoHiddenMBProgressWithText:[mydic objectForKey:@"msg"] addToView:self.view];
@@ -612,6 +613,10 @@
         _showImageData = UIImageJPEGRepresentation(_showImage, 0.8);
         [_showPicBtn setBackgroundImage:_showImage forState:UIControlStateNormal];
         
+        [picker dismissViewControllerAnimated:YES completion:^{
+            
+        }];
+        
 //        //将图片传递给截取界面进行截取并设置回调方法（协议）
 //        MLImageCrop *imageCrop = [[MLImageCrop alloc]init];
 //        imageCrop.delegate = self;
@@ -625,6 +630,11 @@
         
     }
 }
+
+
+
+
+
 
 
 #pragma mark - MLImageCropDelegate

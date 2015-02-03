@@ -158,7 +158,7 @@
             storeNameBtn.shopType = [dic stringValueForKey:@"mall_type"];
             [view addSubview:storeNameBtn];
             //距离
-            UILabel *distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(storeNameBtn.frame)+10, view.frame.size.width, 25)];
+            UILabel *distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(storeNameBtn.frame), view.frame.size.width, 25)];
             distanceLabel.font = [UIFont systemFontOfSize:13];
             distanceLabel.textAlignment = NSTextAlignmentCenter;
             distanceLabel.textColor = [UIColor whiteColor];

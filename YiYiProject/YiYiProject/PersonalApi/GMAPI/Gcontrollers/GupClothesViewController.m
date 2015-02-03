@@ -289,6 +289,7 @@
                                        
                                        if ([[mydic objectForKey:@"errorcode"]intValue]==0) {
                                            [GMAPI showAutoHiddenMBProgressWithText:@"添加成功" addToView:self.view];
+                                           [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_FABUDANPIN_SUCCESS object:nil];
                                            [self performSelector:@selector(fabuyifuSuccessToGoBack) withObject:[NSNumber numberWithBool:YES] afterDelay:1];
                                            
                                        }

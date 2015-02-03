@@ -84,6 +84,10 @@ alpha:(a)]
 #define NOTIFICATION_GUANZHU_PINPAI @"guanzhu_pinpai"
 //取消关注品牌
 #define NOTIFICATION_GUANZHU_PINPAI_QUXIAO @"guanzhu_pinpai_quxiao"
+//发布单品成功
+#define NOTIFICATION_FABUDANPIN_SUCCESS @"fabudanpin_success"
+//发布活动成功
+#define NOTIFICATION_FABUHUODONG_SUCCESS @"fabuhuodong_success"
 
 //取消红点
 #define NOTIFICATION_CANCEL_HOTPOINT @"cancelHotPoint"
@@ -168,7 +172,7 @@ typedef enum {
 //获取附近商铺
 #define HOME_CLOTH_NEARBYSTORE @"http://182.92.158.32/?d=api&c=mall&m=gerNearMalls"
 //获取我关注的店铺
-#define HOME_CLOTH_GUANZHUSTORE_MINE @"http://182.92.158.32/?d=api&c=friendship&m=listMall&authcode=%@&page=1&count=100"
+#define HOME_CLOTH_GUANZHUSTORE_MINE @"http://182.92.158.32/?d=api&c=friendship&m=listMall"
 //获取我关注的品牌
 #define HOME_CLOTH_GUANZHUPINPAI_MINE @"http://182.92.158.32/index.php?d=api&c=brand&m=get_attend_brands&authcode=%@&page=%d"
 

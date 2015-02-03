@@ -242,6 +242,7 @@
     GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
     [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
         [self creatDianpuInfoView];
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         
         NSLog(@"商场店信息 %@",result);
         NSString *dizhi = [result stringValueForKey:@"address"];

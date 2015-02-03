@@ -88,6 +88,10 @@
     
     [self getMailActivity];//店铺活动列表
     
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getMailProduct) name:NOTIFICATION_FABUDANPIN_SUCCESS object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getMailActivity) name:NOTIFICATION_FABUHUODONG_SUCCESS object:nil];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -112,12 +116,18 @@
     
     NSLog(@"%@",url);
     
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"获取店铺详情:%@",result);
         
         MailInfoModel *mail = [[MailInfoModel alloc]initWithDictionary:result];
+        if (mail) {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        }
         self.mallInfo = mail;
         [weakSelf setViewWithModel:mail];
         
@@ -186,7 +196,7 @@
 {
     NSString *key = [GMAPI getAuthkey];
     
-    key = @"WiVbIgF4BeMEvwabALBajQWgB+VUoVWkBShRYFUwXGkGOAAyB2FSZgczBjYAbAp6AjZSaQ==";
+//    key = @"WiVbIgF4BeMEvwabALBajQWgB+VUoVWkBShRYFUwXGkGOAAyB2FSZgczBjYAbAp6AjZSaQ==";
     
     NSString *url = [NSString stringWithFormat:GET_MAIL_ACTIVITY_LIST,key];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
@@ -417,6 +427,7 @@
         
         GupClothesViewController *ccc = [[GupClothesViewController alloc]init];
         ccc.userInfo = self.userInfo;
+        ccc.mallInfo = self.mallInfo;
         
         [self.navigationController pushViewController:ccc animated:YES];
         

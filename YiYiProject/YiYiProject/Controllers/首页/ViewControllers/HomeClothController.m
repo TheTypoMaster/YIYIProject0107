@@ -193,6 +193,7 @@
         [self prepareNearbyPinpai];
         //请求附近的商店
         [self prepareNearbyStore];
+        
     }
     
     
@@ -293,14 +294,23 @@
     
     
     
+    
     if (_guanzhuStoreDataArray.count>0) {
         _scrollview_nearbyView.dataArray = _guanzhuStoreDataArray;
         [_scrollview_nearbyView gReloadData];
         return;
     }
     
+    [self prepareGuanzhuStoreWithLocation];
+    
+    
+}
+
+
+-(void)prepareGuanzhuStoreWithLocation{
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    NSString *url = [NSString stringWithFormat:HOME_CLOTH_GUANZHUSTORE_MINE,[GMAPI getAuthkey]];
+    NSString *url = [NSString stringWithFormat:@"%@&authcode=%@&page=1&count=100&long=%@&lat=%@",HOME_CLOTH_GUANZHUSTORE_MINE,[GMAPI getAuthkey],[_locationDic stringValueForKey:@"long"],[_locationDic stringValueForKey:@"lat"]];
     
     NSLog(@"我关注的商店:%@",url);
     
@@ -320,6 +330,7 @@
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
     }];
+
 }
 
 
