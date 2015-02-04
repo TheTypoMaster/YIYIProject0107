@@ -71,7 +71,7 @@
 
 -(void)dealloc{
     
-    
+    _waterFlow.waterDelegate = nil;
     NSLog(@"%s",__FUNCTION__);
 }
 
