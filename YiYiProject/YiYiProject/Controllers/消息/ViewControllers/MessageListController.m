@@ -154,6 +154,19 @@
 }
 
 /**
+ *  未读消息条数
+ *
+ *  @return 不包含融云
+ */
+- (int)unreadMessgeNumWithOutRongCloud
+{
+    int sum = 0;
+    sum = yiyi_model.unread_msg_num + shop_model.unread_msg_num + other_model.unread_msg_num;
+    
+    return sum;
+}
+
+/**
  *  获取未读消息条数
  */
 - (int)unreadMessgeNum
@@ -168,6 +181,8 @@
     
     sum = yiyi_model.unread_msg_num + shop_model.unread_msg_num + other_model.unread_msg_num + rong_num;
     
+    [LTools cache:NSStringFromInt(sum - rong_num) ForKey:USER_UNREADNUM];//记录除了即时通讯消息未读条数
+
     return sum;
 }
 

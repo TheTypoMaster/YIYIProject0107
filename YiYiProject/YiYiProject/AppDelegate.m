@@ -159,7 +159,13 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     
-    [UIApplication sharedApplication].applicationIconBadgeNumber = [[RCIM sharedRCIM] getTotalUnreadCount];//融云
+    int rong_num = [[RCIM sharedRCIM] getTotalUnreadCount];
+    
+    rong_num = rong_num > 0 ? rong_num : 0;
+    
+    int other_num = [[LTools cacheForKey:USER_UNREADNUM]intValue];
+    
+    [UIApplication sharedApplication].applicationIconBadgeNumber = rong_num + other_num;//融云 + 其他
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
