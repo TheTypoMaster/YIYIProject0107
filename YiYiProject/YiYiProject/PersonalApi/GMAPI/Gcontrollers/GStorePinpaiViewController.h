@@ -26,8 +26,9 @@
 @property(nonatomic,strong)NSString *pinpaiNameStr;//品牌名称
 @property(nonatomic,strong)NSString *storeNameStr;//商家名称
 
-@property(nonatomic,strong)NSString *storeIdStr;//商城id
+@property(nonatomic,strong)NSString *storeIdStr;//商场id  点击附近的商家 商场店的时候为店铺id  精品店的时候为商场id    点击附近的品牌为店铺id
 @property(nonatomic,strong)NSString *pinpaiId;//品牌id
+@property(nonatomic,strong)NSString *shopId;//店铺id
 
 @property(nonatomic,strong)NSString *guanzhu;//0未关注  1已关注
 

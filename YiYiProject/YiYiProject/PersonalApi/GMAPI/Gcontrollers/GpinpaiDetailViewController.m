@@ -175,7 +175,7 @@
     NSDictionary *dic = _dataArray[indexPath.row];
     
     GStorePinpaiViewController *cc = [[GStorePinpaiViewController alloc]init];
-    cc.storeIdStr = [dic stringValueForKey:@"mall_id"];
+    cc.storeIdStr = [dic stringValueForKey:@"mb_id"];
     cc.pinpaiId = self.pinpaiIdStr;
     cc.pinpaiNameStr = self.pinpaiName;
     cc.storeNameStr = [dic stringValueForKey:@"mall_name"];

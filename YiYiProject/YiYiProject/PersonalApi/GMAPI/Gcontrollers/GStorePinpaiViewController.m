@@ -175,6 +175,19 @@
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             
             NSLog(@"精品店信息%@",result);
+            NSArray *brand = [result arrayValueForKey:@"brand"];
+            NSArray *brand1 = nil;
+            NSDictionary *brand2 = nil;
+            if (brand && brand.count>0) {
+                brand1= brand[0];
+                if (brand1 && brand1.count>0) {
+                    brand2 = brand1[0];
+                }
+            }
+            
+            if ([brand2 isKindOfClass:[NSDictionary class]]) {
+                self.shopId = [brand2 stringValueForKey:@"shop_id"];
+            }
             
             NSString *mallName = [result stringValueForKey:@"mall_name"];
             NSString *dizhi = [result stringValueForKey:@"address"];
@@ -238,7 +251,7 @@
     
     
     //关注品牌==========
-    NSString *api = [NSString stringWithFormat: @"%@&mall_id=%@",HOME_CLOTH_NEARBYSTORE_DETAIL,self.storeIdStr];//商场店
+    NSString *api = [NSString stringWithFormat:GET_MAIL_DETAIL_INFO,self.storeIdStr];//商场店
     GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
     [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
         [self creatDianpuInfoView];
@@ -246,7 +259,8 @@
         
         NSLog(@"商场店信息 %@",result);
         NSString *dizhi = [result stringValueForKey:@"address"];
-        
+        self.pinpaiId = [result stringValueForKey:@"brand_id"];
+        NSLog(@"self.pinpaiId %@",self.pinpaiId);
         //活动
         NSDictionary *dic = [result dictionaryValueForKey:@"activity"];
         NSString *huodongStr = nil;
@@ -533,6 +547,7 @@
     _waterFlow = [[LWaterflowView alloc]initWithFrame:_backView_water.bounds waterDelegate:self waterDataSource:self];
     _waterFlow.backgroundColor = RGBCOLOR(240, 230, 235);
     [_backView_water addSubview:_waterFlow];
+    [_waterFlow showRefreshHeader:YES];
     
     
     
@@ -576,12 +591,16 @@
     NSLog(@"customSegmentIndex:%d",_paixuIndex);
     
     
+    if (![self.guanzhuleixing isEqualToString:@"精品店"]) {
+        self.shopId = self.storeIdStr;
+    }
+    
     if (_paixuIndex == 0) {//新品
-        api = [NSString stringWithFormat:@"%@&action=%@&mb_id=%@&page=%d&per_page=%d",HOME_CLOTH_STORE_PINPAILIST,@"by_time",self.storeIdStr,_waterFlow.pageNum,_per_page];
+        api = [NSString stringWithFormat:@"%@&action=%@&mb_id=%@&page=%d&per_page=%d",HOME_CLOTH_STORE_PINPAILIST,@"by_time",self.shopId,_waterFlow.pageNum,_per_page];
     }else if (_paixuIndex == 1){//折扣
-        api = [NSString stringWithFormat:@"%@&action=%@&mb_id=%@&page=%d&per_page=%d",HOME_CLOTH_STORE_PINPAILIST,@"by_discount",self.storeIdStr,_waterFlow.pageNum,_per_page];
+        api = [NSString stringWithFormat:@"%@&action=%@&mb_id=%@&page=%d&per_page=%d",HOME_CLOTH_STORE_PINPAILIST,@"by_discount",self.shopId,_waterFlow.pageNum,_per_page];
     }else if (_paixuIndex == 2){//热销
-        api = [NSString stringWithFormat:@"%@&action=%@&mb_id=%@&page=%d&per_page=%d",HOME_CLOTH_STORE_PINPAILIST,@"by_hot",self.storeIdStr,_waterFlow.pageNum,_per_page];
+        api = [NSString stringWithFormat:@"%@&action=%@&mb_id=%@&page=%d&per_page=%d",HOME_CLOTH_STORE_PINPAILIST,@"by_hot",self.shopId,_waterFlow.pageNum,_per_page];
     }
     
     NSLog(@"请求的接口%@",api);

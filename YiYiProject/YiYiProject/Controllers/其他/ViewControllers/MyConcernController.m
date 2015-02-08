@@ -15,7 +15,7 @@
 #import "GpinpaiDetailViewController.h"
 #import "GnearbyStoreViewController.h"
 
-@interface MyConcernController ()<RefreshDelegate,UITableViewDataSource>
+@interface MyConcernController ()<RefreshDelegate,UITableViewDataSource,UIScrollViewDelegate>
 {
     UIButton *heartButton;
     UIView *indicator;
@@ -315,6 +315,7 @@
 - (void)createViews
 {
     bgScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 58, DEVICE_WIDTH, self.view.height - 58)];
+    bgScroll.delegate = self;
     [self.view addSubview:bgScroll];
     bgScroll.contentSize = CGSizeMake(DEVICE_WIDTH * 2, bgScroll.height);
     
@@ -508,6 +509,33 @@
     }
     
     return brandTable.dataArray.count;
+}
+
+
+
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    if (scrollView == bgScroll) {
+        if (scrollView.contentOffset.x>DEVICE_WIDTH*0.5) {
+//            scrollView.contentOffset = CGPointMake(DEVICE_WIDTH, 0);
+            UIButton *btn1 = (UIButton *)[self.view viewWithTag:100];
+            UIButton *btn2 = (UIButton *)[self.view viewWithTag:101];
+            btn1.selected = NO;
+            btn2.selected = YES;
+            indicator.left = DEVICE_WIDTH/2.f;
+        }
+        
+        if (scrollView.contentOffset.x<DEVICE_WIDTH*0.5) {
+//            scrollView.contentOffset = CGPointMake(0, 0);
+            UIButton *btn1 = (UIButton *)[self.view viewWithTag:100];
+            UIButton *btn2 = (UIButton *)[self.view viewWithTag:101];
+            btn1.selected = YES;
+            btn2.selected = NO;
+            indicator.left = 0;
+        }
+        NSLog(@"x = %f, y = %f",scrollView.contentOffset.x,scrollView.contentOffset.y);
+    }
+    
 }
 
 @end
