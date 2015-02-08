@@ -146,16 +146,23 @@
             
             
             GBtn *storeNameBtn = [GBtn buttonWithType:UIButtonTypeCustom];
-            [storeNameBtn setFrame:CGRectMake(0, 2, view.frame.size.width, 35)];
+            [storeNameBtn setFrame:CGRectMake(-3, 2, view.frame.size.width, 35)];
             storeNameBtn.tag = [[dic stringValueForKey:@"mall_id"]integerValue]+10;
             [storeNameBtn addTarget:self action:@selector(goNearbyStoreVC:) forControlEvents:UIControlEventTouchUpInside];
             [storeNameBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             storeNameBtn.titleLabel.font = [UIFont systemFontOfSize:12];
             storeNameBtn.titleLabel.numberOfLines = 2;
             [storeNameBtn setBackgroundImage:[UIImage imageNamed:@"gdownname.png"] forState:UIControlStateNormal];
-            [storeNameBtn setBackgroundImage:[UIImage imageNamed:@"gdownname1.png"] forState:UIControlStateSelected];
+//            [storeNameBtn setBackgroundImage:[UIImage imageNamed:@"gdownname1.png"] forState:UIControlStateSelected];
             [storeNameBtn setTitle:[dic stringValueForKey:@"mall_name"] forState:UIControlStateNormal];
             storeNameBtn.shopType = [dic stringValueForKey:@"mall_type"];
+            
+            
+            //调整titleLabel间距
+//            storeNameBtn.titleLabel.backgroundColor = [UIColor orangeColor];
+            [storeNameBtn setTitleEdgeInsets:UIEdgeInsetsMake(5, 1, 0, 1)];
+            
+            
             [view addSubview:storeNameBtn];
             //距离
             UILabel *distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(storeNameBtn.frame), view.frame.size.width, 25)];
@@ -184,16 +191,19 @@
             //商城名字
             GBtn *storeNameBtn = [GBtn buttonWithType:UIButtonTypeCustom];
 
-            [storeNameBtn setFrame:CGRectMake(0, CGRectGetMaxY(distanceLabel.frame), view.frame.size.width, 35)];
+            [storeNameBtn setFrame:CGRectMake(3, CGRectGetMaxY(distanceLabel.frame), view.frame.size.width, 35)];
             storeNameBtn.tag = [[dic stringValueForKey:@"mall_id"]integerValue]+10;
             [storeNameBtn addTarget:self action:@selector(goNearbyStoreVC:) forControlEvents:UIControlEventTouchUpInside];
-            [storeNameBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [storeNameBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             storeNameBtn.titleLabel.font = [UIFont systemFontOfSize:12];
             storeNameBtn.titleLabel.numberOfLines = 2;
             [storeNameBtn setBackgroundImage:[UIImage imageNamed:@"gupname.png"] forState:UIControlStateNormal];
-            [storeNameBtn setBackgroundImage:[UIImage imageNamed:@"gupname1.png"] forState:UIControlStateSelected];
+//            [storeNameBtn setBackgroundImage:[UIImage imageNamed:@"gupname1.png"] forState:UIControlStateSelected];
             [storeNameBtn setTitle:[dic stringValueForKey:@"mall_name"] forState:UIControlStateNormal];
             storeNameBtn.shopType = [dic stringValueForKey:@"mall_type"];
+            //调整titleLabel间距
+//            storeNameBtn.titleLabel.backgroundColor = [UIColor orangeColor];
+            [storeNameBtn setTitleEdgeInsets:UIEdgeInsetsMake(-4, 1, 0, 1)];
             [view addSubview:storeNameBtn];
             
 //            view.backgroundColor = [UIColor orangeColor];

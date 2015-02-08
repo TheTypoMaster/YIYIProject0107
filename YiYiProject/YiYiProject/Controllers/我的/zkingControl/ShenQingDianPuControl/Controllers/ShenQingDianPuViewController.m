@@ -971,12 +971,10 @@
                 [GMAPI showAutoHiddenMBProgressWithText:@"此地区暂无开通此项服务" addToView:self.view];
             }else{
                 
-                NSDictionary *listDic = [result dictionaryValueForKey:@"list"];
-                NSArray *keysArray = [listDic allKeys];
-                
+                NSArray *listArray = [result arrayValueForKey:@"list"];
                 NSMutableArray *storeArray = [NSMutableArray arrayWithCapacity:1];
-                for (NSString *key in keysArray) {
-                    [storeArray addObject:[listDic objectForKey:key]];
+                if (listArray) {
+                    storeArray = [NSMutableArray arrayWithArray:listArray];
                 }
                 
                 GChooseStoreViewController *ccc = [[GChooseStoreViewController alloc]init];

@@ -346,11 +346,18 @@
         return;
     }
     
+    [self prepareNearPinpaiWithLocation];
     
     
+}
+
+
+-(void)prepareNearPinpaiWithLocation{
     NSString *api = HOME_CLOTH_NEARBYPINPAI;
-    
-    GmPrepareNetData *gg = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+    NSString *lon = [_locationDic stringValueForKey:@"long"];
+    NSString *lat = [_locationDic stringValueForKey:@"lat"];
+    NSString *url = [NSString stringWithFormat:@"%@&long=%@&lat=%@",api,lon,lat];
+    GmPrepareNetData *gg = [[GmPrepareNetData alloc]initWithUrl:url isPost:NO postData:nil];
     [gg requestCompletion:^(NSDictionary *result, NSError *erro) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         NSLog(@"%@",result);
@@ -362,15 +369,19 @@
         [_scrollView_pinpai gReloadData];
         
         _isLoadNearPinpaiSuccess = YES;
-//        if (_isLoadUpPicSuccess && _isLoadNearbyStoreSuccess && _isLoadNearPinpaiSuccess) {
-            [self doneLoadingTableViewData];
-//        }
+        [self doneLoadingTableViewData];
+        
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         _isLoadNearPinpaiSuccess = NO;
         [MBProgressHUD hideHUDForView:self.view animated:YES];
     }];
 }
+
+
+
+
+
 
 
 //请求我关注的品牌
