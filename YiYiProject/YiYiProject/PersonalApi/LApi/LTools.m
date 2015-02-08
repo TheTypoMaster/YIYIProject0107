@@ -33,6 +33,11 @@
     return (AppDelegate *)[UIApplication sharedApplication].delegate;
 }
 
++ (UINavigationController *)rootNavigationController
+{
+    return (UINavigationController *)[LTools appDelegate].window.rootViewController;
+}
+
 #pragma - mark MD5 加密
 
 + (NSString *) md5:(NSString *) text
@@ -1034,7 +1039,7 @@
         
         LoginViewController *login = [[LoginViewController alloc]init];
         
-        UINavigationController *unVc = [[UINavigationController alloc]initWithRootViewController:login];
+        LNavigationController *unVc = [[LNavigationController alloc]initWithRootViewController:login];
         
         [viewController presentViewController:unVc animated:YES completion:nil];
         

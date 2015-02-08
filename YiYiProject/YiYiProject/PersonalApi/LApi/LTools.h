@@ -48,6 +48,8 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
 
 + (AppDelegate *)appDelegate;
 
++ (UINavigationController *)rootNavigationController;
+
 + (BOOL)isLogin:(UIViewController *)viewController;//判读是否登录
 
 //@property(nonatomic,retain)

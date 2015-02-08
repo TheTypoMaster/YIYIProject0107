@@ -49,6 +49,8 @@ alpha:(a)]
 #define USRR_AUTHKEY @"authkey"
 #define USER_DEVICE_TOKEN @"DEVICE_TOKEN"
 
+#define USER_UNREADNUM @"unreadNum"//未读消息条数
+
 #define RONGCLOUD_TOKEN @"rongCloudToken"//融云对应的token
 
 //本地数据保存
@@ -94,6 +96,7 @@ alpha:(a)]
 
 //推送消息
 #define NOTIFICATION_REMOTE_MESSAGE @"remoteMessage"
+
 
 
 //登录类型 normal为正常手机登陆，sweibo、qq、weixin分别代表新浪微博、qq、微信登陆

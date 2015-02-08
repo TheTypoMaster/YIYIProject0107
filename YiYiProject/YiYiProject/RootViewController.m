@@ -44,6 +44,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     [self prepareItems];
     
     [self getMyMessage];
@@ -68,14 +71,14 @@
         if (i == 0) {
             
             HomeViewController *home = [[HomeViewController alloc]init];
-            UINavigationController *unvc = [[UINavigationController alloc]initWithRootViewController:home];
+            LNavigationController *unvc = [[LNavigationController alloc]initWithRootViewController:home];
             [items addObject:unvc];
         }else
         {
             
             NSString *className = classNames[i];
             UIViewController *vc = [[NSClassFromString(className) alloc]init];
-            UINavigationController *unvc = [[UINavigationController alloc]initWithRootViewController:vc];
+            LNavigationController *unvc = [[LNavigationController alloc]initWithRootViewController:vc];
             [items addObject:unvc];
         }
         
@@ -190,7 +193,7 @@
     MenuItem *menuItem = [[MenuItem alloc] initWithTitle:@"拍照" iconName:@"t_paizhao" glowColor:[UIColor grayColor] index:0];
     [items addObject:menuItem];
     
-    menuItem = [[MenuItem alloc] initWithTitle:@"相册" iconName:@"t_xiangce" glowColor:[UIColor colorWithRed:0.000 green:0.840 blue:0.000 alpha:1.000] index:0];
+    menuItem = [[MenuItem alloc] initWithTitle:@"相册" iconName:@"t_xiangce" glowColor:[UIColor redColor] index:0];
     [items addObject:menuItem];
     
     menuItem = [[MenuItem alloc] initWithTitle:@"搭配" iconName:@"t_dapei" glowColor:[UIColor colorWithRed:0.687 green:0.000 blue:0.000 alpha:1.000] index:0];
@@ -210,7 +213,7 @@
     MenuView *centerButton = [[MenuView alloc] initWithFrame:self.view.bounds items:items];
     centerButton.didSelectedItemCompletion = ^(MenuItem *selectedItem) {
         
-        [weakSelf swapToIndex:selectedItem.index];
+        [weakSelf swapToIndex:(int)selectedItem.index];
         
     };
     [centerButton showMenuAtView:self.view];

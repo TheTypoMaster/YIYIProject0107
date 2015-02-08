@@ -389,6 +389,8 @@
         
         NSLog(@"发表评论 ---  %@",[GMAPI getAuthkey]);
         
+        _parent_post = @"0";
+        
         [weakSelf tPlatCommentWithUserName:weakSelf.r_reply_userName WithUid:weakSelf.r_reply_uid];
         
     }];
