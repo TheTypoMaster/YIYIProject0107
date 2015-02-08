@@ -631,6 +631,9 @@
 - (void)imagePickerController:(JKImagePickerController *)imagePicker didSelectAssets:(NSArray *)assets isSource:(BOOL)source
 {
     self.assetsArray = [NSMutableArray arrayWithArray:assets];
+    for (UIButton *btn in _showPicsBtnArray) {
+        [btn setBackgroundImage:[UIImage imageNamed:@"gremovephoto.png"] forState:UIControlStateNormal];
+    }
     
     [imagePicker dismissViewControllerAnimated:YES completion:^{
         
