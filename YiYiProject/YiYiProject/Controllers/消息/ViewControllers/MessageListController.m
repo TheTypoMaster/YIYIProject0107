@@ -17,6 +17,8 @@
 
 #import "MessageViewController.h"
 
+#import "MyCollectionController.h"
+
 
 @interface MessageListController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -210,41 +212,48 @@
     return 65;
 }
 
-/**
- *  衣加衣团队
- */
-- (void)tapToYIJiaYi:(UITapGestureRecognizer *)tap
-{
-    NSLog(@"衣加衣团队");
-    MailMessageViewController *mail = [[MailMessageViewController alloc]init];
-    mail.aType = Message_Yy;
-    mail.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:mail animated:YES];
-}
-
-/**
- *  商家消息
- */
-- (void)tapToMail:(UITapGestureRecognizer *)tap
-{
-    NSLog(@"商家消息");
-    MailMessageViewController *mail = [[MailMessageViewController alloc]init];
-    mail.aType = Message_Shop;
-    mail.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:mail animated:YES];
-}
-
-/**
- *  衣加衣团队
- */
-- (void)tapToDynamic:(UITapGestureRecognizer *)tap
-{
-    NSLog(@"动态消息");
-    MailMessageViewController *mail = [[MailMessageViewController alloc]init];
-    mail.aType = Message_Dynamic;
-    mail.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:mail animated:YES];
-}
+///**
+// *  衣加衣团队
+// */
+//- (void)tapToYIJiaYi:(UITapGestureRecognizer *)tap
+//{
+//    NSLog(@"衣加衣团队");
+////    MailMessageViewController *mail = [[MailMessageViewController alloc]init];
+////    mail.aType = Message_Yy;
+////    mail.hidesBottomBarWhenPushed = YES;
+////    [self.navigationController pushViewController:mail animated:YES];
+//    
+//    
+//    MyCollectionController *mail = [[MyCollectionController alloc]init];
+////    mail.aType = Message_/Yy;
+//    mail.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:mail animated:YES];
+//
+//}
+//
+///**
+// *  商家消息
+// */
+//- (void)tapToMail:(UITapGestureRecognizer *)tap
+//{
+//    NSLog(@"商家消息");
+//    MailMessageViewController *mail = [[MailMessageViewController alloc]init];
+//    mail.aType = Message_Shop;
+//    mail.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:mail animated:YES];
+//}
+//
+///**
+// *  衣加衣团队
+// */
+//- (void)tapToDynamic:(UITapGestureRecognizer *)tap
+//{
+//    NSLog(@"动态消息");
+//    MailMessageViewController *mail = [[MailMessageViewController alloc]init];
+//    mail.aType = Message_Dynamic;
+//    mail.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:mail animated:YES];
+//}
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

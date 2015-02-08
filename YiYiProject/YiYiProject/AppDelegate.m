@@ -144,7 +144,7 @@
     RootViewController *root = [[RootViewController alloc]init];
     self.rootViewController = root;
     
-    UINavigationController *unVc = [[UINavigationController alloc]initWithRootViewController:root];
+    LNavigationController *unVc = [[LNavigationController alloc]initWithRootViewController:root];
     unVc.navigationBarHidden = YES;
     self.window.rootViewController = unVc;
     self.window.backgroundColor = [UIColor whiteColor];

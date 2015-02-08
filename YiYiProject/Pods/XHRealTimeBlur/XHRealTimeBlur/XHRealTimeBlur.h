@@ -32,7 +32,9 @@ typedef NS_ENUM(NSInteger, XHBlurStyle) {
     // 黑色半透明背景
     XHBlurStyleBlackTranslucent,
     // 纯白色
-    XHBlurStyleWhite
+    XHBlurStyleWhite,
+    
+    XHBlurStyleWhite_new //新加
 };
 
 @interface XHRealTimeBlur : UIView

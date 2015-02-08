@@ -40,6 +40,9 @@
 @property (nonatomic, strong) UIView *blackTranslucentBackgroundView;
 @property (nonatomic, strong) UIView *whiteBackgroundView;
 
+@property(nonatomic,strong)UIView *whiteBackgroundView_new;
+
+
 @end
 
 @implementation XHRealTimeBlur
@@ -124,6 +127,18 @@
     return _gradientBackgroundView;
 }
 
+- (UIView *)whiteBackgroundView_new {
+    if (!_whiteBackgroundView_new) {
+        _whiteBackgroundView_new = [[UIView alloc] initWithFrame:self.bounds];
+        //        _whiteBackgroundView_new.backgroundColor = [UIColor whiteColor];
+        
+        _whiteBackgroundView_new.backgroundColor = [UIColor colorWithWhite:1.f alpha:0.95];
+        
+        _whiteBackgroundView_new.tintColor = [UIColor colorWithWhite:1 alpha:0.5];
+    }
+    return _whiteBackgroundView_new;
+}
+
 - (UIToolbar *)blurBackgroundView {
     if (!_blurBackgroundView) {
         _blurBackgroundView = [[UIToolbar alloc] initWithFrame:self.bounds];
@@ -161,6 +176,9 @@
             break;
         case XHBlurStyleWhite:
             return self.whiteBackgroundView;
+            break;
+        case XHBlurStyleWhite_new:
+            return self.whiteBackgroundView_new;
             break;
         default:
             break;

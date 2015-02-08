@@ -50,16 +50,25 @@
 - (void)setup {
     self.backgroundColor = [UIColor clearColor];
     
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 142)];
+    imageView.image = [UIImage imageNamed:@"t_title"];
+    imageView.contentMode = UIViewContentModeCenter;
+    [self addSubview:imageView];
+    
+    imageView.center = CGPointMake(DEVICE_WIDTH/2.f, DEVICE_HEIGHT/4.f - 40);
+    
     typeof(self) __weak weakSelf = self;
     _realTimeBlur = [[XHRealTimeBlur alloc] initWithFrame:self.bounds];
     _realTimeBlur.showDuration = 0.4;
     _realTimeBlur.disMissDuration = 0.5;
-    _realTimeBlur.blurStyle = XHBlurStyleTranslucent;
+    _realTimeBlur.blurStyle = XHBlurStyleWhite_new;
     _realTimeBlur.willShowBlurViewcomplted = ^(void) {
         [weakSelf showButtons];
     };
     
+    __weak typeof(imageView)weakImage = imageView;
     _realTimeBlur.willDismissBlurViewCompleted = ^(void) {
+        [weakImage removeFromSuperview];
         [weakSelf hidenButtons];
     };
     _realTimeBlur.didDismissBlurViewCompleted = ^(BOOL finished) {
