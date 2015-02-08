@@ -230,6 +230,11 @@
     }
     
     
+    if ([tf4.text floatValue]<1.0f && [tf4.text floatValue]>10.0f) {
+        [GMAPI showAutoHiddenMBProgressWithText:@"折扣输入错误" addToView:self.view];
+        return;
+    }
+    
     
     
     //设置接收响应类型为标准HTTP类型(默认为响应类型为JSON)
@@ -292,6 +297,8 @@
                                            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_FABUDANPIN_SUCCESS object:nil];
                                            [self performSelector:@selector(fabuyifuSuccessToGoBack) withObject:[NSNumber numberWithBool:YES] afterDelay:1];
                                            
+                                       }else{
+                                           [GMAPI showAutoHiddenMBProgressWithText:[mydic objectForKey:@"msg"] addToView:self.view];
                                        }
                                        
                                    }
@@ -409,10 +416,10 @@
         
         if (i == 3) {
             shuruTf.placeholder = @"单位:元";
-            shuruTf.keyboardType = UIKeyboardTypeNumberPad;
+            shuruTf.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
         }else if (i == 4){
-            shuruTf.placeholder = @"如:8.8即为88折扣";
-            shuruTf.keyboardType = UIKeyboardTypeNumberPad;
+            shuruTf.placeholder = @"如:8.8即为88折";
+            shuruTf.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
         }else if (i == 5){
             shuruTf.placeholder = @"如:运动,休闲,时尚,商务";
         }else if (i == 1){
