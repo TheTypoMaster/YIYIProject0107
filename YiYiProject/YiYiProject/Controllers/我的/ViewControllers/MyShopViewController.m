@@ -131,8 +131,8 @@
     
     NSLog(@"%@",url);
     
-    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
@@ -141,7 +141,7 @@
         
         MailInfoModel *mail = [[MailInfoModel alloc]initWithDictionary:result];
         if (mail) {
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
+//            [MBProgressHUD hideHUDForView:self.view animated:YES];
         }
         self.mallInfo = mail;
         [weakSelf setViewWithModel:mail];
