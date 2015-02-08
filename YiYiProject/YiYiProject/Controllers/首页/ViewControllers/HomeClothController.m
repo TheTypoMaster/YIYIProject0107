@@ -225,11 +225,15 @@
 
 //请求顶部scrollview一组图片
 -(void)prepareTopScrollViewIms{
+    
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
     NSString *api = HOME_CLOTH_TOPSCROLLVIEW;
     
     GmPrepareNetData *gg = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
     [gg requestCompletion:^(NSDictionary *result, NSError *erro) {
-        
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         NSLog(@"%@",result);
         _topScrollviewImvInfoArray = [result objectForKey:@"advertisements_data"];
         [_gscrollView reloadData];
@@ -241,6 +245,7 @@
 //        }
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         _isLoadUpPicSuccess = NO;
     }];
     
@@ -257,7 +262,7 @@
         return;
     }
     
-    
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     
@@ -267,7 +272,7 @@
     
     GmPrepareNetData *dd = [[GmPrepareNetData alloc]initWithUrl:api isPost:YES postData:nil];
     [dd requestCompletion:^(NSDictionary *result, NSError *erro) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         
         NSLog(@"%@",result);
         
@@ -285,7 +290,7 @@
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         _isLoadNearbyStoreSuccess = NO;
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     }];
     
 }
@@ -317,7 +322,7 @@
     
     GmPrepareNetData *dd = [[GmPrepareNetData alloc]initWithUrl:url isPost:NO postData:nil];
     [dd requestCompletion:^(NSDictionary *result, NSError *erro) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         NSLog(@"%@",result);
         
         _guanzhuStoreDataArray = [result objectForKey:@"list"];
@@ -329,7 +334,7 @@
         [_scrollview_nearbyView gReloadData];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     }];
 
 }
@@ -354,13 +359,19 @@
 
 
 -(void)prepareNearPinpaiWithLocation{
+    
+    
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    
     NSString *api = HOME_CLOTH_NEARBYPINPAI;
     NSString *lon = [_locationDic stringValueForKey:@"long"];
     NSString *lat = [_locationDic stringValueForKey:@"lat"];
     NSString *url = [NSString stringWithFormat:@"%@&long=%@&lat=%@",api,lon,lat];
     GmPrepareNetData *gg = [[GmPrepareNetData alloc]initWithUrl:url isPost:NO postData:nil];
     [gg requestCompletion:^(NSDictionary *result, NSError *erro) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         NSLog(@"%@",result);
         _pinpaiScrollViewModelInfoArray = [result objectForKey:@"brand_data"];
         _scrollView_pinpai.dataArray = _pinpaiScrollViewModelInfoArray;
@@ -375,7 +386,7 @@
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         _isLoadNearPinpaiSuccess = NO;
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     }];
 }
 
@@ -394,11 +405,12 @@
         return;
     }
     
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     NSString *url = [NSString stringWithFormat:HOME_CLOTH_GUANZHUPINPAI_MINE,[GMAPI getAuthkey],1];
     GmPrepareNetData *gg = [[GmPrepareNetData alloc]initWithUrl:url isPost:NO postData:nil];
     [gg requestCompletion:^(NSDictionary *result, NSError *erro) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         NSLog(@"%@",result);
         _guanzhuPinpaiDataArray = [result objectForKey:@"brand_data"];
         _scrollView_pinpai.dataArray = _guanzhuPinpaiDataArray;
@@ -408,7 +420,7 @@
         [_scrollView_pinpai gReloadData];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     }];
 }
 
@@ -907,24 +919,28 @@
 
 - (void)egoRefreshTableDidTriggerRefresh:(EGORefreshPos)aRefreshPos{
     
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     _nearByStoreDataArray = nil;
     _guanzhuStoreDataArray = nil;
     _pinpaiScrollViewModelInfoArray = nil;
     _guanzhuPinpaiDataArray = nil;
     
+    _pinpaiBtn.selected = YES;
+    _guanzhuBtn_pinpai.selected = NO;
+    
+    _nearbyBtn.selected = YES;
+    _guanzhuBtn_Store.selected = NO;
     
     //网络请求
     //请求顶部滚动广告栏
     [self prepareTopScrollViewIms];
-    //请求附近的品牌
-    [self prepareNearbyPinpai];
-    _pinpaiBtn.selected = YES;
-    _guanzhuBtn_pinpai.selected = NO;
-    //请求附近的商店
-    [self prepareNearbyStore];
-    _nearbyBtn.selected = YES;
-    _guanzhuBtn_Store.selected = NO;
+    [self getjingweidu];
+    
+    
+    
+    
     
     
     

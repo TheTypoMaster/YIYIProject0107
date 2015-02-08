@@ -541,7 +541,7 @@
     
     
     //瀑布流相关
-    _backView_water = [[UIView alloc]initWithFrame:CGRectMake(12, CGRectGetMaxY(_menu_view.frame)+12, ALL_FRAME_WIDTH-24, ALL_FRAME_HEIGHT - _menu_view.frame.size.height - 12-12-64-_upStoreInfoView.frame.size.height)];
+    _backView_water = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_menu_view.frame)+12, ALL_FRAME_WIDTH, ALL_FRAME_HEIGHT - _menu_view.frame.size.height -64-_upStoreInfoView.frame.size.height)];
     _backView_water.backgroundColor = RGBCOLOR(240, 230, 235);
     [_mainScrollview addSubview:_backView_water];
     _waterFlow = [[LWaterflowView alloc]initWithFrame:_backView_water.bounds waterDelegate:self waterDataSource:self];
@@ -786,18 +786,18 @@
     if (scrollView.contentOffset.y>0) {
         CGFloat height = _upStoreInfoView.frame.size.height;
         if (_mainScrollview.contentOffset.y<height) {
-            [_backView_water setFrame:CGRectMake(12, CGRectGetMaxY(_menu_view.frame)+12, ALL_FRAME_WIDTH-24, ALL_FRAME_HEIGHT - _menu_view.frame.size.height - 12-12-64)];
-            [_waterFlow setFrame:CGRectMake(0, 0, _backView_water.frame.size.width, _backView_water.frame.size.height)];
-//            _waterFlow.backgroundColor = [UIColor orangeColor];
-            
+            [_backView_water setFrame:CGRectMake(0, CGRectGetMaxY(_menu_view.frame)+12, DEVICE_WIDTH, DEVICE_HEIGHT - _menu_view.frame.size.height -64)];
+            [_waterFlow setFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT - _menu_view.frame.size.height -64-15)];
+            [_waterFlow.quitView setFrame:_waterFlow.frame];
             [_mainScrollview setContentOffset:CGPointMake(0, height)];
         }
         
     }else if (scrollView.contentOffset.y<0){
         CGFloat height = _upStoreInfoView.frame.size.height;
         if (_mainScrollview.contentOffset.y>=height) {
-            [_backView_water setFrame:CGRectMake(12, CGRectGetMaxY(_menu_view.frame)+12, ALL_FRAME_WIDTH-24, ALL_FRAME_HEIGHT - _menu_view.frame.size.height - 12-12-64-_upStoreInfoView.frame.size.height)];
-            [_waterFlow setFrame:_backView_water.bounds];
+            [_backView_water setFrame:CGRectMake(0, CGRectGetMaxY(_menu_view.frame)+12, DEVICE_WIDTH, DEVICE_HEIGHT - _menu_view.frame.size.height -64-_upStoreInfoView.frame.size.height)];
+            [_waterFlow setFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT - _menu_view.frame.size.height -64-_upStoreInfoView.frame.size.height-15)];
+            [_waterFlow.quitView setFrame:_waterFlow.frame];
             [_mainScrollview setContentOffset:CGPointMake(0, 0)];
         }
     }
