@@ -41,6 +41,9 @@
     NSString *content;
     NSString *time;
     
+    CGFloat image_height = 0.f;
+    CGFloat image_width = 0.f;
+    
     //消息
     if ([aModel isKindOfClass:[MessageModel class]]) {
         
@@ -51,6 +54,11 @@
         name = model.from_username;
         photo = model.photo;
         time = model.send_time;
+        
+        image_height = [model.pic_height floatValue];
+        image_width = [model.pic_width floatValue];
+        
+        NSLog(@"--> %f %f",image_height,image_width);
     }
     //活动
     else if ([aModel isKindOfClass:[ActivityModel class]]){
@@ -93,8 +101,11 @@
     //有图
     if (image_url.length > 0 && [image_url hasPrefix:@"http://"]) {
         
-        CGFloat ratio = 274 / 156;
-        CGFloat realWidth = (DEVICE_WIDTH - 46) / 2.f;
+//        CGFloat ratio = 274 / 156;
+        
+        CGFloat ratio = image_height == 0 ? 0 : (image_width / image_height);
+        
+        CGFloat realWidth = (DEVICE_WIDTH - 46) / 1.f;
         CGFloat needHeight = realWidth / ratio;
         
         _centerImageView.height = needHeight;
@@ -155,6 +166,9 @@
     NSString *image_url;
     NSString *content;
     
+    CGFloat image_height = 0.f;
+    CGFloat image_width = 0.f;
+    
     //消息
     if ([aModel isKindOfClass:[MessageModel class]]) {
         
@@ -162,6 +176,8 @@
         title = model.title;
         image_url = model.pic;
         content = model.content;
+        image_height = [model.pic_height floatValue];
+        image_width = [model.pic_width floatValue];
         
     }
     //活动
@@ -186,8 +202,12 @@
     //图片
     if (image_url.length > 0 && [image_url hasPrefix:@"http://"])
     {
-        CGFloat ratio = 274 / 156;
-        CGFloat realWidth = (DEVICE_WIDTH - 46) / 2.f;
+        
+//        CGFloat ratio = 274 / 156;
+        
+        CGFloat ratio = image_height == 0 ? 0 : (image_width / image_height);
+        
+        CGFloat realWidth = (DEVICE_WIDTH - 46) / 1.f;
         CGFloat needHeight = realWidth / ratio;
         
         aHeight += (needHeight + 12 + 10);//图片高度 + 上面间距 + 下间距

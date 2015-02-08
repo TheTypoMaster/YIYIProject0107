@@ -31,6 +31,12 @@
 @property(nonatomic,retain)NSString *photo;
 @property(nonatomic,retain)NSString *from_username;
 
+@property(nonatomic,retain)NSString *pic_height;//图片高度（截图）
+@property(nonatomic,retain)NSString *pic_width;//图片宽度
+
+@property(nonatomic,retain)NSString *ori_height;//图片高度（原图）
+@property(nonatomic,retain)NSString *ori_width;//图片宽度
+
 
 //"": "11",
 //"": "11",
