@@ -18,6 +18,7 @@
 #import "LoginViewController.h"
 #import "EGORefreshTableHeaderView.h"
 #import "GStorePinpaiViewController.h"
+#import "GwebViewController.h"
 
 @interface HomeClothController ()<GCycleScrollViewDatasource,GCycleScrollViewDelegate,UIScrollViewDelegate,EGORefreshTableDelegate,GgetllocationDelegate>
 {
@@ -782,25 +783,36 @@
 - (void)didClickPage:(GCycleScrollView *)csView atIndex:(NSInteger)index
 {
     
-    id obj=NSClassFromString(@"UIAlertController");
-    if ( obj!=nil){
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:[NSString stringWithFormat:@"当前点击第%ld个页面",index] preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-            
-        }];
-        [alertController addAction:cancelAction];
-        [self presentViewController:alertController animated:YES completion:^{
-            
-        }];
+    
+    NSDictionary *dic = _topScrollviewImvInfoArray[index];
+    
+    
+    GwebViewController *gwebvc = [[GwebViewController alloc]init];
+    gwebvc.urlstring = [dic stringValueForKey:@"redirect_url"];
+    if ([[dic stringValueForKey:@"redirect_type"]intValue]==1) {
+        gwebvc.hidesBottomBarWhenPushed = YES;
+        [self.rootViewController.navigationController pushViewController:gwebvc animated:YES];
     }
-    else{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
-                                                        message:[NSString stringWithFormat:@"当前点击第%ld个页面",index]
-                                                       delegate:self
-                                              cancelButtonTitle:@"确定"
-                                              otherButtonTitles:nil,nil];
-        [alert show];
-    }
+    
+//    id obj=NSClassFromString(@"UIAlertController");
+//    if ( obj!=nil){
+//        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:[NSString stringWithFormat:@"当前点击第%ld个页面",index] preferredStyle:UIAlertControllerStyleAlert];
+//        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+//            
+//        }];
+//        [alertController addAction:cancelAction];
+//        [self presentViewController:alertController animated:YES completion:^{
+//            
+//        }];
+//    }
+//    else{
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
+//                                                        message:[NSString stringWithFormat:@"当前点击第%ld个页面",index]
+//                                                       delegate:self
+//                                              cancelButtonTitle:@"确定"
+//                                              otherButtonTitles:nil,nil];
+//        [alert show];
+//    }
     
 }
 

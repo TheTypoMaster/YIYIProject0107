@@ -548,6 +548,10 @@
 		E3E913831A7FF1E700BF54C8 /* dian_xiao@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3E913811A7FF1E700BF54C8 /* dian_xiao@3x.png */; };
 		E3EAA8BD1A87225B008F3183 /* gdownname@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3EAA8BC1A87225B008F3183 /* gdownname@2x.png */; };
 		E3EAA8BF1A8722EF008F3183 /* gupname@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3EAA8BE1A8722EF008F3183 /* gupname@2x.png */; };
+		E3EAA8C21A87806D008F3183 /* GwebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3EAA8C11A87806D008F3183 /* GwebViewController.m */; };
+		E3EAA8C61A8782C7008F3183 /* ios7_goahead4032@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3EAA8C31A8782C7008F3183 /* ios7_goahead4032@2x.png */; };
+		E3EAA8C71A8782C7008F3183 /* ios7_goback4032@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3EAA8C41A8782C7008F3183 /* ios7_goback4032@2x.png */; };
+		E3EAA8C81A8782C7008F3183 /* ios7_refresh4139@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3EAA8C51A8782C7008F3183 /* ios7_refresh4139@2x.png */; };
 		E3ECC7021A7E07D60024A734 /* grzx150_150@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3ECC7011A7E07D60024A734 /* grzx150_150@3x.png */; };
 		E3ECC7051A7E7EA00024A734 /* GBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = E3ECC7041A7E7EA00024A734 /* GBtn.m */; };
 		E3FC8DE71A3C4B430025525D /* GeditUserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FC8DE61A3C4B430025525D /* GeditUserInfoViewController.m */; };
@@ -1398,6 +1402,11 @@
 		E3E913811A7FF1E700BF54C8 /* dian_xiao@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dian_xiao@3x.png"; sourceTree = "<group>"; };
 		E3EAA8BC1A87225B008F3183 /* gdownname@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gdownname@2x.png"; sourceTree = "<group>"; };
 		E3EAA8BE1A8722EF008F3183 /* gupname@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gupname@2x.png"; sourceTree = "<group>"; };
+		E3EAA8C01A87806D008F3183 /* GwebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GwebViewController.h; sourceTree = "<group>"; };
+		E3EAA8C11A87806D008F3183 /* GwebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GwebViewController.m; sourceTree = "<group>"; };
+		E3EAA8C31A8782C7008F3183 /* ios7_goahead4032@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ios7_goahead4032@2x.png"; sourceTree = "<group>"; };
+		E3EAA8C41A8782C7008F3183 /* ios7_goback4032@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ios7_goback4032@2x.png"; sourceTree = "<group>"; };
+		E3EAA8C51A8782C7008F3183 /* ios7_refresh4139@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ios7_refresh4139@2x.png"; sourceTree = "<group>"; };
 		E3ECC7011A7E07D60024A734 /* grzx150_150@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grzx150_150@3x.png"; sourceTree = "<group>"; };
 		E3ECC7031A7E7EA00024A734 /* GBtn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBtn.h; sourceTree = "<group>"; };
 		E3ECC7041A7E7EA00024A734 /* GBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBtn.m; sourceTree = "<group>"; };
@@ -3072,6 +3081,8 @@
 		E3996E2D1A5E1DBA00673147 /* Gcontrollers */ = {
 			isa = PBXGroup;
 			children = (
+				E3EAA8C01A87806D008F3183 /* GwebViewController.h */,
+				E3EAA8C11A87806D008F3183 /* GwebViewController.m */,
 				E3996E2E1A5E1DBA00673147 /* GEditPersonInfoViewController.h */,
 				E3996E2F1A5E1DBA00673147 /* GEditPersonInfoViewController.m */,
 				E3996E301A5E1DBA00673147 /* GLeadBuyMapViewController.h */,
@@ -3103,6 +3114,9 @@
 		E3996E3E1A5E1DBA00673147 /* Gmodels */ = {
 			isa = PBXGroup;
 			children = (
+				E3EAA8C31A8782C7008F3183 /* ios7_goahead4032@2x.png */,
+				E3EAA8C41A8782C7008F3183 /* ios7_goback4032@2x.png */,
+				E3EAA8C51A8782C7008F3183 /* ios7_refresh4139@2x.png */,
 				E3EAA8BE1A8722EF008F3183 /* gupname@2x.png */,
 				E3EAA8BC1A87225B008F3183 /* gdownname@2x.png */,
 				E3E913801A7FF1E700BF54C8 /* dian_da@3x.png */,
@@ -3606,6 +3620,7 @@
 				137B07C41A4E6FDF00DE7DCC /* bianji_boy@3x.png in Resources */,
 				E3996EC61A5E1DBA00673147 /* gpin@2x.png in Resources */,
 				137B07F21A4E6FDF00DE7DCC /* zhidemai_botton@3x.png in Resources */,
+				E3EAA8C81A8782C7008F3183 /* ios7_refresh4139@2x.png in Resources */,
 				565821DD1A66AA2A004C8F7D /* xq_love_up@2x.png in Resources */,
 				137B6FF91A6B995D007035DE /* dz_bg@2x.png in Resources */,
 				E38AFE131A7A967E009C2C0C /* compose_pic_add@3x.png in Resources */,
@@ -3682,6 +3697,7 @@
 				137B07FF1A4E6FDF00DE7DCC /* my_shezhi@3x.png in Resources */,
 				137B07F91A4E6FDF00DE7DCC /* my_dapei@3x.png in Resources */,
 				19F7B43C1A67FFA600087BCB /* messages_right_bubble@2x.png in Resources */,
+				E3EAA8C61A8782C7008F3183 /* ios7_goahead4032@2x.png in Resources */,
 				133B17641A74EF3D005B8B3F /* xia_up@2x.png in Resources */,
 				13A3899D1A3893FC00ABBACB /* MessageViewController.xib in Resources */,
 				133B17751A750988005B8B3F /* MJPhotoBrowser.bundle in Resources */,
@@ -3882,6 +3898,7 @@
 				5640317F1A4EEBC800680E08 /* stars_selected_image@3x.png in Resources */,
 				137B088A1A4EBAAB00DE7DCC /* fenxiangb@2x.png in Resources */,
 				137B084F1A4E8D6700DE7DCC /* dapeishi_botton_up@3x.png in Resources */,
+				E3EAA8C71A8782C7008F3183 /* ios7_goback4032@2x.png in Resources */,
 				137B08091A4E6FDF00DE7DCC /* qiu_up@3x.png in Resources */,
 				133B17621A74EF3D005B8B3F /* qiu_up@2x.png in Resources */,
 				137B08931A4ECDD100DE7DCC /* shaixuan_girl@2x.png in Resources */,
@@ -4022,6 +4039,7 @@
 				1391DC561A8704E4006A2E15 /* MenuView.m in Sources */,
 				E3996EE61A5E1E0600673147 /* HomeClothController.m in Sources */,
 				1391DC451A8703E3006A2E15 /* LoginViewController.m in Sources */,
+				E3EAA8C21A87806D008F3183 /* GwebViewController.m in Sources */,
 				E30479481A6109B800709985 /* UIImage+ImageEffects.m in Sources */,
 				56DAB20D1A46A35F00273140 /* ZSNApi.m in Sources */,
 				E3996ED01A5E1DBA00673147 /* GMAPI.m in Sources */,
@@ -4231,7 +4249,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "c0e78a4b-d0ce-43e3-aa60-53f011b81776";
+				PROVISIONING_PROFILE = "0c1b68b6-94ba-43b9-b1d3-dea4d4ca3175";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -4267,7 +4285,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "c0e78a4b-d0ce-43e3-aa60-53f011b81776";
+				PROVISIONING_PROFILE = "0c1b68b6-94ba-43b9-b1d3-dea4d4ca3175";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -4302,7 +4320,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c0e78a4b-d0ce-43e3-aa60-53f011b81776";
+				PROVISIONING_PROFILE = "0c1b68b6-94ba-43b9-b1d3-dea4d4ca3175";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Debug;
@@ -4336,7 +4354,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c0e78a4b-d0ce-43e3-aa60-53f011b81776";
+				PROVISIONING_PROFILE = "0c1b68b6-94ba-43b9-b1d3-dea4d4ca3175";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Release;
