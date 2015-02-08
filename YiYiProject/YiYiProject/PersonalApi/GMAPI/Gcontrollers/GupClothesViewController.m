@@ -230,10 +230,14 @@
     }
     
     
-    if ([tf4.text floatValue]<1.0f && [tf4.text floatValue]>10.0f) {
+    if ([tf4.text floatValue]<10.0f && [tf4.text floatValue]>100.0f) {
         [GMAPI showAutoHiddenMBProgressWithText:@"折扣输入错误" addToView:self.view];
         return;
     }
+    
+    CGFloat zhekou = [tf4.text floatValue];
+    zhekou = zhekou*0.1;
+    NSString *zhekouStr = [NSString stringWithFormat:@"%.2f",zhekou];
     
     
     
@@ -252,7 +256,7 @@
                                                 @"product_sku":tf2.text,//产品唯一标示
                                                 @"product_hotsale":product_hotsale,//是否热销
                                                 @"product_new":product_new,//是否新品
-                                                @"discount_num":tf4.text,//打折力度
+                                                @"discount_num":zhekouStr,//打折力度
                                                 @"product_tag":tf5.text,//标签
                                                 @"authcode":[GMAPI getAuthkey]//用户标示
                                                 }
@@ -416,10 +420,10 @@
         
         if (i == 3) {
             shuruTf.placeholder = @"单位:元";
-            shuruTf.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+            shuruTf.keyboardType = UIKeyboardTypeNumberPad;
         }else if (i == 4){
-            shuruTf.placeholder = @"如:8.8即为88折";
-            shuruTf.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+            shuruTf.placeholder = @"如:88即为88折";
+            shuruTf.keyboardType = UIKeyboardTypeNumberPad;
         }else if (i == 5){
             shuruTf.placeholder = @"如:运动,休闲,时尚,商务";
         }else if (i == 1){
