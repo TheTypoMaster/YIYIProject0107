@@ -170,6 +170,13 @@
             distanceLabel.textAlignment = NSTextAlignmentCenter;
             distanceLabel.textColor = [UIColor whiteColor];
             distanceLabel.text = [NSString stringWithFormat:@"%@m",[dic stringValueForKey:@"distance"]];
+            NSString *juli = [dic stringValueForKey:@"distance"];
+            CGFloat juli_f = 0.0f;
+            if ([juli intValue] >=1000) {
+                juli_f = [juli floatValue]*0.001;
+                distanceLabel.text = [NSString stringWithFormat:@"%.2fkm",juli_f];
+            }
+            
             [view addSubview:distanceLabel];
             
             [self addSubview:view];
@@ -186,6 +193,12 @@
             distanceLabel.textAlignment = NSTextAlignmentCenter;
             distanceLabel.textColor = [UIColor blackColor];
             distanceLabel.text = [NSString stringWithFormat:@"%@m",[dic stringValueForKey:@"distance"]];
+            NSString *juli = [dic stringValueForKey:@"distance"];
+            CGFloat juli_f = 0.0f;
+            if ([juli intValue] >=1000) {
+                juli_f = [juli floatValue]*0.001;
+                distanceLabel.text = [NSString stringWithFormat:@"%.2fkm",juli_f];
+            }
             [view addSubview:distanceLabel];
             
             //商城名字
