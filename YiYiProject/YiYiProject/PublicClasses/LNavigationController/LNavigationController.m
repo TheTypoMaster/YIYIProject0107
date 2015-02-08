@@ -91,13 +91,29 @@
     UIView *rootView = [LTools rootNavigationController].view;//根 navigationController
     
     UIGraphicsBeginImageContextWithOptions(rootView.bounds.size, rootView.opaque, 0.0);
-    [rootView.layer renderInContext:UIGraphicsGetCurrentContext()];
+//    [rootView.layer renderInContext:UIGraphicsGetCurrentContext()];
+    
+    [rootView drawViewHierarchyInRect:rootView.frame afterScreenUpdates:NO];
     
     UIImage * aImage = UIGraphicsGetImageFromCurrentImageContext();
     
     UIGraphicsEndImageContext();
     
     return aImage;
+}
+
+
+- (UIImage *)getSnapshotImage {
+    
+    UIView *rootView = [LTools rootNavigationController].view;//根 navigationController
+    
+//    UIGraphicsBeginImageContextWithOptions(CGSizeMake(CGRectGetWidth(rootView.frame), CGRectGetHeight(rootView.frame)), NO, 1);
+    
+    UIGraphicsBeginImageContextWithOptions(rootView.bounds.size, rootView.opaque, 0.0);
+    [self.view drawViewHierarchyInRect:CGRectMake(0, 0, CGRectGetWidth(rootView.frame), CGRectGetHeight(rootView.frame)) afterScreenUpdates:NO];
+    UIImage *snapshot = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return snapshot;
 }
 
 #pragma mark - Gesture Recognizer

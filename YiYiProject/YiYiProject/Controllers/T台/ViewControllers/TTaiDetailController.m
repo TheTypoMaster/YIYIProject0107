@@ -59,6 +59,14 @@
     [_input_view deleteKeyBordNotification];
 }
 
+- (void)dealloc
+{
+    NSLog(@"---->%@",NSStringFromClass([self class]));
+    _table.refreshDelegate = nil;
+    _table.dataSource = nil;
+    _table = nil;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -246,6 +254,8 @@
 {
     
     [loading show:YES];
+    
+    __weak typeof(self)weakSelf = self;
     
     NSString *url = [NSString stringWithFormat:TTAI_DETAIL,self.tt_id,[GMAPI getAuthkey]];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
