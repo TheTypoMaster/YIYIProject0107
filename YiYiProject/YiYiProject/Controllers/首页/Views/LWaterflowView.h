@@ -37,6 +37,8 @@
     TMQuiltView *qtmquitView;
     
     UIView *tableFooterView;
+    
+    BOOL _noloadView;
 }
 
 @property (nonatomic,assign)id<WaterFlowDelegate>waterDelegate;
@@ -58,6 +60,10 @@
 -(instancetype)initWithFrame:(CGRect)frame
                waterDelegate:(id<WaterFlowDelegate>)waterDelegate
              waterDataSource:(id<TMQuiltViewDataSource>)waterDatasource;
+
+-(instancetype)initWithFrame:(CGRect)frame
+               waterDelegate:(id<WaterFlowDelegate>)waterDelegate
+             waterDataSource:(id<TMQuiltViewDataSource>)waterDatasource noloadView:(BOOL)noloadView;
 
 - (void)reloadData;
 -(void)showRefreshHeader:(BOOL)animated;

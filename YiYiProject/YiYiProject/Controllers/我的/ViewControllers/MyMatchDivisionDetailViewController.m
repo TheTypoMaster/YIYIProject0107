@@ -7,7 +7,7 @@
 //
 
 #import "MyMatchDivisionDetailViewController.h"
-
+#import "TMPhotoViewQuiltViewCell.h"
 @interface MyMatchDivisionDetailViewController ()
 {
     NSMutableArray * _dataSourceArray;
@@ -21,7 +21,7 @@
     self.myTitle=@"三级列表";
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     self.view.backgroundColor = [UIColor whiteColor];
-    waterFlow = [[LWaterflowView alloc]initWithFrame:CGRectMake(0, 0, ALL_FRAME_WIDTH, ALL_FRAME_HEIGHT - 44) waterDelegate:self waterDataSource:self];
+    waterFlow = [[LWaterflowView alloc]initWithFrame:CGRectMake(0, 0, ALL_FRAME_WIDTH, ALL_FRAME_HEIGHT - 44) waterDelegate:self waterDataSource:self noloadView:YES];
     waterFlow.backgroundColor = RGBCOLOR(240, 230, 235);
     [self.view addSubview:waterFlow];
     [self getNetData];
@@ -63,7 +63,14 @@
 
 - (CGFloat)waterHeightForCellIndexPath:(NSIndexPath *)indexPath
 {
-    return (DEVICE_WIDTH-3*10)/2;
+    
+    CGFloat realWidth = (DEVICE_WIDTH - 30)/2.f;
+    CGFloat aHeight = 0.f;
+    NSDictionary *aMode = _dataSourceArray[indexPath.row];
+    aHeight = [[aMode objectForKey:@"pic_height"] floatValue];
+    CGFloat aWindth = [[aMode objectForKey:@"pic_width"] floatValue];
+    float rate = aHeight/aWindth;
+    return  realWidth * rate;
 }
 - (CGFloat)waterViewNumberOfColumns
 {
@@ -79,18 +86,11 @@
 
 - (TMQuiltViewCell *)quiltView:(TMQuiltView *)quiltView cellAtIndexPath:(NSIndexPath *)indexPath
 {
-    TMQuiltViewCell *cell = (TMQuiltViewCell *)[quiltView dequeueReusableCellWithReuseIdentifier:@"PhotoCell"];
+    TMPhotoViewQuiltViewCell *cell = (TMPhotoViewQuiltViewCell *)[quiltView dequeueReusableCellWithReuseIdentifier:@"PhotoCell"];
     if (!cell) {
-        cell = [[TMQuiltViewCell alloc] initWithReuseIdentifier:@"PhotoCell"];
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, (DEVICE_WIDTH-3*10)/2, (DEVICE_WIDTH-3*10)/2)];
-        imageView.tag = 1001;
-        imageView.backgroundColor = RGBCOLOR(180, 180, 180);
-        [cell addSubview:imageView];
-        
+        cell = [[TMPhotoViewQuiltViewCell alloc] initWithReuseIdentifier:@"PhotoCell"];
     }
-    cell.layer.cornerRadius = 3.f;
-    UIImageView *imageView = (UIImageView *)[cell viewWithTag:1001];
-    [imageView sd_setImageWithURL:[NSURL URLWithString:[_dataSourceArray objectAtIndex:indexPath.row] ] placeholderImage:[UIImage imageNamed:@"dapei_jiantou"]];
+    [cell.photoView sd_setImageWithURL:[NSURL URLWithString:[[_dataSourceArray objectAtIndex:indexPath.row] objectForKey:@"pic_url"]] placeholderImage:nil];
     return cell;
 }
 

@@ -91,13 +91,25 @@
     
     //标题
     self.aTitleLabel.top = top;
+    
     self.aTitleLabel.text = title;
     CGFloat height = [LTools heightForText:title width:_aTitleLabel.width font:16];
     _aTitleLabel.height = height;
     
+    if (title == nil || [title isEqualToString:@"0"]) {
+        
+        self.aTitleLabel.height = 0;
+        _timeLabel.top = _aTitleLabel.bottom;
+
+        
+    }else
+    {
+        self.aTitleLabel.hidden = NO;
+        _timeLabel.top = _aTitleLabel.bottom + 10;
+    }
+    
     //时间
     self.timeLabel.text = [LTools timechangeMMDD:time];
-    _timeLabel.top = _aTitleLabel.bottom + 10;
     
     //图片
     self.centerImageView.top = _timeLabel.bottom + 12;
@@ -199,7 +211,13 @@
     CGFloat aWidth = DEVICE_WIDTH/2.f - 23;
     CGFloat height = [LTools heightForText:title width:aWidth font:16];
     
+    
+    if (title == nil || [title isEqualToString:@"0"]) {
+        
+        height = -10;
+    }
     aHeight += height;
+
     
     //时间高度
     

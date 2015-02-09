@@ -360,8 +360,11 @@
         ll.coordinate_store = CLLocationCoordinate2DMake([aModel.mall_info[@"latitude"]floatValue], [aModel.mall_info[@"longitude"]floatValue]);
     }
     
+    UINavigationController *rrr = [[UINavigationController alloc]initWithRootViewController:ll];
     
-    [self.navigationController pushViewController:ll animated:YES];
+    [self presentViewController:rrr animated:YES completion:nil];
+    
+//    [self.navigationController pushViewController:ll animated:YES];
 }
 
 /*
@@ -444,7 +447,7 @@
     
     NSString *brandName = aProductModel.brand_info[@"brand_name"];
     
-    if ([brandName isEqualToString:@"(null)"] || [brandName isEqualToString:@"null"]) {
+    if (brandName == nil || [brandName isEqualToString:@"(null)"] || [brandName isEqualToString:@"null"]) {
         
         self.brandName.hidden = YES;
     }else

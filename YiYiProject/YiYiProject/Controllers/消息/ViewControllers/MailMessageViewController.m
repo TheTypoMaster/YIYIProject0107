@@ -13,6 +13,8 @@
 
 #import "MessageDetailController.h"
 
+#import "TTaiDetailController.h"
+
 @interface MailMessageViewController ()<RefreshDelegate,UITableViewDataSource>
 {
     RefreshTableView *_table;
@@ -111,8 +113,21 @@
 //新加
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
-    NSLog(@"详情");
     MessageModel *aModel = _table.dataArray[indexPath.row];
+
+    
+    if (self.aType == Message_Dynamic){
+
+        NSLog(@"动态消息调整到T台详情");
+        
+        TTaiDetailController *t_detail = [[TTaiDetailController alloc]init];
+        t_detail.tt_id = aModel.theme_id;
+        [self.navigationController pushViewController:t_detail animated:YES];
+        
+        return;
+    }
+    
+    NSLog(@"详情");
     MessageDetailController *detail = [[MessageDetailController alloc]init];
     detail.msg_id = aModel.msg_id;
     [self.navigationController pushViewController:detail animated:YES];

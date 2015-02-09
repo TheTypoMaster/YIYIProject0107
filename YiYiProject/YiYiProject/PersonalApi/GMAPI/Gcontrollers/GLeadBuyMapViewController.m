@@ -46,10 +46,26 @@
 -(void)viewWillAppear:(BOOL)animated {
     [_mapView viewWillAppear];
     
+    if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] )
+    {
+        //iOS 5 new UINavigationBar custom background
+        
+        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:MY_MACRO_NAME?IOS7DAOHANGLANBEIJING_PUSH:IOS6DAOHANGLANBEIJING] forBarMetrics: UIBarMetricsDefault];
+    }
+
+    
+//    LNavigationController *navigation = (LNavigationController *)self.navigationController;
+//    
+//    navigation.panGesture.enabled = NO;
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
     [_mapView viewWillDisappear];
+    
+//    LNavigationController *navigation = (LNavigationController *)self.navigationController;
+//    
+//    navigation.panGesture.enabled = YES;
     
     //停止定位
     [_locService stopUserLocationService];
@@ -61,7 +77,10 @@
 }
 
 
-
+- (void)leftButtonTap:(UIButton *)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -70,6 +89,22 @@
     {
         self.navigationController.navigationBar.translucent = NO;
     }
+    
+    UILabel *_myTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0,100,44)];
+    _myTitleLabel.textAlignment = NSTextAlignmentCenter;
+    _myTitleLabel.text = self.storeName;
+    _myTitleLabel.textColor = [UIColor whiteColor];
+    _myTitleLabel.font = [UIFont systemFontOfSize:17];
+    self.navigationItem.titleView = _myTitleLabel;
+    
+    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(0,8,40,44)];
+    [button_back addTarget:self action:@selector(leftButtonTap:) forControlEvents:UIControlEventTouchUpInside];
+    [button_back setImage:BACK_DEFAULT_IMAGE forState:UIControlStateNormal];
+    //        button_back.backgroundColor = [UIColor orangeColor];
+    [button_back setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
+    self.navigationItem.leftBarButtonItems=@[back_item];
+    
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     self.myTitleLabel.textColor = [UIColor whiteColor];

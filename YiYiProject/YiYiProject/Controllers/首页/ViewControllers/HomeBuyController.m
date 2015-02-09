@@ -24,13 +24,18 @@
 #import "FilterView.h"
 
 
-@interface HomeBuyController ()<TMQuiltViewDataSource,WaterFlowDelegate>
+@interface HomeBuyController ()<TMQuiltViewDataSource,WaterFlowDelegate,GgetllocationDelegate>
 {
     LWaterflowView *waterFlow;
     
     SORT_SEX_TYPE sex_type;
     SORT_Discount_TYPE discount_type;
 //    NSArray *dataArray;
+    
+    GMAPI *mapApi;
+    
+    NSString *_longtitud;//经度
+    NSString *_latitude;//维度
 }
 
 @end
@@ -53,7 +58,7 @@
         [self parseDataWithResult:result];
     }
     
-    [waterFlow showRefreshHeader:YES];
+//    [waterFlow showRefreshHeader:YES];
     
     UIButton *filterButton = [UIButton buttonWithType:UIButtonTypeCustom];
     filterButton.frame = CGRectMake(17, 17, 38, 38);
@@ -64,11 +69,59 @@
     [self.view addSubview:filterButton];
     [filterButton addTarget:self action:@selector(clickToFilter:) forControlEvents:UIControlEventTouchUpInside];
     
+    [self updateLocation];
+    
+    //10分钟更新一次位置
+    [NSTimer scheduledTimerWithTimeInterval:10 * 60 target:self selector:@selector(updateLocation) userInfo:nil repeats:YES];
+    
+}
+
+- (void)updateLocation
+{
+    NSLog(@"updateLocation");
+    
+    CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
+    if (kCLAuthorizationStatusDenied == status || kCLAuthorizationStatusRestricted == status) {
+        
+        NSLog(@"请打开您的位置服务!");
+    }else
+    {
+        mapApi = [GMAPI sharedManager];
+        mapApi.delegate = self;
+        [mapApi startDingwei];
+    }
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma - mark 地图坐标
+
+- (void)theLocationDictionary:(NSDictionary *)dic{
+    
+    NSLog(@"%@",dic);
+    
+    CGFloat lat = [dic[@"lat"]doubleValue];;
+    CGFloat lon = [dic[@"long"]doubleValue];
+    
+    _latitude = NSStringFromFloat(lat);
+    _longtitud = NSStringFromFloat(lon);
+    
+    [waterFlow showRefreshHeader:YES];
+
 }
 
 #pragma mark 事件处理
@@ -174,8 +227,12 @@
                 discount:(SORT_Discount_TYPE)discountType
                     page:(int)pageNum
 {
-    NSString *longtitud = @"116.42111721";
-    NSString *latitude = @"39.90304099";
+//    NSString *longtitud = @"116.42111721";
+//    NSString *latitude = @"39.90304099";
+    
+    NSString *longtitud = _longtitud ? _longtitud : @"116.42111721";
+    NSString *latitude = _latitude ? _latitude : @"39.90304099";
+    
     NSString *url = [NSString stringWithFormat:HOME_DESERVE_BUY,longtitud,latitude,sortType,discountType,pageNum,L_PAGE_SIZE,[GMAPI getAuthkey]];
     
     __weak typeof(self)weakSelf = self;

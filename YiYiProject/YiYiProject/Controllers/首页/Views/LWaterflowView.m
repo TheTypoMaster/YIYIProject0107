@@ -31,6 +31,40 @@
 
 -(instancetype)initWithFrame:(CGRect)frame
                waterDelegate:(id<WaterFlowDelegate>)waterDelegate
+             waterDataSource:(id<TMQuiltViewDataSource>)waterDatasource noloadView:(BOOL)noloadView
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.pageNum = 1;
+        self.dataArray = [NSMutableArray array];
+        
+        qtmquitView = [[TMQuiltView alloc] initWithFrame:frame];
+        qtmquitView.delegate = self;
+        qtmquitView.dataSource = waterDatasource;
+        self.waterDelegate = waterDelegate;
+        
+        self.quitView = qtmquitView;
+        
+        [self addSubview:qtmquitView];
+        
+        _noloadView = noloadView;
+
+        
+        if (noloadView == NO) {
+            
+            
+            [self createHeaderView];
+            [self createFooterView];
+        }
+    
+        //        [self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0.0f];
+    }
+    return self;
+}
+
+
+-(instancetype)initWithFrame:(CGRect)frame
+               waterDelegate:(id<WaterFlowDelegate>)waterDelegate
              waterDataSource:(id<TMQuiltViewDataSource>)waterDatasource
 {
     self = [super initWithFrame:frame];
@@ -155,7 +189,11 @@
     
     //如果有更多数据，重新设置footerview  frame
     
-    [self createFooterView];
+    if (_noloadView == NO) {
+        
+        [self createFooterView];
+
+    }
     
     if (self.isHaveMoreData)
     {
