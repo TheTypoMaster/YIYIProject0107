@@ -468,6 +468,7 @@
 		E30522271A6E9962007BEAFD /* gremovephoto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E30522251A6E9962007BEAFD /* gremovephoto@2x.png */; };
 		E305222A1A6ECD3A007BEAFD /* GupHuoDongViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E30522291A6ECD3A007BEAFD /* GupHuoDongViewController.m */; };
 		E305222D1A6ED1B5007BEAFD /* GHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E305222C1A6ED1B5007BEAFD /* GHolderTextView.m */; };
+		E34372AF1A88357D003CDFD9 /* gdownname@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E34372AE1A88357D003CDFD9 /* gdownname@2x.png */; };
 		E34E3D671A615B8000DD95BB /* CustomSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = E34E3D661A615B8000DD95BB /* CustomSegmentView.m */; };
 		E35EF1161A6A54A900B493A9 /* GChooseStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E35EF1151A6A54A900B493A9 /* GChooseStoreViewController.m */; };
 		E35EF1231A6A756900B493A9 /* GchooseFloorPinpaiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E35EF1221A6A756900B493A9 /* GchooseFloorPinpaiViewController.m */; };
@@ -546,7 +547,6 @@
 		E3E832441A666F7600026DAC /* GrootScrollViewFloorTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3E832431A666F7600026DAC /* GrootScrollViewFloorTableViewCell.m */; };
 		E3E913821A7FF1E700BF54C8 /* dian_da@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3E913801A7FF1E700BF54C8 /* dian_da@3x.png */; };
 		E3E913831A7FF1E700BF54C8 /* dian_xiao@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3E913811A7FF1E700BF54C8 /* dian_xiao@3x.png */; };
-		E3EAA8BD1A87225B008F3183 /* gdownname@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3EAA8BC1A87225B008F3183 /* gdownname@2x.png */; };
 		E3EAA8BF1A8722EF008F3183 /* gupname@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3EAA8BE1A8722EF008F3183 /* gupname@2x.png */; };
 		E3EAA8C21A87806D008F3183 /* GwebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3EAA8C11A87806D008F3183 /* GwebViewController.m */; };
 		E3EAA8C61A8782C7008F3183 /* ios7_goahead4032@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3EAA8C31A8782C7008F3183 /* ios7_goahead4032@2x.png */; };
@@ -1210,6 +1210,7 @@
 		E30522291A6ECD3A007BEAFD /* GupHuoDongViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GupHuoDongViewController.m; sourceTree = "<group>"; };
 		E305222B1A6ED1B5007BEAFD /* GHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHolderTextView.h; sourceTree = "<group>"; };
 		E305222C1A6ED1B5007BEAFD /* GHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHolderTextView.m; sourceTree = "<group>"; };
+		E34372AE1A88357D003CDFD9 /* gdownname@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gdownname@2x.png"; sourceTree = "<group>"; };
 		E34E3D651A615B8000DD95BB /* CustomSegmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomSegmentView.h; sourceTree = "<group>"; };
 		E34E3D661A615B8000DD95BB /* CustomSegmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomSegmentView.m; sourceTree = "<group>"; };
 		E35EF1141A6A54A900B493A9 /* GChooseStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GChooseStoreViewController.h; sourceTree = "<group>"; };
@@ -1400,7 +1401,6 @@
 		E3E832431A666F7600026DAC /* GrootScrollViewFloorTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrootScrollViewFloorTableViewCell.m; sourceTree = "<group>"; };
 		E3E913801A7FF1E700BF54C8 /* dian_da@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dian_da@3x.png"; sourceTree = "<group>"; };
 		E3E913811A7FF1E700BF54C8 /* dian_xiao@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dian_xiao@3x.png"; sourceTree = "<group>"; };
-		E3EAA8BC1A87225B008F3183 /* gdownname@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gdownname@2x.png"; sourceTree = "<group>"; };
 		E3EAA8BE1A8722EF008F3183 /* gupname@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gupname@2x.png"; sourceTree = "<group>"; };
 		E3EAA8C01A87806D008F3183 /* GwebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GwebViewController.h; sourceTree = "<group>"; };
 		E3EAA8C11A87806D008F3183 /* GwebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GwebViewController.m; sourceTree = "<group>"; };
@@ -3114,11 +3114,11 @@
 		E3996E3E1A5E1DBA00673147 /* Gmodels */ = {
 			isa = PBXGroup;
 			children = (
+				E34372AE1A88357D003CDFD9 /* gdownname@2x.png */,
 				E3EAA8C31A8782C7008F3183 /* ios7_goahead4032@2x.png */,
 				E3EAA8C41A8782C7008F3183 /* ios7_goback4032@2x.png */,
 				E3EAA8C51A8782C7008F3183 /* ios7_refresh4139@2x.png */,
 				E3EAA8BE1A8722EF008F3183 /* gupname@2x.png */,
-				E3EAA8BC1A87225B008F3183 /* gdownname@2x.png */,
 				E3E913801A7FF1E700BF54C8 /* dian_da@3x.png */,
 				E3E913811A7FF1E700BF54C8 /* dian_xiao@3x.png */,
 				E3ECC7011A7E07D60024A734 /* grzx150_150@3x.png */,
@@ -3612,6 +3612,7 @@
 				13CEC8A21A5D974900FE273F /* xingji_ban@2x.png in Resources */,
 				138986141A6A18C600F187C9 /* my_shezhi@2x.png in Resources */,
 				137B08501A4E8D6700DE7DCC /* zhidemai_botton_up@3x.png in Resources */,
+				E34372AF1A88357D003CDFD9 /* gdownname@2x.png in Resources */,
 				137B07D71A4E6FDF00DE7DCC /* xq_love_down@3x.png in Resources */,
 				13CD36371A3C51BE0068C12A /* ForgetPwdController.xib in Resources */,
 				137B07D81A4E6FDF00DE7DCC /* xq_love_up@3x.png in Resources */,
@@ -3814,7 +3815,6 @@
 				137B087A1A4EADFE00DE7DCC /* tianjia_down@3x.png in Resources */,
 				56A8A8211A456E0100E85F6B /* match_line_image@2x.png in Resources */,
 				139607BD1A46D82400AACAC4 /* FilterViewController.xib in Resources */,
-				E3EAA8BD1A87225B008F3183 /* gdownname@2x.png in Resources */,
 				137B088B1A4EBAAB00DE7DCC /* shoucangb@2x.png in Resources */,
 				137B088D1A4EBAAB00DE7DCC /* xihuanb@2x.png in Resources */,
 				137B087E1A4EADFE00DE7DCC /* xiaoxi_down@3x.png in Resources */,
