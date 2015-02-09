@@ -68,6 +68,9 @@
         image_url = model.pic;
         content = model.activity_info;
         time = model.add_time;
+        
+        image_height = [model.pic_height floatValue];
+        image_width = [model.pic_width floatValue];
     }
     
     if (aType == icon_Yes) {
@@ -187,6 +190,9 @@
         title = model.activity_title;
         image_url = model.pic;
         content = model.activity_info;
+        
+        image_height = [model.pic_height floatValue];
+        image_width = [model.pic_width floatValue];
     }
     
     //标题高度

@@ -13,11 +13,6 @@
 #import "BaseModel.h"
 
 @interface TopicSubCommentsModel : BaseModel
-{
-    
-}
-
-
 
 @property(nonatomic,strong)NSString * reply_id;
 @property(nonatomic,strong)NSString * repost_uid;
@@ -31,7 +26,10 @@
 @property(nonatomic,strong)NSString * r_reply_uid;
 @property(nonatomic,strong)NSString * r_reply_user_name;
 
-
-
+@property(nonatomic,strong)NSString *father_id;//本条回复对应的回复id(一级回复id)
+@property(nonatomic,strong)NSString *post_id;//本条回复id
+@property(nonatomic,strong)NSString *grandfather_id;
+@property(nonatomic,strong)NSString *uid;//回复对应的人
+@property(nonatomic,strong)NSString *type;
 
 @end

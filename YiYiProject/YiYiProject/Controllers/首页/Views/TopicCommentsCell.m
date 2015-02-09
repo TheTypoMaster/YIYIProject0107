@@ -88,7 +88,7 @@
 {
     TopicSubCommentsModel * model = [comments_array objectAtIndex:sender.view.tag - 10000];
 
-    SecondForwardView_block(TopicCommentsCellClickTypeComment,model.user_name,model.repost_uid,model.reply_id);
+    SecondForwardView_block(TopicCommentsCellClickTypeComment,model.user_name,model.uid,model.father_id);
 }
 
 @end

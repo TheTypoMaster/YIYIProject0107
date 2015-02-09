@@ -293,7 +293,7 @@
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {
-    NSLog(@"--> %d  %@",tabBarController.selectedIndex,viewController);
+    NSLog(@"--> %d  %@",(int)tabBarController.selectedIndex,viewController);
     
 }
 

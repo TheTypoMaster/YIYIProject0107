@@ -61,7 +61,7 @@
     _realTimeBlur = [[XHRealTimeBlur alloc] initWithFrame:self.bounds];
     _realTimeBlur.showDuration = 0.4;
     _realTimeBlur.disMissDuration = 0.5;
-    _realTimeBlur.blurStyle = XHBlurStyleWhite_new;
+    _realTimeBlur.blurStyle = XHBlurStyleTranslucent;
     _realTimeBlur.willShowBlurViewcomplted = ^(void) {
         [weakSelf showButtons];
     };

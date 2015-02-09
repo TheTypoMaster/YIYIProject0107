@@ -286,7 +286,7 @@
    
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
-        NSLog(@"faildic==%@",failDic);
+        NSLog(@"token发送失败 == %@",failDic);
         
         UIAlertView *alertV=[[UIAlertView alloc]initWithTitle:[NSString stringWithFormat:@"%@",@"token发送失败"] message:nil delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
         [alertV show];

@@ -443,6 +443,15 @@
     
     
     NSString *brandName = aProductModel.brand_info[@"brand_name"];
+    
+    if ([brandName isEqualToString:@"(null)"] || [brandName isEqualToString:@"null"]) {
+        
+        self.brandName.hidden = YES;
+    }else
+    {
+        self.brandName.hidden = NO;
+    }
+    
     self.brandName.text = [NSString stringWithFormat:@" %@ ",brandName];
     
     
@@ -470,7 +479,7 @@
         
     }else
     {
-        self.discountLabel.text = [NSString stringWithFormat:@"%.f折",aProductModel.discount_num * 10];
+        self.discountLabel.text = [NSString stringWithFormat:@"%.1f折",aProductModel.discount_num * 10];
     }
     
     

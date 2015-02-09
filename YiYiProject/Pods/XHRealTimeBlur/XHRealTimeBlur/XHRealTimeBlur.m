@@ -142,7 +142,9 @@
 - (UIToolbar *)blurBackgroundView {
     if (!_blurBackgroundView) {
         _blurBackgroundView = [[UIToolbar alloc] initWithFrame:self.bounds];
-        [_blurBackgroundView setBarStyle:UIBarStyleBlackTranslucent];
+//        [_blurBackgroundView setBarStyle:UIBarStyleBlackTranslucent];
+        
+        [_blurBackgroundView setBarStyle:UIBarStyleDefault];
     }
     return _blurBackgroundView;
 }

@@ -120,6 +120,14 @@
 
 - (void)clickToComment:(UIButton *)sender
 {
+    _parent_post = @"0";
+    
+    [self beiginComment];
+
+}
+
+- (void)beiginComment
+{
     if ([LTools isLogin:self]) {
         [_input_view showInputView:nil];
     }
@@ -235,7 +243,7 @@
         
         NSLog(@"-->%@",result);
         
-        [LTools showMBProgressWithText:result[RESULT_INFO] addToView:self.view];
+        [LTools showMBProgressWithText:result[RESULT_INFO] addToView:bself.view];
         
         weakTable.pageNum = 1;
         weakTable.isReloadData = YES;
@@ -243,7 +251,7 @@
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
-        [LTools showMBProgressWithText:failDic[@"msg"] addToView:self.view];
+        [LTools showMBProgressWithText:failDic[@"msg"] addToView:bself.view];
     }];
 }
 
@@ -266,9 +274,9 @@
         
         detail_model = [[TDetailModel alloc]initWithDictionary:result];
         
-        [self createViewsWithModel:detail_model];
+        [weakSelf createViewsWithModel:detail_model];
         
-        [self setViewWithModel:detail_model];
+        [weakSelf setViewWithModel:detail_model];
         
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
@@ -399,7 +407,6 @@
         
         NSLog(@"发表评论 ---  %@",[GMAPI getAuthkey]);
         
-        _parent_post = @"0";
         
         [weakSelf tPlatCommentWithUserName:weakSelf.r_reply_userName WithUid:weakSelf.r_reply_uid];
         
@@ -597,7 +604,7 @@
     
     _input_view.text_input_view.text = [NSString stringWithFormat:@"回复 %@:",model.user_name];
     
-    [self clickToComment:nil];
+    [self beiginComment];
 }
 
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
@@ -642,8 +649,15 @@
         bself.r_reply_userName = userName;
         
         _input_view.text_input_view.text = [NSString stringWithFormat:@"回复 %@:",userName];
-        [bself clickToComment:nil];
+
+        [self beiginComment];
         
+        
+        NSString *reply_msg = [NSString stringWithFormat:@"topic = p:%@ r:%@",reply_id,uid];
+        
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:reply_msg delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil, nil];
+        [alert show];
+
         NSLog(@"userName %@",userName);
     }];
     [cell.second_view setSeconForwardViewBlock:^(TopicCommentsCellClickType aType, NSString *userName, NSString *uid, NSString *reply_id) {
@@ -651,7 +665,14 @@
         bself.r_reply_uid = uid;
         bself.r_reply_userName = userName;
         _input_view.text_input_view.text = [NSString stringWithFormat:@"回复 %@:",userName];
-        [bself clickToComment:nil];
+        
+        [self beiginComment];
+
+        NSString *reply_msg = [NSString stringWithFormat:@"second = p:%@ r:%@",reply_id,uid];
+        
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:reply_msg delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil, nil];
+        [alert show];
+        
         NSLog(@"userName2 %@",userName);
     }];
     
