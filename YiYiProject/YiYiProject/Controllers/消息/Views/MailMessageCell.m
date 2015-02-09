@@ -106,7 +106,7 @@
         CGFloat ratio = image_height == 0 ? 0 : (image_width / image_height);
         
         CGFloat realWidth = (DEVICE_WIDTH - 46) / 1.f;
-        CGFloat needHeight = realWidth / ratio;
+        CGFloat needHeight = ratio == 0 ? 0 : realWidth / ratio;
         
         _centerImageView.height = needHeight;
         
@@ -208,7 +208,7 @@
         CGFloat ratio = image_height == 0 ? 0 : (image_width / image_height);
         
         CGFloat realWidth = (DEVICE_WIDTH - 46) / 1.f;
-        CGFloat needHeight = realWidth / ratio;
+        CGFloat needHeight = ratio == 0 ? 0 : realWidth / ratio;
         
         aHeight += (needHeight + 12 + 10);//图片高度 + 上面间距 + 下间距
     }else
@@ -228,6 +228,8 @@
     {
         aHeight += (15 + 15);
     }
+    
+    NSLog(@"---%@",NSStringFromFloat(aHeight));
     
     return aHeight;
 }
