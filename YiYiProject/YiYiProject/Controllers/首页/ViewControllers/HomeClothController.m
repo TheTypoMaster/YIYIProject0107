@@ -177,6 +177,7 @@
 
 -(void)getjingweidu{
     
+
     CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
     if (kCLAuthorizationStatusRestricted == status) {
         NSLog(@"kCLAuthorizationStatusRestricted 开启定位失败");
@@ -190,9 +191,23 @@
         return;
     }
     
-    GMAPI *aaa = [GMAPI sharedManager];
-    aaa.delegate = self;
-    [aaa startDingwei];
+//    GMAPI *aaa = [GMAPI sharedManager];
+//    aaa.delegate = self;
+//    [aaa startDingwei];
+
+//    GMAPI *aaa = [GMAPI sharedManager];
+//    aaa.delegate = self;
+//    [aaa startDingwei];
+    
+//    [GMAPI startDingwei];
+    
+    __weak typeof(self)weakSelf = self;
+    
+    [[GMAPI appDeledate]startDingweiWithBlock:^(NSDictionary *dic) {
+       
+        [weakSelf theLocationDictionary:dic];
+    }];
+
 }
 
 

@@ -175,7 +175,6 @@
  */
 - (void)getBrand
 {
-    //关注接口:http://182.92.158.32/index.php?d=api&c=brand&m=attend_brand&authcode=AX4BeFojV7EBulfKVuYJ3lP2V7UB9Ar7Ay5WZ1YzBDJabAAyWzhcZgM1V2RTMgp6BTFWaA==&brand_id=
     
     if (tool_brand) {
         

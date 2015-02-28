@@ -28,8 +28,14 @@
 
 //融云cloud
 
-#define RONGCLOUD_IM_APPKEY    @"kj7swf8o7zaf2" //正式 融云账号 18600912932 cocos2d
-#define RONGCLOUD_IM_APPSECRET @"2cCSWhaLcCm37"
+
+//开发
+//#define RONGCLOUD_IM_APPKEY    @"kj7swf8o7zaf2" //正式 融云账号 18600912932 cocos2d
+//#define RONGCLOUD_IM_APPSECRET @"2cCSWhaLcCm37"
+
+//上线
+#define RONGCLOUD_IM_APPKEY    @"qf3d5gbj3a8gh" //正式 融云账号 18600912932 cocos2d
+#define RONGCLOUD_IM_APPSECRET @"rcUmYEhqkfs"
 
 #define UmengAppkey @"548bae91fd98c50d0c000b8b"//正式 umeng后台：mobile@jiruijia.com mobile2014
 
@@ -47,10 +53,13 @@
 //sns.whalecloud.com
 
 
-@interface AppDelegate ()<BMKGeneralDelegate,RCIMConnectionStatusDelegate,RCConnectDelegate,RCIMConnectionStatusDelegate,RCConnectDelegate,RCIMReceiveMessageDelegate,RCIMUserInfoFetcherDelegagte>
+@interface AppDelegate ()<BMKGeneralDelegate,RCIMConnectionStatusDelegate,RCConnectDelegate,RCIMConnectionStatusDelegate,RCConnectDelegate,RCIMReceiveMessageDelegate,RCIMUserInfoFetcherDelegagte,GgetllocationDelegate>
 {
     BMKMapManager* _mapManager;
     CLLocationManager *_locationManager;
+    
+    GMAPI *mapApi;
+    LocationBlock _locationBlock;
 }
 
 @end
@@ -153,6 +162,43 @@
     self.window.backgroundColor = [UIColor whiteColor];
     
     return YES;
+}
+
+#pragma mark - 获取坐标
+
+- (void)startDingweiWithBlock:(LocationBlock)location
+{
+    _locationBlock = location;
+    
+    //定位获取坐标
+    mapApi = [GMAPI sharedManager];
+    mapApi.delegate = self;
+    
+    [mapApi startDingwei];
+}
+
+- (void)startDingwei
+{
+    //定位获取坐标
+    mapApi = [GMAPI sharedManager];
+    mapApi.delegate = self;
+    
+    [mapApi startDingwei];
+}
+
+#pragma mark - 定位Delegate
+
+- (void)theLocationDictionary:(NSDictionary *)dic{
+    
+    NSLog(@"------->%@",dic);
+    
+//    CGFloat lat = [dic[@"lat"]doubleValue];
+//    CGFloat lon = [dic[@"long"]doubleValue];
+    
+    if (_locationBlock) {
+        
+        _locationBlock(dic);
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

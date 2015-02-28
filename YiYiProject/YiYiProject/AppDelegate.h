@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^LocationBlock)(NSDictionary *dic);//获取坐标block
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
@@ -17,6 +19,10 @@
 @property(nonatomic,retain)NSDictionary *remote_message;//推送消息
 
 - (void)rondCloudDefaultLogin;//融云登录
+
+#pragma mark - 获取坐标
+
+- (void)startDingweiWithBlock:(LocationBlock)location;
 
 @end
 

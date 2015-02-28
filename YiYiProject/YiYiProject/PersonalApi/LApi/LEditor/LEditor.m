@@ -840,21 +840,6 @@
                                        
                                        NSLog(@"mydic == %@ err0 = %@",mydic,myerr);
                                        
-//                                       {
-//                                           errorcode = 0;
-//                                           msg = "\U4e0a\U4f20\U6210\U529f";
-//                                           pics =     (
-//                                                       {
-//                                                           "image_height" = 200;
-//                                                           "image_resize_height" = 200;
-//                                                           "image_resize_url" = "http://182.92.158.32:83/topic/2014/1228/549fde214c89c.jpg_180x200.jpg";
-//                                                           "image_resize_width" = 180;
-//                                                           "image_url" = "http://182.92.158.32:83/topic/2014/1228/549fde214c89c.jpg";
-//                                                           "image_width" = 180;
-//                                                       }
-//                                                       );
-//                                       }
-                                    
                                        
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {

@@ -55,8 +55,7 @@
 
 + (NSString *)getUerHeadImageUrl;//头像url
 
-
-
++ (AppDelegate *)appDeledate;
 
 
 //写数据=========================

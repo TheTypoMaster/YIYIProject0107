@@ -23,6 +23,8 @@
 
 #import "FilterView.h"
 
+#import "DataManager.h"
+
 
 @interface HomeBuyController ()<TMQuiltViewDataSource,WaterFlowDelegate,GgetllocationDelegate>
 {
@@ -52,13 +54,16 @@
     waterFlow.backgroundColor = RGBCOLOR(240, 230, 235);
     [self.view addSubview:waterFlow];
     
-    NSDictionary *result = [LTools cacheForKey:CACHE_DESERVE_BUY];
+//    NSDictionary *result = [LTools cacheForKey:CACHE_DESERVE_BUY];
+//    if (result) {
+//        
+//        [self parseDataWithResult:result];
+//    }
+    NSDictionary *result = [DataManager getCacheDataForType:Cache_DeserveBuy];
     if (result) {
         
         [self parseDataWithResult:result];
     }
-    
-//    [waterFlow showRefreshHeader:YES];
     
     UIButton *filterButton = [UIButton buttonWithType:UIButtonTypeCustom];
     filterButton.frame = CGRectMake(17, 17, 38, 38);
@@ -71,6 +76,8 @@
     
     [self updateLocation];
     
+    [waterFlow showRefreshHeader:YES];
+
     //10分钟更新一次位置
     [NSTimer scheduledTimerWithTimeInterval:10 * 60 target:self selector:@selector(updateLocation) userInfo:nil repeats:YES];
     
@@ -78,17 +85,26 @@
 
 - (void)updateLocation
 {
-    NSLog(@"updateLocation");
+    NSLog(@"updateLocation-----");
     
     CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
     if (kCLAuthorizationStatusDenied == status || kCLAuthorizationStatusRestricted == status) {
         
         NSLog(@"请打开您的位置服务!");
+        
     }else
     {
-        mapApi = [GMAPI sharedManager];
-        mapApi.delegate = self;
-        [mapApi startDingwei];
+//        mapApi = [GMAPI sharedManager];
+//        mapApi.delegate = self;
+//        [mapApi startDingwei];
+        
+//        [GMAPI startDingwei];
+        
+        __weak typeof(self)weakSelf = self;
+        [[GMAPI appDeledate]startDingweiWithBlock:^(NSDictionary *dic) {
+           
+            [weakSelf theLocationDictionary:dic];
+        }];
     }
 }
 
@@ -146,7 +162,7 @@
     ProductModel *aMode = waterFlow.dataArray[sender.tag - 100];
     
     NSString *productId = aMode.product_id;
-    __weak typeof(self)weakSelf = self;
+//    __weak typeof(self)weakSelf = self;
     
     NSString *api = HOME_PRODUCT_ZAN_ADD;
     
@@ -245,7 +261,9 @@
             
             //本地存储
             
-            [LTools cache:result ForKey:CACHE_DESERVE_BUY];
+//            [LTools cache:result ForKey:CACHE_DESERVE_BUY];
+            
+            [DataManager cacheDataType:Cache_DeserveBuy content:result];
         }
         
         
