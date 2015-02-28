@@ -32,6 +32,11 @@ typedef enum{
 
 
 
+//目标地点
+@property(nonatomic,assign)CLLocationCoordinate2D mudidi;
+
+
+
 //产品model,包含坐标、name等所有信息
 @property(nonatomic,retain)ProductModel *aModel;
 

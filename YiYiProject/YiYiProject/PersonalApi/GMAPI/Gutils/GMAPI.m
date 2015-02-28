@@ -308,8 +308,8 @@
 }
 
 //用户位置更新后，会调用此函数
-- (void)didUpdateUserLocation:(BMKUserLocation *)userLocation
-{
+
+- (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation{
     NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
     if (userLocation) {
         _theLocationDic = @{
@@ -325,7 +325,18 @@
         
         
     }
-    
+}
+
+
+
+- (void)didFailToLocateUserWithError:(NSError *)error{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(theLocationDictionary:)]) {
+        _theLocationDic = @{
+                            @"lat":[NSString stringWithFormat:@"%f",39.915187],
+                            @"long":[NSString stringWithFormat:@"%f",116.403877]
+                            };
+        [self.delegate theLocationFaild:_theLocationDic];
+    }
 }
 
 

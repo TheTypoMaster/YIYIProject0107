@@ -20,6 +20,8 @@
     CGFloat _location_x;
     CGFloat _location_y;
     BMKGeoCodeSearch* _geocodesearch;
+    
+    UIButton *_button_daohang;
 
 }
 @end
@@ -48,11 +50,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeText];
-    
-    
-    self.myTitle=@"选择地址";
-    self.rightString = @"确定";
+
     
     //适配ios7
     if( ([[[UIDevice currentDevice] systemVersion] doubleValue]>=7.0))
@@ -60,9 +58,34 @@
         self.navigationController.navigationBar.translucent = NO;
     }
     
+    //导航栏
+    UIView *daohangView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 64)];
+    daohangView.backgroundColor = RGBCOLOR(235, 77, 104);
+    [self.view addSubview:daohangView];
+    
+    //标题
+    UILabel *_myTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(DEVICE_WIDTH/2.0-100,20,200,44)];
+    _myTitleLabel.textAlignment = NSTextAlignmentCenter;
+    _myTitleLabel.text = @"选择地址";
+    _myTitleLabel.textColor = [UIColor whiteColor];
+    _myTitleLabel.font = [UIFont systemFontOfSize:17];
+    [daohangView addSubview:_myTitleLabel];
     
     
+    //返回按钮
+    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(20,20,40,44)];
+    [button_back addTarget:self action:@selector(leftButtonTap) forControlEvents:UIControlEventTouchUpInside];
+    [button_back setImage:BACK_DEFAULT_IMAGE forState:UIControlStateNormal];
+    [button_back setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    [daohangView addSubview:button_back];
     
+    //确定按钮
+    _button_daohang=[[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_myTitleLabel.frame)+10,20,40,44)];
+    [_button_daohang addTarget:self action:@selector(rightQuedingBtn) forControlEvents:UIControlEventTouchUpInside];
+    [_button_daohang setTitle:@"确定" forState:UIControlStateNormal];
+    [_button_daohang setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
+    _button_daohang.userInteractionEnabled = NO;
+    [daohangView addSubview:_button_daohang];
     
     //初始化地图
     [self setGMap];
@@ -98,7 +121,7 @@
 }
 
 
--(void)rightButtonTap:(UIButton *) sender{
+-(void)rightQuedingBtn{
     
     
     NSLog(@"%f,%f",_newAnnotation.annotation.coordinate.latitude,_newAnnotation.annotation.coordinate.longitude);
@@ -112,9 +135,16 @@
 }
 
 
+-(void)leftButtonTap{
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
+
+
 #pragma mark - 初始化地图
 -(void)setGMap{
-    _mapView = [[BMKMapView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT)];
+    _mapView = [[BMKMapView alloc]initWithFrame:CGRectMake(0, 64, DEVICE_WIDTH, DEVICE_HEIGHT-64)];
     _mapView.delegate = self;
     _mapView.zoomLevel = 18;
     [self.view addSubview:_mapView];
@@ -134,10 +164,11 @@
     coor.latitude = [[dic stringValueForKey:@"lat"]floatValue];
     coor.longitude = [[dic stringValueForKey:@"long"]floatValue];
     _pointAnnotation.coordinate = coor;
-    _pointAnnotation.title = @"test";
-    _pointAnnotation.subtitle = @"此Annotation可拖拽!";
+    _pointAnnotation.title = @"提示";
+    _pointAnnotation.subtitle = @"此标注可拖拽!";
     _mapView.centerCoordinate = coor;
     [_mapView addAnnotation:_pointAnnotation];
+    _button_daohang.userInteractionEnabled = YES;
     
     
 }
@@ -201,7 +232,7 @@
         self.delegate3.text = @"已选择";
         self.delegate.text = showmeg;
         self.delegate2.location_jingpindian = ccc;
-        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:titleStr message:showmeg delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",nil];
+        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:titleStr message:showmeg delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
         myAlertView.delegate = self;
         [myAlertView show];
     }
@@ -212,7 +243,10 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     
     if (buttonIndex == 0) {
-        [self.navigationController popViewControllerAnimated:YES];
+    }else if (buttonIndex == 1){
+        [self dismissViewControllerAnimated:YES completion:^{
+            
+        }];
     }
 }
 

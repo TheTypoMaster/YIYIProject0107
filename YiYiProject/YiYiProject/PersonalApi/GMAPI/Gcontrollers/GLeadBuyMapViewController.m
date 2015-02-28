@@ -18,6 +18,12 @@
     //信息字典
     NSMutableDictionary *_poiAnnotationDic;
     
+    //用户定位数据
+    BMKUserLocation *_userLocation;
+    
+    //导航按钮
+    UIButton *_button_daohang;
+    
 }
 
 @property(nonatomic,strong)BMKPoiInfo *tableViewCellDataModel;
@@ -90,25 +96,37 @@
         self.navigationController.navigationBar.translucent = NO;
     }
     
-    UILabel *_myTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0,100,44)];
+    
+    //导航栏
+    UIView *daohangView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 64)];
+    daohangView.backgroundColor = RGBCOLOR(235, 77, 104);
+    [self.view addSubview:daohangView];
+    
+    //标题
+    UILabel *_myTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(DEVICE_WIDTH/2.0-100,20,200,44)];
     _myTitleLabel.textAlignment = NSTextAlignmentCenter;
     _myTitleLabel.text = self.storeName;
     _myTitleLabel.textColor = [UIColor whiteColor];
     _myTitleLabel.font = [UIFont systemFontOfSize:17];
-    self.navigationItem.titleView = _myTitleLabel;
+    [daohangView addSubview:_myTitleLabel];
+
     
-    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(0,8,40,44)];
+    //返回按钮
+    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(20,20,40,44)];
     [button_back addTarget:self action:@selector(leftButtonTap:) forControlEvents:UIControlEventTouchUpInside];
     [button_back setImage:BACK_DEFAULT_IMAGE forState:UIControlStateNormal];
-    //        button_back.backgroundColor = [UIColor orangeColor];
     [button_back setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
-    UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
-    self.navigationItem.leftBarButtonItems=@[back_item];
+    [daohangView addSubview:button_back];
+    
+    //导航按钮
+    _button_daohang=[[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_myTitleLabel.frame)+10,20,40,44)];
+    [_button_daohang addTarget:self action:@selector(gDaohang) forControlEvents:UIControlEventTouchUpInside];
+    [_button_daohang setTitle:@"导航" forState:UIControlStateNormal];
+    [_button_daohang setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
+    _button_daohang.userInteractionEnabled = NO;
+    [daohangView addSubview:_button_daohang];
     
     
-    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
-    self.myTitleLabel.textColor = [UIColor whiteColor];
-    self.myTitle = self.storeName;
     
     //初始化地图
     [self setGMap];
@@ -127,17 +145,64 @@
     //加标注
     if (self.theType == LEADYOUTYPE_STORE) {//商店
         [self addMapAnnotationOfStore];
+        self.mudidi = self.coordinate_store;
     }else if (self.theType == LEADYOUTYPE_CHANPIN){//产品
         [self addMapAnnotationOfChanpin];
+        self.mudidi = self.coordinate_chanpin;
     }
     
     
 }
 
 
+
+//跳转百度地图应用
+-(void)gDaohang{
+    
+    UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"是否跳转百度地图" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [al show];
+}
+
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    NSLog(@"%d",buttonIndex);
+    if (buttonIndex == 1) {
+        [self tiaozhuanBiduMap];
+    }
+}
+
+
+-(void)tiaozhuanBiduMap{
+//    CLLocationCoordinate2D coordinate_end;
+//    
+//    if (self.theType == LEADYOUTYPE_STORE) {//商店
+//        coordinate_end = self.coordinate_store;
+//    }else if (self.theType == LEADYOUTYPE_CHANPIN){//产品
+//        coordinate_end = self.coordinate_chanpin;
+//    }
+    
+    
+    ///name:起始位置
+    NSString * string = [NSString stringWithFormat:@"baidumap://map/direction?origin=%f,%f&destination=%f,%f&mode=driving&src=gaizhuang",_userLocation.location.coordinate.latitude,_userLocation.location.coordinate.longitude,self.mudidi.latitude,self.mudidi.longitude];
+    
+    NSLog(@"我我我我我我我我我我我我我我我我我我我哦我我我我我 ---  %@",string);
+    
+    UIApplication *app = [UIApplication sharedApplication];
+    
+    if ([app canOpenURL:[NSURL URLWithString:string]])
+    {
+        [_locService stopUserLocationService];
+        [app openURL:[NSURL URLWithString:string]];
+    }else
+    {
+        [GMAPI showAutoHiddenMBProgressWithText:@"您还没有安装百度地图" addToView:self.view];
+    }
+}
+
+
 #pragma mark - 初始化地图
 -(void)setGMap{
-    _mapView = [[BMKMapView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT-44)];
+    _mapView = [[BMKMapView alloc]initWithFrame:CGRectMake(0, 64, DEVICE_WIDTH, DEVICE_HEIGHT-64)];
     _mapView.delegate = self;
     [self.view addSubview:_mapView];
 }
@@ -156,7 +221,7 @@
     NSLog(@"进入罗盘态");
     [_locService startUserLocationService];
     _mapView.showsUserLocation = NO;
-    _mapView.zoomLevel = 17;
+    _mapView.zoomLevel = 13;
     _mapView.userTrackingMode = BMKUserTrackingModeFollow;
     _mapView.showsUserLocation = YES;
     
@@ -183,7 +248,20 @@
 //用户位置更新后，会调用此函数
 - (void)didUpdateUserLocation:(BMKUserLocation *)userLocation
 {
-    NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
+//    NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
+    
+    
+    if (userLocation && !_button_daohang.userInteractionEnabled) {
+        _button_daohang.userInteractionEnabled = YES;
+        _userLocation = userLocation;
+        
+        //距离
+//        CLLocation *mdd = [[CLLocation alloc]initWithLatitude:self.mudidi.latitude longitude:self.mudidi.longitude];
+//        CLLocationDistance juli = [userLocation.location distanceFromLocation:mdd];
+        
+        
+    }
+    
     
     [_mapView updateLocationData:userLocation];
 }

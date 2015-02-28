@@ -699,7 +699,9 @@
     ccc.delegate = tf;
     ccc.delegate2 = self;
     
-    [self.navigationController pushViewController:ccc animated:YES];
+    [self presentViewController:ccc animated:YES completion:^{
+        
+    }];
 }
 
 

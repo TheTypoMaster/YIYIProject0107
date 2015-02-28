@@ -28,6 +28,8 @@
 
 - (void)theLocationDictionary:(NSDictionary *)dic;
 
+- (void)theLocationFaild:(NSDictionary *)dic;
+
 
 @end
 

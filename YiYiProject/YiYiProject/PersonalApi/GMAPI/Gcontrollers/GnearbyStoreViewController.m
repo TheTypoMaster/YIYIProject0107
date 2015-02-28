@@ -340,7 +340,10 @@
     cc.storeName = _mallNameLabel.text;
     cc.coordinate_store = self.coordinate_store;
     
-    [self.navigationController pushViewController:cc animated:YES];
+    
+    [self presentViewController:cc animated:YES completion:^{
+        
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
