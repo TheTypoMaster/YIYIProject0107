@@ -135,7 +135,6 @@ static int seconds = 60;//计时60s
 - (IBAction)clickToCommit:(id)sender {
     
     
-    //url:http://182.92.158.32/index.php?d=api&c=user_api&m=get_back_password
 //    get方式调取
 //    参数解释依次为:
 //    mobile(手机号) string

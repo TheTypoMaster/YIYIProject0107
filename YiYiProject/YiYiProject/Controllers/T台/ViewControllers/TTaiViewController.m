@@ -17,6 +17,8 @@
 #import "TPlatModel.h"
 #import "TPlatCell.h"
 
+#import "DataManager.h"
+
 @interface TTaiViewController ()<TMQuiltViewDataSource,WaterFlowDelegate>
 {
     LWaterflowView *waterFlow;
@@ -39,9 +41,14 @@
     [self.view addSubview:waterFlow];
     
     
-    NSDictionary *dic = [LTools cacheForKey:CACHE_YIYI];
+//    NSDictionary *dic = [LTools cacheForKey:CACHE_TPLAT];
+//    if (dic) {
+//        
+//        [self parseDataWithResult:dic];
+//    }
+    
+    NSDictionary *dic = [DataManager getCacheDataForType:Cache_TPlat];
     if (dic) {
-        
         [self parseDataWithResult:dic];
     }
     
@@ -204,8 +211,13 @@
         
         [weakSelf parseDataWithResult:result];
         
+    
+        
         if (waterFlow.pageNum == 1) {
-            [LTools cache:result ForKey:CACHE_YIYI];
+//            [LTools cache:result ForKey:CACHE_TPLAT];
+            
+            [DataManager cacheDataType:Cache_TPlat content:result];
+            
         }
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {

@@ -71,10 +71,16 @@
     _geocodesearch.delegate = self;
     
     //获取用户当前经纬度
-    GMAPI *aaa =[GMAPI sharedManager];
-    aaa.delegate = self;
-    [aaa startDingwei];
+//    GMAPI *aaa =[GMAPI sharedManager];
+//    aaa.delegate = self;
+//    [aaa startDingwei];
     
+    __weak typeof(self)weakSelf = self;
+    
+    [[GMAPI appDeledate] startDingweiWithBlock:^(NSDictionary *dic) {
+        
+        [weakSelf addPointAnnotationWithDic:dic];
+    }];
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setTitle:@"位置" forState:UIControlStateNormal];

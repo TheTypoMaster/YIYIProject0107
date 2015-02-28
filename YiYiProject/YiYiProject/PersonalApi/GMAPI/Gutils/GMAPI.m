@@ -9,12 +9,21 @@
 #import "GMAPI.h"
 #import "DataBase.h"
 #import "FBCity.h"
+#import "AppDelegate.h"
 
 //RBG color
 #define RGBA(r,g,b,a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 #define HUDBACKGOUNDCOLOR  RGBA(0, 0, 0, 0.6)
 #define HUDFOREGROUNDCOLOR  RGBA(255, 255, 255, 1)
 @implementation GMAPI
+
+
++ (AppDelegate *)appDeledate
+{
+    AppDelegate *aa = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    return aa;
+}
+
 
 //获取用户的devicetoken
 

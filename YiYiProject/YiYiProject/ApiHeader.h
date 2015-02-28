@@ -56,7 +56,7 @@ alpha:(a)]
 //本地数据保存
 
 #define CACHE_DESERVE_BUY @"deserveBuy"//值得买
-#define CACHE_YIYI @"YIYI"//衣+衣
+#define CACHE_TPLAT @"tPlat"//t台
 
 
 //通知 信息相关
@@ -97,6 +97,8 @@ alpha:(a)]
 //推送消息
 #define NOTIFICATION_REMOTE_MESSAGE @"remoteMessage"
 
+//获取坐标
+#define NOTIFICATION_REMOTE_MESSAGE @"remoteMessage"
 
 
 //登录类型 normal为正常手机登陆，sweibo、qq、weixin分别代表新浪微博、qq、微信登陆
@@ -158,140 +160,140 @@ typedef enum{
 
 //融云 token
 
-#define RONCLOUD_GET_TOKEN @"http://182.92.158.32/index.php?d=api&c=chat&m=get_token&user_id=%@&name=%@&portrait_uri=%@"//获取融云 token
+#define RONCLOUD_GET_TOKEN @"http://www.alayy.com/index.php?d=api&c=chat&m=get_token&user_id=%@&name=%@&portrait_uri=%@"//获取融云 token
 
 //登录
-#define USER_LOGIN_ACTION @"http://182.92.158.32/index.php?d=api&c=user_api&m=login&type=%@&password=%@&thirdid=%@&nickname=%@&third_photo=%@&gender=%d&devicetoken=%@&mobile=%@"
+#define USER_LOGIN_ACTION @"http://www.alayy.com/index.php?d=api&c=user_api&m=login&type=%@&password=%@&thirdid=%@&nickname=%@&third_photo=%@&gender=%d&devicetoken=%@&mobile=%@"
 
 //退出登录
 
-#define USER_LOGOUT_ACTION @"http://182.92.158.32/index.php?d=api&c=user_api&m=login_out&authcode=%@"
+#define USER_LOGOUT_ACTION @"http://www.alayy.com/index.php?d=api&c=user_api&m=login_out&authcode=%@"
 
 //注册
-#define USER_REGISTER_ACTION @"http://182.92.158.32/index.php?d=api&c=user_api&m=register&username=%@&password=%@&gender=%d&type=%d&code=%d&mobile=%@"
+#define USER_REGISTER_ACTION @"http://www.alayy.com/index.php?d=api&c=user_api&m=register&username=%@&password=%@&gender=%d&type=%d&code=%d&mobile=%@"
 //获取验证码
-#define USER_GET_SECURITY_CODE @"http://182.92.158.32/index.php?d=api&c=user_api&m=get_code&mobile=%@&type=%d"
+#define USER_GET_SECURITY_CODE @"http://www.alayy.com/index.php?d=api&c=user_api&m=get_code&mobile=%@&type=%d"
 //找回密码
-#define USER_GETBACK_PASSWORD @"http://182.92.158.32/index.php?d=api&c=user_api&m=get_back_password&mobile=%@&code=%d&new_password=%@"
+#define USER_GETBACK_PASSWORD @"http://www.alayy.com/index.php?d=api&c=user_api&m=get_back_password&mobile=%@&code=%d&new_password=%@"
 
 //首页--值得买
-#define HOME_DESERVE_BUY @"http://182.92.158.32/?d=api&c=products&m=listWorthBuy&long=%@&lat=%@&sex=%d&discount=%d&page=%d&count=%d&authcode=%@"
+#define HOME_DESERVE_BUY @"http://www.alayy.com/?d=api&c=products&m=listWorthBuy&long=%@&lat=%@&sex=%d&discount=%d&page=%d&count=%d&authcode=%@"
 
 
 //首页--衣加衣
 //获取顶部scrollview图片
-#define HOME_CLOTH_TOPSCROLLVIEW @"http://182.92.158.32/index.php?d=api&c=advertisement&m=get_advertisement"
+#define HOME_CLOTH_TOPSCROLLVIEW @"http://www.alayy.com/index.php?d=api&c=advertisement&m=get_advertisement"
 //获取附近品牌
-#define HOME_CLOTH_NEARBYPINPAI @"http://182.92.158.32/index.php?d=api&c=brand&m=get_nearby_brands"
+#define HOME_CLOTH_NEARBYPINPAI @"http://www.alayy.com/index.php?d=api&c=brand&m=get_nearby_brands"
 //获取附近商铺
-#define HOME_CLOTH_NEARBYSTORE @"http://182.92.158.32/?d=api&c=mall&m=gerNearMalls"
+#define HOME_CLOTH_NEARBYSTORE @"http://www.alayy.com/?d=api&c=mall&m=gerNearMalls"
 //获取我关注的店铺
-#define HOME_CLOTH_GUANZHUSTORE_MINE @"http://182.92.158.32/?d=api&c=friendship&m=listMall"
+#define HOME_CLOTH_GUANZHUSTORE_MINE @"http://www.alayy.com/?d=api&c=friendship&m=listMall"
 //获取我关注的品牌
-#define HOME_CLOTH_GUANZHUPINPAI_MINE @"http://182.92.158.32/index.php?d=api&c=brand&m=get_attend_brands&authcode=%@&page=%d"
+#define HOME_CLOTH_GUANZHUPINPAI_MINE @"http://www.alayy.com/index.php?d=api&c=brand&m=get_attend_brands&authcode=%@&page=%d"
 
 //店铺详情  mall_id
-#define HOME_CLOTH_NEARBYSTORE_DETAIL @"http://182.92.158.32?d=api&c=mall&m=getMallDetail"
+#define HOME_CLOTH_NEARBYSTORE_DETAIL @"http://www.alayy.com?d=api&c=mall&m=getMallDetail"
 //店铺详情 shop_id
-#define GET_MAIL_DETAIL_INFO @"http://182.92.158.32/index.php?d=api&c=mall&m=get_shop_info&shop_id=%@"
+#define GET_MAIL_DETAIL_INFO @"http://www.alayy.com/index.php?d=api&c=mall&m=get_shop_info&shop_id=%@"
 
 //点击品牌进入该品牌的商铺列表
-#define HOME_CLOTH_PINPAI_STORELIST @"http://182.92.158.32/index.php?d=api&c=mall&m=get_mall_by_brand"
+#define HOME_CLOTH_PINPAI_STORELIST @"http://www.alayy.com/index.php?d=api&c=mall&m=get_mall_by_brand"
 //某商场某一品牌下的单品列表
-#define HOME_CLOTH_STORE_PINPAILIST @"http://182.92.158.32/index.php?d=api&c=products&m=getProductList"
+#define HOME_CLOTH_STORE_PINPAILIST @"http://www.alayy.com/index.php?d=api&c=products&m=getProductList"
 
 
 
 //单品详情
 
-#define HOME_PRODUCT_DETAIL @"http://182.92.158.32/api/products/getProductInfo?product_id=%@&authcode=%@"
+#define HOME_PRODUCT_DETAIL @"http://www.alayy.com/api/products/getProductInfo?product_id=%@&authcode=%@"
 
 //单品 - 添加赞
-#define HOME_PRODUCT_ZAN_ADD @"http://182.92.158.32/?d=api&c=products&m=like"
+#define HOME_PRODUCT_ZAN_ADD @"http://www.alayy.com/?d=api&c=products&m=like"
 
 //单品 - 取消赞
-#define HOME_PRODUCT_ZAN_Cancel @"http://182.92.158.32/?d=api&c=products&m=cancelLike"
+#define HOME_PRODUCT_ZAN_Cancel @"http://www.alayy.com/?d=api&c=products&m=cancelLike"
 
 //单品 - 添加收藏
-#define HOME_PRODUCT_COLLECT_ADD @"http://182.92.158.32/?d=api&c=products&m=favor&product_id=%@"
+#define HOME_PRODUCT_COLLECT_ADD @"http://www.alayy.com/?d=api&c=products&m=favor&product_id=%@"
 
 //单品 - 取消收藏
-#define HOME_PRODUCT_COLLECT_Cancel @"http://182.92.158.32/?d=api&c=products&m=cancelFavor&product_id=%@"
+#define HOME_PRODUCT_COLLECT_Cancel @"http://www.alayy.com/?d=api&c=products&m=cancelFavor&product_id=%@"
 
 
 //T 台
-#define TTAI_LIST @"http://182.92.158.32/?d=api&c=tplat&m=listT&page=%d&count=%d&authcode=%@"
+#define TTAI_LIST @"http://www.alayy.com/?d=api&c=tplat&m=listT&page=%d&count=%d&authcode=%@"
 
 //T 台 通过user_id查看某个用户id
 
-#define TTAI_LIST_UID @"http://182.92.158.32/?d=api&c=tplat&m=listT&page=%d&count=%d&authcode=%@&user_id=%@"
+#define TTAI_LIST_UID @"http://www.alayy.com/?d=api&c=tplat&m=listT&page=%d&count=%d&authcode=%@&user_id=%@"
 
 //添加T台
-#define TTAI_ADD @"http://182.92.158.32/?d=api&c=tplat&m=addTplat"
+#define TTAI_ADD @"http://www.alayy.com/?d=api&c=tplat&m=addTplat"
 
 
 //t台详情
 
-#define TTAI_DETAIL @"http://182.92.158.32/?d=api&c=tplat&m=ttinfo&tt_id=%@&authcode=%@"
+#define TTAI_DETAIL @"http://www.alayy.com/?d=api&c=tplat&m=ttinfo&tt_id=%@&authcode=%@"
 
 ///t台评论接口
-#define TTAI_COMMENTS_URL @"http://182.92.158.32/?d=api&c=tplat&m=listReply&page=%d&count=20&tt_id=%@"
+#define TTAI_COMMENTS_URL @"http://www.alayy.com/?d=api&c=tplat&m=listReply&page=%d&count=20&tt_id=%@"
 //T台评论
 
-#define TTAI_COMMENT @"http://182.92.158.32/?d=api&c=tplat&m=comment"
+#define TTAI_COMMENT @"http://www.alayy.com/?d=api&c=tplat&m=comment"
 
 //T台点赞
 
-#define TTAI_ZAN @"http://182.92.158.32/?d=api&c=tplat&m=like"
+#define TTAI_ZAN @"http://www.alayy.com/?d=api&c=tplat&m=like"
 
 //T台取消赞
-#define TTAI_ZAN_CANCEL @"http://182.92.158.32/?d=api&c=tplat&m=cancelLike"
+#define TTAI_ZAN_CANCEL @"http://www.alayy.com/?d=api&c=tplat&m=cancelLike"
 
 //转发 + 1
-#define TTAI_ZHUANFA_ADD @"http://182.92.158.32/?d=api&c=tplat&m=incrShare"
+#define TTAI_ZHUANFA_ADD @"http://www.alayy.com/?d=api&c=tplat&m=incrShare"
 
 
 //个人信息相关
-#define PERSON_CHANGEUSERBANNER @"http://182.92.158.32/index.php?d=api&c=user_api&m=update_user_banner"
-#define PERSON_GETUSERINFO @"http://182.92.158.32/index.php?d=api&c=user_api&m=get_user_info"
-#define PERSON_CHANGEUSERFACE @"http://182.92.158.32/index.php?d=api&c=user_api&m=update_user_info"
+#define PERSON_CHANGEUSERBANNER @"http://www.alayy.com/index.php?d=api&c=user_api&m=update_user_banner"
+#define PERSON_GETUSERINFO @"http://www.alayy.com/index.php?d=api&c=user_api&m=get_user_info"
+#define PERSON_CHANGEUSERFACE @"http://www.alayy.com/index.php?d=api&c=user_api&m=update_user_info"
 
 //根据id获取用户信息
-#define GET_PERSONINFO_WITHID @"http://182.92.158.32/index.php?d=api&c=user_api&m=get_user_by_uid&uid=%@"
+#define GET_PERSONINFO_WITHID @"http://www.alayy.com/index.php?d=api&c=user_api&m=get_user_by_uid&uid=%@"
 
 //关注商场
-#define GUANZHUSHANGCHANG @"http://182.92.158.32/?d=api&c=friendship&m=mallShipCreate"
+#define GUANZHUSHANGCHANG @"http://www.alayy.com/?d=api&c=friendship&m=mallShipCreate"
 //取消关注商场
-#define QUXIAOGUANZHU_SHANGCHANG @"http://182.92.158.32/?d=api&c=friendship&m=mallDestory"
+#define QUXIAOGUANZHU_SHANGCHANG @"http://www.alayy.com/?d=api&c=friendship&m=mallDestory"
 
 //关注品牌
-#define GUANZHUPINPAI @"http://182.92.158.32/index.php?d=api&c=brand&m=attend_brand"
+#define GUANZHUPINPAI @"http://www.alayy.com/index.php?d=api&c=brand&m=attend_brand"
 //取消关注品牌
-#define QUXIAOGUANZHUPINPAI @"http://182.92.158.32/index.php?d=api&c=brand&m=cancel_attend_brand"
+#define QUXIAOGUANZHUPINPAI @"http://www.alayy.com/index.php?d=api&c=brand&m=cancel_attend_brand"
 //查询品牌是否关注
-#define GUANZHUPINPAI_ISORNO @"http://182.92.158.32/index.php?d=api&c=brand&m=isBrandFriend"
+#define GUANZHUPINPAI_ISORNO @"http://www.alayy.com/index.php?d=api&c=brand&m=isBrandFriend"
 
-#define ZPOSTDEVICETOKEN @"http://182.92.158.32/index.php?d=api&c=user_api&m=update_user_info"
+#define ZPOSTDEVICETOKEN @"http://www.alayy.com/index.php?d=api&c=user_api&m=update_user_info"
 
 //申请店铺界面 
 //根据省市区获取商城列表
-#define STORELISTWITHPROVINCEANDCITY @"http://182.92.158.32/api/mall/listMall?province_id=%@&city_id=%@"
+#define STORELISTWITHPROVINCEANDCITY @"http://www.alayy.com/api/mall/listMall?province_id=%@&city_id=%@"
 //某商场所有楼层的品牌列表
-#define STOREALLFLOORPINPAI @"http://182.92.158.32/?d=api&c=mall&m=listBrandFromMall&mall_id=%@"
+#define STOREALLFLOORPINPAI @"http://www.alayy.com/?d=api&c=mall&m=listBrandFromMall&mall_id=%@"
 
 //获取手机验证码
-#define PHONE_YANZHENGMA_SHENQINGSHANGCHANGDIAN @"http://182.92.158.32/index.php?d=api&c=user_api&m=get_code&mobile=%@&type=5"
+#define PHONE_YANZHENGMA_SHENQINGSHANGCHANGDIAN @"http://www.alayy.com/index.php?d=api&c=user_api&m=get_code&mobile=%@&type=5"
 
 //申请店铺
-#define SHENQINGJINGPINDIAN @"http://182.92.158.32/?d=api&c=mall&m=addMall"
+#define SHENQINGJINGPINDIAN @"http://www.alayy.com/?d=api&c=mall&m=addMall"
 //申请商场店
-#define SHENQINGSHANGCHANGDIAN @"http://182.92.158.32/?d=api&c=mall&m=addShop"
+#define SHENQINGSHANGCHANGDIAN @"http://www.alayy.com/?d=api&c=mall&m=addShop"
 
 //我是店主 发布单品
-#define GFABUDIANPIN @"http://182.92.158.32/?d=api&c=products&m=addProducts"
+#define GFABUDIANPIN @"http://www.alayy.com/?d=api&c=products&m=addProducts"
 
 //我是店主 发布活动
-#define GFABUHUODONG @"http://182.92.158.32/index.php?d=api&c=mall&m=publish_activity"
+#define GFABUHUODONG @"http://www.alayy.com/index.php?d=api&c=mall&m=publish_activity"
 
 
 
@@ -304,16 +306,16 @@ typedef enum{
  page(页数 默认1)
  perpage(每页显示数量 默认10)
  */
-#define GET_DAPEISHI_URL @"http://182.92.158.32/index.php?d=api&c=division_t&m=get_division_teachers&action=%@&authcode=%@&tagid=%d&page=%d&perpage=%d"
+#define GET_DAPEISHI_URL @"http://www.alayy.com/index.php?d=api&c=division_t&m=get_division_teachers&action=%@&authcode=%@&tagid=%d&page=%d&perpage=%d"
 ///搭配师界面获取话题接口
-#define GET_TOPIC_DATA_URL @"http://182.92.158.32/index.php?d=api&c=topic&m=get_topics&uid=%@&page=%d&per_page=%d"
+#define GET_TOPIC_DATA_URL @"http://www.alayy.com/index.php?d=api&c=topic&m=get_topics&uid=%@&page=%d&per_page=%d"
 ///搭配师界面获取搭配师搭配接口
 /*
  t_uid（搭配师uid，若传该参数表示获取该搭配师的搭配列表，若不传则返回所有搭配师的搭配列表）
  page(页数 默认1)
  per_page(每页显示数量 默认10)
  */
-#define GET_MATCH_DATA_URL @"http://182.92.158.32/index.php?d=api&c=division_t&m=get_division_tts&t_uid=%@&page=%d&per_page=%d"
+#define GET_MATCH_DATA_URL @"http://www.alayy.com/index.php?d=api&c=division_t&m=get_division_tts&t_uid=%@&page=%d&per_page=%d"
 
 ///申请搭配师
 /*
@@ -324,18 +326,18 @@ typedef enum{
  weixin(微信号码，可不填) int
  pic(身份证照片) string
  */
-#define APPLY_MATCH_URL @"http://182.92.158.32/index.php?d=api&c=division_t&m=apply_division_teacher"
+#define APPLY_MATCH_URL @"http://www.alayy.com/index.php?d=api&c=division_t&m=apply_division_teacher"
 
 ///话题详情接口
-#define GET_TOPIC_DETAIL_URL @"http://182.92.158.32/index.php?d=api&c=topic&m=get_topic_info&topic_id=%@&authcode=%@"
+#define GET_TOPIC_DETAIL_URL @"http://www.alayy.com/index.php?d=api&c=topic&m=get_topic_info&topic_id=%@&authcode=%@"
 ///获取话题评论接口
-#define GET_TOPIC_COMMENTS_URL @"http://182.92.158.32/index.php?d=api&c=topic&m=get_replies&topic_id=%@&page=%d&per_page=20"
+#define GET_TOPIC_COMMENTS_URL @"http://www.alayy.com/index.php?d=api&c=topic&m=get_replies&topic_id=%@&page=%d&per_page=20"
 ///获取搭配师个人信息
-#define GET_MATCH_INFOMATION_URL @"http://182.92.158.32/index.php?d=api&c=division_t&m=get_division_t_info&t_uid=%@&authcode=%@"
+#define GET_MATCH_INFOMATION_URL @"http://www.alayy.com/index.php?d=api&c=division_t&m=get_division_t_info&t_uid=%@&authcode=%@"
 ///话题点赞接口
-#define TOPIC_ADDFAV_URL @"http://182.92.158.32/index.php?d=api&c=topic&m=like_topic&authcode=%@&topic_id=%@"
+#define TOPIC_ADDFAV_URL @"http://www.alayy.com/index.php?d=api&c=topic&m=like_topic&authcode=%@&topic_id=%@"
 ///话题取消赞接口
-#define TOPIC_DELFAV_URL @"http://182.92.158.32/index.php?d=api&c=topic&m=cancel_like&topic_id=%@&authcode=%@"
+#define TOPIC_DELFAV_URL @"http://www.alayy.com/index.php?d=api&c=topic&m=cancel_like&topic_id=%@&authcode=%@"
 
 ///话题评论接口
 /*
@@ -346,7 +348,7 @@ typedef enum{
  level（回复的评论是主评论还是子评论，1=》主评论 2=》子评论） parent_post(回复的主评论id，若level=1则值为0)
  r_reply_id(回复的回复id，当为二级评论的时候需要该参数，若level=1则值为0)
  */
-#define TOPIC_COMMENTS_URL @"http://182.92.158.32/index.php?d=api&c=topic&m=reply_topic"
+#define TOPIC_COMMENTS_URL @"http://www.alayy.com/index.php?d=api&c=topic&m=reply_topic"
 
 ///关注取消关注接口
 /*
@@ -355,60 +357,60 @@ typedef enum{
  action(取消还是关注 at_friend⇒关注某人 can_friend⇒取消关注某人) str
  friend_uid(操作的对象uid) int
  */
-#define ATTENTTION_SOMEBODY_URL @"http://182.92.158.32/index.php?d=api&c=my_api&m=attention&authcode=%@&action=%@&friend_uid=%@"
+#define ATTENTTION_SOMEBODY_URL @"http://www.alayy.com/index.php?d=api&c=my_api&m=attention&authcode=%@&action=%@&friend_uid=%@"
 
 #pragma mark - 搭配师相关接口 ******************************add by sn
 
 #pragma mark--我的衣橱接口
 
-#define GET_MY_CILLECTION @"http://182.92.158.32/?d=api&c=products&m=listFavors&long=%@&lat=%@&page=%d&count=%d&authcode=%@"//我的收藏（只有单品）
+#define GET_MY_CILLECTION @"http://www.alayy.com/?d=api&c=products&m=listFavors&long=%@&lat=%@&page=%d&count=%d&authcode=%@"//我的收藏（只有单品）
 
 
 #pragma mark--我的衣橱接口
 
 
-#define GET_MYYICHU_LIST_URL @"http://182.92.158.32/index.php?d=api&c=wardrobe&m=get_wardrobe&authcode=%@"
+#define GET_MYYICHU_LIST_URL @"http://www.alayy.com/index.php?d=api&c=wardrobe&m=get_wardrobe&authcode=%@"
 
-#define UPLOAD_IMAGE_URL @"http://182.92.158.32/index.php?d=api&c=upload&m=upload_pic"//action(等于topic_pic为上传话题图片，等于ttinfo为上传T台图片)
+#define UPLOAD_IMAGE_URL @"http://www.alayy.com/index.php?d=api&c=upload&m=upload_pic"//action(等于topic_pic为上传话题图片，等于ttinfo为上传T台图片)
 
 //添加分类
-#define GET_ADDCLASSICATION_URL @"http://182.92.158.32/index.php?d=api&c=wardrobe&m=add_sort&sort_name=%@&authcode=%@"
+#define GET_ADDCLASSICATION_URL @"http://www.alayy.com/index.php?d=api&c=wardrobe&m=add_sort&sort_name=%@&authcode=%@"
 //删除分类
-#define GET_DELETECLASSICATION_URL @"http://182.92.158.32/index.php?d=api&c=wardrobe&m=del_sort&sort_id=%@&authcode=%@"
+#define GET_DELETECLASSICATION_URL @"http://www.alayy.com/index.php?d=api&c=wardrobe&m=del_sort&sort_id=%@&authcode=%@"
 
 //编辑分类
-#define GET_EDITCLASSICATION_URL @"http://182.92.158.32/index.php?d=api&c=wardrobe&m=update_sort&sort_id=%@&sort_name=%@&authcode=%@"
+#define GET_EDITCLASSICATION_URL @"http://www.alayy.com/index.php?d=api&c=wardrobe&m=update_sort&sort_id=%@&sort_name=%@&authcode=%@"
 //获取分类
-#define GET_GETCLASSTCATION_URL @"http://182.92.158.32/index.php?d=api&c=wardrobe&m=get_sort&authcode=%@"
+#define GET_GETCLASSTCATION_URL @"http://www.alayy.com/index.php?d=api&c=wardrobe&m=get_sort&authcode=%@"
 //衣橱里面添加衣服
-#define POST_ADDCLOTHES_URL     @"http://182.92.158.32/index.php?d=api&c=wardrobe&m=add_clothes"
+#define POST_ADDCLOTHES_URL     @"http://www.alayy.com/index.php?d=api&c=wardrobe&m=add_clothes"
 //获取某个分类下的衣服
-#define GET_CLASSICATIONCLOTHES_URL @"http://182.92.158.32/index.php?d=api&c=wardrobe&m=get_clothes&sort_id=%@&authcode=%@"
+#define GET_CLASSICATIONCLOTHES_URL @"http://www.alayy.com/index.php?d=api&c=wardrobe&m=get_clothes&sort_id=%@&authcode=%@"
 
-#define MY_CONCERN_BRAND @"http://182.92.158.32/index.php?d=api&c=brand&m=get_attend_brands&authcode=%@&page=%d"//我关注品牌
-#define MY_CONCERN_BRAND_CANCEL @"http://182.92.158.32/index.php?d=api&c=brand&m=cancel_attend_brand"//取消品牌关注
+#define MY_CONCERN_BRAND @"http://www.alayy.com/index.php?d=api&c=brand&m=get_attend_brands&authcode=%@&page=%d"//我关注品牌
+#define MY_CONCERN_BRAND_CANCEL @"http://www.alayy.com/index.php?d=api&c=brand&m=cancel_attend_brand"//取消品牌关注
 
-#define MY_CONCERN_SHOP @"http://182.92.158.32/?d=api&c=friendship&m=listMall&authcode=%@&page=%d&count=%d"//我关注商家
+#define MY_CONCERN_SHOP @"http://www.alayy.com/?d=api&c=friendship&m=listMall&authcode=%@&page=%d&count=%d"//我关注商家
 
-#define MY_CONCERN_MAIL_CANCEL @"http://182.92.158.32/?d=api&c=friendship&m=mallDestory"//取消关注商家
+#define MY_CONCERN_MAIL_CANCEL @"http://www.alayy.com/?d=api&c=friendship&m=mallDestory"//取消关注商家
 
-#define POST_EDITMYBODY_URL @"http://182.92.158.32/index.php?d=api&c=user_api&m=update_user_body_info"//修改我的体型
+#define POST_EDITMYBODY_URL @"http://www.alayy.com/index.php?d=api&c=user_api&m=update_user_body_info"//修改我的体型
 
-#define GET_GETMYBODY_URL @"http://182.92.158.32/index.php?d=api&c=user_api&m=get_user_body_info&authcode=%@"//获取我的体型信息
+#define GET_GETMYBODY_URL @"http://www.alayy.com/index.php?d=api&c=user_api&m=get_user_body_info&authcode=%@"//获取我的体型信息
 
-#define GET_GETMYSTYLE_URL @"http://182.92.158.32/index.php?d=api&c=division&m=get_my_styles&authcode=%@"//获取我的搭配风格
+#define GET_GETMYSTYLE_URL @"http://www.alayy.com/index.php?d=api&c=division&m=get_my_styles&authcode=%@"//获取我的搭配风格
 
-#define GET_ADDSTYLE_URL @"http://182.92.158.32/index.php?d=api&c=division&m=add_style&style_pid=%@&style_name=%@&authcode=%@"//添加搭配风格
+#define GET_ADDSTYLE_URL @"http://www.alayy.com/index.php?d=api&c=division&m=add_style&style_pid=%@&style_name=%@&authcode=%@"//添加搭配风格
 
-#define GET_EDITSTYLENAME_URL @"http://182.92.158.32/index.php?d=api&c=division&m=update_style&style_id=%@&style_name=%@&authcode=%@"//修改搭配风格名字
+#define GET_EDITSTYLENAME_URL @"http://www.alayy.com/index.php?d=api&c=division&m=update_style&style_id=%@&style_name=%@&authcode=%@"//修改搭配风格名字
 
-#define GET_DELETESTYLENAME_URL @"http://182.92.158.32/index.php?d=api&c=division&m=del_style&style_id=%@&authcode=%@"//删除搭配风格
+#define GET_DELETESTYLENAME_URL @"http://www.alayy.com/index.php?d=api&c=division&m=del_style&style_id=%@&authcode=%@"//删除搭配风格
 
-#define POST_ADDDAPEISTYLE_URL @"http://182.92.158.32/index.php?d=api&c=division&m=add_division"//添加我的搭配
-#define GET_DIVISION_INFO @"http://182.92.158.32/index.php?d=api&c=division&m=get_division_info&division_id=%@&authcode=%@"
+#define POST_ADDDAPEISTYLE_URL @"http://www.alayy.com/index.php?d=api&c=division&m=add_division"//添加我的搭配
+#define GET_DIVISION_INFO @"http://www.alayy.com/index.php?d=api&c=division&m=get_division_info&division_id=%@&authcode=%@"
 
-#define GET_DIVISOINBYSTYLE_URL @"http://182.92.158.32/index.php?d=api&c=division&m=get_divisions_by_style&style_id=%@&authcode=%@"
-#define POST_MYBODY_URL @"http://182.92.158.32/index.php?d=api&c=user_api&m=update_user_body_info"//修改我的体型
+#define GET_DIVISOINBYSTYLE_URL @"http://www.alayy.com/index.php?d=api&c=division&m=get_divisions_by_style&style_id=%@&authcode=%@"
+#define POST_MYBODY_URL @"http://www.alayy.com/index.php?d=api&c=user_api&m=update_user_body_info"//修改我的体型
 
 
 
@@ -416,7 +418,7 @@ typedef enum{
 
 #pragma - mark 搭配师话题
 
-#define TOPIC_ADD @"http://182.92.158.32/index.php?d=api&c=topic&m=publish_topic"//添加话题
+#define TOPIC_ADD @"http://www.alayy.com/index.php?d=api&c=topic&m=publish_topic"//添加话题
 
 
 
@@ -426,35 +428,35 @@ typedef enum{
 #define	APP_RATING_URL	 @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=951259287"
 
 #pragma mark-------------编辑个人资料
-#define GET_UPDATEMYINFO_URL @"http://182.92.158.32/index.php?d=api&c=user_api&m=get_user_info"  //获取个人资料
+#define GET_UPDATEMYINFO_URL @"http://www.alayy.com/index.php?d=api&c=user_api&m=get_user_info"  //获取个人资料
 
-#define POST_UPDATEMYINFO_URL @"http://182.92.158.32/index.php?d=api&c=user_api&m=update_user_info"  //修改个人资料
+#define POST_UPDATEMYINFO_URL @"http://www.alayy.com/index.php?d=api&c=user_api&m=update_user_info"  //修改个人资料
 
-#define POST_GETMYINFO_URL @"http://182.92.158.32/index.php?d=api&c=user_api&m=get_user_info"  //获取个人资料
+#define POST_GETMYINFO_URL @"http://www.alayy.com/index.php?d=api&c=user_api&m=get_user_info"  //获取个人资料
 
-#define POST_TLIST_URL @"http://182.92.158.32/?d=api&c=tplat&m=listT"  //获取个人资料
+#define POST_TLIST_URL @"http://www.alayy.com/?d=api&c=tplat&m=listT"  //获取个人资料
 
 
 #pragma mark - 消息
 
-#define MESSAGE_GET_MINE @"http://182.92.158.32/index.php?d=api&c=msg&m=get_my_msg&authcode=%@"//我的消息
+#define MESSAGE_GET_MINE @"http://www.alayy.com/index.php?d=api&c=msg&m=get_my_msg&authcode=%@"//我的消息
 
-#define MESSAGE_GET_LIST @"http://182.92.158.32/index.php?d=api&c=msg&m=get_special_msg&action=%@&authcode=%@"//action= yy(衣加衣) shop（商家） dynamic（动态）
+#define MESSAGE_GET_LIST @"http://www.alayy.com/index.php?d=api&c=msg&m=get_special_msg&action=%@&authcode=%@"//action= yy(衣加衣) shop（商家） dynamic（动态）
 
-#define MESSAGE_GET_DETAIL @"http://182.92.158.32/index.php?d=api&c=msg&m=get_msg_info&msg_id=%@&authcode=%@"
+#define MESSAGE_GET_DETAIL @"http://www.alayy.com/index.php?d=api&c=msg&m=get_msg_info&msg_id=%@&authcode=%@"
 
 //店主活动列表
-#define GET_MAIL_ACTIVITY_LIST @"http://182.92.158.32/index.php?d=api&c=mall&m=get_activities&authcode=%@"
+#define GET_MAIL_ACTIVITY_LIST @"http://www.alayy.com/index.php?d=api&c=mall&m=get_activities&authcode=%@"
 //店主单品列表
-#define GET_MAIL_PRODUCT_LIST @"http://182.92.158.32/index.php?d=api&c=products&m=getProductList&action=%@&mb_id=%@&page=%d&per_page=%d"
+#define GET_MAIL_PRODUCT_LIST @"http://www.alayy.com/index.php?d=api&c=products&m=getProductList&action=%@&mb_id=%@&page=%d&per_page=%d"
 
 
 
 //活动详情
-#define GET_MAIL_ACTIVITY_DETAIL @"http://182.92.158.32/index.php?d=api&c=mall&m=get_activity_info&activity_id=%@"
+#define GET_MAIL_ACTIVITY_DETAIL @"http://www.alayy.com/index.php?d=api&c=mall&m=get_activity_info&activity_id=%@"
 
 //发起活动
-#define GADD_MAIL_ACTIVITY @"http://182.92.158.32/index.php?d=api&c=mall&m=publish_activity"
+#define GADD_MAIL_ACTIVITY @"http://www.alayy.com/index.php?d=api&c=mall&m=publish_activity"
 
 
 

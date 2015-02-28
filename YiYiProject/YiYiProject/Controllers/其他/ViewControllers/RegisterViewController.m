@@ -91,7 +91,6 @@ static int seconds = 60;//计时60s
  */
 - (IBAction)clickToSecurityCode:(UIButton *)sender {
     
-//url:http://182.92.158.32/index.php?d=api&c=user_api&m=get_code
 //    get方式调取
 //    参数解释依次为:
 //    mobile(手机号) string
@@ -142,7 +141,6 @@ static int seconds = 60;//计时60s
  */
 - (IBAction)clickToRegister:(id)sender {
     
-    //url:http://182.92.158.32/index.php?d=api&c=user_api&m=register
     //    get方式调取
     //    参数解释依次为:
     //    username(昵称,可不填，系统自动分配一个) string
