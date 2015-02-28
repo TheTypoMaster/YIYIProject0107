@@ -18,7 +18,7 @@ static sqlite3 *db = nil;
     if (db) {
         return db;
     }
-    NSString *documents = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0];//获取document路径
+    NSString *documents = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)objectAtIndex:0];//获取document路径
     NSString *filePath = [documents stringByAppendingPathComponent:@"yiyiDB.sqlite"]; //将要存放位置
     NSLog(@"值得买数据库路径 = %@",filePath);
     NSString *bundlePath = [[NSBundle mainBundle]pathForResource:@"yiyiDB" ofType:@"sqlite"];//bundle中位置
@@ -38,7 +38,7 @@ static sqlite3 *db = nil;
 
 + (BOOL)removeDb
 {
-    NSString *documents = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0];//获取document路径
+    NSString *documents = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)objectAtIndex:0];//获取document路径
     NSString *filePath = [documents stringByAppendingPathComponent:@"yiyiDB.sqlite"]; //将要存放位置
     NSLog(@"数据库路径 = %@",filePath);
     
