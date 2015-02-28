@@ -177,6 +177,19 @@
 
 -(void)getjingweidu{
     
+    CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
+    if (kCLAuthorizationStatusRestricted == status) {
+        NSLog(@"kCLAuthorizationStatusRestricted 开启定位失败");
+        UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"开启定位失败" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [al show];
+        return;
+    }else if (kCLAuthorizationStatusDenied == status){
+        NSLog(@"请允许衣加衣使用定位服务");
+        UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请允许衣加衣使用定位服务" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [al show];
+        return;
+    }
+    
     GMAPI *aaa = [GMAPI sharedManager];
     aaa.delegate = self;
     [aaa startDingwei];

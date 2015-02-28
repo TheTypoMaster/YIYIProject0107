@@ -122,11 +122,14 @@
     }
 #pragma mark 百度地图相关
     
-    if( ([[[UIDevice currentDevice] systemVersion] doubleValue]>=8.0)) {
-        _locationManager = [[CLLocationManager alloc] init];
-        [_locationManager requestAlwaysAuthorization];
-        [_locationManager startUpdatingLocation];
+    if ([[[UIDevice currentDevice] systemVersion] doubleValue] > 8.0)
+    {
+        //设置定位权限 仅ios8有意义
+        [_locationManager requestWhenInUseAuthorization];// 前台定位
+        
+        //  [locationManager requestAlwaysAuthorization];// 前后台同时定位
     }
+    [_locationManager startUpdatingLocation];
     
 
     // 要使用百度地图，请先启动BaiduMapManager
