@@ -9,8 +9,10 @@
 #import "GLeadBuyMapViewController.h"
 #import "BMapKit.h"
 #import "GLeadbuyTableViewCell.h"
+#import <MapKit/MapKit.h>
+#import <CoreLocation/CoreLocation.h>
 
-@interface GLeadBuyMapViewController ()<BMKMapViewDelegate,BMKLocationServiceDelegate,BMKPoiSearchDelegate,BMKAnnotation,UIAlertViewDelegate>
+@interface GLeadBuyMapViewController ()<BMKMapViewDelegate,BMKLocationServiceDelegate,BMKPoiSearchDelegate,BMKAnnotation,UIAlertViewDelegate,UIActionSheetDelegate>
 {
     BMKMapView* _mapView;//地图
     BMKLocationService* _locService;//定位服务
@@ -147,9 +149,11 @@
     if (self.theType == LEADYOUTYPE_STORE) {//商店
         [self addMapAnnotationOfStore];
         self.mudidi = self.coordinate_store;
+        self.mudidiName = self.storeName;
     }else if (self.theType == LEADYOUTYPE_CHANPIN){//产品
         [self addMapAnnotationOfChanpin];
         self.mudidi = self.coordinate_chanpin;
+        self.mudidiName = self.chanpinName;
     }
     
     
@@ -160,8 +164,25 @@
 //跳转百度地图应用
 -(void)gDaohang{
     
-    UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"是否跳转百度地图" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-    [al show];
+    UIActionSheet *acs = [[UIActionSheet alloc]initWithTitle:@"提示:是否跳转到" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"百度地图",@"苹果地图", nil];
+    [acs showInView:self.view];
+    
+//    UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"是否跳转百度地图" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+//    [al show];
+}
+
+
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    NSLog(@"-----------------%d",buttonIndex);
+    
+    //0 百度地图
+    //1 苹果地图
+    
+    if (buttonIndex == 0) {
+        [self tiaozhuanBiduMap];
+    }else if (buttonIndex == 1){
+        [self tiaozhuanAppleMap];
+    }
 }
 
 
@@ -172,10 +193,41 @@
     }
 }
 
+-(void)tiaozhuanAppleMap{
+    
+    
+    
+    CLLocationCoordinate2D from = CLLocationCoordinate2DMake(_userLocation.location.coordinate.latitude-0.0060,_userLocation.location.coordinate.longitude-0.0065);
+    MKPlacemark * fromMark = [[MKPlacemark alloc] initWithCoordinate:from
+                                                   addressDictionary:nil];
+    MKMapItem * fromLocation = [[MKMapItem alloc] initWithPlacemark:fromMark];
+    fromLocation.name = @"我的位置";
+    
+    
+    CLLocationCoordinate2D to = CLLocationCoordinate2DMake(self.mudidi.latitude-0.0060,self.mudidi.longitude-0.0065);
+    MKPlacemark * toMark = [[MKPlacemark alloc] initWithCoordinate:to
+                                                 addressDictionary:nil];
+    MKMapItem * toLocation = [[MKMapItem alloc] initWithPlacemark:toMark];
+    toLocation.name = self.mudidiName;
+    
+    NSArray  * values = [NSArray arrayWithObjects:
+                         MKLaunchOptionsDirectionsModeDriving,
+                         [NSNumber numberWithBool:YES],
+                         [NSNumber numberWithInt:3],
+                         nil];
+    NSArray * keys = [NSArray arrayWithObjects:
+                      MKLaunchOptionsDirectionsModeKey,
+                      MKLaunchOptionsShowsTrafficKey,
+                      MKLaunchOptionsMapTypeKey,nil];
+    
+    [MKMapItem openMapsWithItems:[NSArray arrayWithObjects:fromLocation, toLocation, nil]
+                   launchOptions:[NSDictionary dictionaryWithObjects:values
+                                                             forKeys:keys]];
+}
 
 -(void)tiaozhuanBiduMap{
 //    CLLocationCoordinate2D coordinate_end;
-//    
+//
 //    if (self.theType == LEADYOUTYPE_STORE) {//商店
 //        coordinate_end = self.coordinate_store;
 //    }else if (self.theType == LEADYOUTYPE_CHANPIN){//产品
@@ -350,6 +402,17 @@
     annotationView.image = [UIImage imageNamed:@"gpin.png"];
     
     annotationView.selected = YES;
+    
+    
+//    annotationView.rightCalloutAccessoryView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 50, 43)];
+//    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [btn setTitle:@"导航" forState:UIControlStateNormal];
+//    [btn setBackgroundColor:[UIColor blueColor]];
+//    [btn setFrame:annotationView.rightCalloutAccessoryView.bounds];
+//    
+//    [annotationView.rightCalloutAccessoryView addSubview:btn];
+    
+    
     
     return annotationView;
 }

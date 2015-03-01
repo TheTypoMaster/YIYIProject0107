@@ -32,8 +32,10 @@ typedef enum{
 
 
 
-//目标地点
+//目标地点 名称
 @property(nonatomic,assign)CLLocationCoordinate2D mudidi;
+
+@property(nonatomic,strong)NSString *mudidiName;
 
 
 

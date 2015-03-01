@@ -193,18 +193,22 @@
 -(void)gtijiao{
     
     
+    //判断信息完整性
+    if (!self.mallInfo.mall_id || !self.userInfo.shop_id || !_gholderTextView.text.length>0 || !_startTime.text.length>0 || !_endTime.text.length) {
+        [GMAPI showAutoHiddenMidleQuicklyMBProgressWithText:@"请完善信息" addToView:self.view];
+        return;
+    }
+    
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     //上传的url
     NSString *uploadImageUrlStr = GFABUHUODONG;
     
     NSString *type = nil;
-//    if ([self.mallInfo.brand_id isEqualToString:@"0"]) {//精品店
-//        
-//    }else {//商场店
-//        
-//    }
     type = @"2";
+    
+    
+    
     
     NSString *mall_id = self.mallInfo.mall_id;//商场id
     NSString *shop_id = self.userInfo.shop_id;//店铺id
@@ -235,7 +239,12 @@
                                        {
                                            //开始拼接表单
                                            //获取图片的二进制形式
+                                           
+                                           
                                            NSData * data= _showImageData;
+                                           if (!_showImageData) {
+                                               return;
+                                           }
                                            
                                            NSLog(@"%ld",(unsigned long)data.length);
                                            
@@ -413,6 +422,7 @@
     
     _startTime = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(startTimeLabel.frame)+5, startTimeLabel.frame.origin.y, DEVICE_WIDTH-16-16-5-70, 25)];
     _startTime.textColor = RGBCOLOR(114, 114, 114);
+    _startTime.backgroundColor = RGBCOLOR(242, 242, 242);
     _startTime.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(chooseStartTime:)];
     [_startTime addGestureRecognizer:tap];
@@ -428,6 +438,7 @@
     
     _endTime = [[UILabel alloc]initWithFrame:CGRectMake(_startTime.frame.origin.x, endTimeLabel.frame.origin.y, _startTime.frame.size.width, _startTime.frame.size.height)];
     _endTime.textColor = RGBCOLOR(114, 114, 114);
+    _endTime.backgroundColor = RGBCOLOR(242, 242, 242);
     _endTime.userInteractionEnabled = YES;
     UITapGestureRecognizer *tapc = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(chooseEndTime:)];
     [_endTime addGestureRecognizer:tapc];
