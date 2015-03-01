@@ -158,34 +158,34 @@
     
 //    self.brandTF.text,self.modelTF.text,self.priceTF.text
     
-    if ([LTools isEmpty:self.brandTF.text]) {
-        
-        [LTools showMBProgressWithText:@"品牌不能为空" addToView:self.view];
-        return;
-    }
-    if ([LTools isEmpty:self.modelTF.text]) {
-        
-        [LTools showMBProgressWithText:@"型号不能为空" addToView:self.view];
-        return;
-    }
+//    if ([LTools isEmpty:self.brandTF.text]) {
+//        
+//        [LTools showMBProgressWithText:@"品牌不能为空" addToView:self.view];
+//        return;
+//    }
+//    if ([LTools isEmpty:self.modelTF.text]) {
+//        
+//        [LTools showMBProgressWithText:@"型号不能为空" addToView:self.view];
+//        return;
+//    }
+//    
+//    if ([LTools isEmpty:self.priceTF.text]) {
+//        
+//        [LTools showMBProgressWithText:@"价格不能为空" addToView:self.view];
+//        return;
+//    }
+//    
+//    if ([LTools isValidateFloat:self.priceTF.text]) {
+//        
+//        [LTools showMBProgressWithText:@"请填写有效价格" addToView:self.view];
+//        return;
+//    }
     
-    if ([LTools isEmpty:self.priceTF.text]) {
-        
-        [LTools showMBProgressWithText:@"价格不能为空" addToView:self.view];
-        return;
-    }
-    
-    if ([LTools isValidateFloat:self.priceTF.text]) {
-        
-        [LTools showMBProgressWithText:@"请填写有效价格" addToView:self.view];
-        return;
-    }
-    
-    
-    self.my_right_button.userInteractionEnabled = NO;
     
     if (imageIsValid) {
         
+        self.my_right_button.userInteractionEnabled = NO;
+
        [self upLoadImage:self.addImageButton.imageView.image];
     }else
     {
