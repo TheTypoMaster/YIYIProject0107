@@ -124,6 +124,7 @@
     [_button_daohang setTitle:@"导航" forState:UIControlStateNormal];
     [_button_daohang setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
     _button_daohang.userInteractionEnabled = NO;
+    _button_daohang.hidden = YES;
     [daohangView addSubview:_button_daohang];
     
     
@@ -246,9 +247,11 @@
 }
 
 //用户位置更新后，会调用此函数
-- (void)didUpdateUserLocation:(BMKUserLocation *)userLocation
+- (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
 {
 //    NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
+    
+    
     
     
     if (userLocation && !_button_daohang.userInteractionEnabled) {
@@ -372,6 +375,10 @@
 // 当点击annotation view弹出的泡泡时，调用此接口
 - (void)mapView:(BMKMapView *)mapView annotationViewForBubble:(BMKAnnotationView *)view;
 {
+    NSLog(@"%s",__FUNCTION__);
+    if (_button_daohang.userInteractionEnabled) {
+        [self gDaohang];
+    }
     
 }
 

@@ -486,8 +486,8 @@
 		E36BFC871A6939FC009DAF81 /* FBCity.m in Sources */ = {isa = PBXBuildFile; fileRef = E36BFC861A6939FC009DAF81 /* FBCity.m */; };
 		E3766AD21A74AED20009BECC /* g_redline_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3766AD11A74AED20009BECC /* g_redline_down@2x.png */; };
 		E37A2E2E1A7349C300145608 /* GchooseAdressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E37A2E2D1A7349C300145608 /* GchooseAdressViewController.m */; };
-		E37C33091AA23F6900B646EC /* libbaidumapapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E37C33071AA23F6900B646EC /* libbaidumapapi.a */; };
 		E37C330A1AA23F6900B646EC /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E37C33081AA23F6900B646EC /* mapapi.bundle */; };
+		E37EAB751AA303040040CA6A /* libbaidumapapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E37EAB741AA303040040CA6A /* libbaidumapapi.a */; };
 		E38AFE021A7A967E009C2C0C /* JKAssets.m in Sources */ = {isa = PBXBuildFile; fileRef = E38AFDDC1A7A967E009C2C0C /* JKAssets.m */; };
 		E38AFE031A7A967E009C2C0C /* JKAssetsCollectionFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = E38AFDDE1A7A967E009C2C0C /* JKAssetsCollectionFooterView.m */; };
 		E38AFE041A7A967E009C2C0C /* JKAssetsGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E38AFDE01A7A967E009C2C0C /* JKAssetsGroupCell.m */; };
@@ -1302,8 +1302,8 @@
 		E37C33041AA23F6900B646EC /* BMKUserLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKUserLocation.h; sourceTree = "<group>"; };
 		E37C33051AA23F6900B646EC /* BMKUtilsComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKUtilsComponent.h; sourceTree = "<group>"; };
 		E37C33061AA23F6900B646EC /* BMKVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKVersion.h; sourceTree = "<group>"; };
-		E37C33071AA23F6900B646EC /* libbaidumapapi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbaidumapapi.a; sourceTree = "<group>"; };
 		E37C33081AA23F6900B646EC /* mapapi.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = mapapi.bundle; sourceTree = "<group>"; };
+		E37EAB741AA303040040CA6A /* libbaidumapapi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbaidumapapi.a; sourceTree = "<group>"; };
 		E38AFDDB1A7A967E009C2C0C /* JKAssets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKAssets.h; sourceTree = "<group>"; };
 		E38AFDDC1A7A967E009C2C0C /* JKAssets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKAssets.m; sourceTree = "<group>"; };
 		E38AFDDD1A7A967E009C2C0C /* JKAssetsCollectionFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKAssetsCollectionFooterView.h; sourceTree = "<group>"; };
@@ -1478,7 +1478,7 @@
 				137FC2A81A4DAE1F0039E3FF /* CoreImage.framework in Frameworks */,
 				138C2C0C1A39E24600EA59F5 /* CoreGraphics.framework in Frameworks */,
 				137FC2A61A4DAE0F0039E3FF /* CoreAudio.framework in Frameworks */,
-				E37C33091AA23F6900B646EC /* libbaidumapapi.a in Frameworks */,
+				E37EAB751AA303040040CA6A /* libbaidumapapi.a in Frameworks */,
 				137FC2A41A4DAE070039E3FF /* CFNetwork.framework in Frameworks */,
 				137FC2A21A4DADFE0039E3FF /* AVFoundation.framework in Frameworks */,
 				137FC2A01A4DADB80039E3FF /* AudioToolbox.framework in Frameworks */,
@@ -3013,8 +3013,8 @@
 		E37C32C81AA23F6900B646EC /* BaiduMap_IOSSDK_v2.6.0_Lib */ = {
 			isa = PBXGroup;
 			children = (
+				E37EAB741AA303040040CA6A /* libbaidumapapi.a */,
 				E37C32C91AA23F6900B646EC /* inc */,
-				E37C33071AA23F6900B646EC /* libbaidumapapi.a */,
 				E37C33081AA23F6900B646EC /* mapapi.bundle */,
 			);
 			path = BaiduMap_IOSSDK_v2.6.0_Lib;
