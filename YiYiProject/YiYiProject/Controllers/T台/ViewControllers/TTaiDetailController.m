@@ -653,10 +653,10 @@
         [self beiginComment];
         
         
-        NSString *reply_msg = [NSString stringWithFormat:@"topic = p:%@ r:%@",reply_id,uid];
-        
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:reply_msg delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil, nil];
-        [alert show];
+//        NSString *reply_msg = [NSString stringWithFormat:@"topic = p:%@ r:%@",reply_id,uid];
+//        
+//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:reply_msg delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil, nil];
+//        [alert show];
 
         NSLog(@"userName %@",userName);
     }];
@@ -668,10 +668,10 @@
         
         [self beiginComment];
 
-        NSString *reply_msg = [NSString stringWithFormat:@"second = p:%@ r:%@",reply_id,uid];
-        
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:reply_msg delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil, nil];
-        [alert show];
+//        NSString *reply_msg = [NSString stringWithFormat:@"second = p:%@ r:%@",reply_id,uid];
+//        
+//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:reply_msg delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil, nil];
+//        [alert show];
         
         NSLog(@"userName2 %@",userName);
     }];

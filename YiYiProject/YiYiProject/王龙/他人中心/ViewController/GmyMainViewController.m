@@ -58,6 +58,10 @@
 
 - (void)dealloc
 {
+    self.waterfall.delegate = nil;
+    self.waterfall.collectionView.delegate = nil;
+    self.waterfall.collectionView.dataSource = nil;
+//    self.waterfall = nil;
     [self.waterfall.collectionView removeObserver:self forKeyPath:@"contentSize" context:nil];
 
 }

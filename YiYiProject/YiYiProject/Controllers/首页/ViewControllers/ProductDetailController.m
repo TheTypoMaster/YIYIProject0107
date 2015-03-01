@@ -360,9 +360,9 @@
         ll.coordinate_store = CLLocationCoordinate2DMake([aModel.mall_info[@"latitude"]floatValue], [aModel.mall_info[@"longitude"]floatValue]);
     }
     
-    UINavigationController *rrr = [[UINavigationController alloc]initWithRootViewController:ll];
+//    UINavigationController *rrr = [[UINavigationController alloc]initWithRootViewController:ll];
     
-    [self presentViewController:rrr animated:YES completion:nil];
+    [self presentViewController:ll animated:YES completion:nil];
     
 //    [self.navigationController pushViewController:ll animated:YES];
 }

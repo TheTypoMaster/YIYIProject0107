@@ -18,6 +18,14 @@
 
 @implementation WaterF
 
+- (void)dealloc
+{
+//    self.collectionView.delegate = nil;
+//    self.collectionView.dataSource = nil;
+    self.cell = nil;
+//    self.collectionView = nil;
+}
+
 - (id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout
 {
     self = [super initWithCollectionViewLayout:layout];
