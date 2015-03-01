@@ -101,7 +101,7 @@
     _mainScrollView.tag = 10000;
     _mainScrollView.backgroundColor = RGBCOLOR(242, 242, 242);
     
-    _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH, 553 *DEVICE_HEIGHT/568.0f);
+    _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH,DEVICE_HEIGHT<568?100+ 553 *DEVICE_HEIGHT/568.0f: 553 *DEVICE_HEIGHT/568.0f);
     
     //下拉刷新
     
