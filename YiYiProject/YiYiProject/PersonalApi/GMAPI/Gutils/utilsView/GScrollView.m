@@ -187,7 +187,7 @@
 
             NSDictionary *dic = upDataArray[i];
             //距离
-            UILabel *distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, view.frame.size.width, 18)];
+            UILabel *distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 1, view.frame.size.width, 18)];
 
             distanceLabel.font = [UIFont systemFontOfSize:13];
             distanceLabel.textAlignment = NSTextAlignmentCenter;

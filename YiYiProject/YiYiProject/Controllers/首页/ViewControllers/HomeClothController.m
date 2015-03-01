@@ -100,7 +100,8 @@
     _mainScrollView.delegate = self;
     _mainScrollView.tag = 10000;
     _mainScrollView.backgroundColor = RGBCOLOR(242, 242, 242);
-    _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH, 180+218+155);
+    
+    _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH, 553 *DEVICE_HEIGHT/568.0f);
     
     //下拉刷新
     
@@ -356,7 +357,7 @@
         _guanzhuStoreDataArray = [result objectForKey:@"list"];
         _scrollview_nearbyView.dataArray = _guanzhuStoreDataArray;
         if (_guanzhuStoreDataArray.count == 0) {
-            [GMAPI showAutoHiddenMBProgressWithText:@"您还没有关注任何商场" addToView:self.view];
+            [GMAPI showAutoHiddenMidleQuicklyMBProgressWithText:@"您还没有关注任何商场" addToView:self.view];
         }
         
         [_scrollview_nearbyView gReloadData];
@@ -443,7 +444,7 @@
         _guanzhuPinpaiDataArray = [result objectForKey:@"brand_data"];
         _scrollView_pinpai.dataArray = _guanzhuPinpaiDataArray;
         if (_guanzhuPinpaiDataArray.count == 0) {
-            [GMAPI showAutoHiddenMBProgressWithText:@"您还没有关注任何品牌" addToView:self.view];
+            [GMAPI showAutoHiddenMidleQuicklyMBProgressWithText:@"您还没有关注任何品牌" addToView:self.view];
         }
         [_scrollView_pinpai gReloadData];
         
@@ -485,7 +486,7 @@
     _nearbyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_nearbyBtn setTitle:@"附近的商家" forState:UIControlStateNormal];
     [_nearbyBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_nearbyBtn setFrame:CGRectMake(15, 0, 75, 28)];
+    [_nearbyBtn setFrame:CGRectMake(15, 0, 75, 33)];
     _nearbyBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     _nearbyBtn.tag = 62;
     [_nearbyBtn addTarget:self action:@selector(nearOrGuanzhuBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -499,7 +500,7 @@
     [_guanzhuBtn_Store setBackgroundImage:[UIImage imageNamed:@"g_redline_down.png"] forState:UIControlStateSelected];
     [_guanzhuBtn_Store setBackgroundImage:nil forState:UIControlStateNormal];
     [_guanzhuBtn_Store setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_guanzhuBtn_Store setFrame:CGRectMake(CGRectGetMaxX(_nearbyBtn.frame)+10, 0, 100, 28)];
+    [_guanzhuBtn_Store setFrame:CGRectMake(CGRectGetMaxX(_nearbyBtn.frame)+10, 0, 100, 33)];
     _guanzhuBtn_Store.titleLabel.font = [UIFont systemFontOfSize:15];
     _guanzhuBtn_Store.tag = 63;
     [_guanzhuBtn_Store addTarget:self action:@selector(nearOrGuanzhuBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -573,7 +574,7 @@
     [_pinpaiBtn setBackgroundImage:[UIImage imageNamed:@"g_redline_down.png"] forState:UIControlStateSelected];
     [_pinpaiBtn setBackgroundImage:nil forState:UIControlStateNormal];
     [_pinpaiBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_pinpaiBtn setFrame:CGRectMake(15, 0, 75, 30)];
+    [_pinpaiBtn setFrame:CGRectMake(15, 0, 75, 33)];
     _pinpaiBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     _pinpaiBtn.selected = YES;
     _pinpaiBtn.tag = 60;
@@ -585,7 +586,7 @@
     [_guanzhuBtn_pinpai setBackgroundImage:[UIImage imageNamed:@"g_redline_down.png"] forState:UIControlStateSelected];
     [_guanzhuBtn_pinpai setBackgroundImage:nil forState:UIControlStateNormal];
     [_guanzhuBtn_pinpai setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_guanzhuBtn_pinpai setFrame:CGRectMake(CGRectGetMaxX(_pinpaiBtn.frame)+10, 0, 100, 30)];
+    [_guanzhuBtn_pinpai setFrame:CGRectMake(CGRectGetMaxX(_pinpaiBtn.frame)+10, 0, 100, 33)];
     _guanzhuBtn_pinpai.titleLabel.font = [UIFont systemFontOfSize:15];
     _guanzhuBtn_pinpai.tag = 61;
     [_guanzhuBtn_pinpai addTarget:self action:@selector(nearOrGuanzhuBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -593,7 +594,7 @@
     
     
     //滚动界面
-    _scrollView_pinpai = [[GScrollView alloc]initWithFrame:CGRectMake(15, 30, DEVICE_WIDTH-15-15, 155-30-14)];
+    _scrollView_pinpai = [[GScrollView alloc]initWithFrame:CGRectMake(15, 33, DEVICE_WIDTH-15-15, 155-30-14)];
     _scrollView_pinpai.backgroundColor = RGBCOLOR(242, 242, 242);
     _scrollView_pinpai.contentSize = CGSizeMake(1000, 155-30-14);
     _scrollView_pinpai.tag = 11;
@@ -617,7 +618,7 @@
         
         UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(yuan.frame)+10, 70, 13)];
         nameLabel.font = [UIFont systemFontOfSize:13];
-        nameLabel.text = @"ONLY";
+//        nameLabel.text = @"ONLY";
         nameLabel.textAlignment = NSTextAlignmentCenter;
         nameLabel.textColor = RGBCOLOR(114, 114, 114);
         [pinpaiView addSubview:nameLabel];

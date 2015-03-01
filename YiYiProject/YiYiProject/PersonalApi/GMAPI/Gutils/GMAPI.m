@@ -362,6 +362,17 @@
     [hud hide:YES afterDelay:0.3];
 }
 
++ (void)showAutoHiddenMidleQuicklyMBProgressWithText:(NSString *)text addToView:(UIView *)aView
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:aView animated:YES];
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = text;
+    hud.margin = 15.f;
+    hud.yOffset = 0.f;
+    hud.removeFromSuperViewOnHide = YES;
+    [hud hide:YES afterDelay:0.7];
+}
+
 
 + (MBProgressHUD *)showMBProgressWithText:(NSString *)text addToView:(UIView *)aView
 {

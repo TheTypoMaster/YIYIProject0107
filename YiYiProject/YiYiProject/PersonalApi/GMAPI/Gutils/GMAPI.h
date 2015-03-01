@@ -111,6 +111,7 @@
 + (void)showAutoHiddenMBProgressWithText:(NSString *)text addToView:(UIView *)aView;
 + (MBProgressHUD *)showMBProgressWithText:(NSString *)text addToView:(UIView *)aView;
 + (void)showAutoHiddenQuicklyMBProgressWithText:(NSString *)text addToView:(UIView *)aView;
++ (void)showAutoHiddenMidleQuicklyMBProgressWithText:(NSString *)text addToView:(UIView *)aView;
 
 //信息处理
 +(NSString *)exchangeStringForDeleteNULL:(id)sender;
