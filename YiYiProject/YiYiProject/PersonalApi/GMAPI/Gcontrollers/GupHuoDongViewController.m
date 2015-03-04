@@ -621,7 +621,7 @@
         
         
         _showImage = originImage;
-        _showImageData = UIImageJPEGRepresentation(_showImage, 0.5);
+        _showImageData = UIImageJPEGRepresentation(_showImage, 0.2);
         [_showPicBtn setBackgroundImage:_showImage forState:UIControlStateNormal];
         
         [picker dismissViewControllerAnimated:YES completion:^{
