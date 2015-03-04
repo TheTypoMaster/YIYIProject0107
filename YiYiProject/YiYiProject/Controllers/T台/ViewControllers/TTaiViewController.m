@@ -52,10 +52,16 @@
         [self parseDataWithResult:dic];
     }
     
-    [waterFlow showRefreshHeader:YES];
+    [self performSelector:@selector(loadData) withObject:nil afterDelay:0.2];
     
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateTTai:) name:NOTIFICATION_TTAI_PUBLISE_SUCCESS object:nil];
+}
+
+- (void)loadData
+{
+    [waterFlow showRefreshHeader:YES];
+
 }
 
 #pragma mark 事件处理
@@ -210,8 +216,6 @@
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         [weakSelf parseDataWithResult:result];
-        
-    
         
         if (waterFlow.pageNum == 1) {
 //            [LTools cache:result ForKey:CACHE_TPLAT];

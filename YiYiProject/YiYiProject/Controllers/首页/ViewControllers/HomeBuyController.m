@@ -76,7 +76,7 @@
     
     [self updateLocation];
     
-    [waterFlow showRefreshHeader:YES];
+//    [waterFlow showRefreshHeader:YES];
 
     //10分钟更新一次位置
     [NSTimer scheduledTimerWithTimeInterval:10 * 60 target:self selector:@selector(updateLocation) userInfo:nil repeats:YES];
@@ -87,13 +87,13 @@
 {
     NSLog(@"updateLocation-----");
     
-    CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
-    if (kCLAuthorizationStatusDenied == status || kCLAuthorizationStatusRestricted == status) {
-        
-        NSLog(@"请打开您的位置服务!");
-        
-    }else
-    {
+//    CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
+//    if (kCLAuthorizationStatusDenied == status || kCLAuthorizationStatusRestricted == status) {
+//        
+//        NSLog(@"请打开您的位置服务!");
+//        
+//    }else
+//    {
 //        mapApi = [GMAPI sharedManager];
 //        mapApi.delegate = self;
 //        [mapApi startDingwei];
@@ -105,7 +105,7 @@
            
             [weakSelf theLocationDictionary:dic];
         }];
-    }
+//    }
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -128,7 +128,7 @@
 
 - (void)theLocationDictionary:(NSDictionary *)dic{
     
-    NSLog(@"%@",dic);
+    NSLog(@"当前坐标-->%@",dic);
     
     CGFloat lat = [dic[@"lat"]doubleValue];;
     CGFloat lon = [dic[@"long"]doubleValue];
@@ -222,8 +222,8 @@
                 [arr addObject:aModel];
             }
             
-            
-            [waterFlow reloadData:arr total:L_PAGE_SIZE];
+                        
+            [waterFlow reloadData:arr pageSize:L_PAGE_SIZE];
         }
         
     }
