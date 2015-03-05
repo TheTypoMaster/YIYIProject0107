@@ -164,6 +164,7 @@
     [self judgeNil:nick];
     [self judgeNil:sex];
     [self judgeNil:birth];
+    [infoView.headImageView setImage:[GMAPI getUserFaceImage]];
     [infoView.headImageView sd_setImageWithURL:[NSURL URLWithString:headUrl] placeholderImage:nil];
     infoView.nickerTf.text = nick;
 
