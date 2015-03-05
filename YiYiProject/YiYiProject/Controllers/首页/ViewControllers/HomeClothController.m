@@ -101,7 +101,9 @@
     _mainScrollView.tag = 10000;
     _mainScrollView.backgroundColor = RGBCOLOR(242, 242, 242);
     
-    _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH,DEVICE_HEIGHT<568?100+ 553 *DEVICE_HEIGHT/568.0f: 553 *DEVICE_HEIGHT/568.0f);
+    _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH,DEVICE_HEIGHT<568?100+ 553 *DEVICE_HEIGHT/568.0f:(DEVICE_HEIGHT<736? 553 *DEVICE_HEIGHT/568.0f:553 *DEVICE_HEIGHT/568.0f-85));
+    
+    NSLog(@"devh===%f",DEVICE_HEIGHT);
     
     //下拉刷新
     
@@ -458,7 +460,7 @@
 
 ///创建循环滚动的scrollview
 -(UIView*)creatGscrollView{
-    _gscrollView = [[GCycleScrollView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 180)];
+    _gscrollView = [[GCycleScrollView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 180*GscreenRatio_568)];
     _gscrollView.theGcycelScrollViewType = GCYCELNORMORL;
     [_gscrollView loadGcycleScrollView];
     _gscrollView.tag = 200;
@@ -799,7 +801,7 @@
     
     
     if (theGCycleScrollView.tag == 200) {
-        UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 180)];
+        UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 180*GscreenRatio_568)];
         imv.userInteractionEnabled = YES;
         
         NSDictionary *dic = _topScrollviewImvInfoArray[index];
@@ -811,7 +813,7 @@
         [imv sd_setImageWithURL:[NSURL URLWithString:str] placeholderImage:nil];
         return imv;
     }else if (theGCycleScrollView.tag == 201){
-        GClothWaveCustomView *view = [[GClothWaveCustomView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH-30, 180)];
+        GClothWaveCustomView *view = [[GClothWaveCustomView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH-30, 180*GscreenRatio_568)];
         [view loadCustomViewWithDataArray:_nearByStoreDataArray pageIndex:index];
         return view;
     }

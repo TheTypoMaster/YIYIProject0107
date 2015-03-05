@@ -8,6 +8,7 @@
 
 #import "MyViewController.h"
 #import "EditInfoView.h"
+@class MineViewController;
 @interface EditMyInfoViewController : MyViewController <UIScrollViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIActionSheetDelegate,UITextFieldDelegate>
 {
     UIScrollView *infoScrollView;
@@ -20,6 +21,8 @@
     NSDictionary *infoDic;  //用户信息
     UIView *dateView;
 }
+
+@property(nonatomic,assign)MineViewController *delegate;
 
 
 @end

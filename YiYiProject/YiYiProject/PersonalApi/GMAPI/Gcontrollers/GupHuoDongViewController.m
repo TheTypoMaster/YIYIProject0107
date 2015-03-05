@@ -567,7 +567,7 @@
     picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
     
     [self presentViewController:picker animated:YES completion:^{
-        
+        _showImageData = nil;
     }];
 }
 

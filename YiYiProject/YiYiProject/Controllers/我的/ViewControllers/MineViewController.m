@@ -652,6 +652,7 @@ typedef enum{
     if ([LTools isLogin:self]) {
         //编辑
         EditMyInfoViewController *editInfoVC = [[EditMyInfoViewController alloc] init];
+        editInfoVC.delegate = self;
         editInfoVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:editInfoVC animated:YES];
     }

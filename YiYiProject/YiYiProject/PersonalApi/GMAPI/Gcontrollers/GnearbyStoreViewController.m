@@ -277,6 +277,9 @@
     //楼层数
     NSMutableArray *floorsNameArray = [NSMutableArray arrayWithCapacity:1];
     for (NSArray *arr in floorArray) {
+        if (arr.count==0) {
+            return;
+        }
         NSDictionary *dic = arr[0];
         NSString *str = [dic stringValueForKey:@"floor_name"];
         [floorsNameArray addObject:[NSString stringWithFormat:@"%@",str]];

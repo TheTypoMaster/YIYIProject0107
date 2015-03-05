@@ -174,6 +174,13 @@
         
     }
     
+    
+    if (self.assetsArray.count == 0) {
+        [GMAPI showAutoHiddenMBProgressWithText:@"请添加图片" addToView:self.view];
+        return;
+    }
+    
+    
     //获取需要上传的图片
     [self getChoosePics];
     

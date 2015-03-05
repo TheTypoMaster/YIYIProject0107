@@ -10,6 +10,7 @@
 #import "AFNetworking.h"
 #import "GMAPI.h"
 #define RGBA(r,g,b,a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
+#import "MineViewController.h"
 
 @interface EditMyInfoViewController ()
 
@@ -256,7 +257,8 @@
                                        }
                                        if ([resultDic[@"errorcode"] intValue] == 0) {
                                            //刷新上一界面的头像
-                                           
+                                           [GMAPI setUserFaceImageWithData:UIImagePNGRepresentation(infoView.headImageView.image)];
+                                           [self.delegate.userFaceImv setImage:infoView.headImageView.image];
                                            [self.navigationController popViewControllerAnimated:YES];
                                        }else{
                                            //打印错误信息
