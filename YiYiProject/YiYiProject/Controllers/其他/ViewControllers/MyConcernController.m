@@ -15,6 +15,8 @@
 #import "GpinpaiDetailViewController.h"
 #import "GnearbyStoreViewController.h"
 
+#import "GStorePinpaiViewController.h"
+
 @interface MyConcernController ()<RefreshDelegate,UITableViewDataSource,UIScrollViewDelegate>
 {
     UIButton *heartButton;
@@ -347,12 +349,26 @@
     
 }
 //商场
--(void)pushToNearbyStoreVCWithIdStr:(NSString *)theID theStoreName:(NSString *)nameStr{
-    GnearbyStoreViewController *dd = [[GnearbyStoreViewController alloc]init];
-    dd.storeIdStr = theID;
-    dd.storeNameStr = nameStr;
-    dd.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:dd animated:YES];
+-(void)pushToNearbyStoreVCWithIdStr:(NSString *)theID theStoreName:(NSString *)nameStr mailType:(NSString *)mailType{
+    
+    if ([mailType intValue]==2) {//精品店
+        
+        GStorePinpaiViewController *cc = [[GStorePinpaiViewController alloc]init];
+        cc.storeIdStr = theID;
+        cc.storeNameStr = nameStr;
+        cc.guanzhuleixing = @"精品店";
+        cc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:cc animated:YES];
+        
+        
+    }else{
+        GnearbyStoreViewController *dd = [[GnearbyStoreViewController alloc]init];
+        dd.storeIdStr = theID;
+        dd.storeNameStr = nameStr;
+        NSLog(@"%@",mailType);
+        dd.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:dd animated:YES];
+    }
 }
 
 /**
@@ -448,7 +464,7 @@
         
     }else if (tableView == shopTable){
         MailModel *aModel = shopTable.dataArray[indexPath.row];
-        [self pushToNearbyStoreVCWithIdStr:aModel.mall_id theStoreName:aModel.mall_name];
+        [self pushToNearbyStoreVCWithIdStr:aModel.mall_id theStoreName:aModel.mall_name mailType:aModel.mall_type];
     }
 }
 

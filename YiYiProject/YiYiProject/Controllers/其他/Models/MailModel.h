@@ -22,4 +22,6 @@
 @property(nonatomic,retain)NSString *street;
 @property(nonatomic,retain)NSString *address;
 
+@property(nonatomic,retain)NSString *mall_type;
+
 @end
