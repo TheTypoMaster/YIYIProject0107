@@ -175,6 +175,7 @@
     mapApi.delegate = self;
     
     [mapApi startDingwei];
+    
 }
 
 
@@ -338,8 +339,8 @@
         
         NSLog(@"token发送失败 == %@",failDic);
         
-        UIAlertView *alertV=[[UIAlertView alloc]initWithTitle:[NSString stringWithFormat:@"%@",@"token发送失败"] message:nil delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
-        [alertV show];
+//        UIAlertView *alertV=[[UIAlertView alloc]initWithTitle:[NSString stringWithFormat:@"%@",@"token发送失败"] message:nil delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+//        [alertV show];
 
     }];
 
@@ -587,6 +588,8 @@
 - (void)responseConnectSuccess:(NSString*)userId{
     
     NSLog(@"userId %@ rongCloud登录成功",userId);
+    
+    [LTools cacheBool:YES ForKey:LOGIN_RONGCLOUD_STATE];
 }
 
 /**

@@ -178,7 +178,18 @@ const CGFloat kTMPhotoQuiltViewMargin = 0;
     [self.photoView sd_setImageWithURL:[NSURL URLWithString:imageurl] placeholderImage:nil];
     self.dianPuName_Label.text = aModel.mall_name;
     
-    NSString *distanceStr = [NSString stringWithFormat:@"%@m",aModel.distance];
+    NSString *distanceStr;
+    
+    double dis = [aModel.distance doubleValue];
+    
+    if (dis > 1000) {
+        
+        distanceStr = [NSString stringWithFormat:@"%.1fkm",dis/1000];
+    }else
+    {
+        distanceStr = [NSString stringWithFormat:@"%@m",aModel.distance];
+    }
+    
     self.distance_label.text = distanceStr;
     _distance_label.width = [LTools widthForText:distanceStr font:12];
     

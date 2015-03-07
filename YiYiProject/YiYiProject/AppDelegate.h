@@ -18,8 +18,6 @@ typedef void(^LocationBlock)(NSDictionary *dic);//获取坐标block
 
 @property(nonatomic,retain)NSDictionary *remote_message;//推送消息
 
-- (void)rondCloudDefaultLogin;//融云登录
-
 #pragma mark - 获取坐标
 
 - (void)startDingweiWithBlock:(LocationBlock)location;

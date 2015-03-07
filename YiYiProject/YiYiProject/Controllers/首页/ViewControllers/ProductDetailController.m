@@ -400,9 +400,6 @@
 
 - (CGFloat)thumbImageHeightForArr:(NSArray *)imagesArr
 {
-    
-    
-    NSLog(@"--->%d",imagesArr.count);
     CGFloat aHeight = 0.f;
     CGFloat aWidth = 0.f;
     if (imagesArr.count >= 1) {
@@ -413,7 +410,6 @@
         aHeight = [originalImage[@"height"] floatValue];
         aWidth = [originalImage[@"width"] floatValue];
     }
-    //
     
     return aHeight * (DEVICE_WIDTH / aWidth);
 }

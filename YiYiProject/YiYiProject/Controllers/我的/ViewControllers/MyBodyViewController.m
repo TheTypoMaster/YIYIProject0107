@@ -19,6 +19,8 @@
     UITextField *TunWeiTextField;//臀围
     UIImageView *imageView;//生活照
     NSDictionary *sourceDic;//数据源字典
+    
+    MBProgressHUD *loading;
 }
 @end
 
@@ -35,6 +37,9 @@
     [self createViews];
     [self getNetData];
     // Do any additional setup after loading the view.
+    
+    loading = [LTools MBProgressWithText:@"数据更新中..." addToView:self.view];
+    
 }
 -(void)createRootScrolliew
 {
@@ -237,22 +242,53 @@
 }
 -(void)rightButtonTap:(UIButton *) sender
 {
+    [self registerKeyBord:nil];
+    
     [self upLoadInfo];
+}
+
+- (NSString *)stringForTextFieldText:(NSString *)text
+{
+    if (text.length < 3) {
+        
+        
+        return nil;
+    }
+    
+    return [text substringToIndex:shenGaoTextField.text.length - 3];
+
 }
 
 //上传
 -(void)upLoadInfo
 {
-    
     //设置接收响应类型为标准HTTP类型(默认为响应类型为JSON)
+    
+    if ([self stringForTextFieldText:shenGaoTextField.text]
+        && [self stringForTextFieldText:tiZhongTextField.text]
+        && [self stringForTextFieldText:jianKuanTextField.text]
+        && [self stringForTextFieldText:xiongWeiTextField.text]
+        && [self stringForTextFieldText:yaoWeiTextField.text]
+        && [self stringForTextFieldText:TunWeiTextField.text]) {
+        
+        [loading show:YES];
+
+        
+    }else
+    {
+        [LTools showMBProgressWithText:@"信息填写不完整" addToView:self.view];
+        
+        return;
+    }
+    
     NSDictionary *paraments = @{
                                 @"authcode":[GMAPI getAuthkey],
-                                @"height": [shenGaoTextField.text substringToIndex:shenGaoTextField.text.length - 3],
-                                @"weight": [tiZhongTextField.text substringToIndex:tiZhongTextField.text.length -3],
-                                @"shoulder_width":[jianKuanTextField.text substringToIndex:jianKuanTextField.text.length - 3],
-                                @"chest_width":[xiongWeiTextField.text substringToIndex:xiongWeiTextField.text.length -3],
-                                @"waistline":[yaoWeiTextField.text substringToIndex:yaoWeiTextField.text.length - 3],
-                                @"hipline":[TunWeiTextField.text substringToIndex:TunWeiTextField.text.length -3]
+                                @"height": [self stringForTextFieldText:shenGaoTextField.text],
+                                @"weight": [self stringForTextFieldText:tiZhongTextField.text],
+                                @"shoulder_width":[self stringForTextFieldText:jianKuanTextField.text],
+                                @"chest_width":[self stringForTextFieldText:xiongWeiTextField.text],
+                                @"waistline":[self stringForTextFieldText:yaoWeiTextField.text],
+                                @"hipline":[self stringForTextFieldText:TunWeiTextField.text]
                                 };
     
     AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
@@ -272,10 +308,13 @@
                                        NSString *str = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
                                        
                                        NSLog(@"....str = %@",str);
+                                       
+                                       
+                                       [loading hide:YES];
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        
-                                       
+                                       NSLog(@"update erro %@",operation.responseString);
                                        
                                    }];
     //设置上传操作的进度
