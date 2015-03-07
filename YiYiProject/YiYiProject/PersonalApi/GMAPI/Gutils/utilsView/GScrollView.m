@@ -55,10 +55,28 @@
             UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ggdoTap:)];
             [pinpaiView addGestureRecognizer:tap];
             
+            //距离
+            NSString *distance_str = [dic stringValueForKey:@"distance"];
+            CGFloat distance_float = [distance_str floatValue];
+            if (distance_float>=1000) {
+                distance_float = distance_float*0.001;
+                distance_str = [NSString stringWithFormat:@"%.2fkm",distance_float];
+            }else{
+                distance_str = [NSString stringWithFormat:@"%@m",distance_str];
+            }
+            
+            UILabel *distanceLabel = [[UILabel alloc]initWithFrame
+                                      :CGRectMake(0, 10, 70, 13)];
+//            distanceLabel.backgroundColor = [UIColor orangeColor];
+            distanceLabel.font = [UIFont systemFontOfSize:13];
+            distanceLabel.textColor = RGBCOLOR(114, 114, 114);
+            distanceLabel.textAlignment = NSTextAlignmentCenter;
+            distanceLabel.text = distance_str;
+            [pinpaiView addSubview:distanceLabel];
             
             
-            
-            UIImageView *yuanLogoImv = [[UIImageView alloc]initWithFrame:CGRectMake(2, 15, 66, 66)];
+            //logo
+            UIImageView *yuanLogoImv = [[UIImageView alloc]initWithFrame:CGRectMake(2, CGRectGetMaxY(distanceLabel.frame)+10, 66, 66)];
             yuanLogoImv.layer.cornerRadius = 33;
             yuanLogoImv.layer.borderWidth = 1;
             yuanLogoImv.layer.masksToBounds = YES;
@@ -67,6 +85,7 @@
             [yuanLogoImv sd_setImageWithURL:[NSURL URLWithString:imvStr] placeholderImage:nil];
             [pinpaiView addSubview:yuanLogoImv];
             
+            //品牌名称
             UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(yuanLogoImv.frame)+10, 70, 13)];
             nameLabel.userInteractionEnabled = YES;
             nameLabel.font = [UIFont systemFontOfSize:13];

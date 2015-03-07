@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GnearbyStoreViewController.m"
-            timestampString = "447402316.974008"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GStorePinpaiViewController.m"
+            timestampString = "447418248.688721"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "286"
-            endingLineNumber = "286"
-            landmarkName = "-creatFloorScrollViewWithDic:"
+            startingLineNumber = "640"
+            endingLineNumber = "640"
+            landmarkName = "-waterLoadNewData"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

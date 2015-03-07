@@ -190,7 +190,7 @@ typedef enum{
 //获取我关注的店铺
 #define HOME_CLOTH_GUANZHUSTORE_MINE @"http://www.alayy.com/?d=api&c=friendship&m=listMall"
 //获取我关注的品牌
-#define HOME_CLOTH_GUANZHUPINPAI_MINE @"http://www.alayy.com/index.php?d=api&c=brand&m=get_attend_brands&authcode=%@&page=%d"
+#define HOME_CLOTH_GUANZHUPINPAI_MINE @"http://www.alayy.com/index.php?d=api&c=brand&m=get_attend_brands&authcode=%@&page=%d&lat=%@&long=%@"
 
 //店铺详情  mall_id
 #define HOME_CLOTH_NEARBYSTORE_DETAIL @"http://www.alayy.com?d=api&c=mall&m=getMallDetail"

@@ -312,15 +312,16 @@
 - (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation{
     NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
     if (userLocation) {
-        _theLocationDic = @{
+        self.theLocationDic = @{
                             @"lat":[NSString stringWithFormat:@"%f",userLocation.location.coordinate.latitude],
                             @"long":[NSString stringWithFormat:@"%f",userLocation.location.coordinate.longitude]
                             };
         
         
         [self stopLocation];
+        
         if (self.delegate && [self.delegate respondsToSelector:@selector(theLocationDictionary:)]) {
-            [self.delegate theLocationDictionary:_theLocationDic];
+            [self.delegate theLocationDictionary:self.theLocationDic];
         }
         
         
@@ -331,11 +332,11 @@
 
 - (void)didFailToLocateUserWithError:(NSError *)error{
     if (self.delegate && [self.delegate respondsToSelector:@selector(theLocationDictionary:)]) {
-        _theLocationDic = @{
+        self.theLocationDic = @{
                             @"lat":[NSString stringWithFormat:@"%f",39.915187],
                             @"long":[NSString stringWithFormat:@"%f",116.403877]
                             };
-        [self.delegate theLocationFaild:_theLocationDic];
+        [self.delegate theLocationFaild:self.theLocationDic];
     }
 }
 
@@ -564,8 +565,36 @@
 }
 
 
+//首页缓存
++(void)setHomeClothCacheOfNearStoreWithDic:(NSDictionary *)data{
+    [[NSUserDefaults standardUserDefaults]setObject:data forKey:GNEARSTORE];
+}
++(void)setHomeClothCacheOfNearPinpai:(NSDictionary *)data{
+    [[NSUserDefaults standardUserDefaults]setObject:data forKey:GNEARPINPAI];
+}
++(void)setHomeClothCacheOfTopImage:(NSDictionary *)data;{
+    [[NSUserDefaults standardUserDefaults]setObject:data forKey:GTOPIMAGES];
+}
 
++(NSDictionary*)getHomeClothCacheOfNearStore{
+    NSDictionary *dic = [[NSUserDefaults standardUserDefaults]objectForKey:GNEARSTORE];
+    return dic;
+}
++(NSDictionary*)getHomeClothCacheOfNearPinpai{
+    NSDictionary *dic = [[NSUserDefaults standardUserDefaults]objectForKey:GNEARPINPAI];
+    return dic;
+}
++(NSDictionary*)getHomeClothCacheOfTopimage{
+    NSDictionary *dic = [[NSUserDefaults standardUserDefaults]objectForKey:GTOPIMAGES];
+    return dic;
+}
 
+//清除缓存 首页衣加衣部分
++(void)cleanUserDefaulWithHomeCloth{
+    [[NSUserDefaults standardUserDefaults]removeObjectForKey:GNEARSTORE];
+    [[NSUserDefaults standardUserDefaults]removeObjectForKey:GNEARPINPAI];
+    [[NSUserDefaults standardUserDefaults]removeObjectForKey:GTOPIMAGES];
+}
 
 
 @end

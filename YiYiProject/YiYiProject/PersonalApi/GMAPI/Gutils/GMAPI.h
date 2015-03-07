@@ -16,6 +16,12 @@
 //代码屏幕适配 (设计图为320*568)
 #define GscreenRatio_568 DEVICE_HEIGHT/568.00
 
+
+//首页缓存
+#define GNEARSTORE @"gnearStore"
+#define GNEARPINPAI @"gnearPinpai"
+#define GTOPIMAGES @"gTopImages"
+
 #import "BMapKit.h"
 
 
@@ -38,10 +44,11 @@
 @interface GMAPI : NSObject<BMKMapViewDelegate,BMKLocationServiceDelegate>
 {
     BMKLocationService* _locService;//定位服务
-    NSDictionary *_theLocationDic;//经纬度
+//    NSDictionary *_theLocationDic;//经纬度
     
 }
 
+@property(nonatomic,strong)NSDictionary *theLocationDic;
 @property(nonatomic,assign)id<GgetllocationDelegate> delegate;
 
 +(NSString *)getUsername;
@@ -173,6 +180,23 @@
 
 //时间戳相关
 +(NSString*)getTimeWithDate:(NSDate*)theDate;
+
+
+
+//首页缓存
+//存
++(void)setHomeClothCacheOfNearStoreWithDic:(NSDictionary*)data;//附近的商家
++(void)setHomeClothCacheOfNearPinpai:(NSDictionary *)data;//附近的品牌
++(void)setHomeClothCacheOfTopImage:(NSDictionary *)data;//广告图
+//取
++(NSDictionary*)getHomeClothCacheOfNearStore;//商家
++(NSDictionary*)getHomeClothCacheOfNearPinpai;//品牌
++(NSDictionary*)getHomeClothCacheOfTopimage;//广告图
+
+
+//清除缓存
++(void)cleanUserDefaulWithHomeCloth;
+
 
 
 @end

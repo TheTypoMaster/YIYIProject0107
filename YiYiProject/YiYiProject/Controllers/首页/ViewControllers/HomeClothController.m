@@ -101,7 +101,7 @@
     _mainScrollView.tag = 10000;
     _mainScrollView.backgroundColor = RGBCOLOR(242, 242, 242);
     
-    _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH,DEVICE_HEIGHT<568?100+ 553 *DEVICE_HEIGHT/568.0f:(DEVICE_HEIGHT<736? 553 *DEVICE_HEIGHT/568.0f:553 *DEVICE_HEIGHT/568.0f-85));
+    _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH,DEVICE_HEIGHT<568?100+ 567 *DEVICE_HEIGHT/568.0f:(DEVICE_HEIGHT<736? 567 *DEVICE_HEIGHT/568.0f:567 *DEVICE_HEIGHT/568.0f-85));
     
     NSLog(@"devh===%f",DEVICE_HEIGHT);
     
@@ -137,6 +137,10 @@
     
     
     
+    //先走缓存
+    [self cacheData];
+    
+    
     //获取经纬度
     [self getjingweidu];
     
@@ -151,6 +155,26 @@
     
 }
 
+//走缓存数据
+-(void)cacheData{
+    //附近商店
+    NSDictionary *storeDic = [GMAPI getHomeClothCacheOfNearStore];//商城
+    _nearByStoreDataArray = [storeDic objectForKey:@"list"];
+    _scrollview_nearbyView.dataArray = _nearByStoreDataArray;
+    [_scrollview_nearbyView gReloadData];
+    
+    //附近的品牌
+    NSDictionary *pinpaiDic = [GMAPI getHomeClothCacheOfNearPinpai];//品牌
+    _pinpaiScrollViewModelInfoArray = [pinpaiDic objectForKey:@"brand_data"];
+    _scrollView_pinpai.dataArray = _pinpaiScrollViewModelInfoArray;
+    [_scrollView_pinpai gReloadData];
+    
+    //广告图
+    NSDictionary *topImageDic = [GMAPI getHomeClothCacheOfTopimage];//图片
+    _topScrollviewImvInfoArray = [topImageDic objectForKey:@"advertisements_data"];
+    [_gscrollView reloadData];
+    
+}
 
 //关注
 -(void)notificationGuanzhupinpai{
@@ -265,6 +289,10 @@
     GmPrepareNetData *gg = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
     [gg requestCompletion:^(NSDictionary *result, NSError *erro) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        
+        //缓存
+        [GMAPI setHomeClothCacheOfTopImage:result];
+        
         NSLog(@"%@",result);
         _topScrollviewImvInfoArray = [result objectForKey:@"advertisements_data"];
         [_gscrollView reloadData];
@@ -307,6 +335,9 @@
         
         NSLog(@"%@",result);
         
+        //缓存
+        [GMAPI setHomeClothCacheOfNearStoreWithDic:result];
+        
         _nearByStoreDataArray = [result objectForKey:@"list"];
         _scrollview_nearbyView.dataArray = _nearByStoreDataArray;
         if (_nearByStoreDataArray.count == 0) {
@@ -315,9 +346,8 @@
         [_scrollview_nearbyView gReloadData];
         
         _isLoadNearbyStoreSuccess = YES;
-//        if (_isLoadUpPicSuccess && _isLoadNearbyStoreSuccess && _isLoadNearPinpaiSuccess) {
-            [self doneLoadingTableViewData];
-//        }
+
+        [self doneLoadingTableViewData];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         _isLoadNearbyStoreSuccess = NO;
@@ -404,6 +434,10 @@
     [gg requestCompletion:^(NSDictionary *result, NSError *erro) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         NSLog(@"%@",result);
+        
+        //缓存
+        [GMAPI setHomeClothCacheOfNearPinpai:result];
+        
         _pinpaiScrollViewModelInfoArray = [result objectForKey:@"brand_data"];
         _scrollView_pinpai.dataArray = _pinpaiScrollViewModelInfoArray;
         if (_pinpaiScrollViewModelInfoArray.count == 0) {
@@ -438,7 +472,7 @@
     
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    NSString *url = [NSString stringWithFormat:HOME_CLOTH_GUANZHUPINPAI_MINE,[GMAPI getAuthkey],1];
+    NSString *url = [NSString stringWithFormat:HOME_CLOTH_GUANZHUPINPAI_MINE,[GMAPI getAuthkey],1,[_locationDic stringValueForKey:@"lat"],[_locationDic stringValueForKey:@"long"]];
     GmPrepareNetData *gg = [[GmPrepareNetData alloc]initWithUrl:url isPost:NO postData:nil];
     [gg requestCompletion:^(NSDictionary *result, NSError *erro) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
@@ -596,9 +630,9 @@
     
     
     //滚动界面
-    _scrollView_pinpai = [[GScrollView alloc]initWithFrame:CGRectMake(15, 33, DEVICE_WIDTH-15-15, 155-30-14)];
+    _scrollView_pinpai = [[GScrollView alloc]initWithFrame:CGRectMake(15, 33, DEVICE_WIDTH-15-15, 155-30)];
     _scrollView_pinpai.backgroundColor = RGBCOLOR(242, 242, 242);
-    _scrollView_pinpai.contentSize = CGSizeMake(1000, 155-30-14);
+    _scrollView_pinpai.contentSize = CGSizeMake(1000, 155-30);
     _scrollView_pinpai.tag = 11;
     _scrollView_pinpai.gtype = 11;
     _scrollView_pinpai.delegate = self;

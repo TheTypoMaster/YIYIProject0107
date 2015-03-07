@@ -88,8 +88,14 @@
     
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    NSString *api = nil;
+    if (self.locationDic) {
+        api = [NSString stringWithFormat:@"%@&brand_id=%@&page=1&per_page=100&long=%@&lat=%@",HOME_CLOTH_PINPAI_STORELIST,self.pinpaiIdStr,[self.locationDic stringValueForKey:@"long"],[self.locationDic stringValueForKey:@"lat"]];
+    }else{
+        GMAPI *aa = [GMAPI sharedManager];
+        api = [NSString stringWithFormat:@"%@&brand_id=%@&page=1&per_page=100&long=%@&lat=%@",HOME_CLOTH_PINPAI_STORELIST,self.pinpaiIdStr,[aa.theLocationDic stringValueForKey:@"long"],[aa.theLocationDic stringValueForKey:@"lat"]];
+    }
     
-    NSString *api = [NSString stringWithFormat:@"%@&brand_id=%@&page=1&per_page=100&long=%@&lat=%@",HOME_CLOTH_PINPAI_STORELIST,self.pinpaiIdStr,[self.locationDic stringValueForKey:@"long"],[self.locationDic stringValueForKey:@"lat"]];
     
     NSLog(@"%@",api);
     

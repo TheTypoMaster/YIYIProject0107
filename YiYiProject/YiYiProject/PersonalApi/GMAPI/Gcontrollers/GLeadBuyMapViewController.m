@@ -447,14 +447,16 @@
     
     annotationView.selected = YES;
     
+    annotationView.rightCalloutAccessoryView = [[UIView alloc]initWithFrame:CGRectMake(0, 1, 35, 43)];
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.titleLabel.font = [UIFont systemFontOfSize:14];
+    [btn setTitle:@"导航" forState:UIControlStateNormal];
+    [btn setBackgroundColor:[[UIColor grayColor] colorWithAlphaComponent:0.5]];
+    [btn setFrame:annotationView.rightCalloutAccessoryView.bounds];
+    btn.layer.cornerRadius = 5;
+    btn.layer.masksToBounds = YES;
     
-//    annotationView.rightCalloutAccessoryView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 50, 43)];
-//    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [btn setTitle:@"导航" forState:UIControlStateNormal];
-//    [btn setBackgroundColor:[UIColor blueColor]];
-//    [btn setFrame:annotationView.rightCalloutAccessoryView.bounds];
-//    
-//    [annotationView.rightCalloutAccessoryView addSubview:btn];
+    [annotationView.rightCalloutAccessoryView addSubview:btn];
     
     
     

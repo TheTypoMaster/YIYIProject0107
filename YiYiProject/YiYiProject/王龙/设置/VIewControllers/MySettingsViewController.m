@@ -290,6 +290,7 @@
     [GMAPI setUpUserBannerNo];//重置上传banner标志位
     [GMAPI setUpUserFaceNo];//重置上传用户头像标志位
     [GMAPI showSuccessProgessWithText:@"退出登录成功！" hasMask:NO];
+    [GMAPI cleanUserDefaulWithHomeCloth];//清除首页缓存
     
     [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_LOGOUT object:nil];
     [self logout];
