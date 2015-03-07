@@ -274,12 +274,18 @@
     }else{
         return;
     }
+    NSMutableArray *floorArray_new = [NSMutableArray array];
+    for (NSArray *arr in floorArray) {
+        if (arr.count!=0) {
+            [floorArray_new addObject:arr];
+        }
+    }
+    
+    
+    
     //楼层数
     NSMutableArray *floorsNameArray = [NSMutableArray arrayWithCapacity:1];
-    for (NSArray *arr in floorArray) {
-        if (arr.count==0) {
-            break;
-        }
+    for (NSArray *arr in floorArray_new) {
         NSDictionary *dic = arr[0];
         NSString *str = [dic stringValueForKey:@"floor_name"];
         [floorsNameArray addObject:[NSString stringWithFormat:@"%@",str]];
@@ -287,7 +293,7 @@
     
     //每层的数据的二维数组
     NSMutableArray *data_2Array = [NSMutableArray arrayWithCapacity:1];
-    data_2Array = [NSMutableArray arrayWithArray:floorArray];
+    data_2Array = [NSMutableArray arrayWithArray:floorArray_new];
     
     UIView *floorView = [[UIView alloc]initWithFrame:CGRectMake(12, 185, DEVICE_WIDTH-24, DEVICE_HEIGHT-_upStoreInfoView.frame.size.height)];
     
