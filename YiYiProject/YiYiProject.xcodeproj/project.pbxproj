@@ -489,6 +489,7 @@
 		E37A2E2E1A7349C300145608 /* GchooseAdressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E37A2E2D1A7349C300145608 /* GchooseAdressViewController.m */; };
 		E37C330A1AA23F6900B646EC /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E37C33081AA23F6900B646EC /* mapapi.bundle */; };
 		E37EAB751AA303040040CA6A /* libbaidumapapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E37EAB741AA303040040CA6A /* libbaidumapapi.a */; };
+		E38487721AAA9B7A00BB4B3C /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E38487711AAA9B7A00BB4B3C /* libstdc++.6.0.9.dylib */; };
 		E38AFE021A7A967E009C2C0C /* JKAssets.m in Sources */ = {isa = PBXBuildFile; fileRef = E38AFDDC1A7A967E009C2C0C /* JKAssets.m */; };
 		E38AFE031A7A967E009C2C0C /* JKAssetsCollectionFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = E38AFDDE1A7A967E009C2C0C /* JKAssetsCollectionFooterView.m */; };
 		E38AFE041A7A967E009C2C0C /* JKAssetsGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E38AFDE01A7A967E009C2C0C /* JKAssetsGroupCell.m */; };
@@ -1306,6 +1307,7 @@
 		E37C33061AA23F6900B646EC /* BMKVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKVersion.h; sourceTree = "<group>"; };
 		E37C33081AA23F6900B646EC /* mapapi.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = mapapi.bundle; sourceTree = "<group>"; };
 		E37EAB741AA303040040CA6A /* libbaidumapapi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbaidumapapi.a; sourceTree = "<group>"; };
+		E38487711AAA9B7A00BB4B3C /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
 		E38AFDDB1A7A967E009C2C0C /* JKAssets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKAssets.h; sourceTree = "<group>"; };
 		E38AFDDC1A7A967E009C2C0C /* JKAssets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKAssets.m; sourceTree = "<group>"; };
 		E38AFDDD1A7A967E009C2C0C /* JKAssetsCollectionFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKAssetsCollectionFooterView.h; sourceTree = "<group>"; };
@@ -1461,6 +1463,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				138C2C141A39E46B00EA59F5 /* libz.dylib in Frameworks */,
+				E38487721AAA9B7A00BB4B3C /* libstdc++.6.0.9.dylib in Frameworks */,
 				5653214C1A59780B00E43F80 /* libicucore.dylib in Frameworks */,
 				5653214A1A5977D100E43F80 /* CoreText.framework in Frameworks */,
 				137FC2B41A4DAE980039E3FF /* UIKit.framework in Frameworks */,
@@ -1468,7 +1472,6 @@
 				E3E3E84A1A3C6780001A1DD6 /* QuartzCore.framework in Frameworks */,
 				E3E3E84C1A3C678C001A1DD6 /* OpenGLES.framework in Frameworks */,
 				137FC2B21A4DAE780039E3FF /* MapKit.framework in Frameworks */,
-				138C2C141A39E46B00EA59F5 /* libz.dylib in Frameworks */,
 				138C2C121A39E45E00EA59F5 /* libstdc++.dylib in Frameworks */,
 				138C2C0E1A39E25000EA59F5 /* libsqlite3.dylib in Frameworks */,
 				137FC2B01A4DAE550039E3FF /* libc++.dylib in Frameworks */,
@@ -1509,6 +1512,7 @@
 		12A83EACEAF04194B6F77679 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E38487711AAA9B7A00BB4B3C /* libstdc++.6.0.9.dylib */,
 				5653214B1A59780B00E43F80 /* libicucore.dylib */,
 				565321491A5977D100E43F80 /* CoreText.framework */,
 				137FC2B31A4DAE980039E3FF /* UIKit.framework */,
@@ -4327,6 +4331,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YiYiProject/UMengShare/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
+					"$(PROJECT_DIR)/YiYiProject/PersonalApi/GMAPI/Gutils",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/YiYiProject/PrefixHeader.pch";
 				INFOPLIST_FILE = YiYiProject/Info.plist;
@@ -4362,6 +4367,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YiYiProject/UMengShare/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
+					"$(PROJECT_DIR)/YiYiProject/PersonalApi/GMAPI/Gutils",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/YiYiProject/PrefixHeader.pch";
 				INFOPLIST_FILE = YiYiProject/Info.plist;

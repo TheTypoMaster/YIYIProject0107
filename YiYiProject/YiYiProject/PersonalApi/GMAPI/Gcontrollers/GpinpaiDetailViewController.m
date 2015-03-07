@@ -13,6 +13,7 @@
 #import "GStorePinpaiViewController.h"
 #import "GcustomStoreTableViewCell.h"
 #import "EGORefreshTableHeaderView.h"
+#import "NSDictionary+GJson.h"
 
 @interface GpinpaiDetailViewController ()<UITableViewDataSource,UITableViewDelegate,EGORefreshTableDelegate>
 {
@@ -88,7 +89,7 @@
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
-    NSString *api = [NSString stringWithFormat:@"%@&brand_id=%@&page=1&per_page=100",HOME_CLOTH_PINPAI_STORELIST,self.pinpaiIdStr];
+    NSString *api = [NSString stringWithFormat:@"%@&brand_id=%@&page=1&per_page=100&long=%@&lat=%@",HOME_CLOTH_PINPAI_STORELIST,self.pinpaiIdStr,[self.locationDic stringValueForKey:@"long"],[self.locationDic stringValueForKey:@"lat"]];
     
     NSLog(@"%@",api);
     

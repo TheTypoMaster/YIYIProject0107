@@ -898,6 +898,7 @@
     cc.hidesBottomBarWhenPushed = YES;
     cc.pinpaiIdStr = theID;
     cc.pinpaiName = theName;
+    cc.locationDic = _locationDic;
     [self.rootViewController.navigationController pushViewController:cc animated:YES];
     
 }

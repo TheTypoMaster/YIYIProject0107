@@ -11,7 +11,7 @@
 #import "GLeadbuyTableViewCell.h"
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
-
+#import "NSDictionary+GJson.h"
 @interface GLeadBuyMapViewController ()<BMKMapViewDelegate,BMKLocationServiceDelegate,BMKPoiSearchDelegate,BMKAnnotation,UIAlertViewDelegate,UIActionSheetDelegate>
 {
     BMKMapView* _mapView;//地图
@@ -196,15 +196,66 @@
 -(void)tiaozhuanAppleMap{
     
     
+//    NSString *api = @"http://api.map.baidu.com/ag/coord/convert?from=0&to=2&y=%f&x=%f";
+//    NSString *urlStr = [NSString stringWithFormat:api,_userLocation.location.coordinate
+//                        .latitude,_userLocation.location.coordinate.longitude];
+//    
+//    
+//    
+//    
+//    
+//    GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:urlStr isPost:NO postData:nil];
+//    [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
+//        
+//        NSLog(@"%@",result);
+//        NSString *lat = [result stringValueForKey:@"x"];
+//        NSString *lon = [result stringValueForKey:@"y"];
+//        NSLog(@"lat :%f  lon : %f",[lat floatValue],[lon floatValue]);
+//        
+//    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+//        
+//    }];
     
-    CLLocationCoordinate2D from = CLLocationCoordinate2DMake(_userLocation.location.coordinate.latitude-0.0060,_userLocation.location.coordinate.longitude-0.0065);
+    
+    //定位点
+    const double x_pi = 3.14159265358979324 * 3000.0 / 180.0;
+    
+    double bd_lon = _userLocation.location.coordinate.longitude;
+    double bd_lat = _userLocation.location.coordinate.latitude;
+    
+    double x = bd_lon - 0.0065, y = bd_lat - 0.006;
+    double z = sqrt(x * x + y * y) - 0.00002 * sin(y * x_pi);
+    double theta = atan2(y, x) - 0.000003 * cos(x * x_pi);
+    
+    double gaode_lon = z * cos(theta);//高德经度
+    double gaode_lat = z * sin(theta);//高德维度
+    
+    //目的地
+    const double x_pi1 = 3.14159265358979324 * 3000.0 / 180.0;
+    
+    double bd_lon1= self.mudidi.longitude;
+    double bd_lat1 = self.mudidi.latitude;
+    
+    double x1 = bd_lon1 - 0.0065, y1 = bd_lat1 - 0.006;
+    double z1 = sqrt(x1 * x1 + y1 * y1) - 0.00002 * sin(y1 * x_pi1);
+    double theta1 = atan2(y1, x1) - 0.000003 * cos(x1 * x_pi1);
+    
+    double gaode_lon1 = z1 * cos(theta1);//高德经度
+    double gaode_lat1 = z1 * sin(theta1);//高德维度
+    
+    
+    
+    
+//    CLLocationCoordinate2D from = CLLocationCoordinate2DMake(_userLocation.location.coordinate.latitude-0.0060,_userLocation.location.coordinate.longitude-0.0065);
+    CLLocationCoordinate2D from = CLLocationCoordinate2DMake(gaode_lat,gaode_lon);
     MKPlacemark * fromMark = [[MKPlacemark alloc] initWithCoordinate:from
                                                    addressDictionary:nil];
     MKMapItem * fromLocation = [[MKMapItem alloc] initWithPlacemark:fromMark];
     fromLocation.name = @"我的位置";
     
     
-    CLLocationCoordinate2D to = CLLocationCoordinate2DMake(self.mudidi.latitude-0.0060,self.mudidi.longitude-0.0065);
+//    CLLocationCoordinate2D to = CLLocationCoordinate2DMake(self.mudidi.latitude-0.0060,self.mudidi.longitude-0.0065);
+    CLLocationCoordinate2D to = CLLocationCoordinate2DMake(gaode_lat1,gaode_lon1);
     MKPlacemark * toMark = [[MKPlacemark alloc] initWithCoordinate:to
                                                  addressDictionary:nil];
     MKMapItem * toLocation = [[MKMapItem alloc] initWithPlacemark:toMark];
@@ -226,14 +277,7 @@
 }
 
 -(void)tiaozhuanBiduMap{
-//    CLLocationCoordinate2D coordinate_end;
-//
-//    if (self.theType == LEADYOUTYPE_STORE) {//商店
-//        coordinate_end = self.coordinate_store;
-//    }else if (self.theType == LEADYOUTYPE_CHANPIN){//产品
-//        coordinate_end = self.coordinate_chanpin;
-//    }
-    
+
     
     ///name:起始位置
     NSString * string = [NSString stringWithFormat:@"baidumap://map/direction?origin=%f,%f&destination=%f,%f&mode=driving&src=gaizhuang",_userLocation.location.coordinate.latitude,_userLocation.location.coordinate.longitude,self.mudidi.latitude,self.mudidi.longitude];

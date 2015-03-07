@@ -108,9 +108,9 @@
     if ([key intValue]<0) {
         int a = [key intValue];
         a = -1*a;
-        title = [NSString stringWithFormat:@"B%d",a];
+        title = [NSString stringWithFormat:@"%d",a];
     }else{
-        title = [NSString stringWithFormat:@"%@F",key];
+        title = [NSString stringWithFormat:@"%@",key];
     }
     
     titleLabel.text = title;
@@ -146,9 +146,9 @@
     if ([key intValue]<0) {
         int a = [key intValue];
         a = -1*a;
-        title = [NSString stringWithFormat:@"B%d",a];
+        title = [NSString stringWithFormat:@"%d",a];
     }else{
-        title = [NSString stringWithFormat:@"%@F",key];
+        title = [NSString stringWithFormat:@"%@",key];
     }
     
     
