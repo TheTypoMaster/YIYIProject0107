@@ -612,6 +612,9 @@
     }
     
     [[RCIM sharedRCIM] invokeVoIPCall:self.window.rootViewController message:message];
+    
+    [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_REMOTE_MESSAGE object:nil];
+
 }
 
 #pragma mark - RCIMUserInfoFetcherDelegagte method

@@ -49,6 +49,9 @@
     
     [self prepareItems];
     
+    //更新未读消息数字
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateRemoteMessage:) name:NOTIFICATION_REMOTE_MESSAGE object:nil];
+    
     [self getMyMessage];
     
     self.delegate = self;
@@ -57,6 +60,15 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)updateRemoteMessage:(NSNotification *)notification
+{
+    __weak typeof(self)weakSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [weakSelf getMyMessage];
+    });
 }
 
 - (void)prepareItems

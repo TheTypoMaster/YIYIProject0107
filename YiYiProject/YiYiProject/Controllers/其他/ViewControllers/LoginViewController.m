@@ -24,7 +24,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    self.myTitleLabel.text = @"登陆";
+    self.myTitleLabel.text = @"登录";
     self.myTitleLabel.textColor = [UIColor whiteColor];
     self.rightString = @"注册";
 
@@ -159,10 +159,10 @@
 #pragma mark - 网络请求
 
 /**
- *  @param type       (登录方式，normal为正常手机登陆，s_weibo、qq、weixin分别代表新浪微博、qq、微信登陆) string
- *  @param thirdId    (第三方id，若为第三方登陆需要该参数)
- *  @param nickName   (第三方昵称，若为第三方登陆需要该参数)
- *  @param thirdphoto (第三方头像，若为第三方登陆需要该参数)
+ *  @param type       (登录方式，normal为正常手机登录，s_weibo、qq、weixin分别代表新浪微博、qq、微信登录) string
+ *  @param thirdId    (第三方id，若为第三方登录需要该参数)
+ *  @param nickName   (第三方昵称，若为第三方登录需要该参数)
+ *  @param thirdphoto (第三方头像，若为第三方登录需要该参数)
  *  @param gender     (性别，若第三方登录可填写，也可不填写，1=》男 2=》女 默认为女) int
  */
 

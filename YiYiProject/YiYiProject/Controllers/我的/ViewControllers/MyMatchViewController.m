@@ -44,12 +44,15 @@
 }
 -(void)createViewsWithDic:(NSDictionary *) dic
 {
+    if(_rootScrollView.subviews.count > 0)
+    {
     for(UIView *imageView in _rootScrollView.subviews)
     {
         if(imageView.tag > 1000)
         {
             [imageView removeFromSuperview];
         }
+    }
     }
     float tempWindth = (DEVICE_WIDTH-25-70*4)/3.0;
     NSArray *mainArray = [[dic objectForKey:@"list"] objectForKey:@"main_styles"];

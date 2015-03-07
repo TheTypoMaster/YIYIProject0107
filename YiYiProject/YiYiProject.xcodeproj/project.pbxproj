@@ -481,7 +481,6 @@
 		E35EF15F1A6B947800B493A9 /* GupClothesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E35EF15E1A6B947800B493A9 /* GupClothesViewController.m */; };
 		E3601E6F1A61716100CC41FE /* GView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3601E6E1A61716100CC41FE /* GView.m */; };
 		E3601E771A61733300CC41FE /* gnearstorered@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3601E721A61733300CC41FE /* gnearstorered@3x.png */; };
-		E3601E7B1A61733C00CC41FE /* gimv1_back@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3601E7A1A61733C00CC41FE /* gimv1_back@3x.png */; };
 		E3601E801A61A27900CC41FE /* GcustomStoreTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3601E7F1A61A27900CC41FE /* GcustomStoreTableViewCell.m */; };
 		E3601E821A61A75700CC41FE /* gcustomstore@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3601E811A61A75700CC41FE /* gcustomstore@3x.png */; };
 		E36BFC841A693974009DAF81 /* DataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = E36BFC831A693974009DAF81 /* DataBase.m */; };
@@ -1234,7 +1233,6 @@
 		E3601E6D1A61716100CC41FE /* GView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GView.h; sourceTree = "<group>"; };
 		E3601E6E1A61716100CC41FE /* GView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GView.m; sourceTree = "<group>"; };
 		E3601E721A61733300CC41FE /* gnearstorered@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gnearstorered@3x.png"; sourceTree = "<group>"; };
-		E3601E7A1A61733C00CC41FE /* gimv1_back@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gimv1_back@3x.png"; sourceTree = "<group>"; };
 		E3601E7E1A61A27900CC41FE /* GcustomStoreTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GcustomStoreTableViewCell.h; sourceTree = "<group>"; };
 		E3601E7F1A61A27900CC41FE /* GcustomStoreTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GcustomStoreTableViewCell.m; sourceTree = "<group>"; };
 		E3601E811A61A75700CC41FE /* gcustomstore@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gcustomstore@3x.png"; sourceTree = "<group>"; };
@@ -3230,7 +3228,6 @@
 				E35EF1561A6B6E0700B493A9 /* garea.plist */,
 				E35EF1571A6B6E0700B493A9 /* garea.sqlite */,
 				E3601E811A61A75700CC41FE /* gcustomstore@3x.png */,
-				E3601E7A1A61733C00CC41FE /* gimv1_back@3x.png */,
 				E3601E721A61733300CC41FE /* gnearstorered@3x.png */,
 				E3996E411A5E1DBA00673147 /* Gmodel.h */,
 				E3996E421A5E1DBA00673147 /* Gmodel.m */,
@@ -3625,7 +3622,6 @@
 				137B082F1A4E716700DE7DCC /* 1+1_botton@2x.png in Resources */,
 				56D187E41A5C274A006A606D /* dapeishi_bg@2x.png in Resources */,
 				138C2BF91A39E09200EA59F5 /* UMShareEditViewController.xib in Resources */,
-				E3601E7B1A61733C00CC41FE /* gimv1_back@3x.png in Resources */,
 				137B086A1A4EAC9900DE7DCC /* xiaoxi_down@2x.png in Resources */,
 				137B07CE1A4E6FDF00DE7DCC /* fenxiangb@3x.png in Resources */,
 				13963F511A4FE3A5007BE68B /* fabu@3x.png in Resources */,

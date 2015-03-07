@@ -39,17 +39,10 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    int rong_num = [[RCIM sharedRCIM] getTotalUnreadCount];
     
-    if (rong_num > 0 ) {
-        
-        [self setMesModelWithInfo:@"您有未读消息" num:rong_num];
-    }else
-    {
-        [self setMesModelWithInfo:nil num:0];
-    }
+    //单独处理 即时消息的条数
     
-    [_table reloadData];
+    [self updateRongMessage];
     
 }
 
@@ -81,10 +74,34 @@
 
 #pragma mark - 推送消息
 
+/**
+ *  更新融云即时通讯消息
+ */
+- (void)updateRongMessage
+{
+    int rong_num = [[RCIM sharedRCIM] getTotalUnreadCount];
+    
+    if (rong_num > 0 ) {
+        
+        [self setMesModelWithInfo:@"您有未读消息" num:rong_num];
+    }else
+    {
+        [self setMesModelWithInfo:nil num:0];
+    }
+    
+    [_table reloadData];
+
+}
+
 - (void)updateRemoteMessage:(NSNotification *)notification
 {
-    //获取消息
-    [self getMyMessage];
+    __weak typeof(self)weakSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [weakSelf getMyMessage];
+        
+        [weakSelf updateRongMessage];
+    });
 }
 
 - (void)setMesModelWithInfo:(NSString *)info num:(int)unreadNum
@@ -125,7 +142,8 @@
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
-        
+        NSLog(@"failDic %@",failDic);
+
     }];
 }
 
