@@ -22,9 +22,15 @@
     int _page;
     int _per_page;
     
-    LWaterflowView *_waterFlow;
+    //瀑布流视图
+    LWaterflowView *_waterFlow_xinpin;//新品
+    LWaterflowView *_waterFlow_zhekou;//折扣
+    LWaterflowView *_waterFlow_rexiao;//热销
     
-    int _paixuIndex;
+    LWaterflowView *_waterFlow;//指针
+    
+    
+    int _paixuIndex;//新品折扣热销btn标识
     
     
     UIView *_menu_view;//按钮底层view
@@ -72,6 +78,7 @@
 -(void)dealloc{
     
     _waterFlow.waterDelegate = nil;
+    
     NSLog(@"%s",__FUNCTION__);
 }
 
@@ -544,11 +551,28 @@
     _backView_water = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_menu_view.frame)+12, ALL_FRAME_WIDTH, ALL_FRAME_HEIGHT - _menu_view.frame.size.height -64-_upStoreInfoView.frame.size.height)];
     _backView_water.backgroundColor = RGBCOLOR(240, 230, 235);
     [_mainScrollview addSubview:_backView_water];
-    _waterFlow = [[LWaterflowView alloc]initWithFrame:_backView_water.bounds waterDelegate:self waterDataSource:self];
-    _waterFlow.backgroundColor = RGBCOLOR(240, 230, 235);
-    [_backView_water addSubview:_waterFlow];
-    [_waterFlow showRefreshHeader:YES];
     
+    //新品
+    _waterFlow_xinpin = [[LWaterflowView alloc]initWithFrame:_backView_water.bounds waterDelegate:self waterDataSource:self];
+    _waterFlow_xinpin.backgroundColor = RGBCOLOR(240, 230, 235);
+    [_backView_water addSubview:_waterFlow_xinpin];
+    _waterFlow_xinpin.hidden = NO;
+    [_waterFlow_xinpin showRefreshHeader:YES];
+    
+    
+    //折扣
+    _waterFlow_zhekou = [[LWaterflowView alloc]initWithFrame:_backView_water.bounds waterDelegate:self waterDataSource:self];
+    _waterFlow_zhekou.backgroundColor = RGBCOLOR(240, 230, 235);
+    [_backView_water addSubview:_waterFlow_zhekou];
+    _waterFlow_zhekou.hidden = YES;
+    [_waterFlow_zhekou showRefreshHeader:YES];
+    
+    //热销
+    _waterFlow_rexiao = [[LWaterflowView alloc]initWithFrame:_backView_water.bounds waterDelegate:self waterDataSource:self];
+    _waterFlow_rexiao.backgroundColor = RGBCOLOR(240, 230, 235);
+    [_backView_water addSubview:_waterFlow_rexiao];
+    _waterFlow_rexiao.hidden = YES;
+    [_waterFlow_rexiao showRefreshHeader:YES];
     
     
 }
@@ -568,7 +592,42 @@
     
     //请求数据  _paixuIndex 0新品 1
     _paixuIndex = tag - 100;
-    [_waterFlow showRefreshHeader:YES];
+    
+    
+    if (_paixuIndex == 0) {//新品
+        _waterFlow_xinpin.pageNum = 1;
+        _waterFlow_xinpin.dataArray = [NSMutableArray arrayWithCapacity:1];
+        _waterFlow = _waterFlow_xinpin;
+        if (_waterFlow.dataArray.count>0) {
+            _waterFlow_xinpin.hidden = NO;
+            _waterFlow_zhekou.hidden = YES;
+            _waterFlow_rexiao.hidden = YES;
+            return;
+        }
+        [_waterFlow_xinpin showRefreshHeader:YES];
+    }else if (_paixuIndex == 1){//折扣
+        _waterFlow_zhekou.pageNum = 1;
+        _waterFlow_zhekou.dataArray = [NSMutableArray arrayWithCapacity:1];
+        _waterFlow = _waterFlow_zhekou;
+        if (_waterFlow.dataArray.count>0) {
+            _waterFlow_xinpin.hidden = YES;
+            _waterFlow_zhekou.hidden = NO;
+            _waterFlow_rexiao.hidden = YES;
+            return;
+        }
+        [_waterFlow_zhekou showRefreshHeader:YES];
+    }else if (_paixuIndex == 2){//热销
+        _waterFlow_rexiao.pageNum = 1;
+        _waterFlow_rexiao.dataArray = [NSMutableArray arrayWithCapacity:1];
+        _waterFlow = _waterFlow_rexiao;
+        if (_waterFlow.dataArray.count>0) {
+            _waterFlow_xinpin.hidden = YES;
+            _waterFlow_zhekou.hidden = YES;
+            _waterFlow_rexiao.hidden = NO;
+            return;
+        }
+        [_waterFlow_rexiao showRefreshHeader:YES];
+    }
 }
 
 
@@ -578,11 +637,7 @@
 
 - (void)waterLoadNewData
 {
-    
-    
-    //初始化
-    _waterFlow.pageNum = 1;
-    _waterFlow.dataArray = [NSMutableArray arrayWithCapacity:1];
+
     
     //请求网络数据
     NSString *api = nil;
@@ -619,7 +674,6 @@
             
             
             if (list.count == 0) {
-//                [GMAPI showAutoHiddenMBProgressWithText:@"暂无" addToView:self.view];
                 [GMAPI showAutoHiddenQuicklyMBProgressWithText:@"暂无" addToView:_backView_water];
             }
             
@@ -636,8 +690,7 @@
             }
             
         }
-    
-        [_waterFlow reloadData:arr pageSize:_per_page];
+        [_waterFlow reloadData:_waterFlow.dataArray pageSize:_per_page];
         
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {

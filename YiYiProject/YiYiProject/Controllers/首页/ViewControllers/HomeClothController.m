@@ -141,19 +141,26 @@
     [self cacheData];
     
     
-    //获取经纬度
-    [self getjingweidu];
+    [self performSelector:@selector(prepareNetData) withObject:[NSNumber numberWithBool:YES] afterDelay:2];
     
     
-    //网络请求
-    //请求顶部滚动广告栏
-    [self prepareTopScrollViewIms];
     
     
     
     
     
 }
+//请求网络数据
+-(void)prepareNetData{
+    //获取经纬度
+    [self getjingweidu];
+    //网络请求
+    //请求顶部滚动广告栏
+    [self prepareTopScrollViewIms];
+}
+
+
+
 
 //走缓存数据
 -(void)cacheData{
