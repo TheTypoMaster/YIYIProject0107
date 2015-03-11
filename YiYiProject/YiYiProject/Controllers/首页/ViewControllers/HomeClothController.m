@@ -873,7 +873,7 @@
     
     GwebViewController *gwebvc = [[GwebViewController alloc]init];
     gwebvc.urlstring = [dic stringValueForKey:@"redirect_url"];
-    if ([[dic stringValueForKey:@"redirect_type"]intValue]==1) {
+    if ([[dic stringValueForKey:@"redirect_type"]intValue]==1) {//可以跳转
         gwebvc.hidesBottomBarWhenPushed = YES;
         [self.rootViewController.navigationController pushViewController:gwebvc animated:YES];
     }

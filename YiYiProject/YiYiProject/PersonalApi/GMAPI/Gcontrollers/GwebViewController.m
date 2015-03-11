@@ -33,6 +33,7 @@
 //    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     NSURL *url =[NSURL URLWithString:self.urlstring];
+    self.myTitle = @"详情";
     
     
     NSURLRequest *request =[NSURLRequest requestWithURL:url];

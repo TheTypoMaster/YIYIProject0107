@@ -298,10 +298,15 @@
                                        
                                        NSError * myerr;
                                        
-                                       NSDictionary *mydic=[NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:0 error:&myerr];
+                                       NSDictionary *mydic=[NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:NSJSONReadingAllowFragments error:&myerr];
                                        
                                        
                                        NSLog(@"mydic == %@ err0 = %@",mydic,myerr);
+                                       
+                                       if (mydic == nil) {
+                                           [GMAPI showAutoHiddenMBProgressWithText:@"上传失败" addToView:self.view];
+                                           return;
+                                       }
                                        
                                        if ([[mydic objectForKey:@"errorcode"]intValue]==0) {
                                            [GMAPI showAutoHiddenMBProgressWithText:@"添加成功" addToView:self.view];

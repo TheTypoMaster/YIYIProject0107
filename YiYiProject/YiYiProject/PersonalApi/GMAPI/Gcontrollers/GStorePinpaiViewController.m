@@ -554,14 +554,17 @@
     
     //新品
     _waterFlow_xinpin = [[LWaterflowView alloc]initWithFrame:_backView_water.bounds waterDelegate:self waterDataSource:self];
+    _waterFlow_xinpin.tag = 565;
     _waterFlow_xinpin.backgroundColor = RGBCOLOR(240, 230, 235);
     [_backView_water addSubview:_waterFlow_xinpin];
     _waterFlow_xinpin.hidden = NO;
     [_waterFlow_xinpin showRefreshHeader:YES];
+    _waterFlow = _waterFlow_xinpin;
     
     
     //折扣
     _waterFlow_zhekou = [[LWaterflowView alloc]initWithFrame:_backView_water.bounds waterDelegate:self waterDataSource:self];
+    _waterFlow_zhekou.tag = 566;
     _waterFlow_zhekou.backgroundColor = RGBCOLOR(240, 230, 235);
     [_backView_water addSubview:_waterFlow_zhekou];
     _waterFlow_zhekou.hidden = YES;
@@ -569,6 +572,7 @@
     
     //热销
     _waterFlow_rexiao = [[LWaterflowView alloc]initWithFrame:_backView_water.bounds waterDelegate:self waterDataSource:self];
+    _waterFlow_rexiao.tag = 567;
     _waterFlow_rexiao.backgroundColor = RGBCOLOR(240, 230, 235);
     [_backView_water addSubview:_waterFlow_rexiao];
     _waterFlow_rexiao.hidden = YES;
@@ -674,6 +678,7 @@
             
             
             if (list.count == 0) {
+                [_waterFlow loadFail];
                 [GMAPI showAutoHiddenQuicklyMBProgressWithText:@"暂无" addToView:_backView_water];
             }
             

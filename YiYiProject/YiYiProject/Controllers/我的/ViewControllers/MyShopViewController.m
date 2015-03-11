@@ -322,15 +322,16 @@
     NSLog(@"%@",NSStringFromCGRect(self.userFaceImv.frame));
     
     //昵称
-    self.userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.userFaceImv.frame)+10, self.userFaceImv.frame.origin.y+6, DEVICE_WIDTH - self.userFaceImv.right - 20, 14)];
+    self.userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.userFaceImv.frame)+10, self.userFaceImv.frame.origin.y+6, DEVICE_WIDTH - self.userFaceImv.right - 20, 15)];
     self.userNameLabel.text = @"昵称";
-    self.userNameLabel.font = [UIFont systemFontOfSize:14*GscreenRatio_320];
+    self.userNameLabel.font = [UIFont systemFontOfSize:13*GscreenRatio_320];
     self.userNameLabel.textColor = [UIColor whiteColor];
     _userNameLabel.text = [GMAPI getUsername];
     
     //地址
-    self.userScoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.userNameLabel.frame.origin.x, CGRectGetMaxY(self.userNameLabel.frame)+10, self.userNameLabel.frame.size.width, self.userNameLabel.frame.size.height)];
-    self.userScoreLabel.font = [UIFont systemFontOfSize:14*GscreenRatio_320];
+    self.userScoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.userNameLabel.frame.origin.x, CGRectGetMaxY(self.userNameLabel.frame)+7, self.userNameLabel.frame.size.width, 30)];
+    self.userScoreLabel.font = [UIFont systemFontOfSize:13*GscreenRatio_320];
+    self.userScoreLabel.numberOfLines = 2;
     //    self.userScoreLabel.text = @"地址";
     self.userScoreLabel.textColor = [UIColor whiteColor];
     
@@ -352,6 +353,7 @@
     [self.userFaceImv sd_setImageWithURL:[NSURL URLWithString:aModel.logo] placeholderImage:nil];
     self.userNameLabel.text = aModel.shop_name;
     self.userScoreLabel.text = aModel.address;
+    [self.userScoreLabel sizeToFit];
 }
 
 //更新状态栏颜色
