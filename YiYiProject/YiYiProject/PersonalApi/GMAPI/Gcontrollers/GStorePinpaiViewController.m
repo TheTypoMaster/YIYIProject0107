@@ -19,15 +19,11 @@
 @interface GStorePinpaiViewController ()<CustomSegmentViewDelegate,TMQuiltViewDataSource,WaterFlowDelegate,UIScrollViewDelegate>
 {
     
-    int _page;
-    int _per_page;
+    
+    int _per_page;//每一页请求多少数据
     
     //瀑布流视图
-    LWaterflowView *_waterFlow_xinpin;//新品
-    LWaterflowView *_waterFlow_zhekou;//折扣
-    LWaterflowView *_waterFlow_rexiao;//热销
-    
-    LWaterflowView *_waterFlow;//指针
+    LWaterflowView *_waterFlow;//一个瀑布流
     
     
     int _paixuIndex;//新品折扣热销btn标识
@@ -38,10 +34,12 @@
     
     
     //网络数据
-    NSMutableArray *_netDataArray;//网络数据数组
     NSMutableArray *_dataArray_xinpin;//新品数组
+    int _page_xinpin;//新品当前页
     NSMutableArray *_dataArray_zhekou;//折扣数组
+    int _page_zhekou;//折扣当前页
     NSMutableArray *_dataArray_rexiao;//热销数组
+    int _page_rexiao;//热销当前页
     
     
     //关注相关
@@ -130,11 +128,14 @@
     
     //初始化
     _btnArray = [NSMutableArray arrayWithCapacity:1];
-
-    _page = 1;
     _per_page = 10;
     _paixuIndex = 0;
+    _page_xinpin = 1;
+    _page_zhekou = 1;
+    _page_rexiao = 1;
     
+    //测试
+//    self.storeIdStr = @"2653";
     
     
     
@@ -551,32 +552,10 @@
     _backView_water = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_menu_view.frame)+12, ALL_FRAME_WIDTH, ALL_FRAME_HEIGHT - _menu_view.frame.size.height -64-_upStoreInfoView.frame.size.height)];
     _backView_water.backgroundColor = RGBCOLOR(240, 230, 235);
     [_mainScrollview addSubview:_backView_water];
-    
-    //新品
-    _waterFlow_xinpin = [[LWaterflowView alloc]initWithFrame:_backView_water.bounds waterDelegate:self waterDataSource:self];
-    _waterFlow_xinpin.tag = 565;
-    _waterFlow_xinpin.backgroundColor = RGBCOLOR(240, 230, 235);
-    [_backView_water addSubview:_waterFlow_xinpin];
-    _waterFlow_xinpin.hidden = NO;
-    [_waterFlow_xinpin showRefreshHeader:YES];
-    _waterFlow = _waterFlow_xinpin;
-    
-    
-    //折扣
-    _waterFlow_zhekou = [[LWaterflowView alloc]initWithFrame:_backView_water.bounds waterDelegate:self waterDataSource:self];
-    _waterFlow_zhekou.tag = 566;
-    _waterFlow_zhekou.backgroundColor = RGBCOLOR(240, 230, 235);
-    [_backView_water addSubview:_waterFlow_zhekou];
-    _waterFlow_zhekou.hidden = YES;
-    [_waterFlow_zhekou showRefreshHeader:YES];
-    
-    //热销
-    _waterFlow_rexiao = [[LWaterflowView alloc]initWithFrame:_backView_water.bounds waterDelegate:self waterDataSource:self];
-    _waterFlow_rexiao.tag = 567;
-    _waterFlow_rexiao.backgroundColor = RGBCOLOR(240, 230, 235);
-    [_backView_water addSubview:_waterFlow_rexiao];
-    _waterFlow_rexiao.hidden = YES;
-    [_waterFlow_rexiao showRefreshHeader:YES];
+    _waterFlow = [[LWaterflowView alloc]initWithFrame:_backView_water.bounds waterDelegate:self waterDataSource:self];
+    _waterFlow.backgroundColor = RGBCOLOR(240, 230, 235);
+    [_backView_water addSubview:_waterFlow];
+    [_waterFlow showRefreshHeader:YES];
     
     
 }
@@ -599,38 +578,32 @@
     
     
     if (_paixuIndex == 0) {//新品
-        _waterFlow_xinpin.pageNum = 1;
-        _waterFlow_xinpin.dataArray = [NSMutableArray arrayWithCapacity:1];
-        _waterFlow = _waterFlow_xinpin;
-        if (_waterFlow.dataArray.count>0) {
-            _waterFlow_xinpin.hidden = NO;
-            _waterFlow_zhekou.hidden = YES;
-            _waterFlow_rexiao.hidden = YES;
-            return;
+        
+        if (_dataArray_xinpin) {
+            _waterFlow.dataArray = _dataArray_xinpin;
+            [_waterFlow reloadData];
+        }else{
+            [_waterFlow showRefreshHeader:YES];
         }
-        [_waterFlow_xinpin showRefreshHeader:YES];
+        
+        
     }else if (_paixuIndex == 1){//折扣
-        _waterFlow_zhekou.pageNum = 1;
-        _waterFlow_zhekou.dataArray = [NSMutableArray arrayWithCapacity:1];
-        _waterFlow = _waterFlow_zhekou;
-        if (_waterFlow.dataArray.count>0) {
-            _waterFlow_xinpin.hidden = YES;
-            _waterFlow_zhekou.hidden = NO;
-            _waterFlow_rexiao.hidden = YES;
-            return;
+        
+        if (_dataArray_zhekou) {
+            _waterFlow.dataArray = _dataArray_zhekou;
+            [_waterFlow reloadData];
+        }else{
+            [_waterFlow showRefreshHeader:YES];
         }
-        [_waterFlow_zhekou showRefreshHeader:YES];
+        
     }else if (_paixuIndex == 2){//热销
-        _waterFlow_rexiao.pageNum = 1;
-        _waterFlow_rexiao.dataArray = [NSMutableArray arrayWithCapacity:1];
-        _waterFlow = _waterFlow_rexiao;
-        if (_waterFlow.dataArray.count>0) {
-            _waterFlow_xinpin.hidden = YES;
-            _waterFlow_zhekou.hidden = YES;
-            _waterFlow_rexiao.hidden = NO;
-            return;
+        
+        if (_dataArray_rexiao) {
+            _waterFlow.dataArray = _dataArray_rexiao;
+            [_waterFlow reloadData];
+        }else{
+            [_waterFlow showRefreshHeader:YES];
         }
-        [_waterFlow_rexiao showRefreshHeader:YES];
     }
 }
 
@@ -655,11 +628,17 @@
     }
     
     if (_paixuIndex == 0) {//新品
-        api = [NSString stringWithFormat:@"%@&action=%@&mb_id=%@&page=%d&per_page=%d",HOME_CLOTH_STORE_PINPAILIST,@"by_time",self.shopId,_waterFlow.pageNum,_per_page];
+        _page_xinpin = 1;
+        _dataArray_xinpin = nil;
+        api = [NSString stringWithFormat:@"%@&action=%@&mb_id=%@&page=%d&per_page=%d",HOME_CLOTH_STORE_PINPAILIST,@"by_time",self.shopId,_page_xinpin,_per_page];
     }else if (_paixuIndex == 1){//折扣
-        api = [NSString stringWithFormat:@"%@&action=%@&mb_id=%@&page=%d&per_page=%d",HOME_CLOTH_STORE_PINPAILIST,@"by_discount",self.shopId,_waterFlow.pageNum,_per_page];
+        _page_zhekou = 1;
+        _dataArray_zhekou = nil;
+        api = [NSString stringWithFormat:@"%@&action=%@&mb_id=%@&page=%d&per_page=%d",HOME_CLOTH_STORE_PINPAILIST,@"by_discount",self.shopId,_page_zhekou,_per_page];
     }else if (_paixuIndex == 2){//热销
-        api = [NSString stringWithFormat:@"%@&action=%@&mb_id=%@&page=%d&per_page=%d",HOME_CLOTH_STORE_PINPAILIST,@"by_hot",self.shopId,_waterFlow.pageNum,_per_page];
+        _page_rexiao = 1;
+        _dataArray_rexiao = nil;
+        api = [NSString stringWithFormat:@"%@&action=%@&mb_id=%@&page=%d&per_page=%d",HOME_CLOTH_STORE_PINPAILIST,@"by_hot",self.shopId,_page_rexiao,_per_page];
     }
     
     NSLog(@"请求的接口%@",api);
@@ -695,7 +674,17 @@
             }
             
         }
-        [_waterFlow reloadData:_waterFlow.dataArray pageSize:_per_page];
+        
+        if (_paixuIndex == 0) {//新品
+            _dataArray_xinpin = arr;
+        }else if (_paixuIndex == 1){//折扣
+            _dataArray_zhekou = arr;
+        }else if (_paixuIndex == 2){//热销
+            _dataArray_rexiao = arr;
+        }
+        
+        
+        [_waterFlow reloadData:arr pageSize:_per_page];
         
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
@@ -713,11 +702,11 @@
     
     
     if (_paixuIndex == 0) {//新品
-        api = [NSString stringWithFormat:@"%@&action=%@&mb_id=%@&page=%d&per_page=%d",HOME_CLOTH_STORE_PINPAILIST,@"by_time",self.storeIdStr,_waterFlow.pageNum,_per_page];
+        api = [NSString stringWithFormat:@"%@&action=%@&mb_id=%@&page=%d&per_page=%d",HOME_CLOTH_STORE_PINPAILIST,@"by_time",self.storeIdStr,_page_xinpin+1,_per_page];
     }else if (_paixuIndex == 1){//折扣
-        api = [NSString stringWithFormat:@"%@&action=%@&mb_id=%@&page=%d&per_page=%d",HOME_CLOTH_STORE_PINPAILIST,@"by_discount",self.storeIdStr,_waterFlow.pageNum,_per_page];
+        api = [NSString stringWithFormat:@"%@&action=%@&mb_id=%@&page=%d&per_page=%d",HOME_CLOTH_STORE_PINPAILIST,@"by_discount",self.storeIdStr,_page_zhekou+1,_per_page];
     }else if (_paixuIndex == 2){//热销
-        api = [NSString stringWithFormat:@"%@&action=%@&mb_id=%@&page=%d&per_page=%d",HOME_CLOTH_STORE_PINPAILIST,@"by_hot",self.storeIdStr,_waterFlow.pageNum,_per_page];
+        api = [NSString stringWithFormat:@"%@&action=%@&mb_id=%@&page=%d&per_page=%d",HOME_CLOTH_STORE_PINPAILIST,@"by_hot",self.storeIdStr,_page_rexiao+1,_per_page];
     }
     
     NSLog(@"请求的接口%@",api);
@@ -747,12 +736,34 @@
             
         }
         
+        
+        //请求数据成功之后修改 页数和数据数组
+        if (_paixuIndex == 0) {//新品
+            _page_xinpin += 1;
+            _waterFlow.dataArray = _dataArray_xinpin;
+        }else if (_paixuIndex == 1){//折扣
+            _page_zhekou += 1;
+            _waterFlow.dataArray = _dataArray_zhekou;
+        }else if (_paixuIndex == 2){//热销
+            _page_rexiao += 1;
+            _waterFlow.dataArray = _dataArray_rexiao;
+        }
+        
+        
+        //重载瀑布流
         [_waterFlow reloadData:arr pageSize:_per_page];
         
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
         [_waterFlow loadFail];
+        if (_paixuIndex == 0) {//新品
+            _waterFlow.dataArray = _dataArray_xinpin;
+        }else if (_paixuIndex == 1){//折扣
+            _waterFlow.dataArray = _dataArray_zhekou;
+        }else if (_paixuIndex == 2){//热销
+            _waterFlow.dataArray = _dataArray_rexiao;
+        }
     }];
 }
 

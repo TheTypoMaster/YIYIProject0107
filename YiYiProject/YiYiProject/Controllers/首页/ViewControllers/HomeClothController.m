@@ -27,6 +27,7 @@
     //第一行
     GCycleScrollView *_gscrollView;//上方循环滚动的scrollview
     NSMutableArray *_topScrollviewImvInfoArray;//顶部广告scrollview图片数组
+//    NSMutableArray *_topScrollviewImvInfoArray_cache;//顶部广告scrollview图片数组缓存
     
     //第二行
     UIView *_nearbyView;//附近的view
@@ -167,14 +168,12 @@
 -(void)cacheData{
     //附近商店
     NSDictionary *storeDic = [GMAPI getHomeClothCacheOfNearStore];//商城
-    _nearByStoreDataArray = [storeDic objectForKey:@"list"];
-    _scrollview_nearbyView.dataArray = _nearByStoreDataArray;
+    _scrollview_nearbyView.dataArray = [storeDic objectForKey:@"list"];
     [_scrollview_nearbyView gReloadData];
     
     //附近的品牌
     NSDictionary *pinpaiDic = [GMAPI getHomeClothCacheOfNearPinpai];//品牌
-    _pinpaiScrollViewModelInfoArray = [pinpaiDic objectForKey:@"brand_data"];
-    _scrollView_pinpai.dataArray = _pinpaiScrollViewModelInfoArray;
+    _scrollView_pinpai.dataArray = [pinpaiDic objectForKey:@"brand_data"];
     [_scrollView_pinpai gReloadData];
     
     //广告图
@@ -830,9 +829,11 @@
     NSInteger num = 0;
     if (theGCycleScrollView.tag == 200) {
         num = _topScrollviewImvInfoArray.count;
-    }else if (theGCycleScrollView.tag == 201){
-        num = _nearByStoreDataArray.count/4+1;
     }
+    //这是什么?
+//    else if (theGCycleScrollView.tag == 201){
+//        num = _nearByStoreDataArray.count/4+1;
+//    }
     return num;
     
 }
@@ -854,11 +855,13 @@
         
         [imv sd_setImageWithURL:[NSURL URLWithString:str] placeholderImage:nil];
         return imv;
-    }else if (theGCycleScrollView.tag == 201){
-        GClothWaveCustomView *view = [[GClothWaveCustomView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH-30, 180*GscreenRatio_568)];
-        [view loadCustomViewWithDataArray:_nearByStoreDataArray pageIndex:index];
-        return view;
     }
+    //这是什么?
+//    else if (theGCycleScrollView.tag == 201){
+//        GClothWaveCustomView *view = [[GClothWaveCustomView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH-30, 180*GscreenRatio_568)];
+//        [view loadCustomViewWithDataArray:_nearByStoreDataArray pageIndex:index];
+//        return view;
+//    }
     
     return [UIView new];
     
@@ -871,6 +874,8 @@
     
     NSDictionary *dic = _topScrollviewImvInfoArray[index];
     
+    //测试
+//    [self.rootViewController.navigationController pushViewController:[[GStorePinpaiViewController alloc]init] animated:YES];
     
     
     if ([[dic stringValueForKey:@"redirect_type"]intValue]==1) {//可以跳转

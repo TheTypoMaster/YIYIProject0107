@@ -331,10 +331,12 @@
 
 
 - (void)didFailToLocateUserWithError:(NSError *)error{
+    //金领时代 40.041951,116.33934
+    //天安门 39.915187,116.403877
     if (self.delegate && [self.delegate respondsToSelector:@selector(theLocationDictionary:)]) {
         self.theLocationDic = @{
-                            @"lat":[NSString stringWithFormat:@"%f",39.915187],
-                            @"long":[NSString stringWithFormat:@"%f",116.403877]
+                            @"lat":[NSString stringWithFormat:@"%f",40.041951],
+                            @"long":[NSString stringWithFormat:@"%f",116.33934]
                             };
         [self.delegate theLocationFaild:self.theLocationDic];
     }
