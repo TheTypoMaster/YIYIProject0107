@@ -252,6 +252,13 @@
 #pragma mark--UITableViewDeleGate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    if (indexPath.row == 0) {
+        
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        
+        return;
+    }
     _maskView.hidden = YES;
     chooseDic = [_dataSourceArray objectAtIndex:indexPath.row];
     chooseLabel.text = [[_dataSourceArray objectAtIndex:indexPath.row] objectForKey:@"sort_name"];
@@ -470,7 +477,17 @@
         if(result && [[result objectForKey:@"errorcode"] integerValue] == 0)
         {
             _dataSourceArray = [NSMutableArray arrayWithArray:[result objectForKey:@"list"]];
-            [_dataSourceArray replaceObjectAtIndex:0 withObject:@"所有分类"];
+//            [_dataSourceArray replaceObjectAtIndex:0 withObject:@"所有分类"];
+            
+            if (_dataSourceArray.count > 0) {
+                
+                [_dataSourceArray insertObject:@"所有分类" atIndex:0];
+                
+            }else
+            {
+                [_dataSourceArray addObject:@"所有分类"];
+            }
+
             [myTableView reloadData];
             NSLog(@"%@",result);
         }
