@@ -440,8 +440,9 @@
     
     collectButton.selected = aProductModel.is_favor ==  1 ? YES : NO;
     
+    //精品店商品 和 商场店商品 的品牌名字
     
-    NSString *brandName = aProductModel.brand_info[@"brand_name"];
+    NSString *brandName = aProductModel.product_brand_name;
     
     if (brandName == nil || [brandName isEqualToString:@"(null)"] || [brandName isEqualToString:@"null"]) {
         

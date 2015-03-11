@@ -18,7 +18,7 @@
 @property(nonatomic,retain)NSString *longitude;
 @property(nonatomic,retain)NSString *latitude;
 @property(nonatomic,retain)NSString *mall_name;
-@property(nonatomic,retain)NSString *product_name;
+@property(nonatomic,retain)NSString *product_name;//品牌名
 
 @property(nonatomic,retain)NSString *product_price;
 @property(nonatomic,assign)CGFloat discount_num;
@@ -28,6 +28,9 @@
 @property(nonatomic,retain)NSString *product_fav_num;
 
 @property(nonatomic,retain)NSString *product_brand_id;
+
+@property(nonatomic,retain)NSString *product_brand_name;//品牌名
+
 @property(nonatomic,retain)NSString *product_share_num;
 
 @property(nonatomic,retain)NSString *product_sku;
