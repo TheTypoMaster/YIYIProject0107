@@ -473,6 +473,7 @@
 		E305222A1A6ECD3A007BEAFD /* GupHuoDongViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E30522291A6ECD3A007BEAFD /* GupHuoDongViewController.m */; };
 		E305222D1A6ED1B5007BEAFD /* GHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E305222C1A6ED1B5007BEAFD /* GHolderTextView.m */; };
 		E34372AF1A88357D003CDFD9 /* gdownname@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E34372AE1A88357D003CDFD9 /* gdownname@2x.png */; };
+		E34744E21AB0DA8200383A1B /* gimv1_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E34744E11AB0DA8200383A1B /* gimv1_back@2x.png */; };
 		E34E3D671A615B8000DD95BB /* CustomSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = E34E3D661A615B8000DD95BB /* CustomSegmentView.m */; };
 		E35EF1161A6A54A900B493A9 /* GChooseStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E35EF1151A6A54A900B493A9 /* GChooseStoreViewController.m */; };
 		E35EF1231A6A756900B493A9 /* GchooseFloorPinpaiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E35EF1221A6A756900B493A9 /* GchooseFloorPinpaiViewController.m */; };
@@ -539,7 +540,6 @@
 		E3996EDD1A5E1DBA00673147 /* GShowStarsView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996EAC1A5E1DBA00673147 /* GShowStarsView.m */; };
 		E3996EDE1A5E1DBA00673147 /* GStarsView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996EAE1A5E1DBA00673147 /* GStarsView.m */; };
 		E3996EE01A5E1DBA00673147 /* GClothWaveCustomView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996EB41A5E1DBA00673147 /* GClothWaveCustomView.m */; };
-		E3996EE11A5E1DBA00673147 /* gimv1_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3996EB51A5E1DBA00673147 /* gimv1_back@2x.png */; };
 		E3996EE21A5E1DBA00673147 /* GLeadbuyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996EB71A5E1DBA00673147 /* GLeadbuyTableViewCell.m */; };
 		E3996EE31A5E1DBA00673147 /* GTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996EB91A5E1DBA00673147 /* GTableViewCell.m */; };
 		E3996EE61A5E1E0600673147 /* HomeClothController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996EE51A5E1E0600673147 /* HomeClothController.m */; };
@@ -1221,6 +1221,7 @@
 		E305222B1A6ED1B5007BEAFD /* GHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHolderTextView.h; sourceTree = "<group>"; };
 		E305222C1A6ED1B5007BEAFD /* GHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHolderTextView.m; sourceTree = "<group>"; };
 		E34372AE1A88357D003CDFD9 /* gdownname@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gdownname@2x.png"; sourceTree = "<group>"; };
+		E34744E11AB0DA8200383A1B /* gimv1_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gimv1_back@2x.png"; sourceTree = "<group>"; };
 		E34E3D651A615B8000DD95BB /* CustomSegmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomSegmentView.h; sourceTree = "<group>"; };
 		E34E3D661A615B8000DD95BB /* CustomSegmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomSegmentView.m; sourceTree = "<group>"; };
 		E35EF1141A6A54A900B493A9 /* GChooseStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GChooseStoreViewController.h; sourceTree = "<group>"; };
@@ -1395,7 +1396,6 @@
 		E3996EAE1A5E1DBA00673147 /* GStarsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GStarsView.m; sourceTree = "<group>"; };
 		E3996EB31A5E1DBA00673147 /* GClothWaveCustomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GClothWaveCustomView.h; sourceTree = "<group>"; };
 		E3996EB41A5E1DBA00673147 /* GClothWaveCustomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GClothWaveCustomView.m; sourceTree = "<group>"; };
-		E3996EB51A5E1DBA00673147 /* gimv1_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gimv1_back@2x.png"; sourceTree = "<group>"; };
 		E3996EB61A5E1DBA00673147 /* GLeadbuyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLeadbuyTableViewCell.h; sourceTree = "<group>"; };
 		E3996EB71A5E1DBA00673147 /* GLeadbuyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLeadbuyTableViewCell.m; sourceTree = "<group>"; };
 		E3996EB81A5E1DBA00673147 /* GTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTableViewCell.h; sourceTree = "<group>"; };
@@ -3218,6 +3218,7 @@
 		E3996E3E1A5E1DBA00673147 /* Gmodels */ = {
 			isa = PBXGroup;
 			children = (
+				E34744E11AB0DA8200383A1B /* gimv1_back@2x.png */,
 				E34372AE1A88357D003CDFD9 /* gdownname@2x.png */,
 				E3EAA8C31A8782C7008F3183 /* ios7_goahead4032@2x.png */,
 				E3EAA8C41A8782C7008F3183 /* ios7_goback4032@2x.png */,
@@ -3329,7 +3330,6 @@
 			children = (
 				E3996EB31A5E1DBA00673147 /* GClothWaveCustomView.h */,
 				E3996EB41A5E1DBA00673147 /* GClothWaveCustomView.m */,
-				E3996EB51A5E1DBA00673147 /* gimv1_back@2x.png */,
 				E3996EB61A5E1DBA00673147 /* GLeadbuyTableViewCell.h */,
 				E3996EB71A5E1DBA00673147 /* GLeadbuyTableViewCell.m */,
 				E3996EB81A5E1DBA00673147 /* GTableViewCell.h */,
@@ -3729,6 +3729,7 @@
 				139562CC1A3C11EC007BB183 /* RegisterViewController.xib in Resources */,
 				566FE2591A5042B700A96B5F /* default_navigation_clear_image@2x.png in Resources */,
 				13CEC8A51A5D974900FE273F /* zhixiangjiantou@2x.png in Resources */,
+				E34744E21AB0DA8200383A1B /* gimv1_back@2x.png in Resources */,
 				137E0ADD1A4C567500B59F64 /* weixin72_72@2x.png in Resources */,
 				137B6FFA1A6B995D007035DE /* dz_jiantou@2x.png in Resources */,
 				13963F591A4FE3B8007BE68B /* fabu_pic@2x.png in Resources */,
@@ -3809,7 +3810,6 @@
 				139607B61A46A0BB00AACAC4 /* product_like@2x.png in Resources */,
 				13D560E51AA1B40C00C28927 /* yiyiDB.sqlite in Resources */,
 				133B175D1A74EF3D005B8B3F /* dong_down@2x.png in Resources */,
-				E3996EE11A5E1DBA00673147 /* gimv1_back@2x.png in Resources */,
 				13B690521A564BF6007FE152 /* tianjia_down@2x.png in Resources */,
 				137B083B1A4E716700DE7DCC /* sh_jiantou_left@2x.png in Resources */,
 				133B17651A74EF3D005B8B3F /* yc_sc_tj@2x.png in Resources */,
