@@ -68,6 +68,10 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    
+    
+    
     // Override point for customization after application launch.
    
 #pragma mark 融云
@@ -384,13 +388,21 @@
         [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_REMOTE_MESSAGE object:nil];
         
         NSDictionary *aps = userInfo[@"aps"];
-        NSString *alertMessage = aps[@"alert"];//消息内容
+//        NSString *alertMessage = aps[@"alert"];//消息内容
         
         self.remote_message = [NSDictionary dictionaryWithDictionary:aps];
         
 //        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"消息提示" message:alertMessage delegate:self cancelButtonTitle:@"忽略" otherButtonTitles:@"查看", nil];
 //        alert.tag = 300;
 //        [alert show];
+        
+        int type = [aps[@"type"] intValue];
+        
+        if (type == 9 || type == 10){
+            
+            //店铺申请状态通知
+            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_SHENQINGDIANPU_STATE object:nil];
+        }
         
     }
     if (state == UIApplicationStateBackground)
@@ -423,6 +435,7 @@
         
         [self pushToMessageDetail:Message_Shop];
     }else if (type == 9 || type == 10){
+        
         
         //店铺申请状态通知
         [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_SHENQINGDIANPU_STATE object:nil];
