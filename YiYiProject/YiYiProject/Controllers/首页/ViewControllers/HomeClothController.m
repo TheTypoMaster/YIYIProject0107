@@ -19,6 +19,7 @@
 #import "EGORefreshTableHeaderView.h"
 #import "GStorePinpaiViewController.h"
 #import "GwebViewController.h"
+#import "MessageDetailController.h"
 
 @interface HomeClothController ()<GCycleScrollViewDatasource,GCycleScrollViewDelegate,UIScrollViewDelegate,EGORefreshTableDelegate,GgetllocationDelegate>
 {
@@ -871,11 +872,29 @@
     NSDictionary *dic = _topScrollviewImvInfoArray[index];
     
     
-    GwebViewController *gwebvc = [[GwebViewController alloc]init];
-    gwebvc.urlstring = [dic stringValueForKey:@"redirect_url"];
+    
     if ([[dic stringValueForKey:@"redirect_type"]intValue]==1) {//可以跳转
-        gwebvc.hidesBottomBarWhenPushed = YES;
-        [self.rootViewController.navigationController pushViewController:gwebvc animated:YES];
+        
+        NSString *adv_type_val = [dic stringValueForKey:@"adv_type_val"];
+        if ([adv_type_val intValue]==1) {//广告类型
+            GwebViewController *gwebvc = [[GwebViewController alloc]init];
+            gwebvc.urlstring = [dic stringValueForKey:@"redirect_url"];
+            gwebvc.hidesBottomBarWhenPushed = YES;
+            [self.rootViewController.navigationController pushViewController:gwebvc animated:YES];
+        }else if ([adv_type_val intValue]==2){//2:跳转商场活动  3:跳转店铺活动
+            NSString *theId = [dic stringValueForKey:@"theme_id"];
+            MessageDetailController *detail = [[MessageDetailController alloc]init];
+            detail.msg_id = theId;
+            detail.isActivity = YES;
+            detail.hidesBottomBarWhenPushed = YES;
+            [self.rootViewController.navigationController pushViewController:detail animated:YES];
+            
+        }else if ([adv_type_val intValue]==4){//跳转单品页面
+            NSString *theId = [dic stringValueForKey:@"theme_id"];
+        }
+        
+        
+        
     }
     
 //    id obj=NSClassFromString(@"UIAlertController");

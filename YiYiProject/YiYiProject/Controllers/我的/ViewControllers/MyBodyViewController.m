@@ -311,10 +311,15 @@
                                        
                                        
                                        [loading hide:YES];
+                                       
+                                       [LTools showMBProgressWithText:@"数据更新成功" addToView:self.view];
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        
                                        NSLog(@"update erro %@",operation.responseString);
+                                       
+                                       [loading hide:YES];
+
                                        
                                    }];
     //设置上传操作的进度

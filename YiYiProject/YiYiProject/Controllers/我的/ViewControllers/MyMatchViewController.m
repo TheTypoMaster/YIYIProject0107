@@ -133,7 +133,10 @@
         for(int j = 0 ;j < columnNum ; j++)
         {
             UIImageView *classificationImageView = [[UIImageView alloc] initWithFrame:CGRectMake(sourceX, sourceY, imageViewWindth, imageViewWindth)];
-            classificationImageView.backgroundColor = RGBCOLOR(255,155,155);
+//            classificationImageView.backgroundColor = RGBCOLOR(255,155,155);
+            
+            classificationImageView.image = [UIImage imageNamed:@"image_album_bg"];
+
             CGColorSpaceRef colorSpace=CGColorSpaceCreateDeviceRGB();
             CGColorRef colorRef=CGColorCreate(colorSpace, (CGFloat[]){204/255.0,204/255.0,204/255.0,1});
             [classificationImageView.layer setCornerRadius:5];//设置矩形是个圆角半径
