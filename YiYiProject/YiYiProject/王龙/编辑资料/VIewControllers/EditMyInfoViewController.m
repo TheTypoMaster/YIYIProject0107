@@ -215,6 +215,10 @@
 
 -(void)rightButtonTap:(UIButton *)sender
 {
+    
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
     NSString *user_name = [self judgeNil:infoView.nickerTf.text];
 
     NSString *gender;
@@ -257,10 +261,15 @@
                                            //打印服务器错误
                                        }
                                        if ([resultDic[@"errorcode"] intValue] == 0) {
+                                           [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                           [GMAPI showAutoHiddenMidleQuicklyMBProgressWithText:@"修改成功" addToView:self.view];
+                                           
                                            //刷新上一界面的头像
                                            [GMAPI setUserFaceImageWithData:UIImagePNGRepresentation(infoView.headImageView.image)];
                                            [self.delegate.userFaceImv setImage:infoView.headImageView.image];
-                                           [self.navigationController popViewControllerAnimated:YES];
+                                           self.delegate.userNameLabel.text =user_name;
+                                           [self performSelector:@selector(gPop) withObject:[NSNumber numberWithBool:YES] afterDelay:1];
+                                           
                                        }else{
                                            //打印错误信息
                                            
@@ -269,8 +278,8 @@
 
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       
-                                       
+                                       [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                       [GMAPI showAutoHiddenMidleQuicklyMBProgressWithText:@"修改失败" addToView:self.view];
                                        
                                    }];
     //设置上传操作的进度
@@ -278,6 +287,13 @@
         
     }];
 }
+
+
+#pragma mark - 跳转上一个界面
+-(void)gPop{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 #pragma mark-----------------手势关联的事件
 

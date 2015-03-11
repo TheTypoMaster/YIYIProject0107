@@ -215,7 +215,8 @@
 //    _upStoreInfoView.backgroundColor = [UIColor orangeColor];
     
     //商城名称
-    _mallNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 30, DEVICE_WIDTH-15-15, 18)];
+    _mallNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 30, DEVICE_WIDTH-15-15, 19)];
+    _mallNameLabel.font = [UIFont systemFontOfSize:17];
     
     //活动
     _huodongTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(_mallNameLabel.frame.origin.x, CGRectGetMaxY(_mallNameLabel.frame)+13, 45, 15)];

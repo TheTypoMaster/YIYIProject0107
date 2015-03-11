@@ -21,7 +21,7 @@
     CGFloat _location_y;
     BMKGeoCodeSearch* _geocodesearch;
     
-    UIButton *_button_daohang;
+    UIButton *_button_right;
 
 }
 @end
@@ -80,12 +80,12 @@
     [daohangView addSubview:button_back];
     
     //确定按钮
-    _button_daohang=[[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_myTitleLabel.frame)+10,20,40,44)];
-    [_button_daohang addTarget:self action:@selector(rightQuedingBtn) forControlEvents:UIControlEventTouchUpInside];
-    [_button_daohang setTitle:@"确定" forState:UIControlStateNormal];
-    [_button_daohang setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
-    _button_daohang.userInteractionEnabled = NO;
-    [daohangView addSubview:_button_daohang];
+    _button_right=[[UIButton alloc]initWithFrame:CGRectMake(DEVICE_WIDTH-10-10-40,20,40,44)];
+    [_button_right addTarget:self action:@selector(rightQuedingBtn) forControlEvents:UIControlEventTouchUpInside];
+    [_button_right setTitle:@"确定" forState:UIControlStateNormal];
+    [_button_right setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
+    _button_right.userInteractionEnabled = NO;
+    [daohangView addSubview:_button_right];
     
     //初始化地图
     [self setGMap];
@@ -168,7 +168,7 @@
     _pointAnnotation.subtitle = @"此标注可拖拽!";
     _mapView.centerCoordinate = coor;
     [_mapView addAnnotation:_pointAnnotation];
-    _button_daohang.userInteractionEnabled = YES;
+    _button_right.userInteractionEnabled = YES;
     
     
 }
