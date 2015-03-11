@@ -118,15 +118,15 @@
     
     catchSize = @"";
     
-    dataArray = @[@"关于我们",
-                  @"清除缓存",
-                  @"检测新版本",
-                  @"爱的鼓励",
-                  @"意见反馈",
-                  ];
+//    dataArray = @[@"关于我们",
+//                  @"清除缓存",
+//                  @"检测新版本",
+//                  @"爱的鼓励",
+//                  @"意见反馈",
+//                  ];
+    
+    dataArray = @[@"关于我们",@"清除缓存",@"爱的鼓励",@"意见反馈"];
 }
-
-
 
 
 #pragma mark------------------UItableVIewDataSource
@@ -135,7 +135,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 
-    return 5;
+    return 4;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -221,31 +221,31 @@
     }
     
     
-    if (indexPath.row == 2) {
-         //检测新版本
-        
-        //TODO:
-        
-        //版本更新
-        
-        [[LTools shareInstance]versionForAppid:@"951259287" Block:^(BOOL isNewVersion, NSString *updateUrl, NSString *updateContent) {
-            
-            NSLog(@"updateContent %@ %@",updateUrl,updateContent);
-            
-            if (isNewVersion == NO) {
-                
-                [LTools alertText:@"已是最新版本" viewController:self];
-            }
-            
-        }];
-    }
+//    if (indexPath.row == 2) {
+//         //检测新版本
+//        
+//        //TODO:
+//        
+//        //版本更新
+//        
+//        [[LTools shareInstance]versionForAppid:@"951259287" Block:^(BOOL isNewVersion, NSString *updateUrl, NSString *updateContent) {
+//            
+//            NSLog(@"updateContent %@ %@",updateUrl,updateContent);
+//            
+//            if (isNewVersion == NO) {
+//                
+//                [LTools alertText:@"已是最新版本" viewController:self];
+//            }
+//            
+//        }];
+//    }
     
-    if (indexPath.row == 3) {
+    if (indexPath.row == 2) {
         //打分
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:APP_RATING_URL]];
     }
     
-    if (indexPath.row == 4) {
+    if (indexPath.row == 3) {
         //意见反馈
         
         UMFeedbackViewController *_feedbackVC=[[UMFeedbackViewController alloc]init];

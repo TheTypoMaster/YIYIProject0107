@@ -318,6 +318,7 @@
     bgScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 58, DEVICE_WIDTH, self.view.height - 58)];
     bgScroll.delegate = self;
     [self.view addSubview:bgScroll];
+    bgScroll.pagingEnabled = YES;
     bgScroll.contentSize = CGSizeMake(DEVICE_WIDTH * 2, bgScroll.height);
     
     //店铺

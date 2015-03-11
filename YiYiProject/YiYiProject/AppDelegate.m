@@ -409,6 +409,8 @@
     //1 衣加衣通知消息 2 关注通知消息 3 回复主题消息 4 回复主题回复
     //5 回复T台通知消息 6 回复T台回复通知消息 7 品牌促销通知消息 8 商场促销通知
     
+    // 9 成功  10 失败
+    
     if (type == 1) {
         
         [self pushToMessageDetail:Message_Yy];
@@ -420,6 +422,10 @@
     }else if (type == 7 || type == 8){
         
         [self pushToMessageDetail:Message_Shop];
+    }else if (type == 9 || type == 10){
+        
+        //店铺申请状态通知
+        [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_SHENQINGDIANPU_STATE object:nil];
     }
 
 }

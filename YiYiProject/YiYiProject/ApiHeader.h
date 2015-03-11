@@ -68,6 +68,9 @@ alpha:(a)]
 
 #define NOTIFICATION_SHENQINGDIANPU_SUCCESS @"GSHENQINGDIANPU_SUCCESS"//申请店铺成功
 
+#define NOTIFICATION_SHENQINGDIANPU_STATE @"GSHENQINGDIANPU_STATE"//申请店铺成功状态 成功或者失败
+
+
 //错误提示信息 
 
 #define ALERT_ERRO_PHONE @"请输入有效手机号"
