@@ -76,6 +76,8 @@
 -(void)dealloc{
     
     _waterFlow.waterDelegate = nil;
+    _waterFlow.quitView.dataSource = nil;
+    _waterFlow = nil;
     
     NSLog(@"%s",__FUNCTION__);
 }
