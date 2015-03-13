@@ -61,7 +61,7 @@
     activeLabel.font = [UIFont systemFontOfSize:14];
     activeLabel.textColor = RGBCOLOR(114, 114, 114);
     activeLabel.text = [dic stringValueForKey:@"activity_info"];
-    activeLabel.numberOfLines = 50;
+    activeLabel.numberOfLines = 4;
     [activeLabel sizeToFit];
     
     cellHeight += distanceLabel.frame.size.height+activeLabel.frame.size.height;
@@ -75,7 +75,9 @@
     
     [jiantouImv setFrame:CGRectMake(DEVICE_WIDTH - 20, cellHeight*0.5-6, 7, 12)];
     
-    
+    UIView *downLine = [[UIView alloc]initWithFrame:CGRectMake(15, cellHeight-0.5, DEVICE_WIDTH-15, 0.5)];
+    downLine.backgroundColor = RGBCOLOR(226, 226, 228);
+    [self.contentView addSubview:downLine];
     
     return cellHeight;
     
