@@ -402,7 +402,10 @@
         [_scrollview_nearbyView gReloadData];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        _guanzhuBtn_Store.selected = NO;
+        _nearbyBtn.selected = YES;
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [GMAPI showAutoHiddenMidleQuicklyMBProgressWithText:@"加载失败，请检查网络" addToView:self.view];
     }];
 
 }
@@ -493,6 +496,9 @@
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        _pinpaiBtn.selected = YES;
+        _guanzhuBtn_pinpai.selected = NO;
+        [GMAPI showAutoHiddenMBProgressWithText:@"加载失败，请检查网络" addToView:self.view];
     }];
 }
 
