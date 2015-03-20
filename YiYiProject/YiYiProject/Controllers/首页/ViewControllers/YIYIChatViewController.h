@@ -11,4 +11,8 @@
 #import "RCChatViewController.h"
 @interface YIYIChatViewController : RCChatViewController
 
+//@property(nonatomic,strong)NSString *GTitleString;//标题
+
+@property(nonatomic,strong)UILabel *GTitleLabel;//标题Label
+
 @end

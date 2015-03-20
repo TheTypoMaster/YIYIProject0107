@@ -778,6 +778,7 @@
     ProductModel *aMode = _waterFlow.dataArray[indexPath.row];
     ProductDetailController *detail = [[ProductDetailController alloc]init];
     detail.product_id = aMode.product_id;
+    detail.gShop_id = self.shopId;
     detail.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:detail animated:YES];
     

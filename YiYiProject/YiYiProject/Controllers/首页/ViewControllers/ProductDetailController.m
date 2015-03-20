@@ -313,19 +313,38 @@
             
             NSString *useriId;
             NSString *userName;
+            NSString *mall_type;
+            NSString *brand_name;
+            NSString *mall_name;
+            YIYIChatViewController *contact = [[YIYIChatViewController alloc]init];
+            contact.currentTarget = useriId;
+            
             if ([aModel.mall_info isKindOfClass:[NSDictionary class]]) {
                 
                 useriId = aModel.mall_info[@"uid"];
                 userName = aModel.mall_info[@"mall_name"];
+                mall_type = aModel.mall_info[@"mall_type"];
+                if ([mall_type intValue] == 1) {//商场店
+                    brand_name = aModel.brand_info[@"brand_name"];//品牌名
+                    mall_name = aModel.mall_info[@"mall_name"];//商城名
+                    NSString *aaa = [NSString stringWithFormat:@"%@.%@",brand_name,mall_name];
+                    NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:aaa];
+                    NSInteger pinpaiNameLength = brand_name.length;
+                    NSInteger storeNameLength = mall_name.length;
+                    [title addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0,pinpaiNameLength+1)];
+                    [title addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:17*GscreenRatio_320] range:NSMakeRange(0,pinpaiNameLength)];
+                    [title addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(240, 173, 184) range:NSMakeRange(pinpaiNameLength+1, storeNameLength)];
+                    [title addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13*GscreenRatio_320] range:NSMakeRange(pinpaiNameLength+1, storeNameLength)];
+                    contact.GTitleLabel.textAlignment = NSTextAlignmentCenter;
+                    contact.GTitleLabel.attributedText = title;
+                }else{
+                    userName = userName;
+                    contact.GTitleLabel.text = userName;
+                    contact.GTitleLabel.textColor = [UIColor whiteColor];
+                }
+                
             }
             
-            //test
-            
-//            useriId = @"38";
-            
-            YIYIChatViewController *contact = [[YIYIChatViewController alloc]init];
-            contact.currentTarget = useriId;
-            contact.currentTargetName = userName;
             contact.portraitStyle = RCUserAvatarCycle;
             contact.enableSettings = NO;
             contact.conversationType = ConversationType_PRIVATE;
