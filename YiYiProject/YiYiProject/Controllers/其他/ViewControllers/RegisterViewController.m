@@ -102,6 +102,7 @@ static int seconds = 60;//计时60s
     [self tapToHiddenKeyboard:nil];
     
     SecurityCode_Type type;//默认注册
+    
     NSString *mobile = self.phoneTF.text;
     
     if (![LTools isValidateMobile:mobile]) {
