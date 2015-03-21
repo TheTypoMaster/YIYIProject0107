@@ -270,6 +270,7 @@
     
     //清除用户数据,返回我的,弹出登录界面,融云退出登录
     
+    [self logout];//一定要在  authKey清空之前
     
     [LTools cache:@"" ForKey:USER_NAME];
     [LTools cache:@"" ForKey:USER_UID];
@@ -293,9 +294,7 @@
     [GMAPI cleanUserDefaulWithHomeCloth];//清除首页缓存
     
     [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_LOGOUT object:nil];
-    [self logout];
     [self performSelector:@selector(leftButtonTap:) withObject:nil afterDelay:0.2];
-    
     
     
 }
