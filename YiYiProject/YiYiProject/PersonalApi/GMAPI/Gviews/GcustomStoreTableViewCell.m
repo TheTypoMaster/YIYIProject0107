@@ -57,7 +57,6 @@
     
     //活动
     UILabel *activeLabel = [[UILabel alloc]initWithFrame:CGRectMake(nameLabel.frame.origin.x, CGRectGetMaxY(nameLabel.frame)+10, DEVICE_WIDTH - 30 , 15)];
-//    activeLabel.backgroundColor = [UIColor orangeColor];
     activeLabel.font = [UIFont systemFontOfSize:14];
     activeLabel.textColor = RGBCOLOR(114, 114, 114);
     activeLabel.text = [dic stringValueForKey:@"activity_info"];

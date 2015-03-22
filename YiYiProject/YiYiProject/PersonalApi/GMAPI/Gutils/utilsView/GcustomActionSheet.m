@@ -72,10 +72,6 @@
                 UIButton *b = [UIButton buttonWithType:UIButtonTypeCustom];
                 b.frame = CGRectMake(20,firstBtnForTopSpacing+(HeightOfNormalBtn+normalBtnSpacing)*i,DEVICE_WIDTH-40,44);
                 b.tag = 101 + i;
-//                b.layer.cornerRadius = 5.0f;
-//                b.layer.masksToBounds = YES;
-//                b.layer.borderWidth = 0.5;
-//                b.layer.borderColor = RGBCOLOR(0,167,21).CGColor;
                 b.backgroundColor = buttonColor;
                 [b setTitleColor:buttonTitleColor forState:UIControlStateNormal];
                 [b setTitle:[buttonTitles objectAtIndex:i] forState:UIControlStateNormal];
@@ -92,10 +88,6 @@
             UIButton *b = [UIButton buttonWithType:UIButtonTypeCustom];
             b.frame = CGRectMake(20,content_height+10,DEVICE_WIDTH-40,44);
             b.tag = 100;
-//            b.layer.cornerRadius = 5.0f;
-//            b.layer.masksToBounds = YES;
-//            b.layer.borderWidth = 0.5f;
-//            b.layer.borderColor = RGBCOLOR(170,170,170).CGColor;
             b.backgroundColor = cancelColor;
             [b setTitle:canceTitle forState:UIControlStateNormal];
             [b setTitleColor:cancelTitleColor forState:UIControlStateNormal];

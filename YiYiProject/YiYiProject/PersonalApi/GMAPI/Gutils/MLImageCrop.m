@@ -567,14 +567,4 @@
 	return self.imageView;
 }
 
-#pragma mark - rotate
-//- (BOOL)shouldAutorotate
-//{
-//    return NO; //不让旋转，默认竖屏对齐
-//}
-//
-//- (NSUInteger)supportedInterfaceOrientations
-//{
-//    return UIInterfaceOrientationMaskPortrait; //如果shouldAutorotate返回YES，这里就有用了，状态栏等其他会旋转但是不影响self.view
-//}
 @end

@@ -62,7 +62,6 @@
 
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"indexPath.row:%d",indexPath.row);
     NSDictionary *dicInfo = self.dataArray[indexPath.row];
     NSLog(@"mall_id%@",[dicInfo stringValueForKey:@"mall_id"]);
     [self gGodismissAndFuzhiWithMallid:[dicInfo stringValueForKey:@"mall_id"] theMallName:[dicInfo stringValueForKey:@"mall_name"] floorInfoDic:[dicInfo dictionaryValueForKey:@"floor_num"]];

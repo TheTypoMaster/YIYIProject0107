@@ -67,7 +67,6 @@
             
             UILabel *distanceLabel = [[UILabel alloc]initWithFrame
                                       :CGRectMake(0, 10, 70, 13)];
-//            distanceLabel.backgroundColor = [UIColor orangeColor];
             distanceLabel.font = [UIFont systemFontOfSize:13];
             distanceLabel.textColor = RGBCOLOR(114, 114, 114);
             distanceLabel.textAlignment = NSTextAlignmentCenter;
@@ -155,7 +154,6 @@
             NSDictionary *dic = downDataArray[i];
             UIView *view = [[UIView alloc]initWithFrame:CGRectMake(22+i*(38+80), 104, 80, 60)];
             view.userInteractionEnabled = YES;
-//            view.backgroundColor = [UIColor orangeColor];
             
             
             //小红点
@@ -172,13 +170,11 @@
             storeNameBtn.titleLabel.font = [UIFont systemFontOfSize:12];
             storeNameBtn.titleLabel.numberOfLines = 2;
             [storeNameBtn setBackgroundImage:[UIImage imageNamed:@"gdownname.png"] forState:UIControlStateNormal];
-//            [storeNameBtn setBackgroundImage:[UIImage imageNamed:@"gdownname1.png"] forState:UIControlStateSelected];
             [storeNameBtn setTitle:[dic stringValueForKey:@"mall_name"] forState:UIControlStateNormal];
             storeNameBtn.shopType = [dic stringValueForKey:@"mall_type"];
             
             
             //调整titleLabel间距
-//            storeNameBtn.titleLabel.backgroundColor = [UIColor orangeColor];
             [storeNameBtn setTitleEdgeInsets:UIEdgeInsetsMake(5, 1, 0, 1)];
             
             
@@ -230,15 +226,12 @@
             storeNameBtn.titleLabel.font = [UIFont systemFontOfSize:12];
             storeNameBtn.titleLabel.numberOfLines = 2;
             [storeNameBtn setBackgroundImage:[UIImage imageNamed:@"gupname.png"] forState:UIControlStateNormal];
-//            [storeNameBtn setBackgroundImage:[UIImage imageNamed:@"gupname1.png"] forState:UIControlStateSelected];
             [storeNameBtn setTitle:[dic stringValueForKey:@"mall_name"] forState:UIControlStateNormal];
             storeNameBtn.shopType = [dic stringValueForKey:@"mall_type"];
             //调整titleLabel间距
-//            storeNameBtn.titleLabel.backgroundColor = [UIColor orangeColor];
             [storeNameBtn setTitleEdgeInsets:UIEdgeInsetsMake(-4, 1, 0, 1)];
             [view addSubview:storeNameBtn];
             
-//            view.backgroundColor = [UIColor orangeColor];
             
             //小红点
             UIImageView *redPoint = [[UIImageView alloc]initWithFrame:CGRectMake(storeNameBtn.frame.size.width*0.5-4, CGRectGetMaxY(storeNameBtn.frame), 15, 15)];

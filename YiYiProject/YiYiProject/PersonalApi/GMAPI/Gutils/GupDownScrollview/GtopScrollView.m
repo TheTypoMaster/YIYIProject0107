@@ -101,12 +101,9 @@
         [button setTitle:title forState:UIControlStateNormal];
         button.titleLabel.font = [UIFont systemFontOfSize:12];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//        [button setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
         [button addTarget:self action:@selector(selectNameButton:) forControlEvents:UIControlEventTouchUpInside];
         
-//        int buttonWidth = [title sizeWithFont:button.titleLabel.font
-//                            constrainedToSize:CGSizeMake(150, 30)
-//                                lineBreakMode:NSLineBreakByClipping].width;
+
         
         button.frame = CGRectMake(xPos, 0, titleBtnWidth, titleBtnHeight);
         
@@ -145,7 +142,6 @@
         
         [UIView animateWithDuration:0.25 animations:^{
             
-//            [shadowImageView setFrame:CGRectMake(sender.frame.origin.x, 0, [[_buttonWithArray objectAtIndex:BUTTONID] floatValue], 44)];
             
         } completion:^(BOOL finished) {
             if (finished) {

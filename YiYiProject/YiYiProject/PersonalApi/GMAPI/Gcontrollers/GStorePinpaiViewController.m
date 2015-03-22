@@ -33,14 +33,6 @@
     NSMutableArray *_btnArray;//按钮数组
     
     
-    //网络数据
-//    NSMutableArray *_dataArray_xinpin;//新品数组
-//    int _page_xinpin;//新品当前页
-//    NSMutableArray *_dataArray_zhekou;//折扣数组
-//    int _page_zhekou;//折扣当前页
-//    NSMutableArray *_dataArray_rexiao;//热销数组
-//    int _page_rexiao;//热销当前页
-    
     
     //关注相关
     UIButton *_my_right_button;
@@ -630,16 +622,10 @@
     }
     
     if (_paixuIndex == 0) {//新品
-//        _page_xinpin = 1;
-//        _dataArray_xinpin = nil;
         api = [NSString stringWithFormat:@"%@&action=%@&mb_id=%@&page=%d&per_page=%d",HOME_CLOTH_STORE_PINPAILIST,@"by_time",self.shopId,_waterFlow.pageNum,_per_page];
     }else if (_paixuIndex == 1){//折扣
-//        _page_zhekou = 1;
-//        _dataArray_zhekou = nil;
         api = [NSString stringWithFormat:@"%@&action=%@&mb_id=%@&page=%d&per_page=%d",HOME_CLOTH_STORE_PINPAILIST,@"by_discount",self.shopId,_waterFlow.pageNum,_per_page];
     }else if (_paixuIndex == 2){//热销
-//        _page_rexiao = 1;
-//        _dataArray_rexiao = nil;
         api = [NSString stringWithFormat:@"%@&action=%@&mb_id=%@&page=%d&per_page=%d",HOME_CLOTH_STORE_PINPAILIST,@"by_hot",self.shopId,_waterFlow.pageNum,_per_page];
     }
     
@@ -676,14 +662,6 @@
             }
             
         }
-        
-//        if (_paixuIndex == 0) {//新品
-//            _dataArray_xinpin = arr;
-//        }else if (_paixuIndex == 1){//折扣
-//            _dataArray_zhekou = arr;
-//        }else if (_paixuIndex == 2){//热销
-//            _dataArray_rexiao = arr;
-//        }
         
         
         [_waterFlow reloadData:arr pageSize:_per_page];
@@ -739,21 +717,6 @@
         }
         
         
-//        //请求数据成功之后修改 页数和数据数组
-//        if (_paixuIndex == 0) {//新品
-//            _page_xinpin += 1;
-//            _waterFlow.dataArray = _dataArray_xinpin;
-////            [_dataArray_xinpin addObjectsFromArray:arr];
-//        }else if (_paixuIndex == 1){//折扣
-//            _page_zhekou += 1;
-//            _waterFlow.dataArray = _dataArray_zhekou;
-////            [_dataArray_zhekou addObjectsFromArray:arr];
-//        }else if (_paixuIndex == 2){//热销
-//            _page_rexiao += 1;
-//            _waterFlow.dataArray = _dataArray_rexiao;
-////            [_dataArray_rexiao addObjectsFromArray:arr];
-//        }
-        
         
         //重载瀑布流
         [_waterFlow reloadData:arr pageSize:_per_page];
@@ -762,13 +725,6 @@
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
         [_waterFlow loadFail];
-//        if (_paixuIndex == 0) {//新品
-//            _waterFlow.dataArray = _dataArray_xinpin;
-//        }else if (_paixuIndex == 1){//折扣
-//            _waterFlow.dataArray = _dataArray_zhekou;
-//        }else if (_paixuIndex == 2){//热销
-//            _waterFlow.dataArray = _dataArray_rexiao;
-//        }
     }];
 }
 
@@ -811,15 +767,6 @@
 }
 
 - (TMQuiltViewCell *)quiltView:(TMQuiltView *)quiltView cellAtIndexPath:(NSIndexPath *)indexPath {
-//    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[quiltView dequeueReusableCellWithReuseIdentifier:@"PhotoCell"];
-//    if (!cell) {
-//        cell = [[TMPhotoQuiltViewCell alloc] initWithReuseIdentifier:@"PhotoCell"];
-//    }
-//    
-//    cell.layer.cornerRadius = 3.f;
-//    
-//    ProductModel *aMode = _waterFlow.dataArray[indexPath.row];
-//    [cell setCellWithModel:aMode];
     
     
     TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[quiltView dequeueReusableCellWithReuseIdentifier:@"PhotoCell"];

@@ -349,8 +349,6 @@
 //创建信息填写view
 -(void)creatView1{
     
-//    UIView *topGrayView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 15)];
-//    topGrayView.backgroundColor = RGBCOLOR(242, 242, 242);
     
     
     _view1 = [[UIView alloc]initWithFrame:CGRectMake(0, 15, DEVICE_WIDTH, 353)];
@@ -497,7 +495,6 @@
     
     //上传衣服标题
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(17, 15, 70, 20)];
-//    titleLabel.backgroundColor = RGBCOLOR_ONE;
     titleLabel.textColor = RGBCOLOR(114, 114, 114);
     titleLabel.font = [UIFont systemFontOfSize:17];
     titleLabel.text = @"上传图片";
@@ -516,7 +513,6 @@
             [btn addTarget:self action:@selector(tianjiatupian:) forControlEvents:UIControlEventTouchUpInside];
         }else{
             [btn setBackgroundImage:[UIImage imageNamed:@"gremovephoto.png"] forState:UIControlStateNormal];
-//            [btn addTarget:self action:@selector(removeSelf:) forControlEvents:UIControlEventTouchUpInside];
             [_showPicsBtnArray addObject:btn];
         }
         

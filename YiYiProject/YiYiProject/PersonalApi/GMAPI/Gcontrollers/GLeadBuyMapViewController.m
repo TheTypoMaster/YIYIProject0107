@@ -60,20 +60,11 @@
         
         [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:MY_MACRO_NAME?IOS7DAOHANGLANBEIJING_PUSH:IOS6DAOHANGLANBEIJING] forBarMetrics: UIBarMetricsDefault];
     }
-
-    
-//    LNavigationController *navigation = (LNavigationController *)self.navigationController;
-//    
-//    navigation.panGesture.enabled = NO;
     
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
     [_mapView viewWillDisappear];
-    
-//    LNavigationController *navigation = (LNavigationController *)self.navigationController;
-//    
-//    navigation.panGesture.enabled = YES;
     
     //停止定位
     [_locService stopUserLocationService];
@@ -173,7 +164,6 @@
 
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
-    NSLog(@"-----------------%d",buttonIndex);
     
     //0 百度地图
     //1 苹果地图
@@ -187,34 +177,12 @@
 
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    NSLog(@"%d",buttonIndex);
     if (buttonIndex == 1) {
         [self tiaozhuanBiduMap];
     }
 }
 
 -(void)tiaozhuanAppleMap{
-    
-    
-//    NSString *api = @"http://api.map.baidu.com/ag/coord/convert?from=0&to=2&y=%f&x=%f";
-//    NSString *urlStr = [NSString stringWithFormat:api,_userLocation.location.coordinate
-//                        .latitude,_userLocation.location.coordinate.longitude];
-//    
-//    
-//    
-//    
-//    
-//    GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:urlStr isPost:NO postData:nil];
-//    [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
-//        
-//        NSLog(@"%@",result);
-//        NSString *lat = [result stringValueForKey:@"x"];
-//        NSString *lon = [result stringValueForKey:@"y"];
-//        NSLog(@"lat :%f  lon : %f",[lat floatValue],[lon floatValue]);
-//        
-//    } failBlock:^(NSDictionary *failDic, NSError *erro) {
-//        
-//    }];
     
     
     //定位点
@@ -245,16 +213,12 @@
     
     
     
-    
-//    CLLocationCoordinate2D from = CLLocationCoordinate2DMake(_userLocation.location.coordinate.latitude-0.0060,_userLocation.location.coordinate.longitude-0.0065);
     CLLocationCoordinate2D from = CLLocationCoordinate2DMake(gaode_lat,gaode_lon);
     MKPlacemark * fromMark = [[MKPlacemark alloc] initWithCoordinate:from
                                                    addressDictionary:nil];
     MKMapItem * fromLocation = [[MKMapItem alloc] initWithPlacemark:fromMark];
     fromLocation.name = @"我的位置";
     
-    
-//    CLLocationCoordinate2D to = CLLocationCoordinate2DMake(self.mudidi.latitude-0.0060,self.mudidi.longitude-0.0065);
     CLLocationCoordinate2D to = CLLocationCoordinate2DMake(gaode_lat1,gaode_lon1);
     MKPlacemark * toMark = [[MKPlacemark alloc] initWithCoordinate:to
                                                  addressDictionary:nil];
@@ -345,7 +309,6 @@
 //用户位置更新后，会调用此函数
 - (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
 {
-//    NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
     
     
     
@@ -353,11 +316,6 @@
     if (userLocation && !_button_daohang.userInteractionEnabled) {
         _button_daohang.userInteractionEnabled = YES;
         _userLocation = userLocation;
-        
-        //距离
-//        CLLocation *mdd = [[CLLocation alloc]initWithLatitude:self.mudidi.latitude longitude:self.mudidi.longitude];
-//        CLLocationDistance juli = [userLocation.location distanceFromLocation:mdd];
-        
         
     }
     

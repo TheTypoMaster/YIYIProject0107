@@ -31,7 +31,6 @@
     
     NSInteger last = 30.0 - (unsigned long)self.text.length;
     
-    //self.gxqmVC.lastLength.text = [NSString stringWithFormat:@"%ld",last];
     
     //placeholder
     if (self.text.length == 0) {
@@ -49,8 +48,7 @@
         tmp = [self.text substringWithRange:range];
         
     }
-    //
-    //    self.text = tmp;
+    
     NSLog(@"%@",self.text);
     
     

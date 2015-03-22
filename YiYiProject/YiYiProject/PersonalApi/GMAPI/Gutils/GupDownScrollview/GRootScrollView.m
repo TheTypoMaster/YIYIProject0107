@@ -122,10 +122,6 @@
     [self.myTopScrollView setButtonUnSelect];
     int positionid = scrollView.contentOffset.x/self.frame.size.width;
     
-//    NSLog(@"scrollView.contentOffset.x:%f",scrollView.contentOffset.x);
-//    NSLog(@"scrollView.contentOffset.y:%f",scrollView.contentOffset.y);
-//    NSLog(@"self.frame.size.width:%f",self.frame.size.width);
-//    NSLog(@"positionid = %d",positionid);
     self.myTopScrollView.scrollViewSelectedChannelID = positionid+100;
     [self.myTopScrollView setButtonSelect];
     [self.myTopScrollView setScrollViewContentOffset];
@@ -135,7 +131,6 @@
 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-//    return self.dataArray.count;
     
     
     NSArray *dataArray = self.dataArray[tableView.tag-200];

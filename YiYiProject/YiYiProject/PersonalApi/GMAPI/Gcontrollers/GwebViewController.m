@@ -30,8 +30,6 @@
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeText];
     
-//    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    
     NSURL *url =[NSURL URLWithString:self.urlstring];
     self.myTitle = @"详情";
     
@@ -89,12 +87,6 @@
 }
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    
-//    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-    
-//    string_title=[NSString stringWithFormat:@"%@",[webView stringByEvaluatingJavaScriptFromString:@"document.title"]];
-    
-//    self.title=string_title;
     
     button_comment.userInteractionEnabled=YES;
 }

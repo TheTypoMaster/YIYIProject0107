@@ -42,14 +42,10 @@
         button.adjustsImageWhenHighlighted = NO;
         
         button.frame = CGRectMake(0+self.frame.size.width/(array.count/2)*i,0,self.frame.size.width/(array.count/2),self.frame.size.height);
-                
-       // [button setImage:[UIImage imageNamed:[array objectAtIndex:(i+array.count/2)]] forState:UIControlStateSelected];
+        
         [button setBackgroundImage:[UIImage imageNamed:[array objectAtIndex:(i+array.count/2)]] forState:UIControlStateSelected];
         
-       // [button setImage:[UIImage imageNamed:[array objectAtIndex:i]] forState:UIControlStateNormal];
         [button setBackgroundImage:[UIImage imageNamed:[array objectAtIndex:i]] forState:UIControlStateNormal];
-
-       // [button setTitle:@"ss" forState:UIControlStateNormal];
         
         if (_currentPage == i)
         {
@@ -104,13 +100,5 @@
 
 
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 @end

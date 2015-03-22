@@ -317,7 +317,7 @@
             NSString *brand_name;
             NSString *mall_name;
             YIYIChatViewController *contact = [[YIYIChatViewController alloc]init];
-            contact.currentTarget = useriId;
+            
             
             if ([aModel.mall_info isKindOfClass:[NSDictionary class]]) {
                 
@@ -345,6 +345,7 @@
                 
             }
             
+            contact.currentTarget = useriId;
             contact.portraitStyle = RCUserAvatarCycle;
             contact.enableSettings = NO;
             contact.conversationType = ConversationType_PRIVATE;

@@ -10,10 +10,7 @@
 
 @interface GClothWaveCustomView : UIView
 
-//@property(nonatomic,strong)UIImageView *imv1;
-//@property(nonatomic,strong)UIImageView *imv2;
-//@property(nonatomic,strong)UIImageView *imv3;
-//@property(nonatomic,strong)UIImageView *imv4;
+
 
 -(void)loadCustomViewWithDataArray:(NSArray *)dataArray pageIndex:(NSInteger)index;
 

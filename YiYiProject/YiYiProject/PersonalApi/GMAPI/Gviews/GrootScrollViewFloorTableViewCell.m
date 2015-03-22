@@ -38,7 +38,6 @@
     
     //name
     UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(logoImv.frame)+10, logoImv.frame.origin.y+17, self.bounds.size.width-logoImv.frame.size.width -17, 18)];
-    //    nameLabel.backgroundColor = [UIColor orangeColor];
     nameLabel.textColor = [UIColor blackColor];
     nameLabel.font = [UIFont systemFontOfSize:17];
     nameLabel.textAlignment = NSTextAlignmentLeft;

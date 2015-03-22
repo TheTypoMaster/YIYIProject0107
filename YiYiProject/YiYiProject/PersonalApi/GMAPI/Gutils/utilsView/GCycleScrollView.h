@@ -22,9 +22,6 @@ typedef enum{
     UIScrollView *_scrollView;
     UIPageControl *_pageControl;
     
-//    id<XLCycleScrollViewDelegate> _delegate;
-//    id<XLCycleScrollViewDatasource> _datasource;
-    
     NSInteger _totalPages;
     NSInteger _curPage;
     

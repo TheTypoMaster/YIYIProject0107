@@ -94,10 +94,6 @@
     _geocodesearch.delegate = self;
     
     //获取用户当前经纬度
-//    GMAPI *aaa =[GMAPI sharedManager];
-//    aaa.delegate = self;
-//    [aaa startDingwei];
-    
     __weak typeof(self)weakSelf = self;
     
     [[GMAPI appDeledate] startDingweiWithBlock:^(NSDictionary *dic) {
@@ -187,8 +183,6 @@
         _newAnnotation = [[BMKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:AnnotationViewID];
         // 设置颜色
         ((BMKPinAnnotationView*)_newAnnotation).pinColor = BMKPinAnnotationColorPurple;
-//        // 从天上掉下效果
-//        ((BMKPinAnnotationView*)_newAnnotation).animatesDrop = YES;
         // 设置可拖拽
         ((BMKPinAnnotationView*)_newAnnotation).draggable = YES;
     }

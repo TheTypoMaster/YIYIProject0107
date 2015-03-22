@@ -17,20 +17,7 @@
     
     
     [self addSubview:imv_back];
-
     
-//    for (int i = 0; i<4; i++) {
-//        UIView *infoBackView = [[UIView alloc]initWithFrame:CGRectZero];
-//        infoBackView.backgroundColor = [UIColor redColor];
-//        if (i == 0 || i == 2) {
-//            [infoBackView setFrame:CGRectMake(0, 100, 70, 40)];
-//        }else if (i == 1 || i == 3){
-//            [infoBackView setFrame:CGRectMake(0+i*70, 20, 70, 40)];
-//        }
-//        
-//        [self addSubview:infoBackView];
-//        
-//    }
 }
 
 @end
