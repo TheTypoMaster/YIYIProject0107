@@ -9,14 +9,14 @@
 #import "GStorePinpaiViewController.h"
 #import "GtopScrollView.h"
 #import "GRootScrollView.h"
-#import "CustomSegmentView.h"
+#import "GCustomSegmentView.h"
 #import "LwaterFlowView.h"
 #import "ProductDetailController.h"
 #import "LoginViewController.h"
 #import "NSDictionary+GJson.h"
 
 
-@interface GStorePinpaiViewController ()<CustomSegmentViewDelegate,TMQuiltViewDataSource,WaterFlowDelegate,UIScrollViewDelegate>
+@interface GStorePinpaiViewController ()<GCustomSegmentViewDelegate,TMQuiltViewDataSource,WaterFlowDelegate,UIScrollViewDelegate>
 {
     
     
@@ -515,8 +515,6 @@
     _menu_view.layer.cornerRadius = 15.f;
     _menu_view.backgroundColor = RGBCOLOR(212, 59, 85);
     
-    
-//    self.navigationItem.titleView = menu_view;
     [_mainScrollview addSubview:_menu_view];
     NSLog(@"%@",NSStringFromCGRect(_menu_view.frame));
     
@@ -790,12 +788,8 @@
 
 
 #pragma mark - CustomSegmentViewDelegate
--(void)buttonClick:(int)buttonSelected{
-    NSLog(@"buttonSelect:%d",buttonSelected);
-    
-    
-    
-    
+-(void)buttonClick:(NSInteger)buttonSelected{
+    NSLog(@"buttonSelect:%ld",(long)buttonSelected);
     
 }
 

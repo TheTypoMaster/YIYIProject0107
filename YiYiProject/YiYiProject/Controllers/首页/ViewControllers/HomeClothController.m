@@ -20,9 +20,13 @@
 #import "GStorePinpaiViewController.h"
 #import "GwebViewController.h"
 #import "MessageDetailController.h"
+#import "GsearchViewController.h"
 
-@interface HomeClothController ()<GCycleScrollViewDatasource,GCycleScrollViewDelegate,UIScrollViewDelegate,EGORefreshTableDelegate,GgetllocationDelegate>
+@interface HomeClothController ()<GCycleScrollViewDatasource,GCycleScrollViewDelegate,UIScrollViewDelegate,EGORefreshTableDelegate,GgetllocationDelegate,UISearchBarDelegate>
 {
+    
+    //第零行
+    UIView *_searchView;//搜索框
     
     //第一行
     GCycleScrollView *_gscrollView;//上方循环滚动的scrollview
@@ -115,11 +119,13 @@
     
     
     
+    [_mainScrollView addSubview:[self creatSearchView]];//搜索栏
+    
     [_mainScrollView addSubview:[self creatGscrollView]];//循环滚动幻灯片
     
-    [_mainScrollView addSubview:[self creatNearbyView]];//附近的商场
+    [_mainScrollView addSubview:[self creatNearbyStoreView]];//附近的商场
     
-    [_mainScrollView addSubview:[self creatPinpaiView]];//品牌
+    [_mainScrollView addSubview:[self creatNearbyPinpaiView]];//品牌
     
     [self.view addSubview:_mainScrollView];
     
@@ -224,16 +230,6 @@
         [al show];
         return;
     }
-    
-//    GMAPI *aaa = [GMAPI sharedManager];
-//    aaa.delegate = self;
-//    [aaa startDingwei];
-
-//    GMAPI *aaa = [GMAPI sharedManager];
-//    aaa.delegate = self;
-//    [aaa startDingwei];
-    
-//    [GMAPI startDingwei];
     
     __weak typeof(self)weakSelf = self;
     
@@ -366,9 +362,6 @@
 //请求我关注的商店
 -(void)prepareGuanzhuStore{
     
-    
-    
-    
     if (_guanzhuStoreDataArray.count>0) {
         _scrollview_nearbyView.dataArray = _guanzhuStoreDataArray;
         [_scrollview_nearbyView gReloadData];
@@ -376,7 +369,6 @@
     }
     
     [self prepareGuanzhuStoreWithLocation];
-    
     
 }
 
@@ -427,7 +419,6 @@
     
     
 }
-
 
 -(void)prepareNearPinpaiWithLocation{
     
@@ -503,11 +494,39 @@
 }
 
 
+//创建搜索栏
+-(UIView*)creatSearchView{
+    _searchView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 52)];
+    _searchView.backgroundColor = RGBCOLOR(238, 238, 238);
+    UISearchBar *bar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 52)];
+    bar.placeholder = @"搜索品牌/店铺/单品";
+    bar.delegate = self;
+    bar.layer.borderWidth = 2.f;
+    bar.layer.borderColor = RGBCOLOR(242, 242, 242).CGColor;
+    bar.barTintColor = RGBCOLOR(242, 242, 242);
+    [_searchView addSubview:bar];
+    return _searchView;
+}
 
 
-///创建循环滚动的scrollview
+#pragma - mark UISearchBarDelegate
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+{
+    GsearchViewController *gsearchVc = [[GsearchViewController alloc]init];
+//    UINavigationController * search_nav = [[UINavigationController alloc] initWithRootViewController:gsearchVc];
+//    [self.rootViewController presentViewController:search_nav animated:YES completion:^{
+//        
+//    }];
+    gsearchVc.hidesBottomBarWhenPushed = YES;
+    [self.rootViewController.navigationController pushViewController:gsearchVc animated:YES];
+    
+    return NO;
+}
+
+
+//创建循环滚动的scrollview
 -(UIView*)creatGscrollView{
-    _gscrollView = [[GCycleScrollView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 180*GscreenRatio_568)];
+    _gscrollView = [[GCycleScrollView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_searchView.frame), DEVICE_WIDTH, 180*GscreenRatio_568)];
     _gscrollView.theGcycelScrollViewType = GCYCELNORMORL;
     [_gscrollView loadGcycleScrollView];
     _gscrollView.tag = 200;
@@ -518,20 +537,13 @@
 }
 
 //创建附近的商城view
--(UIView*)creatNearbyView{
+-(UIView*)creatNearbyStoreView{
     
     
     _nearbyView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_gscrollView.frame), DEVICE_WIDTH, 218)];
     _nearbyView.backgroundColor = [UIColor whiteColor];
     
-    
-    
-    
     //标题
-//    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 12, 30, 15)];
-//    titleLabel.font = [UIFont systemFontOfSize:15];
-//    titleLabel.text = @"附近";
-//    [_nearbyView addSubview:titleLabel];
     _nearbyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_nearbyBtn setTitle:@"附近的商家" forState:UIControlStateNormal];
     [_nearbyBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -554,6 +566,16 @@
     _guanzhuBtn_Store.tag = 63;
     [_guanzhuBtn_Store addTarget:self action:@selector(nearOrGuanzhuBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [_nearbyView addSubview:_guanzhuBtn_Store];
+    
+    //搜索附近的商场
+//    UIButton *searchStoreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [searchStoreBtn setFrame:CGRectMake(_nearbyView.frame.size.width -15-60, 0, 60, 33)];
+//    [searchStoreBtn setTitle:@"搜索" forState:UIControlStateNormal];
+//    [searchStoreBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//    searchStoreBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+//    [searchStoreBtn addTarget:self action:@selector(pushToSearchStoreVc) forControlEvents:UIControlEventTouchUpInside];
+//    [_nearbyView addSubview:searchStoreBtn];
+    
     
     
     //背景图
@@ -605,19 +627,17 @@
 }
 
 
-//品牌
--(UIView *)creatPinpaiView{
+
+
+
+//附近的品牌
+-(UIView *)creatNearbyPinpaiView{
     
-    _pinpaiView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_nearbyView.frame), DEVICE_HEIGHT, 155)];
+    _pinpaiView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_nearbyView.frame), DEVICE_WIDTH, 155)];
     _pinpaiView.backgroundColor = RGBCOLOR(242, 242, 242);
     
     
     //标题
-//    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 12, 30, 15)];
-//    titleLabel.font = [UIFont systemFontOfSize:15];
-//    titleLabel.text = @"品牌";
-//    [_pinpaiView addSubview:titleLabel];
-    
     _pinpaiBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_pinpaiBtn setTitle:@"附近的品牌" forState:UIControlStateNormal];
     [_pinpaiBtn setBackgroundImage:[UIImage imageNamed:@"g_redline_down.png"] forState:UIControlStateSelected];
@@ -640,6 +660,9 @@
     _guanzhuBtn_pinpai.tag = 61;
     [_guanzhuBtn_pinpai addTarget:self action:@selector(nearOrGuanzhuBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [_pinpaiView addSubview:_guanzhuBtn_pinpai];
+    
+    
+    
     
     
     //滚动界面
@@ -667,7 +690,6 @@
         
         UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(yuan.frame)+10, 70, 13)];
         nameLabel.font = [UIFont systemFontOfSize:13];
-//        nameLabel.text = @"ONLY";
         nameLabel.textAlignment = NSTextAlignmentCenter;
         nameLabel.textColor = RGBCOLOR(114, 114, 114);
         [pinpaiView addSubview:nameLabel];
@@ -690,24 +712,15 @@
     [_pinpaiView addSubview:downTitleLine];
     
     
-    
-    
-    //向左按钮btn
-    UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [leftBtn setFrame:CGRectMake(15, CGRectGetMaxY(downTitleLine.frame)+40, 22, 22)];
-    leftBtn.layer.cornerRadius = 4;
-    [leftBtn setImage:[UIImage imageNamed:@"gjiantouleft.png"] forState:UIControlStateNormal];
-    [leftBtn addTarget:self action:@selector(pinpaiGoleft) forControlEvents:UIControlEventTouchUpInside];
-//    [_pinpaiView addSubview:leftBtn];
-    
-    
-    //向右按钮btn
-    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightBtn setFrame:CGRectMake(DEVICE_WIDTH-37, CGRectGetMaxY(downTitleLine.frame)+40, 22, 22)];
-    rightBtn.layer.cornerRadius = 4;
-    [rightBtn setImage:[UIImage imageNamed:@"gjiantouright.png"] forState:UIControlStateNormal];
-    [rightBtn addTarget:self action:@selector(pinpaiGoRight) forControlEvents:UIControlEventTouchUpInside];
-//    [_pinpaiView addSubview:rightBtn];
+    //搜索附近的品牌
+//    UIButton *searchNearbyPinpaiBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [searchNearbyPinpaiBtn setTitle:@"搜索" forState:UIControlStateNormal];
+//    [searchNearbyPinpaiBtn addTarget:self action:@selector(pushToSearchPinpaiVc) forControlEvents:UIControlEventTouchUpInside];
+//    NSLog(@"%f",_pinpaiView.frame.size.width);
+//    [searchNearbyPinpaiBtn setFrame:CGRectMake(_pinpaiView.frame.size.width-60-15, 0, 60, 33)];
+//    [searchNearbyPinpaiBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//    searchNearbyPinpaiBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+//    [_pinpaiView addSubview:searchNearbyPinpaiBtn];
     
     
     return _pinpaiView;
@@ -836,10 +849,6 @@
     if (theGCycleScrollView.tag == 200) {
         num = _topScrollviewImvInfoArray.count;
     }
-    //这是什么?
-//    else if (theGCycleScrollView.tag == 201){
-//        num = _nearByStoreDataArray.count/4+1;
-//    }
     return num;
     
 }
@@ -862,12 +871,6 @@
         [imv sd_setImageWithURL:[NSURL URLWithString:str] placeholderImage:nil];
         return imv;
     }
-    //这是什么?
-//    else if (theGCycleScrollView.tag == 201){
-//        GClothWaveCustomView *view = [[GClothWaveCustomView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH-30, 180*GscreenRatio_568)];
-//        [view loadCustomViewWithDataArray:_nearByStoreDataArray pageIndex:index];
-//        return view;
-//    }
     
     return [UIView new];
     
@@ -908,25 +911,7 @@
         
     }
     
-//    id obj=NSClassFromString(@"UIAlertController");
-//    if ( obj!=nil){
-//        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:[NSString stringWithFormat:@"当前点击第%ld个页面",index] preferredStyle:UIAlertControllerStyleAlert];
-//        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-//            
-//        }];
-//        [alertController addAction:cancelAction];
-//        [self presentViewController:alertController animated:YES completion:^{
-//            
-//        }];
-//    }
-//    else{
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
-//                                                        message:[NSString stringWithFormat:@"当前点击第%ld个页面",index]
-//                                                       delegate:self
-//                                              cancelButtonTitle:@"确定"
-//                                              otherButtonTitles:nil,nil];
-//        [alert show];
-//    }
+
     
 }
 
@@ -951,7 +936,6 @@
     
     
 }
-
 
 -(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
     if (scrollView == _mainScrollView) {

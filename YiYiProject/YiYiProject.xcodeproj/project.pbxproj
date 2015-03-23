@@ -474,7 +474,6 @@
 		E305222D1A6ED1B5007BEAFD /* GHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E305222C1A6ED1B5007BEAFD /* GHolderTextView.m */; };
 		E34372AF1A88357D003CDFD9 /* gdownname@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E34372AE1A88357D003CDFD9 /* gdownname@2x.png */; };
 		E34744E21AB0DA8200383A1B /* gimv1_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E34744E11AB0DA8200383A1B /* gimv1_back@2x.png */; };
-		E34E3D671A615B8000DD95BB /* CustomSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = E34E3D661A615B8000DD95BB /* CustomSegmentView.m */; };
 		E35EF1161A6A54A900B493A9 /* GChooseStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E35EF1151A6A54A900B493A9 /* GChooseStoreViewController.m */; };
 		E35EF1231A6A756900B493A9 /* GchooseFloorPinpaiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E35EF1221A6A756900B493A9 /* GchooseFloorPinpaiViewController.m */; };
 		E35EF1581A6B6E0700B493A9 /* garea.plist in Resources */ = {isa = PBXBuildFile; fileRef = E35EF1561A6B6E0700B493A9 /* garea.plist */; };
@@ -490,6 +489,15 @@
 		E37A2E2E1A7349C300145608 /* GchooseAdressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E37A2E2D1A7349C300145608 /* GchooseAdressViewController.m */; };
 		E37C330A1AA23F6900B646EC /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E37C33081AA23F6900B646EC /* mapapi.bundle */; };
 		E37EAB751AA303040040CA6A /* libbaidumapapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E37EAB741AA303040040CA6A /* libbaidumapapi.a */; };
+		E37EB4F61ABFB50E009F5797 /* GsearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E37EB4F51ABFB50E009F5797 /* GsearchViewController.m */; };
+		E37EB4F81ABFC2BF009F5797 /* ios7_newssearchbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E37EB4F71ABFC2BF009F5797 /* ios7_newssearchbar@2x.png */; };
+		E37EB4FB1ABFC82F009F5797 /* GCustomSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = E37EB4FA1ABFC82F009F5797 /* GCustomSegmentView.m */; };
+		E37EB4FD1ABFCC44009F5797 /* searchSelectImage in Resources */ = {isa = PBXBuildFile; fileRef = E37EB4FC1ABFCC44009F5797 /* searchSelectImage */; };
+		E37EB5691AC00BEC009F5797 /* GloadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = E37EB55E1AC00BEC009F5797 /* GloadingView.m */; };
+		E37EB56A1AC00BEC009F5797 /* GmPrepareNetData.m in Sources */ = {isa = PBXBuildFile; fileRef = E37EB5601AC00BEC009F5797 /* GmPrepareNetData.m */; };
+		E37EB56B1AC00BEC009F5797 /* GrefreshTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = E37EB5621AC00BEC009F5797 /* GrefreshTableFooterView.m */; };
+		E37EB56C1AC00BEC009F5797 /* GrefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = E37EB5641AC00BEC009F5797 /* GrefreshTableHeaderView.m */; };
+		E37EB56D1AC00BEC009F5797 /* GrefreshTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E37EB5661AC00BEC009F5797 /* GrefreshTableView.m */; };
 		E38487721AAA9B7A00BB4B3C /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E38487711AAA9B7A00BB4B3C /* libstdc++.6.0.9.dylib */; };
 		E38AFE021A7A967E009C2C0C /* JKAssets.m in Sources */ = {isa = PBXBuildFile; fileRef = E38AFDDC1A7A967E009C2C0C /* JKAssets.m */; };
 		E38AFE031A7A967E009C2C0C /* JKAssetsCollectionFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = E38AFDDE1A7A967E009C2C0C /* JKAssetsCollectionFooterView.m */; };
@@ -522,7 +530,6 @@
 		E3996ECE1A5E1DBA00673147 /* red_background.png in Resources */ = {isa = PBXBuildFile; fileRef = E3996E8E1A5E1DBA00673147 /* red_background.png */; };
 		E3996ECF1A5E1DBA00673147 /* UIViewAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E901A5E1DBA00673147 /* UIViewAdditions.m */; };
 		E3996ED01A5E1DBA00673147 /* GMAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E921A5E1DBA00673147 /* GMAPI.m */; };
-		E3996ED11A5E1DBA00673147 /* GmPrepareNetData.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E941A5E1DBA00673147 /* GmPrepareNetData.m */; };
 		E3996ED21A5E1DBA00673147 /* gGray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3996E961A5E1DBA00673147 /* gGray@2x.png */; };
 		E3996ED31A5E1DBA00673147 /* gRed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3996E971A5E1DBA00673147 /* gRed@2x.png */; };
 		E3996ED41A5E1DBA00673147 /* GRootScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E991A5E1DBA00673147 /* GRootScrollView.m */; };
@@ -1219,8 +1226,6 @@
 		E305222C1A6ED1B5007BEAFD /* GHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHolderTextView.m; sourceTree = "<group>"; };
 		E34372AE1A88357D003CDFD9 /* gdownname@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gdownname@2x.png"; sourceTree = "<group>"; };
 		E34744E11AB0DA8200383A1B /* gimv1_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gimv1_back@2x.png"; sourceTree = "<group>"; };
-		E34E3D651A615B8000DD95BB /* CustomSegmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomSegmentView.h; sourceTree = "<group>"; };
-		E34E3D661A615B8000DD95BB /* CustomSegmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomSegmentView.m; sourceTree = "<group>"; };
 		E35EF1141A6A54A900B493A9 /* GChooseStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GChooseStoreViewController.h; sourceTree = "<group>"; };
 		E35EF1151A6A54A900B493A9 /* GChooseStoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GChooseStoreViewController.m; sourceTree = "<group>"; };
 		E35EF1211A6A756900B493A9 /* GchooseFloorPinpaiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GchooseFloorPinpaiViewController.h; sourceTree = "<group>"; };
@@ -1305,6 +1310,22 @@
 		E37C33061AA23F6900B646EC /* BMKVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKVersion.h; sourceTree = "<group>"; };
 		E37C33081AA23F6900B646EC /* mapapi.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = mapapi.bundle; sourceTree = "<group>"; };
 		E37EAB741AA303040040CA6A /* libbaidumapapi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbaidumapapi.a; sourceTree = "<group>"; };
+		E37EB4F41ABFB50E009F5797 /* GsearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GsearchViewController.h; sourceTree = "<group>"; };
+		E37EB4F51ABFB50E009F5797 /* GsearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GsearchViewController.m; sourceTree = "<group>"; };
+		E37EB4F71ABFC2BF009F5797 /* ios7_newssearchbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ios7_newssearchbar@2x.png"; sourceTree = "<group>"; };
+		E37EB4F91ABFC82F009F5797 /* GCustomSegmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCustomSegmentView.h; sourceTree = "<group>"; };
+		E37EB4FA1ABFC82F009F5797 /* GCustomSegmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCustomSegmentView.m; sourceTree = "<group>"; };
+		E37EB4FC1ABFCC44009F5797 /* searchSelectImage */ = {isa = PBXFileReference; lastKnownFileType = folder; path = searchSelectImage; sourceTree = "<group>"; };
+		E37EB55D1AC00BEC009F5797 /* GloadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GloadingView.h; sourceTree = "<group>"; };
+		E37EB55E1AC00BEC009F5797 /* GloadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GloadingView.m; sourceTree = "<group>"; };
+		E37EB55F1AC00BEC009F5797 /* GmPrepareNetData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GmPrepareNetData.h; sourceTree = "<group>"; };
+		E37EB5601AC00BEC009F5797 /* GmPrepareNetData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GmPrepareNetData.m; sourceTree = "<group>"; };
+		E37EB5611AC00BEC009F5797 /* GrefreshTableFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrefreshTableFooterView.h; sourceTree = "<group>"; };
+		E37EB5621AC00BEC009F5797 /* GrefreshTableFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrefreshTableFooterView.m; sourceTree = "<group>"; };
+		E37EB5631AC00BEC009F5797 /* GrefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrefreshTableHeaderView.h; sourceTree = "<group>"; };
+		E37EB5641AC00BEC009F5797 /* GrefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrefreshTableHeaderView.m; sourceTree = "<group>"; };
+		E37EB5651AC00BEC009F5797 /* GrefreshTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrefreshTableView.h; sourceTree = "<group>"; };
+		E37EB5661AC00BEC009F5797 /* GrefreshTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrefreshTableView.m; sourceTree = "<group>"; };
 		E38487711AAA9B7A00BB4B3C /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
 		E38AFDDB1A7A967E009C2C0C /* JKAssets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKAssets.h; sourceTree = "<group>"; };
 		E38AFDDC1A7A967E009C2C0C /* JKAssets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKAssets.m; sourceTree = "<group>"; };
@@ -1359,8 +1380,6 @@
 		E3996E901A5E1DBA00673147 /* UIViewAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIViewAdditions.m; sourceTree = "<group>"; };
 		E3996E911A5E1DBA00673147 /* GMAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMAPI.h; sourceTree = "<group>"; };
 		E3996E921A5E1DBA00673147 /* GMAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMAPI.m; sourceTree = "<group>"; };
-		E3996E931A5E1DBA00673147 /* GmPrepareNetData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GmPrepareNetData.h; sourceTree = "<group>"; };
-		E3996E941A5E1DBA00673147 /* GmPrepareNetData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GmPrepareNetData.m; sourceTree = "<group>"; };
 		E3996E961A5E1DBA00673147 /* gGray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gGray@2x.png"; sourceTree = "<group>"; };
 		E3996E971A5E1DBA00673147 /* gRed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gRed@2x.png"; sourceTree = "<group>"; };
 		E3996E981A5E1DBA00673147 /* GRootScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRootScrollView.h; sourceTree = "<group>"; };
@@ -3087,6 +3106,23 @@
 			path = inc;
 			sourceTree = "<group>";
 		};
+		E37EB55A1AC00BEC009F5797 /* GMRefreshTableViewAndNetData */ = {
+			isa = PBXGroup;
+			children = (
+				E37EB55D1AC00BEC009F5797 /* GloadingView.h */,
+				E37EB55E1AC00BEC009F5797 /* GloadingView.m */,
+				E37EB55F1AC00BEC009F5797 /* GmPrepareNetData.h */,
+				E37EB5601AC00BEC009F5797 /* GmPrepareNetData.m */,
+				E37EB5611AC00BEC009F5797 /* GrefreshTableFooterView.h */,
+				E37EB5621AC00BEC009F5797 /* GrefreshTableFooterView.m */,
+				E37EB5631AC00BEC009F5797 /* GrefreshTableHeaderView.h */,
+				E37EB5641AC00BEC009F5797 /* GrefreshTableHeaderView.m */,
+				E37EB5651AC00BEC009F5797 /* GrefreshTableView.h */,
+				E37EB5661AC00BEC009F5797 /* GrefreshTableView.m */,
+			);
+			path = GMRefreshTableViewAndNetData;
+			sourceTree = "<group>";
+		};
 		E38AFDD91A7A967E009C2C0C /* GImagePicker */ = {
 			isa = PBXGroup;
 			children = (
@@ -3198,6 +3234,8 @@
 				E30522291A6ECD3A007BEAFD /* GupHuoDongViewController.m */,
 				E37A2E2C1A7349C300145608 /* GchooseAdressViewController.h */,
 				E37A2E2D1A7349C300145608 /* GchooseAdressViewController.m */,
+				E37EB4F41ABFB50E009F5797 /* GsearchViewController.h */,
+				E37EB4F51ABFB50E009F5797 /* GsearchViewController.m */,
 			);
 			path = Gcontrollers;
 			sourceTree = "<group>";
@@ -3205,6 +3243,8 @@
 		E3996E3E1A5E1DBA00673147 /* Gmodels */ = {
 			isa = PBXGroup;
 			children = (
+				E37EB4FC1ABFCC44009F5797 /* searchSelectImage */,
+				E37EB4F71ABFC2BF009F5797 /* ios7_newssearchbar@2x.png */,
 				E34744E11AB0DA8200383A1B /* gimv1_back@2x.png */,
 				E34372AE1A88357D003CDFD9 /* gdownname@2x.png */,
 				E3EAA8C31A8782C7008F3183 /* ios7_goahead4032@2x.png */,
@@ -3231,6 +3271,7 @@
 		E3996E491A5E1DBA00673147 /* Gutils */ = {
 			isa = PBXGroup;
 			children = (
+				E37EB55A1AC00BEC009F5797 /* GMRefreshTableViewAndNetData */,
 				E37C32C81AA23F6900B646EC /* BaiduMap_IOSSDK_v2.6.0_Lib */,
 				E36BFC851A6939FC009DAF81 /* FBCity.h */,
 				E36BFC861A6939FC009DAF81 /* FBCity.m */,
@@ -3239,8 +3280,6 @@
 				E3996E8B1A5E1DBA00673147 /* CWSegmentControl */,
 				E3996E911A5E1DBA00673147 /* GMAPI.h */,
 				E3996E921A5E1DBA00673147 /* GMAPI.m */,
-				E3996E931A5E1DBA00673147 /* GmPrepareNetData.h */,
-				E3996E941A5E1DBA00673147 /* GmPrepareNetData.m */,
 				E3996E951A5E1DBA00673147 /* GupDownScrollview */,
 				E3996E9C1A5E1DBA00673147 /* MLImageCrop.h */,
 				E3996E9D1A5E1DBA00673147 /* MLImageCrop.m */,
@@ -3285,8 +3324,6 @@
 			children = (
 				E305222B1A6ED1B5007BEAFD /* GHolderTextView.h */,
 				E305222C1A6ED1B5007BEAFD /* GHolderTextView.m */,
-				E34E3D651A615B8000DD95BB /* CustomSegmentView.h */,
-				E34E3D661A615B8000DD95BB /* CustomSegmentView.m */,
 				E30479421A6109B800709985 /* GBigSmallTabHeaderView */,
 				E3996EA51A5E1DBA00673147 /* GcustomActionSheet.h */,
 				E3996EA61A5E1DBA00673147 /* GcustomActionSheet.m */,
@@ -3319,6 +3356,8 @@
 				E3E832431A666F7600026DAC /* GrootScrollViewFloorTableViewCell.m */,
 				E3ECC7031A7E7EA00024A734 /* GBtn.h */,
 				E3ECC7041A7E7EA00024A734 /* GBtn.m */,
+				E37EB4F91ABFC82F009F5797 /* GCustomSegmentView.h */,
+				E37EB4FA1ABFC82F009F5797 /* GCustomSegmentView.m */,
 			);
 			path = Gviews;
 			sourceTree = "<group>";
@@ -3642,6 +3681,7 @@
 				EF932A021A617E2B00A8BD18 /* EditInfoView.xib in Resources */,
 				137B07CB1A4E6FDF00DE7DCC /* xingji_kong@3x.png in Resources */,
 				137B07DA1A4E6FDF00DE7DCC /* sQQ_icon@3x.png in Resources */,
+				E37EB4F81ABFC2BF009F5797 /* ios7_newssearchbar@2x.png in Resources */,
 				1391DC611A870673006A2E15 /* t_shoucang@2x.png in Resources */,
 				19F7B4371A67FFA600087BCB /* item_cancel@2x.png in Resources */,
 				137E0AE11A4C66F200B59F64 /* product_shoucang_cancel@2x.png in Resources */,
@@ -3822,6 +3862,7 @@
 				137B08381A4E716700DE7DCC /* quxian@2x.png in Resources */,
 				136B14D21AA56A55000DB09B /* image_album_bg@3x.png in Resources */,
 				E3996EC71A5E1DBA00673147 /* gstart@2x.png in Resources */,
+				E37EB4FD1ABFCC44009F5797 /* searchSelectImage in Resources */,
 				19F7B4431A67FFA600087BCB /* nav_btn_bg.png in Resources */,
 				136B14D01AA56995000DB09B /* image_album_bg@2x.png in Resources */,
 				137B07DD1A4E6FDF00DE7DCC /* 1+1_botton@3x.png in Resources */,
@@ -3962,6 +4003,7 @@
 				56726C491A55A9A90085D77C /* TopicSubCommentsModel.m in Sources */,
 				E38AFE0E1A7A967E009C2C0C /* UIView+JKPicker.m in Sources */,
 				DFC7812D1A615FF700776C62 /* MyMatchDivisionDetailViewController.m in Sources */,
+				E37EB56A1AC00BEC009F5797 /* GmPrepareNetData.m in Sources */,
 				DFB196EA1A6D3D900006633F /* UIImage+ImageEffects.m in Sources */,
 				E38AFE091A7A967E009C2C0C /* JKPhotoBrowser.m in Sources */,
 				E37A2E2E1A7349C300145608 /* GchooseAdressViewController.m in Sources */,
@@ -4010,6 +4052,7 @@
 				13B690801A580B76007FE152 /* MailModel.m in Sources */,
 				13A389BD1A38974F00ABBACB /* RefreshTableView.m in Sources */,
 				13963F4C1A4FC5FB007BE68B /* PublishHuatiController.m in Sources */,
+				E37EB4F61ABFB50E009F5797 /* GsearchViewController.m in Sources */,
 				13CEC8931A5D96CF00FE273F /* TTPublishViewController.m in Sources */,
 				13AD17B11A603E4300AB24F5 /* TopicParseModel.m in Sources */,
 				137B6FE31A6B682E007035DE /* MessageDetailController.m in Sources */,
@@ -4042,6 +4085,7 @@
 				1391DC561A8704E4006A2E15 /* MenuView.m in Sources */,
 				E3996EE61A5E1E0600673147 /* HomeClothController.m in Sources */,
 				1391DC451A8703E3006A2E15 /* LoginViewController.m in Sources */,
+				E37EB56B1AC00BEC009F5797 /* GrefreshTableFooterView.m in Sources */,
 				E3EAA8C21A87806D008F3183 /* GwebViewController.m in Sources */,
 				E30479481A6109B800709985 /* UIImage+ImageEffects.m in Sources */,
 				56DAB20D1A46A35F00273140 /* ZSNApi.m in Sources */,
@@ -4050,7 +4094,9 @@
 				1382C51E1A812A5A0079AF55 /* MJRefreshBaseView.m in Sources */,
 				566FE24F1A50264A00A96B5F /* TopicDetailBottomView.m in Sources */,
 				566FE2541A503A9E00A96B5F /* MatchInfoViewController.m in Sources */,
+				E37EB4FB1ABFC82F009F5797 /* GCustomSegmentView.m in Sources */,
 				565321521A59896600E43F80 /* TopicModel.m in Sources */,
+				E37EB5691AC00BEC009F5797 /* GloadingView.m in Sources */,
 				EF932A161A6236AD00A8BD18 /* WaterF.m in Sources */,
 				13C404D81A6FF42100C4B516 /* ActivityModel.m in Sources */,
 				19D5E6B51A4FE8E1008401E0 /* YichuListTableViewCell.m in Sources */,
@@ -4073,8 +4119,6 @@
 				13963F431A4FC54D007BE68B /* LEditor.m in Sources */,
 				13B6906A1A5694C5007FE152 /* MyCollectionController.m in Sources */,
 				EF9329F31A617DD500A8BD18 /* MySettingsViewController.m in Sources */,
-				E3996ED11A5E1DBA00673147 /* GmPrepareNetData.m in Sources */,
-				E34E3D671A615B8000DD95BB /* CustomSegmentView.m in Sources */,
 				EF932A191A6236AD00A8BD18 /* WaterFCell.m in Sources */,
 				E35EF1161A6A54A900B493A9 /* GChooseStoreViewController.m in Sources */,
 				E3996EDE1A5E1DBA00673147 /* GStarsView.m in Sources */,
@@ -4093,6 +4137,7 @@
 				56A8A8311A45946000E85F6B /* MatchTopicModel.m in Sources */,
 				EFD42C841A6A8FE600E5C5E3 /* SVProgressHUD.m in Sources */,
 				566FE24B1A501C4E00A96B5F /* TopicCommentsCell.m in Sources */,
+				E37EB56C1AC00BEC009F5797 /* GrefreshTableHeaderView.m in Sources */,
 				1387B08D1A5EC2D0006365D8 /* TopicImageModel.m in Sources */,
 				E35EF15F1A6B947800B493A9 /* GupClothesViewController.m in Sources */,
 				E3996ED41A5E1DBA00673147 /* GRootScrollView.m in Sources */,
@@ -4150,6 +4195,7 @@
 				E3FC8DE71A3C4B430025525D /* GeditUserInfoViewController.m in Sources */,
 				5653214F1A59785F00E43F80 /* OHLableHelper.m in Sources */,
 				13D560E31AA1B3F500C28927 /* DataManager.m in Sources */,
+				E37EB56D1AC00BEC009F5797 /* GrefreshTableView.m in Sources */,
 				1391DC491A87049A006A2E15 /* RootViewController.m in Sources */,
 				138986331A6A6A5B00F187C9 /* LDataInstance.m in Sources */,
 				13B690451A564825007FE152 /* CHTumblrMenuView.m in Sources */,
@@ -4251,7 +4297,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "be0546d7-a286-4b8e-9b4b-9f9e2fdb52cb";
 				PROVISIONING_PROFILE = "4104abd3-c5bf-4595-b386-80c241eb01dd";
 				SDKROOT = iphoneos;
 			};
@@ -4288,7 +4333,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "be0546d7-a286-4b8e-9b4b-9f9e2fdb52cb";
 				PROVISIONING_PROFILE = "4104abd3-c5bf-4595-b386-80c241eb01dd";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -4326,12 +4370,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-
-				PROVISIONING_PROFILE = "0a7574f4-6027-4272-a6f9-204c5fdbb548";
-
-				PROVISIONING_PROFILE = "be0546d7-a286-4b8e-9b4b-9f9e2fdb52cb";
 				PROVISIONING_PROFILE = "d660f35d-efb7-464d-8f44-5417866db7bd";
-
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Debug;
@@ -4367,12 +4406,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-
-				PROVISIONING_PROFILE = "0a7574f4-6027-4272-a6f9-204c5fdbb548";
-
-				PROVISIONING_PROFILE = "be0546d7-a286-4b8e-9b4b-9f9e2fdb52cb";
 				PROVISIONING_PROFILE = "d660f35d-efb7-464d-8f44-5417866db7bd";
-
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Release;
