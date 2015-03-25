@@ -180,7 +180,8 @@
 
 //时间戳相关
 +(NSString*)getTimeWithDate:(NSDate*)theDate;
-
++(NSString *)timechangeAll:(NSString *)placetime;
++(NSString *)timechangeAll1:(NSString *)placetime;
 
 
 //首页缓存

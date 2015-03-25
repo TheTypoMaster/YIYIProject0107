@@ -41,7 +41,7 @@ typedef enum{
     UIActivityIndicatorView *_activityView;
 }
 
-@property(nonatomic,assign) id <GRefreshTableDelegate> delegate;
+@property(nonatomic,assign) NSObject <GRefreshTableDelegate>* delegate;
 - (id)initWithFrame:(CGRect)frame arrowImageName:(NSString *)arrow textColor:(UIColor *)textColor;
 
 - (void)refreshLastUpdatedDate;

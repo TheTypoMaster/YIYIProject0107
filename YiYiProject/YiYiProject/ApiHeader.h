@@ -294,10 +294,13 @@ typedef enum{
 
 //我是店主 发布单品
 #define GFABUDIANPIN @"http://www.alayy.com/?d=api&c=products&m=addProducts"
+//编辑单品
+#define GEDITPRODUCT_MANAGE @"http://www.alayy.com/index.php?d=api&c=products&m=edit_product"
 
 //我是店主 发布活动
 #define GFABUHUODONG @"http://www.alayy.com/index.php?d=api&c=mall&m=publish_activity"
-
+//修改活动
+#define GEDITHUODONG @"http://www.alayy.com/index.php?d=api&c=mall&m=edit_activity"
 
 
 
@@ -462,6 +465,11 @@ typedef enum{
 #define GADD_MAIL_ACTIVITY @"http://www.alayy.com/index.php?d=api&c=mall&m=publish_activity"
 
 
+//上架下架单品  参数：authcode  单品id字符串逗号隔开：product_ids   上架或下架action down/up
+#define GUPDOWNPRODUCTS @"http://www.alayy.com/index.php?d=api&c=products&m=product_shelf"
+
+//删除单品  参数：authcode  单品id字符串逗号隔开：product_ids
+#define GDELETPRODUCTS @"http://www.alayy.com/index.php?d=api&c=products&m=del_product"
 
 #endif
 

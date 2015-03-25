@@ -26,9 +26,7 @@
 
 -(void)gReloadData{
     
-    
-    
-    if (self.gtype == 11) {//附近的品牌
+    if (self.gtype == GNEARBYPINPAI) {//附近的品牌
         
         
         for (UIView *view in self.subviews) {
@@ -98,7 +96,7 @@
             
         }
         
-    }else if (self.gtype == 10){//附近的商店
+    }else if (self.gtype == GNEARBYSTORE){//附近的商店
 
         for (UIView *view in self.subviews) {
             [view removeFromSuperview];

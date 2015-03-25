@@ -14,6 +14,12 @@
 #import <UIKit/UIKit.h>
 #import "UserInfo.h"
 #import "MailInfoModel.h"
+#import "ProductModel.h"
+
+typedef enum{
+    GUPCLOTH = 0,
+    GEDITCLOTH
+}GUPCLOTHTYPE;
 
 @interface GupClothesViewController : MyViewController
 {
@@ -30,5 +36,12 @@
 @property (nonatomic, strong) NSMutableArray   *assetsArray;
 @property(nonatomic,strong)NSMutableArray *uploadImageArray;
 
+//修改衣服
+@property(nonatomic,assign)GUPCLOTHTYPE thetype;
+@property(nonatomic,strong)ProductModel *theEditProduct;
+@property(nonatomic,strong)NSMutableArray *oldImageArray;
+
+
+-(id)initWithType:(GUPCLOTHTYPE)theType editProduct:(ProductModel*)theModel;
 
 @end

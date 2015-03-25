@@ -62,6 +62,9 @@
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     
     self.myTitle=@"发布活动";
+    if (self.thetype == GUPHUODONGTYPE_EDIT) {
+        self.myTitle = @"修改活动";
+    }
     
     
     NSLog(@"self.mallInfo.brand_id: %@",self.mallInfo.brand_id);
@@ -79,12 +82,42 @@
     
     [self creatDatePickerChooseView];
     
+    if (self.thetype == GUPHUODONGTYPE_EDIT) {
+        [self setDataWithModel:self.theEditActivity];
+    }
     
     
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(gShou) name:UIKeyboardWillHideNotification object:nil];
     
 }
+
+
+//修改活动填充数据
+-(void)setDataWithModel:(ActivityModel*)amodel{
+//    NSString *mall_id = self.mallInfo.mall_id;//商场id
+//    NSString *shop_id = self.userInfo.shop_id;//店铺id
+    
+    UITextField *titleLabel = (UITextField *)[self.view viewWithTag:200];
+    titleLabel.text = amodel.activity_title;
+    _endTime.text = [GMAPI timechangeAll1:amodel.end_time];
+    _startTime.text = [GMAPI timechangeAll1:amodel.start_time];
+    _gholderTextView.text = amodel.activity_info;
+    _gholderTextView.TV.hidden = YES;
+    
+    UIImageView *imv = [[UIImageView alloc]init];
+    [imv sd_setImageWithURL:[NSURL URLWithString:amodel.pic] placeholderImage:[UIImage imageNamed:@"gremovephoto.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        _showImage = image;
+        [_showPicBtn setBackgroundImage:_showImage forState:UIControlStateNormal];
+    }];
+    
+    
+    
+}
+
+
+
+
 
 //时间选择器view
 -(void)creatDatePickerChooseView{
@@ -180,6 +213,9 @@
 -(void)creatTijiaoBtn{
     UIButton *tijiaoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [tijiaoBtn setTitle:@"提  交" forState:UIControlStateNormal];
+    if (self.thetype == GUPHUODONGTYPE_EDIT) {
+        [tijiaoBtn setTitle:@"修  改" forState:UIControlStateNormal];
+    }
     [tijiaoBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [tijiaoBtn setBackgroundColor:RGBCOLOR(217, 66, 93)];
     tijiaoBtn.layer.cornerRadius = 5;
@@ -204,6 +240,10 @@
     //上传的url
     NSString *uploadImageUrlStr = GFABUHUODONG;
     
+    if (self.thetype == GUPHUODONGTYPE_EDIT) {
+        uploadImageUrlStr = GEDITHUODONG;
+    }
+    
     NSString *type = nil;
     type = @"2";
     
@@ -220,21 +260,43 @@
     NSString *activity_title = titleLabel.text;//活动标题
     
     
-    if ([type isEqualToString:@"2"]) {//精品店
+    NSDictionary *parameters_dic = [NSDictionary dictionary];
+    NSString *activity_id = [NSString stringWithFormat:@"%@",self.theEditActivity.id];
+    if (self.thetype == GUPHUODONGTYPE_NONE) {
+        parameters_dic = @{
+                     @"type":type,
+                     @"shop_id":shop_id,
+                     @"activity_title":activity_title,
+                     @"activity_info":activity_info,
+                     @"start_time":start_time,
+                     @"end_time":end_time,
+                     @"authcode":[GMAPI getAuthkey],
+                     };
+    }else if (self.thetype == GUPHUODONGTYPE_EDIT){
+        parameters_dic = @{
+                     @"type":type,
+                     @"shop_id":shop_id,
+                     @"activity_title":activity_title,
+                     @"activity_info":activity_info,
+                     @"start_time":start_time,
+                     @"end_time":end_time,
+                     @"authcode":[GMAPI getAuthkey],
+                     @"activity_id":activity_id
+                     };
+    }
+    
+    
+    
+    
+    
+    if ([type isEqualToString:@"2"]) {//type为2的时候是店铺发布活动
+        
         //设置接收响应类型为标准HTTP类型(默认为响应类型为JSON)
         AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
         AFHTTPRequestOperation  * o2= [manager
                                        POST:uploadImageUrlStr
-                                       parameters:@{
-                                                    @"type":type,
-                                                    @"shop_id":shop_id,
-                                                    @"activity_title":activity_title,
-                                                    @"activity_info":activity_info,
-                                                    @"start_time":start_time,
-                                                    @"end_time":end_time,
-                                                    @"authcode":[GMAPI getAuthkey],
-                                                    }
+                                       parameters:parameters_dic
                                        constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
                                        {
                                            //开始拼接表单
@@ -278,7 +340,12 @@
                                            
                                            
                                            if ([[mydic objectForKey:@"errorcode"]intValue]==0) {
-                                               [GMAPI showAutoHiddenMBProgressWithText:@"发布成功" addToView:self.view];
+                                               if (self.thetype == GUPHUODONGTYPE_EDIT) {
+                                                   [GMAPI showAutoHiddenMBProgressWithText:@"修改成功" addToView:self.view];
+                                               }else if (self.thetype == GUPHUODONGTYPE_NONE){
+                                                   [GMAPI showAutoHiddenMBProgressWithText:@"发布成功" addToView:self.view];
+                                               }
+                                               
                                                [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_FABUHUODONG_SUCCESS object:nil];
                                                [self performSelector:@selector(fabuSuccessToGoBack) withObject:[NSNumber numberWithBool:YES] afterDelay:1];
                                            }else{
@@ -293,85 +360,14 @@
                                        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                            
                                            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                                           [GMAPI showAutoHiddenMBProgressWithText:@"发布失败请重新发布" addToView:self.view];
-                                           
-                                           NSLog(@"%@",error);
-                                           
-                                           
-                                       }];
-        
-        //设置上传操作的进度
-        [o2 setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
-            
-        }];
-    }else if ([type isEqualToString:@"1"]){//商场店
-        //设置接收响应类型为标准HTTP类型(默认为响应类型为JSON)
-        AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
-        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-        AFHTTPRequestOperation  * o2= [manager
-                                       POST:uploadImageUrlStr
-                                       parameters:@{
-                                                    @"type":type,
-                                                    @"mall_id":mall_id,
-                                                    @"shop_id":shop_id,
-                                                    @"activity_info":activity_info,
-                                                    @"start_time":start_time,
-                                                    @"end_time":end_time,
-                                                    @"authcode":[GMAPI getAuthkey],
-                                                    }
-                                       constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
-                                       {
-                                           //开始拼接表单
-                                           //获取图片的二进制形式
-                                           NSData * data= _showImageData;
-                                           
-                                           NSLog(@"%ld",(unsigned long)data.length);
-                                           
-                                           //将得到的二进制图片拼接到表单中
-                                           /**
-                                            *  data,指定上传的二进制流
-                                            *  name,服务器端所需参数名
-                                            *  fileName,指定文件名
-                                            *  mimeType,指定文件格式
-                                            */
-                                           [formData appendPartWithFileData:data name:@"pic" fileName:@"icon.jpg" mimeType:@"image/jpg"];
-                                           //多用途互联网邮件扩展（MIME，Multipurpose Internet Mail Extensions）
-                                           
-                                           
-                                           
-                                       }
-                                       success:^(AFHTTPRequestOperation *operation, id responseObject)
-                                       {
-                                           
-                                           
-                                           [MBProgressHUD hideHUDForView:self.view animated:YES];
-                                           
-                                           NSLog(@"%@",responseObject);
-                                           
-                                           NSError * myerr;
-                                           
-                                           NSDictionary *mydic=[NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:NSJSONReadingAllowFragments error:&myerr];
-                                           
-                                           
-                                           NSLog(@"%@",mydic);
-                                           
-                                           if ([[mydic objectForKey:@"errorcode"]intValue]==0) {
-                                               [GMAPI showAutoHiddenMBProgressWithText:@"发布成功" addToView:self.view];
-                                               [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_FABUHUODONG_SUCCESS object:nil];
-                                               [self performSelector:@selector(fabuSuccessToGoBack) withObject:[NSNumber numberWithBool:YES] afterDelay:1];
-                                           }else{
-                                               [GMAPI showAutoHiddenMBProgressWithText:[mydic objectForKey:@"msg"] addToView:self.view];
-                                               NSLog(@"%@",[mydic objectForKey:@"msg"]);
+                                           if (self.thetype == GUPHUODONGTYPE_NONE) {
+                                               [GMAPI showAutoHiddenMBProgressWithText:@"发布失败请检查网络" addToView:self.view];
+                                           }else if (self.thetype == GUPHUODONGTYPE_EDIT){
+                                               [GMAPI showAutoHiddenMBProgressWithText:@"修改失败请检查网络" addToView:self.view];
                                            }
                                            
-                                       }
-                                       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                           
-                                           [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                                           [GMAPI showAutoHiddenMBProgressWithText:@"发布失败请重新发布" addToView:self.view];
                                            
                                            NSLog(@"%@",error);
-                                           
                                            
                                            
                                        }];

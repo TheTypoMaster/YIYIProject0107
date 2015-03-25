@@ -13,9 +13,21 @@
 #import "MailInfoModel.h"
 #import "UserInfo.h"
 
+#import "ActivityModel.h"
+
+typedef enum{
+    GUPHUODONGTYPE_NONE = 0,
+    GUPHUODONGTYPE_EDIT
+}GUPHUODONGTYPE;
+
 @interface GupHuoDongViewController : MyViewController
 
 @property(nonatomic,strong)MailInfoModel *mallInfo;//店铺信息
 @property(nonatomic,strong)UserInfo *userInfo;
+
+//修改活动
+@property(nonatomic,assign)GUPHUODONGTYPE thetype;
+@property(nonatomic,strong)ActivityModel *theEditActivity;
+@property(nonatomic,strong)NSMutableArray *oldImageArray;
 
 @end

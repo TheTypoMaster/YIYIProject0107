@@ -37,6 +37,8 @@
     //性别
     UILabel *_genderLabel;
     
+    UISwitch *_ggg;//性别开关
+    
     
     
 }
@@ -45,11 +47,24 @@
 @implementation GupClothesViewController
 
 
+-(id)initWithType:(GUPCLOTHTYPE)theType editProduct:(ProductModel*)theModel{
+    self = [super init];
+    if (self) {
+        self.theEditProduct = theModel;
+        self.thetype = theType;
+    }
+    
+    return self;
+}
+
 -(void)viewWillAppear:(BOOL)animated{
     self.navigationController.navigationBarHidden = NO;
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
+    if (self.thetype == GEDITCLOTH) {
+        return;
+    }
     self.navigationController.navigationBarHidden = YES;
 }
 
@@ -63,7 +78,6 @@
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     
     self.myTitle=@"上传衣服";
-    
     
     self.view.backgroundColor = [UIColor whiteColor];
     
@@ -95,9 +109,76 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(gShou) name:UIKeyboardWillHideNotification object:nil];
     
     
+    if (self.thetype == GEDITCLOTH) {
+        self.myTitle = @"修改单品";
+        [self setDataWithModel:self.theEditProduct];
+    }
     
     
 }
+
+
+
+-(void)setDataWithModel:(ProductModel *)theModel{
+    UITextField *tf = _shurukuangArray[0];//品牌
+    UITextField *tf1 = _shurukuangArray[1];//品名
+    UITextField *tf2 = _shurukuangArray[2];//型号
+    UITextField *tf3 = _shurukuangArray[3];//价格
+    UITextField *tf4 = _shurukuangArray[4];//折扣
+    UITextField *tf5 = _shurukuangArray[5];//标签
+    
+    if (theModel.product_brand_name.length>0) {
+        tf.text = theModel.product_brand_name;
+    }
+    tf1.text = theModel.product_name;
+    tf2.text = theModel.product_sku;
+    tf3.text = theModel.product_price;
+    CGFloat zhekou = theModel.discount_num;
+    int zhe = zhekou*100;
+    tf4.text = [NSString stringWithFormat:@"%d",zhe];
+    tf5.text = theModel.product_tag;
+    
+    //类型
+    if ([theModel.product_new intValue] == 0 && [theModel.product_hotsale intValue] == 0) {
+        _leixingLabel.text = @"折扣";
+    }else if ([theModel.product_new intValue] == 1 && [theModel.product_hotsale intValue] == 0){
+        _leixingLabel.text = @"新品";
+    }else if ([theModel.product_new  intValue]== 0 && [theModel.product_hostsale intValue] == 0){
+        _leixingLabel.text = @"畅销";
+    }
+    _leixingLabel.textColor = [UIColor blackColor];
+    
+    //性别
+    if ([theModel.product_gender intValue] == 1) {
+        _genderLabel.text = @"女";
+        _ggg.on = YES;
+    }else if ([theModel.product_gender intValue] == 2){
+        _genderLabel.text = @"男";
+        _ggg.on = NO;
+    }
+    
+    
+    UIButton *btn = (UIButton*)[_mainScrollView viewWithTag:567];
+    [btn setTitle:@"修改" forState:UIControlStateNormal];
+    
+    self.oldImageArray = [NSMutableArray arrayWithCapacity:1];
+    
+    NSArray *imageList = theModel.imagelist;
+    for (int i = 0;i<imageList.count;i++) {
+        NSDictionary *dic = imageList[i];
+        NSString *imageName = [[dic objectForKey:@"original"]objectForKey:@"src"];
+        UIImageView *imv = [[UIImageView alloc]init];
+        [imv sd_setImageWithURL:[NSURL URLWithString:imageName] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            UIButton *btn = _showPicsBtnArray[i];
+            [btn setBackgroundImage:imv.image forState:UIControlStateNormal];
+            [self.oldImageArray addObject:imv.image];
+        }];
+    }
+    
+    
+    
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -151,6 +232,7 @@
 -(void)creatTijiaoBtn{
     UIButton *tijiaoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [tijiaoBtn setTitle:@"提  交" forState:UIControlStateNormal];
+    tijiaoBtn.tag = 567;
     [tijiaoBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [tijiaoBtn setBackgroundColor:RGBCOLOR(217, 66, 93)];
     tijiaoBtn.layer.cornerRadius = 5;
@@ -175,7 +257,7 @@
     }
     
     
-    if (self.assetsArray.count == 0) {
+    if (self.assetsArray.count == 0 && self.thetype == GUPCLOTH) {
         [GMAPI showAutoHiddenMBProgressWithText:@"请添加图片" addToView:self.view];
         return;
     }
@@ -194,7 +276,7 @@
 
 #pragma mark - 上传图片 & 上传信息
 
-//上传
+//发布单品上传
 -(void)upLoadImage:(NSArray *)aImage_arr{
     
     
@@ -245,6 +327,105 @@
     CGFloat zhekou = [tf4.text floatValue];
     zhekou = zhekou*0.1;
     NSString *zhekouStr = [NSString stringWithFormat:@"%.2f",zhekou];
+    
+    
+    
+    if (self.thetype == GEDITCLOTH) {
+        NSString *product_id = self.theEditProduct.product_id;
+        uploadImageUrlStr = GEDITPRODUCT_MANAGE;
+        //设置接收响应类型为标准HTTP类型(默认为响应类型为JSON)
+        AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        AFHTTPRequestOperation  * o2= [manager
+                                       POST:uploadImageUrlStr
+                                       parameters:@{
+                                                    @"product_name":tf1.text,//产品名
+                                                    @"product_gender":gengder,//产品适用性别
+                                                    @"product_price":tf3.text,//产品价格
+                                                    @"product_brand_id":self.mallInfo.brand_id,//产品品牌id
+                                                    @"product_brand_name":tf.text,//品牌名称
+                                                    @"product_shop_id":self.userInfo.shop_id,//商店id
+                                                    @"product_sku":tf2.text,//产品唯一标示
+                                                    @"product_hotsale":product_hotsale,//是否热销
+                                                    @"product_new":product_new,//是否新品
+                                                    @"discount_num":zhekouStr,//打折力度
+                                                    @"product_tag":tf5.text,//标签
+                                                    @"authcode":[GMAPI getAuthkey],//用户标示
+                                                    @"product_id":product_id
+                                                    }
+                                       constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
+                                       {
+                                           
+                                           for (int i = 0; i < aImage_arr.count; i ++) {
+                                               
+                                               UIImage *aImage = aImage_arr[i];
+                                               
+                                               NSData * data= UIImageJPEGRepresentation(aImage, 0.8);
+                                               
+                                               NSLog(@"---> 大小 %ld",(unsigned long)data.length);
+                                               
+                                               NSString *imageName = [NSString stringWithFormat:@"icon%d.jpg",i];
+                                               
+                                               NSString *picName = [NSString stringWithFormat:@"images%d",i];
+                                               
+                                               [formData appendPartWithFileData:data name:picName fileName:imageName mimeType:@"image/jpg"];
+                                               
+                                           }
+                                           
+                                           
+                                       }
+                                       success:^(AFHTTPRequestOperation *operation, id responseObject)
+                                       {
+                                           
+                                           
+                                           [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                           
+                                           NSLog(@"success %@",responseObject);
+                                           
+                                           NSError * myerr;
+                                           
+                                           NSDictionary *mydic=[NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:NSJSONReadingAllowFragments error:&myerr];
+                                           
+                                           
+                                           NSLog(@"mydic == %@ err0 = %@",mydic,myerr);
+                                           
+                                           if (mydic == nil) {
+                                               [GMAPI showAutoHiddenMBProgressWithText:@"上传失败" addToView:self.view];
+                                               return;
+                                           }
+                                           
+                                           if ([[mydic objectForKey:@"errorcode"]intValue]==0) {
+                                               [GMAPI showAutoHiddenMBProgressWithText:@"修改成功" addToView:self.view];
+                                               [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_FABUDANPIN_SUCCESS object:nil];
+                                               [self performSelector:@selector(fabuyifuSuccessToGoBack) withObject:[NSNumber numberWithBool:YES] afterDelay:1];
+                                               
+                                           }else{
+                                               [GMAPI showAutoHiddenMBProgressWithText:[mydic objectForKey:@"msg"] addToView:self.view];
+                                           }
+                                           
+                                       }
+                                       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                           
+                                           [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                           
+                                           [GMAPI showAutoHiddenMBProgressWithText:@"修改失败请重新修改" addToView:self.view];
+                                           
+                                           NSLog(@"失败 : %@",error);
+                                           
+                                           
+                                       }];
+        
+        //设置上传操作的进度
+        [o2 setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+            
+        }];
+        
+        
+        return;
+    }
+    
+    
+    
     
     
     
@@ -336,6 +517,7 @@
     
     
 }
+
 
 
 
@@ -513,6 +695,7 @@
             [btn addTarget:self action:@selector(tianjiatupian:) forControlEvents:UIControlEventTouchUpInside];
         }else{
             [btn setBackgroundImage:[UIImage imageNamed:@"gremovephoto.png"] forState:UIControlStateNormal];
+//            [btn addTarget:self action:@selector(removeSelf:) forControlEvents:UIControlEventTouchUpInside];
             [_showPicsBtnArray addObject:btn];
         }
         
@@ -530,20 +713,30 @@
     UILabel *ttt = [[UILabel alloc]initWithFrame:CGRectMake(17, CGRectGetMaxY(titleLabel.frame)+btnWeight+25, 70, 20)];
     ttt.text = @"选择性别";
     ttt.textColor = RGBCOLOR(114, 114, 114);
-    UISwitch *ggg = [[UISwitch alloc]initWithFrame:CGRectMake(CGRectGetMaxX(ttt.frame)+5, ttt.frame.origin.y-5, 50, 50)];
-    [ggg addTarget:self action:@selector(nnnn:) forControlEvents:UIControlEventValueChanged];
-    ggg.on = YES;
-    _genderLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(ggg.frame)+10, ttt.frame.origin.y, 50, 20)];
+    _ggg = [[UISwitch alloc]initWithFrame:CGRectMake(CGRectGetMaxX(ttt.frame)+5, ttt.frame.origin.y-5, 50, 50)];
+    
+    [_ggg addTarget:self action:@selector(nnnn:) forControlEvents:UIControlEventValueChanged];
+    _ggg.on = YES;
+    _genderLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_ggg.frame)+10, ttt.frame.origin.y, 50, 20)];
     _genderLabel.text = @"女";
     _genderLabel.textColor = RGBCOLOR(114, 114, 114);
     [_view2 addSubview:ttt];
-    [_view2 addSubview:ggg];
+    [_view2 addSubview:_ggg];
     [_view2 addSubview:_genderLabel];
     
     
     
     
 }
+
+
+
+-(void)removeSelf:(UIButton *)sender{
+    [sender setBackgroundImage:[UIImage imageNamed:@"gremovephoto.png"] forState:UIControlStateNormal];
+}
+
+
+
 
 
 -(void)nnnn:(UISwitch*)sender{
@@ -611,6 +804,13 @@
         }];
     }
     
+    
+    if (self.assetsArray.count == 0) {
+        [self upLoadImage:self.oldImageArray];
+    }
+
+    
+    
 }
 
 
@@ -649,18 +849,49 @@
     
     [imagePicker dismissViewControllerAnimated:YES completion:^{
         
-        ALAssetsLibrary   *lib = [[ALAssetsLibrary alloc] init];
-        for (int i = 0; i<self.assetsArray.count; i++) {
-            JKAssets *asset = self.assetsArray[i];
-            [lib assetForURL:asset.assetPropertyURL resultBlock:^(ALAsset *asset) {
-                if (asset) {
-                    UIButton *btn = _showPicsBtnArray[i];
-                    [btn setBackgroundImage:[UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]] forState:UIControlStateNormal];
-                }
-            } failureBlock:^(NSError *error) {
-                
-            }];
-        }
+//        if (self.thetype == GUPCLOTH) {
+            ALAssetsLibrary   *lib = [[ALAssetsLibrary alloc] init];
+            for (int i = 0; i<self.assetsArray.count; i++) {
+                JKAssets *asset = self.assetsArray[i];
+                [lib assetForURL:asset.assetPropertyURL resultBlock:^(ALAsset *asset) {
+                    if (asset) {
+                        UIButton *btn = _showPicsBtnArray[i];
+                        [btn setBackgroundImage:[UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]] forState:UIControlStateNormal];
+                    }
+                } failureBlock:^(NSError *error) {
+                    
+                }];
+            }
+//        }
+        
+//        else if (self.thetype == GEDITCLOTH){
+//            ALAssetsLibrary   *lib = [[ALAssetsLibrary alloc] init];
+//            for (int i = 0; i<self.assetsArray.count; i++) {
+//                JKAssets *asset = self.assetsArray[i];
+//                [lib assetForURL:asset.assetPropertyURL resultBlock:^(ALAsset *asset) {
+//                    if (asset) {
+//                        UIImage *image = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]];
+//                        [self.oldImageArray addObject:image];
+//                        
+//                        if (i == self.assetsArray.count-1) {
+//                            for (int i = 0;i<self.oldImageArray.count; i++) {
+//                                UIButton *btn = _showPicsBtnArray[i];
+//                                [btn setBackgroundImage:self.oldImageArray[i] forState:UIControlStateNormal];
+//                            }
+//                        }
+//                        
+//                        
+//                    }
+//                    
+//                } failureBlock:^(NSError *error) {
+//                    
+//                }];
+//            }
+//            
+//            
+//            
+//        }
+        
         
         
     }];

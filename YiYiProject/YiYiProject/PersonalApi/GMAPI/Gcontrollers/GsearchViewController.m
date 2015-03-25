@@ -23,6 +23,8 @@
     int _page;//第几页
     int _pageCapacity;//一页请求几条数据
     NSArray *_dataArray;//数据源
+    
+    
 }
 @end
 
@@ -42,15 +44,15 @@
     //创建搜索标题
     [self creatSearchHeaderView];
     
+    _selectIndex = 100;
+    
     //创建tableview
     _tableView = [[GrefreshTableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_searchHeaderView.frame), DEVICE_WIDTH, DEVICE_HEIGHT - _searchHeaderView.frame.size.height)];
-    _tableView.refreshDelegate = self;
+    _tableView.GrefreshDelegate = self;
     _tableView.dataSource =self;
+    _tableView.hidden = YES;
     [self.view addSubview:_tableView];
     
-    
-    _selectIndex = 100;
-    [_tableView showRefreshHeader:YES];
     
 }
 
@@ -60,7 +62,7 @@
 }
 
 
-
+//创建搜索框
 -(void)creatSearchHeaderView{
     _searchHeaderView=[[UIView alloc]initWithFrame:CGRectMake(0,0, DEVICE_WIDTH,82)];
     _searchHeaderView.backgroundColor=RGBCOLOR(247, 247, 247);
@@ -85,6 +87,7 @@
     [searchBtn setFrame:CGRectMake(_searchHeaderView.frame.size.width-60, 0, 60, 40)];
     searchBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [searchBtn setTitle:@"搜索" forState:UIControlStateNormal];
+    [searchBtn addTarget:self action:@selector(searchBtnClicked) forControlEvents:UIControlEventTouchUpInside];
     [searchBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_searchHeaderView addSubview:searchBtn];
     
@@ -143,21 +146,32 @@
     _selectIndex = tag;
     NSLog(@"selectIndex = %d",_selectIndex);
     if (_selectIndex == 100) {//品牌
-        
+        [_tableView showRefreshHeader:YES];
     }else if (_selectIndex == 101){//店铺
-        
+        [_tableView showRefreshHeader:YES];
     }else if (_selectIndex == 102){//单品
-        
+        [_tableView showRefreshHeader:YES];
     }
 }
 
+//点击搜索按钮
+-(void)searchBtnClicked{
+    [self gshou];
+    _tableView.hidden = NO;
+    [_tableView showRefreshHeader:YES];
+}
 
+//收键盘
+-(void)gshou{
+    [_searchTextField resignFirstResponder];
+}
 
 
 //请求网络数据
 -(void)prepareNetData{
     
     NSString *api = [@"123" stringByAppendingString:[NSString stringWithFormat:@"&page=%d&ps=%d",_page,_pageCapacity]];
+    NSString *theWord = _searchTextField.text;
     
     if (_selectIndex == 100) {//搜索品牌
         

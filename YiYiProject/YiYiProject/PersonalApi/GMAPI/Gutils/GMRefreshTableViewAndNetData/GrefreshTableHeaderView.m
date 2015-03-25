@@ -78,7 +78,7 @@
 
 - (void)refreshLastUpdatedDate {
     
-    if (_delegate) {
+    if (_delegate && [_delegate respondsToSelector:@selector(GRefreshTableDataSourceLastUpdated:)]) {
         
         NSDate *date = [_delegate GRefreshTableDataSourceLastUpdated:self];
         
@@ -165,7 +165,7 @@
     } else if (scrollView.isDragging) {
         
         BOOL _loading = NO;
-        if (_delegate) {
+        if (_delegate && [_delegate respondsToSelector:@selector(GRefreshTableDataSourceIsLoading:)]) {
             _loading = [_delegate GRefreshTableDataSourceIsLoading:self];
         }
         
@@ -184,13 +184,13 @@
 - (void)GRefreshScrollViewDidEndDragging:(UIScrollView *)scrollView {
     
     BOOL _loading = NO;
-    if (_delegate) {
+    if (_delegate && [_delegate respondsToSelector:@selector(GRefreshTableDataSourceIsLoading:)]) {
         _loading = [_delegate GRefreshTableDataSourceIsLoading:self];
     }
     
     if (scrollView.contentOffset.y <= - 65.0f && !_loading) {
         
-        if (_delegate) {
+        if (_delegate && [_delegate respondsToSelector:@selector(GRefreshTableDidTriggerRefresh:)]) {
             [_delegate GRefreshTableDidTriggerRefresh:GRefreshHeader];
         }
         [self setState:GPullRefreshLoading];

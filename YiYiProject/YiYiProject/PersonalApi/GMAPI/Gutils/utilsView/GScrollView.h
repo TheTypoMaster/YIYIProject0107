@@ -11,13 +11,19 @@
 
 @class HomeClothController;
 
+typedef enum{
+    GNEARBYNONE = 0,
+    GNEARBYSTORE,
+    GNEARBYPINPAI
+}GSCROLLVIEWTYPE;
+
 typedef void (^pinpaiViewBlock)(NSInteger index);//定义block
 
 @interface GScrollView : UIScrollView
 
 
 @property(nonatomic,strong)NSMutableArray *dataArray;//数据源数组
-@property(nonatomic,assign)NSInteger gtype;
+@property(nonatomic,assign)GSCROLLVIEWTYPE gtype;
 @property(nonatomic,assign)HomeClothController *delegate1;
 
 

@@ -10,6 +10,7 @@
 #import "HomeBuyController.h"
 #import "HomeClothController.h"
 #import "HomeMatchController.h"
+#import "GsearchViewController.h"
 
 @interface HomeViewController ()
 {
@@ -37,6 +38,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self createMemuView];
+    
+    [self creatSearchRightBarButton];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -45,6 +49,29 @@
 }
 
 #pragma mark - 创建视图
+
+-(void)creatSearchRightBarButton{
+    
+    UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [searchBtn setTitle:@"搜索" forState:UIControlStateNormal];
+//    searchBtn.backgroundColor = [UIColor orangeColor];
+    [searchBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [searchBtn setFrame:CGRectMake(0, 0, 60, 30)];
+    searchBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    [searchBtn addTarget:self action:@selector(pushToSearchVc) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *rightBtnItem = [[UIBarButtonItem alloc]initWithCustomView:searchBtn];
+    self.navigationItem.rightBarButtonItem = rightBtnItem;
+    
+}
+
+-(void)pushToSearchVc{
+    GsearchViewController *gsearchVc = [[GsearchViewController alloc]init];
+    gsearchVc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:gsearchVc animated:YES];
+}
+
+
 /**
  *  暂时去掉搭配师
  */

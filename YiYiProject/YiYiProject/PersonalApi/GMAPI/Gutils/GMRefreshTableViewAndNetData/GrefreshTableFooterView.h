@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import "GRefreshTableHeaderView.h"
+#import "GmPrepareNetData.h"
 @class SCGIFImageView;
 
 @interface GrefreshTableFooterView : UIView
@@ -23,7 +24,7 @@
 }
 
 
-@property(nonatomic,assign) id <GRefreshTableDelegate> delegate;
+@property(nonatomic,assign) NSObject <GRefreshTableDelegate> *delegate;
 - (void)GrefreshLastUpdatedDate;
 - (void)GRefreshScrollViewDidScroll:(UIScrollView *)scrollView;
 - (void)GRefreshScrollViewDidEndDragging:(UIScrollView *)scrollView;

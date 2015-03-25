@@ -13,9 +13,9 @@
 #define NOMORE_TEXT @"没有更多数据"
 
 @implementation GrefreshTableView
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithFrame:(CGRect)frame style:(UITableViewStyle)style
 {
-    self = [super initWithFrame:frame];
+    self = [super initWithFrame:frame style:style];
     if (self) {
         // Initialization code
         
@@ -96,8 +96,8 @@
     if (aRefreshPos ==  GRefreshHeader)
     {
         _isReloadData = YES;
-        if (_refreshDelegate && [_refreshDelegate respondsToSelector:@selector(loadNewData)]) {
-            [_refreshDelegate performSelector:@selector(loadNewData)];
+        if (_GrefreshDelegate && [_GrefreshDelegate respondsToSelector:@selector(loadNewData)]) {
+            [_GrefreshDelegate performSelector:@selector(loadNewData)];
         }
     }
     
@@ -153,12 +153,12 @@
     
     if(_isHaveMoreData && scrollView.contentOffset.y > ((scrollView.contentSize.height - scrollView.frame.size.height-40)))
     {
-        if (_refreshDelegate && [_refreshDelegate respondsToSelector:@selector(loadMoreData)]) {
+        if (_GrefreshDelegate && [_GrefreshDelegate respondsToSelector:@selector(loadMoreData)]) {
             
             [self startLoading];
             
             _isLoadMoreData = YES;
-            [_refreshDelegate performSelector:@selector(loadMoreData)];
+            [_GrefreshDelegate performSelector:@selector(loadMoreData)];
         }
     }
 }
@@ -169,16 +169,16 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat aHeight = 0.0;
-    if (_refreshDelegate && [_refreshDelegate respondsToSelector:@selector(heightForRowIndexPath:)]) {
-        aHeight = [_refreshDelegate heightForRowIndexPath:indexPath];
+    if (_GrefreshDelegate && [_GrefreshDelegate respondsToSelector:@selector(heightForRowIndexPath:)]) {
+        aHeight = [_GrefreshDelegate heightForRowIndexPath:indexPath];
     }
     return aHeight;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_refreshDelegate && [_refreshDelegate respondsToSelector:@selector(didSelectRowAtIndexPath:)]) {
-        [_refreshDelegate didSelectRowAtIndexPath:indexPath];
+    if (_GrefreshDelegate && [_GrefreshDelegate respondsToSelector:@selector(didSelectRowAtIndexPath:)]) {
+        [_GrefreshDelegate didSelectRowAtIndexPath:indexPath];
     }
 }
 

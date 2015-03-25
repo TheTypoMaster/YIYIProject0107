@@ -25,8 +25,8 @@
 @interface HomeClothController ()<GCycleScrollViewDatasource,GCycleScrollViewDelegate,UIScrollViewDelegate,EGORefreshTableDelegate,GgetllocationDelegate,UISearchBarDelegate>
 {
     
-    //第零行
-    UIView *_searchView;//搜索框
+//    //第零行
+//    UIView *_searchView;//搜索框
     
     //第一行
     GCycleScrollView *_gscrollView;//上方循环滚动的scrollview
@@ -119,7 +119,7 @@
     
     
     
-    [_mainScrollView addSubview:[self creatSearchView]];//搜索栏
+//    [_mainScrollView addSubview:[self creatSearchView]];//搜索栏
     
     [_mainScrollView addSubview:[self creatGscrollView]];//循环滚动幻灯片
     
@@ -494,39 +494,35 @@
 }
 
 
-//创建搜索栏
--(UIView*)creatSearchView{
-    _searchView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 52)];
-    _searchView.backgroundColor = RGBCOLOR(238, 238, 238);
-    UISearchBar *bar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 52)];
-    bar.placeholder = @"搜索品牌/店铺/单品";
-    bar.delegate = self;
-    bar.layer.borderWidth = 2.f;
-    bar.layer.borderColor = RGBCOLOR(242, 242, 242).CGColor;
-    bar.barTintColor = RGBCOLOR(242, 242, 242);
-    [_searchView addSubview:bar];
-    return _searchView;
-}
+////创建搜索栏
+//-(UIView*)creatSearchView{
+//    _searchView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 52)];
+//    _searchView.backgroundColor = RGBCOLOR(238, 238, 238);
+//    UISearchBar *bar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 52)];
+//    bar.placeholder = @"搜索品牌/店铺/单品";
+//    bar.delegate = self;
+//    bar.layer.borderWidth = 2.f;
+//    bar.layer.borderColor = RGBCOLOR(242, 242, 242).CGColor;
+//    bar.barTintColor = RGBCOLOR(242, 242, 242);
+//    [_searchView addSubview:bar];
+//    return _searchView;
+//}
 
 
-#pragma - mark UISearchBarDelegate
-- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
-{
-    GsearchViewController *gsearchVc = [[GsearchViewController alloc]init];
-//    UINavigationController * search_nav = [[UINavigationController alloc] initWithRootViewController:gsearchVc];
-//    [self.rootViewController presentViewController:search_nav animated:YES completion:^{
-//        
-//    }];
-    gsearchVc.hidesBottomBarWhenPushed = YES;
-    [self.rootViewController.navigationController pushViewController:gsearchVc animated:YES];
-    
-    return NO;
-}
+//#pragma - mark UISearchBarDelegate
+//- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+//{
+//    GsearchViewController *gsearchVc = [[GsearchViewController alloc]init];
+//    gsearchVc.hidesBottomBarWhenPushed = YES;
+//    [self.rootViewController.navigationController pushViewController:gsearchVc animated:YES];
+//    
+//    return NO;
+//}
 
 
 //创建循环滚动的scrollview
 -(UIView*)creatGscrollView{
-    _gscrollView = [[GCycleScrollView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_searchView.frame), DEVICE_WIDTH, 180*GscreenRatio_568)];
+    _gscrollView = [[GCycleScrollView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 180*GscreenRatio_568)];
     _gscrollView.theGcycelScrollViewType = GCYCELNORMORL;
     [_gscrollView loadGcycleScrollView];
     _gscrollView.tag = 200;
@@ -609,11 +605,10 @@
 
     _scrollview_nearbyView = [[GScrollView alloc]initWithFrame:CGRectMake(15, 30, DEVICE_WIDTH-15-15, 218-30-14)];
     _scrollview_nearbyView.tag = 10;
-    _scrollview_nearbyView.gtype = 10;
+    _scrollview_nearbyView.gtype = GNEARBYSTORE;
     _scrollview_nearbyView.delegate = self;
     _scrollview_nearbyView.showsHorizontalScrollIndicator = NO;
     _scrollview_nearbyView.delegate1 = self;
-//    _scrollview_nearbyView.bounces = NO;
     
     [_nearbyView addSubview:_scrollview_nearbyView];
     
@@ -670,7 +665,7 @@
     _scrollView_pinpai.backgroundColor = RGBCOLOR(242, 242, 242);
     _scrollView_pinpai.contentSize = CGSizeMake(1000, 155-30);
     _scrollView_pinpai.tag = 11;
-    _scrollView_pinpai.gtype = 11;
+    _scrollView_pinpai.gtype = GNEARBYPINPAI;
     _scrollView_pinpai.delegate = self;
     _scrollView_pinpai.delegate1 = self;
     [_pinpaiView addSubview:_scrollView_pinpai];

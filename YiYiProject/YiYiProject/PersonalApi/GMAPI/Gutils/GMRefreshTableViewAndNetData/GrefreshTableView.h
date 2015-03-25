@@ -24,7 +24,7 @@
 
 @property (nonatomic,retain)GrefreshTableHeaderView * refreshHeaderView;
 
-@property (nonatomic,assign)id<GrefreshDelegate>refreshDelegate;
+@property (nonatomic,assign)id<GrefreshDelegate>GrefreshDelegate;
 @property (nonatomic,assign)BOOL                        isReloadData;      //是否是下拉刷新数据
 @property (nonatomic,assign)BOOL                        reloading;         //是否正在loading
 @property (nonatomic,assign)BOOL                        isLoadMoreData;    //是否是载入更多
@@ -40,5 +40,9 @@
 -(void)beginToReloadData:(GRefreshPos)aRefreshPos;
 -(void)showRefreshHeader:(BOOL)animated;//代码出发刷新
 - (void)finishReloadigData;
+
+
+
+- (NSDate*)GRefreshTableDataSourceLastUpdated:(UIView*)view;
 
 @end

@@ -54,4 +54,7 @@
 @property(nonatomic,retain)NSArray *images;//图片数组(单品详情)
 
 
+@property(nonatomic,strong)NSString *product_new;
+
+
 @end

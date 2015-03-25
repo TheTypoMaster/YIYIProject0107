@@ -32,6 +32,10 @@
 
 #import "NSDictionary+GJson.h"
 
+#import "GmyproductsListViewController.h"
+
+#import "GmyActivetiesViewController.h"
+
 
 @interface MyShopViewController ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,WaterFlowDelegate,TMQuiltViewDataSource,RefreshDelegate>
 {
@@ -332,8 +336,20 @@
     self.userScoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.userNameLabel.frame.origin.x, CGRectGetMaxY(self.userNameLabel.frame)+7, self.userNameLabel.frame.size.width, 30)];
     self.userScoreLabel.font = [UIFont systemFontOfSize:13*GscreenRatio_320];
     self.userScoreLabel.numberOfLines = 2;
-    //    self.userScoreLabel.text = @"地址";
     self.userScoreLabel.textColor = [UIColor whiteColor];
+    
+    
+    
+    
+//    //管理
+//    UIButton *manageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [manageBtn setTitle:@"管理" forState:UIControlStateNormal];
+//    manageBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+//    [manageBtn setFrame:CGRectMake(chilunBtn.frame.origin.x, _backView.frame.size.height-44, 55, 44)];
+//    [manageBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [manageBtn addTarget:self action:@selector(manageBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+//    [_backView addSubview:manageBtn];
+    
     
     //    //添加视图
     //    [backView addSubview:self.userBannerImv];
@@ -342,8 +358,24 @@
     [_backView addSubview:self.userScoreLabel];
     [_backView addSubview:chilunBtn];
     
+    
+    
+    
+    
     return _backView;
 }
+
+
+-(void)manageBtnClicked{
+    
+    UIActionSheet *act = [[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"管理单品",@"管理活动", nil];
+    act.tag = 17;
+    [act showInView:self.view];
+    
+}
+
+
+
 
 #pragma mark - 事件处理
 
@@ -421,7 +453,8 @@
 {
     NSLog(@"添加商品 或者 单品");
     
-    UIActionSheet *sheet = [[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"发布单品",@"发布活动", nil];
+    UIActionSheet *sheet = [[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"发布单品",@"发布活动",@"管理单品",@"管理活动", nil];
+    sheet.tag = 18;
     [sheet showInView:self.view];
 }
 
@@ -430,27 +463,39 @@
 // Called when a button is clicked. The view will be automatically dismissed after this call returns
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 1) {
+    
+    if (actionSheet.tag ==18){
         
-        NSLog(@"发布活动");
-        
-        GupHuoDongViewController *ccc = [[GupHuoDongViewController alloc]init];
-        ccc.mallInfo = self.mallInfo;
-        ccc.userInfo = self.userInfo;
-        [self.navigationController pushViewController:ccc animated:YES];
-        
-    }else if (buttonIndex == 0){
-        
-        NSLog(@"发布单品");
-        
-        
-        GupClothesViewController *ccc = [[GupClothesViewController alloc]init];
-        ccc.userInfo = self.userInfo;
-        ccc.mallInfo = self.mallInfo;
-        
-        [self.navigationController pushViewController:ccc animated:YES];
-        
+        if (buttonIndex == 0) {
+            NSLog(@"发布单品");
+            GupClothesViewController *ccc = [[GupClothesViewController alloc]init];
+            ccc.userInfo = self.userInfo;
+            ccc.mallInfo = self.mallInfo;
+            [self.navigationController pushViewController:ccc animated:YES];
+        }else if (buttonIndex == 1){
+            NSLog(@"发布活动");
+            GupHuoDongViewController *ccc = [[GupHuoDongViewController alloc]init];
+            ccc.mallInfo = self.mallInfo;
+            ccc.userInfo = self.userInfo;
+            [self.navigationController pushViewController:ccc animated:YES];
+        }else if (buttonIndex == 2){
+            NSLog(@"管理单品");
+            GmyproductsListViewController *ccc = [[GmyproductsListViewController alloc]init];
+            ccc.userInfo = self.userInfo;
+            ccc.mallInfo = self.mallInfo;
+            [self.navigationController pushViewController:ccc animated:YES];
+            
+        }else if (buttonIndex == 3){
+            NSLog(@"管理活动");
+            
+            GmyActivetiesViewController *ccc = [[GmyActivetiesViewController alloc]init];
+            ccc.userInfo = self.userInfo;
+            ccc.mallInfo = self.mallInfo;
+            [self.navigationController pushViewController:ccc animated:YES];
+        }
     }
+    
+    
 }
 
 #pragma mark -
