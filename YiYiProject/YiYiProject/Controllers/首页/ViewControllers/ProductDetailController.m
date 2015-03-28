@@ -82,6 +82,10 @@
     
     [self createNavigationbarTools];
     
+    if (self.isYYChatVcPush) {//从聊天界面跳转过来的
+        self.lianxiDianzhuBtn.hidden = YES;
+    }
+    
     self.bugButton.layer.cornerRadius = 5.0f;
     self.bugButton.layer.borderColor = [UIColor whiteColor].CGColor;
     self.bugButton.layer.borderWidth = 1.f;
@@ -134,7 +138,7 @@
             NSDictionary *dic = result[@"pinfo"];
             
             ProductModel *aModel1 = [[ProductModel alloc]initWithDictionary:dic];
-            
+            self.theModel = aModel1;
             [weakSelf prepareViewWithModel:aModel1];
         }
         
@@ -362,6 +366,10 @@
             contact.portraitStyle = RCUserAvatarCycle;
             contact.enableSettings = NO;
             contact.conversationType = ConversationType_PRIVATE;
+            
+            contact.theModel = self.theModel;
+            contact.isProductDetailVcPush = YES;
+            
             
             [self.navigationController pushViewController:contact animated:YES];
         }else

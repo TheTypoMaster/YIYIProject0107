@@ -7,6 +7,9 @@
 //
 
 #import "YIYIChatViewController.h"
+#import "ProductDetailController.h"
+#import "RCIM.h"
+#import "GchatSettingViewController.h"
 
 @implementation YIYIChatViewController
 
@@ -21,6 +24,16 @@
     
     return self;
 }
+
+
+
+-(void)viewWillAppear:(BOOL)animated{
+    
+    
+    
+}
+
+
 
 
 -(void)viewDidLoad
@@ -42,6 +55,92 @@
     UIBarButtonItem *title_item = [[UIBarButtonItem alloc]initWithCustomView:titleView];
     self.navigationItem.leftBarButtonItems=@[spaceButton1,back_item,title_item];
     
+    
+    //自定义导航左右按钮
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithTitle:@"设置" style:UIBarButtonItemStyleBordered target:self action:@selector(rightBarButtonItemPressed:)];
+    [rightButton setTintColor:[UIColor whiteColor]];
+    self.navigationItem.rightBarButtonItem = rightButton;
+    
+    
+    if (self.isProductDetailVcPush) {
+        //发送产品图文链接
+        [self sendProductDetailMessage];
+    }
+    
+    //设置点击跳转
+    [self setDetailMessageViewClickedBlock];
+    
+    
+    
+}
+
+
+-(void)rightBarButtonItemPressed:(id)sender{
+    GchatSettingViewController *temp = [[GchatSettingViewController alloc]init];
+    temp.HeadsPadView.hidden = YES;
+    temp.targetId = self.currentTarget;
+    temp.conversationType = self.conversationType;
+    temp.portraitStyle = RCUserAvatarCycle;
+    [self.navigationController pushViewController:temp animated:YES];
+}
+
+
+//发送产品图文链接
+-(void)sendProductDetailMessage{
+    RCRichContentMessage *message = [[RCRichContentMessage alloc] init];
+    message.title = self.theModel.product_name;
+    message.digest = [NSString stringWithFormat:@"%@  %@   %@",self.theModel.product_sku,self.theModel.product_price,self.theModel.product_tag];
+    message.imageURL = self.theModel.product_tag;
+    NSArray *imageArray = self.theModel.images;
+    if (imageArray.count>0) {
+        NSDictionary *dic = imageArray[0];
+        message.imageURL = dic[@"540Middle"][@"src"];
+    }
+    
+    message.extra = self.theModel.product_id;
+    
+//    [[RCIM sharedRCIM]sendRichContentMessage:self.conversationType
+//                                    targetId:self.currentTarget
+//                          richContentMessage:message
+//                                    delegate:self
+//                                      object:self];
+    
+    
+    
+    [self sendRichContentMessage:message];
+    
+    
+    
+}
+
+
+
+
+//设置消息框点击跳转
+-(void)setDetailMessageViewClickedBlock{
+    
+    __weak typeof (self)bself = self;
+    
+    [self setMessageTapHandler:^(RCMessage *message){
+        
+        [bself pushToProductDetailVcWithMessage:message];
+    }];
+    
+    
+}
+
+-(void)pushToProductDetailVcWithMessage:(RCMessage*)message{
+    ProductDetailController *detail = [[ProductDetailController alloc]init];
+    RCRichContentMessage *ccc = (RCRichContentMessage*)message.content;
+    detail.product_id = ccc.extra;
+    detail.isYYChatVcPush = YES;
+    detail.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:detail animated:YES];
+}
+
+
+- (void)responseSendMessageStatus:(RCErrorCode)errorCode messageId:(long)messageId object:(id)object{
+    NSLog(@"RCErrorCode : %d",errorCode);
 }
 
 @end

@@ -35,5 +35,9 @@
 @property(nonatomic,strong)NSString *guanzhuleixing;//关注类型  品牌店 精品店  品牌
 
 
+@property(nonatomic,strong)NSString *activityId;//活动id
+
+
+@property(nonatomic,assign)CLLocationCoordinate2D coordinate_store;//商家经纬度
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "MyViewController.h"
+@class ProductModel;
 
 typedef enum {
     
@@ -21,6 +22,9 @@ typedef enum {
 
 @property (nonatomic,retain)NSString *product_id;//产品id
 @property(nonatomic,strong)NSString *gShop_id;//商家id
+
+@property(nonatomic,strong)ProductModel *theModel;//单品model 给聊天界面传递
+
 @property (strong, nonatomic) IBOutlet UILabel *brandName;
 
 @property (strong, nonatomic) IBOutlet UILabel *shopNameLabel;
@@ -37,7 +41,12 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIButton *bugButton;
 
 
+@property(nonatomic,assign)BOOL isYYChatVcPush;//是否从聊天界面push过来的
+
 - (IBAction)clickToBuy:(id)sender;
+
+
+@property (weak, nonatomic) IBOutlet UIButton *lianxiDianzhuBtn;
 
 
 @end

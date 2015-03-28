@@ -14,7 +14,8 @@
 #import "ProductDetailController.h"
 #import "LoginViewController.h"
 #import "NSDictionary+GJson.h"
-
+#import "MessageDetailController.h"
+#import "GLeadBuyMapViewController.h"
 
 @interface GStorePinpaiViewController ()<GCustomSegmentViewDelegate,TMQuiltViewDataSource,WaterFlowDelegate,UIScrollViewDelegate>
 {
@@ -205,6 +206,7 @@
                 if (huodongStr.length==0) {
                     huodongStr = @"";
                 }
+                self.activityId = [dic stringValueForKey:@"activity_id"];
             }
             _huodongLabel.text = huodongStr;
             
@@ -238,6 +240,13 @@
                 [_my_right_button setTitle:@"关注" forState:UIControlStateNormal];
                 self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
             }
+            
+            
+            
+            self.coordinate_store = CLLocationCoordinate2DMake([[result stringValueForKey:@"latitude"]floatValue], [[result stringValueForKey:@"longitude"]floatValue]);
+            
+            
+            
             
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
@@ -320,6 +329,10 @@
     _huodongTitleLabel.text = @"活动：";
     _huodongLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_huodongTitleLabel.frame)+10, CGRectGetMaxY(_mallNameLabel.frame)+13, DEVICE_WIDTH -15-15-10-_huodongTitleLabel.frame.size.width, 15)];
     _huodongLabel.font = [UIFont systemFontOfSize:15];
+    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(huodongLabelClicked)];
+    _huodongLabel.userInteractionEnabled = YES;
+    [_huodongLabel addGestureRecognizer:tap];
+//    _huodongLabel.backgroundColor = [UIColor orangeColor];
     
     //地址
     _dizhiTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(_mallNameLabel.frame.origin.x, CGRectGetMaxY(_huodongTitleLabel.frame)+8, 45, 15)];
@@ -327,7 +340,9 @@
     _dizhiTitleLabel.font = [UIFont systemFontOfSize:15];
     _adressLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_dizhiTitleLabel.frame)+10, CGRectGetMaxY(_huodongLabel.frame)+8, DEVICE_WIDTH -15-15-10-_huodongTitleLabel.frame.size.width, 15)];
     _adressLabel.font = [UIFont systemFontOfSize:15];
-    
+    _adressLabel.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(adressLabelClicked)];
+    [_adressLabel addGestureRecognizer:tap1];
     
     
     [_upStoreInfoView addSubview:_mallNameLabel];
@@ -339,6 +354,31 @@
     [_mainScrollview addSubview:_upStoreInfoView];
 }
 
+//跳转地图导航页面
+-(void)adressLabelClicked{
+    GLeadBuyMapViewController *cc = [[GLeadBuyMapViewController alloc]init];
+    cc.theType = LEADYOUTYPE_STORE;
+    cc.storeName = _mallNameLabel.text;
+    cc.coordinate_store = self.coordinate_store;
+    
+    
+    [self presentViewController:cc animated:YES completion:^{
+        
+    }];
+}
+
+
+//点击跳转活动
+-(void)huodongLabelClicked{
+    NSLog(@"活动");
+    
+    MessageDetailController *detail = [[MessageDetailController alloc]init];
+    detail.msg_id = self.activityId;
+    detail.isActivity = YES;
+    detail.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:detail animated:YES];
+    
+}
 
 
 //获取是否关注 品牌

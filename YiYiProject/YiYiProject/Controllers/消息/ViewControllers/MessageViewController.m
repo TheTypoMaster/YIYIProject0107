@@ -270,7 +270,9 @@
         
         YIYIChatViewController *contact = [[YIYIChatViewController alloc]init];
         contact.currentTarget = useriId;
-        contact.currentTargetName = userName;
+//        contact.currentTargetName = userName;
+        contact.GTitleLabel.text = userName;
+        contact.GTitleLabel.textColor = [UIColor whiteColor];
         contact.portraitStyle = RCUserAvatarCycle;
         contact.enableSettings = NO;
         contact.conversationType = conversation.conversationType;

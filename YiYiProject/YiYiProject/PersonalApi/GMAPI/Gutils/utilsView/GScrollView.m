@@ -101,21 +101,14 @@
         for (UIView *view in self.subviews) {
             [view removeFromSuperview];
         }
-        
-        
-        
         NSInteger countNum = self.dataArray.count*0.5+1;
         NSInteger countNum_info = self.dataArray.count;
-        
         if (DEVICE_WIDTH>320) {
             countNum = countNum<4?4:countNum;
         }else{
             countNum = countNum<3?3:countNum;
         }
-        
         self.contentSize = CGSizeMake(countNum *118, self.contentSize.height);
-        
-        
         //红图和信息view
         for (int i = 0; i<countNum; i++) {
             //红图
@@ -124,14 +117,9 @@
             
             [self addSubview:nearStoreView];
         }
-        
-        
-        
-        
         //数据源
         NSMutableArray *upDataArray = [NSMutableArray arrayWithCapacity:1];
         NSMutableArray *downDataArray = [NSMutableArray arrayWithCapacity:1];
-        
         //单双信息分组
         for (int i = 0; i<countNum_info; i++) {
             
@@ -143,7 +131,6 @@
                 [upDataArray addObject:dic];
             }
         }
-        
         NSInteger upArrayNum = upDataArray.count;
         NSInteger downArrayNum = downDataArray.count;
         
