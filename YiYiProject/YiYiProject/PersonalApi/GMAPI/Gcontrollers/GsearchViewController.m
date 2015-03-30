@@ -9,9 +9,14 @@
 #import "GsearchViewController.h"
 #import "GrefreshTableView.h"
 #import "GmPrepareNetData.h"
+#import "NSDictionary+GJson.h"
+#import "GcustomSearchTableViewCell.h"
+#import "GStorePinpaiViewController.h"//店铺主页
+#import "GnearbyStoreViewController.h"//商场主页
+#import "ProductDetailController.h"//单品详情页
 
 
-@interface GsearchViewController ()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate,GrefreshDelegate>
+@interface GsearchViewController ()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate,GrefreshDelegate,UIScrollViewDelegate>
 {
     UIView *_searchHeaderView;
     UITextField * _searchTextField;
@@ -23,6 +28,12 @@
     int _page;//第几页
     int _pageCapacity;//一页请求几条数据
     NSArray *_dataArray;//数据源
+    
+    //定位相关
+    NSDictionary *_locationDic;
+    
+    
+    GcustomSearchTableViewCell *_tmpCell;//用于获取高度的临时cell
     
     
 }
@@ -41,20 +52,39 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     
+    _pageCapacity = 20;
+    
     //创建搜索标题
     [self creatSearchHeaderView];
     
     _selectIndex = 100;
     
     //创建tableview
-    _tableView = [[GrefreshTableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_searchHeaderView.frame), DEVICE_WIDTH, DEVICE_HEIGHT - _searchHeaderView.frame.size.height)];
+    _tableView = [[GrefreshTableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_searchHeaderView.frame), DEVICE_WIDTH, DEVICE_HEIGHT - _searchHeaderView.frame.size.height-64)];
     _tableView.GrefreshDelegate = self;
+//    _tableView.delegate = self;
     _tableView.dataSource =self;
     _tableView.hidden = YES;
     [self.view addSubview:_tableView];
     
+    __weak typeof(self)weakSelf = self;
+    [[GMAPI appDeledate]startDingweiWithBlock:^(NSDictionary *dic) {
+        
+        [weakSelf theLocationDictionary:dic];
+    }];
+    
     
 }
+
+
+- (void)theLocationDictionary:(NSDictionary *)dic{
+    NSLog(@"%@",dic);
+    _locationDic = dic;
+}
+
+
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -107,7 +137,7 @@
     [_searchHeaderView addSubview:_menu_view];
     NSLog(@"%@",NSStringFromCGRect(_menu_view.frame));
     
-    NSArray *titles = @[@"品牌",@"店铺",@"单品"];
+    NSArray *titles = @[@"品牌",@"商铺",@"单品"];
     _btnArray = [NSMutableArray arrayWithCapacity:1];
     for (int i = 0; i < titles.count; i ++) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -145,6 +175,12 @@
     
     _selectIndex = tag;
     NSLog(@"selectIndex = %d",_selectIndex);
+    if (_searchTextField.text.length==0) {
+        return;
+    }else{
+        _tableView.hidden = NO;
+        [self gshou];
+    }
     if (_selectIndex == 100) {//品牌
         [_tableView showRefreshHeader:YES];
     }else if (_selectIndex == 101){//店铺
@@ -156,6 +192,9 @@
 
 //点击搜索按钮
 -(void)searchBtnClicked{
+    if (_searchTextField.text.length == 0) {
+        return;
+    }
     [self gshou];
     _tableView.hidden = NO;
     [_tableView showRefreshHeader:YES];
@@ -170,31 +209,35 @@
 //请求网络数据
 -(void)prepareNetData{
     
-    NSString *api = [@"123" stringByAppendingString:[NSString stringWithFormat:@"&page=%d&ps=%d",_page,_pageCapacity]];
     NSString *theWord = _searchTextField.text;
     
+    NSString *url = [NSString stringWithFormat:@"%@&keywords=%@&page=%d&per_page=%d&long=%@&lat=%@",GSEARCH,theWord,_page,_pageCapacity,[_locationDic stringValueForKey:@"long"],[_locationDic stringValueForKey:@"lat"]];
+    
     if (_selectIndex == 100) {//搜索品牌
-        
-    }else if (_selectIndex == 101){//搜索店铺
-        
+        url = [url stringByAppendingString:@"&type=brand"];
+    }else if (_selectIndex == 101){//搜索商铺
+        url = [url stringByAppendingString:@"&type=mall"];
     }else if (_selectIndex == 102){//搜索单品
-        
+        url = [url stringByAppendingString:@"&type=product"];
     }
     
     //接口url:
-    NSLog(@"请求用户通知接口:%@",api);
+    NSLog(@"请求用户通知接口:%@",url);
     
     __weak typeof (self)bself = self;
     
-    GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+    GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:url isPost:NO postData:nil];
     [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
         
+//        NSString *errorcode = [result stringValueForKey:@"errorcode"];
+//        if ([errorcode intValue]!= 0) {
+//            [GMAPI showAutoHiddenMBProgressWithText:[result stringValueForKey:@"msg"] addToView:self.view];
+//            return;
+//        }
         
-        NSDictionary *datainfo = [result objectForKey:@"datainfo"];
+        NSArray *arr = [result arrayValueForKey:@"list"];
         
-        NSArray *dataArray = [datainfo objectForKey:@"data"];
-        
-        if (dataArray.count < _pageCapacity) {
+        if (arr.count < _pageCapacity) {
             
             _tableView.isHaveMoreData = NO;
         }else
@@ -203,7 +246,7 @@
         }
         
         
-        [bself reloadData:dataArray isReload:_tableView.isReloadData];
+        [bself reloadData:arr isReload:_tableView.isReloadData];
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         if (_tableView.isReloadData) {
             
@@ -261,12 +304,85 @@
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"%s",__FUNCTION__);
+    
+    [self gshou];
+    
+    
+    if (_selectIndex == 100) {//搜索的是品牌
+        NSDictionary *dic = _dataArray[indexPath.row];
+        GStorePinpaiViewController *ccc = [[GStorePinpaiViewController alloc]init];
+        ccc.storeIdStr = [dic stringValueForKey:@"mb_id"];
+        if ([[dic stringValueForKey:@"mall_type"]intValue] != 1) {//商场店
+            ccc.guanzhuleixing = @"精品店";
+        }
+        ccc.storeNameStr = [dic stringValueForKey:@"mall_name"];
+        ccc.pinpaiNameStr = [dic stringValueForKey:@"brand_name"];
+        [self.navigationController pushViewController:ccc animated:YES];
+        
+    }else if (_selectIndex == 101){//搜索的是商铺
+        NSDictionary *dic = _dataArray[indexPath.row];
+        if ([[dic stringValueForKey:@"mall_type"]intValue] == 1) {//商场店
+            GnearbyStoreViewController *ccc = [[GnearbyStoreViewController alloc]init];
+            ccc.storeIdStr = [dic stringValueForKey:@"mall_id"];
+            ccc.storeNameStr = [dic stringValueForKey:@"mall_name"];
+            [self.navigationController pushViewController:ccc animated:YES];
+        }else if ([[dic stringValueForKey:@"mall_type"]intValue]==2){//精品店
+            GStorePinpaiViewController *ccc = [[GStorePinpaiViewController alloc]init];
+            ccc.storeIdStr = [dic stringValueForKey:@"mall_id"];
+            ccc.storeNameStr = [dic stringValueForKey:@"mall_name"];
+            ccc.guanzhuleixing = @"精品店";
+            [self.navigationController pushViewController:ccc animated:YES];
+            
+        }
+    }else if (_selectIndex == 102){//搜索的是单品
+        NSDictionary *dic = _dataArray[indexPath.row];
+        ProductDetailController *ccc = [[ProductDetailController alloc]init];
+        ccc.product_id = [dic stringValueForKey:@"product_id"];
+        [self.navigationController pushViewController:ccc animated:YES];
+    }
+    
+    
 }
 
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
 {
-    return 65;
+    if (!_tmpCell) {
+        _tmpCell = [[GcustomSearchTableViewCell alloc]init];
+    }
+    
+    if (_selectIndex == 100) {
+        _tmpCell.theType = GSEARCHTYPE_PINPAI;
+    }else if (_selectIndex == 101){
+        _tmpCell.theType = GSEARCHTYPE_SHANGPU;
+    }else if (_selectIndex == 102){
+        _tmpCell.theType = GSEARCHTYPE_DANPIN;
+    }
+    
+    NSDictionary *dic = _dataArray[indexPath.row];
+    CGFloat height = [_tmpCell loadCustomViewWithData:dic indexPath:indexPath];
+    
+    return height;
+    
 }
+
+//-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+//    if (!_tmpCell) {
+//        _tmpCell = [[GcustomSearchTableViewCell alloc]init];
+//    }
+//    
+//    if (_selectIndex == 100) {
+//        _tmpCell.theType = GSEARCHTYPE_PINPAI;
+//    }else if (_selectIndex == 101){
+//        _tmpCell.theType = GSEARCHTYPE_SHANGPU;
+//    }else if (_selectIndex == 102){
+//        _tmpCell.theType = GSEARCHTYPE_DANPIN;
+//    }
+//    
+//    NSDictionary *dic = _dataArray[indexPath.row];
+//    CGFloat height = [_tmpCell loadCustomViewWithData:dic indexPath:indexPath];
+//    
+//    return height;
+//}
 
 
 
@@ -274,10 +390,32 @@
 #pragma mark -  UITableViewDataSource
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *identifier = @"identifier";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    GcustomSearchTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        cell = [[GcustomSearchTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
+    
+    
+    for (UIView *view in cell.contentView.subviews) {
+        [view removeFromSuperview];
+    }
+    
+    if (_selectIndex == 100) {//品牌
+        cell.theType = GSEARCHTYPE_PINPAI;
+    }else if (_selectIndex == 101){//商铺
+        cell.theType = GSEARCHTYPE_SHANGPU;
+    }else if (_selectIndex == 102){//单品
+        cell.theType = GSEARCHTYPE_DANPIN;
+    }
+    
+    NSDictionary *data_dic = _dataArray[indexPath.row];
+    
+    [cell loadCustomViewWithData:data_dic indexPath:indexPath];
+    
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    
     
     return cell;
 }
@@ -286,6 +424,25 @@
     return _dataArray.count;
 }
 
+
+
+//-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//}
+
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    NSLog(@"dddddddddddd %f",scrollView.contentOffset.y);
+    if (scrollView == _tableView) {
+        [self gshou];
+    }
+}
+
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [self searchBtnClicked];
+    return YES;
+}
 
 
 @end

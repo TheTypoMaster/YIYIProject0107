@@ -6,8 +6,11 @@
 //  Copyright (c) 2015年 lcw. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 
+//搜索VC
+
+#import <UIKit/UIKit.h>
+@class GcustomSearchTableViewCell;
 typedef enum{
     searNone = 0,
     searchStore,

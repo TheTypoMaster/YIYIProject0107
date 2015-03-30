@@ -364,6 +364,7 @@
 		E305222D1A6ED1B5007BEAFD /* GHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E305222C1A6ED1B5007BEAFD /* GHolderTextView.m */; };
 		E34372AF1A88357D003CDFD9 /* gdownname@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E34372AE1A88357D003CDFD9 /* gdownname@2x.png */; };
 		E34744E21AB0DA8200383A1B /* gimv1_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E34744E11AB0DA8200383A1B /* gimv1_back@2x.png */; };
+		E34E36981AC815AA0028061E /* libbaidumapapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E34E36971AC815AA0028061E /* libbaidumapapi.a */; };
 		E35EF1161A6A54A900B493A9 /* GChooseStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E35EF1151A6A54A900B493A9 /* GChooseStoreViewController.m */; };
 		E35EF1231A6A756900B493A9 /* GchooseFloorPinpaiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E35EF1221A6A756900B493A9 /* GchooseFloorPinpaiViewController.m */; };
 		E35EF1581A6B6E0700B493A9 /* garea.plist in Resources */ = {isa = PBXBuildFile; fileRef = E35EF1561A6B6E0700B493A9 /* garea.plist */; };
@@ -382,7 +383,6 @@
 		E37486CD1AC2AEAD004A722F /* GmyActivetiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E37486CC1AC2AEAD004A722F /* GmyActivetiesViewController.m */; };
 		E37486D01AC2B08B004A722F /* GEditActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E37486CF1AC2B08B004A722F /* GEditActivityTableViewCell.m */; };
 		E3766AD21A74AED20009BECC /* g_redline_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3766AD11A74AED20009BECC /* g_redline_down@2x.png */; };
-		E3776E7E1AC67CA600C18082 /* libbaidumapapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E3776E7D1AC67CA600C18082 /* libbaidumapapi.a */; };
 		E37A2E2E1A7349C300145608 /* GchooseAdressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E37A2E2D1A7349C300145608 /* GchooseAdressViewController.m */; };
 		E37C330A1AA23F6900B646EC /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E37C33081AA23F6900B646EC /* mapapi.bundle */; };
 		E37EB4F61ABFB50E009F5797 /* GsearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E37EB4F51ABFB50E009F5797 /* GsearchViewController.m */; };
@@ -414,6 +414,7 @@
 		E38AFE111A7A967E009C2C0C /* compose_pic_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E38AFDFB1A7A967E009C2C0C /* compose_pic_add@2x.png */; };
 		E38AFE121A7A967E009C2C0C /* compose_pic_add_highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E38AFDFC1A7A967E009C2C0C /* compose_pic_add_highlighted@2x.png */; };
 		E38AFE151A7A967E009C2C0C /* PhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E38AFE011A7A967E009C2C0C /* PhotoCell.m */; };
+		E3937E261AC797CA00AA1A15 /* GcustomSearchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3937E251AC797CA00AA1A15 /* GcustomSearchTableViewCell.m */; };
 		E3996EBB1A5E1DBA00673147 /* GLeadBuyMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E311A5E1DBA00673147 /* GLeadBuyMapViewController.m */; };
 		E3996EBC1A5E1DBA00673147 /* GMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E331A5E1DBA00673147 /* GMapViewController.m */; };
 		E3996EBE1A5E1DBA00673147 /* GnearbyStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E371A5E1DBA00673147 /* GnearbyStoreViewController.m */; };
@@ -1011,6 +1012,7 @@
 		E305222C1A6ED1B5007BEAFD /* GHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHolderTextView.m; sourceTree = "<group>"; };
 		E34372AE1A88357D003CDFD9 /* gdownname@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gdownname@2x.png"; sourceTree = "<group>"; };
 		E34744E11AB0DA8200383A1B /* gimv1_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gimv1_back@2x.png"; sourceTree = "<group>"; };
+		E34E36971AC815AA0028061E /* libbaidumapapi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbaidumapapi.a; sourceTree = "<group>"; };
 		E35EF1141A6A54A900B493A9 /* GChooseStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GChooseStoreViewController.h; sourceTree = "<group>"; };
 		E35EF1151A6A54A900B493A9 /* GChooseStoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GChooseStoreViewController.m; sourceTree = "<group>"; };
 		E35EF1211A6A756900B493A9 /* GchooseFloorPinpaiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GchooseFloorPinpaiViewController.h; sourceTree = "<group>"; };
@@ -1040,7 +1042,6 @@
 		E37486CE1AC2B08B004A722F /* GEditActivityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GEditActivityTableViewCell.h; sourceTree = "<group>"; };
 		E37486CF1AC2B08B004A722F /* GEditActivityTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GEditActivityTableViewCell.m; sourceTree = "<group>"; };
 		E3766AD11A74AED20009BECC /* g_redline_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "g_redline_down@2x.png"; sourceTree = "<group>"; };
-		E3776E7D1AC67CA600C18082 /* libbaidumapapi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbaidumapapi.a; sourceTree = "<group>"; };
 		E37A2E2C1A7349C300145608 /* GchooseAdressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GchooseAdressViewController.h; sourceTree = "<group>"; };
 		E37A2E2D1A7349C300145608 /* GchooseAdressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GchooseAdressViewController.m; sourceTree = "<group>"; };
 		E37C32CA1AA23F6900B646EC /* BMapKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMapKit.h; sourceTree = "<group>"; };
@@ -1157,6 +1158,8 @@
 		E38AFDFC1A7A967E009C2C0C /* compose_pic_add_highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "compose_pic_add_highlighted@2x.png"; sourceTree = "<group>"; };
 		E38AFE001A7A967E009C2C0C /* PhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoCell.h; sourceTree = "<group>"; };
 		E38AFE011A7A967E009C2C0C /* PhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoCell.m; sourceTree = "<group>"; };
+		E3937E241AC797CA00AA1A15 /* GcustomSearchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GcustomSearchTableViewCell.h; sourceTree = "<group>"; };
+		E3937E251AC797CA00AA1A15 /* GcustomSearchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GcustomSearchTableViewCell.m; sourceTree = "<group>"; };
 		E3996E301A5E1DBA00673147 /* GLeadBuyMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLeadBuyMapViewController.h; sourceTree = "<group>"; };
 		E3996E311A5E1DBA00673147 /* GLeadBuyMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLeadBuyMapViewController.m; sourceTree = "<group>"; };
 		E3996E321A5E1DBA00673147 /* GMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMapViewController.h; sourceTree = "<group>"; };
@@ -1287,7 +1290,7 @@
 				E3E3E8481A3C6772001A1DD6 /* CoreLocation.framework in Frameworks */,
 				137FC2A81A4DAE1F0039E3FF /* CoreImage.framework in Frameworks */,
 				138C2C0C1A39E24600EA59F5 /* CoreGraphics.framework in Frameworks */,
-				E3776E7E1AC67CA600C18082 /* libbaidumapapi.a in Frameworks */,
+				E34E36981AC815AA0028061E /* libbaidumapapi.a in Frameworks */,
 				137FC2A61A4DAE0F0039E3FF /* CoreAudio.framework in Frameworks */,
 				137FC2A41A4DAE070039E3FF /* CFNetwork.framework in Frameworks */,
 				137FC2A21A4DADFE0039E3FF /* AVFoundation.framework in Frameworks */,
@@ -2556,7 +2559,7 @@
 		E37C32C81AA23F6900B646EC /* BaiduMap_IOSSDK_v2.6.0_Lib */ = {
 			isa = PBXGroup;
 			children = (
-				E3776E7D1AC67CA600C18082 /* libbaidumapapi.a */,
+				E34E36971AC815AA0028061E /* libbaidumapapi.a */,
 				E37C32C91AA23F6900B646EC /* inc */,
 				E37C33081AA23F6900B646EC /* mapapi.bundle */,
 			);
@@ -2743,10 +2746,10 @@
 				E3996E331A5E1DBA00673147 /* GMapViewController.m */,
 				E3996E361A5E1DBA00673147 /* GnearbyStoreViewController.h */,
 				E3996E371A5E1DBA00673147 /* GnearbyStoreViewController.m */,
-				E3996E381A5E1DBA00673147 /* GpinpaiDetailViewController.h */,
-				E3996E391A5E1DBA00673147 /* GpinpaiDetailViewController.m */,
 				E30479491A6109DE00709985 /* GStorePinpaiViewController.h */,
 				E304794A1A6109DE00709985 /* GStorePinpaiViewController.m */,
+				E3996E381A5E1DBA00673147 /* GpinpaiDetailViewController.h */,
+				E3996E391A5E1DBA00673147 /* GpinpaiDetailViewController.m */,
 				E35EF1141A6A54A900B493A9 /* GChooseStoreViewController.h */,
 				E35EF1151A6A54A900B493A9 /* GChooseStoreViewController.m */,
 				E35EF1211A6A756900B493A9 /* GchooseFloorPinpaiViewController.h */,
@@ -2893,6 +2896,8 @@
 				E36B2B721AC25C14004A87B3 /* GEditProductTableViewCell.m */,
 				E37486CE1AC2B08B004A722F /* GEditActivityTableViewCell.h */,
 				E37486CF1AC2B08B004A722F /* GEditActivityTableViewCell.m */,
+				E3937E241AC797CA00AA1A15 /* GcustomSearchTableViewCell.h */,
+				E3937E251AC797CA00AA1A15 /* GcustomSearchTableViewCell.m */,
 			);
 			path = Gviews;
 			sourceTree = "<group>";
@@ -3526,6 +3531,7 @@
 				E37EB4FB1ABFC82F009F5797 /* GCustomSegmentView.m in Sources */,
 				565321521A59896600E43F80 /* TopicModel.m in Sources */,
 				E37EB5691AC00BEC009F5797 /* GloadingView.m in Sources */,
+				E3937E261AC797CA00AA1A15 /* GcustomSearchTableViewCell.m in Sources */,
 				EF932A161A6236AD00A8BD18 /* WaterF.m in Sources */,
 				13C404D81A6FF42100C4B516 /* ActivityModel.m in Sources */,
 				19D5E6B51A4FE8E1008401E0 /* YichuListTableViewCell.m in Sources */,

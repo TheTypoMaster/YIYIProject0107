@@ -165,8 +165,8 @@ typedef enum{
     //退出登录
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GLogoutAction) name:NOTIFICATION_LOGOUT object:nil];
     
-    //测试审核成功
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GgetUserInfo) name:NOTIFICATION_SHENQINGDIANPU_SUCCESS object:nil];
+//    //测试审核成功
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GgetUserInfo) name:NOTIFICATION_SHENQINGDIANPU_SUCCESS object:nil];
     
     //接收审核结果
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GgetUserInfo) name:NOTIFICATION_SHENQINGDIANPU_STATE object:nil];
@@ -950,8 +950,22 @@ typedef enum{
     {
         // pass the current offset of the UITableView so that the ParallaxHeaderView layouts the subViews.
         [(ParallaxHeaderView *)_tableView.tableHeaderView layoutHeaderViewForScrollViewOffset:scrollView.contentOffset];
+        
+        
+        NSLog(@"contentOffSet.y == %f",scrollView.contentOffset.y);
+        
+//        if (scrollView.contentOffset.y <=-70) {
+//            [self GgetUserInfo];
+//        }
     }
+    
+    
+    
+    
+    
 }
+
+
 
 
 

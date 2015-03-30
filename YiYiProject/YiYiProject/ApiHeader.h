@@ -471,6 +471,13 @@ typedef enum{
 //删除单品  参数：authcode  单品id字符串逗号隔开：product_ids
 #define GDELETPRODUCTS @"http://www.alayy.com/index.php?d=api&c=products&m=del_product"
 
+
+
+//搜索接口 品牌 商铺 单品
+#define GSEARCH @"http://www.alayy.com/index.php?d=api&&c=search"
+
+
+
 #endif
 
 
