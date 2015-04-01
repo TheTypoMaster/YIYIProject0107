@@ -127,6 +127,26 @@
         return;
     }
     
+    
+    if (self.aType == Message_Shop) {
+        
+        NSLog(@"amodel.type:%@",aModel.type);
+        if ([aModel.type intValue] == 11) {//修改活动
+            NSString *activityId = aModel.theme_id;
+            MessageDetailController *detail = [[MessageDetailController alloc]init];
+            detail.isActivity = YES;
+            detail.msg_id = activityId;
+            [self.navigationController pushViewController:detail animated:YES];
+            return;
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
     NSLog(@"详情");
     MessageDetailController *detail = [[MessageDetailController alloc]init];
     detail.msg_id = aModel.msg_id;

@@ -55,6 +55,8 @@
     [_saveImageBtn setImage:[UIImage imageNamed:@"MJPhotoBrowser.bundle/save_icon_highlighted.png"] forState:UIControlStateHighlighted];
     [_saveImageBtn addTarget:self action:@selector(saveImage) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_saveImageBtn];
+    
+    
 }
 
 - (void)saveImage
@@ -91,7 +93,8 @@
     
     MJPhoto *photo = _photos[_currentPhotoIndex];
     // 按钮
-    _saveImageBtn.enabled = photo.image != nil && !photo.save;
+//    _saveImageBtn.enabled = photo.image != nil && !photo.save;
+    _saveImageBtn.enabled = YES;
 }
 
 @end

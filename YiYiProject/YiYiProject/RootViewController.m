@@ -74,11 +74,13 @@
 - (void)prepareItems
 {
     
-    NSArray *classNames = @[@"HomeViewController",@"TTaiViewController",@"UIViewController",@"MessageListController",@"MineViewController"];
+//    NSArray *classNames = @[@"HomeViewController",@"TTaiViewController",@"UIViewController",@"MessageListController",@"MineViewController"];
+//    NSArray *item_names = @[@"首页",@"T台",@"+",@"消息",@"我的"];
     
-    NSArray *item_names = @[@"首页",@"T台",@"+",@"消息",@"我的"];
+    NSArray *classNames = @[@"HomeViewController",@"TTaiViewController",@"MessageListController",@"MineViewController"];
+    NSArray *item_names = @[@"附近",@"T台",@"消息",@"我的"];
     NSMutableArray *items = [NSMutableArray arrayWithCapacity:5];
-    for (int i = 0; i < 5;i ++) {
+    for (int i = 0; i < 4;i ++) {
         
         if (i == 0) {
             
@@ -108,10 +110,14 @@
     
     CGFloat aWidth = allSize.width / 5;
     
-    NSArray *normalImages = @[@"home_up",@"ttai_up",@"tianjia_up",@"xiaoxi_up",@"my_up"];
-    NSArray *selectedImages = @[@"home_down",@"ttai_down",@"tianjia_up",@"xiaoxi_down",@"my_down"];
+//    NSArray *normalImages = @[@"home_up",@"ttai_up",@"tianjia_up",@"xiaoxi_up",@"my_up"];
+//    NSArray *selectedImages = @[@"home_down",@"ttai_down",@"tianjia_up",@"xiaoxi_down",@"my_down"];
     
-    for (int i = 0; i < 5; i ++) {
+    
+    NSArray *normalImages = @[@"gfujin_up",@"ttai_up",@"xiaoxi_up",@"my_up"];
+    NSArray *selectedImages = @[@"gfujin_down",@"ttai_down",@"xiaoxi_down",@"my_down"];
+    
+    for (int i = 0; i < 4; i ++) {
         
         UITabBarItem *item = self.tabBar.items[i];
         UIImage *aImage = [UIImage imageNamed:[normalImages objectAtIndex:i]];
@@ -122,26 +128,28 @@
         selectImage = [selectImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         item.selectedImage = selectImage;
         
-        if (i != 2) {
-            item.title = [item_names objectAtIndex:i];
-        }
+        item.title = [item_names objectAtIndex:i];
         
-        //中间特殊按钮
-        
-        if (i == 2) {
-            //上 左 下 右
-            [item setImageInsets:UIEdgeInsetsMake(5, 0, -5, 0)];
-            
-            UIButton *center = [UIButton buttonWithType:UIButtonTypeCustom];
-            center.frame = CGRectMake(0, 0, aWidth, tabbarSize.height);
-            [self.tabBar addSubview:center];
-            center.backgroundColor = [UIColor clearColor];
-            center.center = CGPointMake(DEVICE_WIDTH/2.f, center.center.y);
-            center.tag = 102;
-            [center setImage:[UIImage imageNamed:normalImages[2]] forState:UIControlStateNormal];
-            [center setImage:[UIImage imageNamed:selectedImages[2]] forState:UIControlStateSelected];
-            [center addTarget:self action:@selector(clickToSelectForIndex:) forControlEvents:UIControlEventTouchUpInside];
-        }
+//        if (i != 2) {
+//            item.title = [item_names objectAtIndex:i];
+//        }
+//        
+//        //中间特殊按钮
+//        
+//        if (i == 2) {
+//            //上 左 下 右
+//            [item setImageInsets:UIEdgeInsetsMake(5, 0, -5, 0)];
+//            
+//            UIButton *center = [UIButton buttonWithType:UIButtonTypeCustom];
+//            center.frame = CGRectMake(0, 0, aWidth, tabbarSize.height);
+//            [self.tabBar addSubview:center];
+//            center.backgroundColor = [UIColor clearColor];
+//            center.center = CGPointMake(DEVICE_WIDTH/2.f, center.center.y);
+//            center.tag = 102;
+//            [center setImage:[UIImage imageNamed:normalImages[2]] forState:UIControlStateNormal];
+//            [center setImage:[UIImage imageNamed:selectedImages[2]] forState:UIControlStateSelected];
+//            [center addTarget:self action:@selector(clickToSelectForIndex:) forControlEvents:UIControlEventTouchUpInside];
+//        }
     }
     
     [[UITabBarItem appearance] setTitleTextAttributes:
@@ -457,7 +465,7 @@
         number_str = [NSString stringWithFormat:@"%d",number];
     }
     
-    UINavigationController *unvc = [self.viewControllers objectAtIndex:3];
+    UINavigationController *unvc = [self.viewControllers objectAtIndex:2];
     unvc.tabBarItem.badgeValue = number_str;
     
     [UIApplication sharedApplication].applicationIconBadgeNumber = [number_str intValue];

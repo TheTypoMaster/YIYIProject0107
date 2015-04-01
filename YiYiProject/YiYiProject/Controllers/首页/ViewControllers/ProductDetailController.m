@@ -375,6 +375,11 @@
         }else
         {
             NSLog(@"服务器登陆成功了,融云未登陆");
+            
+            
+            AppDelegate * appdelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+            [appdelegate loginToRongCloud];
+            
         }
         
     }

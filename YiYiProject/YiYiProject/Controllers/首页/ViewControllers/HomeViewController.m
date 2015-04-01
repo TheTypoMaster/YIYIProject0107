@@ -53,15 +53,25 @@
 -(void)creatSearchRightBarButton{
     
     UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [searchBtn setTitle:@"搜索" forState:UIControlStateNormal];
+//    [searchBtn setTitle:@"搜索" forState:UIControlStateNormal];
+    
 //    searchBtn.backgroundColor = [UIColor orangeColor];
+    
     [searchBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [searchBtn setFrame:CGRectMake(0, 0, 60, 30)];
+//    searchBtn.backgroundColor = [UIColor orangeColor];
     searchBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    [searchBtn setImage:[UIImage imageNamed:@"gsearch_up.png"] forState:UIControlStateNormal];
+    [searchBtn setImage:[UIImage imageNamed:@"gsearch_down.png"] forState:UIControlStateHighlighted];
     [searchBtn addTarget:self action:@selector(pushToSearchVc) forControlEvents:UIControlEventTouchUpInside];
     
-    UIBarButtonItem *rightBtnItem = [[UIBarButtonItem alloc]initWithCustomView:searchBtn];
-    self.navigationItem.rightBarButtonItem = rightBtnItem;
+    
+    UIBarButtonItem *btn_right = [[UIBarButtonItem alloc] initWithCustomView:searchBtn];
+    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
+                                       initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                       target:nil action:nil];
+    negativeSpacer.width = -18;
+    self.navigationItem.rightBarButtonItems = @[negativeSpacer,btn_right];
     
 }
 

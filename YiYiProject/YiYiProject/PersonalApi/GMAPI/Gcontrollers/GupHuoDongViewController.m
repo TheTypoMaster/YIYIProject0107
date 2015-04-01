@@ -219,7 +219,7 @@
     [tijiaoBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [tijiaoBtn setBackgroundColor:RGBCOLOR(217, 66, 93)];
     tijiaoBtn.layer.cornerRadius = 5;
-    [tijiaoBtn setFrame:CGRectMake(20, CGRectGetMaxY(_view3.frame)+13, DEVICE_WIDTH-40, 44)];
+    [tijiaoBtn setFrame:CGRectMake(20, CGRectGetMaxY(_view3.frame)+11, DEVICE_WIDTH-40, 44)];
     [tijiaoBtn addTarget:self action:@selector(gtijiao) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:tijiaoBtn];
@@ -302,11 +302,13 @@
                                            //开始拼接表单
                                            //获取图片的二进制形式
                                            
-                                           
+                                           _showImageData = UIImageJPEGRepresentation(_showImage, 0.2);
                                            NSData * data= _showImageData;
                                            if (!_showImageData) {
                                                return;
                                            }
+                                           
+                                           
                                            
                                            NSLog(@"%ld",(unsigned long)data.length);
                                            

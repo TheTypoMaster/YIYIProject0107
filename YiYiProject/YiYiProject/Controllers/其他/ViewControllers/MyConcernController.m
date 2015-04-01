@@ -67,7 +67,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.view.backgroundColor = RGBCOLOR(200, 200, 200);
+    self.view.backgroundColor = RGBCOLOR(242, 242, 242);
     
     self.myTitleLabel.text = @"我的关注";
     

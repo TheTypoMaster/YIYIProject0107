@@ -134,16 +134,22 @@ typedef enum{
 
     _logoImageArray = @[@[[UIImage imageNamed:@"my_zhuye.png"]]
                         ,@[[UIImage imageNamed:@"my_shoucang.png"],[UIImage imageNamed:@"my_guanzhu.png"]]
-                        ,@[[UIImage imageNamed:@"my_yichu.png"],[UIImage imageNamed:@"my_dapei.png"],[UIImage imageNamed:@"my_tixing.png"]]
                         ,@[[UIImage imageNamed:@"my_shenqing.png"]]
                         ,@[[UIImage imageNamed:@"my_haoyou.png"]]
                         ];
     
+//    _tabelViewCellTitleArray = @[@[@"我的主页"]
+//                                 ,@[@"我的收藏",@"我的关注"]
+//                                 ,@[@"我的衣橱",@"我的搭配",@"我的体型"]
+//                                 ,@[@"我是店主，申请衣+衣店铺"]
+//                                 ,@[@"邀请好友"]];
+    
     _tabelViewCellTitleArray = @[@[@"我的主页"]
                                  ,@[@"我的收藏",@"我的关注"]
-                                 ,@[@"我的衣橱",@"我的搭配",@"我的体型"]
                                  ,@[@"我是店主，申请衣+衣店铺"]
-                                 ,@[@"邀请好友"]];
+                                 ,@[@"邀请好友"]
+                                 ];
+
     
     _customInfo_tabelViewCell = @{@"titleLogo":_logoImageArray,
                                   @"titleArray":_tabelViewCellTitleArray
@@ -192,13 +198,11 @@ typedef enum{
 -(void)changeTheTitleAndPicArray_dianzhu{//已经是店主
     _logoImageArray = @[@[[UIImage imageNamed:@"my_zhuye.png"],[UIImage imageNamed:@"my_shenqing.png"]]
                         ,@[[UIImage imageNamed:@"my_shoucang.png"],[UIImage imageNamed:@"my_guanzhu.png"]]
-                        ,@[[UIImage imageNamed:@"my_yichu.png"],[UIImage imageNamed:@"my_dapei.png"],[UIImage imageNamed:@"my_tixing.png"]]
                         ,@[[UIImage imageNamed:@"my_haoyou.png"]]
                         ];
     
     _tabelViewCellTitleArray = @[@[@"我的主页",@"我的店铺"]
                                  ,@[@"我的收藏",@"我的关注"]
-                                 ,@[@"我的衣橱",@"我的搭配",@"我的体型"]
                                  ,@[@"邀请好友"]];
     
     
@@ -212,14 +216,12 @@ typedef enum{
 -(void)changeTheTitleAndPicArray_shenhe{//正在审核
     _logoImageArray = @[@[[UIImage imageNamed:@"my_zhuye.png"]]
                         ,@[[UIImage imageNamed:@"my_shoucang.png"],[UIImage imageNamed:@"my_guanzhu.png"]]
-                        ,@[[UIImage imageNamed:@"my_yichu.png"],[UIImage imageNamed:@"my_dapei.png"],[UIImage imageNamed:@"my_tixing.png"]]
                         ,@[[UIImage imageNamed:@"my_shenqing.png"]]
                         ,@[[UIImage imageNamed:@"my_haoyou.png"]]
                         ];
     
     _tabelViewCellTitleArray = @[@[@"我的主页"]
                                  ,@[@"我的收藏",@"我的关注"]
-                                 ,@[@"我的衣橱",@"我的搭配",@"我的体型"]
                                  ,@[@"店铺审核中"]
                                  ,@[@"邀请好友"]];
     
@@ -566,29 +568,7 @@ typedef enum{
         }
             break;
             
-        case 2:
-        {
-            
-            if (indexPath.row==0) {//我的衣橱
-                MyYiChuViewController *_myyichuVC=[[MyYiChuViewController alloc]init];
-                _myyichuVC.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:_myyichuVC animated:YES];
-            }else if(indexPath.row==1){//我的搭配
-                MyMatchViewController *myMatchVC = [[MyMatchViewController alloc] init];
-                myMatchVC.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:myMatchVC animated:YES];
-                
-            }else if(indexPath.row==2){//我的体型
-                MyBodyViewController *_myBodyVC =[[MyBodyViewController alloc] init];
-                _myBodyVC.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:_myBodyVC animated:YES];
-            }
-            
-            
-        }
-            break;
-            
-        case 3://我是店主，申请衣加衣店铺  或 邀请好友
+        case 2://我是店主，申请衣加衣店铺  或 邀请好友
         {
             if (indexPath.row==0) {
                 
@@ -614,7 +594,7 @@ typedef enum{
         }
             break;
             
-        case 4://邀请好友 或没有
+        case 3://邀请好友 或没有
         {
             
             if (indexPath.row == 0){
@@ -631,16 +611,6 @@ typedef enum{
         default:
             break;
     }
-    
-    
-    
-    
-    
-    //    if (indexPath.row == 0) {
-    //        GmyMainViewController *dd = [[GmyMainViewController alloc]init];
-    //        dd.hidesBottomBarWhenPushed = YES;
-    //        [self.navigationController pushViewController:dd animated:YES];
-    //    }
     
     
     

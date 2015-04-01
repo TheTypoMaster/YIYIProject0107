@@ -23,10 +23,16 @@
     // Do any additional setup after loading the view.
     
     
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(gGoDismiss)];
-    self.navigationItem.rightBarButtonItem = rightItem;
     
-    self.navigationItem.title = @"选择楼层和品牌";
+    
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:MY_MACRO_NAME?IOS7DAOHANGLANBEIJING_PUSH:IOS6DAOHANGLANBEIJING] forBarMetrics: UIBarMetricsDefault];
+    
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
+    
+    self.myTitleLabel.text = @"选择楼层和品牌";
+    
+    
     
     
     NSLog(@"有品牌的楼层%@",self.havePinpaiFloordic);
@@ -45,6 +51,13 @@
     
     
 }
+
+
+-(void)leftButtonTap:(UIButton *)sender
+{
+    [self gGoDismiss];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

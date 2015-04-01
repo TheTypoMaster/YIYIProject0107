@@ -90,7 +90,7 @@
     
     //主scrollview
     _mainScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT-15)];
-    _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH, DEVICE_HEIGHT+58+50+15);
+    _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH, DEVICE_HEIGHT+58+50+15+44);
     
     _mainScrollView.backgroundColor = RGBCOLOR(242, 242, 242);
     [self.view addSubview:_mainScrollView];

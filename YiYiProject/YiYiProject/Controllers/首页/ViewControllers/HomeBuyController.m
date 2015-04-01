@@ -51,7 +51,7 @@
     self.view.backgroundColor = RGBCOLOR(200, 200, 200);
     
     waterFlow = [[LWaterflowView alloc]initWithFrame:CGRectMake(0, 0, ALL_FRAME_WIDTH, ALL_FRAME_HEIGHT - 49 - 44) waterDelegate:self waterDataSource:self];
-    waterFlow.backgroundColor = RGBCOLOR(240, 230, 235);
+    waterFlow.backgroundColor = RGBCOLOR(235, 235, 235);
     [self.view addSubview:waterFlow];
     
 //    NSDictionary *result = [LTools cacheForKey:CACHE_DESERVE_BUY];

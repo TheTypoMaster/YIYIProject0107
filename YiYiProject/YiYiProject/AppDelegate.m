@@ -421,7 +421,8 @@
     //1 衣加衣通知消息 2 关注通知消息 3 回复主题消息 4 回复主题回复
     //5 回复T台通知消息 6 回复T台回复通知消息 7 品牌促销通知消息 8 商场促销通知
     
-    // 9 成功  10 失败
+    // 9 申请店铺成功  10 申请店铺失败
+    //11 修改活动
     
     if (type == 1) {
         
@@ -436,9 +437,10 @@
         [self pushToMessageDetail:Message_Shop];
     }else if (type == 9 || type == 10){
         
-        
         //店铺申请状态通知
         [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_SHENQINGDIANPU_STATE object:nil];
+    }else if (type == 11){
+        [self pushToMessageDetail:Message_Shop];
     }
 
 }
@@ -451,13 +453,13 @@
 
 - (void)pushToMessageDetail:(Message_Type)aType
 {
-    self.rootViewController.selectedIndex = 3;
+    self.rootViewController.selectedIndex = 2;
     
     MailMessageViewController *mail = [[MailMessageViewController alloc]init];
     mail.aType = aType;
     mail.hidesBottomBarWhenPushed = YES;
     
-    UINavigationController *unVc = [self.rootViewController.viewControllers objectAtIndex:3];
+    UINavigationController *unVc = [self.rootViewController.viewControllers objectAtIndex:2];
     
     [unVc pushViewController:mail animated:YES];
 }
@@ -660,7 +662,17 @@
         LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
         [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
             
-            NSString *name = result[@"user_name"];
+            NSString *name = @" ";
+            if ([[result objectForKey:@"mall_type"]intValue] == 1) {//商场店
+                name = [NSString stringWithFormat:@"%@.%@",result[@"brand_name"],result[@"mall_name"]];
+            }else if ([[result objectForKey:@"mall_type"]intValue] == 2){//精品店
+                name = result[@"mall_name"];
+            }
+            
+            
+            
+            
+            
             NSString *icon = result[@"photo"];
             
             if (name.length > 0) {

@@ -13,7 +13,7 @@
 
 @class ShenQingDianPuViewController;
 
-@interface GchooseFloorPinpaiViewController : UIViewController
+@interface GchooseFloorPinpaiViewController : MyViewController
 
 
 @property(nonatomic,assign)ShenQingDianPuViewController *delegate;

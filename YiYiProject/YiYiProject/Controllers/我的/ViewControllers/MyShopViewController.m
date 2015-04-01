@@ -740,7 +740,7 @@
             }
             
             waterFlow = [[LWaterflowView alloc]initWithFrame:CGRectMake(0,0,DEVICE_WIDTH,DEVICE_HEIGHT - 57 + 20) waterDelegate:self waterDataSource:self];
-            waterFlow.backgroundColor = RGBCOLOR(240, 230, 235);
+            waterFlow.backgroundColor = RGBCOLOR(235, 235, 235);
             [cell.contentView addSubview:waterFlow];
 
             waterFlow.quitView.scrollEnabled = NO;

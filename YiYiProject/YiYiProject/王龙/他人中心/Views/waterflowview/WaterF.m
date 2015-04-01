@@ -20,10 +20,10 @@
 
 - (void)dealloc
 {
-//    self.collectionView.delegate = nil;
-//    self.collectionView.dataSource = nil;
+    self.collectionView.delegate = nil;
+    self.collectionView.dataSource = nil;
     self.cell = nil;
-//    self.collectionView = nil;
+    self.collectionView = nil;
 }
 
 - (id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout

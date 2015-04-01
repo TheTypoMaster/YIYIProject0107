@@ -19,6 +19,8 @@
 
 #import "LoginViewController.h"
 
+#import "MessageDetailController.h"
+
 
 @interface GnearbyStoreViewController ()<CWSegmentDelegate,UIScrollViewDelegate>
 {
@@ -211,7 +213,7 @@
 //创建商家顶部信息view
 -(void)creatUpStoreInfoView{
     
-    _upStoreInfoView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 185)];
+    _upStoreInfoView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 140)];
 //    _upStoreInfoView.backgroundColor = [UIColor orangeColor];
     
     //商城名称
@@ -225,7 +227,11 @@
     _huodongTitleLabel.text = @"活动：";
     _huodongLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_huodongTitleLabel.frame)+10, CGRectGetMaxY(_mallNameLabel.frame)+13, DEVICE_WIDTH -15-15-10-_huodongTitleLabel.frame.size.width, 15)];
 //    _huodongLabel.backgroundColor = [UIColor purpleColor];
+    _huodongLabel.textColor = RGBCOLOR(56, 80, 122);
     _huodongLabel.font = [UIFont systemFontOfSize:15];
+    _huodongLabel.userInteractionEnabled = YES;
+    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(huodongLabelClicked)];
+    [_huodongLabel addGestureRecognizer:tap];
     
     //地址
     _dizhiTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(_mallNameLabel.frame.origin.x, CGRectGetMaxY(_huodongTitleLabel.frame)+8, 45, 15)];
@@ -234,6 +240,10 @@
     _dizhiTitleLabel.font = [UIFont systemFontOfSize:15];
     _adressLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_dizhiTitleLabel.frame)+10, CGRectGetMaxY(_huodongLabel.frame)+8, DEVICE_WIDTH -15-15-10-_huodongTitleLabel.frame.size.width, 15)];
 //    _adressLabel.backgroundColor = [UIColor purpleColor];
+    _adressLabel.textColor = RGBCOLOR(56, 80, 122);
+    UITapGestureRecognizer *tt = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(leadYouBuy)];
+    _adressLabel.userInteractionEnabled = YES;
+    [_adressLabel addGestureRecognizer:tt];
     _adressLabel.font = [UIFont systemFontOfSize:15];
     
     //带你买
@@ -252,7 +262,10 @@
     [_upStoreInfoView addSubview:_huodongLabel];
     [_upStoreInfoView addSubview:_dizhiTitleLabel];
     [_upStoreInfoView addSubview:_adressLabel];
-    [_upStoreInfoView addSubview:_dainimaiBtn];
+//    [_upStoreInfoView addSubview:_dainimaiBtn];
+    
+    
+//    _upStoreInfoView.backgroundColor = [UIColor orangeColor];
     
     [self.view addSubview:_upStoreInfoView];
     
@@ -296,7 +309,7 @@
     NSMutableArray *data_2Array = [NSMutableArray arrayWithCapacity:1];
     data_2Array = [NSMutableArray arrayWithArray:floorArray_new];
     
-    UIView *floorView = [[UIView alloc]initWithFrame:CGRectMake(12, 185, DEVICE_WIDTH-24, DEVICE_HEIGHT-_upStoreInfoView.frame.size.height)];
+    UIView *floorView = [[UIView alloc]initWithFrame:CGRectMake(12, CGRectGetMaxY(_upStoreInfoView.frame), DEVICE_WIDTH-24, DEVICE_HEIGHT-_upStoreInfoView.frame.size.height)];
     
     GtopScrollView *topScrollView = [[GtopScrollView alloc]initWithFrame:CGRectMake(0, 0, floorView.frame.size.width, 28)];
     GRootScrollView *rootScrollView = [[GRootScrollView alloc]initWithFrame:CGRectMake(0, 28, topScrollView.frame.size.width, DEVICE_HEIGHT-_upStoreInfoView.frame.size.height-topScrollView.frame.size.height-64)];
@@ -397,6 +410,8 @@
             if (huodongStr.length==0) {
                 huodongStr = @"";
             }
+            
+            self.activityId = [dic stringValueForKey:@"activity_id"];
         }
 
         _mallNameLabel.text = [NSString stringWithFormat:@"%@",[result stringValueForKey:@"mall_name"]];
@@ -446,6 +461,20 @@
     
 }
 
+
+
+
+//点击跳转活动
+-(void)huodongLabelClicked{
+    NSLog(@"活动");
+    
+    MessageDetailController *detail = [[MessageDetailController alloc]init];
+    detail.msg_id = self.activityId;
+    detail.isActivity = YES;
+    detail.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:detail animated:YES];
+    
+}
 
 
 @end

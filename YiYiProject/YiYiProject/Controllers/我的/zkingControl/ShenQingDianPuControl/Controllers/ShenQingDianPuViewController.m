@@ -337,7 +337,7 @@
     //精品店
     _jingpingdianView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 58, DEVICE_WIDTH, DEVICE_HEIGHT - 58)];
     _jingpingdianView.contentSize = CGSizeMake(DEVICE_WIDTH, DEVICE_HEIGHT+58+58);
-    _jingpingdianView.scrollEnabled = NO;
+//    _jingpingdianView.scrollEnabled = NO;
     [self.view addSubview:_jingpingdianView];
     
     //商场店
@@ -938,7 +938,7 @@
     for (UITextField *tf in self.shuruTextFieldArray) {
         [tf resignFirstResponder];
     }
-    _jingpingdianView.scrollEnabled = NO;
+//    _jingpingdianView.scrollEnabled = NO;
     
     //商场店相关
     if (_shanchangdianView.contentOffset.y >=58) {
@@ -947,7 +947,7 @@
     for (UITextField *tf in self.chooseTextFieldArray) {
         [tf resignFirstResponder];
     }
-    _shanchangdianView.scrollEnabled = NO;
+//    _shanchangdianView.scrollEnabled = NO;
     
 }
 

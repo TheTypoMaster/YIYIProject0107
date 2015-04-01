@@ -22,5 +22,12 @@ typedef void(^LocationBlock)(NSDictionary *dic);//获取坐标block
 
 - (void)startDingweiWithBlock:(LocationBlock)location;
 
+
+
+
+
+//登录融云
+- (void)loginToRongCloud;
+
 @end
 

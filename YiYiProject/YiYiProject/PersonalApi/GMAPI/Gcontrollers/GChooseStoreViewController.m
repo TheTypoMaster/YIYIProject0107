@@ -22,10 +22,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(gGoDismiss)];
-    self.navigationItem.rightBarButtonItem = rightItem;
     
-    self.navigationItem.title = @"请选择商场";
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:MY_MACRO_NAME?IOS7DAOHANGLANBEIJING_PUSH:IOS6DAOHANGLANBEIJING] forBarMetrics: UIBarMetricsDefault];
+    
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
+    
+    self.myTitleLabel.text = @"请选择商场";
     
     
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT) style:UITableViewStylePlain];
@@ -33,6 +35,12 @@
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     
+}
+
+
+-(void)leftButtonTap:(UIButton *)sender
+{
+    [self gGoDismiss];
 }
 
 - (void)didReceiveMemoryWarning {

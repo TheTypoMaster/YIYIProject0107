@@ -166,4 +166,38 @@
 }
 
 
+-(void)aaaaa{
+    _backGroudView.frame = CGRectMake(0, 0, self.width, self.height);
+    _backGroudView.layer.cornerRadius = 3.f;
+    
+    //用户信息部分
+    _headBgView.frame = CGRectMake(0, 0, 0, 0);
+    _iconImageView.frame = CGRectMake(10, 0, 35, 35);
+    
+    _iconImageView.center = CGPointMake(_iconImageView.center.x, _headBgView.height / 2.f);
+    
+    _userNameLabel.frame = CGRectMake(_iconImageView.right + 10, 10, 120, 15);
+    _timeLabel.frame = CGRectMake(_userNameLabel.left, _userNameLabel.bottom + 5, _userNameLabel.width, 10);
+    
+    CGRect aBound = self.bounds;
+    aBound.size.height -= 33;
+    
+    self.photoView.frame = CGRectMake(0, _headBgView.bottom, self.width, _photoView.height);
+    [self addSubview:self.photoView];
+    NSLog(@"%@",NSStringFromCGRect(self.photoView.frame));
+    
+    //评论 喜欢 view
+    
+    _infoView.frame = CGRectMake(0, _photoView.bottom, self.width, 36);
+    
+    _like_label.frame = CGRectMake(self.width - _like_label.width - 5, 0, _like_label.width, _infoView.height);
+    self.like_btn.frame = CGRectMake(_like_label.left - 20 - 2, 0, 20, 20);
+    _like_btn.center = CGPointMake(_like_btn.center.x, _infoView.height / 2.f);
+    
+    
+    _comment_label.frame = CGRectMake(_like_btn.left - 10 - _comment_label.width, 0, _comment_label.width, _infoView.height);
+    self.comment_btn.frame = CGRectMake(_comment_label.left - _like_btn.width - 5, 0, 20, 20);
+    _comment_btn.center = CGPointMake(_comment_btn.center.x, _like_label.center.y);
+}
+
 @end

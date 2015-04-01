@@ -280,9 +280,13 @@
             if (huodongStr.length==0) {
                 huodongStr = @"";
             }
+            self.activityId = [dic stringValueForKey:@"activity_id"];
         }
         
+        
         _huodongLabel.text = huodongStr;
+        
+        self.coordinate_store = CLLocationCoordinate2DMake([[result stringValueForKey:@"latitude"]floatValue], [[result stringValueForKey:@"longitude"]floatValue]);
         
         //根据内容调整活动和地址的高度=================start
         if (_huodongLabel.text.length == 0) {
@@ -329,6 +333,7 @@
     _huodongTitleLabel.text = @"活动：";
     _huodongLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_huodongTitleLabel.frame)+10, CGRectGetMaxY(_mallNameLabel.frame)+13, DEVICE_WIDTH -15-15-10-_huodongTitleLabel.frame.size.width, 15)];
     _huodongLabel.font = [UIFont systemFontOfSize:15];
+    _huodongLabel.textColor = RGBCOLOR(56, 80, 122);
     UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(huodongLabelClicked)];
     _huodongLabel.userInteractionEnabled = YES;
     [_huodongLabel addGestureRecognizer:tap];
@@ -340,6 +345,7 @@
     _dizhiTitleLabel.font = [UIFont systemFontOfSize:15];
     _adressLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_dizhiTitleLabel.frame)+10, CGRectGetMaxY(_huodongLabel.frame)+8, DEVICE_WIDTH -15-15-10-_huodongTitleLabel.frame.size.width, 15)];
     _adressLabel.font = [UIFont systemFontOfSize:15];
+    _adressLabel.textColor = RGBCOLOR(56, 80, 122);
     _adressLabel.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(adressLabelClicked)];
     [_adressLabel addGestureRecognizer:tap1];
@@ -585,7 +591,7 @@
     _backView_water.backgroundColor = RGBCOLOR(240, 230, 235);
     [_mainScrollview addSubview:_backView_water];
     _waterFlow = [[LWaterflowView alloc]initWithFrame:_backView_water.bounds waterDelegate:self waterDataSource:self];
-    _waterFlow.backgroundColor = RGBCOLOR(240, 230, 235);
+    _waterFlow.backgroundColor = RGBCOLOR(235, 235, 235);
     [_backView_water addSubview:_waterFlow];
     [_waterFlow showRefreshHeader:YES];
     

@@ -139,8 +139,6 @@
 }
 
 
-- (void)responseSendMessageStatus:(RCErrorCode)errorCode messageId:(long)messageId object:(id)object{
-    NSLog(@"RCErrorCode : %d",errorCode);
-}
+
 
 @end

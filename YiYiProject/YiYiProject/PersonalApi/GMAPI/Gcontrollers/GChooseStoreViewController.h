@@ -13,7 +13,7 @@
 #import <UIKit/UIKit.h>
 @class ShenQingDianPuViewController;
 
-@interface GChooseStoreViewController : UIViewController
+@interface GChooseStoreViewController : MyViewController
 
 @property(nonatomic,strong)NSArray *dataArray;
 @property(nonatomic,assign)ShenQingDianPuViewController *delegate;

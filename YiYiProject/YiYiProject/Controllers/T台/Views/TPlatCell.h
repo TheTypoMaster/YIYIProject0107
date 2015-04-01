@@ -34,4 +34,6 @@
 
 - (void)setCellWithModel:(TPlatModel *)aModel;
 
+-(void)aaaaa;
+
 @end

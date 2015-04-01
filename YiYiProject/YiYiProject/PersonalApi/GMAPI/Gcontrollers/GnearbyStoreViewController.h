@@ -22,4 +22,7 @@
 @property(nonatomic,strong)NSString *guanzhu;//0未关注  1已关注
 @property(nonatomic,strong)NSString *mall_id;//需要关注的商场id
 
+
+@property(nonatomic,strong)NSString *activityId;//活动id
+
 @end

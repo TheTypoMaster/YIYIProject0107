@@ -105,7 +105,7 @@
 
     
     //返回按钮
-    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(20,20,40,44)];
+    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(16,20,40,44)];
     [button_back addTarget:self action:@selector(leftButtonTap:) forControlEvents:UIControlEventTouchUpInside];
     [button_back setImage:BACK_DEFAULT_IMAGE forState:UIControlStateNormal];
     [button_back setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
@@ -404,13 +404,17 @@
     annotationView.image = [UIImage imageNamed:@"gpin.png"];
     
     annotationView.selected = YES;
+    annotationView.enabled = YES;
     
-    annotationView.rightCalloutAccessoryView = [[UIView alloc]initWithFrame:CGRectMake(0, 1, 35, 43)];
+    annotationView.rightCalloutAccessoryView = [[UIView alloc]initWithFrame:CGRectMake(0, 1, 34, 41)];
+    annotationView.rightCalloutAccessoryView.userInteractionEnabled = YES;
+    
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.titleLabel.font = [UIFont systemFontOfSize:14];
     [btn setTitle:@"导航" forState:UIControlStateNormal];
     [btn setBackgroundColor:[[UIColor grayColor] colorWithAlphaComponent:0.5]];
     [btn setFrame:annotationView.rightCalloutAccessoryView.bounds];
+    [btn addTarget:self action:@selector(gDaohang) forControlEvents:UIControlEventTouchUpInside];
     btn.layer.cornerRadius = 5;
     btn.layer.masksToBounds = YES;
     

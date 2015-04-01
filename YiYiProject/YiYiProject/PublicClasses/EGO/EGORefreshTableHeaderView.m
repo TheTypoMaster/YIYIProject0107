@@ -86,6 +86,9 @@
 		[view release];
 		
 		
+        _statusLabel.textColor = [UIColor grayColor];
+        _lastUpdatedLabel.textColor = [UIColor grayColor];
+        
 		[self setState:EGOOPullRefreshNormal];
 		
     }
