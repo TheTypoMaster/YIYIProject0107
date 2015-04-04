@@ -26,4 +26,10 @@
 @property(nonatomic,retain)NSDictionary *uinfo;//用户信息
 @property(nonatomic,assign)int is_like;
 
+//史忠坤修改
+@property(nonatomic,assign)int have_detail;
+
+@property(nonatomic,strong)NSArray *img_detail;
+//end
+
 @end

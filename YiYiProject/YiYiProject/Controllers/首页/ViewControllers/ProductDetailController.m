@@ -304,6 +304,8 @@
     }];
 }
 
+#pragma mark--联系搭配师
+
 - (IBAction)clickToDaPeiShi:(id)sender {
     
     HomeMatchController *dapei = [[HomeMatchController alloc]init];
@@ -384,6 +386,8 @@
         
     }
 }
+
+#pragma mark--带你去买
 
 - (IBAction)clickToBuy:(id)sender {
     
