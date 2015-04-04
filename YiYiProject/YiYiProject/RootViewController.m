@@ -32,6 +32,8 @@
 
 #import "MessageListController.h"//消息列表 分四个
 
+#import "GTTPublishViewController.h"//发布T台
+
 @interface RootViewController ()<UITabBarControllerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
     MessageViewController *messageVc;
@@ -374,7 +376,7 @@
         
         //        [self addPhoto:image];
         
-        TTPublishViewController *publish = [[TTPublishViewController alloc]init];
+        GTTPublishViewController *publish = [[GTTPublishViewController alloc]init];
         publish.publishImage = image;
         
         [self pushToViewController:publish];

@@ -18,6 +18,8 @@
 #import "MJPhotoBrowser.h"
 #import "MJPhoto.h"
 
+#import "GAddTtaiImageLinkViewController.h"
+
 @interface ProductDetailController ()
 {
     ProductModel *aModel;
@@ -86,11 +88,18 @@
         self.lianxiDianzhuBtn.hidden = YES;
     }
     
+    
     self.bugButton.layer.cornerRadius = 5.0f;
     self.bugButton.layer.borderColor = [UIColor whiteColor].CGColor;
     self.bugButton.layer.borderWidth = 1.f;
     
     loading = [LTools MBProgressWithText:@"加载..." addToView:self.view];
+    
+    
+    if (self.isChooseProductLink) {
+        [self.lianxiDianzhuBtn setTitle:@"选择" forState:UIControlStateNormal];
+    }
+    
     
     [self networkForDetail];
 }
@@ -321,6 +330,16 @@
  *  @param sender
  */
 - (IBAction)clickToContact:(id)sender {
+    
+    
+    if (self.isChooseProductLink) {
+        GAddTtaiImageLinkViewController *cc = self.navigationController.viewControllers[0];
+        [cc setGmoveImvProductId:self.product_id shopid:self.theModel.product_shop_id productName:self.titleLabel.text shopName:self.shangChangLabel.text];
+        [self.navigationController popToViewController:cc animated:YES];
+        return;
+    }
+    
+    
     
     BOOL rong_login = [LTools cacheBoolForKey:LOGIN_RONGCLOUD_STATE];
     

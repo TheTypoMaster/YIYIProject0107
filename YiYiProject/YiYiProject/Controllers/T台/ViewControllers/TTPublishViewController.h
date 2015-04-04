@@ -19,5 +19,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *priceTF;
 
 @property (nonatomic,retain)UIImage *publishImage;//发布图片
+@property (weak, nonatomic) IBOutlet UIScrollView *mainScrollview;
+@property (weak, nonatomic) IBOutlet UIView *brandModelPriceView;
 
 @end

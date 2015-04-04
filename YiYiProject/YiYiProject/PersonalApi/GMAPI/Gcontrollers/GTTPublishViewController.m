@@ -1,58 +1,66 @@
 //
-//  TTPublishViewController.m
+//  GTTPublishViewController.m
 //  YiYiProject
 //
-//  Created by lichaowei on 15/1/2.
+//  Created by gaomeng on 15/4/2.
 //  Copyright (c) 2015年 lcw. All rights reserved.
 //
 
-#import "TTPublishViewController.h"
-
+#import "GTTPublishViewController.h"
 #import "AFNetworking.h"
+#import "GHolderTextView.h"
+#import "GmoveImv.h"
+#import "GImvUpScrollView.h"
+#import "GAddTtaiImageLinkViewController.h"
 
-
-@interface TTPublishViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate>
+@interface GTTPublishViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate>
 {
     BOOL imageIsValid;//图片是否有效
     
+    UIView *_tfBackview;//textfield输入框下层view
     
     //添加锚点相关
-    UIView *_editImageView;//添加锚点的view
-    UIImageView *_showImageView;//显示可以添加锚点的图片imageview
+    UIImageView *_editImageView;//添加锚点的view
+    GmoveImv *_showImageView;//显示可以添加锚点的图片imageview
     UIControl *_theImvTouched;//图片点击
     
+    GmoveImv *_maodian;
+    
+    UIImage *_theChooseImage;//用户选择的图片
+    
 }
-
 @end
 
-@implementation TTPublishViewController
+@implementation GTTPublishViewController
+
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    NSLog(@"%@",self.maodianDic);
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-    
-    self.view.backgroundColor = RGBCOLOR(235, 235, 235);
+    // Do any additional setup after loading the view.
+    self.view.backgroundColor = [UIColor whiteColor];
     self.rightString = @"发送";
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeText];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapToHiddenKeyboard:)];
     [self.view addGestureRecognizer:tap];
     
-    [self.addImageButton addTarget:self action:@selector(clickToAction:) forControlEvents:UIControlEventTouchUpInside];
     
-    if (self.publishImage) {
-        
-        imageIsValid = YES;
-        [self.addImageButton setImage:self.publishImage forState:UIControlStateNormal];
-    }
-    
-    
-    self.mainScrollview.contentSize = CGSizeMake(DEVICE_WIDTH, DEVICE_HEIGHT+100);
+//
+//    if (self.publishImage) {
+//        
+//        imageIsValid = YES;
+//        [self.addImageButton setImage:self.publishImage forState:UIControlStateNormal];
+//    }
     
     
-    
-    
-    
+    [self creatCustomView];
     
     
 }
@@ -62,10 +70,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+
+
 #pragma mark - 网络请求
-
-
-
 #pragma mark 图片上传
 
 //上传
@@ -73,6 +81,10 @@
     
     NSString *content = self.contentTF.text;
     NSString *brand = [NSString stringWithFormat:@"%@,%@,%@",self.brandTF.text,self.modelTF.text,self.priceTF.text];
+    NSString *img_x = [self.maodianDic objectForKey:@"locationxbili"];
+    NSString *img_y = [self.maodianDic objectForKey:@"locationybili"];
+    NSString *shop_ids = [self.maodianDic objectForKey:@"shopIds"];
+    NSString *product_ids = [self.maodianDic objectForKey:@"productid"];
     
     //上传的url
     NSString *uploadImageUrlStr = TTAI_ADD;
@@ -85,7 +97,11 @@
                                    parameters:@{
                                                 @"authcode":[GMAPI getAuthkey],
                                                 @"ttInfo":brand,
-                                                @"tt_content":content
+                                                @"tt_content":content,
+                                                @"img_x":img_x,
+                                                @"img_y":img_y,
+                                                @"shop_ids":shop_ids,
+                                                @"product_ids":product_ids
                                                 }
                                    constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
                                    {
@@ -164,7 +180,9 @@
 
 - (void)leftButtonTap:(UIButton *)sender
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
 }
 
 -(void)rightButtonTap:(UIButton *)sender
@@ -173,37 +191,37 @@
     
     [self tapToHiddenKeyboard:nil];
     
-//    self.brandTF.text,self.modelTF.text,self.priceTF.text
+    //    self.brandTF.text,self.modelTF.text,self.priceTF.text
     
-//    if ([LTools isEmpty:self.brandTF.text]) {
-//        
-//        [LTools showMBProgressWithText:@"品牌不能为空" addToView:self.view];
-//        return;
-//    }
-//    if ([LTools isEmpty:self.modelTF.text]) {
-//        
-//        [LTools showMBProgressWithText:@"型号不能为空" addToView:self.view];
-//        return;
-//    }
-//    
-//    if ([LTools isEmpty:self.priceTF.text]) {
-//        
-//        [LTools showMBProgressWithText:@"价格不能为空" addToView:self.view];
-//        return;
-//    }
-//    
-//    if ([LTools isValidateFloat:self.priceTF.text]) {
-//        
-//        [LTools showMBProgressWithText:@"请填写有效价格" addToView:self.view];
-//        return;
-//    }
+    //    if ([LTools isEmpty:self.brandTF.text]) {
+    //
+    //        [LTools showMBProgressWithText:@"品牌不能为空" addToView:self.view];
+    //        return;
+    //    }
+    //    if ([LTools isEmpty:self.modelTF.text]) {
+    //
+    //        [LTools showMBProgressWithText:@"型号不能为空" addToView:self.view];
+    //        return;
+    //    }
+    //
+    //    if ([LTools isEmpty:self.priceTF.text]) {
+    //
+    //        [LTools showMBProgressWithText:@"价格不能为空" addToView:self.view];
+    //        return;
+    //    }
+    //
+    //    if ([LTools isValidateFloat:self.priceTF.text]) {
+    //
+    //        [LTools showMBProgressWithText:@"请填写有效价格" addToView:self.view];
+    //        return;
+    //    }
     
     
     if (imageIsValid) {
         
         self.my_right_button.userInteractionEnabled = NO;
-
-       [self upLoadImage:self.addImageButton.imageView.image];
+        
+        [self upLoadImage:self.addImageButton.imageView.image];
     }else
     {
         [LTools showMBProgressWithText:@"请添加有效照片" addToView:self.view];
@@ -244,7 +262,7 @@
 - (void)updateViewFrameY:(CGFloat)frameY
 {
     [UIView animateWithDuration:0.2 animations:^{
-       
+        
         self.view.top = frameY;
     }];
     
@@ -261,18 +279,18 @@
 }
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     
-//    if (textField == self.brandTF) {
-//        
-//        [self updateViewFrameY:_brandTF.top * -1];
-//
-//    }else if (textField == _modelTF){
-//        
-//        [self updateViewFrameY:_modelTF.top * -1];
-//
-//    }else if (textField == _priceTF){
-//        
-//        [self updateViewFrameY:_priceTF.top * -1];
-//    }
+    //    if (textField == self.brandTF) {
+    //
+    //        [self updateViewFrameY:_brandTF.top * -1];
+    //
+    //    }else if (textField == _modelTF){
+    //
+    //        [self updateViewFrameY:_modelTF.top * -1];
+    //
+    //    }else if (textField == _priceTF){
+    //
+    //        [self updateViewFrameY:_priceTF.top * -1];
+    //    }
     
     
     
@@ -375,7 +393,7 @@
         //将二进制数据生成UIImage
         UIImage *image = [UIImage imageWithData:data];
         
-//        [self addPhoto:image];
+        //        [self addPhoto:image];
         
         if (image) {
             
@@ -384,7 +402,9 @@
         
         [self.addImageButton setImage:image forState:UIControlStateNormal];
         
-        [self creatShowImageViewWithImage:image];
+        
+        _theChooseImage = image;
+        [self creatShowImageView];
         
         [picker dismissViewControllerAnimated:NO completion:^{
             
@@ -392,7 +412,7 @@
         }];
         
     }
-
+    
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
@@ -401,7 +421,7 @@
         
     }];
 }
-    
+
 #pragma mark - UIActionSheetDelegate <NSObject>
 
 // Called when a button is clicked. The view will be automatically dismissed after this call returns
@@ -418,54 +438,101 @@
 
 
 #pragma mark - myMethod
+
+
+//创建视图
+-(void)creatCustomView{
+    self.mainScrollview = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT)];
+    self.mainScrollview.contentSize = CGSizeMake(DEVICE_WIDTH, DEVICE_HEIGHT+100);
+    [self.view addSubview:self.mainScrollview];
+    
+    //发表内容输入框
+    self.contentTF = [[GHolderTextView alloc]initWithFrame:CGRectMake(10, 10, DEVICE_WIDTH-20, 100) placeholder:@"发表这一刻的想法" holderSize:15];
+    self.contentTF.backgroundColor = [UIColor whiteColor];
+    self.contentTF.font = [UIFont systemFontOfSize:15];
+    [self.mainScrollview addSubview:self.contentTF];
+    
+    //添加图片的按钮
+    UIView *addPicView = [[UIView alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(self.contentTF.frame), self.contentTF.frame.size.width, 80)];
+    addPicView.backgroundColor = [UIColor whiteColor];
+    [self.mainScrollview addSubview:addPicView];
+    self.addImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.addImageButton setImage:[UIImage imageNamed:@"stianjia.png"] forState:UIControlStateNormal];
+    [self.addImageButton setFrame:CGRectMake(6, 0, 80, 80)];
+    [self.addImageButton addTarget:self action:@selector(clickToAction:) forControlEvents:UIControlEventTouchUpInside];
+    [addPicView addSubview:self.addImageButton];
+    
+    
+    
+    //品牌型号价格
+    _tfBackview = [[UIView alloc]initWithFrame:CGRectMake(16, CGRectGetMaxY(addPicView.frame)+7, DEVICE_WIDTH-32, 145)];
+    NSArray *titleArray = @[@"品牌",@"型号",@"价格"];
+    for (int i = 0; i<3; i++) {
+        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, i*44, _tfBackview.frame.size.width, 44)];
+        [_tfBackview addSubview:view];
+        _tfBackview.tag = 1000000;
+        UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, 0, view.frame.size.width, 1)];
+        line.backgroundColor = RGBCOLOR(208, 208, 208);
+        [view addSubview:line];
+        UILabel *tt = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 70, 44)];
+        tt.font = [UIFont systemFontOfSize:15];
+        tt.text = titleArray[i];
+        [view addSubview:tt];
+        
+        if (i == 0) {
+            self.brandTF = [[UITextField alloc]initWithFrame:CGRectMake(75, 0, _tfBackview.frame.size.width-75, 44)];
+            self.brandTF.textAlignment = NSTextAlignmentRight;
+            self.brandTF.font = [UIFont systemFontOfSize:15];
+            self.brandTF.placeholder = @"例如：ONLY";
+            [view addSubview:self.brandTF];
+        }else if (i==1){
+            self.modelTF = [[UITextField alloc]initWithFrame:CGRectMake(75, 0, _tfBackview.frame.size.width-75, 44)];
+            self.modelTF.textAlignment = NSTextAlignmentRight;
+            self.modelTF.font = [UIFont systemFontOfSize:15];
+            self.modelTF.placeholder = @"例如：BH1431938";
+            [view addSubview:self.modelTF];
+        }else if (i==2){
+            self.priceTF = [[UITextField alloc]initWithFrame:CGRectMake(75, 0, _tfBackview.frame.size.width-75, 44)];
+            self.priceTF.textAlignment = NSTextAlignmentRight;
+            self.priceTF.font = [UIFont systemFontOfSize:15];
+            self.priceTF.placeholder = @"例如：1000";
+            [view addSubview:self.priceTF];
+            
+        }
+    }
+    
+    [self.mainScrollview addSubview:_tfBackview];
+    
+}
+
+
+
+
 //创建编辑图片的view
--(void)creatShowImageViewWithImage:(UIImage*)img{
+-(void)creatShowImageView{
     
-    //从父视图移除
-    [_editImageView removeFromSuperview];
-    
-    //获取图片高度
-    CGFloat im_height = img.size.height*(DEVICE_WIDTH-20)/img.size.width;
-    
-    //创建下层view
-    _editImageView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.brandModelPriceView.frame), DEVICE_WIDTH, im_height+100)];
-    _editImageView.backgroundColor = RGBCOLOR(235, 235, 235);
-    [self.mainScrollview addSubview:_editImageView];
-    
-    //创建显示图片的imv
-    _showImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, DEVICE_WIDTH-20, im_height)];
-    _showImageView.image = img;
-    _showImageView.userInteractionEnabled = YES;
-    
-    [_editImageView addSubview:_showImageView];
-    
-    //调整整个scrollview的contentsize
-    CGSize s = self.mainScrollview.contentSize;
-    s.height +=im_height;
-    self.mainScrollview.contentSize = s;
-    
-    //创建提示语view
-    UILabel *tip1 = [[UILabel alloc]initWithFrame:CGRectMake(12, CGRectGetMaxY(_showImageView.frame)+5, DEVICE_WIDTH-24, 20)];
-    tip1.text = @"提示  1 点击图片添加锚点";
-    tip1.font = [UIFont systemFontOfSize:15];
-    tip1.textColor = [UIColor grayColor];
-    [_editImageView addSubview:tip1];
-    UILabel *tip2 = [[UILabel alloc]initWithFrame:CGRectMake(12, CGRectGetMaxY(tip1.frame), tip1.frame.size.width, tip1.frame.size.height)];
-    tip2.text = @"         2 长按图片删除";
-    tip2.textColor = tip1.textColor;
-    tip2.font = tip1.font;
-    [_editImageView addSubview:tip2];
-    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setTitle:@"添加商品链接" forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    btn.backgroundColor = RGBCOLOR(235, 235, 235);
+    [btn setFrame:CGRectMake(0, CGRectGetMaxY(_tfBackview.frame)+5, DEVICE_WIDTH, 40)];
+    [btn addTarget:self action:@selector(addProductLink) forControlEvents:UIControlEventTouchUpInside];
+    [self.mainScrollview addSubview:btn];
     
 }
 
 
-- (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    //保存触摸起始点位置
-    CGPoint point = [[touches anyObject] locationInView:_showImageView];
-    NSLog(@"x=%f y=%f",point.x,point.y);
+-(void)addProductLink{
+    GAddTtaiImageLinkViewController *ddd = [[GAddTtaiImageLinkViewController alloc]init];
+    ddd.theImage = _theChooseImage;
+    ddd.delegate = self;
+    UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:ddd];
+    
+    [self presentViewController:navc animated:YES completion:^{
+        
+    }];
 }
+
 
 
 

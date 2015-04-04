@@ -40,4 +40,6 @@
 
 @property(nonatomic,assign)CLLocationCoordinate2D coordinate_store;//商家经纬度
 
+@property(nonatomic,assign)BOOL isChooseProductLink;//是否为发布T台选择商品
+
 @end

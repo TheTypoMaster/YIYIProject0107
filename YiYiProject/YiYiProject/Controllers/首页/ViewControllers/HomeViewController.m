@@ -95,7 +95,7 @@
     
     self.navigationItem.titleView = menu_view;
     
-    NSArray *titles = @[@"衣+衣",@"值得买"];
+    NSArray *titles = @[@"商家",@"单品"];
     
     for (int i = 0; i < titles.count; i ++) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];

@@ -48,5 +48,7 @@ typedef enum {
 
 @property (weak, nonatomic) IBOutlet UIButton *lianxiDianzhuBtn;
 
+@property(nonatomic,assign)BOOL isChooseProductLink;//是否为发布T台商品链接
+
 
 @end

@@ -16,6 +16,7 @@
 #import "NSDictionary+GJson.h"
 #import "MessageDetailController.h"
 #import "GLeadBuyMapViewController.h"
+#import "GAddTtaiImageLinkViewController.h"
 
 @interface GStorePinpaiViewController ()<GCustomSegmentViewDelegate,TMQuiltViewDataSource,WaterFlowDelegate,UIScrollViewDelegate>
 {
@@ -241,7 +242,9 @@
                 self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
             }
             
-            
+            if (self.isChooseProductLink) {
+                [_my_right_button setTitle:@"选择" forState:UIControlStateNormal];
+            }
             
             self.coordinate_store = CLLocationCoordinate2DMake([[result stringValueForKey:@"latitude"]floatValue], [[result stringValueForKey:@"longitude"]floatValue]);
             
@@ -404,6 +407,10 @@
             self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
         }
         
+        if (self.isChooseProductLink) {
+            [_my_right_button setTitle:@"选择" forState:UIControlStateNormal];
+        }
+        
         [_waterFlow showRefreshHeader:YES];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
@@ -441,6 +448,14 @@
         
     }
     
+    
+    
+    if (self.isChooseProductLink) {
+        GAddTtaiImageLinkViewController *rrr = self.navigationController.viewControllers[0];
+        [rrr setGmoveImvProductId:@"0" shopid:self.shopId productName:@" " shopName:_mallNameLabel.text];
+        [self.navigationController popToViewController:rrr animated:YES];
+        return;
+    }
     
     
     //判断是否为精品店
@@ -780,6 +795,9 @@
     detail.product_id = aMode.product_id;
     detail.gShop_id = self.shopId;
     detail.hidesBottomBarWhenPushed = YES;
+    if (self.isChooseProductLink) {
+        detail.isChooseProductLink = YES;
+    }
     [self.navigationController pushViewController:detail animated:YES];
     
 }

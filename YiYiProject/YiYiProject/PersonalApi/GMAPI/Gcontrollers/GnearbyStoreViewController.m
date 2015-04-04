@@ -216,9 +216,12 @@
     _upStoreInfoView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 140)];
 //    _upStoreInfoView.backgroundColor = [UIColor orangeColor];
     
+    
+    
     //商城名称
     _mallNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 30, DEVICE_WIDTH-15-15, 19)];
     _mallNameLabel.font = [UIFont systemFontOfSize:17];
+    
     
     //活动
     _huodongTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(_mallNameLabel.frame.origin.x, CGRectGetMaxY(_mallNameLabel.frame)+13, 45, 15)];
@@ -353,6 +356,9 @@
     cc.storeIdStr = theId;
     cc.storeNameStr = _mallNameLabel.text;
     cc.pinpaiNameStr = thePinpaiName;
+    if (self.isChooseProductLink) {
+        cc.isChooseProductLink = YES;
+    }
     [self.navigationController pushViewController:cc animated:YES];
 }
 

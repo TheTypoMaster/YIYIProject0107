@@ -22,4 +22,6 @@ typedef enum{
 
 @property(nonatomic,assign)SEARCHTYPE *searchType;
 
+@property(nonatomic,assign)BOOL isChooseProductLink;//是否为发布T台商品链接
+
 @end

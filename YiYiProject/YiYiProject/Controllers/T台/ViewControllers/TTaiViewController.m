@@ -19,6 +19,8 @@
 
 #import "DataManager.h"
 
+#import "GTTPublishViewController.h"
+
 @interface TTaiViewController ()<TMQuiltViewDataSource,WaterFlowDelegate>
 {
     LWaterflowView *waterFlow;
@@ -91,9 +93,14 @@
         return;
     }
     
-    TTPublishViewController *publishT = [[TTPublishViewController alloc]init];
-    publishT.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:publishT animated:YES];
+    GTTPublishViewController *publishT = [[GTTPublishViewController alloc]init];
+    UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:publishT];
+//    publishT.hidesBottomBarWhenPushed = YES;
+    
+//    [self.navigationController pushViewController:navc animated:YES];
+    [self presentViewController:navc animated:YES completion:^{
+        
+    }];
 }
 
 - (void)clickToPush:(UIButton *)sender

@@ -25,4 +25,6 @@
 
 @property(nonatomic,strong)NSString *activityId;//活动id
 
+@property(nonatomic,assign)BOOL isChooseProductLink;//是否为发布T台商品链接
+
 @end

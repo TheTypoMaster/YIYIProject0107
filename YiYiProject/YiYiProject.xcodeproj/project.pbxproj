@@ -239,7 +239,6 @@
 		13CEC8891A5D956B00FE273F /* TTaiDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CEC8881A5D956B00FE273F /* TTaiDetailController.m */; };
 		13CEC88F1A5D95F400FE273F /* TDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CEC88E1A5D95F400FE273F /* TDetailModel.m */; };
 		13CEC8931A5D96CF00FE273F /* TTPublishViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CEC8911A5D96CF00FE273F /* TTPublishViewController.m */; };
-		13CEC8941A5D96CF00FE273F /* TTPublishViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13CEC8921A5D96CF00FE273F /* TTPublishViewController.xib */; };
 		13CEC89E1A5D974900FE273F /* dapei_jiantou@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13CEC8961A5D974900FE273F /* dapei_jiantou@2x.png */; };
 		13CEC8A01A5D974900FE273F /* pinglun_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13CEC8981A5D974900FE273F /* pinglun_icon@2x.png */; };
 		13CEC8A11A5D974900FE273F /* time_iocn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13CEC8991A5D974900FE273F /* time_iocn@2x.png */; };
@@ -369,6 +368,7 @@
 		E36BFC841A693974009DAF81 /* DataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = E36BFC831A693974009DAF81 /* DataBase.m */; };
 		E36BFC871A6939FC009DAF81 /* FBCity.m in Sources */ = {isa = PBXBuildFile; fileRef = E36BFC861A6939FC009DAF81 /* FBCity.m */; };
 		E36D3F871ACC20DC00CADED1 /* libbaidumapapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E36D3F861ACC20DC00CADED1 /* libbaidumapapi.a */; };
+		E36D3F8D1ACC264400CADED1 /* GmoveImv.m in Sources */ = {isa = PBXBuildFile; fileRef = E36D3F8C1ACC264400CADED1 /* GmoveImv.m */; };
 		E37374001AC4FE4B00935D2B /* GchatSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E37373FF1AC4FE4B00935D2B /* GchatSettingViewController.m */; };
 		E37486CD1AC2AEAD004A722F /* GmyActivetiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E37486CC1AC2AEAD004A722F /* GmyActivetiesViewController.m */; };
 		E37486D01AC2B08B004A722F /* GEditActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E37486CF1AC2B08B004A722F /* GEditActivityTableViewCell.m */; };
@@ -404,6 +404,9 @@
 		E38AFE111A7A967E009C2C0C /* compose_pic_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E38AFDFB1A7A967E009C2C0C /* compose_pic_add@2x.png */; };
 		E38AFE121A7A967E009C2C0C /* compose_pic_add_highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E38AFDFC1A7A967E009C2C0C /* compose_pic_add_highlighted@2x.png */; };
 		E38AFE151A7A967E009C2C0C /* PhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E38AFE011A7A967E009C2C0C /* PhotoCell.m */; };
+		E38E2D351ACD2726002C63EF /* GTTPublishViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E38E2D341ACD2726002C63EF /* GTTPublishViewController.m */; };
+		E38E2D6A1ACD41C3002C63EF /* GImvUpScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = E38E2D691ACD41C3002C63EF /* GImvUpScrollView.m */; };
+		E38E2D9F1ACD49D0002C63EF /* GAddTtaiImageLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E38E2D9E1ACD49D0002C63EF /* GAddTtaiImageLinkViewController.m */; };
 		E3937E261AC797CA00AA1A15 /* GcustomSearchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3937E251AC797CA00AA1A15 /* GcustomSearchTableViewCell.m */; };
 		E3996EBB1A5E1DBA00673147 /* GLeadBuyMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E311A5E1DBA00673147 /* GLeadBuyMapViewController.m */; };
 		E3996EBC1A5E1DBA00673147 /* GMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996E331A5E1DBA00673147 /* GMapViewController.m */; };
@@ -831,7 +834,6 @@
 		13CEC88E1A5D95F400FE273F /* TDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDetailModel.m; sourceTree = "<group>"; };
 		13CEC8901A5D96CF00FE273F /* TTPublishViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTPublishViewController.h; sourceTree = "<group>"; };
 		13CEC8911A5D96CF00FE273F /* TTPublishViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTPublishViewController.m; sourceTree = "<group>"; };
-		13CEC8921A5D96CF00FE273F /* TTPublishViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TTPublishViewController.xib; sourceTree = "<group>"; };
 		13CEC8961A5D974900FE273F /* dapei_jiantou@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dapei_jiantou@2x.png"; sourceTree = "<group>"; };
 		13CEC8981A5D974900FE273F /* pinglun_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pinglun_icon@2x.png"; sourceTree = "<group>"; };
 		13CEC8991A5D974900FE273F /* time_iocn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "time_iocn@2x.png"; sourceTree = "<group>"; };
@@ -1027,6 +1029,8 @@
 		E36BFC851A6939FC009DAF81 /* FBCity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBCity.h; sourceTree = "<group>"; };
 		E36BFC861A6939FC009DAF81 /* FBCity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBCity.m; sourceTree = "<group>"; };
 		E36D3F861ACC20DC00CADED1 /* libbaidumapapi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbaidumapapi.a; sourceTree = "<group>"; };
+		E36D3F8B1ACC264400CADED1 /* GmoveImv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GmoveImv.h; sourceTree = "<group>"; };
+		E36D3F8C1ACC264400CADED1 /* GmoveImv.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GmoveImv.m; sourceTree = "<group>"; };
 		E37373FE1AC4FE4B00935D2B /* GchatSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GchatSettingViewController.h; sourceTree = "<group>"; };
 		E37373FF1AC4FE4B00935D2B /* GchatSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GchatSettingViewController.m; sourceTree = "<group>"; };
 		E37486CB1AC2AEAD004A722F /* GmyActivetiesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GmyActivetiesViewController.h; sourceTree = "<group>"; };
@@ -1150,6 +1154,12 @@
 		E38AFDFC1A7A967E009C2C0C /* compose_pic_add_highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "compose_pic_add_highlighted@2x.png"; sourceTree = "<group>"; };
 		E38AFE001A7A967E009C2C0C /* PhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoCell.h; sourceTree = "<group>"; };
 		E38AFE011A7A967E009C2C0C /* PhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoCell.m; sourceTree = "<group>"; };
+		E38E2D331ACD2726002C63EF /* GTTPublishViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTTPublishViewController.h; sourceTree = "<group>"; };
+		E38E2D341ACD2726002C63EF /* GTTPublishViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTTPublishViewController.m; sourceTree = "<group>"; };
+		E38E2D681ACD41C3002C63EF /* GImvUpScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GImvUpScrollView.h; sourceTree = "<group>"; };
+		E38E2D691ACD41C3002C63EF /* GImvUpScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GImvUpScrollView.m; sourceTree = "<group>"; };
+		E38E2D9D1ACD49D0002C63EF /* GAddTtaiImageLinkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAddTtaiImageLinkViewController.h; sourceTree = "<group>"; };
+		E38E2D9E1ACD49D0002C63EF /* GAddTtaiImageLinkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAddTtaiImageLinkViewController.m; sourceTree = "<group>"; };
 		E3937E241AC797CA00AA1A15 /* GcustomSearchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GcustomSearchTableViewCell.h; sourceTree = "<group>"; };
 		E3937E251AC797CA00AA1A15 /* GcustomSearchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GcustomSearchTableViewCell.m; sourceTree = "<group>"; };
 		E3996E301A5E1DBA00673147 /* GLeadBuyMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLeadBuyMapViewController.h; sourceTree = "<group>"; };
@@ -2061,7 +2071,6 @@
 			children = (
 				13CEC8901A5D96CF00FE273F /* TTPublishViewController.h */,
 				13CEC8911A5D96CF00FE273F /* TTPublishViewController.m */,
-				13CEC8921A5D96CF00FE273F /* TTPublishViewController.xib */,
 				13CEC8871A5D956B00FE273F /* TTaiDetailController.h */,
 				13CEC8881A5D956B00FE273F /* TTaiDetailController.m */,
 				13A389931A3893D000ABBACB /* TTaiViewController.h */,
@@ -2774,6 +2783,10 @@
 				E37486CC1AC2AEAD004A722F /* GmyActivetiesViewController.m */,
 				E37373FE1AC4FE4B00935D2B /* GchatSettingViewController.h */,
 				E37373FF1AC4FE4B00935D2B /* GchatSettingViewController.m */,
+				E38E2D331ACD2726002C63EF /* GTTPublishViewController.h */,
+				E38E2D341ACD2726002C63EF /* GTTPublishViewController.m */,
+				E38E2D9D1ACD49D0002C63EF /* GAddTtaiImageLinkViewController.h */,
+				E38E2D9E1ACD49D0002C63EF /* GAddTtaiImageLinkViewController.m */,
 			);
 			path = Gcontrollers;
 			sourceTree = "<group>";
@@ -2875,6 +2888,10 @@
 				E3996EAC1A5E1DBA00673147 /* GShowStarsView.m */,
 				E3996EAD1A5E1DBA00673147 /* GStarsView.h */,
 				E3996EAE1A5E1DBA00673147 /* GStarsView.m */,
+				E36D3F8B1ACC264400CADED1 /* GmoveImv.h */,
+				E36D3F8C1ACC264400CADED1 /* GmoveImv.m */,
+				E38E2D681ACD41C3002C63EF /* GImvUpScrollView.h */,
+				E38E2D691ACD41C3002C63EF /* GImvUpScrollView.m */,
 			);
 			path = utilsView;
 			sourceTree = "<group>";
@@ -3241,7 +3258,6 @@
 				133B17641A74EF3D005B8B3F /* xia_up@2x.png in Resources */,
 				13A3899D1A3893FC00ABBACB /* MessageViewController.xib in Resources */,
 				133B17751A750988005B8B3F /* MJPhotoBrowser.bundle in Resources */,
-				13CEC8941A5D96CF00FE273F /* TTPublishViewController.xib in Resources */,
 				139562CC1A3C11EC007BB183 /* RegisterViewController.xib in Resources */,
 				566FE2591A5042B700A96B5F /* default_navigation_clear_image@2x.png in Resources */,
 				13CEC8A51A5D974900FE273F /* zhixiangjiantou@2x.png in Resources */,
@@ -3550,6 +3566,7 @@
 				DF626D651A6964E200093568 /* TMPhotoViewQuiltViewCell.m in Sources */,
 				DF6855831A592181004D924F /* ZYQAssetPickerController.m in Sources */,
 				565321431A59769300E43F80 /* FBHelper.m in Sources */,
+				E36D3F8D1ACC264400CADED1 /* GmoveImv.m in Sources */,
 				1382C51F1A812A5A0079AF55 /* MJRefreshConst.m in Sources */,
 				133B17741A750988005B8B3F /* MJPhoto.m in Sources */,
 				E3996EE01A5E1DBA00673147 /* GClothWaveCustomView.m in Sources */,
@@ -3562,6 +3579,7 @@
 				13963F431A4FC54D007BE68B /* LEditor.m in Sources */,
 				13B6906A1A5694C5007FE152 /* MyCollectionController.m in Sources */,
 				EF9329F31A617DD500A8BD18 /* MySettingsViewController.m in Sources */,
+				E38E2D9F1ACD49D0002C63EF /* GAddTtaiImageLinkViewController.m in Sources */,
 				EF932A191A6236AD00A8BD18 /* WaterFCell.m in Sources */,
 				E35EF1161A6A54A900B493A9 /* GChooseStoreViewController.m in Sources */,
 				E3996EDE1A5E1DBA00673147 /* GStarsView.m in Sources */,
@@ -3601,6 +3619,7 @@
 				19B937761A5D8780009B359F /* ShenQingDianPuViewController.m in Sources */,
 				139607BC1A46D82400AACAC4 /* FilterViewController.m in Sources */,
 				139A05241A66B9C500A8EB49 /* MailMessageCell.m in Sources */,
+				E38E2D6A1ACD41C3002C63EF /* GImvUpScrollView.m in Sources */,
 				13A3899C1A3893FC00ABBACB /* MessageViewController.m in Sources */,
 				19D0C0D21A4EDA6D00BEC10D /* MyYiChuViewController.m in Sources */,
 				E3996ECF1A5E1DBA00673147 /* UIViewAdditions.m in Sources */,
@@ -3619,6 +3638,7 @@
 				E3996EE31A5E1DBA00673147 /* GTableViewCell.m in Sources */,
 				19F7B44C1A67FFA600087BCB /* UMFeedbackTableViewCellRight.m in Sources */,
 				E305222A1A6ECD3A007BEAFD /* GupHuoDongViewController.m in Sources */,
+				E38E2D351ACD2726002C63EF /* GTTPublishViewController.m in Sources */,
 				13A3897E1A3878FE00ABBACB /* MyViewController.m in Sources */,
 				E38AFE0C1A7A967E009C2C0C /* JKUtil.m in Sources */,
 				E38AFE151A7A967E009C2C0C /* PhotoCell.m in Sources */,
