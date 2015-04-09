@@ -39,7 +39,13 @@
     
     [self updateTabbarNumber:[self unreadMessgeNum]];
     
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+    
 }
+
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -105,7 +111,7 @@
         UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
         self.navigationItem.leftBarButtonItems=@[back_item];
         
-        [self setNavigationTitle:@"聊天消息" textColor:[UIColor whiteColor]];
+        [self setNavigationTitle:@"聊天消息" textColor:RGBCOLOR(251, 108, 157)];
 
     }
     
@@ -272,7 +278,7 @@
         contact.currentTarget = useriId;
 //        contact.currentTargetName = userName;
         contact.GTitleLabel.text = userName;
-        contact.GTitleLabel.textColor = [UIColor whiteColor];
+        contact.GTitleLabel.textColor = RGBCOLOR(251, 108, 157);
         contact.portraitStyle = RCUserAvatarCycle;
         contact.enableSettings = NO;
         contact.conversationType = conversation.conversationType;

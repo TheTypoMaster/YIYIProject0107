@@ -29,6 +29,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+    [self.my_right_button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    
     self.rightString = @"完成";
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeText];

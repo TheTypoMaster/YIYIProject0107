@@ -81,6 +81,14 @@
     
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
+    UIBarButtonItem * spaceButton1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(0,8,40,44)];
+    [button_back addTarget:self action:@selector(leftButtonTap:) forControlEvents:UIControlEventTouchUpInside];
+    [button_back setImage:[UIImage imageNamed:@"gback_white.png"] forState:UIControlStateNormal];
+    [button_back setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
+    self.navigationItem.leftBarButtonItems=@[back_item];
+    
     
     [self createNavigationbarTools];
     
@@ -378,7 +386,7 @@
                 }else{
                     userName = userName;
                     contact.GTitleLabel.text = userName;
-                    contact.GTitleLabel.textColor = [UIColor whiteColor];
+                    contact.GTitleLabel.textColor = RGBCOLOR(251, 108, 157);
                 }
                 
             }

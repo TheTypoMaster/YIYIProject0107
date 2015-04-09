@@ -64,6 +64,8 @@
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
     
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
 }
 
 
@@ -108,7 +110,7 @@
         NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:aaa];
         NSInteger pinpaiNameLength = self.pinpaiNameStr.length;
         NSInteger storeNameLength = self.storeNameStr.length;
-        [title addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0,pinpaiNameLength+1)];
+        [title addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0,pinpaiNameLength+1)];
         [title addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:17*GscreenRatio_320] range:NSMakeRange(0,pinpaiNameLength)];
         
         [title addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(240, 173, 184) range:NSMakeRange(pinpaiNameLength+1, storeNameLength)];

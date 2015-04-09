@@ -99,15 +99,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.view.backgroundColor = RGBCOLOR(242, 242, 242);
+    self.view.backgroundColor = [UIColor whiteColor];
     
     
     _mainScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT -  64 - 44)];
     _mainScrollView.delegate = self;
     _mainScrollView.tag = 10000;
-    _mainScrollView.backgroundColor = RGBCOLOR(242, 242, 242);
-    
-    _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH,DEVICE_HEIGHT<568?100+ 567 *DEVICE_HEIGHT/568.0f:(DEVICE_HEIGHT<736? 567 *DEVICE_HEIGHT/568.0f:567 *DEVICE_HEIGHT/568.0f-85));
+
     
     NSLog(@"devh===%f",DEVICE_HEIGHT);
     
@@ -128,6 +126,18 @@
     [_mainScrollView addSubview:[self creatNearbyPinpaiView]];//品牌
     
     [self.view addSubview:_mainScrollView];
+    
+    
+    
+    
+//    _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH,DEVICE_HEIGHT<568?100+ 567 *DEVICE_HEIGHT/568.0f:(DEVICE_HEIGHT<736? 567 *DEVICE_HEIGHT/568.0f:567 *DEVICE_HEIGHT/568.0f-85));
+    
+    
+    if ((_gscrollView.frame.size.height+_nearbyView.frame.size.height+_pinpaiView.frame.size.height)>DEVICE_HEIGHT-64-44) {
+        _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH, _gscrollView.frame.size.height+_nearbyView.frame.size.height+_pinpaiView.frame.size.height);
+    }else{
+        _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH, DEVICE_HEIGHT-64-44+10);
+    }
     
     
     
@@ -494,30 +504,7 @@
 }
 
 
-////创建搜索栏
-//-(UIView*)creatSearchView{
-//    _searchView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 52)];
-//    _searchView.backgroundColor = RGBCOLOR(238, 238, 238);
-//    UISearchBar *bar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 52)];
-//    bar.placeholder = @"搜索品牌/店铺/单品";
-//    bar.delegate = self;
-//    bar.layer.borderWidth = 2.f;
-//    bar.layer.borderColor = RGBCOLOR(242, 242, 242).CGColor;
-//    bar.barTintColor = RGBCOLOR(242, 242, 242);
-//    [_searchView addSubview:bar];
-//    return _searchView;
-//}
 
-
-//#pragma - mark UISearchBarDelegate
-//- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
-//{
-//    GsearchViewController *gsearchVc = [[GsearchViewController alloc]init];
-//    gsearchVc.hidesBottomBarWhenPushed = YES;
-//    [self.rootViewController.navigationController pushViewController:gsearchVc animated:YES];
-//    
-//    return NO;
-//}
 
 
 //创建循环滚动的scrollview
@@ -526,7 +513,6 @@
     _gscrollView.theGcycelScrollViewType = GCYCELNORMORL;
     [_gscrollView loadGcycleScrollView];
     _gscrollView.tag = 200;
-    _gscrollView.backgroundColor =  RGBCOLOR(242, 242, 242);
     _gscrollView.delegate = self;
     _gscrollView.datasource = self;
     return _gscrollView;
@@ -536,14 +522,21 @@
 -(UIView*)creatNearbyStoreView{
     
     
-    _nearbyView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_gscrollView.frame), DEVICE_WIDTH, 218)];
+    
+    
+    _nearbyView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_gscrollView.frame), DEVICE_WIDTH, 175)];
     _nearbyView.backgroundColor = [UIColor whiteColor];
+    UIView *fenge = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 6)];
+    fenge.backgroundColor = RGBCOLOR(228, 228, 228);
+    [_nearbyView addSubview:fenge];
     
     //标题
     _nearbyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_nearbyBtn setTitle:@"附近的商家" forState:UIControlStateNormal];
+    [_nearbyBtn setTitle:@"商 家" forState:UIControlStateNormal];
+    [_nearbyBtn setTitleEdgeInsets:UIEdgeInsetsMake(8, 0, 0, 0)];
+    
     [_nearbyBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_nearbyBtn setFrame:CGRectMake(15, 0, 75, 33)];
+    [_nearbyBtn setFrame:CGRectMake(6, 0, 60, 33)];
     _nearbyBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     _nearbyBtn.tag = 62;
     [_nearbyBtn addTarget:self action:@selector(nearOrGuanzhuBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -553,57 +546,20 @@
     [_nearbyView addSubview:_nearbyBtn];
     
     _guanzhuBtn_Store = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_guanzhuBtn_Store setTitle:@"我关注的商家" forState:UIControlStateNormal];
+    [_guanzhuBtn_Store setTitle:@"已关注" forState:UIControlStateNormal];
+    [_guanzhuBtn_Store setTitleEdgeInsets:UIEdgeInsetsMake(8, 0, 0, 0)];
     [_guanzhuBtn_Store setBackgroundImage:[UIImage imageNamed:@"g_redline_down.png"] forState:UIControlStateSelected];
     [_guanzhuBtn_Store setBackgroundImage:nil forState:UIControlStateNormal];
     [_guanzhuBtn_Store setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_guanzhuBtn_Store setFrame:CGRectMake(CGRectGetMaxX(_nearbyBtn.frame)+10, 0, 100, 33)];
+    [_guanzhuBtn_Store setFrame:CGRectMake(CGRectGetMaxX(_nearbyBtn.frame)+10, 0, 60, 33)];
     _guanzhuBtn_Store.titleLabel.font = [UIFont systemFontOfSize:15];
     _guanzhuBtn_Store.tag = 63;
     [_guanzhuBtn_Store addTarget:self action:@selector(nearOrGuanzhuBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [_nearbyView addSubview:_guanzhuBtn_Store];
     
-    //搜索附近的商场
-//    UIButton *searchStoreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [searchStoreBtn setFrame:CGRectMake(_nearbyView.frame.size.width -15-60, 0, 60, 33)];
-//    [searchStoreBtn setTitle:@"搜索" forState:UIControlStateNormal];
-//    [searchStoreBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//    searchStoreBtn.titleLabel.font = [UIFont systemFontOfSize:15];
-//    [searchStoreBtn addTarget:self action:@selector(pushToSearchStoreVc) forControlEvents:UIControlEventTouchUpInside];
-//    [_nearbyView addSubview:searchStoreBtn];
-    
-    
-    
-    //背景图
-    UIView *graypngBackview = [[UIView alloc]initWithFrame:CGRectMake(15, 30+60, DEVICE_WIDTH-15-15, 218-30-14-60)];
-    [_nearbyView addSubview:graypngBackview];
-    if (DEVICE_WIDTH>320) {
-        
-        
-        for (int i = 0; i<4; i++) {
-            UIImageView *imv1_back = [[UIImageView alloc]initWithFrame:CGRectMake(0+i*120, 10, 120, 218-30-14-60-10)];
-            [imv1_back setImage:[UIImage imageNamed:@"gimv1_back.png"]];
-            [graypngBackview addSubview:imv1_back];
-        }
-    }else{
-        for (int i = 0; i<3; i++) {
-            UIImageView *imv1_back = [[UIImageView alloc]initWithFrame:CGRectMake(0+i*120, 10, 120, 218-30-14-60-10)];
-            [imv1_back setImage:[UIImage imageNamed:@"gimv1_back.png"]];
-            [graypngBackview addSubview:imv1_back];
-        }
-    }
-    
-    //遮挡view
-    UIView *zview = [[UIView alloc]initWithFrame:CGRectMake(DEVICE_WIDTH-15, graypngBackview.frame.origin.y, 15, graypngBackview.frame.size.height)];
-    zview.backgroundColor = [UIColor whiteColor];
-    [_nearbyView addSubview:zview];
-    
-    
-    
-    
     //滚动界面
 
-    _scrollview_nearbyView = [[GScrollView alloc]initWithFrame:CGRectMake(15, 30, DEVICE_WIDTH-15-15, 218-30-14)];
+    _scrollview_nearbyView = [[GScrollView alloc]initWithFrame:CGRectMake(6, 30, DEVICE_WIDTH-12, _nearbyView.frame.size.height-30-14)];
     _scrollview_nearbyView.tag = 10;
     _scrollview_nearbyView.gtype = GNEARBYSTORE;
     _scrollview_nearbyView.delegate = self;
@@ -614,7 +570,7 @@
     
     
     //标题下面的分割线
-    UIView *downTitleLine = [[UIView alloc]initWithFrame:CGRectMake(_nearbyBtn.frame.origin.x, CGRectGetMaxY(_nearbyBtn.frame)+3, DEVICE_WIDTH-30, 1)];
+    UIView *downTitleLine = [[UIView alloc]initWithFrame:CGRectMake(_nearbyBtn.frame.origin.x, CGRectGetMaxY(_nearbyBtn.frame), DEVICE_WIDTH-6, 1)];
     downTitleLine.backgroundColor = RGBCOLOR(213, 213, 213);
     [_nearbyView addSubview:downTitleLine];
     
@@ -628,17 +584,22 @@
 //附近的品牌
 -(UIView *)creatNearbyPinpaiView{
     
-    _pinpaiView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_nearbyView.frame), DEVICE_WIDTH, 155)];
-    _pinpaiView.backgroundColor = RGBCOLOR(242, 242, 242);
     
+    
+    _pinpaiView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_nearbyView.frame), DEVICE_WIDTH, 195)];
+    
+    UIView *fenge = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 6)];
+    fenge.backgroundColor = RGBCOLOR(228, 228, 228);
+    [_pinpaiView addSubview:fenge];
     
     //标题
     _pinpaiBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_pinpaiBtn setTitle:@"附近的品牌" forState:UIControlStateNormal];
+    [_pinpaiBtn setTitle:@"品 牌" forState:UIControlStateNormal];
+    [_pinpaiBtn setTitleEdgeInsets:UIEdgeInsetsMake(8, 0, 0, 0)];
     [_pinpaiBtn setBackgroundImage:[UIImage imageNamed:@"g_redline_down.png"] forState:UIControlStateSelected];
     [_pinpaiBtn setBackgroundImage:nil forState:UIControlStateNormal];
     [_pinpaiBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_pinpaiBtn setFrame:CGRectMake(15, 0, 75, 33)];
+    [_pinpaiBtn setFrame:CGRectMake(6, 0, 60, 33)];
     _pinpaiBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     _pinpaiBtn.selected = YES;
     _pinpaiBtn.tag = 60;
@@ -646,11 +607,12 @@
     [_pinpaiView addSubview:_pinpaiBtn];
     
     _guanzhuBtn_pinpai = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_guanzhuBtn_pinpai setTitle:@"我关注的品牌" forState:UIControlStateNormal];
+    [_guanzhuBtn_pinpai setTitle:@"已关注" forState:UIControlStateNormal];
+    [_guanzhuBtn_pinpai setTitleEdgeInsets:UIEdgeInsetsMake(8, 0, 0, 0)];
     [_guanzhuBtn_pinpai setBackgroundImage:[UIImage imageNamed:@"g_redline_down.png"] forState:UIControlStateSelected];
     [_guanzhuBtn_pinpai setBackgroundImage:nil forState:UIControlStateNormal];
     [_guanzhuBtn_pinpai setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_guanzhuBtn_pinpai setFrame:CGRectMake(CGRectGetMaxX(_pinpaiBtn.frame)+10, 0, 100, 33)];
+    [_guanzhuBtn_pinpai setFrame:CGRectMake(CGRectGetMaxX(_pinpaiBtn.frame)+10, 0, 60, 33)];
     _guanzhuBtn_pinpai.titleLabel.font = [UIFont systemFontOfSize:15];
     _guanzhuBtn_pinpai.tag = 61;
     [_guanzhuBtn_pinpai addTarget:self action:@selector(nearOrGuanzhuBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -661,9 +623,7 @@
     
     
     //滚动界面
-    _scrollView_pinpai = [[GScrollView alloc]initWithFrame:CGRectMake(15, 33, DEVICE_WIDTH-15-15, 155-30)];
-    _scrollView_pinpai.backgroundColor = RGBCOLOR(242, 242, 242);
-    _scrollView_pinpai.contentSize = CGSizeMake(1000, 155-30);
+    _scrollView_pinpai = [[GScrollView alloc]initWithFrame:CGRectMake(6, 33, DEVICE_WIDTH-12, 165)];
     _scrollView_pinpai.tag = 11;
     _scrollView_pinpai.gtype = GNEARBYPINPAI;
     _scrollView_pinpai.delegate = self;
@@ -671,51 +631,11 @@
     [_pinpaiView addSubview:_scrollView_pinpai];
     
     
-    for (int i = 0; i<_scrollView_pinpai.dataArray.count; i++) {
-        UIView *pinpaiView = [[UIView alloc]initWithFrame:CGRectMake(0+i*77, 0, 70, 120)];
-        pinpaiView.backgroundColor = [UIColor orangeColor];
-        
-        
-        UIView *yuan = [[UIView alloc]initWithFrame:CGRectMake(2, 15, 66, 66)];
-        yuan.layer.cornerRadius = 33;
-        yuan.backgroundColor = [UIColor whiteColor];
-        yuan.layer.borderWidth = 1;
-        yuan.layer.borderColor = RGBCOLOR(212, 212, 212).CGColor;
-        [pinpaiView addSubview:yuan];
-        
-        UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(yuan.frame)+10, 70, 13)];
-        nameLabel.font = [UIFont systemFontOfSize:13];
-        nameLabel.textAlignment = NSTextAlignmentCenter;
-        nameLabel.textColor = RGBCOLOR(114, 114, 114);
-        [pinpaiView addSubview:nameLabel];
-        
-        
-        
-        [_scrollView_pinpai addSubview:pinpaiView];
-        
-    }
-    
-    
-    
-    
-    
-    
     
     //标题下面的分割线
-    UIView *downTitleLine = [[UIView alloc]initWithFrame:CGRectMake(_pinpaiBtn.frame.origin.x, CGRectGetMaxY(_pinpaiBtn.frame)+3, DEVICE_WIDTH-30, 1)];
+    UIView *downTitleLine = [[UIView alloc]initWithFrame:CGRectMake(_pinpaiBtn.frame.origin.x, CGRectGetMaxY(_pinpaiBtn.frame), DEVICE_WIDTH-6, 1)];
     downTitleLine.backgroundColor = RGBCOLOR(213, 213, 213);
     [_pinpaiView addSubview:downTitleLine];
-    
-    
-    //搜索附近的品牌
-//    UIButton *searchNearbyPinpaiBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [searchNearbyPinpaiBtn setTitle:@"搜索" forState:UIControlStateNormal];
-//    [searchNearbyPinpaiBtn addTarget:self action:@selector(pushToSearchPinpaiVc) forControlEvents:UIControlEventTouchUpInside];
-//    NSLog(@"%f",_pinpaiView.frame.size.width);
-//    [searchNearbyPinpaiBtn setFrame:CGRectMake(_pinpaiView.frame.size.width-60-15, 0, 60, 33)];
-//    [searchNearbyPinpaiBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//    searchNearbyPinpaiBtn.titleLabel.font = [UIFont systemFontOfSize:15];
-//    [_pinpaiView addSubview:searchNearbyPinpaiBtn];
     
     
     return _pinpaiView;

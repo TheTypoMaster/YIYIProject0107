@@ -115,7 +115,7 @@
     
     
     
-    self.myTitleLabel.textColor = [UIColor whiteColor];
+    self.myTitleLabel.textColor = [UIColor blackColor];
     self.myTitle = self.storeNameStr;
     
     NSLog(@"哪个vc %s",__FUNCTION__);

@@ -133,7 +133,7 @@
     UIButton *heartButton=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 44, 44)];
     [heartButton addTarget:self action:@selector(clickToPhoto:) forControlEvents:UIControlEventTouchUpInside];
     [heartButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [heartButton setImage:[UIImage imageNamed:@"rizhi_xiangji"] forState:UIControlStateNormal];
+    [heartButton setImage:[UIImage imageNamed:@"gcamera.png"] forState:UIControlStateNormal];
     [heartButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
     
     [rightView addSubview:heartButton];

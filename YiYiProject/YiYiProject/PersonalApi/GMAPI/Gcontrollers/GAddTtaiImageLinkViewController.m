@@ -30,19 +30,27 @@
         NSLog(@"imv.shopid = %@ imv.pid = %@",imv.shop_id,imv.product_id);
         NSLog(@"imv.shopName = %@  imv.pname = %@",imv.shop_name,imv.product_name);
         
-        UILabel *shopNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 0, 15)];
+        UILabel *shopNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(25, 5, 0, 15)];
         shopNameLabel.font = [UIFont systemFontOfSize:13];
         shopNameLabel.text = imv.shop_name;
-        shopNameLabel.numberOfLines = 1;
+        shopNameLabel.numberOfLines = 2;
+        shopNameLabel.textColor = [UIColor whiteColor];
+        
         UILabel *productNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(shopNameLabel.frame), 0, 15)];
         productNameLabel.font = [UIFont systemFontOfSize:13];
         productNameLabel.text = imv.product_name;
-        productNameLabel.numberOfLines = 1;
+        productNameLabel.numberOfLines = 2;
+        productNameLabel.textColor = [UIColor whiteColor];
+        
         [shopNameLabel sizeToFit];
         [productNameLabel sizeToFit];
         
         [imv addSubview:shopNameLabel];
         [imv addSubview:productNameLabel];
+        CGRect r = imv.frame;
+        r.size.height = shopNameLabel.frame.size.height+productNameLabel.frame.size.height+10;
+        r.size.width = shopNameLabel.frame.size.width>productNameLabel.frame.size.width ? shopNameLabel.frame.size.width:productNameLabel.frame.size.width;
+        [imv setFrame:r];
         
     }
     
@@ -185,13 +193,13 @@
     
     GmoveImv *gimv = [[GmoveImv alloc]initWithFrame:CGRectMake(0, 0, 60, 60)];
     gimv.tag = (_flagTag_gimv+=1);
-    gimv.backgroundColor = [UIColor orangeColor];
+    [gimv setImage:[UIImage imageNamed:@"gdianji.png"]];
     gimv.center = point;
     gimv.location_x = point.x;
     gimv.location_y = point.y;
     UIButton *deletBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [deletBtn setFrame:CGRectMake(0, 0, 25, 25)];
-    deletBtn.backgroundColor = [UIColor redColor];
+    [deletBtn setFrame:CGRectMake(-3, -3, 27, 27)];
+    [deletBtn setBackgroundImage:[UIImage imageNamed:@"g_linkdelete.png"] forState:UIControlStateNormal];
     [gimv addSubview:deletBtn];
     [deletBtn addTarget:self action:@selector(removeSelf:) forControlEvents:UIControlEventTouchUpInside];
     deletBtn.tag = -gimv.tag;
@@ -236,6 +244,7 @@
     
     for (GmoveImv *imv in self.maodianArray) {
         if (imv.tag == _flagTag) {
+            [imv setImage:[UIImage imageNamed:@"GTtailj_bg.png"]];
             imv.shop_id = theShopId;
             imv.product_id = productId;
             imv.shop_name = theProductName;
