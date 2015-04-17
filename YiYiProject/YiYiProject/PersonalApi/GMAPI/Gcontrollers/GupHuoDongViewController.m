@@ -214,7 +214,7 @@
     UIButton *tijiaoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [tijiaoBtn setTitle:@"提  交" forState:UIControlStateNormal];
     if (self.thetype == GUPHUODONGTYPE_EDIT) {
-        [tijiaoBtn setTitle:@"修  改" forState:UIControlStateNormal];
+        [tijiaoBtn setTitle:@"完 成" forState:UIControlStateNormal];
     }
     [tijiaoBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [tijiaoBtn setBackgroundColor:RGBCOLOR(217, 66, 93)];
@@ -534,6 +534,8 @@
     UITextView *tv = (UITextView*)[self.view viewWithTag:300];
     [tv resignFirstResponder];
     
+    
+    
     [UIView animateWithDuration:0.3 animations:^{
         _dateChooseView.frame = CGRectMake(0, DEVICE_HEIGHT, DEVICE_WIDTH, 300);
     } completion:^(BOOL finished) {
@@ -619,10 +621,24 @@
         _showImageData = UIImageJPEGRepresentation(_showImage, 0.2);
         [_showPicBtn setBackgroundImage:_showImage forState:UIControlStateNormal];
         
-        [picker dismissViewControllerAnimated:YES completion:^{
-            
-        }];
         
+        //按比例缩放
+        UIImage *scaleImage = [self scaleImage:originImage toScale:0.3];
+        
+        
+        //将图片传递给截取界面进行截取并设置回调方法（协议）
+        MLImageCrop *imageCrop = [[MLImageCrop alloc]init];
+        imageCrop.delegate = self;
+        //按像素缩放  //设置缩放比例
+        imageCrop.ratioOfWidthAndHeight = 320/188.0f;
+        imageCrop.image = scaleImage;
+        picker.navigationBar.hidden = YES;
+        [picker pushViewController:imageCrop animated:YES];
+        
+//        [picker dismissViewControllerAnimated:YES completion:^{
+//            
+//        }];
+  
         
     }
 }
@@ -640,7 +656,7 @@
     
     UIImage *doneImage = [self scaleToSize:cropImage size:CGSizeMake(DEVICE_WIDTH, DEVICE_HEIGHT)];//按像素缩放
     _showImage = doneImage;
-    _showImageData = UIImageJPEGRepresentation(_showImage, 0.8);
+    _showImageData = UIImageJPEGRepresentation(_showImage, 1);
     
     
     

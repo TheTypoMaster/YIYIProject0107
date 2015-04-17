@@ -27,4 +27,15 @@
 
 @property(nonatomic,assign)BOOL isChooseProductLink;//是否为发布T台商品链接
 
+@property(nonatomic,strong)NSString *mallName;//商场名称
+
+
+@property(nonatomic,assign)CGFloat upinfoview_height;
+
+
+
+-(void)showTheUpDownViewFullView;
+
+-(void)showTheUpDownViewHalfView;
+
 @end

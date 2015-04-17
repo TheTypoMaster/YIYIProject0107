@@ -317,7 +317,10 @@
         }
         ccc.storeNameStr = [dic stringValueForKey:@"mall_name"];
         ccc.pinpaiNameStr = [dic stringValueForKey:@"brand_name"];
-        ccc.isChooseProductLink = YES;
+        if (self.isChooseProductLink) {
+            ccc.isChooseProductLink = YES;
+        }
+        
         [self.navigationController pushViewController:ccc animated:YES];
         
     }else if (_selectIndex == 101){//搜索的是商铺
@@ -326,14 +329,18 @@
             GnearbyStoreViewController *ccc = [[GnearbyStoreViewController alloc]init];
             ccc.storeIdStr = [dic stringValueForKey:@"mall_id"];
             ccc.storeNameStr = [dic stringValueForKey:@"mall_name"];
-            ccc.isChooseProductLink = YES;
+            if (self.isChooseProductLink) {
+                ccc.isChooseProductLink = YES;
+            }
             [self.navigationController pushViewController:ccc animated:YES];
         }else if ([[dic stringValueForKey:@"mall_type"]intValue]==2){//精品店
             GStorePinpaiViewController *ccc = [[GStorePinpaiViewController alloc]init];
             ccc.storeIdStr = [dic stringValueForKey:@"mall_id"];
             ccc.storeNameStr = [dic stringValueForKey:@"mall_name"];
             ccc.guanzhuleixing = @"精品店";
-            ccc.isChooseProductLink = YES;
+            if (self.isChooseProductLink) {
+                ccc.isChooseProductLink = YES;
+            }
             [self.navigationController pushViewController:ccc animated:YES];
             
         }
@@ -341,7 +348,9 @@
         NSDictionary *dic = _dataArray[indexPath.row];
         ProductDetailController *ccc = [[ProductDetailController alloc]init];
         ccc.product_id = [dic stringValueForKey:@"product_id"];
-        ccc.isChooseProductLink = YES;
+        if (self.isChooseProductLink) {
+            ccc.isChooseProductLink = YES;
+        }
         [self.navigationController pushViewController:ccc animated:YES];
     }
     

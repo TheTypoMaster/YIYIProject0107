@@ -7,6 +7,7 @@
 //
 
 #import "MyViewController.h"
+@class GScanViewController;
 
 @interface MineViewController : MyViewController
 {
@@ -23,5 +24,10 @@
 @property(nonatomic,strong)UILabel *userScoreLabel;//积分
 
 @property(nonatomic,strong)NSData *userUploadImagedata;//需要上传的二进制图片
+
+
+
+-(void)gScanvcPushWithString:(NSString *)string;
+
 
 @end

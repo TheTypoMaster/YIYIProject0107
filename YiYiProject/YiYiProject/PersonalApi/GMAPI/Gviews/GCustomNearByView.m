@@ -17,11 +17,11 @@
 -(void)loadCustomView{
     if (self.theType == GjiaoyaTypeDown) {//脚丫在下面
         //小红点
-        self.xiaohongdian = [[UIImageView alloc]initWithFrame:CGRectMake(0, 22, 10, 10)];
+        self.xiaohongdian = [[UIImageView alloc]initWithFrame:CGRectMake(0, 37, 10, 10)];
         [self.xiaohongdian setImage:[UIImage imageNamed:@"gyuanshixin.png"]];
         [self addSubview:self.xiaohongdian];
         //店铺名
-        self.titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.xiaohongdian.frame)+2, 15, 60, 35)];
+        self.titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.xiaohongdian.frame)+2, 30, 60, 35)];
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
         self.titleLabel.font = [UIFont systemFontOfSize:14];
         self.titleLabel.numberOfLines = 2;
@@ -29,7 +29,7 @@
         self.shopType = [self.dataDic stringValueForKey:@"mall_type"];
         [self addSubview:self.titleLabel];
         //脚丫
-        self.jiaoya = [[UIImageView alloc]initWithFrame:CGRectMake(self.titleLabel.frame.origin.x, CGRectGetMaxY(self.titleLabel.frame)+30, 52, 37)];
+        self.jiaoya = [[UIImageView alloc]initWithFrame:CGRectMake(self.titleLabel.frame.origin.x, CGRectGetMaxY(self.titleLabel.frame)+15, 52, 37)];
         [self.jiaoya setImage:[UIImage imageNamed:@"gjiaoyaup.png"]];
         [self addSubview:self.jiaoya];
         
@@ -51,7 +51,7 @@
         
     }else if (self.theType == GjiaoyaTypeUp){//脚丫在上面
         //小红点
-        self.xiaohongdian = [[UIImageView alloc]initWithFrame:CGRectMake(0, 95, 10, 10)];
+        self.xiaohongdian = [[UIImageView alloc]initWithFrame:CGRectMake(0, 80, 10, 10)];
         [self.xiaohongdian setImage:[UIImage imageNamed:@"gyuanquankong.png"]];
         [self addSubview:self.xiaohongdian];
         //脚丫
@@ -60,7 +60,7 @@
         [self addSubview:self.jiaoya];
         
         //店铺名
-        self.titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.jiaoya.frame.origin.x, CGRectGetMaxY(self.jiaoya.frame)+30, 60, 35)];
+        self.titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.jiaoya.frame.origin.x, CGRectGetMaxY(self.jiaoya.frame)+15, 60, 35)];
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
         self.titleLabel.font = [UIFont systemFontOfSize:14];
         self.titleLabel.numberOfLines = 2;

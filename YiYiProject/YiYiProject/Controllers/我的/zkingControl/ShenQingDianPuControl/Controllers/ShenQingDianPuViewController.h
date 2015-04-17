@@ -26,5 +26,7 @@
 @property(nonatomic,assign)CLLocationCoordinate2D location_jingpindian;//精品店经纬度
 
 
+@property(nonatomic,assign)BOOL isMianzeshengmingAgree;//是否同意免责声明
+
 @end
 

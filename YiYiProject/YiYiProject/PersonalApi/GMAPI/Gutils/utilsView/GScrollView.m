@@ -56,16 +56,20 @@
             //品牌图片view
             UIImageView *pinpai_pic = [[UIImageView alloc]initWithFrame:CGRectMake(0, 3, 108, 143)];
             pinpai_pic.layer.cornerRadius = 10;
+            pinpai_pic.layer.borderWidth = 0.5f;
+            pinpai_pic.layer.borderColor = [[UIColor grayColor]CGColor];
             pinpai_pic.layer.masksToBounds = YES;
             pinpai_pic.userInteractionEnabled = YES;
+            pinpai_pic.contentMode = UIViewContentModeScaleAspectFit;
             [pinpai_pic sd_setImageWithURL:[NSURL URLWithString:imvStr] placeholderImage:nil];
             [pinpaiView addSubview:pinpai_pic];
             
             //品牌名称
-            UIView *nameView = [[UIView alloc]initWithFrame:CGRectMake(15, 110, pinpai_pic.frame.size.width-30, 25)];
-            nameView.alpha = 0.5;
+            UIView *nameView = [[UIView alloc]initWithFrame:CGRectMake(10, 110, pinpai_pic.frame.size.width-20, 25)];
+            nameView.alpha = 1;
             UILabel *nameLabel = [[UILabel alloc]initWithFrame:nameView.bounds];
-            nameLabel.backgroundColor = RGBCOLOR(48, 47, 52);
+//            nameLabel.backgroundColor = RGBCOLOR(48, 47, 52);
+            nameLabel.backgroundColor = RGBCOLOR_ONE;
             nameLabel.text = nameStr;
             nameLabel.textColor = [UIColor whiteColor];
             nameLabel.userInteractionEnabled = YES;

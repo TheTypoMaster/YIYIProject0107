@@ -8,7 +8,7 @@
 
 
 
-//创建商场店地图选点
+//创建商场店地图选点 取中间点
 
 #import <UIKit/UIKit.h>
 @class ShenQingDianPuViewController;

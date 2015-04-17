@@ -27,7 +27,7 @@
 
 
 //设置锚点的商品id和shopid
--(void)setGmoveImvProductId:(NSString *)productId shopid:(NSString*)theShopId productName:(NSString*)theProductName shopName:(NSString*)theShopName;
+-(void)setGmoveImvProductId:(NSString *)productId shopid:(NSString*)theShopId productName:(NSString*)theProductName shopName:(NSString*)theShopName price:(NSString *)thePrice;
 
 
 @end

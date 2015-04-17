@@ -58,10 +58,7 @@
                 int erroCode = [[dic objectForKey:@"errcode"]intValue];
                 NSString *erroInfo = [dic objectForKey:@"errinfo"];
                 
-                
-                
                 if (erroCode != 0) { //0代表无错误,  && erroCode != 1 1代表无结果
-                    
                     
                     NSDictionary *failDic = @{ERROR_INFO:erroInfo};
                     failBlock(failDic,connectionError);
@@ -73,8 +70,8 @@
                 }
             }
             
-        }else
-        {
+        }else{
+            
             NSLog(@"data 为空 connectionError %@",connectionError);
             
             NSString *errInfo = @"网络有问题,请检查网络";

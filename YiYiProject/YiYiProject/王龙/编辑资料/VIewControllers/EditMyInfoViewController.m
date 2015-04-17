@@ -12,6 +12,11 @@
 #define RGBA(r,g,b,a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 #import "MineViewController.h"
 
+#import "NSDictionary+GJson.h"
+
+#import "GuserPhoneViewController.h"
+
+
 @interface EditMyInfoViewController ()
 
 @end
@@ -108,7 +113,25 @@
     NSString *dateAndTime =  [dateFormatter stringFromDate:select];
     infoView.birthdayLabel.text = dateAndTime;
     
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(goToLinkShouji)];
+    
+    [infoView.shoujihao addGestureRecognizer:tap];
+    
+    
+    
 }
+
+
+-(void)goToLinkShouji{
+    if ([infoView.shoujistate.text isEqualToString:@"未绑定"]) {
+        GuserPhoneViewController *user = [[GuserPhoneViewController alloc]init];
+        [self.navigationController pushViewController:user animated:YES];
+    }
+    
+}
+
+
 
 ////性别
 -(void)sexAction:(UIButton *)btn{
@@ -189,6 +212,17 @@
         infoView.womanBtn.selected = YES;
         
     }
+    
+    
+    
+    if ([infoDic stringValueForKey:@"mobile"].length<10) {//没有绑定手机号
+        infoView.shoujistate.text = @"未绑定";
+    }else{
+        infoView.shoujistate.text = [NSString stringWithFormat:@"%@",[infoDic stringValueForKey:@"mobile"]];
+    }
+    
+    
+    
 }
 
 #pragma mark------------获取个人资料

@@ -43,29 +43,18 @@
 {
     [super viewWillAppear:animated];
     
-    if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] )
-    {
-        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:IOS7DAOHANGLANBEIJING_PUSH2] forBarMetrics: UIBarMetricsDefault];
-    }
+//    if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] )
+//    {
+//        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:IOS7DAOHANGLANBEIJING_PUSH2] forBarMetrics: UIBarMetricsDefault];
+//    }
     
     if (IOS7_OR_LATER) {
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     }
 }
 
--(void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] )
-    {
-        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:IOS7DAOHANGLANBEIJING_PUSH] forBarMetrics: UIBarMetricsDefault];
-    }
-    
-    if (IOS7_OR_LATER) {
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
-        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
-    }
-}
+
 
 - (void)dealloc
 {
@@ -80,26 +69,31 @@
     // Do any additional setup after loading the view from its nib.
     
     
+    
+    
+    
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
-    UIBarButtonItem * spaceButton1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(0,8,40,44)];
-    [button_back addTarget:self action:@selector(leftButtonTap:) forControlEvents:UIControlEventTouchUpInside];
-    [button_back setImage:[UIImage imageNamed:@"gback_white.png"] forState:UIControlStateNormal];
-    [button_back setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
-    UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
-    self.navigationItem.leftBarButtonItems=@[back_item];
+    
+//    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(0,8,40,44)];
+//    [button_back setImage:[UIImage imageNamed:@"gback_white.png"] forState:UIControlStateNormal];
+//    [button_back setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+//    UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
+//    self.navigationItem.leftBarButtonItems=@[back_item];
     
     
     [self createNavigationbarTools];
+    
+    
+    self.bugButton.layer.cornerRadius = 4;
+    
     
     if (self.isYYChatVcPush) {//从聊天界面跳转过来的
         self.lianxiDianzhuBtn.hidden = YES;
     }
     
     
-    self.bugButton.layer.cornerRadius = 5.0f;
-    self.bugButton.layer.borderColor = [UIColor whiteColor].CGColor;
-    self.bugButton.layer.borderWidth = 1.f;
+    self.bugButton.layer.cornerRadius = 3.0f;
+    self.bugButton.layer.masksToBounds = YES;
     
     loading = [LTools MBProgressWithText:@"加载..." addToView:self.view];
     
@@ -110,6 +104,7 @@
     
     
     [self networkForDetail];
+    
 }
 
 - (void)viewWillLayoutSubviews NS_AVAILABLE_IOS(5_0)
@@ -342,7 +337,7 @@
     
     if (self.isChooseProductLink) {
         GAddTtaiImageLinkViewController *cc = self.navigationController.viewControllers[0];
-        [cc setGmoveImvProductId:self.product_id shopid:self.theModel.product_shop_id productName:self.titleLabel.text shopName:self.shangChangLabel.text];
+        [cc setGmoveImvProductId:self.product_id shopid:self.theModel.product_shop_id productName:self.shangChangLabel.text shopName:self.titleLabel.text price:self.theModel.product_price];
         [self.navigationController popToViewController:cc animated:YES];
         return;
     }
@@ -564,6 +559,9 @@
     self.xingHaoLabel.text = [NSString stringWithFormat:@"型号: %@",aProductModel.product_sku];
     self.biaoQianLabel.text = [NSString stringWithFormat:@"标签: %@",aProductModel.product_tag];
     
+    self.xingHaoLabel.hidden = YES;
+    self.biaoQianLabel.hidden = NO;
+    
     NSString *mallName = aProductModel.mall_info[@"mall_name"];
     self.shangChangLabel.text = [NSString stringWithFormat:@"商场: %@",mallName];
     
@@ -583,18 +581,17 @@
     
     heartButton=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 44, 44)];
     [heartButton addTarget:self action:@selector(clickToLike:) forControlEvents:UIControlEventTouchUpInside];
-//    [heartButton setTitle:@"喜欢" forState:UIControlStateNormal];
     [heartButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [heartButton setImage:[UIImage imageNamed:@"xihuanb"] forState:UIControlStateNormal];
-    [heartButton setImage:[UIImage imageNamed:@"xihuanb_down"] forState:UIControlStateSelected];
+    [heartButton setImage:[UIImage imageNamed:@"xihuanb.png"] forState:UIControlStateNormal];
+    [heartButton setImage:[UIImage imageNamed:@"xihuanb_down.png"] forState:UIControlStateSelected];
     [heartButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
     
     //收藏的
     
     collectButton =[[UIButton alloc]initWithFrame:CGRectMake(74,0, 44,42.5)];
     [collectButton addTarget:self action:@selector(clickToCollect:) forControlEvents:UIControlEventTouchUpInside];
-    [collectButton setImage:[UIImage imageNamed:@"shoucangb"] forState:UIControlStateNormal];
-    [collectButton setImage:[UIImage imageNamed:@"shoucangb_down"] forState:UIControlStateSelected];
+    [collectButton setImage:[UIImage imageNamed:@"shoucangb.png"] forState:UIControlStateNormal];
+    [collectButton setImage:[UIImage imageNamed:@"shoucangb_down.png"] forState:UIControlStateSelected];
     [collectButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     collectButton.center = CGPointMake(rightView.width / 2.f, collectButton.center.y);
     [collectButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
@@ -603,7 +600,7 @@
 //    [shareButton setTitle:@"评论" forState:UIControlStateNormal];
     shareButton.titleLabel.font=[UIFont systemFontOfSize:14];
     [shareButton addTarget:self action:@selector(clickToShare:) forControlEvents:UIControlEventTouchUpInside];
-    [shareButton setImage:[UIImage imageNamed:@"product_share"] forState:UIControlStateNormal];
+    [shareButton setImage:[UIImage imageNamed:@"product_share.png"] forState:UIControlStateNormal];
     [shareButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [shareButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
 

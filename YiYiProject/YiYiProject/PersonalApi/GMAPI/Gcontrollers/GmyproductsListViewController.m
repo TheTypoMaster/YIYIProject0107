@@ -60,7 +60,7 @@
     _my_right_button.titleLabel.textAlignment = NSTextAlignmentRight;
     [_my_right_button setTitle:@"批量操作" forState:UIControlStateNormal];
     _my_right_button.titleLabel.font = [UIFont systemFontOfSize:15];
-    [_my_right_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_my_right_button setTitleColor:RGBCOLOR(253, 106, 157) forState:UIControlStateNormal];
     [_my_right_button addTarget:self action:@selector(rightButtonTap:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItems = @[spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
     
@@ -360,9 +360,9 @@
     NSString *url = @"";
     
     if (_selectIndex == 100) {//线上产品
-        url = [NSString stringWithFormat:GET_MAIL_PRODUCT_LIST,@"by_time",self.userInfo.shop_id,_page,L_PAGE_SIZE];
+        url = [NSString stringWithFormat:GET_MAIL_PRODUCT_LIST,self.userInfo.shop_id,_page,L_PAGE_SIZE];
     }else if (_selectIndex == 101){//仓库产品
-        url = [NSString stringWithFormat:GET_MAIL_PRODUCT_LIST,@"by_time",self.userInfo.shop_id,_page,L_PAGE_SIZE];
+        url = [NSString stringWithFormat:GET_MAIL_PRODUCT_LIST,self.userInfo.shop_id,_page,L_PAGE_SIZE];
         url = [url stringByAppendingString:@"&status=2"];
     }
     

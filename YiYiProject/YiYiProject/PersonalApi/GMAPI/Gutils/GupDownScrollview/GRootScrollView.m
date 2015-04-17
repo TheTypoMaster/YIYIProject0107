@@ -10,7 +10,7 @@
 #import "GtopScrollView.h"
 #import "NSDictionary+GJson.h"
 #import "GrootScrollViewFloorTableViewCell.h"
-
+#import "GnearbyStoreViewController.h"
 
 
 #define POSITIONID (int)(scrollView.contentOffset.x/self.frame.size.width)
@@ -72,6 +72,9 @@
 }
 
 
+
+
+
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     self.userContentOffsetX = scrollView.contentOffset.x;
@@ -85,6 +88,17 @@
     else {
         self.isLeftScroll = NO;
     }
+    
+    
+    NSLog(@"-------x=%f,-------y=%f",scrollView.contentOffset.x,scrollView.contentOffset.y);
+    
+    if (scrollView.contentOffset.y>0) {
+        [self.nearbyStoreVC showTheUpDownViewFullView];
+    }else if (scrollView.contentOffset.y<0){
+        NSLog(@"wuwuwuwuwuuwu");
+        [self.nearbyStoreVC showTheUpDownViewHalfView];
+    }
+    
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView

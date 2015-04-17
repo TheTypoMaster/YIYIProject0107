@@ -28,6 +28,8 @@
     
     UIImage *_theChooseImage;//用户选择的图片
     
+    UIView *_addPicView;
+    
 }
 @end
 
@@ -452,54 +454,62 @@
     self.contentTF.font = [UIFont systemFontOfSize:15];
     [self.mainScrollview addSubview:self.contentTF];
     
+    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(12, CGRectGetMaxY(self.contentTF.frame), DEVICE_WIDTH-24, 0.5)];
+    lineView.backgroundColor = RGBCOLOR(208, 208, 208);
+    [self.mainScrollview addSubview:lineView];
+    
+    
     //添加图片的按钮
-    UIView *addPicView = [[UIView alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(self.contentTF.frame), self.contentTF.frame.size.width, 80)];
-    addPicView.backgroundColor = [UIColor whiteColor];
-    [self.mainScrollview addSubview:addPicView];
+    _addPicView = [[UIView alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(lineView.frame)+10, self.contentTF.frame.size.width, 80)];
+    _addPicView.backgroundColor = [UIColor whiteColor];
+    [self.mainScrollview addSubview:_addPicView];
     self.addImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.addImageButton setImage:[UIImage imageNamed:@"stianjia.png"] forState:UIControlStateNormal];
     [self.addImageButton setFrame:CGRectMake(6, 0, 80, 80)];
     [self.addImageButton addTarget:self action:@selector(clickToAction:) forControlEvents:UIControlEventTouchUpInside];
-    [addPicView addSubview:self.addImageButton];
+    [_addPicView addSubview:self.addImageButton];
     
     
     
-    //品牌型号价格
-    _tfBackview = [[UIView alloc]initWithFrame:CGRectMake(16, CGRectGetMaxY(addPicView.frame)+7, DEVICE_WIDTH-32, 145)];
-    NSArray *titleArray = @[@"品牌",@"型号",@"价格"];
-    for (int i = 0; i<3; i++) {
-        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, i*44, _tfBackview.frame.size.width, 44)];
-        [_tfBackview addSubview:view];
-        _tfBackview.tag = 1000000;
-        UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, 0, view.frame.size.width, 1)];
-        line.backgroundColor = RGBCOLOR(208, 208, 208);
-        [view addSubview:line];
-        UILabel *tt = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 70, 44)];
-        tt.font = [UIFont systemFontOfSize:15];
-        tt.text = titleArray[i];
-        [view addSubview:tt];
-        
-        if (i == 0) {
-            self.brandTF = [[UITextField alloc]initWithFrame:CGRectMake(75, 0, _tfBackview.frame.size.width-75, 44)];
-            self.brandTF.textAlignment = NSTextAlignmentRight;
-            self.brandTF.font = [UIFont systemFontOfSize:15];
-            self.brandTF.placeholder = @"例如：ONLY";
-            [view addSubview:self.brandTF];
-        }else if (i==1){
-            self.modelTF = [[UITextField alloc]initWithFrame:CGRectMake(75, 0, _tfBackview.frame.size.width-75, 44)];
-            self.modelTF.textAlignment = NSTextAlignmentRight;
-            self.modelTF.font = [UIFont systemFontOfSize:15];
-            self.modelTF.placeholder = @"例如：BH1431938";
-            [view addSubview:self.modelTF];
-        }else if (i==2){
-            self.priceTF = [[UITextField alloc]initWithFrame:CGRectMake(75, 0, _tfBackview.frame.size.width-75, 44)];
-            self.priceTF.textAlignment = NSTextAlignmentRight;
-            self.priceTF.font = [UIFont systemFontOfSize:15];
-            self.priceTF.placeholder = @"例如：1000";
-            [view addSubview:self.priceTF];
-            
-        }
-    }
+    
+    
+    
+//    //品牌型号价格
+//    _tfBackview = [[UIView alloc]initWithFrame:CGRectMake(16, CGRectGetMaxY(addPicView.frame)+7, DEVICE_WIDTH-32, 145)];
+//    NSArray *titleArray = @[@"品牌",@"型号",@"价格"];
+//    for (int i = 0; i<3; i++) {
+//        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, i*44, _tfBackview.frame.size.width, 44)];
+//        [_tfBackview addSubview:view];
+//        _tfBackview.tag = 1000000;
+//        UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, 0, view.frame.size.width, 1)];
+//        line.backgroundColor = RGBCOLOR(208, 208, 208);
+//        [view addSubview:line];
+//        UILabel *tt = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 70, 44)];
+//        tt.font = [UIFont systemFontOfSize:15];
+//        tt.text = titleArray[i];
+//        [view addSubview:tt];
+//        
+//        if (i == 0) {
+//            self.brandTF = [[UITextField alloc]initWithFrame:CGRectMake(75, 0, _tfBackview.frame.size.width-75, 44)];
+//            self.brandTF.textAlignment = NSTextAlignmentRight;
+//            self.brandTF.font = [UIFont systemFontOfSize:15];
+//            self.brandTF.placeholder = @"例如：ONLY";
+//            [view addSubview:self.brandTF];
+//        }else if (i==1){
+//            self.modelTF = [[UITextField alloc]initWithFrame:CGRectMake(75, 0, _tfBackview.frame.size.width-75, 44)];
+//            self.modelTF.textAlignment = NSTextAlignmentRight;
+//            self.modelTF.font = [UIFont systemFontOfSize:15];
+//            self.modelTF.placeholder = @"例如：BH1431938";
+//            [view addSubview:self.modelTF];
+//        }else if (i==2){
+//            self.priceTF = [[UITextField alloc]initWithFrame:CGRectMake(75, 0, _tfBackview.frame.size.width-75, 44)];
+//            self.priceTF.textAlignment = NSTextAlignmentRight;
+//            self.priceTF.font = [UIFont systemFontOfSize:15];
+//            self.priceTF.placeholder = @"例如：1000";
+//            [view addSubview:self.priceTF];
+//            
+//        }
+//    }
     
     [self.mainScrollview addSubview:_tfBackview];
     
@@ -515,7 +525,7 @@
     [btn setTitle:@"添加商品链接" forState:UIControlStateNormal];
     [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     btn.backgroundColor = RGBCOLOR(235, 235, 235);
-    [btn setFrame:CGRectMake(0, CGRectGetMaxY(_tfBackview.frame)+5, DEVICE_WIDTH, 40)];
+    [btn setFrame:CGRectMake(0, CGRectGetMaxY(_addPicView.frame)+10, DEVICE_WIDTH, 40)];
     [btn addTarget:self action:@selector(addProductLink) forControlEvents:UIControlEventTouchUpInside];
     [self.mainScrollview addSubview:btn];
     

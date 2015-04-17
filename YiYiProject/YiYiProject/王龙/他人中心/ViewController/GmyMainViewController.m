@@ -120,6 +120,8 @@
     [backBtn setImage:BACK_DEFAULT_IMAGE forState:UIControlStateNormal];
     [backBtn setImageEdgeInsets:UIEdgeInsetsMake(30, 15, 30, 50)];
     [backBtn setFrame:CGRectMake(0, 0, 80, 80)];
+    [backBtn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    [backBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 12, 0, 12)];
     [backBtn addTarget:self action:@selector(gGoBackVc) forControlEvents:UIControlEventTouchUpInside];
     [_upUserInfoView addSubview:backBtn];
     

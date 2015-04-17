@@ -177,7 +177,7 @@ typedef enum{
 //获取验证码
 #define USER_GET_SECURITY_CODE @"http://www.alayy.com/index.php?d=api&c=user_api&m=get_code&mobile=%@&type=%d"
 //找回密码
-#define USER_GETBACK_PASSWORD @"http://www.alayy.com/index.php?d=api&c=user_api&m=get_back_password&mobile=%@&code=%d&new_password=%@"
+#define USER_GETBACK_PASSWORD @"http://www.alayy.com/index.php?d=api&c=user_api&m=get_back_password&mobile=%@&code=%d&new_password=%@&confirm_password=%@"
 
 //首页--值得买
 #define HOME_DESERVE_BUY @"http://www.alayy.com/?d=api&c=products&m=listWorthBuy&long=%@&lat=%@&sex=%d&discount=%d&page=%d&count=%d&authcode=%@"
@@ -286,6 +286,8 @@ typedef enum{
 
 //获取手机验证码
 #define PHONE_YANZHENGMA_SHENQINGSHANGCHANGDIAN @"http://www.alayy.com/index.php?d=api&c=user_api&m=get_code&mobile=%@&type=5"
+//获取手机验证码
+#define GPHONECODE @"http://www.alayy.com/index.php?d=api&c=user_api&m=get_code"
 
 //申请店铺
 #define SHENQINGJINGPINDIAN @"http://www.alayy.com/?d=api&c=mall&m=addMall"
@@ -454,7 +456,7 @@ typedef enum{
 //店主活动列表
 #define GET_MAIL_ACTIVITY_LIST @"http://www.alayy.com/index.php?d=api&c=mall&m=get_activities&authcode=%@"
 //店主单品列表
-#define GET_MAIL_PRODUCT_LIST @"http://www.alayy.com/index.php?d=api&c=products&m=getProductList&action=%@&mb_id=%@&page=%d&per_page=%d"
+#define GET_MAIL_PRODUCT_LIST @"http://www.alayy.com/index.php?d=api&c=products&m=getProductList&mb_id=%@&page=%d&per_page=%d"
 
 
 
@@ -476,6 +478,28 @@ typedef enum{
 //搜索接口 品牌 商铺 单品
 #define GSEARCH @"http://www.alayy.com/index.php?d=api&&c=search"
 
+
+//签到
+#define GQIANDAO @"http://www.alayy.com/index.php?d=api&c=user_api&m=sign"
+
+
+//获取店铺二维码
+#define GMYSHOPERWEIMA @"http://www.alayy.com/index.php?d=api&c=mall&m=get_qrcode"
+
+
+//获取店铺会员 也就是关注该店铺的人
+#define GMYSHOPHUIYUANLIST @"http://www.alayy.com/index.php?d=api&c=mall&m=get_attention_list"
+
+
+
+//修改店铺联系方式 telephone
+
+#define GCHANGESHOPTELEPHONE @"http://www.alayy.com/index.php?d=api&c=mall&m=set_shop_phone"
+
+
+
+//绑定手机
+#define GBANGDINGPHONE @"http://www119.alayy.com/index.php?d=api&c=user_api&m=bind_mobile"
 
 
 #endif

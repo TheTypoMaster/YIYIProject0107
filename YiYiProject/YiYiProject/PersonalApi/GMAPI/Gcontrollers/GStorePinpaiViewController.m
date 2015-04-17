@@ -96,7 +96,7 @@
     _my_right_button.frame = CGRectMake(0,0,60,44);
     _my_right_button.titleLabel.textAlignment = NSTextAlignmentRight;
     _my_right_button.titleLabel.font = [UIFont systemFontOfSize:15];
-    [_my_right_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_my_right_button setTitleColor:RGBCOLOR(253, 104, 157) forState:UIControlStateNormal];
     [_my_right_button addTarget:self action:@selector(rightButtonTap:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
     
@@ -195,42 +195,10 @@
                 self.shopId = [brand2 stringValueForKey:@"shop_id"];
             }
             
-            NSString *mallName = [result stringValueForKey:@"mall_name"];
-            NSString *dizhi = [result stringValueForKey:@"address"];
             self.guanzhu = [result stringValueForKey:@"following"];
             
-            [self creatDianpuInfoView];
-            _mallNameLabel.text = mallName;
-            //活动
-            NSDictionary *dic = [result dictionaryValueForKey:@"activity"];
-            NSString *huodongStr = nil;
-            if (dic) {
-                huodongStr = [dic stringValueForKey:@"activity_title"];
-                if (huodongStr.length==0) {
-                    huodongStr = @"";
-                }
-                self.activityId = [dic stringValueForKey:@"activity_id"];
-            }
-            _huodongLabel.text = huodongStr;
-            
-            //根据内容调整活动和地址的高度=================start
-            if (_huodongLabel.text.length == 0) {
-                _huodongTitleLabel.hidden = YES;
-                _huodongLabel.hidden = YES;
-                [_dizhiTitleLabel setFrame:_huodongTitleLabel.frame];
-                [_adressLabel setFrame:_huodongLabel.frame];
-                
-            }else{
-                _huodongLabel.numberOfLines = 0;
-                [_huodongLabel sizeToFit];
-                
-            }
-            _adressLabel.text = dizhi;
-            _adressLabel.numberOfLines = 0;
-            [_adressLabel sizeToFit];
-            //根据内容调整活动和地址的高度=================end
-            
-            [_upStoreInfoView setFrame:CGRectMake(0, 0, DEVICE_WIDTH, CGRectGetMaxY(_adressLabel.frame)+10)];
+            [self creatDianpuInfoViewWithResult:result];
+
             
             
             [self createMemuView];
@@ -251,6 +219,16 @@
             self.coordinate_store = CLLocationCoordinate2DMake([[result stringValueForKey:@"latitude"]floatValue], [[result stringValueForKey:@"longitude"]floatValue]);
             
             
+            //活动
+            NSDictionary *dic = [result dictionaryValueForKey:@"activity"];
+            NSString *huodongStr = nil;
+            if (dic) {
+                huodongStr = [dic stringValueForKey:@"activity_title"];
+                if (huodongStr.length==0) {
+                    huodongStr = @"";
+                }
+                self.activityId = [dic stringValueForKey:@"activity_id"];
+            }
             
             
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
@@ -270,11 +248,10 @@
     NSString *api = [NSString stringWithFormat:GET_MAIL_DETAIL_INFO,self.storeIdStr];//商场店
     GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
     [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
-        [self creatDianpuInfoView];
+        [self creatDianpuInfoViewWithResult:result];
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         
         NSLog(@"商场店信息 %@",result);
-        NSString *dizhi = [result stringValueForKey:@"address"];
         self.pinpaiId = [result stringValueForKey:@"brand_id"];
         NSLog(@"self.pinpaiId %@",self.pinpaiId);
         //活动
@@ -293,25 +270,6 @@
         
         self.coordinate_store = CLLocationCoordinate2DMake([[result stringValueForKey:@"latitude"]floatValue], [[result stringValueForKey:@"longitude"]floatValue]);
         
-        //根据内容调整活动和地址的高度=================start
-        if (_huodongLabel.text.length == 0) {
-            _huodongTitleLabel.hidden = YES;
-            _huodongLabel.hidden = YES;
-            [_dizhiTitleLabel setFrame:_huodongTitleLabel.frame];
-            [_adressLabel setFrame:_huodongLabel.frame];
-            
-        }else{
-            _huodongLabel.numberOfLines = 0;
-            [_huodongLabel sizeToFit];
-            
-        }
-        _adressLabel.text = dizhi;
-        _adressLabel.numberOfLines = 0;
-        [_adressLabel sizeToFit];
-        //根据内容调整活动和地址的高度=================end
-        
-        [_upStoreInfoView setFrame:CGRectMake(0, 0, DEVICE_WIDTH, CGRectGetMaxY(_adressLabel.frame)+10)];
-        
         
         [self createMemuView];
         [self getGuanzhuYesOrNoForPinpai];
@@ -324,52 +282,136 @@
 }
 
 //创建店铺信息view
--(void)creatDianpuInfoView{
-    _upStoreInfoView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 100)];
-//        _upStoreInfoView.backgroundColor = [UIColor orangeColor];
+-(void)creatDianpuInfoViewWithResult:(NSDictionary*)result{
     
-    //商城名称
-    _mallNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 20, DEVICE_WIDTH-15-15, 18)];
-    _mallNameLabel.text = [NSString stringWithFormat:@"%@ %@",self.pinpaiNameStr,self.storeNameStr];
+    _upStoreInfoView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 188)];
+    [_mainScrollview addSubview:_upStoreInfoView];
+    
+    //活动图片
+    UIImageView *activeImv = [[UIImageView alloc]initWithFrame:_upStoreInfoView.bounds];
+    activeImv.backgroundColor = [UIColor whiteColor];
+    NSString *imgNameStr = @" ";
+    if ([result[@"activity"] isKindOfClass:[NSDictionary class]]) {
+        imgNameStr = result[@"activity"][@"activity_pic"];
+    }
+    [activeImv sd_setImageWithURL:[NSURL URLWithString:imgNameStr] placeholderImage:nil];
+    [_upStoreInfoView addSubview:activeImv];
+    activeImv.userInteractionEnabled = YES;
+    UITapGestureRecognizer *sss = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(huodongLabelClicked)];
+    [activeImv addGestureRecognizer:sss];
     
     //活动
-    _huodongTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(_mallNameLabel.frame.origin.x, CGRectGetMaxY(_mallNameLabel.frame)+13, 45, 15)];
-    _huodongTitleLabel.font = [UIFont systemFontOfSize:15];
-    _huodongTitleLabel.text = @"活动：";
-    _huodongLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_huodongTitleLabel.frame)+10, CGRectGetMaxY(_mallNameLabel.frame)+13, DEVICE_WIDTH -15-15-10-_huodongTitleLabel.frame.size.width, 15)];
+    _huodongLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 15, DEVICE_WIDTH-15-15, 35)];
+    _huodongLabel.textColor = [UIColor whiteColor];
+    _huodongLabel.numberOfLines = 2;
     _huodongLabel.font = [UIFont systemFontOfSize:15];
-    _huodongLabel.textColor = RGBCOLOR(56, 80, 122);
-    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(huodongLabelClicked)];
+    if ([result[@"activity"] isKindOfClass:[NSDictionary class]]) {
+        _huodongLabel.text = [NSString stringWithFormat:@"活动：%@",result[@"activity"][@"activity_title"]];
+    }
+    
+    NSLog(@"%lu",(unsigned long)_huodongLabel.text.length);
+    
+    
+    
+    
+    if (imgNameStr.length>2) {//有图
+        
+    }else{//没图
+        if (_huodongLabel.text.length>3) {//有文字
+            [_upStoreInfoView addSubview:_huodongLabel];
+            [_upStoreInfoView setFrame:CGRectMake(0, 0, DEVICE_WIDTH, 65)];
+        }else{
+            [_upStoreInfoView setFrame:CGRectMake(0, 0, DEVICE_WIDTH, 0)];
+        }
+    }
+    
+    
     _huodongLabel.userInteractionEnabled = YES;
+    _huodongLabel.layer.shadowColor = [UIColor blackColor].CGColor;
+    _huodongLabel.layer.shadowOpacity = 1.0;
+    _huodongLabel.layer.shadowRadius = 5.0;
+    _huodongLabel.layer.shadowOffset = CGSizeMake(0, 3);
+    _huodongLabel.clipsToBounds = NO;
+    
+    
+    
+    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(huodongLabelClicked)];
     [_huodongLabel addGestureRecognizer:tap];
-//    _huodongLabel.backgroundColor = [UIColor orangeColor];
+    
+    
+    
+    
+    
+    
+    //导航
+    UIView *downDanghangView = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT-35-64, DEVICE_WIDTH, 35)];
+    NSLog(@"%@",NSStringFromCGRect(downDanghangView.frame));
+    downDanghangView.backgroundColor = RGBCOLOR(74, 74, 74);
+    [self.view addSubview:downDanghangView];
+    
+    UIButton *daohangBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [daohangBtn setFrame:CGRectMake(12, 4, 62, 28)];
+    [daohangBtn setImage:[UIImage imageNamed:@"gdaohang_product.png"] forState:UIControlStateNormal];
+    [downDanghangView addSubview:daohangBtn];
+    [daohangBtn addTarget:self action:@selector(leadYouBuy) forControlEvents:UIControlEventTouchUpInside];
     
     //地址
-    _dizhiTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(_mallNameLabel.frame.origin.x, CGRectGetMaxY(_huodongTitleLabel.frame)+8, 45, 15)];
-    _dizhiTitleLabel.text = @"地址：";
-    _dizhiTitleLabel.font = [UIFont systemFontOfSize:15];
-    _adressLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_dizhiTitleLabel.frame)+10, CGRectGetMaxY(_huodongLabel.frame)+8, DEVICE_WIDTH -15-15-10-_huodongTitleLabel.frame.size.width, 15)];
-    _adressLabel.font = [UIFont systemFontOfSize:15];
-    _adressLabel.textColor = RGBCOLOR(56, 80, 122);
-    _adressLabel.userInteractionEnabled = YES;
-    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(adressLabelClicked)];
-    [_adressLabel addGestureRecognizer:tap1];
+    UILabel *adressLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(daohangBtn.frame)+8, 0, DEVICE_WIDTH-CGRectGetMaxX(daohangBtn.frame)-58, downDanghangView.frame.size.height)];
+    adressLabel.text = [NSString stringWithFormat:@"地址：%@",[result stringValueForKey:@"address"]];
+    adressLabel.font = [UIFont systemFontOfSize:13];
+    adressLabel.numberOfLines = 2;
+    adressLabel.textColor = RGBCOLOR(181, 181, 181);
+    [downDanghangView addSubview:adressLabel];
     
     
-    [_upStoreInfoView addSubview:_mallNameLabel];
-    [_upStoreInfoView addSubview:_huodongTitleLabel];
-    [_upStoreInfoView addSubview:_huodongLabel];
-    [_upStoreInfoView addSubview:_dizhiTitleLabel];
-    [_upStoreInfoView addSubview:_adressLabel];
     
-    [_mainScrollview addSubview:_upStoreInfoView];
+    
+    self.phoneNumber = result[@"shop_phone"];
+    
+    
+    //电话
+    UIButton *phoneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [phoneBtn setImage:[UIImage imageNamed:@"gphone_up.png"] forState:UIControlStateNormal];
+    [phoneBtn setImage:[UIImage imageNamed:@"gphone_down.png"] forState:UIControlStateHighlighted];
+    phoneBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    phoneBtn.layer.cornerRadius = 5;
+    phoneBtn.layer.masksToBounds = YES;
+    [phoneBtn setFrame:CGRectMake(CGRectGetMaxX(adressLabel.frame), adressLabel.frame.origin.y+2, 47, adressLabel.frame.size.height-2)];
+    phoneBtn.backgroundColor = RGBCOLOR(12, 62, 3);
+    [phoneBtn addTarget:self action:@selector(takeThePhone) forControlEvents:UIControlEventTouchUpInside];
+    [downDanghangView addSubview:phoneBtn];
+    
+    
+    if ([self.phoneNumber intValue] == 0) {
+        phoneBtn.hidden = YES;
+    }
+    
+    
 }
 
+
+
+//打电话
+-(void)takeThePhone{
+    UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"拨号" message:self.phoneNumber delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [al show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    //0取消    1确定
+    if (buttonIndex == 1) {
+        NSString *strPhone = [NSString stringWithFormat:@"tel://%@",self.phoneNumber];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:strPhone]];
+    }
+}
+
+
 //跳转地图导航页面
--(void)adressLabelClicked{
+-(void)leadYouBuy{
     GLeadBuyMapViewController *cc = [[GLeadBuyMapViewController alloc]init];
     cc.theType = LEADYOUTYPE_STORE;
-    cc.storeName = _mallNameLabel.text;
+    cc.storeName = [NSString stringWithFormat:@"%@",self.storeNameStr];
     cc.coordinate_store = self.coordinate_store;
     
     
@@ -454,7 +496,7 @@
     
     if (self.isChooseProductLink) {
         GAddTtaiImageLinkViewController *rrr = self.navigationController.viewControllers[0];
-        [rrr setGmoveImvProductId:@"0" shopid:self.shopId productName:@" " shopName:_mallNameLabel.text];
+        [rrr setGmoveImvProductId:@"0" shopid:self.shopId productName:@" " shopName:_mallNameLabel.text price:@" "];
         [self.navigationController popToViewController:rrr animated:YES];
         return;
     }
@@ -573,7 +615,7 @@
 {
     
     CGFloat aWidth = (ALL_FRAME_WIDTH - 24)/ 3.f;
-    _menu_view = [[UIView alloc]initWithFrame:CGRectMake(12, CGRectGetMaxY(_upStoreInfoView.frame)+12, aWidth * 3, 30)];
+    _menu_view = [[UIView alloc]initWithFrame:CGRectMake(12, CGRectGetMaxY(_upStoreInfoView.frame)+5, aWidth * 3, 30)];
     _menu_view.clipsToBounds = YES;
     _menu_view.layer.cornerRadius = 15.f;
     _menu_view.backgroundColor = RGBCOLOR(212, 59, 85);
@@ -604,7 +646,7 @@
     
     
     //瀑布流相关
-    _backView_water = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_menu_view.frame)+12, ALL_FRAME_WIDTH, ALL_FRAME_HEIGHT - _menu_view.frame.size.height -64-_upStoreInfoView.frame.size.height)];
+    _backView_water = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_menu_view.frame)+5, ALL_FRAME_WIDTH, ALL_FRAME_HEIGHT - _menu_view.frame.size.height -64-_upStoreInfoView.frame.size.height-25)];
     _backView_water.backgroundColor = RGBCOLOR(240, 230, 235);
     [_mainScrollview addSubview:_backView_water];
     _waterFlow = [[LWaterflowView alloc]initWithFrame:_backView_water.bounds waterDelegate:self waterDataSource:self];
@@ -633,32 +675,11 @@
     
     
     if (_paixuIndex == 0) {//新品
-        
-//        if (_dataArray_xinpin) {
-//            _waterFlow.dataArray = _dataArray_xinpin;
-//            [_waterFlow reloadData];
-//        }else{
-            [_waterFlow showRefreshHeader:YES];
-//        }
-        
-        
+        [_waterFlow showRefreshHeader:YES];
     }else if (_paixuIndex == 1){//折扣
-        
-//        if (_dataArray_zhekou) {
-//            _waterFlow.dataArray = _dataArray_zhekou;
-//            [_waterFlow reloadData];
-//        }else{
-            [_waterFlow showRefreshHeader:YES];
-//        }
-        
+        [_waterFlow showRefreshHeader:YES];
     }else if (_paixuIndex == 2){//热销
-        
-//        if (_dataArray_rexiao) {
-//            _waterFlow.dataArray = _dataArray_rexiao;
-//            [_waterFlow reloadData];
-//        }else{
-            [_waterFlow showRefreshHeader:YES];
-//        }
+        [_waterFlow showRefreshHeader:YES];
     }
 }
 
@@ -868,19 +889,33 @@
     if (scrollView.contentOffset.y>0) {
         CGFloat height = _upStoreInfoView.frame.size.height;
         if (_mainScrollview.contentOffset.y<height) {
-            [_backView_water setFrame:CGRectMake(0, CGRectGetMaxY(_menu_view.frame)+12, DEVICE_WIDTH, DEVICE_HEIGHT - _menu_view.frame.size.height -64)];
-            [_waterFlow setFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT - _menu_view.frame.size.height -64-15)];
-            [_waterFlow.quitView setFrame:_waterFlow.frame];
-            [_mainScrollview setContentOffset:CGPointMake(0, height)];
+            
+            [UIView animateWithDuration:0.3 animations:^{
+                [_backView_water setFrame:CGRectMake(0, CGRectGetMaxY(_menu_view.frame)+5, DEVICE_WIDTH, DEVICE_HEIGHT - _menu_view.frame.size.height -64)];
+                [_waterFlow setFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT - _menu_view.frame.size.height -64-15)];
+                [_waterFlow.quitView setFrame:_waterFlow.frame];
+                [_mainScrollview setContentOffset:CGPointMake(0, height)];
+            }];
+            
+            
         }
         
     }else if (scrollView.contentOffset.y<0){
         CGFloat height = _upStoreInfoView.frame.size.height;
         if (_mainScrollview.contentOffset.y>=height) {
-            [_backView_water setFrame:CGRectMake(0, CGRectGetMaxY(_menu_view.frame)+12, DEVICE_WIDTH, DEVICE_HEIGHT - _menu_view.frame.size.height -64-_upStoreInfoView.frame.size.height)];
-            [_waterFlow setFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT - _menu_view.frame.size.height -64-_upStoreInfoView.frame.size.height-15)];
-            [_waterFlow.quitView setFrame:_waterFlow.frame];
-            [_mainScrollview setContentOffset:CGPointMake(0, 0)];
+            
+            if (_upStoreInfoView.frame.size.height == 0) {
+                return;
+            }
+            
+            [UIView animateWithDuration:0.3 animations:^{
+                [_backView_water setFrame:CGRectMake(0, CGRectGetMaxY(_menu_view.frame)+5, DEVICE_WIDTH, DEVICE_HEIGHT - _menu_view.frame.size.height -64-_upStoreInfoView.frame.size.height)];
+                [_waterFlow setFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT - _menu_view.frame.size.height -64-_upStoreInfoView.frame.size.height-15)];
+                [_waterFlow.quitView setFrame:_waterFlow.frame];
+                [_mainScrollview setContentOffset:CGPointMake(0, 0)];
+            }];
+            
+            
         }
     }
 }

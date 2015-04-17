@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class ShenQingDianPuViewController;
+
 @interface GwebViewController : MyViewController<UIWebViewDelegate>
 {
     UIWebView *awebview;
@@ -18,5 +20,10 @@
     NSString *string_title;
 }
 @property(nonatomic,strong) NSString * urlstring;
+
+
+@property(nonatomic,assign)BOOL ismianzeshengming;//免责声明
+
+@property(nonatomic,assign)ShenQingDianPuViewController *shenqingdianpuvc;//申请店铺vc
 
 @end

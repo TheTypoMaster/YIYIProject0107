@@ -37,7 +37,7 @@
     //性别
     UILabel *_genderLabel;
     
-    UISwitch *_ggg;//性别开关
+    
     
     
     
@@ -90,7 +90,7 @@
     
     //主scrollview
     _mainScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT-15)];
-    _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH, DEVICE_HEIGHT+58+50+15+44);
+    _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH, DEVICE_HEIGHT+58+50+15+44+50);
     
     _mainScrollView.backgroundColor = RGBCOLOR(242, 242, 242);
     [self.view addSubview:_mainScrollView];
@@ -148,18 +148,11 @@
     }
     _leixingLabel.textColor = [UIColor blackColor];
     
-    //性别
-    if ([theModel.product_gender intValue] == 1) {
-        _genderLabel.text = @"女";
-        _ggg.on = YES;
-    }else if ([theModel.product_gender intValue] == 2){
-        _genderLabel.text = @"男";
-        _ggg.on = NO;
-    }
+    
     
     
     UIButton *btn = (UIButton*)[_mainScrollView viewWithTag:567];
-    [btn setTitle:@"修改" forState:UIControlStateNormal];
+    [btn setTitle:@"完成" forState:UIControlStateNormal];
     
     self.oldImageArray = [NSMutableArray arrayWithCapacity:1];
     
@@ -196,16 +189,49 @@
     for (UITextField *tf in _shurukuangArray) {
         [tf resignFirstResponder];
     }
-    _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH, DEVICE_HEIGHT+58+50+15);
+    
+    
+    UITextField *tf2 = _shurukuangArray[2];
+    UITextField *tf3 = _shurukuangArray[3];
+    UITextField *tf4 = _shurukuangArray[4];
+    
+    if (tf2.text.length>0 && tf3.text.length>0) {
+        CGFloat tf2_num = [tf2.text floatValue];
+        CGFloat tf3_num = [tf3.text floatValue];
+        
+        CGFloat zhekou = tf3_num/tf2_num;
+        int zhekou_int = zhekou *100;
+        tf4.text = [NSString stringWithFormat:@"%d",zhekou_int];
+        
+        if ([tf4.text intValue] == 100) {
+            tf4.text = @"无折扣";
+        }
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH, DEVICE_HEIGHT+58+50+15+50);
     
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     
     NSLog(@"%ld",(long)textField.tag);
-    _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH, DEVICE_HEIGHT+360);
+    _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH, DEVICE_HEIGHT+360+50);
     _mainScrollView.userInteractionEnabled = YES;
-    if (textField.tag == 203) {//价格
+    
+    if (textField.tag == 202) {//原价
+        if (_mainScrollView.contentOffset.y<58) {
+            _mainScrollView.contentOffset = CGPointMake(0, 58);
+        }
+        NSLog(@"------%@",textField.text);
+    }
+    if (textField.tag == 203) {//现价
         if (_mainScrollView.contentOffset.y<58) {
             _mainScrollView.contentOffset = CGPointMake(0, 58);
         }
@@ -223,6 +249,10 @@
             _mainScrollView.contentOffset = CGPointMake(0, 208);
         }
         
+    }else if (textField.tag == 207){//性别
+        if (_mainScrollView.contentOffset.y<258) {
+            _mainScrollView.contentOffset = CGPointMake(0, 258);
+        }
     }
 }
 
@@ -289,10 +319,12 @@
     
     UITextField *tf = _shurukuangArray[0];//品牌
     UITextField *tf1 = _shurukuangArray[1];//品名
-    UITextField *tf2 = _shurukuangArray[2];//型号
-    UITextField *tf3 = _shurukuangArray[3];//价格
+    UITextField *tf2 = _shurukuangArray[2];//原价
+    UITextField *tf3 = _shurukuangArray[3];//现价
     UITextField *tf4 = _shurukuangArray[4];//折扣
     UITextField *tf5 = _shurukuangArray[5];//标签
+//    UITextField *tf6 = _shurukuangArray[6];//类型
+//    UITextField *tf7 = _shurukuangArray[7];//性别
     
     
     //类型
@@ -315,7 +347,7 @@
         product_hotsale = @"0";
     }else if ([_leixingLabel.text isEqualToString:@"畅销"]){
         product_new = @"0";
-        product_hotsale = @"0";
+        product_hotsale = @"1";
     }
     
     
@@ -324,7 +356,13 @@
         return;
     }
     
-    CGFloat zhekou = [tf4.text floatValue];
+    CGFloat zhekou = 0;
+    if ([tf4.text isEqualToString:@"无折扣"]) {
+        zhekou = 100;
+    }else{
+        zhekou = [tf4.text floatValue];
+    }
+    
     zhekou = zhekou*0.1;
     NSString *zhekouStr = [NSString stringWithFormat:@"%.2f",zhekou];
     
@@ -341,7 +379,8 @@
                                        parameters:@{
                                                     @"product_name":tf1.text,//产品名
                                                     @"product_gender":gengder,//产品适用性别
-                                                    @"product_price":tf3.text,//产品价格
+                                                    @"product_price":tf3.text,//现价
+                                                    @"original_price":tf2.text,//原价
                                                     @"product_brand_id":self.mallInfo.brand_id,//产品品牌id
                                                     @"product_brand_name":tf.text,//品牌名称
                                                     @"product_shop_id":self.userInfo.shop_id,//商店id
@@ -437,15 +476,15 @@
                                    parameters:@{
                                                 @"product_name":tf1.text,//产品名
                                                 @"product_gender":gengder,//产品适用性别
-                                                @"product_price":tf3.text,//产品价格
+                                                @"product_price":tf2.text,//原价
                                                 @"product_brand_id":self.mallInfo.brand_id,//产品品牌id
                                                 @"product_brand_name":tf.text,//品牌名称
                                                 @"product_shop_id":self.userInfo.shop_id,//商店id
-                                                @"product_sku":tf2.text,//产品唯一标示
                                                 @"product_hotsale":product_hotsale,//是否热销
                                                 @"product_new":product_new,//是否新品
                                                 @"discount_num":zhekouStr,//打折力度
                                                 @"product_tag":tf5.text,//标签
+                                                @"original_price":tf3.text,//现价
                                                 @"authcode":[GMAPI getAuthkey]//用户标示
                                                 }
                                    constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
@@ -533,7 +572,7 @@
     
     
     
-    _view1 = [[UIView alloc]initWithFrame:CGRectMake(0, 15, DEVICE_WIDTH, 353)];
+    _view1 = [[UIView alloc]initWithFrame:CGRectMake(0, 15, DEVICE_WIDTH, 403)];
     _view1.backgroundColor = [UIColor whiteColor];
     [_mainScrollView addSubview:_view1];
     
@@ -545,9 +584,9 @@
         pinpai = self.mallInfo.shop_name;//品牌
     }
     
-    NSArray *titleNameArray = @[@"品牌",@"品名",@"型号",@"价格",@"折扣",@"标签",@"类型"];
+    NSArray *titleNameArray = @[@"品牌",@"品名",@"原价",@"现价",@"折扣",@"标签",@"类型",@"性别"];
     
-    for (int i = 0; i<7; i++) {
+    for (int i = 0; i<8; i++) {
         UIView *backView = [[UIView alloc]initWithFrame:CGRectMake(0, 0+i*50.5, DEVICE_WIDTH, 50)];
         //收键盘
         UIControl *tapshou = [[UIControl alloc]initWithFrame:backView.bounds];
@@ -607,6 +646,18 @@
             [backView addSubview:_leixingLabel];
         }
         
+        if (i == 7) {
+            shuruTf.text = @"123";
+            shuruTf.hidden = YES;
+            _genderLabel = [[UILabel alloc]initWithFrame:shuruTf.frame];
+            _genderLabel.userInteractionEnabled = YES;
+            _genderLabel.textColor = RGBCOLOR(199, 199, 205);
+            _genderLabel.text = @"请选择性别";
+            UITapGestureRecognizer *ttt = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(chooseGender)];
+            [_genderLabel addGestureRecognizer:ttt];
+            [backView addSubview:_genderLabel];
+        }
+        
         
         
         
@@ -614,14 +665,15 @@
             shuruTf.placeholder = @"单位:元";
             shuruTf.keyboardType = UIKeyboardTypeNumberPad;
         }else if (i == 4){
-            shuruTf.placeholder = @"如:88即为88折";
-            shuruTf.keyboardType = UIKeyboardTypeNumberPad;
+            shuruTf.placeholder = @"自动生成:88即为88折";
+            shuruTf.userInteractionEnabled = NO;
         }else if (i == 5){
             shuruTf.placeholder = @"如:运动,休闲,时尚,商务";
         }else if (i == 1){
             shuruTf.placeholder = @"请填写单品名称";
         }else if (i == 2){
-            shuruTf.placeholder = @"请填写单品型号";
+            shuruTf.placeholder = @"单位:元";
+            shuruTf.keyboardType = UIKeyboardTypeNumberPad;
         }
         
         
@@ -635,31 +687,52 @@
 //选择类型
 -(void)chooseLeixing{
     UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"选择商品类型" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"折扣",@"新品",@"畅销", nil];
+    al.tag = -5;
+    
+    [al show];
+}
+
+//选择性别
+-(void)chooseGender{
+    UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"选择性别" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"男",@"女", nil];
+    al.tag = -6;
     
     [al show];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     
-    
-    _leixingLabel.textColor = [UIColor blackColor];
-    if (buttonIndex == 1) {
-        _leixingLabel.text = @"折扣";
-    }else if (buttonIndex == 2){
-        _leixingLabel.text = @"新品";
-    }else if (buttonIndex == 3){
-        _leixingLabel.text = @"畅销";
-    }else{
-        _leixingLabel.textColor = RGBCOLOR(199, 199, 205);
-        _leixingLabel.text = @"请选择单品类型";
+    if (alertView.tag == -5) {
+        _leixingLabel.textColor = [UIColor blackColor];
+        if (buttonIndex == 1) {
+            _leixingLabel.text = @"折扣";
+        }else if (buttonIndex == 2){
+            _leixingLabel.text = @"新品";
+        }else if (buttonIndex == 3){
+            _leixingLabel.text = @"畅销";
+        }else{
+            _leixingLabel.textColor = RGBCOLOR(199, 199, 205);
+            _leixingLabel.text = @"请选择单品类型";
+        }
+    }else if (alertView.tag == -6){
+        _genderLabel.textColor = [UIColor blackColor];
+        if (buttonIndex == 1) {
+            _genderLabel.text = @"男";
+        }else if (buttonIndex == 2){
+            _genderLabel.text = @"女";
+        }else{
+            _genderLabel.textColor = RGBCOLOR(199, 199, 205);
+            _genderLabel.text = @"请选择性别";
+        }
     }
+    
     
 }
 
 
 
 -(void)creatView2{
-    _view2 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_view1.frame)+12, DEVICE_WIDTH, 160)];
+    _view2 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_view1.frame)+12, DEVICE_WIDTH, 120)];
     if (DEVICE_WIDTH>320) {
         [_view2 setFrame:CGRectMake(0, CGRectGetMaxY(_view1.frame)+12, DEVICE_WIDTH, 180)];
     }
@@ -685,9 +758,9 @@
     
     //上传衣服加号和图片view
     
-    CGFloat btnWeight = (DEVICE_WIDTH - 13*5)*0.25;
+    CGFloat btnWeight = (DEVICE_WIDTH - 13*7)/6.0f;
     
-    for (int i = 0; i<4; i++) {
+    for (int i = 0; i<6; i++) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         btn.tag = 100+i;
         if (i == 0) {
@@ -709,20 +782,6 @@
     
     
     
-    //选择性别
-    UILabel *ttt = [[UILabel alloc]initWithFrame:CGRectMake(17, CGRectGetMaxY(titleLabel.frame)+btnWeight+25, 70, 20)];
-    ttt.text = @"选择性别";
-    ttt.textColor = RGBCOLOR(114, 114, 114);
-    _ggg = [[UISwitch alloc]initWithFrame:CGRectMake(CGRectGetMaxX(ttt.frame)+5, ttt.frame.origin.y-5, 50, 50)];
-    
-    [_ggg addTarget:self action:@selector(nnnn:) forControlEvents:UIControlEventValueChanged];
-    _ggg.on = YES;
-    _genderLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_ggg.frame)+10, ttt.frame.origin.y, 50, 20)];
-    _genderLabel.text = @"女";
-    _genderLabel.textColor = RGBCOLOR(114, 114, 114);
-    [_view2 addSubview:ttt];
-    [_view2 addSubview:_ggg];
-    [_view2 addSubview:_genderLabel];
     
     
     
@@ -826,7 +885,7 @@
     imagePickerController.showsCancelButton = YES;
     imagePickerController.allowsMultipleSelection = YES;
     imagePickerController.minimumNumberOfSelection = 0;
-    imagePickerController.maximumNumberOfSelection = 3;
+    imagePickerController.maximumNumberOfSelection = 5;
     imagePickerController.selectedAssetArray = self.assetsArray;
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:imagePickerController];
     [self presentViewController:navigationController animated:YES completion:NULL];

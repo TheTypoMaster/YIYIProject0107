@@ -14,7 +14,7 @@
 #import "GchooseFloorPinpaiViewController.h"
 #import "LTools.h"
 #import "GchooseAdressViewController.h"
-
+#import "GwebViewController.h"
 
 @interface ShenQingDianPuViewController ()<UIPickerViewDelegate,UIPickerViewDataSource>
 {
@@ -102,10 +102,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeText];
     
     self.myTitle=@"申请店铺";
-    
+    self.rightString = @"声明";
     self.view.backgroundColor=RGBCOLOR(239, 239, 239);
     
     //分配内存
@@ -451,8 +451,18 @@
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
             
             NSLog(@"%@",result);
-        } failBlock:^(NSDictionary *failDic, NSError *erro) {
             
+            if ([result[@"errorcode"]intValue]==0) {
+                [GMAPI showAutoHiddenMidleQuicklyMBProgressWithText:@"验证码已发送" addToView:self.view];
+            }else {
+                [GMAPI showAutoHiddenMBProgressWithText:result[@"msg"] addToView:self.view];
+            }
+            
+            
+            
+            
+        } failBlock:^(NSDictionary *failDic, NSError *erro) {
+            [GMAPI showAutoHiddenMBProgressWithText:@"获取验证码失败" addToView:self.view];
         }];
         
         
@@ -653,9 +663,13 @@
         NSString *api = [NSString stringWithFormat:PHONE_YANZHENGMA_SHENQINGSHANGCHANGDIAN,tf.text];
         GmPrepareNetData *ccc =[[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
-            
+            if ([result[@"errorcode"]intValue]==0) {
+                [GMAPI showAutoHiddenMidleQuicklyMBProgressWithText:@"验证码已发送" addToView:self.view];
+            }else {
+                [GMAPI showAutoHiddenMBProgressWithText:result[@"msg"] addToView:self.view];
+            }
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
-            
+            [GMAPI showAutoHiddenMBProgressWithText:@"获取验证码失败" addToView:self.view];
         }];
         
         
@@ -710,6 +724,12 @@
     
     [self gShou];
     
+    
+    
+    if (!self.isMianzeshengmingAgree) {//没有同意免责声明
+        [GMAPI showAutoHiddenMBProgressWithText:@"请阅读免责声明,同意后即可开店" addToView:self.view];
+        return;
+    }
     
     
     /*mall_name 商铺名称 string 限制30字以内
@@ -791,7 +811,11 @@
                 [GMAPI showAutoHiddenMBProgressWithText:[result objectForKey:@"msg"] addToView:self.view];
                 [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_SHENQINGDIANPU_SUCCESS object:nil];
                 [self performSelector:@selector(shenqingtijiao) withObject:[NSNumber numberWithBool:YES] afterDelay:2];
+            }else{
+                [GMAPI showAutoHiddenMBProgressWithText:[result objectForKey:@"msg"] addToView:self.view];
             }
+            
+            NSLog(@"--------------------------%@",result);
             
             
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
@@ -799,7 +823,7 @@
             
             NSLog(@"申请精品店faildic==%@",failDic);
             
-            [LTools showMBProgressWithText:failDic[@"msg"] addToView:self.view];
+            [LTools showMBProgressWithText:failDic[@"ERRO_INFO"] addToView:self.view];
         }];
         
         
@@ -850,6 +874,8 @@
                 [GMAPI showAutoHiddenMBProgressWithText:@"提交成功" addToView:self.view];
                 [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_SHENQINGDIANPU_SUCCESS object:nil];
                 [self performSelector:@selector(shenqingtijiao) withObject:[NSNumber numberWithBool:YES] afterDelay:2];
+            }else{
+                [GMAPI showAutoHiddenMBProgressWithText:[result objectForKey:@"msg"] addToView:self.view];
             }
             
             
@@ -857,7 +883,7 @@
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             NSLog(@"申请商场店faildic==%@",failDic);
             
-            [GMAPI showMBProgressWithText:failDic[@"msg"] addToView:self.view];
+            [GMAPI showMBProgressWithText:failDic[@"ERRO_INFO"] addToView:self.view];
         }];
         
     }
@@ -1041,6 +1067,19 @@
 }
 
 
+
+-(void)rightButtonTap:(UIButton *)sender
+{
+    GwebViewController *ccc = [[GwebViewController alloc]init];
+    ccc.ismianzeshengming = YES;
+    ccc.shenqingdianpuvc = self;
+    ccc.urlstring = @"http://www.alayy.com/index.php?c=relief";
+    UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:ccc];
+    [self presentViewController:navc animated:YES completion:^{
+        
+    }];
+    
+}
 
 
 

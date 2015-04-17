@@ -23,5 +23,8 @@
 @property(nonatomic,retain)NSString *address;
 @property(nonatomic,retain)NSString *logo;
 @property(nonatomic,retain)NSString *shop_name;
+@property(nonatomic,strong)NSString *latitude;
+@property(nonatomic,strong)NSString *longitude;
+@property(nonatomic,strong)NSString *mall_name;
 
 @end

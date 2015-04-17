@@ -22,6 +22,9 @@
     BMKGeoCodeSearch* _geocodesearch;
     
     UIButton *_button_right;
+    
+    
+    UIImageView *_centerImage;//中间点
 
 }
 @end
@@ -52,22 +55,30 @@
     // Do any additional setup after loading the view.
 
     
-    //适配ios7
-    if( ([[[UIDevice currentDevice] systemVersion] doubleValue]>=7.0))
-    {
-        self.navigationController.navigationBar.translucent = NO;
-    }
+//    //适配ios7
+//    if( ([[[UIDevice currentDevice] systemVersion] doubleValue]>=7.0))
+//    {
+//        self.navigationController.navigationBar.translucent = NO;
+//    }
+    
+    
+    //初始化地图
+    [self setGMap];
+    
     
     //导航栏
     UIView *daohangView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 64)];
-    daohangView.backgroundColor = RGBCOLOR(235, 77, 104);
+    daohangView.backgroundColor = [UIColor whiteColor];
+    UIImageView *naviImv = [[UIImageView alloc]initWithFrame:daohangView.bounds];
+    [naviImv setImage:[UIImage imageNamed:@"navigationBarBackground.png"]];
+    
     [self.view addSubview:daohangView];
     
     //标题
     UILabel *_myTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(DEVICE_WIDTH/2.0-100,20,200,44)];
     _myTitleLabel.textAlignment = NSTextAlignmentCenter;
     _myTitleLabel.text = @"选择地址";
-    _myTitleLabel.textColor = [UIColor whiteColor];
+    _myTitleLabel.textColor = RGBCOLOR(252, 76, 139);
     _myTitleLabel.font = [UIFont systemFontOfSize:17];
     [daohangView addSubview:_myTitleLabel];
     
@@ -80,15 +91,18 @@
     [daohangView addSubview:button_back];
     
     //确定按钮
-    _button_right=[[UIButton alloc]initWithFrame:CGRectMake(DEVICE_WIDTH-10-10-40,20,40,44)];
+    
+    _button_right= [UIButton buttonWithType:UIButtonTypeCustom];
+    [_button_right setFrame:CGRectMake(DEVICE_WIDTH-10-10-40,20,40,44)];
     [_button_right addTarget:self action:@selector(rightQuedingBtn) forControlEvents:UIControlEventTouchUpInside];
     [_button_right setTitle:@"确定" forState:UIControlStateNormal];
     [_button_right setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
     _button_right.userInteractionEnabled = NO;
+    [_button_right setTitleColor:RGBCOLOR(252, 76, 139) forState:(UIControlStateNormal)];
+    _button_right.titleLabel.font = [UIFont systemFontOfSize:17];
     [daohangView addSubview:_button_right];
     
-    //初始化地图
-    [self setGMap];
+    
     
     _geocodesearch = [[BMKGeoCodeSearch alloc]init];
     _geocodesearch.delegate = self;
@@ -120,10 +134,14 @@
 -(void)rightQuedingBtn{
     
     
-    NSLog(@"%f,%f",_newAnnotation.annotation.coordinate.latitude,_newAnnotation.annotation.coordinate.longitude);
     
-    _location_y = _newAnnotation.annotation.coordinate.latitude;
-    _location_x = _newAnnotation.annotation.coordinate.longitude;
+    CLLocationCoordinate2D coordinate = [_mapView convertPoint:_centerImage.center
+                                              toCoordinateFromView:_mapView];
+    
+//    NSLog(@"%f,%f",_newAnnotation.annotation.coordinate.latitude,_newAnnotation.annotation.coordinate.longitude);
+    
+    _location_y = coordinate.latitude;
+    _location_x = coordinate.longitude;
     
     [self onClickReverseGeocode];
     
@@ -140,14 +158,25 @@
 
 #pragma mark - 初始化地图
 -(void)setGMap{
-    _mapView = [[BMKMapView alloc]initWithFrame:CGRectMake(0, 64, DEVICE_WIDTH, DEVICE_HEIGHT-64)];
+    
+    
+    _mapView = [[BMKMapView alloc]initWithFrame:self.view.bounds];
     _mapView.delegate = self;
     _mapView.zoomLevel = 18;
+    
     [self.view addSubview:_mapView];
 
     
     
     NSLog(@"%f,%f",_newAnnotation.annotation.coordinate.latitude,_newAnnotation.annotation.coordinate.longitude);
+    
+    CGSize aSize = [UIScreen mainScreen].bounds.size;
+    _centerImage = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"road_select"]];
+    _centerImage.center = CGPointMake(aSize.width / 2.f, aSize.height / 2.f - 64 + 10 + 10 + 10);
+    [self.view addSubview:_centerImage];
+
+    
+    
 }
 
 
@@ -160,8 +189,8 @@
     coor.latitude = [[dic stringValueForKey:@"lat"]floatValue];
     coor.longitude = [[dic stringValueForKey:@"long"]floatValue];
     _pointAnnotation.coordinate = coor;
-    _pointAnnotation.title = @"提示";
-    _pointAnnotation.subtitle = @"此标注可拖拽!";
+//    _pointAnnotation.title = @"提示";
+    _pointAnnotation.subtitle = @"当前位置";
     _mapView.centerCoordinate = coor;
     [_mapView addAnnotation:_pointAnnotation];
     _button_right.userInteractionEnabled = YES;
@@ -181,10 +210,12 @@
     NSString *AnnotationViewID = @"renameMark";
     if (_newAnnotation == nil) {
         _newAnnotation = [[BMKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:AnnotationViewID];
-        // 设置颜色
-        ((BMKPinAnnotationView*)_newAnnotation).pinColor = BMKPinAnnotationColorPurple;
+//        // 设置颜色
+//        ((BMKPinAnnotationView*)_newAnnotation).pinColor = BMKPinAnnotationColorPurple;
+        //设置定位图标
+        ((BMKPinAnnotationView*)_newAnnotation).image = [UIImage imageNamed:@"gpin.png"];
         // 设置可拖拽
-        ((BMKPinAnnotationView*)_newAnnotation).draggable = YES;
+//        ((BMKPinAnnotationView*)_newAnnotation).draggable = YES;
     }
     
     return _newAnnotation;

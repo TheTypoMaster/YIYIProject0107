@@ -36,11 +36,17 @@
 
 #import "GmyActivetiesViewController.h"
 
+#import "GmyshopErweimaViewController.h"//二维码
+
+#import "GmyShopHuiyuanViewController.h"//店铺会员
+
+#import "GShopPhoneViewController.h"//店铺联系电话
+
 
 @interface MyShopViewController ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,WaterFlowDelegate,TMQuiltViewDataSource,RefreshDelegate>
 {
     UITableView *_tableView;
-    ParallaxHeaderView *_backView;//banner
+    UIView *_backView;//banner
     LWaterflowView *waterFlow;
     
     RefreshTableView *rightTable;//活动
@@ -51,6 +57,9 @@
     MailInfoModel *aMailModel;
     
     BOOL scroll_OK;
+    
+    
+    UILabel *_titleLabel;//标题店名
 }
 
 @property(nonatomic,strong)UIImageView *userFaceImv;//头像Imv
@@ -58,8 +67,9 @@
 @property(nonatomic,strong)UIImage *userBanner;//banner
 @property(nonatomic,strong)UIImage *userFace;//头像
 
-@property(nonatomic,strong)UILabel *userNameLabel;//昵称label
-@property(nonatomic,strong)UILabel *userScoreLabel;//积分
+@property(nonatomic,strong)UILabel *shop_mobile;//开店时获取验证码的手机号
+@property(nonatomic,strong)UIButton *erweima;//二维码
+@property(nonatomic,strong)UIButton *shop_huiyuan;//店铺会员
 
 @property(nonatomic,strong)MailInfoModel *mallInfo;//店铺信息
 
@@ -83,6 +93,7 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.tableHeaderView = [self creatTableViewHeaderView];
+    _tableView.tableHeaderView.userInteractionEnabled = YES;
     [self.view addSubview:_tableView];
     _tableView.bounces = NO;
     
@@ -92,10 +103,29 @@
     
     [self getMailActivity];//店铺活动列表
     
+    [self creatManageView];//添加店铺管理界面
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(gengxinDanpin) name:NOTIFICATION_FABUDANPIN_SUCCESS object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(gengxinHuodong) name:NOTIFICATION_FABUHUODONG_SUCCESS object:nil];
     
+}
+
+
+
+-(void)creatManageView{
+    UIView *downManageView = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT-40, DEVICE_WIDTH, 40)];
+    downManageView.backgroundColor = [UIColor blackColor];
+    downManageView.alpha = 0.6f;
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setTitle:@"店铺管理" forState:UIControlStateNormal];
+    [btn setFrame:downManageView.bounds];
+    [btn addTarget:self action:@selector(clickToAdd:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    [downManageView addSubview:btn];
+    
+    [self.view addSubview:downManageView];
 }
 
 
@@ -134,9 +164,6 @@
     NSString *url = [NSString stringWithFormat:GET_MAIL_DETAIL_INFO,self.userInfo.shop_id];
     
     NSLog(@"%@",url);
-    
-//    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-//    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
@@ -245,7 +272,7 @@
     
     //by_time为按时间排序（新品），by_discount为按折扣排序，by_hot为是否热销，默认为by_time
     
-    NSString *url = [NSString stringWithFormat:GET_MAIL_PRODUCT_LIST,@"by_time",self.userInfo.shop_id,waterFlow.pageNum,L_PAGE_SIZE];
+    NSString *url = [NSString stringWithFormat:GET_MAIL_PRODUCT_LIST,self.userInfo.shop_id,waterFlow.pageNum,L_PAGE_SIZE];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
@@ -283,80 +310,85 @@
 ///创建用户头像banner的view
 -(UIView *)creatTableViewHeaderView{
     //底层view
-    _backView = [ParallaxHeaderView parallaxHeaderViewWithCGSize:CGSizeMake(DEVICE_WIDTH, 150.00*DEVICE_WIDTH/320)];
-    _backView.headerImage = [UIImage imageNamed:@"my_bg"];
-    
-    _backView.headerImage = [GMAPI getUserBannerImage];
-    
-    NSLog(@"%@",NSStringFromCGRect(_backView.frame));
+    _backView = [[UIView alloc ]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 150.00*DEVICE_WIDTH/320)];
+    UIImageView *imv = [[UIImageView alloc]initWithFrame:_backView.bounds];
+    imv.userInteractionEnabled = YES;
+    [imv setImage:[GMAPI getUserBannerImage]];
+    [_backView addSubview:imv];
     
     //标题
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 33, 100, 17)];
-    titleLabel.font = [UIFont systemFontOfSize:16*GscreenRatio_320];
-    titleLabel.textAlignment = NSTextAlignmentCenter;
-    titleLabel.text = @"我是店主";
-    titleLabel.textColor = [UIColor whiteColor];
-    [_backView addSubview:titleLabel];
-    titleLabel.center = CGPointMake(DEVICE_WIDTH / 2.f, titleLabel.center.y);
+    _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 33, 100, 17)];
+    _titleLabel.font = [UIFont systemFontOfSize:16*GscreenRatio_320];
+    _titleLabel.textAlignment = NSTextAlignmentCenter;
+    _titleLabel.text = @"";
+    _titleLabel.textColor = [UIColor whiteColor];
+    [_backView addSubview:_titleLabel];
+    _titleLabel.center = CGPointMake(DEVICE_WIDTH / 2.f, _titleLabel.center.y);
     
     //返回按钮
     
-    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(12,20,40,44)];
-//    button_back.backgroundColor = [UIColor orangeColor];
+    UIButton *button_back = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button_back setImage:BACK_DEFAULT_IMAGE forState:UIControlStateNormal];
+    [button_back setImageEdgeInsets:UIEdgeInsetsMake(30, 15, 30, 50)];
+    [button_back setFrame:CGRectMake(0, 0, 80, 80)];
     [button_back addTarget:self action:@selector(clickToBack:) forControlEvents:UIControlEventTouchUpInside];
     [button_back setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
-    [button_back setImage:BACK_DEFAULT_IMAGE forState:UIControlStateNormal];
     [button_back setImageEdgeInsets:UIEdgeInsetsMake(0, 12, 0, 12)];
     [_backView addSubview:button_back];
     
-    //小齿轮设置按钮 设置
-    UIButton *chilunBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [chilunBtn setFrame:CGRectMake(DEVICE_WIDTH - 55, 20, 40, 40)];
-    [chilunBtn setImage:[UIImage imageNamed:@"dz_tianjia.png"] forState:UIControlStateNormal];
-    [chilunBtn addTarget:self action:@selector(clickToAdd:) forControlEvents:UIControlEventTouchUpInside];
     
     //头像
     self.userFaceImv = [[UIImageView alloc]initWithFrame:CGRectMake(30*GscreenRatio_320, _backView.frame.size.height - 75, 50, 50)];
     self.userFaceImv.backgroundColor = RGBCOLOR_ONE;
     self.userFaceImv.layer.cornerRadius = 25;
     self.userFaceImv.layer.masksToBounds = YES;
-    //    self.userFaceImv.image = [GMAPI getUserFaceImage];
     
     
     NSLog(@"%@",NSStringFromCGRect(self.userFaceImv.frame));
     
-    //昵称
-    self.userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.userFaceImv.frame)+10, self.userFaceImv.frame.origin.y+6, DEVICE_WIDTH - self.userFaceImv.right - 20, 15)];
-    self.userNameLabel.text = @"昵称";
-    self.userNameLabel.font = [UIFont systemFontOfSize:13*GscreenRatio_320];
-    self.userNameLabel.textColor = [UIColor whiteColor];
-    _userNameLabel.text = [GMAPI getUsername];
     
-    //地址
-    self.userScoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.userNameLabel.frame.origin.x, CGRectGetMaxY(self.userNameLabel.frame)+7, self.userNameLabel.frame.size.width, 30)];
-    self.userScoreLabel.font = [UIFont systemFontOfSize:13*GscreenRatio_320];
-    self.userScoreLabel.numberOfLines = 2;
-    self.userScoreLabel.textColor = [UIColor whiteColor];
+    //手机号
+    self.shop_mobile = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.userFaceImv.frame)+30, self.userFaceImv.frame.origin.y, DEVICE_WIDTH - self.userFaceImv.right - 20, 20)];
+    self.shop_mobile.tag = 50;
+    self.shop_mobile.text = @"手机:";
+//    self.shop_mobile.backgroundColor = [UIColor blackColor];
+//    self.shop_mobile.alpha = 0.5f;
+    self.shop_mobile.font = [UIFont systemFontOfSize:13*GscreenRatio_320];
+    self.shop_mobile.textColor = [UIColor whiteColor];
     
     
     
+    //二维码
+    self.erweima = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.erweima setFrame:CGRectMake(self.shop_mobile.frame.origin.x, CGRectGetMaxY(self.shop_mobile.frame)+5, self.shop_mobile.frame.size.width, 20)];
+//    self.erweima.backgroundColor = [UIColor blackColor];
+//    self.erweima.alpha = 0.5f;
+    [self.erweima addTarget:self action:@selector(erweimaClicked) forControlEvents:UIControlEventTouchUpInside];
+    self.erweima.titleLabel.font = [UIFont systemFontOfSize:13*GscreenRatio_320];
+    [self.erweima setTitle:@"店铺二维码" forState:UIControlStateNormal];
+    self.erweima.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [self.erweima setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
-//    //管理
-//    UIButton *manageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [manageBtn setTitle:@"管理" forState:UIControlStateNormal];
-//    manageBtn.titleLabel.font = [UIFont systemFontOfSize:15];
-//    [manageBtn setFrame:CGRectMake(chilunBtn.frame.origin.x, _backView.frame.size.height-44, 55, 44)];
-//    [manageBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    [manageBtn addTarget:self action:@selector(manageBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-//    [_backView addSubview:manageBtn];
+    
+    //店铺会员
+    
+    self.shop_huiyuan = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.shop_huiyuan setFrame:CGRectMake(self.shop_mobile.frame.origin.x, CGRectGetMaxY(self.erweima.frame)+5, self.shop_mobile.frame.size.width, 20)];
+    [self.shop_huiyuan setTitle:@"店铺会员" forState:UIControlStateNormal];
+    self.shop_huiyuan.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [self.shop_huiyuan setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    self.shop_huiyuan.titleLabel.font = [UIFont systemFontOfSize:13*GscreenRatio_320];
+    [self.shop_huiyuan addTarget:self action:@selector(shophuiyuanClicked) forControlEvents:UIControlEventTouchUpInside];
+
     
     
-    //    //添加视图
-    //    [backView addSubview:self.userBannerImv];
+    
+    
+    //添加视图
     [_backView addSubview:self.userFaceImv];
-    [_backView addSubview:self.userNameLabel];
-    [_backView addSubview:self.userScoreLabel];
-    [_backView addSubview:chilunBtn];
+    [_backView addSubview:self.shop_mobile];
+    [_backView addSubview:self.erweima];
+//    [_backView addSubview:self.shop_huiyuan];
     
     
     
@@ -364,6 +396,41 @@
     
     return _backView;
 }
+
+
+-(void)lableClicked:(UITapGestureRecognizer*)ttt{
+    
+    if (ttt.view.tag == 50) {//手机号
+        
+    }else if (ttt.view.tag == 51){//店铺二维码
+        GmyshopErweimaViewController *ccc = [[GmyshopErweimaViewController alloc]init];
+        [self.navigationController pushViewController:ccc animated:YES];
+        self.navigationController.navigationBarHidden = NO;
+    }else if (ttt.view.tag == 51){//店铺会员
+        GmyShopHuiyuanViewController *ccc = [[GmyShopHuiyuanViewController alloc]init];
+        [self.navigationController pushViewController:ccc animated:YES];
+        self.navigationController.navigationBarHidden = NO;
+    }
+}
+
+//店铺二维码点击
+-(void)erweimaClicked{
+    GmyshopErweimaViewController *ccc = [[GmyshopErweimaViewController alloc]init];
+    ccc.mallInfo = self.mallInfo;
+    ccc.shop_id = self.userInfo.shop_id;
+    [self.navigationController pushViewController:ccc animated:YES];
+    self.navigationController.navigationBarHidden = NO;
+}
+
+//店铺会员点击
+-(void)shophuiyuanClicked{
+    GmyShopHuiyuanViewController *ccc = [[GmyShopHuiyuanViewController alloc]init];
+    ccc.mallInfo = self.mallInfo;
+    [self.navigationController pushViewController:ccc animated:YES];
+    
+    self.navigationController.navigationBarHidden = NO;
+}
+
 
 
 -(void)manageBtnClicked{
@@ -383,12 +450,12 @@
 {
     aMailModel = aModel;
     [self.userFaceImv sd_setImageWithURL:[NSURL URLWithString:aModel.logo] placeholderImage:nil];
-    self.userNameLabel.text = aModel.shop_name;
-    self.userScoreLabel.text = aModel.address;
-    [self.userScoreLabel sizeToFit];
+    self.shop_mobile.text = [NSString stringWithFormat:@"手机:%@",aModel.shop_mobile];
+    _titleLabel.text = aModel.shop_name;
+    
 }
 
-//更新状态栏颜色
+
 
 - (void)pushViewController:(UIViewController *)viewController
 {
@@ -451,9 +518,8 @@
 
 - (void)clickToAdd:(UIButton *)sender
 {
-    NSLog(@"添加商品 或者 单品");
     
-    UIActionSheet *sheet = [[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"发布单品",@"发布活动",@"管理单品",@"管理活动", nil];
+    UIActionSheet *sheet = [[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"发布单品",@"发布活动",@"管理单品",@"管理活动",@"联系电话", nil];
     sheet.tag = 18;
     [sheet showInView:self.view];
 }
@@ -492,6 +558,12 @@
             ccc.userInfo = self.userInfo;
             ccc.mallInfo = self.mallInfo;
             [self.navigationController pushViewController:ccc animated:YES];
+        }else if (buttonIndex == 4){
+            NSLog(@"联系电话");
+            GShopPhoneViewController *ccc = [[GShopPhoneViewController alloc]init];
+            ccc.shop_id = self.userInfo.shop_id;
+            [self.navigationController pushViewController:ccc animated:YES];
+            
         }
     }
     
@@ -506,8 +578,7 @@
     
     if (scrollView == _tableView)
     {
-        // pass the current offset of the UITableView so that the ParallaxHeaderView layouts the subViews.
-        //        [(ParallaxHeaderView *)_backView layoutHeaderViewForScrollViewOffset:scrollView.contentOffset];
+        
     }
     NSLog(@"---->%f",scrollView.contentOffset.y);
     if (scrollView.contentOffset.y <= 130) {
@@ -532,17 +603,7 @@
 #pragma mark - WaterFlowDelegate
 - (void)waterScrollViewDidScroll:(UIScrollView *)scrollView
 {
-    //    if (scrollView.contentOffset.y <= 100)
-    //    {
-    //
-    //        // 输出改变后的值
-    //        [_tableView setContentOffset:CGPointMake(0,0) animated:YES];
-    //
-    //    }else if(scrollView.contentOffset.y > 100)
-    //    {
-    //        [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
-    //
-    //    }
+    
     CGFloat offset = scrollView.contentOffset.y;
     
     [UIView animateWithDuration:0.2 animations:^{
@@ -576,18 +637,6 @@
 {
     NSLog(@"scrollView %f",scrollView.contentOffset.y);
     if (scrollView == rightTable) {
-        
-        //        if (scrollView.contentOffset.y <= 100)
-        //        {
-        //
-        //            // 输出改变后的值
-        //            [_tableView setContentOffset:CGPointMake(0,0) animated:YES];
-        //
-        //        }else if(scrollView.contentOffset.y > 100)
-        //        {
-        //            [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
-        //
-        //        }
         
         
         CGFloat offset = scrollView.contentOffset.y;

@@ -123,6 +123,11 @@
 
         NSLog(@"动态消息调整到T台详情");
         
+        NSLog(@"%@",aModel.type);
+        if ([aModel.type intValue] == 12) {
+            return;
+        }
+        
         TTaiDetailController *t_detail = [[TTaiDetailController alloc]init];
         t_detail.tt_id = aModel.theme_id;
         [self.navigationController pushViewController:t_detail animated:YES];

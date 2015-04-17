@@ -7,16 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-@class GtopScrollView;
 
+@class GtopScrollView;
+@class GnearbyStoreViewController;
 
 typedef void(^pinpaiClick)(NSString *pinpaiId,NSString *pinpaiName);//品牌楼层block
 
-
-
-
 @interface GRootScrollView : UIScrollView<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
-
 
 
 @property(nonatomic,assign)CGFloat userContentOffsetX;
@@ -36,12 +33,16 @@ typedef void(^pinpaiClick)(NSString *pinpaiId,NSString *pinpaiName);//品牌楼�
 @property(nonatomic,strong)NSMutableArray *contentTfArray;
 @property(nonatomic,strong)NSMutableArray *scrollViewArray;//所有的scrollview数组
 
+@property(nonatomic,assign)GnearbyStoreViewController *nearbyStoreVC;
+
 - (void)initWithViews;
 
 -(void)setThePinpaiBlock:(pinpaiClick)thePinpaiBlock;
 
 
 -(void)GreloadData;
+
+
 
 
 @end

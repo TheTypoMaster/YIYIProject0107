@@ -589,43 +589,43 @@
     brand.font = [UIFont systemFontOfSize:15];
     brand.text = @"品牌:";
     brand.textColor = color;
-    [head_view addSubview:brand];
+//    [head_view addSubview:brand];
     
     UILabel *brand_label = [[UILabel alloc]initWithFrame:CGRectMake(brand.right + 10, bigImageView.bottom + 20, 200, 15)];
     brand_label.font = [UIFont systemFontOfSize:15];
     brand_label.text = brand_text;
     brand_label.textColor = color2;
-    [head_view addSubview:brand_label];
+//    [head_view addSubview:brand_label];
     
     //型号
     UILabel *model = [[UILabel alloc]initWithFrame:CGRectMake(10, brand.bottom + 10, 35, 15)];
     model.font = [UIFont systemFontOfSize:15];
     model.text = @"型号:";
     model.textColor = color;
-    [head_view addSubview:model];
+//    [head_view addSubview:model];
     
     UILabel *model_label = [[UILabel alloc]initWithFrame:CGRectMake(model.right + 10, model.top, 200, 15)];
     model_label.font = [UIFont systemFontOfSize:15];
     model_label.text = model_text;
     model_label.textColor = color2;
-    [head_view addSubview:model_label];
+//    [head_view addSubview:model_label];
     
     //价格
     UILabel *price = [[UILabel alloc]initWithFrame:CGRectMake(10, model.bottom + 10, 35, 15)];
     price.font = [UIFont systemFontOfSize:15];
     price.text = @"价格:";
     price.textColor = color;
-    [head_view addSubview:price];
+//    [head_view addSubview:price];
     
     UILabel *price_label = [[UILabel alloc]initWithFrame:CGRectMake(price.right + 10, price.top, 200, 15)];
     price_label.font = [UIFont systemFontOfSize:15];
     price_label.text = price_text;
     price_label.textColor = color2;
-    [head_view addSubview:price_label];
+//    [head_view addSubview:price_label];
     
     //评论
     
-    UIImageView *comment_icon = [[UIImageView alloc]initWithFrame:CGRectMake(29, price_label.bottom+ 19, 17, 17)];
+    UIImageView *comment_icon = [[UIImageView alloc]initWithFrame:CGRectMake(29, bigImageView.bottom + 20, 17, 17)];
     comment_icon.image = [UIImage imageNamed:@"pinglun_icon"];
     [head_view addSubview:comment_icon];
     
@@ -658,22 +658,44 @@
     float dy=[maodian_detail[@"img_y"] floatValue];
     
     if (product_id>0) {
-        
         //说明是单品
         
-        //代表是单品
-//        UIButton *product_button=[[UIButton alloc]initWithFrame:CGRectMake(dx*bigImageView.frame.size.width, dy*bigImageView.frame.size.height, 70, 50)];
+//        UIView *theFlag = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 105, 75)];
+//        UIImageView *backImv = [[UIImageView alloc]initWithFrame:theFlag.bounds];
+//        [backImv setImage:[UIImage imageNamed:@"gttailink_have.png"]];
+//        [theFlag addSubview:backImv];
+//        //产品名称
+//        UILabel *productName = [[UILabel alloc]initWithFrame:CGRectMake(15, 5, 90, 23)];
+//        productName.text = maodian_detail[@"product_name"];
+//        productName.font = [UIFont systemFontOfSize:10];
+//        productName.textColor = [UIColor whiteColor];
+//        [theFlag addSubview:productName];
 //        
-//        product_button.backgroundColor=[UIColor redColor];
+//        //单价
+//        UILabel *priceLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, CGRectGetMaxY(productName.frame), 90, 13)];
+////        priceLabel.text = [NSString stringWithFormat:@"￥%@",imv.product_price];
+//        priceLabel.font = [UIFont systemFontOfSize:10];
+//        priceLabel.textColor = [UIColor whiteColor];
+//        [theFlag addSubview:priceLabel];
 //        
-//        [bigImageView addSubview:product_button];
+//        //地址
+//        UILabel *adressLabel = [[UILabel alloc]initWithFrame:CGRectMake(7, CGRectGetMaxY(priceLabel.frame)+3, 97, 25)];
+//        adressLabel.text = maodian_detail[@"shop_name"];
+//        adressLabel.font = [UIFont systemFontOfSize:10];
+//        adressLabel.textAlignment = NSTextAlignmentCenter;
+//        adressLabel.numberOfLines = 2;
+//        adressLabel.textColor = [UIColor whiteColor];
+//        [theFlag addSubview:adressLabel];
 //        
-//        product_button.tag=shop_id;
+//        theFlag.center = CGPointMake(bigImageView.frame.size.width*dx, dy*bigImageView.frame.size.height*dy);
+//        [bigImageView addSubview:theFlag];
+//        theFlag.tag = product_id;
+//        UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(turntodanpin:)];
+//        theFlag.userInteractionEnabled=YES;
 //        
-//        [product_button setTitle:maodian_detail[@"product_name"]  forState:UIControlStateNormal];
-//        [product_button addTarget:self action:@selector(turntodanpin:) forControlEvents:UIControlEventTouchUpInside];
+//        [theFlag addGestureRecognizer:tap];
         
-    UILabel *    _centerLabel=[[UILabel alloc] initWithFrame:CGRectZero];
+        UILabel *_centerLabel=[[UILabel alloc] initWithFrame:CGRectZero];
         _centerLabel.backgroundColor=RGBCOLOR(200, 100, 200);
         _centerLabel.textColor=[UIColor colorWithRed:220/255.f green:220/255.f blue:230/255.f alpha:1];
         _centerLabel.font=[UIFont systemFontOfSize:14];
@@ -685,6 +707,7 @@
         [_centerLabel sizeToFit];
         _centerLabel.tag=product_id;
         _centerLabel.frame=CGRectMake(dx*bigImageView.frame.size.width, dy*bigImageView.frame.size.height, _centerLabel.frame.size.width+4, _centerLabel.frame.size.height+4);
+        _centerLabel.center = CGPointMake(dx*bigImageView.frame.size.width, dy*bigImageView.frame.size.height);
         [bigImageView addSubview:_centerLabel];
         
         UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(turntodanpin:)];
@@ -695,21 +718,7 @@
     }else{
         
         //说明是品牌店面
-        
-//        UIButton *shangchang_button=[[UIButton alloc]initWithFrame:CGRectMake(dx*bigImageView.frame.size.width, dy*bigImageView.frame.size.height, 50, 20)];
-//        
-//        shangchang_button.backgroundColor=[UIColor redColor];
-//        
-//        [bigImageView addSubview:shangchang_button];
-//        
-//        shangchang_button.tag=product_id;
-//        [shangchang_button addTarget:self action:@selector(turntoshangchang:) forControlEvents:UIControlEventTouchUpInside];
-//        
-//        
-//        [shangchang_button setTitle:maodian_detail[@"shop_name"]  forState:UIControlStateNormal];
-
-        
-        UILabel *    _centerLabel=[[UILabel alloc] initWithFrame:CGRectZero];
+        UILabel *_centerLabel=[[UILabel alloc] initWithFrame:CGRectZero];
         _centerLabel.backgroundColor=RGBCOLOR(255, 0, 0);
         _centerLabel.textColor=[UIColor colorWithRed:220/255.f green:220/255.f blue:230/255.f alpha:1];
         _centerLabel.font=[UIFont systemFontOfSize:12];

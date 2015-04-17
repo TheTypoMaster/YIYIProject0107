@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GupHuoDongViewController.m"
-            timestampString = "449411478.187866"
+            timestampString = "450786477.52713"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "574"
-            endingLineNumber = "574"
+            startingLineNumber = "576"
+            endingLineNumber = "576"
             landmarkName = "-removeSelf"
             landmarkType = "5">
          </BreakpointContent>
@@ -170,11 +170,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GStorePinpaiViewController.m"
-            timestampString = "450229467.038112"
+            timestampString = "450688297.349589"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "268"
-            endingLineNumber = "268"
+            startingLineNumber = "246"
+            endingLineNumber = "246"
             landmarkName = "-prepareDianpuInfo"
             landmarkType = "5">
          </BreakpointContent>
@@ -218,11 +218,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/ViewControllers/MineViewController.m"
-            timestampString = "449403552.993335"
+            timestampString = "450910216.994365"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "240"
-            endingLineNumber = "240"
+            startingLineNumber = "251"
+            endingLineNumber = "251"
             landmarkName = "-GgetUserInfo"
             landmarkType = "5">
          </BreakpointContent>
@@ -458,11 +458,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/Controllers/&#x9996;&#x9875;/ViewControllers/ProductDetailController.m"
-            timestampString = "450229760.123068"
+            timestampString = "450960811.245412"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "238"
-            endingLineNumber = "238"
+            startingLineNumber = "233"
+            endingLineNumber = "233"
             landmarkName = "-tapImage:"
             landmarkType = "5">
          </BreakpointContent>
@@ -490,11 +490,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/Controllers/&#x9996;&#x9875;/ViewControllers/ProductDetailController.m"
-            timestampString = "450229760.123068"
+            timestampString = "450960811.245412"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "251"
-            endingLineNumber = "251"
+            startingLineNumber = "246"
+            endingLineNumber = "246"
             landmarkName = "-tapImage:"
             landmarkType = "5">
          </BreakpointContent>
@@ -586,11 +586,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GnearbyStoreViewController.m"
-            timestampString = "449410876.35887"
+            timestampString = "450700177.614248"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "91"
-            endingLineNumber = "91"
+            startingLineNumber = "97"
+            endingLineNumber = "97"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
@@ -602,11 +602,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GupHuoDongViewController.m"
-            timestampString = "449411478.187866"
+            timestampString = "450786477.52713"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "617"
-            endingLineNumber = "617"
+            startingLineNumber = "619"
+            endingLineNumber = "619"
             landmarkName = "-imagePickerController:didFinishPickingMediaWithInfo:"
             landmarkType = "5">
          </BreakpointContent>
@@ -618,11 +618,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GupHuoDongViewController.m"
-            timestampString = "449411478.187866"
+            timestampString = "450975974.574281"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "640"
-            endingLineNumber = "640"
+            startingLineNumber = "656"
+            endingLineNumber = "656"
             landmarkName = "-cropImage:forOriginalImage:"
             landmarkType = "5">
          </BreakpointContent>
@@ -634,11 +634,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/&#x738b;&#x9f99;/&#x4ed6;&#x4eba;&#x4e2d;&#x5fc3;/ViewController/GmyMainViewController.m"
-            timestampString = "449474988.959951"
+            timestampString = "450886648.341068"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "339"
-            endingLineNumber = "339"
+            startingLineNumber = "341"
+            endingLineNumber = "341"
             landmarkName = "-quiltView:cellAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -682,11 +682,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/Controllers/&#x6d88;&#x606f;/ViewControllers/MailMessageViewController.m"
-            timestampString = "450166853.927841"
+            timestampString = "450961866.82971"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "135"
-            endingLineNumber = "135"
+            startingLineNumber = "140"
+            endingLineNumber = "140"
             landmarkName = "-didSelectRowAtIndexPath:tableView:"
             landmarkType = "5">
          </BreakpointContent>
@@ -698,11 +698,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/Controllers/&#x6d88;&#x606f;/ViewControllers/MailMessageViewController.m"
-            timestampString = "450166853.927841"
+            timestampString = "450961866.82971"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "132"
-            endingLineNumber = "132"
+            startingLineNumber = "137"
+            endingLineNumber = "137"
             landmarkName = "-didSelectRowAtIndexPath:tableView:"
             landmarkType = "5">
          </BreakpointContent>
@@ -714,11 +714,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GsearchViewController.m"
-            timestampString = "449678605.431318"
+            timestampString = "450339980.894366"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "325"
-            endingLineNumber = "325"
+            startingLineNumber = "328"
+            endingLineNumber = "328"
             landmarkName = "-didSelectRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -730,11 +730,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GnearbyStoreViewController.m"
-            timestampString = "449679264.821666"
+            timestampString = "450700177.614248"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "396"
-            endingLineNumber = "396"
+            startingLineNumber = "428"
+            endingLineNumber = "428"
             landmarkName = "-prepareNetData"
             landmarkType = "5">
          </BreakpointContent>
@@ -746,11 +746,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GnearbyStoreViewController.m"
-            timestampString = "449679264.821666"
+            timestampString = "450700177.614248"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "371"
-            endingLineNumber = "371"
+            startingLineNumber = "403"
+            endingLineNumber = "403"
             landmarkName = "-leadYouBuy"
             landmarkType = "5">
             <Locations>
@@ -760,13 +760,14 @@
                   continueAfterRunningActions = "No"
                   symbolName = "-[GnearbyStoreViewController leadYouBuy]"
                   moduleName = "YiYiProject"
+                  usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/gaomeng/Documents/%E5%B7%A5%E4%BD%9C/YIYIProject0107/YiYiProject/YiYiProject/PersonalApi/GMAPI/Gcontrollers/GnearbyStoreViewController.m"
-                  timestampString = "450166854.591116"
+                  timestampString = "450975176.337349"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "373"
-                  endingLineNumber = "373"
-                  offsetFromSymbolStart = "316">
+                  startingLineNumber = "405"
+                  endingLineNumber = "405"
+                  offsetFromSymbolStart = "258">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -774,12 +775,13 @@
                   continueAfterRunningActions = "No"
                   symbolName = "__40-[GnearbyStoreViewController leadYouBuy]_block_invoke"
                   moduleName = "YiYiProject"
+                  usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/gaomeng/Documents/%E5%B7%A5%E4%BD%9C/YIYIProject0107/YiYiProject/YiYiProject/PersonalApi/GMAPI/Gcontrollers/GnearbyStoreViewController.m"
-                  timestampString = "450166854.591247"
+                  timestampString = "450975176.337573"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "375"
-                  endingLineNumber = "375"
+                  startingLineNumber = "407"
+                  endingLineNumber = "407"
                   offsetFromSymbolStart = "12">
                </Location>
             </Locations>
@@ -824,11 +826,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GAddTtaiImageLinkViewController.m"
-            timestampString = "450231968.707377"
+            timestampString = "450954457.824284"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
+            startingLineNumber = "116"
+            endingLineNumber = "116"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
@@ -840,11 +842,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GStorePinpaiViewController.m"
-            timestampString = "450229467.038112"
+            timestampString = "450599971.683052"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "246"
-            endingLineNumber = "246"
+            startingLineNumber = "214"
+            endingLineNumber = "214"
             landmarkName = "-prepareDianpuInfo"
             landmarkType = "5">
          </BreakpointContent>
@@ -856,11 +858,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GStorePinpaiViewController.m"
-            timestampString = "450229467.038112"
+            timestampString = "450944946.897295"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "411"
-            endingLineNumber = "411"
+            startingLineNumber = "453"
+            endingLineNumber = "453"
             landmarkName = "-getGuanzhuYesOrNoForPinpai"
             landmarkType = "5">
          </BreakpointContent>
@@ -872,11 +874,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GStorePinpaiViewController.m"
-            timestampString = "450229467.038112"
+            timestampString = "450944946.897295"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "457"
-            endingLineNumber = "457"
+            startingLineNumber = "499"
+            endingLineNumber = "499"
             landmarkName = "-rightButtonTap:"
             landmarkType = "5">
          </BreakpointContent>
@@ -887,28 +889,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GAddTtaiImageLinkViewController.m"
-            timestampString = "450231968.707377"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "187"
-            endingLineNumber = "187"
-            landmarkName = "-touchesBegan:withEvent:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GTTPublishViewController.m"
-            timestampString = "449754381.990279"
+            timestampString = "450786477.52713"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
             landmarkName = "-viewWillAppear:"
             landmarkType = "5">
          </BreakpointContent>
@@ -920,11 +906,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GTTPublishViewController.m"
-            timestampString = "449756611.567301"
+            timestampString = "450786477.52713"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "82"
-            endingLineNumber = "82"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
             landmarkName = "-upLoadImage:"
             landmarkType = "5">
          </BreakpointContent>
@@ -936,11 +922,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GTTPublishViewController.m"
-            timestampString = "449756616.80579"
+            timestampString = "450786477.52713"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "88"
-            endingLineNumber = "88"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
             landmarkName = "-upLoadImage:"
             landmarkType = "5">
          </BreakpointContent>
@@ -952,11 +938,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GTTPublishViewController.m"
-            timestampString = "449756622.843279"
+            timestampString = "450786477.52713"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "120"
-            endingLineNumber = "120"
+            startingLineNumber = "122"
+            endingLineNumber = "122"
             landmarkName = "-upLoadImage:"
             landmarkType = "5">
          </BreakpointContent>
@@ -968,11 +954,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GTTPublishViewController.m"
-            timestampString = "449756626.153162"
+            timestampString = "450786477.52713"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "150"
-            endingLineNumber = "150"
+            startingLineNumber = "152"
+            endingLineNumber = "152"
             landmarkName = "-upLoadImage:"
             landmarkType = "5">
          </BreakpointContent>
@@ -984,27 +970,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/Controllers/&#x9996;&#x9875;/ViewControllers/ProductDetailController.m"
-            timestampString = "450229760.123068"
+            timestampString = "450960811.245412"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "340"
-            endingLineNumber = "340"
-            landmarkName = "-clickToContact:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "YiYiProject/Controllers/&#x9996;&#x9875;/ViewControllers/ProductDetailController.m"
-            timestampString = "450229760.123068"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "143"
-            endingLineNumber = "143"
+            startingLineNumber = "138"
+            endingLineNumber = "138"
             landmarkName = "-networkForDetail"
             landmarkType = "5">
          </BreakpointContent>
@@ -1102,6 +1072,1158 @@
             startingLineNumber = "246"
             endingLineNumber = "246"
             landmarkName = "-tapToDynamic:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/&#x738b;&#x9f99;/&#x7f16;&#x8f91;&#x8d44;&#x6599;/VIewControllers/EditMyInfoViewController.m"
+            timestampString = "450968305.604417"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
+            landmarkName = "-viewDidLoad"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/Controllers/&#x9996;&#x9875;/ViewControllers/YIYIChatViewController.m"
+            timestampString = "450337658.091186"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
+            landmarkName = "-viewDidLoad"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GLeadBuyMapViewController.m"
+            timestampString = "450347075.554958"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
+            landmarkName = "-viewDidLoad"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GAddTtaiImageLinkViewController.m"
+            timestampString = "450954457.824284"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "233"
+            endingLineNumber = "233"
+            landmarkName = "-touchesBegan:withEvent:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GAddTtaiImageLinkViewController.m"
+            timestampString = "450954457.824284"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "259"
+            endingLineNumber = "259"
+            landmarkName = "-touchesBegan:withEvent:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/Controllers/&#x5176;&#x4ed6;/ViewControllers/ForgetPwdController.m"
+            timestampString = "450512530.144076"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "137"
+            endingLineNumber = "137"
+            landmarkName = "-clickToCommit:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GnearbyStoreViewController.m"
+            timestampString = "450700177.614248"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "285"
+            endingLineNumber = "285"
+            landmarkName = "-creatUpStoreInfoViewWithResult:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GnearbyStoreViewController.m"
+            timestampString = "450700177.614248"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "479"
+            endingLineNumber = "479"
+            landmarkName = "-huodongLabelClicked"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GnearbyStoreViewController.m"
+            timestampString = "450700177.614248"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "221"
+            endingLineNumber = "221"
+            landmarkName = "-creatUpStoreInfoViewWithResult:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GnearbyStoreViewController.m"
+            timestampString = "450700177.614248"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "223"
+            endingLineNumber = "223"
+            landmarkName = "-creatUpStoreInfoViewWithResult:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GnearbyStoreViewController.m"
+            timestampString = "450700177.614248"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "434"
+            endingLineNumber = "434"
+            landmarkName = "-prepareNetData"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GnearbyStoreViewController.m"
+            timestampString = "450700177.614248"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "314"
+            endingLineNumber = "314"
+            landmarkName = "-creatFloorScrollViewWithDic:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/zkingControl/ShenQingDianPuControl/Controllers/ShenQingDianPuViewController.m"
+            timestampString = "450974620.605609"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "864"
+            endingLineNumber = "864"
+            landmarkName = "-tijiao:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/zkingControl/ShenQingDianPuControl/Controllers/ShenQingDianPuViewController.m"
+            timestampString = "450974620.605609"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "871"
+            endingLineNumber = "871"
+            landmarkName = "-tijiao:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/zkingControl/ShenQingDianPuControl/Controllers/ShenQingDianPuViewController.m"
+            timestampString = "450974620.605609"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "883"
+            endingLineNumber = "883"
+            landmarkName = "-tijiao:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GStorePinpaiViewController.m"
+            timestampString = "450944946.897295"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "510"
+            endingLineNumber = "510"
+            landmarkName = "-rightButtonTap:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GStorePinpaiViewController.m"
+            timestampString = "450944946.897295"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "518"
+            endingLineNumber = "518"
+            landmarkName = "-rightButtonTap:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GStorePinpaiViewController.m"
+            timestampString = "450944946.897295"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "524"
+            endingLineNumber = "524"
+            landmarkName = "-rightButtonTap:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GStorePinpaiViewController.m"
+            timestampString = "450944946.897295"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "528"
+            endingLineNumber = "528"
+            landmarkName = "-rightButtonTap:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GStorePinpaiViewController.m"
+            timestampString = "450944946.897295"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "536"
+            endingLineNumber = "536"
+            landmarkName = "-rightButtonTap:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GStorePinpaiViewController.m"
+            timestampString = "450944946.897295"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "547"
+            endingLineNumber = "547"
+            landmarkName = "-rightButtonTap:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GStorePinpaiViewController.m"
+            timestampString = "450689949.302911"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "290"
+            endingLineNumber = "290"
+            landmarkName = "-creatDianpuInfoViewWithResult:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GStorePinpaiViewController.m"
+            timestampString = "450689949.302911"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "314"
+            endingLineNumber = "314"
+            landmarkName = "-creatDianpuInfoViewWithResult:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gutils/GupDownScrollview/GRootScrollView.m"
+            timestampString = "450697293.517967"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "118"
+            endingLineNumber = "118"
+            landmarkName = "-scrollViewDidEndScrollingAnimation:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GnearbyStoreViewController.m"
+            timestampString = "450700177.614248"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "492"
+            endingLineNumber = "492"
+            landmarkName = "-showTheUpDownViewFullView"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GnearbyStoreViewController showTheUpDownViewFullView]"
+                  moduleName = "YiYiProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/gaomeng/Documents/%E5%B7%A5%E4%BD%9C/YIYIProject0107/YiYiProject/YiYiProject/PersonalApi/GMAPI/Gcontrollers/GnearbyStoreViewController.m"
+                  timestampString = "450975176.363486"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "492"
+                  endingLineNumber = "492"
+                  offsetFromSymbolStart = "41">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__55-[GnearbyStoreViewController showTheUpDownViewFullView]_block_invoke"
+                  moduleName = "YiYiProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/gaomeng/Documents/%E5%B7%A5%E4%BD%9C/YIYIProject0107/YiYiProject/YiYiProject/PersonalApi/GMAPI/Gcontrollers/GnearbyStoreViewController.m"
+                  timestampString = "450975176.363628"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "492"
+                  endingLineNumber = "492"
+                  offsetFromSymbolStart = "15">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/ViewControllers/MyShopViewController.m"
+            timestampString = "450956971.753665"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "91"
+            endingLineNumber = "91"
+            landmarkName = "-viewDidLoad"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/ViewControllers/MyShopViewController.m"
+            timestampString = "450956971.753665"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "520"
+            endingLineNumber = "520"
+            landmarkName = "-clickToAdd:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/zkingControl/ShenQingDianPuControl/Controllers/ShenQingDianPuViewController.m"
+            timestampString = "450974620.605609"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "799"
+            endingLineNumber = "799"
+            landmarkName = "-tijiao:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/zkingControl/ShenQingDianPuControl/Controllers/ShenQingDianPuViewController.m"
+            timestampString = "450974620.605609"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "808"
+            endingLineNumber = "808"
+            landmarkName = "-tijiao:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/zkingControl/ShenQingDianPuControl/Controllers/ShenQingDianPuViewController.m"
+            timestampString = "450974620.605609"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "823"
+            endingLineNumber = "823"
+            landmarkName = "-tijiao:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GupClothesViewController.m"
+            timestampString = "450944841.338012"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "717"
+            endingLineNumber = "717"
+            landmarkName = "-alertView:clickedButtonAtIndex:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GupClothesViewController.m"
+            timestampString = "450944841.338012"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "469"
+            endingLineNumber = "469"
+            landmarkName = "-upLoadImage:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GupClothesViewController.m"
+            timestampString = "450786642.644949"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "197"
+            endingLineNumber = "197"
+            landmarkName = "-gShou"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GupClothesViewController.m"
+            timestampString = "450944841.338012"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "213"
+            endingLineNumber = "213"
+            landmarkName = "-gShou"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GupClothesViewController.m"
+            timestampString = "450786712.076493"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "199"
+            endingLineNumber = "199"
+            landmarkName = "-gShou"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/ViewControllers/MineViewController.m"
+            timestampString = "450910216.994365"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "266"
+            endingLineNumber = "266"
+            landmarkName = "-GgetUserInfo"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/ViewControllers/MyShopViewController.m"
+            timestampString = "450956971.753665"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "402"
+            endingLineNumber = "402"
+            landmarkName = "-lableClicked:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GmyShopHuiyuanViewController.m"
+            timestampString = "450904073.530771"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
+            landmarkName = "-prepareNetData"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/ViewControllers/MineViewController.m"
+            timestampString = "450910216.994365"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "141"
+            endingLineNumber = "141"
+            landmarkName = "-loadMineView"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/ViewControllers/MineViewController.m"
+            timestampString = "450910216.994365"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "147"
+            endingLineNumber = "147"
+            landmarkName = "-loadMineView"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/ViewControllers/MineViewController.m"
+            timestampString = "450910216.994365"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "155"
+            endingLineNumber = "155"
+            landmarkName = "-loadMineView"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/ViewControllers/MineViewController.m"
+            timestampString = "450935480.268545"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "610"
+            endingLineNumber = "610"
+            landmarkName = "-tableView:didSelectRowAtIndexPath:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GAddTtaiImageLinkViewController.m"
+            timestampString = "450954457.824284"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "178"
+            endingLineNumber = "178"
+            landmarkName = "-rightButtonTap:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GAddTtaiImageLinkViewController.m"
+            timestampString = "450954457.824284"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "292"
+            endingLineNumber = "292"
+            landmarkName = "-setGmoveImvProductId:shopid:productName:shopName:price:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GScanViewController.m"
+            timestampString = "450938453.926455"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "350"
+            endingLineNumber = "350"
+            landmarkName = "-alertView:clickedButtonAtIndex:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GScanViewController alertView:clickedButtonAtIndex:]"
+                  moduleName = "YiYiProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/gaomeng/Documents/%E5%B7%A5%E4%BD%9C/YIYIProject0107/YiYiProject/YiYiProject/PersonalApi/GMAPI/Gcontrollers/GScanViewController.m"
+                  timestampString = "450975176.379075"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "350"
+                  endingLineNumber = "350"
+                  offsetFromSymbolStart = "422">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__54-[GScanViewController alertView:clickedButtonAtIndex:]_block_invoke_3"
+                  moduleName = "YiYiProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/gaomeng/Documents/%E5%B7%A5%E4%BD%9C/YIYIProject0107/YiYiProject/YiYiProject/PersonalApi/GMAPI/Gcontrollers/GScanViewController.m"
+                  timestampString = "450975176.379505"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "351"
+                  endingLineNumber = "351"
+                  offsetFromSymbolStart = "12">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GScanViewController.m"
+            timestampString = "450938453.926455"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "353"
+            endingLineNumber = "353"
+            landmarkName = "-alertView:clickedButtonAtIndex:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GScanViewController.m"
+            timestampString = "450938497.437611"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "303"
+            endingLineNumber = "303"
+            landmarkName = "-captureOutput:didOutputMetadataObjects:fromConnection:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GScanViewController.m"
+            timestampString = "450938499.368483"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "307"
+            endingLineNumber = "307"
+            landmarkName = "-captureOutput:didOutputMetadataObjects:fromConnection:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GScanViewController.m"
+            timestampString = "450938762.369933"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "365"
+            endingLineNumber = "365"
+            landmarkName = "-guanzhuShopWithShopId:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GScanViewController.m"
+            timestampString = "450938764.422539"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "376"
+            endingLineNumber = "376"
+            landmarkName = "-guanzhuShopWithShopId:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GScanViewController.m"
+            timestampString = "450942308.304259"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "385"
+            endingLineNumber = "385"
+            landmarkName = "-guanzhuShopWithShopId:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GScanViewController.m"
+            timestampString = "450938833.975405"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "287"
+            endingLineNumber = "287"
+            landmarkName = "-captureOutput:didOutputMetadataObjects:fromConnection:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GScanViewController.m"
+            timestampString = "450938849.182867"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "272"
+            endingLineNumber = "272"
+            landmarkName = "-captureOutput:didOutputMetadataObjects:fromConnection:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GScanViewController.m"
+            timestampString = "450939164.935743"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "329"
+            endingLineNumber = "329"
+            landmarkName = "-alertView:clickedButtonAtIndex:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GScanViewController.m"
+            timestampString = "450939222.818916"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "372"
+            endingLineNumber = "372"
+            landmarkName = "-guanzhuShopWithShopId:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/Controllers/&#x9996;&#x9875;/ViewControllers/ProductDetailController.m"
+            timestampString = "450960811.245412"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "339"
+            endingLineNumber = "339"
+            landmarkName = "-clickToContact:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GAddTtaiImageLinkViewController.m"
+            timestampString = "450952616.058189"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
+            landmarkName = "-viewWillAppear:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GShopPhoneViewController.m"
+            timestampString = "450959163.06617"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "97"
+            endingLineNumber = "97"
+            landmarkName = "-telePhone"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GShopPhoneViewController.m"
+            timestampString = "450959156.245883"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "-telePhone"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GShopPhoneViewController.m"
+            timestampString = "450960046.737246"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "107"
+            endingLineNumber = "107"
+            landmarkName = "-telePhone"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/Controllers/&#x6d88;&#x606f;/ViewControllers/MailMessageViewController.m"
+            timestampString = "450961666.397958"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "125"
+            endingLineNumber = "125"
+            landmarkName = "-didSelectRowAtIndexPath:tableView:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GuserPhoneViewController.m"
+            timestampString = "450971431.637993"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "-creatPhoneView"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GuserPhoneViewController.m"
+            timestampString = "450972600.674901"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "165"
+            endingLineNumber = "165"
+            landmarkName = "-querenClicked"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GuserPhoneViewController.m"
+            timestampString = "450972600.674901"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "172"
+            endingLineNumber = "172"
+            landmarkName = "-querenClicked"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/Controllers/T&#x53f0;/ViewControllers/TTaiDetailController.m"
+            timestampString = "450973224.338912"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "534"
+            endingLineNumber = "534"
+            landmarkName = "-createViewsWithModel:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/Controllers/T&#x53f0;/ViewControllers/TTaiDetailController.m"
+            timestampString = "450973251.776099"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "650"
+            endingLineNumber = "650"
+            landmarkName = "-createbuttonWithModel:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/zkingControl/ShenQingDianPuControl/Controllers/ShenQingDianPuViewController.m"
+            timestampString = "450974533.711838"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "452"
+            endingLineNumber = "452"
+            landmarkName = "-yanzheng_shangchang"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GmyshopErweimaViewController.m"
+            timestampString = "450975064.328833"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
+            landmarkName = "-creatCustomViewWithResult:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

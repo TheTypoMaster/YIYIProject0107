@@ -48,4 +48,6 @@
 
 @property(nonatomic,retain)NSString *shop_id;//店铺id
 
+@property(nonatomic,strong)NSString *is_sign;//是否签到
+
 @end

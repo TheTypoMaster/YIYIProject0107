@@ -19,6 +19,9 @@
 @property (strong, nonatomic) IBOutlet UIView *birthViiew;//生日view
 @property (strong, nonatomic) IBOutlet UILabel *birthdayLabel;//生日
 
+@property (strong, nonatomic) IBOutlet UIView *shoujihao;
+@property (strong, nonatomic) IBOutlet UILabel *shoujistate;
+
 -(void)setPropertiesUi;
 
 

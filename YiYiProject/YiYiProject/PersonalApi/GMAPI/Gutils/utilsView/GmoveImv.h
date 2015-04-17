@@ -16,6 +16,7 @@
 @property(nonatomic,strong)NSString *shop_id;
 @property(nonatomic,strong)NSString *product_id;
 @property(nonatomic,strong)NSString *shop_name;
+@property(nonatomic,strong)NSString *product_price;
 @property(nonatomic,strong)NSString *product_name;
 @property(nonatomic,assign)CGFloat location_x;
 @property(nonatomic,assign)CGFloat location_y;

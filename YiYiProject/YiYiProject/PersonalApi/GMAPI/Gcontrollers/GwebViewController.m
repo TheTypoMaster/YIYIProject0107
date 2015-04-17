@@ -8,6 +8,8 @@
 
 #import "GwebViewController.h"
 
+#import "ShenQingDianPuViewController.h"
+
 #define IOS_VERSION [[[UIDevice currentDevice] systemVersion] floatValue]
 
 @interface GwebViewController ()
@@ -33,6 +35,9 @@
     NSURL *url =[NSURL URLWithString:self.urlstring];
     self.myTitle = @"详情";
     
+    if (self.ismianzeshengming) {
+        self.rightString = @"同意";
+    }
     
     NSURLRequest *request =[NSURLRequest requestWithURL:url];
     
@@ -58,7 +63,14 @@
         [tool_Button setBackgroundImage:[UIImage imageNamed:[array_imgname objectAtIndex:i]] forState:UIControlStateNormal];
         
         [tool_Button addTarget:self action:@selector(dobuttontool:) forControlEvents:UIControlEventTouchUpInside];
+        
         [toolview addSubview:tool_Button];
+        
+        if (self.ismianzeshengming) {
+            if (i == 0 || i==1) {
+                tool_Button.hidden = YES;
+            }
+        }
         
     }
     
@@ -92,6 +104,31 @@
 }
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
 }
+
+
+
+-(void)rightButtonTap:(UIButton *)sender
+{
+    if (self.ismianzeshengming) {
+        //同意
+        [self dismissViewControllerAnimated:YES completion:^{
+            self.shenqingdianpuvc.isMianzeshengmingAgree = YES;
+        }];
+    }
+}
+
+-(void)leftButtonTap:(UIButton *)sender
+{
+    if (self.ismianzeshengming) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            
+        }];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    
+}
+
 
 
 

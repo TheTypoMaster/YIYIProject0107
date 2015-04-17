@@ -42,6 +42,10 @@
 
 #import "UserInfo.h"
 
+#import "GScanViewController.h"//扫一扫
+
+#import "GwebViewController.h"//web界面
+
 typedef enum{
     USERFACE = 0,//头像
     USERBANNER,//banner
@@ -71,6 +75,8 @@ typedef enum{
     
     
     UIActivityIndicatorView *_hud;
+    
+    UIButton *_qiandaoBtn;//签到按钮
     
 }
 @end
@@ -136,18 +142,14 @@ typedef enum{
                         ,@[[UIImage imageNamed:@"my_shoucang.png"],[UIImage imageNamed:@"my_guanzhu.png"]]
                         ,@[[UIImage imageNamed:@"my_shenqing.png"]]
                         ,@[[UIImage imageNamed:@"my_haoyou.png"]]
+                        ,@[[UIImage imageNamed:@"saoyisao.png"]]
                         ];
-    
-//    _tabelViewCellTitleArray = @[@[@"我的主页"]
-//                                 ,@[@"我的收藏",@"我的关注"]
-//                                 ,@[@"我的衣橱",@"我的搭配",@"我的体型"]
-//                                 ,@[@"我是店主，申请衣+衣店铺"]
-//                                 ,@[@"邀请好友"]];
     
     _tabelViewCellTitleArray = @[@[@"我的主页"]
                                  ,@[@"我的收藏",@"我的关注"]
                                  ,@[@"我是店主，申请衣+衣店铺"]
                                  ,@[@"邀请好友"]
+                                 ,@[@"扫一扫"]
                                  ];
 
     
@@ -159,7 +161,6 @@ typedef enum{
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.tableHeaderView = [self creatTableViewHeaderView];
-//    _tableView.userInteractionEnabled = NO;
     [self.view addSubview:_tableView];
     
     
@@ -171,8 +172,8 @@ typedef enum{
     //退出登录
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GLogoutAction) name:NOTIFICATION_LOGOUT object:nil];
     
-//    //测试审核成功
-//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GgetUserInfo) name:NOTIFICATION_SHENQINGDIANPU_SUCCESS object:nil];
+    //店铺提交申请 改变成审核中状态
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeTheTitleAndPicArray_shenhe) name:NOTIFICATION_SHENQINGDIANPU_SUCCESS object:nil];
     
     //接收审核结果
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GgetUserInfo) name:NOTIFICATION_SHENQINGDIANPU_STATE object:nil];
@@ -199,11 +200,14 @@ typedef enum{
     _logoImageArray = @[@[[UIImage imageNamed:@"my_zhuye.png"],[UIImage imageNamed:@"my_shenqing.png"]]
                         ,@[[UIImage imageNamed:@"my_shoucang.png"],[UIImage imageNamed:@"my_guanzhu.png"]]
                         ,@[[UIImage imageNamed:@"my_haoyou.png"]]
+                        ,@[[UIImage imageNamed:@"saoyisao.png"]]
                         ];
     
     _tabelViewCellTitleArray = @[@[@"我的主页",@"我的店铺"]
                                  ,@[@"我的收藏",@"我的关注"]
-                                 ,@[@"邀请好友"]];
+                                 ,@[@"邀请好友"]
+                                 ,@[@"扫一扫"]
+                                 ];
     
     
     
@@ -211,6 +215,8 @@ typedef enum{
     _customInfo_tabelViewCell = @{@"titleLogo":_logoImageArray,
                                   @"titleArray":_tabelViewCellTitleArray
                                   };
+    _userInfo.shopman = @"2";
+    [_tableView reloadData];
 }
 
 -(void)changeTheTitleAndPicArray_shenhe{//正在审核
@@ -218,12 +224,15 @@ typedef enum{
                         ,@[[UIImage imageNamed:@"my_shoucang.png"],[UIImage imageNamed:@"my_guanzhu.png"]]
                         ,@[[UIImage imageNamed:@"my_shenqing.png"]]
                         ,@[[UIImage imageNamed:@"my_haoyou.png"]]
+                        ,@[[UIImage imageNamed:@"saoyisao.png"]]
                         ];
     
     _tabelViewCellTitleArray = @[@[@"我的主页"]
                                  ,@[@"我的收藏",@"我的关注"]
                                  ,@[@"店铺审核中"]
-                                 ,@[@"邀请好友"]];
+                                 ,@[@"邀请好友"]
+                                 ,@[@"扫一扫"]
+                                 ];
     
     
     
@@ -231,6 +240,8 @@ typedef enum{
     _customInfo_tabelViewCell = @{@"titleLogo":_logoImageArray,
                                   @"titleArray":_tabelViewCellTitleArray
                                   };
+    _userInfo.shopman = @"1";
+    [_tableView reloadData];
 }
 
 
@@ -253,7 +264,11 @@ typedef enum{
     GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:URLstr isPost:NO postData:nil];
     [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
         
-        NSLog(@"%@",result);
+        NSLog(@"请求的个人信息：%@",result);
+        
+        
+        
+        
         
         
         _getUserinfoSuccess = YES;
@@ -263,6 +278,20 @@ typedef enum{
         NSDictionary *dic = [result dictionaryValueForKey:@"user_info"];
         
         _userInfo = [[UserInfo alloc]initWithDictionary:dic];
+        
+        
+        if ([_userInfo.is_sign intValue] == 0) {//未签到
+            _qiandaoBtn.userInteractionEnabled = YES;
+            [_qiandaoBtn setImage:[UIImage imageNamed:@"gqiandao_up.png"] forState:UIControlStateNormal];
+            _qiandaoBtn.selected = NO;
+        }else if ([_userInfo.is_sign intValue] == 1){//已签到
+            _qiandaoBtn.userInteractionEnabled = NO;
+            [_qiandaoBtn setImage:[UIImage imageNamed:@"gqiandao_down.png"] forState:UIControlStateNormal];
+            _qiandaoBtn.selected = YES;
+        }
+        
+        
+        
         if ([_userInfo.shopman intValue] == 2) {//已经是店主
             [self changeTheTitleAndPicArray_dianzhu];
         }else if ([_userInfo.shopman intValue]==1){//正在审核
@@ -283,16 +312,12 @@ typedef enum{
         NSString *userFaceUrl = [NSString stringWithFormat:@"%@",[dic stringValueForKey:@"photo"]];
         headImageUrl = userFaceUrl;
         
-//        [self.userFaceImv sd_setImageWithURL:[NSURL URLWithString:userFaceUrl] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-//            [GMAPI setUserFaceImageWithData:UIImagePNGRepresentation(self.userFaceImv.image)];
-//        }];
         
         [self.userFaceImv sd_setImageWithURL:[NSURL URLWithString:userFaceUrl] placeholderImage:[UIImage imageNamed:@"grzx150_150.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             [GMAPI setUserFaceImageWithData:UIImagePNGRepresentation(self.userFaceImv.image)];
         }];
         
         [_tableView reloadData];
-//        _tableView.userInteractionEnabled = YES;
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         if (!_getUserinfoSuccess) {
@@ -325,9 +350,13 @@ typedef enum{
     
     //小齿轮设置按钮
     UIButton *chilunBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [chilunBtn setFrame:CGRectMake(DEVICE_WIDTH - 55, 20, 40, 40)];
+    [chilunBtn setFrame:CGRectMake(15, 30, 40, 40)];
     [chilunBtn setImage:[UIImage imageNamed:@"my_shezhi.png"] forState:UIControlStateNormal];
     [chilunBtn addTarget:self action:@selector(xiaochilun) forControlEvents:UIControlEventTouchUpInside];
+    chilunBtn.layer.masksToBounds = NO;
+    chilunBtn.layer.shadowColor = [UIColor blackColor].CGColor;
+    chilunBtn.layer.shadowOffset = CGSizeMake(0.0f, 5.0f);
+    chilunBtn.layer.shadowOpacity = 0.5f;
     
     
     //头像
@@ -345,22 +374,37 @@ typedef enum{
     self.userNameLabel.text = @"昵称：";
     self.userNameLabel.font = [UIFont systemFontOfSize:14*GscreenRatio_320];
     self.userNameLabel.textColor = [UIColor whiteColor];
-//        self.userNameLabel.backgroundColor = [UIColor lightGrayColor];
 
     //积分
     self.userScoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.userNameLabel.frame.origin.x, CGRectGetMaxY(self.userNameLabel.frame)+10, 150, self.userNameLabel.frame.size.height)];
     self.userScoreLabel.font = [UIFont systemFontOfSize:14*GscreenRatio_320];
     self.userScoreLabel.text = @"积分：";
     self.userScoreLabel.textColor = [UIColor whiteColor];
-//        self.userScoreLabel.backgroundColor = [UIColor orangeColor];
-
+    
     //编辑按钮
     UIButton *editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [editBtn setFrame:CGRectMake(DEVICE_WIDTH-80, self.userFaceImv.frame.origin.y+15, 55, 44)];
-    //    editBtn.backgroundColor = [UIColor purpleColor];
+    [editBtn setFrame:CGRectMake(DEVICE_WIDTH-60, chilunBtn.frame.origin.y-7, 55, 44)];
     editBtn.titleLabel.font = [UIFont systemFontOfSize:16*GscreenRatio_320];
     [editBtn addTarget:self action:@selector(goToEdit) forControlEvents:UIControlEventTouchUpInside];
     [editBtn setTitle:@"编辑" forState:UIControlStateNormal];
+    editBtn.layer.masksToBounds = NO;
+    editBtn.layer.shadowColor = [UIColor blackColor].CGColor;
+    editBtn.layer.shadowOffset = CGSizeMake(0.0f, 5.0f);
+    editBtn.layer.shadowOpacity = 0.5f;
+    
+    
+    
+    //签到
+    _qiandaoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_qiandaoBtn setFrame:CGRectMake(editBtn.frame.origin.x, CGRectGetMaxY(_backView.frame)-50, 50, 40)];
+    [_qiandaoBtn addTarget:self action:@selector(gQiandao:) forControlEvents:UIControlEventTouchUpInside];
+    _qiandaoBtn.userInteractionEnabled = NO;
+    [_backView addSubview:_qiandaoBtn];
+    
+    
+    
+    
+    
     
     //手势
     UITapGestureRecognizer *ddd = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(userBannerClicked)];
@@ -371,8 +415,7 @@ typedef enum{
     [self.userFaceImv addGestureRecognizer:eee];
     
     
-//    //添加视图
-//    [backView addSubview:self.userBannerImv];
+    //添加视图
     [_backView addSubview:self.userFaceImv];
     [_backView addSubview:self.userNameLabel];
     [_backView addSubview:self.userScoreLabel];
@@ -381,6 +424,48 @@ typedef enum{
     
     return _backView;
 }
+
+
+
+//签到
+-(void)gQiandao:(UIButton *)sender{
+    
+    
+    if (sender.selected == YES) {//已经签到
+        
+    }else if (sender.selected == NO){//未签到
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        
+        NSString *url = [NSString stringWithFormat:@"%@&authcode=%@",GQIANDAO,[GMAPI getAuthkey]];
+        GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:NO postData:nil];
+        [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            NSLog(@"%@",result);
+            
+            NSString *errorcode = result[@"errorcode"];
+            
+            if ([errorcode intValue] == 0) {
+                [GMAPI showAutoHiddenMBProgressWithText:result[@"msg"] addToView:self.view];
+                sender.selected = YES;
+                [self GgetUserInfo];
+            }else{
+                sender.selected = NO;
+                [GMAPI showAutoHiddenMBProgressWithText:result[@"msg"] addToView:self.view];
+            }
+            
+            
+            
+            
+        } failBlock:^(NSDictionary *failDic, NSError *erro) {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [GMAPI showAutoHiddenMidleQuicklyMBProgressWithText:@"签到失败,请检查网络" addToView:self.view];
+            sender.selected = NO;
+        }];
+    }
+    
+    
+}
+
 
 
 
@@ -596,18 +681,32 @@ typedef enum{
             
         case 3://邀请好友 或没有
         {
-            
-            if (indexPath.row == 0){
+            int shopMan = [_userInfo.shopman intValue];
+            if (shopMan == 2) {//已是店主  扫一扫
+                if (indexPath.row == 0) {
+                    [self saoyisaoClicked];
+                }
                 
-                
-                [self clickToShare:nil];
+            }else{//不是店主
+                if (indexPath.row == 0){
+                    [self clickToShare:nil];
+                }
             }
+            
             
             
             
         }
             break;
             
+        case 4:
+        {
+            //扫一扫
+            if (indexPath.row == 0) {
+                [self saoyisaoClicked];
+            }
+        }
+            break;
         default:
             break;
     }
@@ -618,6 +717,21 @@ typedef enum{
     
     NSLog(@"在这里进行跳转");
 }
+
+
+
+
+
+-(void)saoyisaoClicked{
+    NSLog(@"扫一扫");
+    GScanViewController *ccc = [[GScanViewController alloc]init];
+    ccc.delegate = self;
+    [self presentViewController:ccc animated:YES completion:^{
+        
+    }];
+    
+}
+
 
 
 
@@ -933,6 +1047,19 @@ typedef enum{
     
     
     
+}
+
+
+
+
+
+
+//扫一扫跳转的页面
+-(void)gScanvcPushWithString:(NSString *)string{
+    GwebViewController *ccc = [[GwebViewController alloc]init];
+    ccc.urlstring = string;
+    ccc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:ccc animated:YES];
 }
 
 

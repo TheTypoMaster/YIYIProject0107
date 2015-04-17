@@ -143,6 +143,7 @@ static int seconds = 60;//计时60s
     
     
     NSString *password = self.passwordTF.text;
+    NSString *secondPassword = self.secondPassword.text;
     int code = [self.securityTF.text intValue];
     NSString *mobile = self.phoneTF.text;
     
@@ -172,7 +173,7 @@ static int seconds = 60;//计时60s
     }
     
     
-    NSString *url = [NSString stringWithFormat:USER_GETBACK_PASSWORD,mobile,code,password];
+    NSString *url = [NSString stringWithFormat:USER_GETBACK_PASSWORD,mobile,code,password,secondPassword];
     
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
@@ -182,7 +183,7 @@ static int seconds = 60;//计时60s
         
         [LTools showMBProgressWithText:result[RESULT_INFO] addToView:self.view];
         
-        [self performSelector:@selector(clickToClose:) withObject:nil afterDelay:0.2];
+        [self performSelector:@selector(clickToClose:) withObject:nil afterDelay:1];
         
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {

@@ -54,6 +54,7 @@
     [self.GTitleLabel setFrame:titleView.bounds];
     self.GTitleLabel.textAlignment = NSTextAlignmentCenter;
     [titleView addSubview:self.GTitleLabel];
+    self.GTitleLabel.textColor = [UIColor blackColor];
     UIBarButtonItem *title_item = [[UIBarButtonItem alloc]initWithCustomView:titleView];
     self.navigationItem.leftBarButtonItems=@[spaceButton1,back_item,title_item];
     
