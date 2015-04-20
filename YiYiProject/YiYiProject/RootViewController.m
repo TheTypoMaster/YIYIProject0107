@@ -8,7 +8,10 @@
 
 #import "RootViewController.h"
 #import "HomeViewController.h"
-#import "TTaiViewController.h"
+#import "TTaiViewController.h" //小图
+
+#import "BigPhotoTTaiViewController.h"//大图t台
+
 #import "MessageViewController.h"
 #import "MineViewController.h"
 
@@ -79,7 +82,7 @@
 //    NSArray *classNames = @[@"HomeViewController",@"TTaiViewController",@"UIViewController",@"MessageListController",@"MineViewController"];
 //    NSArray *item_names = @[@"首页",@"T台",@"+",@"消息",@"我的"];
     
-    NSArray *classNames = @[@"HomeViewController",@"TTaiViewController",@"MessageListController",@"MineViewController"];
+    NSArray *classNames = @[@"HomeViewController",@"BigPhotoTTaiViewController",@"MessageListController",@"MineViewController"];
     NSArray *item_names = @[@"附近",@"T台",@"消息",@"我的"];
     NSMutableArray *items = [NSMutableArray arrayWithCapacity:5];
     for (int i = 0; i < 4;i ++) {

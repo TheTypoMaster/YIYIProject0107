@@ -206,19 +206,11 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
  */
 +(UIImage *)scaleToSizeWithImage:(UIImage *)img size:(CGSize)size;
 
+#pragma mark - 适配尺寸计算
 
-#pragma mark - CoreData管理
-
-@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
-@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-
-- (void)saveContext;
-- (NSURL *)applicationDocumentsDirectory;
-
-- (void)insertDataClassType:(NSString *)classType dataArray:(NSMutableArray*)dataArray unique:(NSString *)unique;
-//查询
-- (NSArray*)queryDataClassType:(NSString *)classType pageSize:(int)pageSize andOffset:(int)currentPage unique:(NSString *)unique;
++ (CGFloat)heightForImageHeight:(CGFloat)image_height
+                     imageWidth:(CGFloat)image_width
+                  originalWidth:(CGFloat)original_height;
 
 #pragma mark - 分类论坛图片获取
 

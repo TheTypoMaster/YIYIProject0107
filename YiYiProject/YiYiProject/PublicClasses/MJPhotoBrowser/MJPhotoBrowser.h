@@ -15,12 +15,19 @@
 // 当前展示的图片索引
 @property (nonatomic, assign) NSUInteger currentPhotoIndex;
 
+@property(nonatomic,assign)BOOL cancelSingleTap;//取消单击
+
 // 显示
 - (void)show;
+
+//隐藏
+- (void)hide;
+
 @end
 
 @protocol MJPhotoBrowserDelegate <NSObject>
 @optional
 // 切换到某一页图片
 - (void)photoBrowser:(MJPhotoBrowser *)photoBrowser didChangedToPageAtIndex:(NSUInteger)index;
+
 @end

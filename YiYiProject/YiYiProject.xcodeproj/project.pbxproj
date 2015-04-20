@@ -205,6 +205,11 @@
 		13A389BA1A38974F00ABBACB /* LRefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A389AA1A38974F00ABBACB /* LRefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		13A389BC1A38974F00ABBACB /* NSString+Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A389AF1A38974F00ABBACB /* NSString+Emoji.m */; };
 		13A389BD1A38974F00ABBACB /* RefreshTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A389B11A38974F00ABBACB /* RefreshTableView.m */; };
+		13A4AC541AE4989A00EA5F2C /* BigPhotoTTaiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A4AC531AE4989A00EA5F2C /* BigPhotoTTaiViewController.m */; };
+		13A4AC581AE49CB600EA5F2C /* TTaiBigPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A4AC561AE49CB600EA5F2C /* TTaiBigPhotoCell.m */; };
+		13A4AC591AE49CB600EA5F2C /* TTaiBigPhotoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13A4AC571AE49CB600EA5F2C /* TTaiBigPhotoCell.xib */; };
+		13A4AC621AE4C0A400EA5F2C /* PropertyImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A4AC611AE4C0A400EA5F2C /* PropertyImageView.m */; };
+		13A4AC651AE4C72500EA5F2C /* LPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A4AC641AE4C72500EA5F2C /* LPhotoBrowser.m */; };
 		13A8A38E1A655879008D3D44 /* MessageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A8A38C1A655879008D3D44 /* MessageViewCell.m */; };
 		13A8A38F1A655879008D3D44 /* MessageViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13A8A38D1A655879008D3D44 /* MessageViewCell.xib */; };
 		13AD17B11A603E4300AB24F5 /* TopicParseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AD17B01A603E4300AB24F5 /* TopicParseModel.m */; };
@@ -222,6 +227,9 @@
 		13B6907C1A580430007FE152 /* ShopViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B6907A1A580430007FE152 /* ShopViewCell.m */; };
 		13B6907D1A580430007FE152 /* ShopViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B6907B1A580430007FE152 /* ShopViewCell.xib */; };
 		13B690801A580B76007FE152 /* MailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B6907F1A580B76007FE152 /* MailModel.m */; };
+		13BEEE3E1AE502B3009C5BA7 /* TTaiCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BEEE3D1AE502B3009C5BA7 /* TTaiCommentViewController.m */; };
+		13BEEE451AE505A9009C5BA7 /* TTaiBigPhotoCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BEEE431AE505A9009C5BA7 /* TTaiBigPhotoCell2.m */; };
+		13BEEE461AE505A9009C5BA7 /* TTaiBigPhotoCell2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13BEEE441AE505A9009C5BA7 /* TTaiBigPhotoCell2.xib */; };
 		13C404D81A6FF42100C4B516 /* ActivityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 13C404D71A6FF42100C4B516 /* ActivityModel.m */; };
 		13CD36361A3C51BE0068C12A /* ForgetPwdController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CD36341A3C51BE0068C12A /* ForgetPwdController.m */; };
 		13CD36371A3C51BE0068C12A /* ForgetPwdController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13CD36351A3C51BE0068C12A /* ForgetPwdController.xib */; };
@@ -800,6 +808,15 @@
 		13A389AF1A38974F00ABBACB /* NSString+Emoji.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Emoji.m"; sourceTree = "<group>"; };
 		13A389B01A38974F00ABBACB /* RefreshTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefreshTableView.h; sourceTree = "<group>"; };
 		13A389B11A38974F00ABBACB /* RefreshTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RefreshTableView.m; sourceTree = "<group>"; };
+		13A4AC521AE4989A00EA5F2C /* BigPhotoTTaiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BigPhotoTTaiViewController.h; sourceTree = "<group>"; };
+		13A4AC531AE4989A00EA5F2C /* BigPhotoTTaiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BigPhotoTTaiViewController.m; sourceTree = "<group>"; };
+		13A4AC551AE49CB600EA5F2C /* TTaiBigPhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTaiBigPhotoCell.h; sourceTree = "<group>"; };
+		13A4AC561AE49CB600EA5F2C /* TTaiBigPhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTaiBigPhotoCell.m; sourceTree = "<group>"; };
+		13A4AC571AE49CB600EA5F2C /* TTaiBigPhotoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TTaiBigPhotoCell.xib; sourceTree = "<group>"; };
+		13A4AC601AE4C0A400EA5F2C /* PropertyImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyImageView.h; sourceTree = "<group>"; };
+		13A4AC611AE4C0A400EA5F2C /* PropertyImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyImageView.m; sourceTree = "<group>"; };
+		13A4AC631AE4C72500EA5F2C /* LPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LPhotoBrowser.h; sourceTree = "<group>"; };
+		13A4AC641AE4C72500EA5F2C /* LPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LPhotoBrowser.m; sourceTree = "<group>"; };
 		13A8A38B1A655879008D3D44 /* MessageViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageViewCell.h; sourceTree = "<group>"; };
 		13A8A38C1A655879008D3D44 /* MessageViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageViewCell.m; sourceTree = "<group>"; };
 		13A8A38D1A655879008D3D44 /* MessageViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageViewCell.xib; sourceTree = "<group>"; };
@@ -827,6 +844,11 @@
 		13B6907B1A580430007FE152 /* ShopViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShopViewCell.xib; sourceTree = "<group>"; };
 		13B6907E1A580B76007FE152 /* MailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MailModel.h; sourceTree = "<group>"; };
 		13B6907F1A580B76007FE152 /* MailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MailModel.m; sourceTree = "<group>"; };
+		13BEEE3C1AE502B3009C5BA7 /* TTaiCommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTaiCommentViewController.h; sourceTree = "<group>"; };
+		13BEEE3D1AE502B3009C5BA7 /* TTaiCommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTaiCommentViewController.m; sourceTree = "<group>"; };
+		13BEEE421AE505A9009C5BA7 /* TTaiBigPhotoCell2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTaiBigPhotoCell2.h; sourceTree = "<group>"; };
+		13BEEE431AE505A9009C5BA7 /* TTaiBigPhotoCell2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTaiBigPhotoCell2.m; sourceTree = "<group>"; };
+		13BEEE441AE505A9009C5BA7 /* TTaiBigPhotoCell2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TTaiBigPhotoCell2.xib; sourceTree = "<group>"; };
 		13C404D61A6FF42100C4B516 /* ActivityModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityModel.h; sourceTree = "<group>"; };
 		13C404D71A6FF42100C4B516 /* ActivityModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityModel.m; sourceTree = "<group>"; };
 		13CD36331A3C51BE0068C12A /* ForgetPwdController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetPwdController.h; sourceTree = "<group>"; };
@@ -2131,6 +2153,12 @@
 				13A389931A3893D000ABBACB /* TTaiViewController.h */,
 				13A389941A3893D000ABBACB /* TTaiViewController.m */,
 				13A389951A3893D000ABBACB /* TTaiViewController.xib */,
+				13A4AC521AE4989A00EA5F2C /* BigPhotoTTaiViewController.h */,
+				13A4AC531AE4989A00EA5F2C /* BigPhotoTTaiViewController.m */,
+				13A4AC631AE4C72500EA5F2C /* LPhotoBrowser.h */,
+				13A4AC641AE4C72500EA5F2C /* LPhotoBrowser.m */,
+				13BEEE3C1AE502B3009C5BA7 /* TTaiCommentViewController.h */,
+				13BEEE3D1AE502B3009C5BA7 /* TTaiCommentViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -2276,8 +2304,16 @@
 		13B690641A56793E007FE152 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				13BEEE421AE505A9009C5BA7 /* TTaiBigPhotoCell2.h */,
+				13BEEE431AE505A9009C5BA7 /* TTaiBigPhotoCell2.m */,
+				13BEEE441AE505A9009C5BA7 /* TTaiBigPhotoCell2.xib */,
 				13B690651A56797E007FE152 /* TPlatCell.h */,
 				13B690661A56797E007FE152 /* TPlatCell.m */,
+				13A4AC551AE49CB600EA5F2C /* TTaiBigPhotoCell.h */,
+				13A4AC561AE49CB600EA5F2C /* TTaiBigPhotoCell.m */,
+				13A4AC571AE49CB600EA5F2C /* TTaiBigPhotoCell.xib */,
+				13A4AC601AE4C0A400EA5F2C /* PropertyImageView.h */,
+				13A4AC611AE4C0A400EA5F2C /* PropertyImageView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3443,6 +3479,7 @@
 				1389862A1A6A433D00F187C9 /* sQQ_icon@2x.png in Resources */,
 				E3601E821A61A75700CC41FE /* gcustomstore@2x.png in Resources */,
 				E3B7BE121ACA578100FE8495 /* ttai_up@2x.png in Resources */,
+				13A4AC591AE49CB600EA5F2C /* TTaiBigPhotoCell.xib in Resources */,
 				DF6855821A592181004D924F /* ZYQAssetPicker.Bundle in Resources */,
 				13681C891A453DE600671D07 /* login_phone@2x.png in Resources */,
 				13B690781A580291007FE152 /* BrandViewCell.xib in Resources */,
@@ -3487,6 +3524,7 @@
 				1387B0911A5EDFA8006365D8 /* apply_wechat_image@2x.png in Resources */,
 				1391DC5F1A870673006A2E15 /* t_guanzhu@2x.png in Resources */,
 				138C2BFD1A39E09200EA59F5 /* UMSShareListController.xib in Resources */,
+				13BEEE461AE505A9009C5BA7 /* TTaiBigPhotoCell2.xib in Resources */,
 				E3E913831A7FF1E700BF54C8 /* dian_xiao@2x.png in Resources */,
 				565321421A59769300E43F80 /* emotionImage.plist in Resources */,
 				E30522261A6E9962007BEAFD /* gaddphoto@2x.png in Resources */,
@@ -3564,8 +3602,10 @@
 				E3996EBC1A5E1DBA00673147 /* GMapViewController.m in Sources */,
 				13684A711A37583E00A508FB /* ViewController.m in Sources */,
 				E3996ECD1A5E1DBA00673147 /* CWSegmentedControl.m in Sources */,
+				13BEEE3E1AE502B3009C5BA7 /* TTaiCommentViewController.m in Sources */,
 				13684A6E1A37583E00A508FB /* AppDelegate.m in Sources */,
 				56DAB2171A46C86B00273140 /* MatchCaseCell.m in Sources */,
+				13A4AC651AE4C72500EA5F2C /* LPhotoBrowser.m in Sources */,
 				1382C5211A812A5A0079AF55 /* MJRefreshHeaderView.m in Sources */,
 				E3E64A9F1AE0D971002F00A4 /* JKPhotoBrowser.m in Sources */,
 				13B6907C1A580430007FE152 /* ShopViewCell.m in Sources */,
@@ -3591,6 +3631,7 @@
 				138986301A6A5DDF00F187C9 /* MessageModel.m in Sources */,
 				133B17761A750988005B8B3F /* MJPhotoBrowser.m in Sources */,
 				565321471A59769300E43F80 /* RegexKitLite.m in Sources */,
+				13A4AC621AE4C0A400EA5F2C /* PropertyImageView.m in Sources */,
 				56A8A8351A45BB1300E85F6B /* MatchTopicCell.m in Sources */,
 				139558D61A40781C00CABC9E /* ProductModel.m in Sources */,
 				137E0AC11A4C559500B59F64 /* LShareSheetView.m in Sources */,
@@ -3644,6 +3685,7 @@
 				1382C51E1A812A5A0079AF55 /* MJRefreshBaseView.m in Sources */,
 				566FE24F1A50264A00A96B5F /* TopicDetailBottomView.m in Sources */,
 				566FE2541A503A9E00A96B5F /* MatchInfoViewController.m in Sources */,
+				13A4AC541AE4989A00EA5F2C /* BigPhotoTTaiViewController.m in Sources */,
 				E37EB4FB1ABFC82F009F5797 /* GCustomSegmentView.m in Sources */,
 				565321521A59896600E43F80 /* TopicModel.m in Sources */,
 				E37EB5691AC00BEC009F5797 /* GloadingView.m in Sources */,
@@ -3712,6 +3754,7 @@
 				E308938F1AE0391B00DA342C /* GMapShowMyshopViewController.m in Sources */,
 				13B690771A580291007FE152 /* BrandViewCell.m in Sources */,
 				E3601E801A61A27900CC41FE /* GcustomStoreTableViewCell.m in Sources */,
+				13A4AC581AE49CB600EA5F2C /* TTaiBigPhotoCell.m in Sources */,
 				DF5E89B01A5E676E00535EBA /* ChooseClothesViewController.m in Sources */,
 				13A389861A387A8800ABBACB /* UIColor+ConvertColor.m in Sources */,
 				19B937761A5D8780009B359F /* ShenQingDianPuViewController.m in Sources */,
@@ -3723,6 +3766,7 @@
 				E3E64A981AE0D971002F00A4 /* JKAssets.m in Sources */,
 				E3996ECF1A5E1DBA00673147 /* UIViewAdditions.m in Sources */,
 				19F7B4331A67FFA600087BCB /* UMEGORefreshTableHeaderView.m in Sources */,
+				13BEEE451AE505A9009C5BA7 /* TTaiBigPhotoCell2.m in Sources */,
 				E30893941AE04AE700DA342C /* GScanViewController.m in Sources */,
 				E3E64AAB1AE0D971002F00A4 /* PhotoCell.m in Sources */,
 				E3E64AA31AE0D971002F00A4 /* PhotoAlbumManager.m in Sources */,
@@ -3864,7 +3908,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "0a7574f4-6027-4272-a6f9-204c5fdbb548";
+				PROVISIONING_PROFILE = "8666d12f-26f9-42b1-8629-08669b44260a";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -3900,7 +3944,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "0a7574f4-6027-4272-a6f9-204c5fdbb548";
+				PROVISIONING_PROFILE = "8666d12f-26f9-42b1-8629-08669b44260a";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -3937,7 +3981,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ccb05848-943b-4165-a3b9-dbef9d49dde7";
+				PROVISIONING_PROFILE = "8666d12f-26f9-42b1-8629-08669b44260a";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Debug;
@@ -3973,7 +4017,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ccb05848-943b-4165-a3b9-dbef9d49dde7";
+				PROVISIONING_PROFILE = "8666d12f-26f9-42b1-8629-08669b44260a";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Release;

@@ -65,6 +65,14 @@
     }
 }
 
+- (void)hide
+{
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+    
+    MJPhotoView *photoView = (MJPhotoView *)[_photoScrollView viewWithTag:_currentPhotoIndex + kPhotoViewTagOffset];
+    [photoView hide];
+}
+
 #pragma mark - 私有方法
 #pragma mark 创建工具条
 - (void)createToolbar
@@ -166,9 +174,9 @@
 	int firstIndex = (int)floorf((CGRectGetMinX(visibleBounds)+kPadding*2) / CGRectGetWidth(visibleBounds));
 	int lastIndex  = (int)floorf((CGRectGetMaxX(visibleBounds)-kPadding*2-1) / CGRectGetWidth(visibleBounds));
     if (firstIndex < 0) firstIndex = 0;
-    if (firstIndex >= _photos.count) firstIndex = _photos.count - 1;
+    if (firstIndex >= _photos.count) firstIndex = (int)_photos.count - 1;
     if (lastIndex < 0) lastIndex = 0;
-    if (lastIndex >= _photos.count) lastIndex = _photos.count - 1;
+    if (lastIndex >= _photos.count) lastIndex = (int)_photos.count - 1;
 	
 	// 回收不再显示的ImageView
     NSInteger photoViewIndex;
@@ -187,7 +195,7 @@
 	
 	for (NSUInteger index = firstIndex; index <= lastIndex; index++) {
 		if (![self isShowingPhotoViewAtIndex:index]) {
-			[self showPhotoViewAtIndex:index];
+			[self showPhotoViewAtIndex:(int)index];
 		}
 	}
 }
@@ -199,8 +207,12 @@
     if (!photoView) { // 添加新的图片view
         photoView = [[MJPhotoView alloc] init];
         photoView.photoViewDelegate = self;
+        photoView.cancelSingleTap = self.cancelSingleTap;
     }
     
+    
+//    UIButton *point = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(<#CGFloat x#>, <#CGFloat y#>, <#CGFloat width#>, <#CGFloat height#>) normalTitle:<#(NSString *)#> image:<#(UIImage *)#> backgroudImage:<#(UIImage *)#> superView:<#(UIView *)#> target:<#(id)#> action:<#(SEL)#>]
+//    
     // 调整当期页的frame
     CGRect bounds = _photoScrollView.bounds;
     CGRect photoViewFrame = bounds;

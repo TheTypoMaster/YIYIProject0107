@@ -1199,6 +1199,27 @@
     return scaledImage;
 }
 
+#pragma mark - 适配尺寸计算
+
++ (CGFloat)heightForImageHeight:(CGFloat)image_height
+                  imageWidth:(CGFloat)image_width
+               originalWidth:(CGFloat)original_height
+{
+    float rate;
+    
+    if (image_width == 0.0 || image_height == 0.0) {
+        image_width = image_height;
+    }else
+    {
+        rate = image_height/image_width;
+    }
+    
+    CGFloat imageHeight = original_height * rate;
+    
+    return imageHeight;
+
+}
+
 #pragma mark - 分类论坛图片获取
 
 + (UIImage *)imageForBBSId:(NSString *)bbsId

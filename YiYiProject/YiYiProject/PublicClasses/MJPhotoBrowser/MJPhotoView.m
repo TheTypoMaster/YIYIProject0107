@@ -149,6 +149,7 @@
     // 设置缩放比例
     [self adjustFrame];
 }
+
 #pragma mark 调整frame
 - (void)adjustFrame
 {
@@ -177,12 +178,37 @@
 }
 
 #pragma mark - 手势处理
+
 - (void)handleSingleTap:(UITapGestureRecognizer *)tap {
+    
     _doubleTap = NO;
+    
+    //是否需要单击隐藏操作
+    if (self.cancelSingleTap) {
+        
+        
+        [self performSelector:@selector(cancelSingleTapAction) withObject:nil afterDelay:0.2];
+        return;
+    }
     [self performSelector:@selector(hide) withObject:nil afterDelay:0.2];
 }
+
+- (void)cancelSingleTapAction
+{
+    // 通知代理
+    if (!_doubleTap && [self.photoViewDelegate respondsToSelector:@selector(photoViewSingleTap:)]) {
+        [self.photoViewDelegate photoViewSingleTap:self];
+    }
+}
+
 - (void)hide
 {
+//    //是否需要单击隐藏操作
+//    if (self.cancelSingleTap) {
+//        return;
+//    }
+    
+    
     if (_doubleTap) return;
     
     // 移除进度条
@@ -209,8 +235,9 @@
         if ([self.photoViewDelegate respondsToSelector:@selector(photoViewSingleTap:)]) {
             [self.photoViewDelegate photoViewSingleTap:self];
         }
+        
     } completion:^(BOOL finished) {
-////        // 设置底部的小图片
+//        // 设置底部的小图片
 //        _photo.srcImageView.image = _photo.placeholder;
 ////
 //        // 通知代理

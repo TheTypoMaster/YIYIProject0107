@@ -20,4 +20,9 @@
 @property (nonatomic, strong) MJPhoto *photo;
 // 代理
 @property (nonatomic, weak) id<MJPhotoViewDelegate> photoViewDelegate;
+
+@property (nonatomic,assign)BOOL cancelSingleTap;//是否取消单击隐藏功能
+
+- (void)hide;//隐藏
+
 @end
