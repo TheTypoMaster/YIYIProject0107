@@ -696,8 +696,9 @@
         
         UILabel *_centerLabel=[[UILabel alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH/3, 100)];
         _centerLabel.backgroundColor=RGBCOLOR(70,81,76);
+        _centerLabel.alpha = 0.8f;
         _centerLabel.textColor=[UIColor whiteColor];
-        _centerLabel.font=[UIFont systemFontOfSize:14];
+        _centerLabel.font=[UIFont systemFontOfSize:12];
         _centerLabel.layer.cornerRadius=5;
         _centerLabel.layer.masksToBounds=YES;
         _centerLabel.layer.borderWidth = 1;

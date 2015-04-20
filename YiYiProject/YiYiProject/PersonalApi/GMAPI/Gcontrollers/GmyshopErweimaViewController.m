@@ -65,7 +65,7 @@
     
     //二维码
     _upErweimaView = [[UIView alloc]initWithFrame:CGRectMake(75, 15, DEVICE_WIDTH-150, DEVICE_WIDTH-150)];
-    _upErweimaView.backgroundColor = [UIColor redColor];
+    _upErweimaView.backgroundColor = [UIColor grayColor];
     UIImageView *imv = [[UIImageView alloc]initWithFrame:_upErweimaView.bounds];
     [_upErweimaView addSubview:imv];
     [imv sd_setImageWithURL:[NSURL URLWithString:result[@"qrcode_img"]] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
