@@ -54,6 +54,10 @@
     
     UIImageView *_activeImv;//活动图片
     
+    
+    UILabel *_huodongTime_title;//活动图片上的活动时间title
+    UILabel *_huodongTime_content;//活动图片上的活动时间内容title
+    UIImageView *_activity_backImv;//活动上带黑底的透明图
 }
 
 @end
@@ -221,7 +225,7 @@
     
     NSLog(@"result : %@",result);
     
-    _upStoreInfoView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 188)];
+    _upStoreInfoView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 188*GscreenRatio_320)];
     
     _activeImv = [[UIImageView alloc]initWithFrame:_upStoreInfoView.bounds];
     _activeImv.backgroundColor = [UIColor whiteColor];
@@ -256,6 +260,31 @@
     
     if (imgNameStr.length>2) {//有图
         
+        _activity_backImv = [[UIImageView alloc]initWithFrame:_activeImv.bounds];
+        [_activity_backImv setImage:[UIImage imageNamed:@"gactivityback.png"]];
+        [_activeImv addSubview:_activity_backImv];
+        
+        
+        _huodongTime_title = [[UILabel alloc]initWithFrame:CGRectMake(12, _activeImv.frame.size.height-50, 60, 17)];
+        _huodongTime_title.textColor = [UIColor whiteColor];
+        _huodongTime_title.font = [UIFont systemFontOfSize:15];
+        [_activeImv addSubview:_huodongTime_title];
+        _huodongTime_title.text = @"活动时间";
+        
+        
+        
+        
+        _huodongTime_content = [[UILabel alloc]initWithFrame:CGRectMake(12, CGRectGetMaxY(_huodongTime_title.frame)+5, _activeImv.frame.size.width-24, 17)];
+        _huodongTime_content.font = [UIFont systemFontOfSize:15];
+        _huodongTime_content.textColor = [UIColor whiteColor];
+        NSString *startTime = result[@"activity"][@"start_time"];
+        NSString *endTime = result[@"activity"][@"end_time"];
+        startTime = [LTools timechangeMMDD:startTime];
+        endTime = [LTools timechangeMMDD:endTime];
+        _huodongTime_content.text = [NSString stringWithFormat:@"%@  --  %@",startTime,endTime];
+        [_activeImv addSubview:_huodongTime_content];
+        
+        
     }else{//没图
         if (_huodongLabel.text.length>3) {//有文字
             [_upStoreInfoView addSubview:_huodongLabel];
@@ -269,10 +298,10 @@
     self.upinfoview_height = _upStoreInfoView.frame.size.height;
     
     _huodongLabel.userInteractionEnabled = YES;
-    _huodongLabel.layer.shadowColor = [UIColor blackColor].CGColor;
+    _huodongLabel.layer.shadowColor = [UIColor grayColor].CGColor;
     _huodongLabel.layer.shadowOpacity = 1.0;
-    _huodongLabel.layer.shadowRadius = 5.0;
-    _huodongLabel.layer.shadowOffset = CGSizeMake(0, 3);
+    _huodongLabel.layer.shadowRadius = 3.0;
+    _huodongLabel.layer.shadowOffset = CGSizeMake(0, 2);
     _huodongLabel.clipsToBounds = NO;
     
     
@@ -492,6 +521,9 @@
     [UIView animateWithDuration:0.3 animations:^{
         [_upStoreInfoView setFrame:CGRectMake(0, 0, DEVICE_WIDTH, 0)];
         [_activeImv setFrame:CGRectMake(0, 0, DEVICE_WIDTH, 0)];
+        [_activity_backImv setFrame:_activeImv.frame];
+        [_huodongTime_title setFrame:CGRectZero];
+        [_huodongTime_content setFrame:CGRectZero];
         [_floorView setFrame:CGRectMake(12, CGRectGetMaxY(_upStoreInfoView.frame)+12, DEVICE_WIDTH-24, DEVICE_HEIGHT-_upStoreInfoView.frame.size.height-12-35-64)];
         [_rootScrollView setFrame:CGRectMake(0, 28, _topScrollView.frame.size.width, _floorView.frame.size.height-_topScrollView.frame.size.height)];
         
@@ -512,6 +544,9 @@
     [UIView animateWithDuration:0.3 animations:^{
         [_upStoreInfoView setFrame:CGRectMake(0, 0, DEVICE_WIDTH, self.upinfoview_height)];
         [_activeImv setFrame:CGRectMake(0, 0, DEVICE_WIDTH, self.upinfoview_height)];
+        [_activity_backImv setFrame:_activeImv.frame];
+        [_huodongTime_title setFrame:CGRectMake(12, _activeImv.frame.size.height-50, 60, 17)];
+        [_huodongTime_content setFrame:CGRectMake(12, CGRectGetMaxY(_huodongTime_title.frame)+5, _activeImv.frame.size.width-24, 17)];
         [_floorView setFrame:CGRectMake(12, CGRectGetMaxY(_upStoreInfoView.frame)+12, DEVICE_WIDTH-24, DEVICE_HEIGHT-_upStoreInfoView.frame.size.height-12-35-64)];
         [_rootScrollView setFrame:CGRectMake(0, 28, _topScrollView.frame.size.width, _floorView.frame.size.height-_topScrollView.frame.size.height)];
     }];

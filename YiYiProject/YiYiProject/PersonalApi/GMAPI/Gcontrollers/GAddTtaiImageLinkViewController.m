@@ -252,9 +252,12 @@
     [deletBtn addTarget:self action:@selector(removeSelf:) forControlEvents:UIControlEventTouchUpInside];
     deletBtn.tag = -gimv.tag;
     
-    [_showImv addSubview:gimv];
     
-    [self.maodianArray addObject:gimv];
+    if (self.maodianArray.count<5) {
+        [_showImv addSubview:gimv];
+        [self.maodianArray addObject:gimv];
+    }
+    
     
     
     

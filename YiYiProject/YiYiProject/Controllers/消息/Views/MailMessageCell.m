@@ -41,6 +41,8 @@
     NSString *content;
     NSString *time;
     
+    NSString *endtime;
+    
     CGFloat image_height = 0.f;
     CGFloat image_width = 0.f;
     
@@ -67,10 +69,12 @@
         title = model.activity_title;
         image_url = model.pic;
         content = model.activity_info;
-        time = model.add_time;
-        
+        time = model.start_time;
+        endtime = model.end_time;
         image_height = [model.pic_height floatValue];
         image_width = [model.pic_width floatValue];
+        
+        
     }
     
     if (aType == icon_Yes) {
@@ -100,7 +104,6 @@
         
         self.aTitleLabel.height = 0;
         _timeLabel.top = _aTitleLabel.bottom;
-
         
     }else
     {
@@ -108,11 +111,15 @@
         _timeLabel.top = _aTitleLabel.bottom + 10;
     }
     
+    _endTimeLabel.top = _timeLabel.bottom;
+    
     //时间
-    self.timeLabel.text = [LTools timechangeMMDD:time];
+    self.timeLabel.text = [NSString stringWithFormat:@"开始时间：%@",[LTools timechangeMMDD:time]];//开始时间
+    self.endTimeLabel.text = [NSString stringWithFormat:@"结束时间：%@",[LTools timechangeMMDD:endtime]];//结束时间
+    
     
     //图片
-    self.centerImageView.top = _timeLabel.bottom + 12;
+    self.centerImageView.top = _endTimeLabel.bottom + 12;
     //有图
     if (image_url.length > 0 && [image_url hasPrefix:@"http://"]) {
         
@@ -221,7 +228,7 @@
     
     //时间高度
     
-    aHeight += (15 + 10);
+    aHeight += (15 + 10 + 15);
     
     //图片
     if (image_url.length > 0 && [image_url hasPrefix:@"http://"])

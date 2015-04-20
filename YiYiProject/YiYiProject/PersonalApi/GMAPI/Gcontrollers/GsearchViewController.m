@@ -80,6 +80,9 @@
 - (void)theLocationDictionary:(NSDictionary *)dic{
     NSLog(@"%@",dic);
     _locationDic = dic;
+    
+    UIButton *btn = (UIButton *)[_menu_view viewWithTag:101];
+    [self GbtnClicked:btn];
 }
 
 
@@ -105,7 +108,7 @@
     
     _searchTextField=[[UITextField alloc]initWithFrame:CGRectMake(30+6,MY_MACRO_NAME? 6:12,self.view.bounds.size.width-90,58/2)];
     _searchTextField.delegate=self;
-    [_searchTextField becomeFirstResponder];
+//    [_searchTextField becomeFirstResponder];
     _searchTextField.font=[UIFont systemFontOfSize:12.f];
     _searchTextField.placeholder=@"输入关键词";
     _searchTextField.returnKeyType=UIReturnKeySearch;
@@ -156,9 +159,10 @@
     }
     
     
-    UIButton *btn = (UIButton *)[_menu_view viewWithTag:100];
-    _selectIndex = 100;
+    UIButton *btn = (UIButton *)[_menu_view viewWithTag:101];
+    _selectIndex = 101;
     btn.backgroundColor = RGBCOLOR(240, 122, 142);
+    
     
     
     
@@ -175,12 +179,12 @@
     
     _selectIndex = tag;
     NSLog(@"selectIndex = %d",_selectIndex);
-    if (_searchTextField.text.length==0) {
-        return;
-    }else{
+//    if (_searchTextField.text.length==0) {
+//        return;
+//    }else{
         _tableView.hidden = NO;
         [self gshou];
-    }
+//    }
     if (_selectIndex == 100) {//品牌
         [_tableView showRefreshHeader:YES];
     }else if (_selectIndex == 101){//店铺

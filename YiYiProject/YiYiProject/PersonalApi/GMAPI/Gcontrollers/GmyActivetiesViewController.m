@@ -107,7 +107,7 @@
         _dataArray = newArr;
     }
     
-    [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
+    [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:0.1];
 }
 
 

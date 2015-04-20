@@ -13,11 +13,11 @@
 {
     [super viewDidLoad];
     //自定义导航标题颜色
-    [self setNavigationTitle:@"设置" textColor:[UIColor whiteColor]];
+    [self setNavigationTitle:@"设置" textColor:RGBCOLOR(255, 78, 139)];
     
     //自定义导航左右按钮
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(leftBarButtonItemPressed:)];
-    [leftButton setTintColor:[UIColor whiteColor]];
+    [leftButton setTintColor:RGBCOLOR(255, 78, 139)];
     self.navigationItem.leftBarButtonItem = leftButton;
     
     
@@ -26,6 +26,9 @@
     [self.HeadsPadView addSubview:upview];
     upview.backgroundColor = RGBCOLOR(213, 213, 213);
     [self.view addSubview:upview];
+    
+    
+    self.tableView.scrollEnabled = NO;
     
     
 }

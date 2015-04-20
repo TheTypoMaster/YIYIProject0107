@@ -230,8 +230,18 @@
     
     
     //判断信息完整性
-    if (!self.mallInfo.mall_id || !self.userInfo.shop_id || !_gholderTextView.text.length>0 || !_startTime.text.length>0 || !_endTime.text.length) {
-        [GMAPI showAutoHiddenMidleQuicklyMBProgressWithText:@"请完善信息" addToView:self.view];
+//    if (!self.mallInfo.mall_id || !self.userInfo.shop_id || !_gholderTextView.text.length>0 || !_startTime.text.length>0 || !_endTime.text.length) {
+//        [GMAPI showAutoHiddenMidleQuicklyMBProgressWithText:@"请完善信息" addToView:self.view];
+//        return;
+//    }
+    
+    if (!_gholderTextView.text.length>0) {
+        [GMAPI showAutoHiddenMidleQuicklyMBProgressWithText:@"请填写活动内容" addToView:self.view];
+        return;
+    }
+    
+    if (!_startTime.text.length>0 || !_endTime.text.length > 0) {
+        [GMAPI showAutoHiddenMidleQuicklyMBProgressWithText:@"请填写活动时间" addToView:self.view];
         return;
     }
     
@@ -304,24 +314,19 @@
                                            
                                            _showImageData = UIImageJPEGRepresentation(_showImage, 0.2);
                                            NSData * data= _showImageData;
-                                           if (!_showImageData) {
-                                               return;
+                                           if (_showImageData) {
+                                               NSLog(@"%ld",(unsigned long)data.length);
+                                               
+                                               //将得到的二进制图片拼接到表单中
+                                               /**
+                                                *  data,指定上传的二进制流
+                                                *  name,服务器端所需参数名
+                                                *  fileName,指定文件名
+                                                *  mimeType,指定文件格式
+                                                */
+                                               [formData appendPartWithFileData:data name:@"pic" fileName:@"icon.jpg" mimeType:@"image/jpg"];
+                                               //多用途互联网邮件扩展（MIME，Multipurpose Internet Mail Extensions）
                                            }
-                                           
-                                           
-                                           
-                                           NSLog(@"%ld",(unsigned long)data.length);
-                                           
-                                           //将得到的二进制图片拼接到表单中
-                                           /**
-                                            *  data,指定上传的二进制流
-                                            *  name,服务器端所需参数名
-                                            *  fileName,指定文件名
-                                            *  mimeType,指定文件格式
-                                            */
-                                           [formData appendPartWithFileData:data name:@"pic" fileName:@"icon.jpg" mimeType:@"image/jpg"];
-                                           //多用途互联网邮件扩展（MIME，Multipurpose Internet Mail Extensions）
-                                           
                                            
                                            
                                        }
@@ -618,12 +623,8 @@
         
         
         _showImage = originImage;
-        _showImageData = UIImageJPEGRepresentation(_showImage, 0.2);
+        _showImageData = UIImageJPEGRepresentation(_showImage, 0.3);
         [_showPicBtn setBackgroundImage:_showImage forState:UIControlStateNormal];
-        
-        
-        //按比例缩放
-        UIImage *scaleImage = [self scaleImage:originImage toScale:0.3];
         
         
         //将图片传递给截取界面进行截取并设置回调方法（协议）
@@ -631,7 +632,7 @@
         imageCrop.delegate = self;
         //按像素缩放  //设置缩放比例
         imageCrop.ratioOfWidthAndHeight = 320/188.0f;
-        imageCrop.image = scaleImage;
+        imageCrop.image = originImage;
         picker.navigationBar.hidden = YES;
         [picker pushViewController:imageCrop animated:YES];
         
@@ -654,14 +655,14 @@
 {
     
     
-    UIImage *doneImage = [self scaleToSize:cropImage size:CGSizeMake(DEVICE_WIDTH, DEVICE_HEIGHT)];//按像素缩放
-    _showImage = doneImage;
+//    UIImage *doneImage = [self scaleToSize:cropImage size:CGSizeMake(DEVICE_WIDTH, DEVICE_HEIGHT)];//按像素缩放
+    _showImage = cropImage;
     _showImageData = UIImageJPEGRepresentation(_showImage, 1);
     
     
     
     
-    [_showPicBtn setBackgroundImage:doneImage forState:UIControlStateNormal];
+    [_showPicBtn setBackgroundImage:cropImage forState:UIControlStateNormal];
 
 }
 

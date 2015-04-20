@@ -48,6 +48,9 @@
     //主scrollview
     UIScrollView *_mainScrollview;
     
+    UILabel *_huodongTime_title;
+    UILabel *_huodongTime_content;
+    
 }
 
 
@@ -284,7 +287,7 @@
 //创建店铺信息view
 -(void)creatDianpuInfoViewWithResult:(NSDictionary*)result{
     
-    _upStoreInfoView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 188)];
+    _upStoreInfoView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 188*GscreenRatio_320)];
     [_mainScrollview addSubview:_upStoreInfoView];
     
     //活动图片
@@ -301,8 +304,8 @@
     [activeImv addGestureRecognizer:sss];
     
     //活动
-    _huodongLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 15, DEVICE_WIDTH-15-15, 35)];
-    _huodongLabel.textColor = [UIColor whiteColor];
+    _huodongLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 8, DEVICE_WIDTH-15-15, 32)];
+    _huodongLabel.textColor = [UIColor purpleColor];
     _huodongLabel.numberOfLines = 2;
     _huodongLabel.font = [UIFont systemFontOfSize:15];
     if ([result[@"activity"] isKindOfClass:[NSDictionary class]]) {
@@ -316,10 +319,52 @@
     
     if (imgNameStr.length>2) {//有图
         
+        UIImageView *activity_backImv = [[UIImageView alloc]initWithFrame:activeImv.bounds];
+        [activity_backImv setImage:[UIImage imageNamed:@"gactivityback.png"]];
+        [activeImv addSubview:activity_backImv];
+        
+        
+        
+        _huodongTime_title = [[UILabel alloc]initWithFrame:CGRectMake(12, activeImv.frame.size.height-50, 60, 17)];
+        _huodongTime_title.textColor = [UIColor whiteColor];
+        _huodongTime_title.layer.shadowColor = [UIColor grayColor].CGColor;
+        _huodongTime_title.layer.shadowOpacity = 1.0;
+        _huodongTime_title.layer.shadowRadius = 3.0;
+        _huodongTime_title.layer.shadowOffset = CGSizeMake(0, 2);
+        _huodongTime_title.font = [UIFont systemFontOfSize:15];
+        [activeImv addSubview:_huodongTime_title];
+        _huodongTime_title.text = @"活动时间";
+        
+        
+        
+        _huodongTime_content = [[UILabel alloc]initWithFrame:CGRectMake(12, CGRectGetMaxY(_huodongTime_title.frame)+5, activeImv.frame.size.width-24, 17)];
+        
+        NSString *startTime = result[@"activity"][@"start_time"];
+        NSString *endTime = result[@"activity"][@"end_time"];
+        startTime = [LTools timechangeMMDD:startTime];
+        endTime = [LTools timechangeMMDD:endTime];
+        _huodongTime_content.text = [NSString stringWithFormat:@"%@  --  %@",startTime,endTime];
+        _huodongTime_content.font = [UIFont systemFontOfSize:15];
+        _huodongTime_content.textColor = [UIColor whiteColor];
+        
+        [activeImv addSubview:_huodongTime_content];
     }else{//没图
         if (_huodongLabel.text.length>3) {//有文字
             [_upStoreInfoView addSubview:_huodongLabel];
-            [_upStoreInfoView setFrame:CGRectMake(0, 0, DEVICE_WIDTH, 65)];
+            _huodongLabel.numberOfLines = 1;
+            UIView *downLine = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_huodongLabel.frame)+15, DEVICE_WIDTH, 0.5)];
+            downLine.backgroundColor = RGBCOLOR(255, 72, 135);
+            
+            UILabel *huodongFlag = [[UILabel alloc]initWithFrame:CGRectMake(DEVICE_WIDTH-80, CGRectGetMaxY(_huodongLabel.frame), 70, 15)];
+            huodongFlag.font = [UIFont systemFontOfSize:11];
+            huodongFlag.text = @"活动";
+            huodongFlag.textColor = RGBCOLOR(252, 74, 139);
+            huodongFlag.textAlignment = NSTextAlignmentRight;
+            
+            [_upStoreInfoView addSubview:huodongFlag];
+            
+            [_upStoreInfoView addSubview:downLine];
+            [_upStoreInfoView setFrame:CGRectMake(0, 0, DEVICE_WIDTH, 60)];
         }else{
             [_upStoreInfoView setFrame:CGRectMake(0, 0, DEVICE_WIDTH, 0)];
         }
@@ -327,10 +372,11 @@
     
     
     _huodongLabel.userInteractionEnabled = YES;
-    _huodongLabel.layer.shadowColor = [UIColor blackColor].CGColor;
-    _huodongLabel.layer.shadowOpacity = 1.0;
-    _huodongLabel.layer.shadowRadius = 5.0;
-    _huodongLabel.layer.shadowOffset = CGSizeMake(0, 3);
+    _huodongLabel.textColor = RGBCOLOR(68, 99, 160);
+//    _huodongLabel.layer.shadowColor = [UIColor grayColor].CGColor;
+//    _huodongLabel.layer.shadowOpacity = 1.0;
+//    _huodongLabel.layer.shadowRadius = 3.0;
+//    _huodongLabel.layer.shadowOffset = CGSizeMake(0, 2);
     _huodongLabel.clipsToBounds = NO;
     
     

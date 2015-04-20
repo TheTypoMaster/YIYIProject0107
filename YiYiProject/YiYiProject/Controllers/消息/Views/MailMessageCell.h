@@ -28,6 +28,8 @@ typedef enum{
 @property (strong, nonatomic) IBOutlet UIImageView *iconImageView;
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UIView *bottomBackView;
+@property (strong, nonatomic) IBOutlet UILabel *endTimeLabel;
+
 
 - (void)setCellWithModel:(id)aModel cellType:(Cell_Type)aType seeAll:(BOOL)seeAll;
 

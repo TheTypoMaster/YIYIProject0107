@@ -148,7 +148,7 @@
     if (self.isLoadMoreData) {
         self.pageNum --;
     }
-    [self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:1.0];
+    [self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0.1];
     
 }
 
@@ -313,14 +313,14 @@
         _isReloadData = YES;
         self.pageNum = 1;
         // pull down to refresh data
-        [self performSelector:@selector(refreshView) withObject:nil afterDelay:2.0];
+        [self performSelector:@selector(refreshView) withObject:nil afterDelay:0.5];
         
     }else if(aRefreshPos == EGORefreshFooter)
     {
         self.pageNum ++;
         
         // pull up to load more data
-        [self performSelector:@selector(getNextPageView) withObject:nil afterDelay:2.0];
+        [self performSelector:@selector(getNextPageView) withObject:nil afterDelay:0.5];
     }
     
     // overide, the actual loading data operation is done in the subclass

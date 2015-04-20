@@ -61,7 +61,7 @@
     
     //自定义导航左右按钮
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithTitle:@"设置" style:UIBarButtonItemStyleBordered target:self action:@selector(rightBarButtonItemPressed:)];
-    [rightButton setTintColor:[UIColor whiteColor]];
+    [rightButton setTintColor:RGBCOLOR(255, 78, 139)];
     self.navigationItem.rightBarButtonItem = rightButton;
     
     

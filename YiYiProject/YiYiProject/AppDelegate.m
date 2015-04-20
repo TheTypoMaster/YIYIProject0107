@@ -498,7 +498,7 @@
         
         NSLog(@"获取融云token失败 %@",result);
         
-//        [LTools showMBProgressWithText:@"登陆聊天服务器失败" addToView:self.window];
+        [LTools showMBProgressWithText:result[@"msg"] addToView:self.window];
         
     }];
 }

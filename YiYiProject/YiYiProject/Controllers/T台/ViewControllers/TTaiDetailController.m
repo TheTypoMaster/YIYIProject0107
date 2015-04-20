@@ -692,22 +692,32 @@
 //        theFlag.tag = product_id;
 //        UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(turntodanpin:)];
 //        theFlag.userInteractionEnabled=YES;
-//        
 //        [theFlag addGestureRecognizer:tap];
         
-        UILabel *_centerLabel=[[UILabel alloc] initWithFrame:CGRectZero];
-        _centerLabel.backgroundColor=RGBCOLOR(200, 100, 200);
-        _centerLabel.textColor=[UIColor colorWithRed:220/255.f green:220/255.f blue:230/255.f alpha:1];
+        UILabel *_centerLabel=[[UILabel alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH/3, 100)];
+        _centerLabel.backgroundColor=RGBCOLOR(70,81,76);
+        _centerLabel.textColor=[UIColor whiteColor];
         _centerLabel.font=[UIFont systemFontOfSize:14];
-        _centerLabel.layer.cornerRadius=3;
+        _centerLabel.layer.cornerRadius=5;
         _centerLabel.layer.masksToBounds=YES;
+        _centerLabel.layer.borderWidth = 1;
+        _centerLabel.layer.borderColor = [RGBCOLOR(252, 76, 139)CGColor];
         _centerLabel.numberOfLines=3;
-        _centerLabel.textAlignment=NSTextAlignmentCenter;
+        _centerLabel.textAlignment = NSTextAlignmentCenter;
         _centerLabel.text=maodian_detail[@"product_name"];
-        [_centerLabel sizeToFit];
         _centerLabel.tag=product_id;
-        _centerLabel.frame=CGRectMake(dx*bigImageView.frame.size.width, dy*bigImageView.frame.size.height, _centerLabel.frame.size.width+4, _centerLabel.frame.size.height+4);
-        _centerLabel.center = CGPointMake(dx*bigImageView.frame.size.width, dy*bigImageView.frame.size.height);
+        
+        
+//        _centerLabel.center = CGPointMake(dx*bigImageView.frame.size.width, dy*bigImageView.frame.size.height);
+        
+        UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 20, 20)];
+        [imv setImage:[UIImage imageNamed:@"gbutton.png"]];
+        imv.center = CGPointMake(dx*bigImageView.frame.size.width, dy*bigImageView.frame.size.height);
+        [bigImageView addSubview:imv];
+        
+        _centerLabel.frame=CGRectMake(CGRectGetMaxX(imv.frame), imv.frame.origin.y, _centerLabel.frame.size.width+4, _centerLabel.frame.size.height+4);
+        [_centerLabel sizeToFit];
+        
         [bigImageView addSubview:_centerLabel];
         
         UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(turntodanpin:)];
@@ -718,7 +728,7 @@
     }else{
         
         //说明是品牌店面
-        UILabel *_centerLabel=[[UILabel alloc] initWithFrame:CGRectZero];
+        UILabel *_centerLabel=[[UILabel alloc]initWithFrame:CGRectZero];
         _centerLabel.backgroundColor=RGBCOLOR(255, 0, 0);
         _centerLabel.textColor=[UIColor colorWithRed:220/255.f green:220/255.f blue:230/255.f alpha:1];
         _centerLabel.font=[UIFont systemFontOfSize:12];
