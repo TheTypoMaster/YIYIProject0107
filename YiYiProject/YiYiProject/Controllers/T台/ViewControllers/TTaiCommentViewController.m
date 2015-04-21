@@ -215,7 +215,10 @@
 ///T台评论
 -(void)getTTaiComments
 {
-    NSString * url = [NSString stringWithFormat:TTAI_COMMENTS_URL,_table.pageNum,@"7"];//test
+//    NSString * url = [NSString stringWithFormat:TTAI_COMMENTS_URL,_table.pageNum,@"7"];//test
+    
+    NSString * url = [NSString stringWithFormat:TTAI_COMMENTS_URL,_table.pageNum,_tt_id];//test
+
     //test
     //  NSString * testurl = [NSString stringWithFormat:TTAI_COMMENTS_URL,_table.pageNum,@"26"];
     

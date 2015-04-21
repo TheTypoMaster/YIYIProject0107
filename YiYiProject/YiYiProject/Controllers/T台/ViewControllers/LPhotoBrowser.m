@@ -114,7 +114,7 @@
     
     //评论数字
     
-    NSString *commentNum = [NSString stringWithFormat:@"%@条评论",detail_model.tt_like_num];
+    NSString *commentNum = [NSString stringWithFormat:@"%@条评论",detail_model.tt_comment_num];
     likeWidth = [LTools widthForText:commentNum font:14];
     
     commentButton = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(likeNumButton.left - likeWidth - 20, 0, likeWidth, bottomView.height) normalTitle:commentNum image:nil backgroudImage:nil superView:nil target:self action:@selector(clickToCommentPage:)];
