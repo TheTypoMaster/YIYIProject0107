@@ -766,6 +766,11 @@
         api = [NSString stringWithFormat:@"%@&action=%@&mb_id=%@&page=%d&per_page=%d",HOME_CLOTH_STORE_PINPAILIST,@"by_hot",self.shopId,_waterFlow.pageNum,_per_page];
     }
     
+    
+    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == YES){//已经登录的情况下 传authecode 点赞
+        api = [NSString stringWithFormat:@"%@&authcode=%@",api,[GMAPI getAuthkey]];
+    }
+    
     NSLog(@"请求的接口%@",api);
     
     GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
@@ -873,6 +878,11 @@
     detail.product_id = aMode.product_id;
     detail.gShop_id = self.shopId;
     detail.hidesBottomBarWhenPushed = YES;
+    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell*)[_waterFlow.quitView cellAtIndexPath:indexPath];
+    
+    detail.theStorePinpaiProductCell = cell;
+    detail.theStorePinpaiProductModel = aMode;
+    
     if (self.isChooseProductLink) {
         detail.isChooseProductLink = YES;
     }
@@ -918,6 +928,14 @@
     
     ProductModel *aMode = _waterFlow.dataArray[indexPath.row];
     cell.titleView.hidden = YES;
+    
+    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO){//没登陆
+//        [cell.like_btn addTarget:self action:@selector(zandenglu) forControlEvents:UIControlEventTouchUpInside];
+    }else{
+        cell.like_btn.tag = 10000 + indexPath.row;
+        [cell.like_btn addTarget:self action:@selector(clickToZan:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
     [cell setCellWithModel:aMode];
     
     
@@ -927,6 +945,73 @@
 }
 
 
+
+
+
+-(void)zandenglu{
+    LoginViewController *login = [[LoginViewController alloc]init];
+    
+    UINavigationController *unVc = [[UINavigationController alloc]initWithRootViewController:login];
+    
+    [self presentViewController:unVc animated:YES completion:nil];
+}
+
+
+
+
+
+/**
+ *  赞 取消赞 收藏 取消收藏
+ */
+
+- (void)clickToZan:(UIButton *)sender
+{
+    if (![LTools isLogin:self]) {
+        
+        return;
+    }
+    //直接变状态
+    //更新数据
+    
+    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[_waterFlow.quitView cellAtIndexPath:[NSIndexPath indexPathForRow:sender.tag - 10000 inSection:0]];
+    cell.like_label.text = @"";
+    
+    ProductModel *aMode = _waterFlow.dataArray[sender.tag - 10000];
+    
+    NSString *productId = aMode.product_id;
+    
+    //    __weak typeof(self)weakSelf = self;
+    
+    NSString *api = HOME_PRODUCT_ZAN_ADD;
+    
+    NSString *post = [NSString stringWithFormat:@"product_id=%@&authcode=%@",productId,[GMAPI getAuthkey]];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    
+    NSString *url = api;
+    
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"result %@",result);
+        sender.selected = YES;
+        aMode.is_like = 1;
+        aMode.product_like_num = NSStringFromInt([aMode.product_like_num intValue] + 1);
+        cell.like_label.text = aMode.product_like_num;
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+        cell.like_label.text = aMode.product_like_num;
+        
+        [GMAPI showAutoHiddenMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
+        
+        if ([failDic[RESULT_CODE] intValue] == -11) {
+            
+            [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
+        }
+        
+    }];
+}
 
 
 #pragma mark - CustomSegmentViewDelegate

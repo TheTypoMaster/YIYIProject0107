@@ -215,9 +215,9 @@
 
 //点击搜索按钮
 -(void)searchBtnClicked{
-    if (_searchTextField.text.length == 0) {
-        return;
-    }
+//    if (_searchTextField.text.length == 0) {
+//        return;
+//    }
     [self gshou];
     _tableView.hidden = NO;
     [_tableView showRefreshHeader:YES];

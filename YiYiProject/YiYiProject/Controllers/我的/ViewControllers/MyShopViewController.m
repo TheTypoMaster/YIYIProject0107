@@ -99,9 +99,9 @@
     
     [self getMailDetailInfo];//店铺详情
     
-    [self getMailProduct];//店铺产品列表
+//    [self getMailProduct];//店铺产品列表
     
-    [self getMailActivity];//店铺活动列表
+//    [self getMailActivity];//店铺活动列表
     
     [self creatManageView];//添加店铺管理界面
     
@@ -157,8 +157,6 @@
 {
     NSString *key = [GMAPI getAuthkey];
     
-    key = @"WiVbIgF4BeMEvwabALBajQWgB+VUoVWkBShRYFUwXGkGOAAyB2FSZgczBjYAbAp6AjZSaQ==";
-    
     __weak typeof(self)weakSelf = self;
     
     NSString *url = [NSString stringWithFormat:GET_MAIL_DETAIL_INFO,self.userInfo.shop_id];
@@ -198,12 +196,13 @@
     //直接变状态
     //更新数据
     
-    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[waterFlow.quitView cellAtIndexPath:[NSIndexPath indexPathForRow:sender.tag - 100 inSection:0]];
+    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[waterFlow.quitView cellAtIndexPath:[NSIndexPath indexPathForRow:sender.tag - 10000 inSection:0]];
     cell.like_label.text = @"";
     
-    ProductModel *aMode = waterFlow.dataArray[sender.tag - 100];
+    ProductModel *aMode = waterFlow.dataArray[sender.tag - 10000];
     
     NSString *productId = aMode.product_id;
+    
     //    __weak typeof(self)weakSelf = self;
     
     NSString *api = HOME_PRODUCT_ZAN_ADD;
@@ -225,12 +224,15 @@
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+        cell.like_label.text = aMode.product_like_num;
+        
+        [GMAPI showAutoHiddenMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
+        
         if ([failDic[RESULT_CODE] intValue] == -11) {
             
             [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
         }
-        aMode.product_like_num = NSStringFromInt([aMode.product_like_num intValue]);
-        cell.like_label.text = aMode.product_like_num;
+        
     }];
 }
 
@@ -270,9 +272,8 @@
 {
     //action=%@&mb_id=%@&page=%d&per_page=%d"
     
-    //by_time为按时间排序（新品），by_discount为按折扣排序，by_hot为是否热销，默认为by_time
     
-    NSString *url = [NSString stringWithFormat:GET_MAIL_PRODUCT_LIST,self.userInfo.shop_id,waterFlow.pageNum,L_PAGE_SIZE];
+    NSString *url = [NSString stringWithFormat:GET_MAIL_PRODUCT_LIST,self.userInfo.shop_id,waterFlow.pageNum,L_PAGE_SIZE,[GMAPI getAuthkey]];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
@@ -789,8 +790,11 @@
             }
             
             waterFlow = [[LWaterflowView alloc]initWithFrame:CGRectMake(0,0,DEVICE_WIDTH,DEVICE_HEIGHT - 57 + 20) waterDelegate:self waterDataSource:self];
+            waterFlow.pageNum = 1;
             waterFlow.backgroundColor = RGBCOLOR(235, 235, 235);
             [cell.contentView addSubview:waterFlow];
+            
+            [waterFlow showRefreshHeader:YES]; //加载数据
 
             waterFlow.quitView.scrollEnabled = NO;
             
@@ -804,6 +808,8 @@
             rightTable.hidden = YES;
             
             rightTable.scrollEnabled = NO;
+            
+            [rightTable showRefreshHeader:YES];//加载数据
             
             return cell;
         }
@@ -853,7 +859,11 @@
     ProductDetailController *detail = [[ProductDetailController alloc]init];
     detail.product_id = aMode.product_id;
     detail.hidesBottomBarWhenPushed = YES;
-    //    [self.navigationController pushViewController:detail animated:YES];
+    
+    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *) [waterFlow.quitView cellAtIndexPath:indexPath];
+//    cell.like_btn.selected = aModel.is_like == 1 ? YES : NO;
+    detail.theLastViewClickedCell = cell;
+    detail.theLastViewProductModel = aMode;
     
     [self pushViewController:detail];
     

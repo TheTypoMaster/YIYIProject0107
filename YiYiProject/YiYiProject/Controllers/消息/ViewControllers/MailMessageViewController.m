@@ -15,6 +15,8 @@
 
 #import "TTaiDetailController.h"
 
+#import "DynamicMessageCell.h"
+
 @interface MailMessageViewController ()<RefreshDelegate,UITableViewDataSource>
 {
     RefreshTableView *_table;
@@ -149,12 +151,6 @@
         }
     }
     
-    
-    
-    
-    
-    
-    
     NSLog(@"详情");
     MessageDetailController *detail = [[MessageDetailController alloc]init];
     detail.msg_id = aModel.msg_id;
@@ -164,6 +160,12 @@
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
     MessageModel *aModel = _table.dataArray[indexPath.row];
+    
+    if (self.aType == Message_Dynamic){
+        
+        return 45 + 55 + 50;
+    }
+    
     return [MailMessageCell heightForModel:aModel cellType:icon_Yes seeAll:YES];
 }
 
@@ -176,6 +178,19 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (self.aType == Message_Dynamic) {
+        
+        static NSString *identify = @"DynamicMessageCell";
+        DynamicMessageCell *cell = (DynamicMessageCell *)[LTools cellForIdentify:identify cellName:identify forTable:tableView];
+        
+        MessageModel *aModel = _table.dataArray[indexPath.row];
+        [cell setCellWithModel:aModel];
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        return cell;
+    }
+    
     static NSString *identify = @"MailMessageCell";
     MailMessageCell *cell = (MailMessageCell *)[LTools cellForIdentify:identify cellName:identify forTable:tableView];
     

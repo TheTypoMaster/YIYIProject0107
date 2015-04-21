@@ -57,4 +57,7 @@
 @property(nonatomic,strong)NSString *product_new;
 
 
+@property(nonatomic,strong)NSString *original_price;//原价
+
+
 @end

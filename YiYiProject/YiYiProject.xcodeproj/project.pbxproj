@@ -413,6 +413,8 @@
 		E38487721AAA9B7A00BB4B3C /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E38487711AAA9B7A00BB4B3C /* libstdc++.6.0.9.dylib */; };
 		E386E8511AE4F4A1005A8725 /* gactivityback@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E386E8501AE4F4A1005A8725 /* gactivityback@2x.png */; };
 		E386E8531AE5147B005A8725 /* gbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E386E8521AE5147B005A8725 /* gbutton@2x.png */; };
+		E389FDC21AE64FAD002D6566 /* DynamicMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E389FDC01AE64FAD002D6566 /* DynamicMessageCell.m */; };
+		E389FDC31AE64FAD002D6566 /* DynamicMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E389FDC11AE64FAD002D6566 /* DynamicMessageCell.xib */; };
 		E38E2D351ACD2726002C63EF /* GTTPublishViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E38E2D341ACD2726002C63EF /* GTTPublishViewController.m */; };
 		E38E2D6A1ACD41C3002C63EF /* GImvUpScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = E38E2D691ACD41C3002C63EF /* GImvUpScrollView.m */; };
 		E38E2D9F1ACD49D0002C63EF /* GAddTtaiImageLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E38E2D9E1ACD49D0002C63EF /* GAddTtaiImageLinkViewController.m */; };
@@ -1193,6 +1195,9 @@
 		E38487711AAA9B7A00BB4B3C /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
 		E386E8501AE4F4A1005A8725 /* gactivityback@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gactivityback@2x.png"; sourceTree = "<group>"; };
 		E386E8521AE5147B005A8725 /* gbutton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gbutton@2x.png"; sourceTree = "<group>"; };
+		E389FDBF1AE64FAD002D6566 /* DynamicMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamicMessageCell.h; sourceTree = "<group>"; };
+		E389FDC01AE64FAD002D6566 /* DynamicMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamicMessageCell.m; sourceTree = "<group>"; };
+		E389FDC11AE64FAD002D6566 /* DynamicMessageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DynamicMessageCell.xib; sourceTree = "<group>"; };
 		E38E2D331ACD2726002C63EF /* GTTPublishViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTTPublishViewController.h; sourceTree = "<group>"; };
 		E38E2D341ACD2726002C63EF /* GTTPublishViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTTPublishViewController.m; sourceTree = "<group>"; };
 		E38E2D681ACD41C3002C63EF /* GImvUpScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GImvUpScrollView.h; sourceTree = "<group>"; };
@@ -2253,6 +2258,9 @@
 				139A05211A66B9C500A8EB49 /* MailMessageCell.h */,
 				139A05221A66B9C500A8EB49 /* MailMessageCell.m */,
 				139A05231A66B9C500A8EB49 /* MailMessageCell.xib */,
+				E389FDBF1AE64FAD002D6566 /* DynamicMessageCell.h */,
+				E389FDC01AE64FAD002D6566 /* DynamicMessageCell.m */,
+				E389FDC11AE64FAD002D6566 /* DynamicMessageCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3296,6 +3304,7 @@
 				137E0ADF1A4C65D000B59F64 /* product_like_cancel@2x.png in Resources */,
 				138986121A6A18C600F187C9 /* my_rizhi@2x.png in Resources */,
 				13963F581A4FE3B8007BE68B /* fabu@2x.png in Resources */,
+				E389FDC31AE64FAD002D6566 /* DynamicMessageCell.xib in Resources */,
 				E3E64AA81AE0D971002F00A4 /* compose_pic_add_highlighted@2x.png in Resources */,
 				137B08671A4EAC9900DE7DCC /* tianjia_up@2x.png in Resources */,
 				139A051C1A66AC3500A8EB49 /* sjxx150_150@2x.png in Resources */,
@@ -3793,6 +3802,7 @@
 				E38E2D351ACD2726002C63EF /* GTTPublishViewController.m in Sources */,
 				13A3897E1A3878FE00ABBACB /* MyViewController.m in Sources */,
 				13B690631A56784D007FE152 /* TPlatModel.m in Sources */,
+				E389FDC21AE64FAD002D6566 /* DynamicMessageCell.m in Sources */,
 				E3996ED71A5E1DBA00673147 /* NSDictionary+GJson.m in Sources */,
 				139607C01A46DC4E00AACAC4 /* FilterView.m in Sources */,
 				13A3898B1A38937600ABBACB /* HomeViewController.m in Sources */,

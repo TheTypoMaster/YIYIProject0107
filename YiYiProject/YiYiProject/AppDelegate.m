@@ -641,6 +641,9 @@
 
 }
 
+
+
+//融云回调 获取用户名 和 头像
 #pragma mark - RCIMUserInfoFetcherDelegagte method
 
 - (void)getUserInfoWithUserId:(NSString *)userId completion:(void(^)(RCUserInfo* userInfo))completion
@@ -656,22 +659,22 @@
         userName = [GMAPI getUsername];
     }
     
-    if (userName.length == 0) {
-        
+    NSLog(@"----->|%@|",userName);
+    
+//    if (userName.length == 0) {
+    
         NSString *url = [NSString stringWithFormat:GET_PERSONINFO_WITHID,userId];
         LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
         [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
             
-            NSString *name = @" ";
+            NSString *name = @"";
             if ([[result objectForKey:@"mall_type"]intValue] == 1) {//商场店
                 name = [NSString stringWithFormat:@"%@.%@",result[@"brand_name"],result[@"mall_name"]];
             }else if ([[result objectForKey:@"mall_type"]intValue] == 2){//精品店
                 name = result[@"mall_name"];
+            }else{
+                name = result[@"user_name"];
             }
-            
-            
-            
-            
             
             NSString *icon = result[@"photo"];
             
@@ -689,7 +692,7 @@
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
             
         }];
-    }
+//    }
     
     NSLog(@"userId %@ %@",userId,userName);
     

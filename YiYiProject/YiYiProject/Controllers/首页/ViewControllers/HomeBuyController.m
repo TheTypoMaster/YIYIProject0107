@@ -183,6 +183,7 @@
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+        [GMAPI showAutoHiddenMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
         if ([failDic[RESULT_CODE] intValue] == -11) {
             
             [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
@@ -297,6 +298,10 @@
     ProductDetailController *detail = [[ProductDetailController alloc]init];
     detail.product_id = aMode.product_id;
     detail.hidesBottomBarWhenPushed = YES;
+    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell*)[waterFlow.quitView cellAtIndexPath:indexPath];
+    detail.theHomeBuyVcModel = aMode;
+    detail.theHomeBuyVcProductCell = cell;
+    
     [self.rootViewController.navigationController pushViewController:detail animated:YES];
     
 }
