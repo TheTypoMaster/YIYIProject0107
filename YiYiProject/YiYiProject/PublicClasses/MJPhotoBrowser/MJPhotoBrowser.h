@@ -6,6 +6,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MJPhotoView.h"
+
 @protocol MJPhotoBrowserDelegate;
 @interface MJPhotoBrowser : UIViewController <UIScrollViewDelegate>
 // 代理
@@ -20,8 +22,13 @@
 // 显示
 - (void)show;
 
+//显示在哪个视图控制器上
+- (void)showWithController:(UIViewController *)viewController;
+
 //隐藏
 - (void)hide;
+
+- (MJPhotoView *)currentPhotoView;
 
 @end
 

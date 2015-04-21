@@ -10,25 +10,27 @@
 
 #import "LoginViewController.h"
 
-#import "GTTPublishViewController.h"
+#import "GTTPublishViewController.h" //t台发布
 
 #import "RefreshTableView.h"
 
-#import "TTaiBigPhotoCell.h"
+#import "TTaiBigPhotoCell.h" //t台样式一
 
-#import "TTaiBigPhotoCell2.h"
+#import "TTaiBigPhotoCell2.h"//t台样式二
 
 #import "TPlatModel.h"
 #import "DataManager.h"
 #import "LPhotoBrowser.h"
 #import "MJPhoto.h"
 
-#import "TTaiDetailController.h"
+#import "TTaiDetailController.h"//t台详情
+
 
 @interface BigPhotoTTaiViewController ()<RefreshDelegate,UITableViewDataSource>
 {
     RefreshTableView *_table;
     LPhotoBrowser *browser;
+    BOOL isFirst;
 }
 
 @end
@@ -47,6 +49,8 @@
     _table.dataSource = self;
     [self.view addSubview:_table];
     
+//    _table.hidden = YES;
+    
     NSDictionary *dic = [DataManager getCacheDataForType:Cache_TPlat];
     if (dic) {
         [self parseDataWithResult:dic];
@@ -57,13 +61,13 @@
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateTTai:) name:NOTIFICATION_TTAI_PUBLISE_SUCCESS object:nil];
     
-    [_table showRefreshHeader:YES];
-    
 }
 
 - (void)loadData
 {
     [_table showRefreshHeader:YES];
+    
+//    [self loadNewData];
     
 }
 
@@ -110,7 +114,27 @@
         
         [_table reloadData:arr total:L_PAGE_SIZE];
         
+//        [self animation];
     }
+}
+
+- (void)animation
+{
+
+    _table.contentOffset = CGPointMake(0, DEVICE_HEIGHT * 3);
+
+    
+    [UIView animateWithDuration:2.f animations:^{
+        
+        _table.hidden = NO;
+
+        
+    } completion:^(BOOL finished) {
+        _table.contentOffset = CGPointMake(0, 0);
+
+        
+    }];
+    
 }
 
 #pragma mark 网络请求
@@ -211,7 +235,10 @@
     browser.showImageView = aImageView;
     browser.tt_id = aImageView.infoId;//详情id
     browser.cancelSingleTap = YES;
-    [browser show];
+    browser.lastViewController = self;
+    [browser showWithController:self.tabBarController];
+    
+//    self.tabBarController.tabBar.top = DEVICE_HEIGHT;
 }
 
 
@@ -257,6 +284,11 @@
 -(void)loadMoreData
 {
     [self getTTaiData];
+}
+
+- (void)refreshScrollViewDidScroll:(UIScrollView *)scrollView
+{
+    NSLog(@"---->%f",scrollView.contentOffset.y);
 }
 
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
@@ -322,7 +354,9 @@
     TTaiBigPhotoCell2 *cell = (TTaiBigPhotoCell2 *)[LTools cellForIdentify:identify cellName:identify forTable:tableView];
     
     [cell setCellWithModel:[_table.dataArray objectAtIndex:indexPath.row]];
-    cell.bigImageView.userInteractionEnabled = NO;
+//    cell.bigImageView.userInteractionEnabled = NO;
+    
+    [cell.bigImageView.tapGesture addTarget:self action:@selector(tapImage:)];
     
     return cell;
 }

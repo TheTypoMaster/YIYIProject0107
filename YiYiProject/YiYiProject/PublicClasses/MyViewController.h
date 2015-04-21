@@ -60,6 +60,7 @@ typedef enum
 
 
 -(void)setMyViewControllerLeftButtonType:(MyViewControllerLeftbuttonType)theType WithRightButtonType:(MyViewControllerRightbuttonType)rightType;
+-(void)leftButtonTap:(UIButton *)sender;
 
 
 @end

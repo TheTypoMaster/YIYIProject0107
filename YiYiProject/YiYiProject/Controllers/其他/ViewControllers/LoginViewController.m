@@ -20,6 +20,17 @@
 
 @implementation LoginViewController
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if ([UIApplication sharedApplication].isStatusBarHidden) {
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+
+    }
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -38,6 +49,19 @@
 }
 
 #pragma mark - 事件处理
+
+- (void)loginResultIsSuccess:(BOOL)isSuccess
+{
+    if (_aLoginBlock) {
+        
+        _aLoginBlock(isSuccess);
+    }
+}
+
+- (void)setLoginBlock:(LoginBlock)aBlock
+{
+    _aLoginBlock = aBlock;
+}
 
 -(void)rightButtonTap:(UIButton *)sender
 {
@@ -88,6 +112,15 @@
 
 -(void)leftButtonTap:(UIButton *)sender
 {
+    if (self.isSpecial) {
+        
+        [self.navigationController.view removeFromSuperview];
+        [self.navigationController removeFromParentViewController];
+        
+        return;
+    }
+    
+    [self loginResultIsSuccess:NO];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -231,12 +264,17 @@
         
         [weakSelf performSelector:@selector(leftButtonTap:) withObject:nil afterDelay:0.2];
         
+        [weakSelf loginResultIsSuccess:YES];
+        
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"failDic %@ erro %@",failDic,erro);
         
         [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
+        
+        [weakSelf loginResultIsSuccess:NO];
+
     }];
 }
 

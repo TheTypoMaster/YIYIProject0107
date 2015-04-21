@@ -13,11 +13,12 @@ typedef enum{
     AnimationZoom = 1 //滑动返回平移效果
 }AnimationStyle;
 
-@interface LNavigationController : UINavigationController
+@interface LNavigationController : UINavigationController<UIGestureRecognizerDelegate,UINavigationControllerDelegate>
+@property(nonatomic,weak) UIViewController* currentShowVC;
 
-// Enable the drag to back interaction, Default is YES.
-@property (nonatomic,assign) BOOL canDragBack;
-@property (nonatomic,assign) AnimationStyle animationStyle;//动画效果
-@property (nonatomic,retain) UIPanGestureRecognizer *panGesture;
+//// Enable the drag to back interaction, Default is YES.
+//@property (nonatomic,assign) BOOL canDragBack;
+//@property (nonatomic,assign) AnimationStyle animationStyle;//动画效果
+//@property (nonatomic,retain) UIPanGestureRecognizer *panGesture;
 
 @end

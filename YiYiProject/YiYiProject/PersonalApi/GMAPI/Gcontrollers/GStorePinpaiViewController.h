@@ -23,6 +23,8 @@
     UILabel *_adressLabel;
 }
 
+@property(nonatomic,assign)BOOL isPresent;//是否是模态出来
+
 @property(nonatomic,strong)NSString *pinpaiNameStr;//品牌名称
 @property(nonatomic,strong)NSString *storeNameStr;//商家名称
 

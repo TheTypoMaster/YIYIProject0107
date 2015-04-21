@@ -701,7 +701,7 @@
         _centerLabel.font=[UIFont systemFontOfSize:13];
         _centerLabel.layer.cornerRadius=5;
         _centerLabel.layer.masksToBounds=YES;
-        _centerLabel.layer.borderWidth = 1;
+        _centerLabel.layer.borderWidth = 1.f;
         _centerLabel.layer.borderColor = [RGBCOLOR(252, 76, 139)CGColor];
         _centerLabel.numberOfLines=3;
         _centerLabel.textAlignment = NSTextAlignmentCenter;

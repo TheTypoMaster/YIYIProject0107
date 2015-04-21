@@ -10,11 +10,18 @@
 
 #import "MyViewController.h"
 
+typedef void(^LoginBlock)(BOOL success);
+
 @interface LoginViewController : MyViewController
+{
+    LoginBlock _aLoginBlock;
+}
 @property (strong, nonatomic) IBOutlet UITextField *phoneTF;
 @property (strong, nonatomic) IBOutlet UITextField *pwdTF;
 
+@property(nonatomic,assign)BOOL isSpecial;//是否是特殊(特殊情况不是present,所以不能dismiss)
 
+- (void)setLoginBlock:(LoginBlock)aBlock;
 
 - (IBAction)clickToSina:(id)sender;
 - (IBAction)clickToQQ:(id)sender;

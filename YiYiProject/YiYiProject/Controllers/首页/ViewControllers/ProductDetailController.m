@@ -228,6 +228,17 @@
 
 #pragma mark - 事件处理
 
+-(void)leftButtonTap:(UIButton *)sender
+{
+    if (self.isPresent) {
+        
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }else
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
 - (void)tapImage:(UITapGestureRecognizer *)tap
 {
     int count = (int)image_urls.count;

@@ -25,6 +25,8 @@ typedef enum {
 
 @property(nonatomic,strong)ProductModel *theModel;//单品model 给聊天界面传递
 
+@property(nonatomic,assign)BOOL isPresent;//是否是模态出来得
+
 @property (strong, nonatomic) IBOutlet UILabel *brandName;
 
 @property (strong, nonatomic) IBOutlet UILabel *shopNameLabel;

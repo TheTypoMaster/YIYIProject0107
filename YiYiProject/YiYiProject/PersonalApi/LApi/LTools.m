@@ -9,7 +9,6 @@
 #import "LTools.h"
 #import <CommonCrypto/CommonDigest.h>
 #import "AppDelegate.h"
-#import "LoginViewController.h"
 
 @implementation LTools
 {
@@ -1038,6 +1037,24 @@
     if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
         
         LoginViewController *login = [[LoginViewController alloc]init];
+        
+        LNavigationController *unVc = [[LNavigationController alloc]initWithRootViewController:login];
+        
+        [viewController presentViewController:unVc animated:YES completion:nil];
+        
+        return NO;
+    }
+    
+    return YES;
+}
+
++ (BOOL)isLogin:(UIViewController *)viewController loginBlock:(LoginBlock)aBlock
+{
+    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
+        
+        LoginViewController *login = [[LoginViewController alloc]init];
+        
+        [login setLoginBlock:aBlock];//登录block
         
         LNavigationController *unVc = [[LNavigationController alloc]initWithRootViewController:login];
         

@@ -13,6 +13,7 @@
 
 #import "MBProgressHUD.h"
 
+#import "LoginViewController.h"
 
 
 #import "AppDelegate.h"
@@ -51,6 +52,8 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
 + (UINavigationController *)rootNavigationController;
 
 + (BOOL)isLogin:(UIViewController *)viewController;//判读是否登录
+
++ (BOOL)isLogin:(UIViewController *)viewController loginBlock:(LoginBlock)aBlock;//判断登录状态
 
 //@property(nonatomic,retain)
 

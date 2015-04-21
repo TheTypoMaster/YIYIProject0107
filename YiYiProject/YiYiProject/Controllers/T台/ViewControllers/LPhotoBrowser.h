@@ -12,10 +12,13 @@
 ///图片浏览器,继承自 MJPhotoBrowser
 @interface LPhotoBrowser : MJPhotoBrowser
 
-@property(nonatomic,retain)NSString *tt_id;
+@property(nonatomic,retain)NSString *tt_id;//t台信息id
 
 @property(nonatomic,assign)TPlatModel *t_model;
 
 @property(nonatomic,assign)UIImageView *showImageView;
+
+
+@property(nonatomic,assign)UIViewController *lastViewController;
 
 @end

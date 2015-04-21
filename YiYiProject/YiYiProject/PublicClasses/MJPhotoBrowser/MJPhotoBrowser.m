@@ -8,7 +8,7 @@
 #import "MJPhotoBrowser.h"
 #import "MJPhoto.h"
 //#import "SDWebImageManager+MJ.h"
-#import "MJPhotoView.h"
+//#import "MJPhotoView.h"
 #import "MJPhotoToolbar.h"
 
 #define kPadding 10
@@ -54,6 +54,16 @@
     [self createToolbar];
 }
 
+- (void)showWithController:(UIViewController *)viewController
+{
+    [viewController.view addSubview:self.view];
+    [viewController addChildViewController:self];
+    
+    if (_currentPhotoIndex == 0) {
+        [self showPhotos];
+    }
+}
+
 - (void)show
 {
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
@@ -67,10 +77,22 @@
 
 - (void)hide
 {
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    [window.rootViewController addChildViewController:self];
+    
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     
     MJPhotoView *photoView = (MJPhotoView *)[_photoScrollView viewWithTag:_currentPhotoIndex + kPhotoViewTagOffset];
     [photoView hide];
+}
+
+//当前的photoView
+
+- (MJPhotoView *)currentPhotoView
+{
+    MJPhotoView *photoView = (MJPhotoView *)[_photoScrollView viewWithTag:_currentPhotoIndex + kPhotoViewTagOffset];
+    
+    return photoView;
 }
 
 #pragma mark - 私有方法

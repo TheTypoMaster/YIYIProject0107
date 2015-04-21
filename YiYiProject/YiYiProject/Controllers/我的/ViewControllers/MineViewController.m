@@ -83,9 +83,9 @@ typedef enum{
 
 @implementation MineViewController
 
--(void)viewWillAppear:(BOOL)animated
+-(void)viewDidAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
+    [super viewDidAppear:animated];
     
     
     self.navigationController.navigationBarHidden = YES;
@@ -94,10 +94,6 @@ typedef enum{
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     }
-    
-    
-    
-    
 }
 
 - (void)viewDidLoad {

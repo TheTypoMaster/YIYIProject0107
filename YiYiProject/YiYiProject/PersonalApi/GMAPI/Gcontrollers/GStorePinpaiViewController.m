@@ -512,7 +512,16 @@
 
 
 
-
+-(void)leftButtonTap:(UIButton *)sender
+{
+    if (self.isPresent) {
+        
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }else
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
 
 
 
