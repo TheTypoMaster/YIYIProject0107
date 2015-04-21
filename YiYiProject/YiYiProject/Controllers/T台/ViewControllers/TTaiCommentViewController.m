@@ -59,7 +59,7 @@
     }
     
     self.navigationController.navigationBarHidden = NO;
-    self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+//    self.navigationController.interactivePopGestureRecognizer.enabled = NO;
 
 }
 
@@ -68,11 +68,9 @@
     [super viewWillDisappear:animated];
     [_input_view deleteKeyBordNotification];
     
-    self.navigationController.navigationBarHidden = YES;
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
     
-    self.navigationController.interactivePopGestureRecognizer.enabled = YES;
-
-
+//    self.navigationController.interactivePopGestureRecognizer.enabled = YES;
 }
 
 //-(void)viewDidDisappear:(BOOL)animated
@@ -126,7 +124,9 @@
 
 -(void)leftButtonTap:(UIButton *)sender
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+//    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)setViewWithModel:(TDetailModel *)aModel
@@ -501,20 +501,24 @@
     UIColor *color2 = [UIColor colorWithHexString:@"262626"];
     
     
-    //评论
+//    //评论
+//    
+//    UIImageView *comment_icon = [[UIImageView alloc]initWithFrame:CGRectMake(29, iconView.bottom + 20, 17, 17)];
+//    comment_icon.image = [UIImage imageNamed:@"pinglun_icon"];
+//    [head_view addSubview:comment_icon];
+//    
+//    UILabel *comment = [LTools createLabelFrame:CGRectMake(comment_icon.right + 12, comment_icon.top, 34, 17) title:@"评论" font:17 align:NSTextAlignmentLeft textColor:color];
+//    [head_view addSubview:comment];
+//    
+//    comment_label = [LTools createLabelFrame:CGRectMake(comment.right + 10, comment.top, 100, 17) title:@"(10)" font:17 align:NSTextAlignmentLeft textColor:color];
+//    [head_view addSubview:comment_label];
+//    
+//    UIImageView *line = [[UIImageView alloc]initWithFrame:CGRectMake(10, comment_icon.bottom + 10, DEVICE_WIDTH - 10 * 2, 17/2.f)];
+//    line.image = [UIImage imageNamed:@"zhixiangjiantou"];
+//    [head_view addSubview:line];
     
-    UIImageView *comment_icon = [[UIImageView alloc]initWithFrame:CGRectMake(29, iconView.bottom + 20, 17, 17)];
-    comment_icon.image = [UIImage imageNamed:@"pinglun_icon"];
-    [head_view addSubview:comment_icon];
-    
-    UILabel *comment = [LTools createLabelFrame:CGRectMake(comment_icon.right + 12, comment_icon.top, 34, 17) title:@"评论" font:17 align:NSTextAlignmentLeft textColor:color];
-    [head_view addSubview:comment];
-    
-    comment_label = [LTools createLabelFrame:CGRectMake(comment.right + 10, comment.top, 100, 17) title:@"(10)" font:17 align:NSTextAlignmentLeft textColor:color];
-    [head_view addSubview:comment_label];
-    
-    UIImageView *line = [[UIImageView alloc]initWithFrame:CGRectMake(10, comment_icon.bottom + 10, DEVICE_WIDTH - 10 * 2, 17/2.f)];
-    line.image = [UIImage imageNamed:@"zhixiangjiantou"];
+    UIImageView *line = [[UIImageView alloc]initWithFrame:CGRectMake(10, iconView.bottom + 10, DEVICE_WIDTH - 10 * 2, 0.5)];
+    line.backgroundColor = [UIColor grayColor];
     [head_view addSubview:line];
     
     head_view.height = line.bottom;

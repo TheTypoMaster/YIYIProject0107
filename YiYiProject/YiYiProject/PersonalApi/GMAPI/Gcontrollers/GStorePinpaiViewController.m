@@ -91,6 +91,8 @@
     
     
     _mainScrollview = [[UIScrollView alloc]initWithFrame:self.view.bounds];
+//    _mainScrollview = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, self.view.height - 35)];
+
     [self.view addSubview:_mainScrollview];
     
     
@@ -1031,8 +1033,8 @@
         if (_mainScrollview.contentOffset.y<height) {
             
             [UIView animateWithDuration:0.3 animations:^{
-                [_backView_water setFrame:CGRectMake(0, CGRectGetMaxY(_menu_view.frame)+5, DEVICE_WIDTH, DEVICE_HEIGHT - _menu_view.frame.size.height -64)];
-                [_waterFlow setFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT - _menu_view.frame.size.height -64-15)];
+                [_backView_water setFrame:CGRectMake(0, CGRectGetMaxY(_menu_view.frame)+5, DEVICE_WIDTH, DEVICE_HEIGHT - _menu_view.frame.size.height -64 - 35)];
+                [_waterFlow setFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT - _menu_view.frame.size.height -64-15 - 35)];
                 [_waterFlow.quitView setFrame:_waterFlow.frame];
                 [_mainScrollview setContentOffset:CGPointMake(0, height)];
             }];

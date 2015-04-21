@@ -137,9 +137,9 @@
     detail.storeNameStr=testlabel.text;
 //    [self.navigationController pushViewController:detail animated:YES];
     
-    LNavigationController *unvc = [[LNavigationController alloc]initWithRootViewController:detail];
+//    LNavigationController *unvc = [[LNavigationController alloc]initWithRootViewController:detail];
     
-    [self presentViewController:unvc animated:YES completion:nil];
+    [self presentViewController:detail animated:YES completion:nil];
     
 }
 //到单品的
@@ -154,7 +154,7 @@
     
     LNavigationController *unvc = [[LNavigationController alloc]initWithRootViewController:detail];
     
-//    [self.navigationController pushViewController:unvc animated:YES];
+//    [self.navigationController pushViewController:detail animated:YES];
     
     [self presentViewController:unvc animated:YES completion:nil];
     
@@ -336,11 +336,11 @@
     
     comment.tt_id = self.tt_id;
     
-    LNavigationController *unVc = [[LNavigationController alloc]initWithRootViewController:comment];
+//    LNavigationController *unVc = [[LNavigationController alloc]initWithRootViewController:comment];
     
-    [self presentViewController:unVc animated:YES completion:nil];
+//    [self presentViewController:unVc animated:YES completion:nil];
     
-//    [self.navigationController pushViewController:comment animated:YES];
+    [self.navigationController pushViewController:comment animated:YES];
     
 }
 
