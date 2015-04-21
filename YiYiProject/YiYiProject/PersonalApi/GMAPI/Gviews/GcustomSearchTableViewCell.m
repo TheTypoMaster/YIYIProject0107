@@ -112,7 +112,6 @@
 -(void)loadCustomCellWithDicOfProduct:(NSDictionary *)dic{
     //图片
     UIImageView *picImv = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 50, 70)];
-    picImv.backgroundColor = [UIColor orangeColor];
     [self.contentView addSubview:picImv];
     
     NSDictionary *images = [dic dictionaryValueForKey:@"images"];
@@ -129,6 +128,12 @@
     //附加信息
     
     NSString *distance = [dic stringValueForKey:@"distance"];
+    
+    CGFloat juli_f = 0.0f;
+    if ([distance intValue] >=1000) {
+        juli_f = [distance floatValue]*0.001;
+    }
+    distance = [NSString stringWithFormat:@"%.2f",juli_f];
     
     UILabel *detailLabel = [[UILabel alloc]initWithFrame:CGRectMake(titleLabel.frame.origin.x, CGRectGetMaxY(titleLabel.frame), titleLabel.frame.size.width, titleLabel.frame.size.height)];
     detailLabel.text = [NSString stringWithFormat:@"%@   %@m",[dic stringValueForKey:@"product_price"],distance];

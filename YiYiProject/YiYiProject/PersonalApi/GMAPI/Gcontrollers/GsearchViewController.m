@@ -41,6 +41,22 @@
 
 @implementation GsearchViewController
 
+
+- (void)dealloc
+{
+    _tableView.GrefreshDelegate = nil;
+    _tableView.dataSource = nil;
+    _tableView.delegate = nil;
+    _tableView = nil;
+}
+
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -62,7 +78,6 @@
     //创建tableview
     _tableView = [[GrefreshTableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_searchHeaderView.frame), DEVICE_WIDTH, DEVICE_HEIGHT - _searchHeaderView.frame.size.height-64)];
     _tableView.GrefreshDelegate = self;
-//    _tableView.delegate = self;
     _tableView.dataSource =self;
     _tableView.hidden = YES;
     [self.view addSubview:_tableView];
@@ -108,9 +123,8 @@
     
     _searchTextField=[[UITextField alloc]initWithFrame:CGRectMake(30+6,MY_MACRO_NAME? 6:12,self.view.bounds.size.width-90,58/2)];
     _searchTextField.delegate=self;
-//    [_searchTextField becomeFirstResponder];
     _searchTextField.font=[UIFont systemFontOfSize:12.f];
-    _searchTextField.placeholder=@"输入关键词";
+    _searchTextField.placeholder=@"输入关键词，不写关键字为搜索附近";
     _searchTextField.returnKeyType=UIReturnKeySearch;
     _searchTextField.userInteractionEnabled = TRUE;
     [_searchHeaderView addSubview:_searchTextField];
@@ -136,7 +150,10 @@
     _menu_view = [[UIView alloc]initWithFrame:CGRectMake(12, CGRectGetMaxY(selectview.frame)+5, aWidth * 3, 30)];
     _menu_view.clipsToBounds = YES;
     _menu_view.layer.cornerRadius = 15.f;
-    _menu_view.backgroundColor = RGBCOLOR(212, 59, 85);
+    _menu_view.backgroundColor = [UIColor whiteColor];
+    _menu_view.layer.borderWidth = 0.5;
+    _menu_view.layer.borderColor = [RGBCOLOR(253, 105, 155)CGColor];
+    
     [_searchHeaderView addSubview:_menu_view];
     NSLog(@"%@",NSStringFromCGRect(_menu_view.frame));
     
@@ -150,8 +167,8 @@
         [btn setHighlighted:NO];
         [btn.titleLabel setFont:[UIFont systemFontOfSize:13]];
         btn.tag = 100 + i;
-        [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [btn setTitleColor:[UIColor colorWithHexString:@"d7425c"] forState:UIControlStateSelected];
+        [btn setTitleColor:RGBCOLOR(253, 105, 155) forState:UIControlStateNormal];
+        btn.backgroundColor = [UIColor whiteColor];
         
         [_menu_view addSubview:btn];
         [_btnArray addObject:btn];
@@ -159,11 +176,11 @@
     }
     
     
-    UIButton *btn = (UIButton *)[_menu_view viewWithTag:101];
     _selectIndex = 101;
-    btn.backgroundColor = RGBCOLOR(240, 122, 142);
     
-    
+    UIButton *btn = (UIButton*)[_menu_view viewWithTag:101];
+    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    btn.backgroundColor = RGBCOLOR(253, 105, 155);
     
     
 }
@@ -173,9 +190,11 @@
     int tag = (int)sender.tag;
     //改变点击颜色
     for (UIButton *btn in _btnArray) {
-        btn.backgroundColor = RGBCOLOR(212, 59, 85);
+        btn.backgroundColor = [UIColor whiteColor];
+        [btn setTitleColor:RGBCOLOR(253, 105, 155) forState:UIControlStateNormal];
     }
-    sender.backgroundColor = RGBCOLOR(240, 122, 142);
+    sender.backgroundColor = RGBCOLOR(253, 105, 155);
+    [sender setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     _selectIndex = tag;
     NSLog(@"selectIndex = %d",_selectIndex);
@@ -233,12 +252,6 @@
     GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:url isPost:NO postData:nil];
     [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
         
-//        NSString *errorcode = [result stringValueForKey:@"errorcode"];
-//        if ([errorcode intValue]!= 0) {
-//            [GMAPI showAutoHiddenMBProgressWithText:[result stringValueForKey:@"msg"] addToView:self.view];
-//            return;
-//        }
-        
         NSArray *arr = [result arrayValueForKey:@"list"];
         
         if (arr.count < _pageCapacity) {
@@ -256,7 +269,7 @@
             
             _page --;
             
-            [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
+            [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:0.1];
         }
     }];
     
@@ -282,7 +295,7 @@
         _dataArray = newArr;
     }
     
-    [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
+    [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:0.1];
 }
 
 
@@ -382,24 +395,7 @@
     
 }
 
-//-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    if (!_tmpCell) {
-//        _tmpCell = [[GcustomSearchTableViewCell alloc]init];
-//    }
-//    
-//    if (_selectIndex == 100) {
-//        _tmpCell.theType = GSEARCHTYPE_PINPAI;
-//    }else if (_selectIndex == 101){
-//        _tmpCell.theType = GSEARCHTYPE_SHANGPU;
-//    }else if (_selectIndex == 102){
-//        _tmpCell.theType = GSEARCHTYPE_DANPIN;
-//    }
-//    
-//    NSDictionary *dic = _dataArray[indexPath.row];
-//    CGFloat height = [_tmpCell loadCustomViewWithData:dic indexPath:indexPath];
-//    
-//    return height;
-//}
+
 
 
 
@@ -443,9 +439,6 @@
 
 
 
-//-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//}
 
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
@@ -459,6 +452,17 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [self searchBtnClicked];
     return YES;
+}
+
+
+
+-(void)leftButtonTap:(UIButton *)sender
+{
+    
+    _tableView.delegate = nil;
+    _tableView.GrefreshDelegate = nil;
+    _tableView = nil;
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

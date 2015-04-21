@@ -198,13 +198,12 @@
     //直接变状态
     //更新数据
     
-    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[waterFlow.quitView cellAtIndexPath:[NSIndexPath indexPathForRow:sender.tag - 10000 inSection:0]];
+    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[waterFlow.quitView cellAtIndexPath:[NSIndexPath indexPathForRow:sender.tag - 100 inSection:0]];
     cell.like_label.text = @"";
     
-    ProductModel *aMode = waterFlow.dataArray[sender.tag - 10000];
+    ProductModel *aMode = waterFlow.dataArray[sender.tag - 100];
     
     NSString *productId = aMode.product_id;
-    
     //    __weak typeof(self)weakSelf = self;
     
     NSString *api = HOME_PRODUCT_ZAN_ADD;
@@ -230,7 +229,8 @@
             
             [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
         }
-        
+        aMode.product_like_num = NSStringFromInt([aMode.product_like_num intValue]);
+        cell.like_label.text = aMode.product_like_num;
     }];
 }
 
@@ -317,8 +317,8 @@
     [_backView addSubview:imv];
     
     //标题
-    _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 33, 100, 17)];
-    _titleLabel.font = [UIFont systemFontOfSize:16*GscreenRatio_320];
+    _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 33, DEVICE_WIDTH-140, 17)];
+    _titleLabel.font = [UIFont systemFontOfSize:15];
     _titleLabel.textAlignment = NSTextAlignmentCenter;
     _titleLabel.text = @"";
     _titleLabel.textColor = [UIColor whiteColor];
@@ -330,7 +330,7 @@
     UIButton *button_back = [UIButton buttonWithType:UIButtonTypeCustom];
     [button_back setImage:BACK_DEFAULT_IMAGE forState:UIControlStateNormal];
     [button_back setImageEdgeInsets:UIEdgeInsetsMake(30, 15, 30, 50)];
-    [button_back setFrame:CGRectMake(0, 0, 80, 80)];
+    [button_back setFrame:CGRectMake(0, 0, 70, 80)];
     [button_back addTarget:self action:@selector(clickToBack:) forControlEvents:UIControlEventTouchUpInside];
     [button_back setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
     [button_back setImageEdgeInsets:UIEdgeInsetsMake(0, 12, 0, 12)];
@@ -339,7 +339,7 @@
     
     //头像
     self.userFaceImv = [[UIImageView alloc]initWithFrame:CGRectMake(30*GscreenRatio_320, _backView.frame.size.height - 75, 50, 50)];
-    self.userFaceImv.backgroundColor = RGBCOLOR_ONE;
+    [self.userFaceImv setImage:[UIImage imageNamed:@"grzx150_150.png"]];
     self.userFaceImv.layer.cornerRadius = 25;
     self.userFaceImv.layer.masksToBounds = YES;
     

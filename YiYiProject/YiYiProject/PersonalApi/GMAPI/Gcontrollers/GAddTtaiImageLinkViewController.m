@@ -50,14 +50,15 @@
         
         
         //产品名称
-        UILabel *productName = [[UILabel alloc]initWithFrame:CGRectMake(15, 5, 90, 23)];
+        UILabel *productName = [[UILabel alloc]initWithFrame:CGRectMake(17, 7, 85, 24)];
         productName.text = imv.product_name;
         productName.font = [UIFont systemFontOfSize:10];
+        productName.numberOfLines = 2;
         productName.textColor = [UIColor whiteColor];
         [imv addSubview:productName];
         
         //单价
-        UILabel *priceLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, CGRectGetMaxY(productName.frame), 90, 13)];
+        UILabel *priceLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, CGRectGetMaxY(productName.frame), 90, 11)];
         priceLabel.text = [NSString stringWithFormat:@"￥%@",imv.product_price];
         priceLabel.font = [UIFont systemFontOfSize:10];
         priceLabel.textColor = [UIColor whiteColor];

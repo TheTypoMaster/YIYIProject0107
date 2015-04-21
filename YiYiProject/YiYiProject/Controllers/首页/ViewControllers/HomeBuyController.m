@@ -187,7 +187,8 @@
             
             [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
         }
-        
+        aMode.product_like_num = NSStringFromInt([aMode.product_like_num intValue]);
+        cell.like_label.text = aMode.product_like_num;
     }];
 }
 

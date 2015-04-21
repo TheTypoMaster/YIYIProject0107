@@ -392,7 +392,7 @@
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         if (_tableView.isReloadData) {
             _page --;
-            [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
+            [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:0.1];
         }
         
     }];
@@ -421,7 +421,7 @@
         _dataArray = newArr;
     }
     
-    [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
+    [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:0.1];
 }
 
 

@@ -698,7 +698,7 @@
         _centerLabel.backgroundColor=RGBCOLOR(70,81,76);
         _centerLabel.alpha = 0.8f;
         _centerLabel.textColor=[UIColor whiteColor];
-        _centerLabel.font=[UIFont systemFontOfSize:12];
+        _centerLabel.font=[UIFont systemFontOfSize:13];
         _centerLabel.layer.cornerRadius=5;
         _centerLabel.layer.masksToBounds=YES;
         _centerLabel.layer.borderWidth = 1;
@@ -711,7 +711,7 @@
         
 //        _centerLabel.center = CGPointMake(dx*bigImageView.frame.size.width, dy*bigImageView.frame.size.height);
         
-        UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 20, 20)];
+        UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 13, 13)];
         [imv setImage:[UIImage imageNamed:@"gbutton.png"]];
         imv.center = CGPointMake(dx*bigImageView.frame.size.width, dy*bigImageView.frame.size.height);
         [bigImageView addSubview:imv];
