@@ -207,7 +207,7 @@
 -(void)createbuttonWithModel:(NSDictionary*)maodian_detail{
     
     
-    UIView *bigImageView = [self currentPhotoView];
+    UIView *bigImageView = ((MJPhotoView *)[self currentPhotoView]).imageView;
     
     bigImageView.userInteractionEnabled= YES;
     

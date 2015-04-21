@@ -14,7 +14,7 @@
 @interface MJPhotoView ()
 {
     BOOL _doubleTap;
-    UIImageView *_imageView;
+//    UIImageView *_imageView;
     MJPhotoLoadingView *_photoLoadingView;
     
 
