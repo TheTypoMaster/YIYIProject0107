@@ -31,6 +31,13 @@
     
 }
 
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

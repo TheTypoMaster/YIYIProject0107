@@ -48,6 +48,9 @@ typedef enum
 
 @property(nonatomic,strong)NSString * rightImageName;
 
+
+@property(nonatomic,assign)BOOL lastPageNavigationHidden;//上一级是否隐藏navigationBar
+
 ///标题
 @property(nonatomic,strong)UILabel * myTitleLabel;
 @property(nonatomic,strong)NSString * myTitle;

@@ -153,12 +153,83 @@
     
     UIView *root = [UIApplication sharedApplication].keyWindow;
     [root addSubview:self];
+    
+    [self shakeView:bgView];
+}
+
+/**
+ *  抖动动画
+ *
+ *  @param viewToShake
+ */
+-(void)shakeView:(UIView*)viewToShake
+{
+//    CGFloat t =2.0;
+//    CGAffineTransform translateRight  =CGAffineTransformTranslate(CGAffineTransformIdentity, t,0.0);
+//    CGAffineTransform translateLeft =CGAffineTransformTranslate(CGAffineTransformIdentity,-t,0.0);
+//    
+//    viewToShake.transform = translateLeft;
+//    
+//    [UIView animateWithDuration:0.07 delay:0.0 options:UIViewAnimationOptionAutoreverse|UIViewAnimationOptionRepeat animations:^{
+//        [UIView setAnimationRepeatCount:2.0];
+//        viewToShake.transform = translateRight;
+//    } completion:^(BOOL finished){
+//        if(finished){
+//            [UIView animateWithDuration:0.05 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+//                viewToShake.transform =CGAffineTransformIdentity;
+//            } completion:NULL];
+//        }
+//    }];
+    
+    //下边是嵌套使用,先变大再消失的动画效果.
+    [UIView animateWithDuration:0.2 animations:^{
+        CGAffineTransform newTransform = CGAffineTransformMakeScale(1.05, 1.05);
+        [viewToShake setTransform:newTransform];
+        
+    }
+                     completion:^(BOOL finished){
+                         
+                         [UIView animateWithDuration:0.1 animations:^{
+                             
+                             [viewToShake setAlpha:1];
+                             
+                             [viewToShake setTransform:CGAffineTransformIdentity];
+                             
+                         } completion:^(BOOL finished){
+                             
+                             
+                         }];
+                     }];
+    
+
+    
 }
 
 - (void)hidden
 {
-    [self removeFromSuperview];
+    
+//    [self removeFromSuperview];
+    
+    [self hiddenAnimation:bgView];
 }
+
+
+-(void)hiddenAnimation:(UIView*)viewToShake
+{
+    //下边是嵌套使用,先变大再消失的动画效果.
+    [UIView animateWithDuration:0.2 animations:^{
+        
+//        self.alpha = 0.f;
+        CGAffineTransform newTransform = CGAffineTransformMakeScale(0, 0);
+        [viewToShake setTransform:newTransform];
+    }
+                     completion:^(BOOL finished){
+                         
+                         [self removeFromSuperview];
+                    }];
+    
+}
+
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {

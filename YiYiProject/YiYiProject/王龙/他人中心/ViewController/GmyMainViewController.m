@@ -296,6 +296,8 @@
     
     TTaiDetailController *t_detail = [[TTaiDetailController alloc]init];
     t_detail.tt_id = model.tt_id;
+    
+    t_detail.lastPageNavigationHidden = YES;
     [self.navigationController pushViewController:t_detail animated:YES];
     
 }

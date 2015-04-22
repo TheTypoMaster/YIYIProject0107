@@ -858,6 +858,9 @@
     ProductModel *aMode = waterFlow.dataArray[indexPath.row];
     ProductDetailController *detail = [[ProductDetailController alloc]init];
     detail.product_id = aMode.product_id;
+    
+    detail.lastPageNavigationHidden = YES;
+    
     detail.hidesBottomBarWhenPushed = YES;
     
     TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *) [waterFlow.quitView cellAtIndexPath:indexPath];

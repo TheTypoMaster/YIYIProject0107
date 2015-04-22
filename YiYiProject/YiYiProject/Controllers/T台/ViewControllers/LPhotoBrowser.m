@@ -344,7 +344,6 @@
     
 }
 
-
 - (void)clickToZan:(UIButton *)sender
 {
 //    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
@@ -371,6 +370,8 @@
         [self zanTTaiDetail:sender.selected];
     }
     
+
+    [LTools animationToBigger:sender duration:0.2 scacle:1.5];
 }
 
 - (void)clickToZhuanFa:(UIButton *)sender

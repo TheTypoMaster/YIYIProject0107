@@ -47,6 +47,14 @@
     
 }
 
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
+    
+}
+
 - (void)dealloc
 {
     [tool_shop cancelRequest];

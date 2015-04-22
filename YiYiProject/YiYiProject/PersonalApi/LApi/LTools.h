@@ -219,4 +219,17 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
 
 + (UIImage *)imageForBBSId:(NSString *)bbsId;
 
+#pragma mark - 动画
+
+/**
+ *  view先变大再恢复原样
+ *
+ *  @param annimationView 需要做动画的view
+ *  @param duration       动画时间
+ *  @param scacle         变大比例
+ */
++ (void)animationToBigger:(UIView *)annimationView
+                 duration:(CGFloat)duration
+                   scacle:(CGFloat)scacle;
+
 @end

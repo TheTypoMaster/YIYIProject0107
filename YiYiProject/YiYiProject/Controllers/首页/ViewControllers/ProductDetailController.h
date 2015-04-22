@@ -32,6 +32,8 @@ typedef enum {
 
 @property(nonatomic,assign)BOOL isPresent;//是否是模态出来得
 
+@property(nonatomic,assign)BOOL lastPageNavigationHidden;//上一页是否隐藏navigationBar
+
 @property (strong, nonatomic) IBOutlet UILabel *brandName;
 
 @property (strong, nonatomic) IBOutlet UILabel *shopNameLabel;

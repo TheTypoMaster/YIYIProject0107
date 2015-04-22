@@ -61,6 +61,8 @@
 {
     [super viewWillDisappear:animated];
     [_input_view deleteKeyBordNotification];
+    
+    [self.navigationController setNavigationBarHidden:self.lastPageNavigationHidden animated:animated];
 }
 
 - (void)dealloc

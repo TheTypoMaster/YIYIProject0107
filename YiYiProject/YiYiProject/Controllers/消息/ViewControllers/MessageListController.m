@@ -44,6 +44,8 @@
     
     [self updateRongMessage];
     
+    self.navigationController.navigationBarHidden = NO;
+    
 }
 
 - (void)viewDidLoad {

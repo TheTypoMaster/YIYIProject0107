@@ -1246,5 +1246,37 @@
     return image;
 }
 
+#pragma mark - 动画
+
+/**
+ *  view先变大再恢复原样
+ *
+ *  @param annimationView 需要做动画的view
+ *  @param duration       动画时间
+ *  @param scacle         变大比例
+ */
++ (void)animationToBigger:(UIView *)annimationView
+                 duration:(CGFloat)duration
+                   scacle:(CGFloat)scacle
+{
+    //下边是嵌套使用,先变大再恢复的动画效果.
+    [UIView animateWithDuration:duration animations:^{
+        CGAffineTransform newTransform = CGAffineTransformMakeScale(scacle, scacle);
+        [annimationView setTransform:newTransform];
+        
+    }
+                     completion:^(BOOL finished){
+                         
+                         [UIView animateWithDuration:0.1 animations:^{
+                             
+                             [annimationView setTransform:CGAffineTransformIdentity];
+                             
+                         } completion:^(BOOL finished){
+                             
+                             
+                         }];
+                     }];
+}
+
 
 @end
