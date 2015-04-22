@@ -360,9 +360,9 @@
     NSString *url = @"";
     
     if (_selectIndex == 100) {//线上产品
-        url = [NSString stringWithFormat:GET_MAIL_PRODUCT_LIST,self.userInfo.shop_id,_page,L_PAGE_SIZE];
+        url = [NSString stringWithFormat:GET_MAIL_PRODUCT_LIST,self.userInfo.shop_id,_page,L_PAGE_SIZE,[GMAPI getAuthkey]];
     }else if (_selectIndex == 101){//仓库产品
-        url = [NSString stringWithFormat:GET_MAIL_PRODUCT_LIST,self.userInfo.shop_id,_page,L_PAGE_SIZE];
+        url = [NSString stringWithFormat:GET_MAIL_PRODUCT_LIST,self.userInfo.shop_id,_page,L_PAGE_SIZE,[GMAPI getAuthkey]];
         url = [url stringByAppendingString:@"&status=2"];
     }
     

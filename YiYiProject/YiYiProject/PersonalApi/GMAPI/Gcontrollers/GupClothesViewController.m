@@ -476,7 +476,7 @@
                                    parameters:@{
                                                 @"product_name":tf1.text,//产品名
                                                 @"product_gender":gengder,//产品适用性别
-                                                @"product_price":tf2.text,//原价
+                                                @"product_price":tf3.text,//现价
                                                 @"product_brand_id":self.mallInfo.brand_id,//产品品牌id
                                                 @"product_brand_name":tf.text,//品牌名称
                                                 @"product_shop_id":self.userInfo.shop_id,//商店id
@@ -484,7 +484,7 @@
                                                 @"product_new":product_new,//是否新品
                                                 @"discount_num":zhekouStr,//打折力度
                                                 @"product_tag":tf5.text,//标签
-                                                @"original_price":tf3.text,//现价
+                                                @"original_price":tf2.text,//原价
                                                 @"authcode":[GMAPI getAuthkey]//用户标示
                                                 }
                                    constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
