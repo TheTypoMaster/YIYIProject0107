@@ -47,6 +47,8 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    self.navigationController.navigationBarHidden = NO;
+
     [super viewWillAppear:animated];
     
     if (IOS7_OR_LATER) {
@@ -54,7 +56,6 @@
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     }
     
-    self.navigationController.navigationBarHidden = NO;
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -62,7 +63,16 @@
     [super viewWillDisappear:animated];
     
     [self.navigationController setNavigationBarHidden:self.lastPageNavigationHidden animated:animated];
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
     
+    if (self.disappearBlock) {
+        
+        self.disappearBlock(YES);
+    }
 }
 
 

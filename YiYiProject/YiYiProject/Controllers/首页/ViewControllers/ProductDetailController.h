@@ -13,6 +13,7 @@
 @class ProductModel;
 @class MyCollectionController;
 
+typedef void(^ViewDidDisappearBlock)(BOOL success);//消失block
 
 typedef enum {
     
@@ -25,14 +26,14 @@ typedef enum {
 
 @interface ProductDetailController : MyViewController
 
+@property(nonatomic,assign)ViewDidDisappearBlock disappearBlock;
+
 @property (nonatomic,retain)NSString *product_id;//产品id
 @property(nonatomic,strong)NSString *gShop_id;//商家id
 
 @property(nonatomic,strong)ProductModel *theModel;//单品model 给聊天界面传递
 
 @property(nonatomic,assign)BOOL isPresent;//是否是模态出来得
-
-@property(nonatomic,assign)BOOL lastPageNavigationHidden;//上一页是否隐藏navigationBar
 
 @property (strong, nonatomic) IBOutlet UILabel *brandName;
 
