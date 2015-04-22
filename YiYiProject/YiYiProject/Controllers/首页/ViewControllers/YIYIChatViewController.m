@@ -91,7 +91,8 @@
 -(void)sendProductDetailMessage{
     RCRichContentMessage *message = [[RCRichContentMessage alloc] init];
     message.title = self.theModel.product_name;
-    message.digest = [NSString stringWithFormat:@"%@  %@   %@",self.theModel.product_sku,self.theModel.product_price,self.theModel.product_tag];
+    NSString *zhekou = [NSString stringWithFormat:@"%.1f折",self.theModel.discount_num * 10];
+    message.digest = [NSString stringWithFormat:@"现价：%@元\n折扣：%@\n标签：%@",self.theModel.product_price,zhekou,self.theModel.product_tag];
     message.imageURL = self.theModel.product_tag;
     NSArray *imageArray = self.theModel.images;
     if (imageArray.count>0) {

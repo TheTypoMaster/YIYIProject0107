@@ -21,6 +21,7 @@
 #import "GwebViewController.h"
 #import "MessageDetailController.h"
 #import "GsearchViewController.h"
+#import "ProductDetailController.h"
 
 @interface HomeClothController ()<GCycleScrollViewDatasource,GCycleScrollViewDelegate,UIScrollViewDelegate,EGORefreshTableDelegate,GgetllocationDelegate,UISearchBarDelegate>
 {
@@ -115,9 +116,6 @@
     _refreshHeaderView.delegate = self;
     [_mainScrollView addSubview:_refreshHeaderView];
     
-    
-    
-//    [_mainScrollView addSubview:[self creatSearchView]];//搜索栏
     
     [_mainScrollView addSubview:[self creatGscrollView]];//循环滚动幻灯片
     
@@ -798,9 +796,6 @@
     
     NSDictionary *dic = _topScrollviewImvInfoArray[index];
     
-    //测试
-//    [self.rootViewController.navigationController pushViewController:[[GStorePinpaiViewController alloc]init] animated:YES];
-    
     
     if ([[dic stringValueForKey:@"redirect_type"]intValue]==1) {//可以跳转
         
@@ -810,7 +805,7 @@
             gwebvc.urlstring = [dic stringValueForKey:@"redirect_url"];
             gwebvc.hidesBottomBarWhenPushed = YES;
             [self.rootViewController.navigationController pushViewController:gwebvc animated:YES];
-        }else if ([adv_type_val intValue]==2){//2:跳转商场活动  3:跳转店铺活动
+        }else if ([adv_type_val intValue]==2 || [adv_type_val intValue]==3){//2:跳转商场活动  3:跳转店铺活动
             NSString *theId = [dic stringValueForKey:@"theme_id"];
             MessageDetailController *detail = [[MessageDetailController alloc]init];
             detail.msg_id = theId;
@@ -820,6 +815,10 @@
             
         }else if ([adv_type_val intValue]==4){//跳转单品页面
             NSString *theId = [dic stringValueForKey:@"theme_id"];
+            ProductDetailController *ccc = [[ProductDetailController alloc]init];
+            ccc.product_id = theId;
+            [self.rootViewController.navigationController pushViewController:ccc animated:YES];
+            
         }
         
         

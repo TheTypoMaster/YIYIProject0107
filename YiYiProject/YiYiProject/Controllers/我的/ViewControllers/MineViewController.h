@@ -13,6 +13,8 @@
 {
     NSString *user_bannerUrl;
     NSString *headImageUrl;
+    
+    UIButton *_loginBtn;//登录按钮
 }
 //@property(nonatomic,strong)UIImageView *userBannerImv;//bannerImv
 @property(nonatomic,strong)UIImageView *userFaceImv;//头像Imv
@@ -28,6 +30,9 @@
 
 
 -(void)gScanvcPushWithString:(NSString *)string;
+
+
+
 
 
 @end

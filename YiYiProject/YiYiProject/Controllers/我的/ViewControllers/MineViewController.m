@@ -78,6 +78,10 @@ typedef enum{
     
     UIButton *_qiandaoBtn;//签到按钮
     
+    UIButton *_editBtn;//编辑按钮
+    
+    UIButton *_chilunBtn;//小齿轮
+    
 }
 @end
 
@@ -86,9 +90,7 @@ typedef enum{
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    
-    self.navigationController.navigationBarHidden = YES;
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
     
     if (IOS7_OR_LATER) {
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
@@ -262,6 +264,7 @@ typedef enum{
         
         NSLog(@"请求的个人信息：%@",result);
         
+        [self setUpuserInfoViewWithLoginState:[LTools cacheBoolForKey:LOGIN_SERVER_STATE]];
         
         
         
@@ -345,24 +348,21 @@ typedef enum{
     [_backView addSubview:titleLabel];
     
     //小齿轮设置按钮
-    UIButton *chilunBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [chilunBtn setFrame:CGRectMake(15, 30, 40, 40)];
-    [chilunBtn setImage:[UIImage imageNamed:@"my_shezhi.png"] forState:UIControlStateNormal];
-    [chilunBtn addTarget:self action:@selector(xiaochilun) forControlEvents:UIControlEventTouchUpInside];
-    chilunBtn.layer.masksToBounds = NO;
-    chilunBtn.layer.shadowColor = [UIColor blackColor].CGColor;
-    chilunBtn.layer.shadowOffset = CGSizeMake(0.0f, 5.0f);
-    chilunBtn.layer.shadowOpacity = 0.5f;
+    _chilunBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_chilunBtn setFrame:CGRectMake(15, 30, 40, 40)];
+    [_chilunBtn setImage:[UIImage imageNamed:@"my_shezhi.png"] forState:UIControlStateNormal];
+    [_chilunBtn addTarget:self action:@selector(xiaochilun) forControlEvents:UIControlEventTouchUpInside];
+    _chilunBtn.layer.masksToBounds = NO;
+    _chilunBtn.layer.shadowColor = [UIColor blackColor].CGColor;
+    _chilunBtn.layer.shadowOffset = CGSizeMake(0.0f, 5.0f);
+    _chilunBtn.layer.shadowOpacity = 0.5f;
     
     
     //头像
     self.userFaceImv = [[UIImageView alloc]initWithFrame:CGRectMake(30*GscreenRatio_320, _backView.frame.size.height - 75, 50, 50)];
     [self.userFaceImv setImage:[UIImage imageNamed:@"grzx150_150.png"]];
-//    self.userFaceImv.backgroundColor = RGBCOLOR_ONE;
     self.userFaceImv.layer.cornerRadius = 25;
     self.userFaceImv.layer.masksToBounds = YES;
-
-    
     NSLog(@"%@",NSStringFromCGRect(self.userFaceImv.frame));
     
     //昵称
@@ -377,22 +377,26 @@ typedef enum{
     self.userScoreLabel.text = @"积分：";
     self.userScoreLabel.textColor = [UIColor whiteColor];
     
+    
+    
+    
+    
     //编辑按钮
-    UIButton *editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [editBtn setFrame:CGRectMake(DEVICE_WIDTH-60, chilunBtn.frame.origin.y-7, 55, 44)];
-    editBtn.titleLabel.font = [UIFont systemFontOfSize:16*GscreenRatio_320];
-    [editBtn addTarget:self action:@selector(goToEdit) forControlEvents:UIControlEventTouchUpInside];
-    [editBtn setTitle:@"编辑" forState:UIControlStateNormal];
-    editBtn.layer.masksToBounds = NO;
-    editBtn.layer.shadowColor = [UIColor blackColor].CGColor;
-    editBtn.layer.shadowOffset = CGSizeMake(0.0f, 5.0f);
-    editBtn.layer.shadowOpacity = 0.5f;
+    _editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_editBtn setFrame:CGRectMake(DEVICE_WIDTH-60, _chilunBtn.frame.origin.y-7, 55, 44)];
+    _editBtn.titleLabel.font = [UIFont systemFontOfSize:16*GscreenRatio_320];
+    [_editBtn addTarget:self action:@selector(goToEdit) forControlEvents:UIControlEventTouchUpInside];
+    [_editBtn setTitle:@"编辑" forState:UIControlStateNormal];
+    _editBtn.layer.masksToBounds = NO;
+    _editBtn.layer.shadowColor = [UIColor blackColor].CGColor;
+    _editBtn.layer.shadowOffset = CGSizeMake(0.0f, 5.0f);
+    _editBtn.layer.shadowOpacity = 0.5f;
     
     
     
     //签到
     _qiandaoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_qiandaoBtn setFrame:CGRectMake(editBtn.frame.origin.x, CGRectGetMaxY(_backView.frame)-50, 50, 40)];
+    [_qiandaoBtn setFrame:CGRectMake(_editBtn.frame.origin.x, CGRectGetMaxY(_backView.frame)-50, 50, 40)];
     [_qiandaoBtn addTarget:self action:@selector(gQiandao:) forControlEvents:UIControlEventTouchUpInside];
     _qiandaoBtn.userInteractionEnabled = NO;
     [_backView addSubview:_qiandaoBtn];
@@ -415,12 +419,67 @@ typedef enum{
     [_backView addSubview:self.userFaceImv];
     [_backView addSubview:self.userNameLabel];
     [_backView addSubview:self.userScoreLabel];
-    [_backView addSubview:editBtn];
-    [_backView addSubview:chilunBtn];
+    [_backView addSubview:_editBtn];
+    [_backView addSubview:_chilunBtn];
+    
+    //判断是否登录
+    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
+        self.userNameLabel.hidden = YES;
+        self.userScoreLabel.hidden = YES;
+        self.userFaceImv.hidden = YES;
+        _editBtn.hidden = YES;
+        _chilunBtn.hidden = YES;
+        
+    }
+    
+    
+    
+    _loginBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_loginBtn setFrame:CGRectMake(0, 0, 80, 35)];
+    _loginBtn.layer.borderWidth = 1;
+    _loginBtn.layer.cornerRadius = 5;
+    _loginBtn.layer.borderColor = [[UIColor whiteColor]CGColor];
+    _loginBtn.layer.masksToBounds = YES;
+    [_loginBtn setTitle:@"登录/注册" forState:UIControlStateNormal];
+    _loginBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    [_loginBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    CGPoint theLoginCenter = _backView.center;
+    theLoginCenter.y+=25;
+    
+    _loginBtn.center = theLoginCenter;
+    _loginBtn.hidden = YES;
+    [_loginBtn addTarget:self action:@selector(presentLoginVc) forControlEvents:UIControlEventTouchUpInside];
+    [_backView addSubview:_loginBtn];
+    
+    
+    [self setUpuserInfoViewWithLoginState:[LTools cacheBoolForKey:LOGIN_SERVER_STATE]];
+    
+    
     
     return _backView;
 }
 
+
+//修改顶部信息view登录未登录状态
+-(void)setUpuserInfoViewWithLoginState:(BOOL)theState{
+    if (theState) {//登录
+        self.userNameLabel.hidden = NO;
+        self.userScoreLabel.hidden = NO;
+        self.userFaceImv.hidden = NO;
+        _editBtn.hidden = NO;
+        _chilunBtn.hidden = NO;
+        _loginBtn.hidden = YES;
+    }else{//未登录
+        self.userNameLabel.hidden = YES;
+        self.userScoreLabel.hidden = YES;
+        self.userFaceImv.hidden = YES;
+        _editBtn.hidden = YES;
+        _chilunBtn.hidden = YES;
+        
+        _loginBtn.hidden = NO;
+        
+    }
+}
 
 
 //签到
@@ -757,6 +816,17 @@ typedef enum{
     if (!_getUserinfoSuccess) {
         return;
     }
+    
+    
+    //判断是否登录
+    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
+        
+        return;
+        
+    }
+    
+    
+    
     _changeImageType = USERBANNER;
     GcustomActionSheet *aaa = [[GcustomActionSheet alloc]initWithTitle:nil
                                                           buttonTitles:@[@"更换相册封面"]
@@ -1059,6 +1129,14 @@ typedef enum{
     }];
 }
 
+
+
+//跳出登录界面
+-(void)presentLoginVc{
+    LoginViewController *login = [[LoginViewController alloc]init];
+    UINavigationController *unVc = [[UINavigationController alloc]initWithRootViewController:login];
+    [self presentViewController:unVc animated:YES completion:nil];
+}
 
 
 
