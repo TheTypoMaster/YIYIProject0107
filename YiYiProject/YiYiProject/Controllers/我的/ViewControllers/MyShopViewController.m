@@ -689,6 +689,7 @@
     detail.isActivity = YES;
     detail.shopName = aMailModel.shop_name;
     detail.shopImageUrl = aMailModel.logo;
+    detail.lastPageNavigationHidden = YES;
     [self pushViewController:detail];
     
 }

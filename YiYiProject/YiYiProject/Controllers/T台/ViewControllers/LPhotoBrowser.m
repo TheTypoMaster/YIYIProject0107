@@ -124,6 +124,125 @@
 
 #pragma - mark 事件处理
 
+
+/**
+ *  更新喜欢数
+ */
+- (void)updateLikeNum
+{
+    NSString *likeNum = [NSString stringWithFormat:@"%@人喜欢",detail_model.tt_like_num];
+    [likeNumButton setTitle:likeNum forState:UIControlStateNormal];
+}
+/**
+ *  更新评论数
+ */
+- (void)updateCommentNum
+{
+    NSString *commentNum = [NSString stringWithFormat:@"%@条评论",detail_model.tt_like_num];
+    [commentButton setTitle:commentNum forState:UIControlStateNormal];
+}
+
+- (void)clickToCommentPage:(UIButton *)sender
+{
+    //评论页面
+    
+    TTaiCommentViewController *comment = [[TTaiCommentViewController alloc]init];
+    
+    comment.tt_id = self.tt_id;
+    
+    //    LNavigationController *unVc = [[LNavigationController alloc]initWithRootViewController:comment];
+    
+    //    [self presentViewController:unVc animated:YES completion:nil];
+    
+    [self.navigationController pushViewController:comment animated:YES];
+    
+}
+
+- (void)clickToZan:(UIButton *)sender
+{
+    //    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
+    //
+    //        LoginViewController *login = [[LoginViewController alloc]init];
+    //
+    //        login.isSpecial = YES;
+    //
+    //        LNavigationController *unVc = [[LNavigationController alloc]initWithRootViewController:login];
+    //
+    //        UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    //        [window addSubview:unVc.view];
+    //        [window.rootViewController addChildViewController:unVc];
+    //
+    //    }else
+    //    {
+    //        sender.selected = !sender.selected;
+    //        [self zanTTaiDetail:sender.selected];
+    //    }
+    
+    if ([LTools isLogin:self]) {
+        
+        sender.selected = !sender.selected;
+        [self zanTTaiDetail:sender.selected];
+    }
+    
+    
+    [LTools animationToBigger:sender duration:0.2 scacle:1.5];
+}
+
+- (void)clickToZhuanFa:(UIButton *)sender
+{
+    [[LShareSheetView shareInstance] showShareContent:detail_model.tt_content title:@"衣加衣" shareUrl:@"http://www.alayy.com" shareImage:self.showImageView.image targetViewController:self];
+    [[LShareSheetView shareInstance]actionBlock:^(NSInteger buttonIndex, Share_Type shareType) {
+        
+        if (shareType == Share_QQ) {
+            
+            NSLog(@"Share_QQ");
+            
+        }else if (shareType == Share_QQZone){
+            
+            NSLog(@"Share_QQZone");
+            
+        }else if (shareType == Share_WeiBo){
+            
+            NSLog(@"Share_WeiBo");
+            
+        }else if (shareType == Share_WX_HaoYou){
+            
+            NSLog(@"Share_WX_HaoYou");
+            
+        }else if (shareType == Share_WX_PengYouQuan){
+            
+            NSLog(@"Share_WX_PengYouQuan");
+            
+        }
+        
+    }];
+    
+    [[LShareSheetView shareInstance]shareResult:^(Share_Result result, Share_Type type) {
+        
+        if (result == Share_Success) {
+            
+            //分享 + 1
+            NSLog(@"分享成功");
+            
+            [self zhuanFaTTaiDetail];
+            
+        }else
+        {
+            //分享失败
+            
+            NSLog(@"分享失败");
+        }
+        
+    }];
+}
+
+
+- (void)clickToClose:(UIButton *)sender
+{
+    [self hide];
+}
+
+
 #pragma mark---锚点的点击方法
 //到商场的
 -(void)turntoshangchang:(UITapGestureRecognizer *)sender{
@@ -151,11 +270,11 @@
     detail.product_id =[NSString stringWithFormat:@"%ld",sender.view.tag] ;
     detail.lastPageNavigationHidden = YES;
     
-    detail.disappearBlock = ^(BOOL succss){
-        
-        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
-        
-    };
+//    detail.disappearBlock = ^(BOOL succss){
+//        
+//        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+//        
+//    };
     
 //    detail.isPresent = YES;
     
@@ -316,123 +435,6 @@
 - (void)photoViewSingleTap:(MJPhotoView *)photoView
 {
     [self showOrHiddenTool];
-}
-
-/**
- *  更新喜欢数
- */
-- (void)updateLikeNum
-{
-    NSString *likeNum = [NSString stringWithFormat:@"%@人喜欢",detail_model.tt_like_num];
-    [likeNumButton setTitle:likeNum forState:UIControlStateNormal];
-}
-/**
- *  更新评论数
- */
-- (void)updateCommentNum
-{
-    NSString *commentNum = [NSString stringWithFormat:@"%@条评论",detail_model.tt_like_num];
-    [commentButton setTitle:commentNum forState:UIControlStateNormal];
-}
-
-- (void)clickToCommentPage:(UIButton *)sender
-{
-    //评论页面
-    
-    TTaiCommentViewController *comment = [[TTaiCommentViewController alloc]init];
-    
-    comment.tt_id = self.tt_id;
-    
-//    LNavigationController *unVc = [[LNavigationController alloc]initWithRootViewController:comment];
-    
-//    [self presentViewController:unVc animated:YES completion:nil];
-    
-    [self.navigationController pushViewController:comment animated:YES];
-    
-}
-
-- (void)clickToZan:(UIButton *)sender
-{
-//    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
-//        
-//        LoginViewController *login = [[LoginViewController alloc]init];
-//        
-//        login.isSpecial = YES;
-//        
-//        LNavigationController *unVc = [[LNavigationController alloc]initWithRootViewController:login];
-//                
-//        UIWindow *window = [UIApplication sharedApplication].keyWindow;
-//        [window addSubview:unVc.view];
-//        [window.rootViewController addChildViewController:unVc];
-//
-//    }else
-//    {
-//        sender.selected = !sender.selected;
-//        [self zanTTaiDetail:sender.selected];
-//    }
-    
-    if ([LTools isLogin:self]) {
-        
-        sender.selected = !sender.selected;
-        [self zanTTaiDetail:sender.selected];
-    }
-    
-
-    [LTools animationToBigger:sender duration:0.2 scacle:1.5];
-}
-
-- (void)clickToZhuanFa:(UIButton *)sender
-{
-    [[LShareSheetView shareInstance] showShareContent:detail_model.tt_content title:@"衣加衣" shareUrl:@"http://www.alayy.com" shareImage:self.showImageView.image targetViewController:self];
-    [[LShareSheetView shareInstance]actionBlock:^(NSInteger buttonIndex, Share_Type shareType) {
-        
-        if (shareType == Share_QQ) {
-            
-            NSLog(@"Share_QQ");
-            
-        }else if (shareType == Share_QQZone){
-            
-            NSLog(@"Share_QQZone");
-            
-        }else if (shareType == Share_WeiBo){
-            
-            NSLog(@"Share_WeiBo");
-            
-        }else if (shareType == Share_WX_HaoYou){
-            
-            NSLog(@"Share_WX_HaoYou");
-            
-        }else if (shareType == Share_WX_PengYouQuan){
-            
-            NSLog(@"Share_WX_PengYouQuan");
-            
-        }
-        
-    }];
-    
-    [[LShareSheetView shareInstance]shareResult:^(Share_Result result, Share_Type type) {
-        
-        if (result == Share_Success) {
-            
-            //分享 + 1
-            NSLog(@"分享成功");
-            
-            [self zhuanFaTTaiDetail];
-            
-        }else
-        {
-            //分享失败
-            
-            NSLog(@"分享失败");
-        }
-        
-    }];
-}
-
-
-- (void)clickToClose:(UIButton *)sender
-{
-    [self hide];
 }
 
 #pragma - mark 网络请求

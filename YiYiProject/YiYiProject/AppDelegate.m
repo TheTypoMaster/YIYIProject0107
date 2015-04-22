@@ -621,6 +621,9 @@
 - (void)responseConnectError:(RCConnectErrorCode)errorCode
 {
     NSLog(@"rongCloud重新连接失败--- %d",(int)errorCode);
+    
+    [LTools cacheBool:NO ForKey:LOGIN_RONGCLOUD_STATE];
+
 }
 
 

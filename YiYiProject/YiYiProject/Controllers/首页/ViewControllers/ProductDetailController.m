@@ -47,14 +47,11 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    self.navigationController.navigationBarHidden = NO;
-
     [super viewWillAppear:animated];
     
-    if (IOS7_OR_LATER) {
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
-        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
-    }
+    self.navigationController.navigationBarHidden = NO;
+    
+    [[UIApplication sharedApplication]setStatusBarHidden:NO];
     
 }
 
@@ -63,6 +60,7 @@
     [super viewWillDisappear:animated];
     
     [self.navigationController setNavigationBarHidden:self.lastPageNavigationHidden animated:animated];
+    
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -392,6 +390,9 @@
 - (void)tapImage:(UITapGestureRecognizer *)tap
 {
     int count = (int)image_urls.count;
+    
+    UIImageView *aImageView = (UIImageView *)tap.view;
+    
     // 1.封装图片数据
     NSMutableArray *photos = [NSMutableArray arrayWithCapacity:count];
     for (int i = 0; i < count; i++) {
@@ -399,7 +400,7 @@
         NSString *url = image_urls[i];
         MJPhoto *photo = [[MJPhoto alloc] init];
         photo.url = [NSURL URLWithString:url]; // 图片路径
-        photo.srcImageView = self.bigImageView; // 来源于哪个UIImageView
+        photo.srcImageView = aImageView; // 来源于哪个UIImageView
         [photos addObject:photo];
     }
     
@@ -417,6 +418,8 @@
 {
     
     if ([LTools isLogin:self]) {
+        
+        [LTools animationToBigger:sender duration:0.2 scacle:1.5];
         
         if (sender.selected) {
             

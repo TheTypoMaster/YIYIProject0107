@@ -31,13 +31,13 @@
     self.navigationController.navigationBarHidden = NO;
 }
 //
-//-(void)viewWillDisappear:(BOOL)animated
-//{
-//    [super viewWillDisappear:animated];
-//    
-//    [self.navigationController setNavigationBarHidden:YES animated:animated];
-//    
-//}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [self.navigationController setNavigationBarHidden:self.lastPageNavigationHidden animated:animated];
+    
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

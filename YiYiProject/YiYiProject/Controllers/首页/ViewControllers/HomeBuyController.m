@@ -32,7 +32,6 @@
     
     SORT_SEX_TYPE sex_type;
     SORT_Discount_TYPE discount_type;
-//    NSArray *dataArray;
     
     GMAPI *mapApi;
     
@@ -54,11 +53,6 @@
     waterFlow.backgroundColor = RGBCOLOR(235, 235, 235);
     [self.view addSubview:waterFlow];
     
-//    NSDictionary *result = [LTools cacheForKey:CACHE_DESERVE_BUY];
-//    if (result) {
-//        
-//        [self parseDataWithResult:result];
-//    }
     NSDictionary *result = [DataManager getCacheDataForType:Cache_DeserveBuy];
     if (result) {
         
@@ -142,7 +136,6 @@
 
 #pragma mark 事件处理
 
-
 /**
  *  赞 取消赞 收藏 取消收藏
  */
@@ -156,15 +149,20 @@
     //直接变状态
     //更新数据
     
+    [LTools animationToBigger:sender duration:0.2 scacle:1.5];
+    
     TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[waterFlow.quitView cellAtIndexPath:[NSIndexPath indexPathForRow:sender.tag - 100 inSection:0]];
-    cell.like_label.text = @"";
+//    cell.like_label.text = @"";
     
     ProductModel *aMode = waterFlow.dataArray[sender.tag - 100];
     
     NSString *productId = aMode.product_id;
-//    __weak typeof(self)weakSelf = self;
+
+    __weak typeof(self)weakSelf = self;
     
-    NSString *api = HOME_PRODUCT_ZAN_ADD;
+    __block BOOL isZan = !sender.selected;
+    
+    NSString *api = sender.selected ? HOME_PRODUCT_ZAN_Cancel : HOME_PRODUCT_ZAN_ADD;
     
     NSString *post = [NSString stringWithFormat:@"product_id=%@&authcode=%@",productId,[GMAPI getAuthkey]];
     NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
@@ -175,23 +173,75 @@
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"result %@",result);
-        sender.selected = YES;
-        aMode.is_like = 1;
-        aMode.product_like_num = NSStringFromInt([aMode.product_like_num intValue] + 1);
+        sender.selected = isZan;
+        aMode.is_like = isZan ? 1 : 0;
+        aMode.product_like_num = NSStringFromInt([aMode.product_like_num intValue] + (isZan ? 1 : -1));
         cell.like_label.text = aMode.product_like_num;
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-        [GMAPI showAutoHiddenMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
+        [GMAPI showAutoHiddenMBProgressWithText:failDic[RESULT_INFO] addToView:weakSelf.view];
         if ([failDic[RESULT_CODE] intValue] == -11) {
             
-            [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
+            [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:weakSelf.view];
         }
         aMode.product_like_num = NSStringFromInt([aMode.product_like_num intValue]);
         cell.like_label.text = aMode.product_like_num;
     }];
 }
+
+
+
+///**
+// *  赞 取消赞 收藏 取消收藏
+// */
+//
+//- (void)clickToZan:(UIButton *)sender
+//{
+//    if (![LTools isLogin:self.rootViewController]) {
+//        
+//        return;
+//    }
+//    //直接变状态
+//    //更新数据
+//    
+//    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[waterFlow.quitView cellAtIndexPath:[NSIndexPath indexPathForRow:sender.tag - 100 inSection:0]];
+//    cell.like_label.text = @"";
+//    
+//    ProductModel *aMode = waterFlow.dataArray[sender.tag - 100];
+//    
+//    NSString *productId = aMode.product_id;
+////    __weak typeof(self)weakSelf = self;
+//    
+//    NSString *api = HOME_PRODUCT_ZAN_ADD;
+//    
+//    NSString *post = [NSString stringWithFormat:@"product_id=%@&authcode=%@",productId,[GMAPI getAuthkey]];
+//    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+//    
+//    NSString *url = api;
+//    
+//    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
+//    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+//        
+//        NSLog(@"result %@",result);
+//        sender.selected = YES;
+//        aMode.is_like = 1;
+//        aMode.product_like_num = NSStringFromInt([aMode.product_like_num intValue] + 1);
+//        cell.like_label.text = aMode.product_like_num;
+//        
+//    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+//        
+//        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+//        [GMAPI showAutoHiddenMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
+//        if ([failDic[RESULT_CODE] intValue] == -11) {
+//            
+//            [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
+//        }
+//        aMode.product_like_num = NSStringFromInt([aMode.product_like_num intValue]);
+//        cell.like_label.text = aMode.product_like_num;
+//    }];
+//}
 
 
 - (void)clickToFilter:(UIButton *)sender

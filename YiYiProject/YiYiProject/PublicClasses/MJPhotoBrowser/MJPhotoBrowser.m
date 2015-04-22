@@ -39,7 +39,10 @@
     // 隐藏状态栏
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     self.view = [[UIView alloc] init];
+//    self.view.frame = [UIScreen mainScreen].bounds;
+    
     self.view.frame = [UIScreen mainScreen].bounds;
+
 	self.view.backgroundColor = [UIColor blackColor];
 }
 
@@ -77,8 +80,8 @@
  
 - (void)hide
 {
-    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    [window.rootViewController addChildViewController:self];
+//    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+//    [window.rootViewController addChildViewController:self];
     
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     
@@ -173,9 +176,17 @@
 }
 
 - (void)photoViewDidEndZoom:(MJPhotoView *)photoView
-{    
-    [self.view removeFromSuperview];
-    [self removeFromParentViewController];
+{
+    [UIView animateWithDuration:0.1 animations:^{
+       
+        self.view.alpha = 0.f;
+    } completion:^(BOOL finished) {
+        
+        [self.view removeFromSuperview];
+        [self removeFromParentViewController];
+    }];
+    
+    
 }
 
 - (void)photoViewImageFinishLoad:(MJPhotoView *)photoView

@@ -119,6 +119,9 @@
 - (void)clickToZan:(UIButton *)sender
 {
     if ([LTools isLogin:self]) {
+        
+        [LTools animationToBigger:sender duration:0.2 scacle:1.5];
+        
         sender.selected = !sender.selected;
         [self zanTTaiDetail:sender.selected];
     }

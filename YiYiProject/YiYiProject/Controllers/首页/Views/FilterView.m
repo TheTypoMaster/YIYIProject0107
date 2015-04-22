@@ -38,6 +38,8 @@
         bgView.layer.cornerRadius = 5.f;
         bgView.clipsToBounds = YES;
         [self addSubview:bgView];
+        
+        bgView.center = CGPointMake(bgView.center.x, DEVICE_HEIGHT/2.f);
 
         //性别选择
         

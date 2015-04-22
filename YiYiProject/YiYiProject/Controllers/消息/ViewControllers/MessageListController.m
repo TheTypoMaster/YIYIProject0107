@@ -52,6 +52,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+    
     self.myTitleLabel.text = @"消息";
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateHotpoint:) name:NOTIFICATION_CANCEL_HOTPOINT object:Nil];

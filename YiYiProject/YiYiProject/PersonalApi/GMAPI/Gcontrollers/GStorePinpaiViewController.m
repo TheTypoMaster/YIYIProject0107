@@ -977,16 +977,19 @@
     //直接变状态
     //更新数据
     
-    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[_waterFlow.quitView cellAtIndexPath:[NSIndexPath indexPathForRow:sender.tag - 10000 inSection:0]];
-    cell.like_label.text = @"";
+    [LTools animationToBigger:sender duration:0.2 scacle:1.5];
+    
+     TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[_waterFlow.quitView cellAtIndexPath:[NSIndexPath indexPathForRow:sender.tag - 10000 inSection:0]];
+    //    cell.like_label.text = @"";
     
     ProductModel *aMode = _waterFlow.dataArray[sender.tag - 10000];
-    
     NSString *productId = aMode.product_id;
     
-    //    __weak typeof(self)weakSelf = self;
+    __weak typeof(self)weakSelf = self;
     
-    NSString *api = HOME_PRODUCT_ZAN_ADD;
+    __block BOOL isZan = !sender.selected;
+    
+    NSString *api = sender.selected ? HOME_PRODUCT_ZAN_Cancel : HOME_PRODUCT_ZAN_ADD;
     
     NSString *post = [NSString stringWithFormat:@"product_id=%@&authcode=%@",productId,[GMAPI getAuthkey]];
     NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
@@ -997,25 +1000,73 @@
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"result %@",result);
-        sender.selected = YES;
-        aMode.is_like = 1;
-        aMode.product_like_num = NSStringFromInt([aMode.product_like_num intValue] + 1);
+        sender.selected = isZan;
+        aMode.is_like = isZan ? 1 : 0;
+        aMode.product_like_num = NSStringFromInt([aMode.product_like_num intValue] + (isZan ? 1 : -1));
         cell.like_label.text = aMode.product_like_num;
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-        cell.like_label.text = aMode.product_like_num;
-        
-        [GMAPI showAutoHiddenMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
-        
+        [GMAPI showAutoHiddenMBProgressWithText:failDic[RESULT_INFO] addToView:weakSelf.view];
         if ([failDic[RESULT_CODE] intValue] == -11) {
             
-            [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
+            [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:weakSelf.view];
         }
-        
+        aMode.product_like_num = NSStringFromInt([aMode.product_like_num intValue]);
+        cell.like_label.text = aMode.product_like_num;
     }];
 }
+
+
+//- (void)clickToZan:(UIButton *)sender
+//{
+//    if (![LTools isLogin:self]) {
+//        
+//        return;
+//    }
+//    //直接变状态
+//    //更新数据
+//    
+//    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[_waterFlow.quitView cellAtIndexPath:[NSIndexPath indexPathForRow:sender.tag - 10000 inSection:0]];
+//    cell.like_label.text = @"";
+//    
+//    ProductModel *aMode = _waterFlow.dataArray[sender.tag - 10000];
+//    
+//    NSString *productId = aMode.product_id;
+//    
+//    //    __weak typeof(self)weakSelf = self;
+//    
+//    NSString *api = HOME_PRODUCT_ZAN_ADD;
+//    
+//    NSString *post = [NSString stringWithFormat:@"product_id=%@&authcode=%@",productId,[GMAPI getAuthkey]];
+//    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+//    
+//    NSString *url = api;
+//    
+//    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
+//    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+//        
+//        NSLog(@"result %@",result);
+//        sender.selected = YES;
+//        aMode.is_like = 1;
+//        aMode.product_like_num = NSStringFromInt([aMode.product_like_num intValue] + 1);
+//        cell.like_label.text = aMode.product_like_num;
+//        
+//    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+//        
+//        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+//        cell.like_label.text = aMode.product_like_num;
+//        
+//        [GMAPI showAutoHiddenMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
+//        
+//        if ([failDic[RESULT_CODE] intValue] == -11) {
+//            
+//            [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
+//        }
+//        
+//    }];
+//}
 
 
 #pragma mark - CustomSegmentViewDelegate

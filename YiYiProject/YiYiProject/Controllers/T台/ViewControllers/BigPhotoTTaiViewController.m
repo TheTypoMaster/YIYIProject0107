@@ -37,19 +37,19 @@
 
 @implementation BigPhotoTTaiViewController
 
--(void)viewWillAppear:(BOOL)animated
-{
-    self.navigationController.navigationBarHidden = NO;
-    
-    [super viewWillAppear:animated];
-    
-    if ([UIApplication sharedApplication].isStatusBarHidden) {
-        
-        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
-
-    }
-    
-}
+//-(void)viewWillAppear:(BOOL)animated
+//{
+//    self.navigationController.navigationBarHidden = NO;
+//    
+//    [super viewWillAppear:animated];
+//    
+//    if ([UIApplication sharedApplication].isStatusBarHidden) {
+//
+//        [[UIApplication sharedApplication]setStatusBarHidden:NO];
+//
+//    }
+//    
+//}
 
 -(void)viewDidLoad
 {
@@ -74,6 +74,16 @@
     
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateTTai:) name:NOTIFICATION_TTAI_PUBLISE_SUCCESS object:nil];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(uu) name:@"aa" object:nil];
+    
+}
+
+- (void)uu
+{
+    
+//    UIViewController
+//    self.tabBarController.selectedIndex = 1;
     
 }
 
