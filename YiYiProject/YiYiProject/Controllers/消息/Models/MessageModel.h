@@ -38,6 +38,12 @@
 @property(nonatomic,retain)NSString *ori_width;//图片宽度
 
 
+
+//商家活动
+@property(nonatomic,strong)NSString *start_time;//活动开始时间
+@property(nonatomic,strong)NSString *end_time;//活动结束时间
+
+
 //"": "11",
 //"": "11",
 //"": "消息标题",

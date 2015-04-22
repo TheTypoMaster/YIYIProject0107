@@ -26,4 +26,8 @@
 
 @property(nonatomic,assign)ShenQingDianPuViewController *shenqingdianpuvc;//申请店铺vc
 
+
+@property(nonatomic,assign)BOOL isSaoyisao;//是否为扫一扫
+
+
 @end

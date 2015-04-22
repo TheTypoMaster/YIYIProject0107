@@ -1038,10 +1038,7 @@ typedef enum{
 //            [self GgetUserInfo];
 //        }
     }
-    
-    
-    
-    
+
     
 }
 
@@ -1054,8 +1051,12 @@ typedef enum{
 -(void)gScanvcPushWithString:(NSString *)string{
     GwebViewController *ccc = [[GwebViewController alloc]init];
     ccc.urlstring = string;
+    ccc.isSaoyisao = YES;
     ccc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:ccc animated:YES];
+    UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:ccc];
+    [self presentViewController:navc animated:YES completion:^{
+        
+    }];
 }
 
 

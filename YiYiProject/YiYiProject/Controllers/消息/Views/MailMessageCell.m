@@ -55,8 +55,8 @@
         content = model.content;
         name = model.from_username;
         photo = model.photo;
-        time = model.send_time;
-        
+        time = model.start_time;
+        endtime = model.end_time;
         image_height = [model.pic_height floatValue];
         image_width = [model.pic_width floatValue];
         

@@ -119,7 +119,7 @@
 
 -(void)leftButtonTap:(UIButton *)sender
 {
-    if (self.ismianzeshengming) {
+    if (self.ismianzeshengming || self.isSaoyisao) {
         [self dismissViewControllerAnimated:YES completion:^{
             
         }];
