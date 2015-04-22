@@ -37,6 +37,20 @@
 
 @implementation BigPhotoTTaiViewController
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.navigationController.navigationBarHidden = NO;
+    
+    [super viewWillAppear:animated];
+    
+    if ([UIApplication sharedApplication].isStatusBarHidden) {
+        
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+
+    }
+    
+}
+
 -(void)viewDidLoad
 {
     [super viewDidLoad];

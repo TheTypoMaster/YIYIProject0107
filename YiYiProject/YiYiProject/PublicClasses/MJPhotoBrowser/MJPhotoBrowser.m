@@ -74,7 +74,7 @@
         [self showPhotos];
     }
 }
-
+ 
 - (void)hide
 {
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
