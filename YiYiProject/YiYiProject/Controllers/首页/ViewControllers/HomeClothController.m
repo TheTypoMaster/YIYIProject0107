@@ -817,6 +817,7 @@
             NSString *theId = [dic stringValueForKey:@"theme_id"];
             ProductDetailController *ccc = [[ProductDetailController alloc]init];
             ccc.product_id = theId;
+            ccc.hidesBottomBarWhenPushed = YES;
             [self.rootViewController.navigationController pushViewController:ccc animated:YES];
             
         }
