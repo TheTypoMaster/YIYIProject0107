@@ -32,11 +32,13 @@
 -(CGFloat)loadCustomViewWithData:(NSDictionary*)theData indexPath:(NSIndexPath*)theIndex{
     
     CGFloat height = 0.0f;
-    if (self.theType == GSEARCHTYPE_PINPAI || self.theType == GSEARCHTYPE_SHANGPU) {//品牌 || 商铺
-        height = [self loadCustomCellWithDic:theData];
+    if (self.theType == GSEARCHTYPE_SHANGPU) {//商铺
+        height = [self loadCustomCellWithDic:theData type:GSEARCHTYPE_SHANGPU];
     }else if (self.theType == GSEARCHTYPE_DANPIN){//单品
         [self loadCustomCellWithDicOfProduct:theData];
         height = 90;
+    }else if (self.theType == GSEARCHTYPE_PINPAI){//品牌
+        height = [self loadCustomCellWithDic:theData type:GSEARCHTYPE_PINPAI];
     }
     
     
@@ -48,14 +50,19 @@
 
 
 //搜索品牌或商铺
--(CGFloat)loadCustomCellWithDic:(NSDictionary *)dic{
+-(CGFloat)loadCustomCellWithDic:(NSDictionary *)dic type:(GSEARCHTYPE)theType{
     
     CGFloat cellHeight = 0.0f;
     
     //name
     UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 18, 0, 16)];
     nameLabel.font = [UIFont boldSystemFontOfSize:15];
-    nameLabel.text = [dic stringValueForKey:@"mall_name"];
+    if (theType == GSEARCHTYPE_SHANGPU) {
+        nameLabel.text = [dic stringValueForKey:@"mall_name"];
+    }else if (theType == GSEARCHTYPE_PINPAI){
+        nameLabel.text = [dic stringValueForKey:@"brand_name"];
+    }
+    
     [nameLabel sizeToFit];
     cellHeight += nameLabel.frame.size.height;
     
@@ -103,6 +110,12 @@
     downLine.backgroundColor = RGBCOLOR(226, 226, 228);
     [self.contentView addSubview:downLine];
     
+    
+    
+    
+    
+    
+    
     return cellHeight;
     
 }
@@ -132,11 +145,12 @@
     CGFloat juli_f = 0.0f;
     if ([distance intValue] >=1000) {
         juli_f = [distance floatValue]*0.001;
+        distance = [NSString stringWithFormat:@"%.2f",juli_f];
     }
-    distance = [NSString stringWithFormat:@"%.2f",juli_f];
+    
     
     UILabel *detailLabel = [[UILabel alloc]initWithFrame:CGRectMake(titleLabel.frame.origin.x, CGRectGetMaxY(titleLabel.frame), titleLabel.frame.size.width, titleLabel.frame.size.height)];
-    detailLabel.text = [NSString stringWithFormat:@"%@   %@m",[dic stringValueForKey:@"product_price"],distance];
+    detailLabel.text = [NSString stringWithFormat:@"%@元   %@km",[dic stringValueForKey:@"product_price"],distance];
     detailLabel.font = [UIFont systemFontOfSize:15];
     detailLabel.numberOfLines = 2;
     [self.contentView addSubview:detailLabel];
