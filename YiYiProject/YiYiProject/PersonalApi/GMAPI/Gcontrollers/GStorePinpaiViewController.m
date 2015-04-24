@@ -178,8 +178,7 @@
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
-    //关注精品店===========
-    
+    //关注精品店===========这里显示的是精品店
     if ([self.guanzhuleixing isEqualToString:@"精品店"]) {
         NSString *api = [NSString stringWithFormat:@"%@&mall_id=%@&authcode=%@",HOME_CLOTH_NEARBYSTORE_DETAIL,self.storeIdStr,[GMAPI getAuthkey]];
         GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
@@ -251,14 +250,14 @@
     
     
     
-    //关注的是品牌==========
-    NSString *api = [NSString stringWithFormat:GET_MAIL_DETAIL_INFO,self.storeIdStr];//商场店
+    //关注的是品牌店==========这里显示品牌店
+    NSString *api = [NSString stringWithFormat:@"%@&shop_id=%@&authcode=%@",GET_MAIL_DETAIL_INFO,self.storeIdStr,[GMAPI getAuthkey]];//品牌店
     GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
     [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
         [self creatDianpuInfoViewWithResult:result];
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         
-        NSLog(@"商场店信息 %@",result);
+        NSLog(@"品牌店信息 %@",result);
         self.pinpaiId = [result stringValueForKey:@"brand_id"];
         NSLog(@"self.pinpaiId %@",self.pinpaiId);
         //活动
@@ -279,7 +278,9 @@
         
         
         [self createMemuView];
-        [self getGuanzhuYesOrNoForPinpai];
+        [self getGuanzhuYesOrNoForPinpaiDianWithDic:result];
+//        [self getGuanzhuYesOrNoForPinpai];
+        
         
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
@@ -513,6 +514,27 @@
 }
 
 
+//获取是否关注品牌店
+-(void)getGuanzhuYesOrNoForPinpaiDianWithDic:(NSDictionary *)dic{
+   
+        self.guanzhu = [dic stringValueForKey:@"following"];
+        if ([self.guanzhu intValue]==0) {//未关注
+            [_my_right_button setTitle:@"关注" forState:UIControlStateNormal];
+            self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
+        }else if ([self.guanzhu intValue] == 1){//已关注
+            [_my_right_button setTitle:@"已关注" forState:UIControlStateNormal];
+            self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
+        }
+        
+        if (self.isChooseProductLink) {
+            [_my_right_button setTitle:@"选择" forState:UIControlStateNormal];
+        }
+        
+        [_waterFlow showRefreshHeader:YES];
+        
+    
+}
+
 
 
 
@@ -578,6 +600,9 @@
                     [_my_right_button setTitle:@"已关注" forState:UIControlStateNormal];
                     self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
                     self.guanzhu = @"1";
+                }else{
+                    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                    [GMAPI showAutoHiddenMBProgressWithText:@"关注失败" addToView:self.view];
                 }
             } failBlock:^(NSDictionary *failDic, NSError *erro) {
                 [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
@@ -599,6 +624,9 @@
                     [_my_right_button setTitle:@"关注" forState:UIControlStateNormal];
                     self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
                     self.guanzhu = @"0";
+                }else{
+                    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                    [GMAPI showAutoHiddenMBProgressWithText:@"取消关注失败" addToView:self.view];
                 }
                 
                 
@@ -610,6 +638,55 @@
         
         
         return;
+        
+    }else if ([self.guanzhuleixing isEqualToString:@"品牌店"]){
+        
+        if ([self.guanzhu intValue] == 0) {//未关注
+            NSString *api = [NSString stringWithFormat:@"%@&shop_id=%@&authcode=%@",GGUANZHUPINPAIDIAN,self.shopId,[GMAPI getAuthkey]];
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+            [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
+                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                
+                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                if ([[result stringValueForKey:@"errorcode"]intValue] == 0) {
+                    [GMAPI showAutoHiddenMBProgressWithText:@"关注成功" addToView:self.view];
+                    [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_STORE object:nil];
+                    [_my_right_button setTitle:@"已关注" forState:UIControlStateNormal];
+                    self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
+                    self.guanzhu = @"1";
+                }else{
+                    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                    [GMAPI showAutoHiddenMBProgressWithText:@"关注失败" addToView:self.view];
+                }
+            } failBlock:^(NSDictionary *failDic, NSError *erro) {
+                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                [GMAPI showAutoHiddenMBProgressWithText:@"关注失败" addToView:self.view];
+            }];
+        }else if ([self.guanzhu intValue] == 1){//已关注
+            NSString *api = [NSString stringWithFormat:@"%@&shop_id=%@&authcode=%@",GQUXIAOGUANZHUPINPAIDIAN,self.shopId,[GMAPI getAuthkey]];
+            GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+            [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
+                if ([[result stringValueForKey:@"errorcode"]intValue]==0) {
+                    [GMAPI showAutoHiddenMBProgressWithText:@"取消关注成功" addToView:self.view];
+                    [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_STORE_QUXIAO object:nil];
+                    [_my_right_button setTitle:@"关注" forState:UIControlStateNormal];
+                    self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
+                    self.guanzhu = @"0";
+                }else{
+                    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                    [GMAPI showAutoHiddenMBProgressWithText:@"取消关注失败" addToView:self.view];
+                }
+            } failBlock:^(NSDictionary *failDic, NSError *erro) {
+                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                [GMAPI showAutoHiddenMBProgressWithText:@"取消关注失败" addToView:self.view];
+            }];
+            
+        }
+        
+        
+        
         
     }
     

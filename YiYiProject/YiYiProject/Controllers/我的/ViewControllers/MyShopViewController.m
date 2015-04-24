@@ -159,7 +159,7 @@
     
     __weak typeof(self)weakSelf = self;
     
-    NSString *url = [NSString stringWithFormat:GET_MAIL_DETAIL_INFO,self.userInfo.shop_id];
+    NSString *url = [NSString stringWithFormat:@"%@&shop_id=%@",GET_MAIL_DETAIL_INFO,self.userInfo.shop_id];
     
     NSLog(@"%@",url);
     

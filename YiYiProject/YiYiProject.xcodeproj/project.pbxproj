@@ -4035,6 +4035,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/YiYiProject/UMengShare/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 					"$(PROJECT_DIR)/YiYiProject/PersonalApi/GMAPI/Gutils",
+					"$(PROJECT_DIR)/YiYiProject",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/YiYiProject/PrefixHeader.pch";
 				INFOPLIST_FILE = YiYiProject/Info.plist;
@@ -4071,6 +4072,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/YiYiProject/UMengShare/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 					"$(PROJECT_DIR)/YiYiProject/PersonalApi/GMAPI/Gutils",
+					"$(PROJECT_DIR)/YiYiProject",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/YiYiProject/PrefixHeader.pch";
 				INFOPLIST_FILE = YiYiProject/Info.plist;

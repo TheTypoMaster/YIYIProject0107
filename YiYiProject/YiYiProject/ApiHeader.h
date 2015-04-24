@@ -198,7 +198,7 @@ typedef enum{
 //店铺详情  mall_id
 #define HOME_CLOTH_NEARBYSTORE_DETAIL @"http://www.alayy.com?d=api&c=mall&m=getMallDetail"
 //店铺详情 shop_id
-#define GET_MAIL_DETAIL_INFO @"http://www.alayy.com/index.php?d=api&c=mall&m=get_shop_info&shop_id=%@"
+#define GET_MAIL_DETAIL_INFO @"http://www.alayy.com/index.php?d=api&c=mall&m=get_shop_info"
 
 //点击品牌进入该品牌的商铺列表
 #define HOME_CLOTH_PINPAI_STORELIST @"http://www.alayy.com/index.php?d=api&c=mall&m=get_mall_by_brand"
@@ -500,6 +500,14 @@ typedef enum{
 
 //绑定手机
 #define GBANGDINGPHONE @"http://www119.alayy.com/index.php?d=api&c=user_api&m=bind_mobile"
+
+
+
+//关注品牌店
+#define GGUANZHUPINPAIDIAN @"http://www.alayy.com/index.php?d=api&c=friendship&m=attend_shop"
+
+//取消关注品牌店
+#define GQUXIAOGUANZHUPINPAIDIAN @"http://www.alayy.com/index.php?d=api&c=friendship&m=cancel_attend_shop"
 
 
 #endif

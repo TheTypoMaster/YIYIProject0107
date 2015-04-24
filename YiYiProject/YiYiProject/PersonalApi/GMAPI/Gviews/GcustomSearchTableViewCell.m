@@ -140,19 +140,23 @@
     
     //附加信息
     
+    UILabel *detailLabel = [[UILabel alloc]initWithFrame:CGRectMake(titleLabel.frame.origin.x, CGRectGetMaxY(titleLabel.frame), titleLabel.frame.size.width, titleLabel.frame.size.height)];
+    detailLabel.font = [UIFont systemFontOfSize:15];
+    detailLabel.numberOfLines = 2;
     NSString *distance = [dic stringValueForKey:@"distance"];
+    detailLabel.text = [NSString stringWithFormat:@"%@元   %@m",[dic stringValueForKey:@"product_price"],distance];
     
     CGFloat juli_f = 0.0f;
     if ([distance intValue] >=1000) {
         juli_f = [distance floatValue]*0.001;
         distance = [NSString stringWithFormat:@"%.2f",juli_f];
+        detailLabel.text = [NSString stringWithFormat:@"%@元   %@km",[dic stringValueForKey:@"product_price"],distance];
     }
     
     
-    UILabel *detailLabel = [[UILabel alloc]initWithFrame:CGRectMake(titleLabel.frame.origin.x, CGRectGetMaxY(titleLabel.frame), titleLabel.frame.size.width, titleLabel.frame.size.height)];
-    detailLabel.text = [NSString stringWithFormat:@"%@元   %@km",[dic stringValueForKey:@"product_price"],distance];
-    detailLabel.font = [UIFont systemFontOfSize:15];
-    detailLabel.numberOfLines = 2;
+    
+    
+    
     [self.contentView addSubview:detailLabel];
 }
 
