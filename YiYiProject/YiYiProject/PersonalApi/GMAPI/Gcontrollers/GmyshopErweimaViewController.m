@@ -19,6 +19,20 @@
 
 @implementation GmyshopErweimaViewController
 
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [self.navigationController setNavigationBarHidden:self.lastPageNavigationHidden animated:animated];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -31,16 +45,7 @@
     self.myTitleLabel.textColor = RGBCOLOR(252, 76, 139);
     
     
-    
-    
-    
-    
     [self prepareNetData];
-    
-    
-    
-    
-    
 }
 
 

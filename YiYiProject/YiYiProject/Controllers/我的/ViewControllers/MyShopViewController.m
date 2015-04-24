@@ -405,12 +405,14 @@
         
     }else if (ttt.view.tag == 51){//店铺二维码
         GmyshopErweimaViewController *ccc = [[GmyshopErweimaViewController alloc]init];
+        ccc.lastPageNavigationHidden = YES;
         [self.navigationController pushViewController:ccc animated:YES];
-        self.navigationController.navigationBarHidden = NO;
+        
+        
     }else if (ttt.view.tag == 51){//店铺会员
         GmyShopHuiyuanViewController *ccc = [[GmyShopHuiyuanViewController alloc]init];
+        ccc.lastPageNavigationHidden = YES;
         [self.navigationController pushViewController:ccc animated:YES];
-        self.navigationController.navigationBarHidden = NO;
     }
 }
 
@@ -419,8 +421,9 @@
     GmyshopErweimaViewController *ccc = [[GmyshopErweimaViewController alloc]init];
     ccc.mallInfo = self.mallInfo;
     ccc.shop_id = self.userInfo.shop_id;
+    
+    ccc.lastPageNavigationHidden = YES;
     [self.navigationController pushViewController:ccc animated:YES];
-    self.navigationController.navigationBarHidden = NO;
 }
 
 //店铺会员点击

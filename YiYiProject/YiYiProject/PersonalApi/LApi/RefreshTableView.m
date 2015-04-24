@@ -292,6 +292,22 @@
 
 #pragma mark -
 #pragma mark overide UITableViewDelegate methods
+//将要显示
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (_refreshDelegate && [_refreshDelegate respondsToSelector:@selector(refreshTableView:willDisplayCell:forRowAtIndexPath:)]) {
+        
+        [_refreshDelegate refreshTableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath];
+    }
+}
+//显示完了
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath NS_AVAILABLE_IOS(6_0)
+{
+    if (_refreshDelegate && [_refreshDelegate respondsToSelector:@selector(refreshTableView:didEndDisplayingCell:forRowAtIndexPath:)]) {
+        
+        [_refreshDelegate refreshTableView:tableView didEndDisplayingCell:cell forRowAtIndexPath:indexPath];
+    }
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {

@@ -13,6 +13,9 @@
 - (void)photoViewImageFinishLoad:(MJPhotoView *)photoView;
 - (void)photoViewSingleTap:(MJPhotoView *)photoView;
 - (void)photoViewDidEndZoom:(MJPhotoView *)photoView;
+
+- (void)photoViewDidLoad:(MJPhotoView *)photoView;//完成显示
+
 @end
 
 @interface MJPhotoView : UIScrollView <UIScrollViewDelegate>
@@ -20,6 +23,8 @@
 @property (nonatomic, strong) MJPhoto *photo;
 
 @property (nonatomic, strong) UIImageView *imageView;
+
+@property (nonatomic, assign) UIView *clearView;//test
 // 代理
 @property (nonatomic, weak) id<MJPhotoViewDelegate> photoViewDelegate;
 

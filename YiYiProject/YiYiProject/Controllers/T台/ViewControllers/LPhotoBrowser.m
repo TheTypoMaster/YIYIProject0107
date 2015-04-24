@@ -17,6 +17,12 @@
 #import "GStorePinpaiViewController.h"
 #import "ProductDetailController.h"
 
+#import "AnchorPiontView.h"
+
+#import "PropertyImageView.h"
+
+#import "MJPhoto.h"
+
 @implementation LPhotoBrowser
 {
     TDetailModel *detail_model;
@@ -44,7 +50,7 @@
     
     loading = [LTools MBProgressWithText:@"加载中..." addToView:self.view];
     
-    [self getTTaiDetail];//获取t台详情
+//    [self getTTaiDetail];//获取t台详情
 }
 
 #pragma - mark 创建视图
@@ -239,7 +245,68 @@
 
 - (void)clickToClose:(UIButton *)sender
 {
+//    CGFloat duration = 0.15;
+//    
+//    MJPhoto *photo = ((MJPhotoView *)[self currentPhotoView]).photo;
+//    
+//    UIImageView *bigImageView = ((MJPhotoView *)[self currentPhotoView]).imageView;
+    
+//    for (int i = 0; i < [bigImageView.subviews count]; i ++) {
+//        
+//        UIView *aView = [[bigImageView subviews]objectAtIndex:i];
+//
+//        [UIView animateWithDuration:duration + 0.1 + 0.1 animations:^{
+//            
+//            
+//            aView.frame = [photo.srcImageView.superview convertRect:photo.srcImageView.frame toView:[UIApplication sharedApplication].keyWindow];
+//            
+//        } completion:^(BOOL finished) {
+//            
+//            [aView removeFromSuperview];
+//            // 设置底部的小图片
+////            aView = nil;
+//        }];
+//    }
+    
+//    [UIView animateWithDuration:duration + 0.1 + 0.1 animations:^{
+//        
+//        _imageView.frame = [_photo.srcImageView.superview convertRect:_photo.srcImageView.frame toView:[UIApplication sharedApplication].keyWindow];
+//        
+//        
+//        
+//        // 通知代理
+//        if ([self.photoViewDelegate respondsToSelector:@selector(photoViewSingleTap:)]) {
+//            [self.photoViewDelegate photoViewSingleTap:self];
+//        }
+//        
+//    } completion:^(BOOL finished) {
+//        
+//        [_imageView removeFromSuperview];
+//        // 设置底部的小图片
+//        _photo.srcImageView.image = _photo.placeholder;
+//        
+//    }];
+    
+    
+//    UIImageView *bigImageView = ((MJPhotoView *)[self currentPhotoView]).imageView;
+//
+//    [self removeMaoDianForCell:bigImageView];
+    
+    [self.clearView removeFromSuperview];
+    
     [self hide];
+}
+
+
+//移除锚点
+- (void)removeMaoDianForCell:(UIImageView *)imageView
+{    
+    for (int i = 0; i < imageView.subviews.count; i ++) {
+        
+        UIView *aView = [[imageView subviews]objectAtIndex:i];
+        [aView removeFromSuperview];
+        aView = nil;
+    }
 }
 
 
@@ -306,7 +373,8 @@
     }
        if (image_have_detail>0) {
         //代表有锚点，0代表没有锚点
-        
+           
+           
         for (int i=0; i<img_detail.count; i++) {
             
             /*{
@@ -426,6 +494,229 @@
     }];
 }
 
+
+/**
+ *  添加锚点
+ */
+- (void)addMaoDian:(TPlatModel *)aModel imageView:(UIImageView *)imageView
+{
+    //史忠坤修改
+    
+    int image_have_detail=0;
+    
+    NSArray *img_detail=[NSArray array];
+    
+    if ([aModel.image isKindOfClass:[NSDictionary class]]) {
+        
+        image_have_detail=[aModel.image[@"have_detail"]intValue ];
+        
+        img_detail=aModel.image[@"img_detail"];
+        
+    }
+    
+    if (image_have_detail>0) {
+        //代表有锚点，0代表没有锚点
+        
+        /**
+         *  由于image 和 imageView不能一样大小,需要计算image实际坐标
+         */
+        
+        CGSize size_image = imageView.image.size;//图片实际大小
+        
+        CGFloat realWidth = DEVICE_WIDTH;//显示大小
+        
+        CGFloat realHeight = size_image.height / (size_image.width/DEVICE_WIDTH);//显示大小
+        
+        CGFloat dis = (DEVICE_HEIGHT - realHeight) / 2.f;//imageView和屏幕一样大小,image相对于imageView坐标偏移
+        
+        self.clearView = [[UIView alloc]initWithFrame:CGRectMake(0, dis, realWidth, realHeight)];
+        _clearView.backgroundColor = [UIColor clearColor];
+        [imageView addSubview:_clearView];
+
+        MJPhotoView *bigImageView = (MJPhotoView *)[self currentPhotoView];
+        bigImageView.clearView = self.clearView;
+        
+        for (int i=0; i<img_detail.count; i++) {
+            
+            /*{
+             dateline = 1427958416;
+             "img_x" = "0.2000";
+             "img_y" = "0.4000";
+             "product_id" = 100;
+             "shop_id" = 2654;
+             "tt_id" = 26;
+             "tt_img_id" = 0;
+             "tt_img_info_id" = 1;
+             },*/
+            NSDictionary *maodian_detail=(NSDictionary *)[img_detail objectAtIndex:i];
+            
+            [self createbuttonWithModel:maodian_detail imageView:imageView];
+            
+        }}
+    
+}
+
+//等到加载完图片之后再加载图片上的三个button
+
+
+-(void)createbuttonWithModel:(NSDictionary*)maodian_detail imageView:(UIImageView *)imageView{
+    
+    NSString *productId = maodian_detail[@"product_id"];
+    
+    NSInteger product_id = [productId integerValue];
+    
+    NSString *shopId = maodian_detail[@"shop_id"];
+    
+    //    NSInteger shop_id = [shopId integerValue];
+    
+    float dx=[maodian_detail[@"img_x"] floatValue];
+    float dy=[maodian_detail[@"img_y"] floatValue];
+    
+    /**
+     *  由于image 和 imageView不能一样大小,需要计算image实际坐标
+     */
+    
+//    CGSize size_image = imageView.image.size;//图片实际大小
+//    
+//    CGFloat realWidth = DEVICE_WIDTH;//显示大小
+//    
+//    CGFloat realHeight = size_image.height / (size_image.width/DEVICE_WIDTH);//显示大小
+//    
+//    CGFloat dis = (DEVICE_HEIGHT - realHeight) / 2.f;//imageView和屏幕一样大小,image相对于imageView坐标偏移
+    
+    __weak typeof(self)weakSelf = self;
+    if (product_id>0) {
+        //说明是单品
+        
+        NSString *title = maodian_detail[@"product_name"];
+        CGPoint point = CGPointMake(dx * self.clearView.width, dy * self.clearView.height);
+        AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title];
+        [self.clearView addSubview:pointView];
+        pointView.infoId = productId;
+        pointView.infoName = title;
+        
+        
+        [pointView setAnchorBlock:^(NSString *infoId,NSString *infoName){
+            
+            [weakSelf turnToDanPinInfoId:infoId infoName:infoName];
+        }];
+        
+        NSLog(@"单品--title %@",title);
+        
+    }else{
+        
+        //说明是品牌店面
+        
+        NSString *title = maodian_detail[@"shop_name"];
+        CGPoint point = CGPointMake(dx * imageView.width, dy * imageView.height);
+        AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title];
+        [imageView addSubview:pointView];
+        
+        pointView.infoId = shopId;
+        pointView.infoName = title;
+        
+        [pointView setAnchorBlock:^(NSString *infoId,NSString *infoName){
+            
+            [weakSelf turnToShangChangInfoId:infoId infoName:infoName];
+        }];
+        
+        NSLog(@"品牌--title %@",title);
+        
+    }
+    
+}
+
+
+//-(void)createbuttonWithModel:(NSDictionary*)maodian_detail imageView:(UIImageView *)imageView{
+//    
+//    NSString *productId = maodian_detail[@"product_id"];
+//    
+//    NSInteger product_id = [productId integerValue];
+//    
+//    NSString *shopId = maodian_detail[@"shop_id"];
+//    
+////    NSInteger shop_id = [shopId integerValue];
+//    
+//    float dx=[maodian_detail[@"img_x"] floatValue];
+//    float dy=[maodian_detail[@"img_y"] floatValue];
+//    
+//    /**
+//     *  由于image 和 imageView不能一样大小,需要计算image实际坐标
+//     */
+//    
+//    CGSize size_image = imageView.image.size;//图片实际大小
+//    
+//    CGFloat realWidth = DEVICE_WIDTH;//显示大小
+//    
+//    CGFloat realHeight = size_image.height / (size_image.width/DEVICE_WIDTH);//显示大小
+//    
+//    CGFloat dis = (DEVICE_HEIGHT - realHeight) / 2.f;//imageView和屏幕一样大小,image相对于imageView坐标偏移
+//    
+//    __weak typeof(self)weakSelf = self;
+//    if (product_id>0) {
+//        //说明是单品
+//        
+//        NSString *title = maodian_detail[@"product_name"];
+//        CGPoint point = CGPointMake(dx * realWidth, dy * realHeight + dis);
+//        AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title];
+//        [imageView addSubview:pointView];
+//        pointView.infoId = productId;
+//        pointView.infoName = title;
+//        
+//        
+//        [pointView setAnchorBlock:^(NSString *infoId,NSString *infoName){
+//            
+//            [weakSelf turnToDanPinInfoId:infoId infoName:infoName];
+//        }];
+//        
+//        NSLog(@"单品--title %@",title);
+//        
+//    }else{
+//        
+//        //说明是品牌店面
+//        
+//        NSString *title = maodian_detail[@"shop_name"];
+//        CGPoint point = CGPointMake(dx * imageView.width, dy * imageView.height);
+//        AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title];
+//        [imageView addSubview:pointView];
+//        
+//        pointView.infoId = shopId;
+//        pointView.infoName = title;
+//        
+//        [pointView setAnchorBlock:^(NSString *infoId,NSString *infoName){
+//            
+//            [weakSelf turnToShangChangInfoId:infoId infoName:infoName];
+//        }];
+//        
+//        NSLog(@"品牌--title %@",title);
+//        
+//    }
+//    
+//}
+
+#pragma mark---锚点的点击方法
+//到商场的
+-(void)turnToShangChangInfoId:(NSString *)infoId
+                     infoName:(NSString *)infoName
+{
+    
+    GStorePinpaiViewController *detail = [[GStorePinpaiViewController alloc]init];
+    detail.storeIdStr = infoId;
+    detail.storeNameStr = infoName;
+    [self.navigationController pushViewController:detail animated:YES];
+    
+}
+//到单品的
+-(void)turnToDanPinInfoId:(NSString *)infoId
+                 infoName:(NSString *)infoName
+{
+    
+    ProductDetailController *detail = [[ProductDetailController alloc]init];
+    detail.product_id = infoId;
+    [self.navigationController pushViewController:detail animated:YES];
+    
+}
+
 #pragma mark - MJPhotoView代理
 
 /**
@@ -436,6 +727,24 @@
 {
     [self showOrHiddenTool];
 }
+
+- (void)photoViewImageFinishLoad:(MJPhotoView *)photoView
+{
+    
+}
+
+- (void)photoViewDidLoad:(MJPhotoView *)photoView//完成显示
+{
+    UIImageView *bigImageView = ((MJPhotoView *)[self currentPhotoView]).imageView;
+    
+    [self addMaoDian:self.t_model imageView:bigImageView];
+    
+    detail_model = (TDetailModel*)self.t_model;
+    
+    [self createBottomTools];
+    
+}
+
 
 #pragma - mark 网络请求
 
@@ -499,7 +808,11 @@
 //        
 //        [weakSelf setViewWithModel:detail_model];
         
-        [weakSelf addMaoDian:detail_model];
+        UIImageView *bigImageView = ((MJPhotoView *)[self currentPhotoView]).imageView;
+        
+        [weakSelf addMaoDian:detail_model imageView:bigImageView];
+        
+//        bigImageView.backgroundColor = [UIColor orangeColor];
         
         [weakSelf createBottomTools];
         

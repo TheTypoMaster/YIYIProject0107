@@ -30,6 +30,20 @@
     _tableView = nil;
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBarHidden = NO;
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [self.navigationController setNavigationBarHidden:self.lastPageNavigationHidden animated:animated];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.

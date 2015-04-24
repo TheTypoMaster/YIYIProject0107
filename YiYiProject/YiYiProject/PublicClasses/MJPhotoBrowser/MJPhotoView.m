@@ -84,23 +84,30 @@
         _imageView.image = _photo.placeholder; // 占位图片
         _photo.srcImageView.image = nil;
         
+        
         // 不是gif，就马上开始下载
+        
         if (![_photo.url.absoluteString hasSuffix:@"gif"]) {
+            
             __unsafe_unretained MJPhotoView *photoView = self;
             __unsafe_unretained MJPhoto *photo = _photo;
-            [_imageView setImageWithURL:_photo.url placeholderImage:_photo.placeholder options:SDWebImageRetryFailed|SDWebImageLowPriority completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+            
+            [_imageView sd_setImageWithURL:_photo.url placeholderImage:_photo.placeholder options:SDWebImageRetryFailed|SDWebImageLowPriority completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                
                 photo.image = image;
                 
                 // 调整frame参数
                 [photoView adjustFrame];
             }];
         }
+
     } else {
+        
         [self photoStartLoad];
     }
 
     // 调整frame参数
-    [self adjustFrame];
+//    [self adjustFrame];
 }
 
 #pragma mark 开始加载图片
@@ -109,6 +116,7 @@
     if (_photo.image) {
         self.scrollEnabled = YES;
         _imageView.image = _photo.image;
+        
     } else {
         self.scrollEnabled = NO;
         // 直接显示进度条
@@ -121,7 +129,7 @@
         [_imageView sd_setImageWithURL:_photo.url placeholderImage:_photo.srcImageView.image options:SDWebImageRetryFailed|SDWebImageLowPriority  progress:^(NSInteger receivedSize, NSInteger expectedSize) {
             
             if (receivedSize > kMinProgress) {
-                            loading.progress = (float)receivedSize/expectedSize;
+                loading.progress = (float)receivedSize/expectedSize;
             }
             
         } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
@@ -157,18 +165,34 @@
     
     
     if (_photo.firstShow) { // 第一次显示的图片
+        
         _photo.firstShow = NO; // 已经显示过了
+        
         _imageView.frame = [_photo.srcImageView convertRect:_photo.srcImageView.bounds toView:nil];
         
         [UIView animateWithDuration:0.3 animations:^{
+            
             _imageView.frame = CGRectMake(0,0,self.frame.size.width,self.frame.size.height);
+            
+            
         } completion:^(BOOL finished) {
             // 设置底部的小图片
             _photo.srcImageView.image = _photo.placeholder;
             [self photoStartLoad];
+            
+            //通知代理
+            if ([self.photoViewDelegate respondsToSelector:@selector(photoViewDidLoad:)]) {
+                [self.photoViewDelegate photoViewDidLoad:self];
+            }
+            
         }];
     } else {
+        
         _imageView.frame = CGRectMake(0,0,self.frame.size.width,self.frame.size.height);
+        
+//        CGSize size = _imageView.image.size;
+//        _imageView.frame = CGRectMake(0, 0, size.width, size.height);
+//        _imageView.center = CGPointMake(self.width/2, self.height/2.f);
     }
 }
 
@@ -235,6 +259,10 @@
     [UIView animateWithDuration:duration + 0.1 + 0.1 animations:^{
         
         _imageView.frame = [_photo.srcImageView.superview convertRect:_photo.srcImageView.frame toView:[UIApplication sharedApplication].keyWindow];
+        
+        _clearView.frame = [_photo.srcImageView.superview convertRect:_photo.srcImageView.frame toView:[UIApplication sharedApplication].keyWindow];
+        
+//        _clearView.top -= 64;
 
         // gif图片仅显示第0张
         if (_imageView.image.images) {
@@ -380,22 +408,22 @@
 - (void)dealloc
 {
     // 取消请求
-    [_imageView setImageWithURL:[NSURL URLWithString:@"file:///abc"]];
+    [_imageView sd_setImageWithURL:[NSURL URLWithString:@"file:///abc"]];
 }
 
-- (void)setFrame:(CGRect)theFrame
-{
-    // store position of the image view if we're scaled or panned so we can stay at that point
-    CGPoint imagePoint = _imageView.frame.origin;
-    
-    [super setFrame:theFrame];
-    
-    // update content size
-    self.contentSize = CGSizeMake(theFrame.size.width * self.zoomScale, theFrame.size.height * self.zoomScale );
-    
-    NSLog(@"contentSize %f %f",self.contentSize.width,self.contentSize.height);
-    // resize image view and keep it proportional to the current zoom scale
-    _imageView.frame = CGRectMake( imagePoint.x, imagePoint.y, theFrame.size.width * self.zoomScale, theFrame.size.height * self.zoomScale);
-}
+//- (void)setFrame:(CGRect)theFrame
+//{
+//    // store position of the image view if we're scaled or panned so we can stay at that point
+//    CGPoint imagePoint = _imageView.frame.origin;
+//    
+//    [super setFrame:theFrame];
+//    
+//    // update content size
+//    self.contentSize = CGSizeMake(theFrame.size.width * self.zoomScale, theFrame.size.height * self.zoomScale );
+//    
+//    NSLog(@"contentSize %f %f",self.contentSize.width,self.contentSize.height);
+//    // resize image view and keep it proportional to the current zoom scale
+//    _imageView.frame = CGRectMake( imagePoint.x, imagePoint.y, theFrame.size.width * self.zoomScale, theFrame.size.height * self.zoomScale);
+//}
 
 @end

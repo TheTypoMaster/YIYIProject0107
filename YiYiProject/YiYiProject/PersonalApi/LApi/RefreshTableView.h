@@ -28,6 +28,11 @@
 
 - (void)refreshScrollViewDidScroll:(UIScrollView *)scrollView;
 
+//将要显示
+- (void)refreshTableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath;
+//显示完了
+- (void)refreshTableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath NS_AVAILABLE_IOS(6_0);
+
 @end
 
 @interface RefreshTableView : UITableView<L_EGORefreshTableDelegate,UITableViewDataSource,UITableViewDelegate>

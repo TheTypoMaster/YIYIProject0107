@@ -27,6 +27,14 @@
 		133B17781A750988005B8B3F /* MJPhotoProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 133B176F1A750988005B8B3F /* MJPhotoProgressView.m */; };
 		133B17791A750988005B8B3F /* MJPhotoToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 133B17711A750988005B8B3F /* MJPhotoToolbar.m */; };
 		133B177D1A751C1C005B8B3F /* MJPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 133B177C1A751C1C005B8B3F /* MJPhotoView.m */; };
+		1366A4D51AE9DEFC004F83FD /* PulsingHaloLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1366A4D41AE9DEFC004F83FD /* PulsingHaloLayer.m */; };
+		1366A4D81AE9E197004F83FD /* AnchorPiontView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1366A4D71AE9E197004F83FD /* AnchorPiontView.m */; };
+		1366A4DA1AE9F875004F83FD /* arrow_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1366A4D91AE9F875004F83FD /* arrow_background@2x.png */; };
+		1366A4DC1AEA0BA5004F83FD /* jiantou_anchor_right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1366A4DB1AEA0BA5004F83FD /* jiantou_anchor_right@2x.png */; };
+		1366A4DE1AEA0D1D004F83FD /* jiantou_anchor_left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1366A4DD1AEA0D1D004F83FD /* jiantou_anchor_left@2x.png */; };
+		1366A4E11AEA493A004F83FD /* LPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1366A4E01AEA493A004F83FD /* LPhotoView.m */; };
+		1366A4E41AEA4A3C004F83FD /* PhotoBrowserView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1366A4E31AEA4A3C004F83FD /* PhotoBrowserView.m */; };
+		1366A4E81AEA4A69004F83FD /* ZoomScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1366A4E71AEA4A69004F83FD /* ZoomScrollView.m */; };
 		13681C811A453B3200671D07 /* share_QQ@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13681C7E1A453B3200671D07 /* share_QQ@2x.png */; };
 		13681C821A453B3200671D07 /* share_sina@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13681C7F1A453B3200671D07 /* share_sina@2x.png */; };
 		13681C831A453B3200671D07 /* share_weixin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13681C801A453B3200671D07 /* share_weixin@2x.png */; };
@@ -559,6 +567,19 @@
 		133B17711A750988005B8B3F /* MJPhotoToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoToolbar.m; sourceTree = "<group>"; };
 		133B177B1A751C1C005B8B3F /* MJPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoView.h; sourceTree = "<group>"; };
 		133B177C1A751C1C005B8B3F /* MJPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoView.m; sourceTree = "<group>"; };
+		1366A4D31AE9DEFC004F83FD /* PulsingHaloLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PulsingHaloLayer.h; sourceTree = "<group>"; };
+		1366A4D41AE9DEFC004F83FD /* PulsingHaloLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PulsingHaloLayer.m; sourceTree = "<group>"; };
+		1366A4D61AE9E197004F83FD /* AnchorPiontView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnchorPiontView.h; sourceTree = "<group>"; };
+		1366A4D71AE9E197004F83FD /* AnchorPiontView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnchorPiontView.m; sourceTree = "<group>"; };
+		1366A4D91AE9F875004F83FD /* arrow_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow_background@2x.png"; sourceTree = "<group>"; };
+		1366A4DB1AEA0BA5004F83FD /* jiantou_anchor_right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jiantou_anchor_right@2x.png"; sourceTree = "<group>"; };
+		1366A4DD1AEA0D1D004F83FD /* jiantou_anchor_left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jiantou_anchor_left@2x.png"; sourceTree = "<group>"; };
+		1366A4DF1AEA493A004F83FD /* LPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LPhotoView.h; sourceTree = "<group>"; };
+		1366A4E01AEA493A004F83FD /* LPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LPhotoView.m; sourceTree = "<group>"; };
+		1366A4E21AEA4A3C004F83FD /* PhotoBrowserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoBrowserView.h; sourceTree = "<group>"; };
+		1366A4E31AEA4A3C004F83FD /* PhotoBrowserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoBrowserView.m; sourceTree = "<group>"; };
+		1366A4E61AEA4A69004F83FD /* ZoomScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZoomScrollView.h; sourceTree = "<group>"; };
+		1366A4E71AEA4A69004F83FD /* ZoomScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZoomScrollView.m; sourceTree = "<group>"; };
 		13681C7E1A453B3200671D07 /* share_QQ@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_QQ@2x.png"; sourceTree = "<group>"; };
 		13681C7F1A453B3200671D07 /* share_sina@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_sina@2x.png"; sourceTree = "<group>"; };
 		13681C801A453B3200671D07 /* share_weixin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_weixin@2x.png"; sourceTree = "<group>"; };
@@ -1487,6 +1508,27 @@
 			path = MJPhotoBrowser;
 			sourceTree = "<group>";
 		};
+		1366A4D21AE9DEFC004F83FD /* LightAnimationLayer */ = {
+			isa = PBXGroup;
+			children = (
+				1366A4D91AE9F875004F83FD /* arrow_background@2x.png */,
+				1366A4DB1AEA0BA5004F83FD /* jiantou_anchor_right@2x.png */,
+				1366A4DD1AEA0D1D004F83FD /* jiantou_anchor_left@2x.png */,
+				1366A4D31AE9DEFC004F83FD /* PulsingHaloLayer.h */,
+				1366A4D41AE9DEFC004F83FD /* PulsingHaloLayer.m */,
+			);
+			path = LightAnimationLayer;
+			sourceTree = "<group>";
+		};
+		1366A4E51AEA4A69004F83FD /* ZoomScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				1366A4E61AEA4A69004F83FD /* ZoomScrollView.h */,
+				1366A4E71AEA4A69004F83FD /* ZoomScrollView.m */,
+			);
+			path = ZoomScrollView;
+			sourceTree = "<group>";
+		};
 		13681C6F1A4527A200671D07 /* AllImages */ = {
 			isa = PBXGroup;
 			children = (
@@ -2163,6 +2205,10 @@
 				13A4AC531AE4989A00EA5F2C /* BigPhotoTTaiViewController.m */,
 				13A4AC631AE4C72500EA5F2C /* LPhotoBrowser.h */,
 				13A4AC641AE4C72500EA5F2C /* LPhotoBrowser.m */,
+				1366A4DF1AEA493A004F83FD /* LPhotoView.h */,
+				1366A4E01AEA493A004F83FD /* LPhotoView.m */,
+				1366A4E21AEA4A3C004F83FD /* PhotoBrowserView.h */,
+				1366A4E31AEA4A3C004F83FD /* PhotoBrowserView.m */,
 				13BEEE7F1AE6262C009C5BA7 /* TTaiCommentViewController.h */,
 				13BEEE801AE6262C009C5BA7 /* TTaiCommentViewController.m */,
 			);
@@ -2223,6 +2269,7 @@
 		13A389A51A38974F00ABBACB /* LApi */ = {
 			isa = PBXGroup;
 			children = (
+				1366A4E51AEA4A69004F83FD /* ZoomScrollView */,
 				13963F371A4FC54D007BE68B /* LEditor */,
 				13A389A61A38974F00ABBACB /* EGORefresh */,
 				138986311A6A6A5B00F187C9 /* LDataInstance.h */,
@@ -2313,6 +2360,7 @@
 		13B690641A56793E007FE152 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				1366A4D21AE9DEFC004F83FD /* LightAnimationLayer */,
 				13BEEE421AE505A9009C5BA7 /* TTaiBigPhotoCell2.h */,
 				13BEEE431AE505A9009C5BA7 /* TTaiBigPhotoCell2.m */,
 				13BEEE441AE505A9009C5BA7 /* TTaiBigPhotoCell2.xib */,
@@ -2323,6 +2371,8 @@
 				13A4AC571AE49CB600EA5F2C /* TTaiBigPhotoCell.xib */,
 				13A4AC601AE4C0A400EA5F2C /* PropertyImageView.h */,
 				13A4AC611AE4C0A400EA5F2C /* PropertyImageView.m */,
+				1366A4D61AE9E197004F83FD /* AnchorPiontView.h */,
+				1366A4D71AE9E197004F83FD /* AnchorPiontView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3489,11 +3539,13 @@
 				E3996ED31A5E1DBA00673147 /* gRed@2x.png in Resources */,
 				1391DC641A870673006A2E15 /* t_yichu@2x.png in Resources */,
 				137B08311A4E716700DE7DCC /* dian_shangchang@2x.png in Resources */,
+				1366A4DA1AE9F875004F83FD /* arrow_background@2x.png in Resources */,
 				1389862A1A6A433D00F187C9 /* sQQ_icon@2x.png in Resources */,
 				E3601E821A61A75700CC41FE /* gcustomstore@2x.png in Resources */,
 				E3B7BE121ACA578100FE8495 /* ttai_up@2x.png in Resources */,
 				13A4AC591AE49CB600EA5F2C /* TTaiBigPhotoCell.xib in Resources */,
 				DF6855821A592181004D924F /* ZYQAssetPicker.Bundle in Resources */,
+				1366A4DC1AEA0BA5004F83FD /* jiantou_anchor_right@2x.png in Resources */,
 				13681C891A453DE600671D07 /* login_phone@2x.png in Resources */,
 				13B690781A580291007FE152 /* BrandViewCell.xib in Resources */,
 				13CEC8A31A5D974900FE273F /* xingji_kong@2x.png in Resources */,
@@ -3533,6 +3585,7 @@
 				E3B7BE051AC9557D00FE8495 /* gfujin_down@2x.png in Resources */,
 				1389860F1A6A18C600F187C9 /* my_guanzhu@2x.png in Resources */,
 				133B17601A74EF3D005B8B3F /* my_sc_guanbi@2x.png in Resources */,
+				1366A4DE1AEA0D1D004F83FD /* jiantou_anchor_left@2x.png in Resources */,
 				133B175F1A74EF3D005B8B3F /* my_sc_dui@2x.png in Resources */,
 				1387B0911A5EDFA8006365D8 /* apply_wechat_image@2x.png in Resources */,
 				1391DC5F1A870673006A2E15 /* t_guanzhu@2x.png in Resources */,
@@ -3621,6 +3674,7 @@
 				1382C5211A812A5A0079AF55 /* MJRefreshHeaderView.m in Sources */,
 				E3E64A9F1AE0D971002F00A4 /* JKPhotoBrowser.m in Sources */,
 				13B6907C1A580430007FE152 /* ShopViewCell.m in Sources */,
+				1366A4E11AEA493A004F83FD /* LPhotoView.m in Sources */,
 				EF932A171A6236AD00A8BD18 /* WaterFallFooter.m in Sources */,
 				138C2C1D1A39E77300EA59F5 /* BaseModel.m in Sources */,
 				56DAB21B1A46DB6000273140 /* ApplyForViewController.m in Sources */,
@@ -3731,11 +3785,13 @@
 				E38E2D9F1ACD49D0002C63EF /* GAddTtaiImageLinkViewController.m in Sources */,
 				EF932A191A6236AD00A8BD18 /* WaterFCell.m in Sources */,
 				E35EF1161A6A54A900B493A9 /* GChooseStoreViewController.m in Sources */,
+				1366A4D51AE9DEFC004F83FD /* PulsingHaloLayer.m in Sources */,
 				E3996EDE1A5E1DBA00673147 /* GStarsView.m in Sources */,
 				E3E832441A666F7600026DAC /* GrootScrollViewFloorTableViewCell.m in Sources */,
 				E3996ED61A5E1DBA00673147 /* MLImageCrop.m in Sources */,
 				E3E64A9C1AE0D971002F00A4 /* JKAssetsThumbnailView.m in Sources */,
 				569722291A407DAE004B6641 /* HomeMatchModel.m in Sources */,
+				1366A4D81AE9E197004F83FD /* AnchorPiontView.m in Sources */,
 				1391DC551A8704E4006A2E15 /* MenuItem.m in Sources */,
 				13CD36491A3C6A870068C12A /* EGORefreshTableFooterView.m in Sources */,
 				565321481A59769300E43F80 /* SCGIFImageView.m in Sources */,
@@ -3776,6 +3832,7 @@
 				E38E2D6A1ACD41C3002C63EF /* GImvUpScrollView.m in Sources */,
 				13A3899C1A3893FC00ABBACB /* MessageViewController.m in Sources */,
 				19D0C0D21A4EDA6D00BEC10D /* MyYiChuViewController.m in Sources */,
+				1366A4E41AEA4A3C004F83FD /* PhotoBrowserView.m in Sources */,
 				E3E64A981AE0D971002F00A4 /* JKAssets.m in Sources */,
 				E3996ECF1A5E1DBA00673147 /* UIViewAdditions.m in Sources */,
 				19F7B4331A67FFA600087BCB /* UMEGORefreshTableHeaderView.m in Sources */,
@@ -3806,6 +3863,7 @@
 				E3996ED71A5E1DBA00673147 /* NSDictionary+GJson.m in Sources */,
 				139607C01A46DC4E00AACAC4 /* FilterView.m in Sources */,
 				13A3898B1A38937600ABBACB /* HomeViewController.m in Sources */,
+				1366A4E81AEA4A69004F83FD /* ZoomScrollView.m in Sources */,
 				E308939D1AE0587700DA342C /* GChooseLocationMoveAnViewController.m in Sources */,
 				E3996EDB1A5E1DBA00673147 /* GCycleScrollView.m in Sources */,
 				19F7B44B1A67FFA600087BCB /* UMFeedbackTableViewCellLeft.m in Sources */,
@@ -3902,7 +3960,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zhong Kun Shi (HXFU9MZ8SD)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -3945,7 +4003,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zhong Kun Shi (HXFU9MZ8SD)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

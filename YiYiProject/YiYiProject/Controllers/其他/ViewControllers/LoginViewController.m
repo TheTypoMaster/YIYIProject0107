@@ -258,7 +258,9 @@
         
         [LTools cacheBool:YES ForKey:LOGIN_SERVER_STATE];
         
-        [LTools showMBProgressWithText:result[RESULT_INFO] addToView:self.view];
+//        [LTools showMBProgressWithText:result[RESULT_INFO] addToView:self.view];
+        
+        [SVProgressHUD showInfoWithStatus:result[RESULT_INFO] maskType:SVProgressHUDMaskTypeClear];
         
         [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_LOGIN object:nil];
         

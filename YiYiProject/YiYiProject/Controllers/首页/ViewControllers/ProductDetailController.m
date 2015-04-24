@@ -168,7 +168,7 @@
             NSDictionary *dic = result[@"pinfo"];
             
             ProductModel *aModel1 = [[ProductModel alloc]initWithDictionary:dic];
-            self.theModel = aModel1;
+            weakSelf.theModel = aModel1;
             [weakSelf prepareViewWithModel:aModel1];
         }
         

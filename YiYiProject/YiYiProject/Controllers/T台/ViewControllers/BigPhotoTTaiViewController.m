@@ -25,6 +25,12 @@
 
 #import "TTaiDetailController.h"//t台详情
 
+#import "TDetailModel.h"
+#import "AnchorPiontView.h"//锚点view
+
+#import "GStorePinpaiViewController.h"
+#import "ProductDetailController.h"
+
 
 @interface BigPhotoTTaiViewController ()<RefreshDelegate,UITableViewDataSource>
 {
@@ -61,6 +67,7 @@
     _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH,DEVICE_HEIGHT - 64)];
     _table.refreshDelegate = self;
     _table.dataSource = self;
+    _table.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_table];
     
 //    _table.hidden = YES;
@@ -234,11 +241,10 @@
 
 #pragma mark 事件处理
 
-- (void)tapImage:(UITapGestureRecognizer *)tap
+
+- (void)tapToPhotoBrowserFromImageView:(PropertyImageView *)aImageView
 {
     
-    PropertyImageView *aImageView = (PropertyImageView *)tap.view;
-
     NSInteger count = aImageView.imageUrls.count;
     // 1.封装图片数据
     NSMutableArray *photos = [NSMutableArray arrayWithCapacity:count];
@@ -250,7 +256,9 @@
         photo.srcImageView = aImageView; // 来源于哪个UIImageView
         [photos addObject:photo];
     }
-
+    
+    NSArray *anchorArr = [NSArray arrayWithArray:[aImageView subviews]];
+    
     
     // 2.显示相册
     browser = [[LPhotoBrowser alloc] init];
@@ -258,11 +266,34 @@
     browser.photos = photos; // 设置所有的图片
     browser.showImageView = aImageView;
     browser.tt_id = aImageView.infoId;//详情id
+    
+    browser.t_model = aImageView.aModel;//传递一个model
+    
+    browser.anchorViews = anchorArr;
+    
     browser.cancelSingleTap = YES;
     browser.lastViewController = self;
     [browser showWithController:self.tabBarController];
     
-//    self.tabBarController.tabBar.top = DEVICE_HEIGHT;
+    //    self.tabBarController.tabBar.top = DEVICE_HEIGHT;
+}
+
+- (void)tapImage:(UITapGestureRecognizer *)tap
+{
+    
+    PropertyImageView *aImageView = (PropertyImageView *)tap.view;
+
+    [self tapToPhotoBrowserFromImageView:aImageView];
+}
+
+
+- (void)tapCell:(UITableViewCell *)cell
+{
+    
+    PropertyImageView *aImageView = ((TTaiBigPhotoCell2 *)cell).bigImageView;
+    
+    [self tapToPhotoBrowserFromImageView:aImageView];
+
 }
 
 
@@ -298,6 +329,147 @@
     }];
 }
 
+
+
+/**
+ *  添加锚点
+ */
+- (void)addMaoDian:(TPlatModel *)aModel imageView:(UIImageView *)imageView
+{
+    //史忠坤修改
+    
+    int image_have_detail=0;
+    
+    NSArray *img_detail=[NSArray array];
+    
+    if ([aModel.image isKindOfClass:[NSDictionary class]]) {
+        
+        image_have_detail=[aModel.image[@"have_detail"]intValue ];
+        
+        img_detail=aModel.image[@"img_detail"];
+        
+    }
+    if (image_have_detail>0) {
+        //代表有锚点，0代表没有锚点
+        
+        for (int i=0; i<img_detail.count; i++) {
+            
+            /*{
+             dateline = 1427958416;
+             "img_x" = "0.2000";
+             "img_y" = "0.4000";
+             "product_id" = 100;
+             "shop_id" = 2654;
+             "tt_id" = 26;
+             "tt_img_id" = 0;
+             "tt_img_info_id" = 1;
+             },*/
+            NSDictionary *maodian_detail=(NSDictionary *)[img_detail objectAtIndex:i];
+            
+            [self createbuttonWithModel:maodian_detail imageView:imageView];
+            
+        }}
+    
+}
+
+//等到加载完图片之后再加载图片上的三个button
+
+-(void)createbuttonWithModel:(NSDictionary*)maodian_detail imageView:(UIImageView *)imageView{
+    
+    NSString *productId = maodian_detail[@"product_id"];
+    
+    NSInteger product_id = [productId integerValue];
+    
+    NSString *shopId = maodian_detail[@"shop_id"];
+    
+    NSInteger shop_id = [shopId integerValue];
+    
+    float dx=[maodian_detail[@"img_x"] floatValue];
+    float dy=[maodian_detail[@"img_y"] floatValue];
+    
+    
+    __weak typeof(self)weakSelf = self;
+    if (product_id>0) {
+        //说明是单品
+        
+        NSString *title = maodian_detail[@"product_name"];
+        CGPoint point = CGPointMake(dx * imageView.width, dy * imageView.height);
+        AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title];
+        [imageView addSubview:pointView];
+        pointView.infoId = productId;
+        pointView.infoName = title;
+        
+        
+        [pointView setAnchorBlock:^(NSString *infoId,NSString *infoName){
+            
+            [weakSelf turnToDanPinInfoId:infoId infoName:infoName];
+        }];
+        
+        NSLog(@"单品--title %@",title);
+        
+    }else{
+        
+        //说明是品牌店面
+        
+        NSString *title = maodian_detail[@"shop_name"];
+        CGPoint point = CGPointMake(dx * imageView.width, dy * imageView.height);
+        AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title];
+        [imageView addSubview:pointView];
+        
+        pointView.infoId = NSStringFromInt(shop_id);
+        pointView.infoName = title;
+        
+        [pointView setAnchorBlock:^(NSString *infoId,NSString *infoName){
+            
+            [weakSelf turnToShangChangInfoId:infoId infoName:infoName];
+        }];
+        
+        NSLog(@"品牌--title %@",title);
+
+    }
+    
+}
+
+//移除锚点
+- (void)removeMaoDianForCell:(UITableViewCell *)cell
+{
+    PropertyImageView *imageView = ((TTaiBigPhotoCell2 *)cell).bigImageView;
+    
+    for (int i = 0; i < imageView.subviews.count; i ++) {
+        
+        UIView *aView = [[imageView subviews]objectAtIndex:i];
+        [aView removeFromSuperview];
+        aView = nil;
+    }
+}
+
+#pragma mark---锚点的点击方法
+//到商场的
+-(void)turnToShangChangInfoId:(NSString *)infoId
+                     infoName:(NSString *)infoName
+{
+    
+    GStorePinpaiViewController *detail = [[GStorePinpaiViewController alloc]init];
+    detail.storeIdStr = infoId;
+    detail.storeNameStr = infoName;
+    detail.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:detail animated:YES];
+    
+}
+//到单品的
+-(void)turnToDanPinInfoId:(NSString *)infoId
+                 infoName:(NSString *)infoName
+{
+    
+    ProductDetailController *detail = [[ProductDetailController alloc]init];
+    detail.product_id = infoId;
+    detail.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:detail animated:YES];
+    
+}
+
+
+
 #pragma - mark RefreshDelegate
 
 -(void)loadNewData
@@ -312,7 +484,7 @@
 
 - (void)refreshScrollViewDidScroll:(UIScrollView *)scrollView
 {
-    NSLog(@"---->%f",scrollView.contentOffset.y);
+//    NSLog(@"---->%f",scrollView.contentOffset.y);
 }
 
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
@@ -321,11 +493,13 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    TPlatModel *aModel = _table.dataArray[indexPath.row];
-    TTaiDetailController *t_detail = [[TTaiDetailController alloc]init];
-    t_detail.tt_id = aModel.tt_id;
-    t_detail.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:t_detail animated:YES];
+//    TPlatModel *aModel = _table.dataArray[indexPath.row];
+//    TTaiDetailController *t_detail = [[TTaiDetailController alloc]init];
+//    t_detail.tt_id = aModel.tt_id;
+//    t_detail.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:t_detail animated:YES];
+    
+    [self tapCell:[tableView cellForRowAtIndexPath:indexPath]];
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
@@ -339,15 +513,21 @@
     
     return 75 + [LTools heightForImageHeight:image_height imageWidth:image_width originalWidth:DEVICE_WIDTH] - 35/2.f;
 }
-
-//- (UIView *)viewForHeaderInSection:(NSInteger)section tableView:(UITableView *)tableView
-//{
-//    
-//}
-//- (CGFloat)heightForHeaderInSection:(NSInteger)section tableView:(UITableView *)tableView
-//{
-//    
-//}
+//将要显示
+- (void)refreshTableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self removeMaoDianForCell:cell];
+    
+    TPlatModel *aModel = (TPlatModel *)[_table.dataArray objectAtIndex:indexPath.row];
+    
+    [self addMaoDian:aModel imageView:((TTaiBigPhotoCell2 *)cell).bigImageView];
+    
+}
+//显示完了
+- (void)refreshTableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath
+{
+    [self removeMaoDianForCell:cell];
+}
 
 #pragma - UITableViewDataSource
 
@@ -375,12 +555,16 @@
     
     static NSString *identify = @"TTaiBigPhotoCell2";
     
+    TPlatModel *aModel = (TPlatModel *)[_table.dataArray objectAtIndex:indexPath.row];
+    
     TTaiBigPhotoCell2 *cell = (TTaiBigPhotoCell2 *)[LTools cellForIdentify:identify cellName:identify forTable:tableView];
     
-    [cell setCellWithModel:[_table.dataArray objectAtIndex:indexPath.row]];
-//    cell.bigImageView.userInteractionEnabled = NO;
+    [cell setCellWithModel:aModel];
     
+    cell.bigImageView.aModel = aModel;
+//    cell.bigImageView.userInteractionEnabled = NO;
     [cell.bigImageView.tapGesture addTarget:self action:@selector(tapImage:)];
+    
     
     return cell;
 }

@@ -69,9 +69,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    
-    
-    
     // Override point for customization after application launch.
    
 #pragma mark 融云
@@ -125,12 +122,8 @@
     NSDictionary *infoDic = [launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"];
     if (infoDic)
     {
-        
-        
         //test
-        
-        
-        NSLog(@"infoDic %@",infoDic);
+        NSLog(@"didFinishLaunch : infoDic %@",infoDic);
         
     }
 #pragma mark 百度地图相关
@@ -188,16 +181,20 @@
 
 - (void)theLocationDictionary:(NSDictionary *)dic{
     
-    NSLog(@"------->%@",dic);
+    NSLog(@"定位成功------>%@",dic);
     
     if (_locationBlock) {
         
         _locationBlock(dic);
     }
+    
+    [GMAPI sharedManager].theLocationDic = [dic copy];
 }
 
 
 -(void)theLocationFaild:(NSDictionary *)dic{
+    
+    NSLog(@"定位失败----->%@",dic);
     
     if (_locationBlock) {
         _locationBlock(dic);
@@ -515,10 +512,6 @@
 
 - (void)rongCloudDefaultLoginWithToken:(NSString *)loginToken
 {
-    //测试token
-    
-//    [LTools cache:@"Z+v61ga3tUUkgHbgG6eFblki5ktT/tK95honsc0yvtV+p7lzHFE9Vop/XwArqiec9DnDrmeC0is=" ForKey:RONGCLOUD_TOKEN];
-    
     //默认测试
     
     if (loginToken.length > 0) {

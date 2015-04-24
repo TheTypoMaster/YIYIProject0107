@@ -15,4 +15,6 @@
 @property(nonatomic,retain)UITapGestureRecognizer *tapGesture;//点击手势
 @property(nonatomic,retain)NSString *infoId;//信息id
 
+@property (nonatomic,strong)id aModel;//传递一个对象
+
 @end

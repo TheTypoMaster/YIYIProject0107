@@ -208,7 +208,7 @@
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSString *cachPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
             NSArray *files = [[NSFileManager defaultManager] subpathsAtPath:cachPath];
-            NSLog(@"files :%d",[files count]);
+            NSLog(@"files :%lu",(unsigned long)[files count]);
             for (NSString *p in files) {
                 NSError *error;
                 NSString *path = [cachPath stringByAppendingPathComponent:p];

@@ -267,9 +267,6 @@
 }
 
 
-
-
-
 //地图相关
 
 + (GMAPI *)sharedManager
@@ -285,7 +282,17 @@
 //开启定位
 -(void)startDingwei{
     
-    [self startLocation];
+    
+    __weak typeof(self)weakSelf = self;
+    CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
+    if (kCLAuthorizationStatusDenied == status || kCLAuthorizationStatusRestricted == status) {
+        
+        NSLog(@"请打开您的位置服务!");
+        
+    }
+    
+    [weakSelf startLocation];
+    
 }
 
 

@@ -29,6 +29,9 @@
     SORT_Discount_TYPE discount_type;
 
     LTools *tool_collection_list;//收藏列表
+    
+    NSString *_latitude;//维度
+    NSString *_longtitud;//经度
 }
 
 @end
@@ -65,9 +68,33 @@
     waterFlow.backgroundColor = RGBCOLOR(235, 235, 235);
     [self.view addSubview:waterFlow];
     
+//    [waterFlow showRefreshHeader:YES];
+    
+    __weak typeof(self)weakSelf = self;
+    [[GMAPI appDeledate]startDingweiWithBlock:^(NSDictionary *dic) {
+        
+        [weakSelf theLocationDictionary:dic];
+    }];
+    
+}
+
+
+#pragma - mark 地图坐标
+
+- (void)theLocationDictionary:(NSDictionary *)dic{
+    
+    NSLog(@"当前坐标-->%@",dic);
+    
+    CGFloat lat = [dic[@"lat"]doubleValue];;
+    CGFloat lon = [dic[@"long"]doubleValue];
+    
+    _latitude = NSStringFromFloat(lat);
+    _longtitud = NSStringFromFloat(lon);
+    
     [waterFlow showRefreshHeader:YES];
     
 }
+
 
 - (void)dealloc
 {
@@ -140,48 +167,6 @@
 }
 
 
-//- (void)clickToZan:(UIButton *)sender
-//{
-//    //直接变状态
-//    //更新数据
-//    
-//    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[waterFlow.quitView cellAtIndexPath:[NSIndexPath indexPathForRow:sender.tag - 100 inSection:0]];
-//    
-//    ProductModel *aMode = waterFlow.dataArray[sender.tag - 100];
-//    
-//    NSString *productId = aMode.product_id;
-//    __weak typeof(self)weakSelf = self;
-//    
-//    NSString *api = HOME_PRODUCT_ZAN_ADD;
-//    
-//    NSString *post = [NSString stringWithFormat:@"product_id=%@&authcode=%@",productId,[GMAPI getAuthkey]];
-//    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-//    
-//    NSString *url = api;
-//    
-//    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
-//    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
-//        
-//        NSLog(@"result %@",result);
-//        sender.selected = YES;
-//        aMode.is_like = 1;
-//        aMode.product_like_num = NSStringFromInt([aMode.product_like_num intValue] + 1);
-//        cell.like_label.text = aMode.product_like_num;
-//        
-//    } failBlock:^(NSDictionary *failDic, NSError *erro) {
-//        
-//        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-//        [GMAPI showAutoHiddenMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
-//        if ([failDic[RESULT_CODE] intValue] == -11) {
-//            
-//            [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
-//        }
-//        
-//    }];
-//}
-
-
-
 /**
  *  我的收藏
  */
@@ -191,8 +176,8 @@
         [tool_collection_list cancelRequest];
     }
     
-    NSString *longtitud = @"116.42111721";
-    NSString *latitude = @"39.90304099";
+    NSString *longtitud = _longtitud ? _longtitud : @"116.42111721";
+    NSString *latitude = _latitude ? _latitude : @"39.90304099";
     
     NSString *url = [NSString stringWithFormat:GET_MY_CILLECTION,longtitud,latitude,waterFlow.pageNum,L_PAGE_SIZE,[GMAPI getAuthkey]];
     tool_collection_list = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];

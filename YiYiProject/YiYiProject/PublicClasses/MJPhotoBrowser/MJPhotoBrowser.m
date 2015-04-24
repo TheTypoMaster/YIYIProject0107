@@ -243,9 +243,6 @@
         photoView.cancelSingleTap = self.cancelSingleTap;
     }
     
-    
-//    UIButton *point = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(<#CGFloat x#>, <#CGFloat y#>, <#CGFloat width#>, <#CGFloat height#>) normalTitle:<#(NSString *)#> image:<#(UIImage *)#> backgroudImage:<#(UIImage *)#> superView:<#(UIView *)#> target:<#(id)#> action:<#(SEL)#>]
-//    
     // 调整当期页的frame
     CGRect bounds = _photoScrollView.bounds;
     CGRect photoViewFrame = bounds;
@@ -281,7 +278,6 @@
     
     if (index < _photos.count - 1) {
         MJPhoto *photo = _photos[index + 1];
-//        [SDWebImageManager downloadWithURL:photo.url];
         
         [[SDWebImageManager sharedManager]downloadImageWithURL:photo.url options:SDWebImageProgressiveDownload progress:^(NSInteger receivedSize, NSInteger expectedSize) {
             
