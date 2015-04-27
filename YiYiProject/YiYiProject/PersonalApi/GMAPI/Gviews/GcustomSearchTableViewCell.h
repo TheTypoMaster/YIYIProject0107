@@ -24,6 +24,8 @@ typedef enum{
 @property(nonatomic,assign)GSEARCHTYPE theType;//类型
 @property(nonatomic,assign)GsearchViewController *delegate;
 
+@property(nonatomic,assign)BOOL isHaveKeyWord;//是否有关键字
+
 
 -(CGFloat)loadCustomViewWithData:(NSDictionary*)theData indexPath:(NSIndexPath*)theIndex;
 

@@ -110,20 +110,9 @@
     self.view.backgroundColor = RGBCOLOR(242, 242, 242);
     
     if ([self.guanzhuleixing isEqualToString:@"精品店"]) {
-        self.myTitleLabel.textAlignment = NSTextAlignmentCenter;
-        self.myTitleLabel.text = self.storeNameStr;
-    }else{
-        NSString *aaa = [NSString stringWithFormat:@"%@.%@",self.pinpaiNameStr,self.storeNameStr];
-        NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:aaa];
-        NSInteger pinpaiNameLength = self.pinpaiNameStr.length;
-        NSInteger storeNameLength = self.storeNameStr.length;
-        [title addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0,pinpaiNameLength+1)];
-        [title addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:17*GscreenRatio_320] range:NSMakeRange(0,pinpaiNameLength)];
         
-        [title addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(240, 173, 184) range:NSMakeRange(pinpaiNameLength+1, storeNameLength)];
-        [title addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13*GscreenRatio_320] range:NSMakeRange(pinpaiNameLength+1, storeNameLength)];
-        self.myTitleLabel.textAlignment = NSTextAlignmentCenter;
-        self.myTitleLabel.attributedText = title;
+    }else{
+        
     }
     
     
@@ -135,19 +124,7 @@
     _btnArray = [NSMutableArray arrayWithCapacity:1];
     _per_page = 10;
     _paixuIndex = 0;
-//    _page_xinpin = 1;
-//    _page_zhekou = 1;
-//    _page_rexiao = 1;
-    
-    //测试
-//    self.storeIdStr = @"2653";
-    
-    
-    
-    
-    
 
-    
     
     //获取店铺详情
     
@@ -185,6 +162,10 @@
         [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
             
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            
+            
+            self.storeNameStr = [result stringValueForKey:@"mall_name"];
+            [self setJingpindianTitleName];//设置精品店标题名称
             
             NSLog(@"精品店信息%@",result);
             NSArray *brand = [result arrayValueForKey:@"brand"];
@@ -258,6 +239,10 @@
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         
         NSLog(@"品牌店信息 %@",result);
+        
+        self.pinpaiNameStr =  [result stringValueForKey:@"shop_name"];
+        self.storeNameStr = [result stringValueForKey:@"mall_name"];
+        [self setPinpaidianTitleName];//设置品牌店标题
         self.pinpaiId = [result stringValueForKey:@"brand_id"];
         NSLog(@"self.pinpaiId %@",self.pinpaiId);
         //活动
@@ -288,6 +273,32 @@
         [GMAPI showAutoHiddenMBProgressWithText:@"加载失败" addToView:self.view];
     }];
 }
+
+
+//设置精品店标题
+-(void)setJingpindianTitleName{
+    self.myTitleLabel.textAlignment = NSTextAlignmentCenter;
+    self.myTitleLabel.text = self.storeNameStr;
+}
+
+
+//设置品牌店标题
+-(void)setPinpaidianTitleName{
+    NSString *aaa = [NSString stringWithFormat:@"%@.%@",self.pinpaiNameStr,self.storeNameStr];
+    NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:aaa];
+    NSInteger pinpaiNameLength = self.pinpaiNameStr.length;
+    NSInteger storeNameLength = self.storeNameStr.length;
+    [title addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0,pinpaiNameLength+1)];
+    [title addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:17*GscreenRatio_320] range:NSMakeRange(0,pinpaiNameLength)];
+    
+    [title addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(240, 173, 184) range:NSMakeRange(pinpaiNameLength+1, storeNameLength)];
+    [title addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13*GscreenRatio_320] range:NSMakeRange(pinpaiNameLength+1, storeNameLength)];
+    self.myTitleLabel.textAlignment = NSTextAlignmentCenter;
+    self.myTitleLabel.attributedText = title;
+}
+
+
+
 
 //创建店铺信息view
 -(void)creatDianpuInfoViewWithResult:(NSDictionary*)result{
@@ -602,7 +613,7 @@
                     self.guanzhu = @"1";
                 }else{
                     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                    [GMAPI showAutoHiddenMBProgressWithText:@"关注失败" addToView:self.view];
+                    [GMAPI showAutoHiddenMBProgressWithText:result[@"msg"] addToView:self.view];
                 }
             } failBlock:^(NSDictionary *failDic, NSError *erro) {
                 [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
@@ -626,7 +637,7 @@
                     self.guanzhu = @"0";
                 }else{
                     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                    [GMAPI showAutoHiddenMBProgressWithText:@"取消关注失败" addToView:self.view];
+                    [GMAPI showAutoHiddenMBProgressWithText:result[@"msg"] addToView:self.view];
                 }
                 
                 
@@ -642,10 +653,13 @@
     }else if ([self.guanzhuleixing isEqualToString:@"品牌店"]){
         
         if ([self.guanzhu intValue] == 0) {//未关注
-            NSString *api = [NSString stringWithFormat:@"%@&shop_id=%@&authcode=%@",GGUANZHUPINPAIDIAN,self.shopId,[GMAPI getAuthkey]];
+            
+            NSString *url = GGUANZHUPINPAIDIAN;
+            NSString *post = [NSString stringWithFormat:@"&shop_id=%@&authcode=%@",self.shopId,[GMAPI getAuthkey]];
+            NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-            GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+            GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
             [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
                 [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                 
@@ -665,8 +679,11 @@
                 [GMAPI showAutoHiddenMBProgressWithText:@"关注失败" addToView:self.view];
             }];
         }else if ([self.guanzhu intValue] == 1){//已关注
-            NSString *api = [NSString stringWithFormat:@"%@&shop_id=%@&authcode=%@",GQUXIAOGUANZHUPINPAIDIAN,self.shopId,[GMAPI getAuthkey]];
-            GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+            
+            NSString *url = GQUXIAOGUANZHUPINPAIDIAN;
+            NSString *post = [NSString stringWithFormat:@"&shop_id=%@&authcode=%@",self.shopId,[GMAPI getAuthkey]];
+            NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+            GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
             [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
                 if ([[result stringValueForKey:@"errorcode"]intValue]==0) {
                     [GMAPI showAutoHiddenMBProgressWithText:@"取消关注成功" addToView:self.view];
@@ -685,13 +702,15 @@
             
         }
         
-        
-        
-        
     }
     
+
     
-    
+}
+
+
+//关注品牌
+-(void)guanzhupinpai{
     //判断是否关注品牌
     NSLog(@"self.guanzhu:%@",self.guanzhu);
     
@@ -740,10 +759,7 @@
             [GMAPI showAutoHiddenMBProgressWithText:@"取消关注失败" addToView:self.view];
         }];
     }
-
-    
 }
-
 
 
 

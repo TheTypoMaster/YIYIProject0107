@@ -17,6 +17,8 @@
 
 #import "GStorePinpaiViewController.h"
 
+#import "NSDictionary+GJson.h"
+
 @interface MyConcernController ()<RefreshDelegate,UITableViewDataSource,UIScrollViewDelegate>
 {
     UIButton *heartButton;
@@ -44,6 +46,17 @@
     [super viewWillAppear:YES];
     
     self.navigationController.navigationBarHidden=NO;
+    
+    if (self.isRePrepareNetData_pinpai) {//从新加载关注品牌
+        
+        brandTable.isReloadData = YES;
+
+        [self getBrand];
+    }else if (self.isRePrepareNetData_shop){//从新加载关注商家
+        
+        shopTable.isReloadData = YES;
+        [self getShop];
+    }
     
 }
 
@@ -87,7 +100,23 @@
     
     [self getBrand];
     [self getShop];
+    
+    
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeTheRefreshTypeOfShop) name:NOTIFICATION_GUANZHU_STORE_QUXIAO object:nil];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeTheRefreshTypeOfShop) name:NOTIFICATION_GUANZHU_PINPAI object:nil];
 }
+
+
+//是否刷新
+-(void)changeTheRefreshTypeOfShop{//关注的商家
+    self.isRePrepareNetData_shop = YES;
+}
+-(void)changeTheRefreshTypeOfPinpai{//关注的品牌
+    self.isRePrepareNetData_pinpai = YES;
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -158,23 +187,44 @@
     
     __weak typeof(self)weakSelf = self;
     
+    
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
     //测试
     NSString *authkey = [GMAPI getAuthkey];
-    NSString *post = [NSString stringWithFormat:@"mall_id=%@&authcode=%@",aModel.mall_id,authkey];
+    NSString *post = @" ";
+    NSString *url = @" ";
+    if ([aModel.mall_type intValue] == 3) {//品牌店
+        url = GQUXIAOGUANZHUPINPAIDIAN;
+        post = [NSString stringWithFormat:@"shop_id=%@&authcode=%@",aModel.shop_id,authkey];
+    }else if ([aModel.mall_type intValue] == 2){//精品店
+        url = [NSString stringWithFormat:QUXIAOGUANZHU_SHANGCHANG];
+        post = [NSString stringWithFormat:@"mall_id=%@&authcode=%@",aModel.mall_id,authkey];
+    }else if ([aModel.mall_type intValue] == 1){//大商场
+        url = [NSString stringWithFormat:QUXIAOGUANZHU_SHANGCHANG];
+        post = [NSString stringWithFormat:@"mall_id=%@&authcode=%@",aModel.mall_id,authkey];
+    }
     NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-        
-    NSString *url = [NSString stringWithFormat:MY_CONCERN_MAIL_CANCEL];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"-->%@",result);
         
-        //刷新数据
-        [weakSelf refreshMailList:index];
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         
+        if ([[result stringValueForKey:@"errorcode"]intValue]==0) {
+            [GMAPI showAutoHiddenMBProgressWithText:@"取消关注成功" addToView:self.view];
+            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_STORE_QUXIAO object:nil];
+            //刷新数据
+            [weakSelf refreshMailList:index];
+        }else{
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [GMAPI showAutoHiddenMBProgressWithText:result[@"msg"] addToView:self.view];
+        }
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         [LTools showMBProgressWithText:failDic[@"msg"] addToView:self.view];
     }];
     
@@ -283,9 +333,10 @@
     
     heartButton=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 44, 44)];
     [heartButton addTarget:self action:@selector(clickToEdit:) forControlEvents:UIControlEventTouchUpInside];
-    [heartButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [heartButton setTitleColor:RGBCOLOR(252, 76, 139) forState:UIControlStateNormal];
     [heartButton setTitle:@"编辑" forState:UIControlStateNormal];
     [heartButton  setTitle:@"完成" forState:UIControlStateSelected];
+    heartButton.titleLabel.font = [UIFont systemFontOfSize:15];
     [heartButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
     [rightView addSubview:heartButton];
     
@@ -370,14 +421,19 @@
         cc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:cc animated:YES];
         
-        
-    }else{
+    }else if ([mailType intValue] == 1){//大商场
         GnearbyStoreViewController *dd = [[GnearbyStoreViewController alloc]init];
         dd.storeIdStr = theID;
         dd.storeNameStr = nameStr;
         NSLog(@"%@",mailType);
         dd.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:dd animated:YES];
+    }else if ([mailType intValue] == 3){//品牌店
+        GStorePinpaiViewController *cc = [[GStorePinpaiViewController alloc]init];
+        cc.storeIdStr = theID;
+        cc.guanzhuleixing = @"品牌店";
+        cc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:cc animated:YES];
     }
 }
 
@@ -474,7 +530,12 @@
         
     }else if (tableView == shopTable){
         MailModel *aModel = shopTable.dataArray[indexPath.row];
-        [self pushToNearbyStoreVCWithIdStr:aModel.mall_id theStoreName:aModel.mall_name mailType:aModel.mall_type];
+        if ([aModel.mall_type intValue] == 3 ) {//品牌店
+            [self pushToNearbyStoreVCWithIdStr:aModel.shop_id theStoreName:aModel.mall_name mailType:aModel.mall_type];
+        }else if ([aModel.mall_type intValue] == 1 || [aModel.mall_type intValue]==2){//大商场 精品店
+            [self pushToNearbyStoreVCWithIdStr:aModel.mall_id theStoreName:aModel.mall_name mailType:aModel.mall_type];
+        }
+        
     }
 }
 

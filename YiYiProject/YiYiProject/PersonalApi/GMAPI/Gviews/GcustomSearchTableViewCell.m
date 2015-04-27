@@ -60,7 +60,12 @@
     if (theType == GSEARCHTYPE_SHANGPU) {
         nameLabel.text = [dic stringValueForKey:@"mall_name"];
     }else if (theType == GSEARCHTYPE_PINPAI){
-        nameLabel.text = [dic stringValueForKey:@"brand_name"];
+        if (self.isHaveKeyWord) {//搜索品牌 并且有关键字
+            nameLabel.text = [dic stringValueForKey:@"mall_name"];
+        }else{
+            nameLabel.text = [dic stringValueForKey:@"brand_name"];
+        }
+        
     }
     
     [nameLabel sizeToFit];

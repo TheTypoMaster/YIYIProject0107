@@ -16,4 +16,5 @@
 @property(nonatomic,retain)NSString *brand_name;
 @property(nonatomic,retain)NSString *brand_logo;
 
+
 @end

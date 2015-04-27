@@ -200,10 +200,12 @@
 //关注
 -(void)notificationGuanzhupinpai{
     _guanzhuPinpaiDataArray = nil;
+    [self prepareGuanzhuPinpai];
 }
 
 -(void)notificationGuanzhustore{
     _guanzhuStoreDataArray = nil;
+    [self prepareGuanzhuStore];
 }
 
 

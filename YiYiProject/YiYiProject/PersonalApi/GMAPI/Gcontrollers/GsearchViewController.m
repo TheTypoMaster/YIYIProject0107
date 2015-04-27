@@ -421,6 +421,11 @@
     
     if (_selectIndex == 100) {//品牌
         cell.theType = GSEARCHTYPE_PINPAI;
+        if (_searchTextField.text.length>0) {
+            cell.isHaveKeyWord = YES;
+        }else{
+            cell.isHaveKeyWord = NO;
+        }
     }else if (_selectIndex == 101){//商铺
         cell.theType = GSEARCHTYPE_SHANGPU;
     }else if (_selectIndex == 102){//单品

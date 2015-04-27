@@ -13,6 +13,7 @@
 @interface MailModel : BaseModel
 
 @property(nonatomic,retain)NSString *mall_id;
+@property(nonatomic,strong)NSString *shop_id;
 @property(nonatomic,retain)NSString *mall_name;
 @property(nonatomic,retain)NSString *latitude;
 @property(nonatomic,retain)NSString *longitude;

@@ -47,12 +47,11 @@
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.myTitleLabel.textColor = [UIColor whiteColor];
+    self.myTitleLabel.textColor = RGBCOLOR(252, 74, 139);
     self.myTitle = self.pinpaiName;
     
     
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(100, 100, 100, 100)];
-    label.backgroundColor = [UIColor lightGrayColor];
     label.text = self.pinpaiIdStr;
     [self.view addSubview:label];
     
