@@ -418,7 +418,7 @@
         AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title];
         [imageView addSubview:pointView];
         
-        pointView.infoId = NSStringFromInt(shop_id);
+        pointView.infoId = NSStringFromInt((int)shop_id);
         pointView.infoName = title;
         
         [pointView setAnchorBlock:^(NSString *infoId,NSString *infoName){

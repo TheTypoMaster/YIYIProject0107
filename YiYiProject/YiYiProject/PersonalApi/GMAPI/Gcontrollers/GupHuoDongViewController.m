@@ -260,7 +260,7 @@
     
     
     
-    NSString *mall_id = self.mallInfo.mall_id;//商场id
+//    NSString *mall_id = self.mallInfo.mall_id;//商场id
     NSString *shop_id = self.userInfo.shop_id;//店铺id
     NSString *activity_info = _gholderTextView.text;//活动内容
     NSString *start_time = _startTime.text;//活动开始时间

@@ -251,7 +251,7 @@
         CHTumblrMenuItemButton *button = buttons_[index];
         CGRect frame = [self frameForButtonAtIndex:index];
         NSUInteger rowIndex = index / columnCount;
-        NSUInteger columnIndex = index % columnCount;
+//        NSUInteger columnIndex = index % columnCount;
 
         CGPoint toPosition = CGPointMake(frame.origin.x + CHTumblrMenuViewImageHeight / 2.0,frame.origin.y -  (rowIndex + 2)*200 + (CHTumblrMenuViewImageHeight + CHTumblrMenuViewTitleHeight) / 2.0);
         

@@ -255,7 +255,7 @@
         //意见反馈
         
         UMFeedbackViewController *_feedbackVC=[[UMFeedbackViewController alloc]init];
-        
+        _feedbackVC.lastPageNavigationHidden = YES;
         [self.navigationController pushViewController:_feedbackVC animated:YES];
         
         
@@ -319,7 +319,7 @@
 
 - (void)logout
 {
-    __weak typeof(self)weakSelf = self;
+//    __weak typeof(self)weakSelf = self;
     
     NSString *url = [NSString stringWithFormat:USER_LOGOUT_ACTION,[GMAPI getAuthkey]];
     

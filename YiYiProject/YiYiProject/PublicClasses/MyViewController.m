@@ -109,7 +109,7 @@
     
     if (theType == MyViewControllerLeftbuttonTypeBack)
     {
-        UIBarButtonItem * spaceButton1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+//        UIBarButtonItem * spaceButton1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
 //        spaceButton1.width = MY_MACRO_NAME?-10:5;
         
         UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(0,8,40,44)];

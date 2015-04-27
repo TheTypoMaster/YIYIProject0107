@@ -155,7 +155,7 @@
  */
 - (void)getMailDetailInfo
 {
-    NSString *key = [GMAPI getAuthkey];
+//    NSString *key = [GMAPI getAuthkey];
     
     __weak typeof(self)weakSelf = self;
     

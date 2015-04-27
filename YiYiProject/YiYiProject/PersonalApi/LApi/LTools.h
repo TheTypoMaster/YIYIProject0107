@@ -81,9 +81,9 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
 
 #pragma mark - 融云用户数据
 
-+ (void)rongCloudChatWithUserId:(NSString *)userId
-                       userName:(NSString *)userName
-                 viewController:(UIViewController *)viewController;
+//+ (void)rongCloudChatWithUserId:(NSString *)userId
+//                       userName:(NSString *)userName
+//                 viewController:(UIViewController *)viewController;
 
 + (void)cacheRongCloudUserName:(NSString *)userName forUserId:(NSString *)userId;
 

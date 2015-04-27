@@ -684,43 +684,43 @@
 
 //T台详情
 
-- (void)getTTaiDetail
-{
-    
-    [loading show:YES];
-    
-    __weak typeof(self)weakSelf = self;
-    
-    NSString *url = [NSString stringWithFormat:TTAI_DETAIL,self.tt_id,[GMAPI getAuthkey]];
-    
-    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
-    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
-        
-        
-        [loading hide:YES];
-        
-        detail_model = [[TDetailModel alloc]initWithDictionary:result];
-        
-//        [weakSelf createViewsWithModel:detail_model];
+//- (void)getTTaiDetail
+//{
+//    
+//    [loading show:YES];
+//    
+//    __weak typeof(self)weakSelf = self;
+//    
+//    NSString *url = [NSString stringWithFormat:TTAI_DETAIL,self.tt_id,[GMAPI getAuthkey]];
+//    
+//    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+//    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
 //        
-//        [weakSelf setViewWithModel:detail_model];
-        
-        UIImageView *bigImageView = ((MJPhotoView *)[self currentPhotoView]).imageView;
-        
-        [weakSelf addMaoDian:detail_model imageView:bigImageView];
-        
-//        bigImageView.backgroundColor = [UIColor orangeColor];
-        
-        [weakSelf createBottomTools];
-        
-    } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        
-        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-        
-        [loading hide:YES];
-        
-    }];
-}
+//        
+//        [loading hide:YES];
+//        
+//        detail_model = [[TDetailModel alloc]initWithDictionary:result];
+//        
+////        [weakSelf createViewsWithModel:detail_model];
+////        
+////        [weakSelf setViewWithModel:detail_model];
+//        
+//        UIImageView *bigImageView = ((MJPhotoView *)[self currentPhotoView]).imageView;
+//        
+//        [weakSelf addMaoDian:detail_model imageView:bigImageView];
+//        
+////        bigImageView.backgroundColor = [UIColor orangeColor];
+//        
+//        [weakSelf createBottomTools];
+//        
+//    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+//        
+//        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+//        
+//        [loading hide:YES];
+//        
+//    }];
+//}
 
 
 // 转发 + 1

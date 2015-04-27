@@ -42,6 +42,13 @@ static UITapGestureRecognizer *tapRecognizer;
     return self;
 }
 
+//-(void)viewWillDisappear:(BOOL)animated
+//{
+//    [super viewWillDisappear:animated];
+//
+//    self.navigationController setNavigationBarHidden:self.lastPageNavigationHidden animated:animated
+//}
+
 - (void)customizeNavigationBar:(UINavigationBar *)bar {
     bar.clipsToBounds = YES;
     if ([bar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)]) {
@@ -159,6 +166,9 @@ static UITapGestureRecognizer *tapRecognizer;
 {
     [super viewWillAppear:animated];
     
+    self.navigationController.navigationBarHidden = NO;
+
+    
     [MobClick beginEvent:@"UMFeedbackViewController"];
 }
 -(void)viewWillDisappear:(BOOL)animated
@@ -169,7 +179,7 @@ static UITapGestureRecognizer *tapRecognizer;
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-   // self.navigationItem.title = NSLocalizedString(@"用户反馈", @"用户反馈");
+//    self.navigationItem.title = NSLocalizedString(@"用户反馈", @"用户反馈");
     
 //    self.navigationItem.title = @"用户反馈";
 //    
@@ -197,7 +207,7 @@ static UITapGestureRecognizer *tapRecognizer;
 //    UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:back_view];
 //    self.navigationItem.leftBarButtonItem=back_item;
 
-    self.title = @"用户反馈";
+    self.myTitleLabel.text = @"用户反馈";
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
 
@@ -290,7 +300,7 @@ static UITapGestureRecognizer *tapRecognizer;
 
 - (void)keyboardWillShow:(NSNotification *)notification {
     float animationDuration = [[[notification userInfo] valueForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
-    CGFloat keyboardHeight = [[[notification userInfo] objectForKey:UIKeyboardBoundsUserInfoKey] CGRectValue].size.height;
+    CGFloat keyboardHeight = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
 
     [UIView animateWithDuration:animationDuration
                           delay:0
@@ -409,9 +419,14 @@ static UITapGestureRecognizer *tapRecognizer;
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     NSString *content = [[feedbackClient.topicAndReplies objectAtIndex:(NSUInteger) indexPath.row] objectForKey:@"content"];
-    CGSize labelSize = [content sizeWithFont:[UIFont systemFontOfSize:14.0f]
-                           constrainedToSize:CGSizeMake(226.0f, MAXFLOAT)
-                               lineBreakMode:UILineBreakModeWordWrap];
+//    CGSize labelSize = [content sizeWithFont:[UIFont systemFontOfSize:14.0f]
+//                           constrainedToSize:CGSizeMake(226.0f, MAXFLOAT)
+//                               lineBreakMode:UILineBreakModeWordWrap];
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:14.f]};
+    CGSize labelSize = [content boundingRectWithSize:CGSizeMake(226.0f, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:Nil].size;
+    
+    
     return labelSize.height + 40 + TOP_MARGIN;
 }
 
@@ -510,7 +525,7 @@ static UITapGestureRecognizer *tapRecognizer;
 
 - (void)scrollToBottom {
     if ([self.mTableView numberOfRowsInSection:0] > 1) {
-        int lastRowNumber = [self.mTableView numberOfRowsInSection:0] - 1;
+        int lastRowNumber = (int)[self.mTableView numberOfRowsInSection:0] - 1;
         NSIndexPath *ip = [NSIndexPath indexPathForRow:lastRowNumber inSection:0];
         [self.mTableView scrollToRowAtIndexPath:ip atScrollPosition:UITableViewScrollPositionTop animated:YES];
     }

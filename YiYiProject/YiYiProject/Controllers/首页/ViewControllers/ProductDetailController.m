@@ -226,16 +226,16 @@
             if (self.theLastViewClickedCell) {
                 
                 //赞的红心状态
-                self.theLastViewClickedCell.like_btn.selected = YES;
-                int zanNum = [self.theLastViewClickedCell.like_label.text intValue];
+                weakSelf.theLastViewClickedCell.like_btn.selected = YES;
+                int zanNum = [weakSelf.theLastViewClickedCell.like_label.text intValue];
                 zanNum++;
-                self.theLastViewClickedCell.like_label.text = [NSString stringWithFormat:@"%d",zanNum];
+                weakSelf.theLastViewClickedCell.like_label.text = [NSString stringWithFormat:@"%d",zanNum];
                 
                 //赞后面的数字
-                self.theLastViewProductModel.is_like = 1;
-                int like_num = [self.theLastViewProductModel.product_like_num intValue];
+                weakSelf.theLastViewProductModel.is_like = 1;
+                int like_num = [weakSelf.theLastViewProductModel.product_like_num intValue];
                 like_num++;
-                self.theLastViewProductModel.product_like_num = [NSString stringWithFormat:@"%d",like_num];
+                weakSelf.theLastViewProductModel.product_like_num = [NSString stringWithFormat:@"%d",like_num];
             }
             
             //更改上一个界面的状态  从首页单品跳转

@@ -96,7 +96,7 @@
     //店铺名
     UILabel *shopNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(12, 12, _shopInfoView.frame.size.width-12, 50)];
     self.shop_Name = self.mallInfo.shop_name;
-    NSString *mall_name = result[@"mall_name"];
+//    NSString *mall_name = result[@"mall_name"];
     if (self.mallInfo.mall_name.length>0) {
         self.shop_Name = [NSString stringWithFormat:@"%@.%@",self.mallInfo.shop_name,self.mallInfo.mall_name];
     }

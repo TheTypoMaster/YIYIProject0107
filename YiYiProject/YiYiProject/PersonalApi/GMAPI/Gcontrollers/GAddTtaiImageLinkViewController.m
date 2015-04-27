@@ -285,7 +285,7 @@
 
 -(void)addProductLink:(UITapGestureRecognizer *)sender{
     
-    _flagTag = sender.view.tag;
+    _flagTag = (int)sender.view.tag;
     GsearchViewController *cc = [[GsearchViewController alloc]init];
     cc.isChooseProductLink = YES;
     [self.navigationController pushViewController:cc animated:YES];

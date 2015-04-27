@@ -84,7 +84,7 @@
         [subViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     }
     
-    [self getDisplayImagesWithCurpage:_curPage];
+    [self getDisplayImagesWithCurpage:(int)_curPage];
     
     for (int i = 0; i < 3; i++) {
         UIView *v = [_curViews objectAtIndex:i];
@@ -120,7 +120,7 @@
     if(value == -1) value = _totalPages - 1;
     if(value == _totalPages) value = 0;
     
-    return value;
+    return (int)value;
     
 }
 

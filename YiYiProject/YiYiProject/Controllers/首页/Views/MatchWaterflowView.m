@@ -16,6 +16,10 @@
     
 }
 
+-(void)removeHeaderView
+{
+    
+}
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {

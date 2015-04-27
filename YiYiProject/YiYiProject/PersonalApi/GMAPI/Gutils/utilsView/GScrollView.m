@@ -133,7 +133,7 @@
 //点击商城 GCustomNearbyView
 -(void)goNearbyStore:(UIGestureRecognizer *)sender{
     GCustomNearByView *view = (GCustomNearByView*)sender.view;
-    NSString *ssidStr = [NSString stringWithFormat:@"%d",sender.view.tag-10];
+    NSString *ssidStr = [NSString stringWithFormat:@"%ld",sender.view.tag-10];
     [self.delegate1 pushToNearbyStoreVCWithIdStr:ssidStr theStoreName:view.titleLabel.text theType:view.shopType];
 }
 
@@ -145,7 +145,7 @@
 //        self.pinpaiViewBlock(sender.view.tag);
 //    }
     
-    NSString *ssidstr = [NSString stringWithFormat:@"%d",sender.view.tag-10];
+    NSString *ssidstr = [NSString stringWithFormat:@"%ld",sender.view.tag-10];
     NSString *pinpaiName = sender.view.gString;
     [self.delegate1 pushToPinpaiDetailVCWithIdStr:ssidstr pinpaiName:pinpaiName];
     

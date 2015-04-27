@@ -384,7 +384,7 @@ BOOL CTRunContainsCharactersFromStringRange(CTRunRef run, NSRange range) {
 	
 	NSTextCheckingResult *linkAtTouchesEnded = [self linkAtPoint:pt];
 	
-	BOOL closeToStart = (abs(touchStartPoint.x - pt.x) < 10 && abs(touchStartPoint.y - pt.y) < 10);
+	BOOL closeToStart = (fabs(touchStartPoint.x - pt.x) < 10 && fabs(touchStartPoint.y - pt.y) < 10);
 
 	// we can check on equality of the ranges themselfes since the data detectors create new results
 	if (activeLink && (NSEqualRanges(activeLink.range,linkAtTouchesEnded.range) || closeToStart)) {

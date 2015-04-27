@@ -204,7 +204,7 @@
 
     
     NSLog(@"请求t台评论接口 --  %@",url);
-    __weak typeof(self) bself = self;
+//    __weak typeof(self) bself = self;
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
@@ -285,7 +285,7 @@
     
     //test
     
-    NSString *testurl = [NSString stringWithFormat:TTAI_DETAIL,@"26",[GMAPI getAuthkey]];
+//    NSString *testurl = [NSString stringWithFormat:TTAI_DETAIL,@"26",[GMAPI getAuthkey]];
 
     
     

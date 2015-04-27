@@ -89,9 +89,9 @@
     _currentPhotoIndex = currentPhotoIndex;
     
     // 更新页码
-    _indexLabel.text = [NSString stringWithFormat:@"%d / %d", _currentPhotoIndex + 1, _photos.count];
+    _indexLabel.text = [NSString stringWithFormat:@"%d / %d", (int)_currentPhotoIndex + 1, (int)_photos.count];
     
-    MJPhoto *photo = _photos[_currentPhotoIndex];
+//    MJPhoto *photo = _photos[_currentPhotoIndex];
     // 按钮
 //    _saveImageBtn.enabled = photo.image != nil && !photo.save;
     _saveImageBtn.enabled = YES;

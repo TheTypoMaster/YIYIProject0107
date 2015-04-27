@@ -138,7 +138,7 @@
 #pragma mark - 创建sectionView
 -(void)createSectionView
 {
-    CGFloat height = 77;
+//    CGFloat height = 77;
     UIView * sectionView = [[UIView alloc] initWithFrame:CGRectMake(0,0,DEVICE_WIDTH,0)];
     sectionView.backgroundColor = RGBCOLOR(245,245,245);
     

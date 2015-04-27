@@ -41,7 +41,6 @@ typedef enum{
 
 @property(nonatomic,assign) id <L_EGORefreshTableDelegate> delegate;
 
-
 - (id)initWithFrame:(CGRect)frame arrowImageName:(NSString *)arrow textColor:(UIColor *)textColor;
 
 - (void)refreshLastUpdatedDate;

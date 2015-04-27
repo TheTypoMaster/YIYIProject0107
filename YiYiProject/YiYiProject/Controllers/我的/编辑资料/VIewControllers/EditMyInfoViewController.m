@@ -390,7 +390,7 @@
 {
     
     UIImage *image = [info objectForKey:@"UIImagePickerControllerEditedImage"];
-    NSData * imageData = UIImageJPEGRepresentation(image,0.6);
+//    NSData * imageData = UIImageJPEGRepresentation(image,0.6);
     //TODO：将图片发给服务器
     infoView.headImageView.image = image;
     [picker dismissViewControllerAnimated:YES completion:^{

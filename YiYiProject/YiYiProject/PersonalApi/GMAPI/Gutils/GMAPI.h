@@ -78,7 +78,7 @@
 
 
 //获取document路径
-+ (NSString *)documentFolder;
+//+ (NSString *)documentFolder;
 
 
 //读数据=========================

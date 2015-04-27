@@ -10,8 +10,7 @@
 #import "GmPrepareNetData.h"
 #import "NSDictionary+GJson.h"
 #import "GLeadBuyMapViewController.h"
-#import "CWSegmentedControl.h"
-#import "UIViewAdditions.h"
+//#import "UIViewAdditions.h"
 
 #import "GtopScrollView.h"
 #import "GRootScrollView.h"
@@ -22,7 +21,7 @@
 #import "MessageDetailController.h"
 
 
-@interface GnearbyStoreViewController ()<CWSegmentDelegate,UIScrollViewDelegate>
+@interface GnearbyStoreViewController ()<UIScrollViewDelegate>
 {
     UIView *_upStoreInfoView;//顶部信息view
     UIScrollView *_mainScrollView;//底部scrollview
@@ -31,7 +30,6 @@
     
     UIScrollView *_floorScrollView;//楼层滚动view
     
-    CWSegmentedControl *_segment;
     UIScrollView *_downScrollView;
     
     UITableView *_tabelView;

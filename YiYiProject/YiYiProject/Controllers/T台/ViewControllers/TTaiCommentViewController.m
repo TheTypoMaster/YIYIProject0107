@@ -214,7 +214,7 @@
     
     
     NSLog(@"请求t台评论接口 --  %@",url);
-    __weak typeof(self) bself = self;
+    __weak typeof(RefreshTableView) *weakTable = _table;
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
@@ -242,7 +242,7 @@
             haveMore = YES;
         }
         
-        [_table reloadData:arr isHaveMore:haveMore];
+        [weakTable reloadData:arr isHaveMore:haveMore];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
@@ -490,8 +490,8 @@
     time_icon.center = CGPointMake(time_icon.center.x, iconView.center.y);
     
     
-    UIColor *color = [UIColor colorWithHexString:@"b9b9b9"];
-    UIColor *color2 = [UIColor colorWithHexString:@"262626"];
+//    UIColor *color = [UIColor colorWithHexString:@"b9b9b9"];
+//    UIColor *color2 = [UIColor colorWithHexString:@"262626"];
     
     
 //    //评论

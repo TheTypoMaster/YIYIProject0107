@@ -84,7 +84,7 @@
     label.automaticallyAddLinksForType = 0;//不让系统自动检测网址链接
     
     NSMutableArray *httpArr = [FBHelper addHttpArr:o_text];
-    NSMutableArray *phoneNumArr = [FBHelper addPhoneNumArr:o_text];
+//    NSMutableArray *phoneNumArr = [FBHelper addPhoneNumArr:o_text];
     
     NSString *text = [FBHelper transformString:o_text];
     text = [NSString stringWithFormat:@"<font color='black' face='Palatino-Roman'>%@",text];

@@ -57,7 +57,7 @@
 
 - (void)waterDidSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary *currentDic = waterFlow.dataArray[indexPath.row];
+//    NSDictionary *currentDic = waterFlow.dataArray[indexPath.row];
     
 }
 

@@ -74,4 +74,7 @@
 - (void)reloadData:(NSArray *)data total:(int)totalPage;//更新数据 //根据总页数获取是否有更多
 - (void)loadFail;//请求数据失败
 
+-(void)removeHeaderView;
+
+
 @end

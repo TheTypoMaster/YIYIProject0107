@@ -310,7 +310,8 @@
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    AFHTTPRequestOperation *operation = [manager POST:APPLY_MATCH_URL parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
+    
+    [manager POST:APPLY_MATCH_URL parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
     {
         NSData * image_data = UIImageJPEGRepresentation(idcard_image,1.0);
         [formData appendPartWithFileData:image_data name:@"uploadFile" fileName:@"pic" mimeType:@"image/png"];

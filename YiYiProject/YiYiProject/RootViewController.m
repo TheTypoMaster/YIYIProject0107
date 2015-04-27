@@ -105,15 +105,15 @@
     
     self.viewControllers = [NSArray arrayWithArray:items];
     
-    CGSize tabbarSize = self.tabBar.frame.size;
+//    CGSize tabbarSize = self.tabBar.frame.size;
 //    UIView *customTabbar = [[UIView alloc]initWithFrame:CGRectMake(0, 0, tabbarSize.width, tabbarSize.height)];
 //    customTabbar.backgroundColor = [UIColor colorWithHexString:@"e8e8e8"];
 //    customTabbar.alpha = 0.97;
 //    [self.tabBar addSubview:customTabbar];
     
-    CGSize allSize = [UIScreen mainScreen].applicationFrame.size;
+//    CGSize allSize = [UIScreen mainScreen].applicationFrame.size;
     
-    CGFloat aWidth = allSize.width / 5;
+//    CGFloat aWidth = allSize.width / 5;
     
 //    NSArray *normalImages = @[@"home_up",@"ttai_up",@"tianjia_up",@"xiaoxi_up",@"my_up"];
 //    NSArray *selectedImages = @[@"home_down",@"ttai_down",@"tianjia_up",@"xiaoxi_down",@"my_down"];

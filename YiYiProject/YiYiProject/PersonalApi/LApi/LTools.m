@@ -283,7 +283,7 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     
     
-    NSString *str = [[NSString alloc]initWithData:_data encoding:NSUTF8StringEncoding];
+//    NSString *str = [[NSString alloc]initWithData:_data encoding:NSUTF8StringEncoding];
     
 //    NSLog(@"response string %@",str);
     

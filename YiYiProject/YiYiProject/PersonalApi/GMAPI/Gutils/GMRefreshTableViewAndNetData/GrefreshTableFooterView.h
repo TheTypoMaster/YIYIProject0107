@@ -25,10 +25,10 @@
 
 
 @property(nonatomic,assign) NSObject <GRefreshTableDelegate> *delegate;
-- (void)GrefreshLastUpdatedDate;
-- (void)GRefreshScrollViewDidScroll:(UIScrollView *)scrollView;
-- (void)GRefreshScrollViewDidEndDragging:(UIScrollView *)scrollView;
-- (void)GRefreshScrollViewDataSourceDidFinishedLoading:(UIScrollView *)scrollView;
+//- (void)GrefreshLastUpdatedDate;
+//- (void)GRefreshScrollViewDidScroll:(UIScrollView *)scrollView;
+//- (void)GRefreshScrollViewDidEndDragging:(UIScrollView *)scrollView;
+//- (void)GRefreshScrollViewDataSourceDidFinishedLoading:(UIScrollView *)scrollView;
 
 
 @end

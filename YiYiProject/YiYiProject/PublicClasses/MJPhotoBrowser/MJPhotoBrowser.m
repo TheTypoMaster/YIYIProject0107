@@ -194,6 +194,11 @@
     _toolbar.currentPhotoIndex = _currentPhotoIndex;
 }
 
+- (void)photoViewDidLoad:(MJPhotoView *)photoView//完成显示
+{
+    
+}
+
 #pragma mark 显示照片
 - (void)showPhotos
 {

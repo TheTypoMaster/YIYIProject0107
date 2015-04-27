@@ -983,7 +983,7 @@
     
     NSLog(@"%ld %ld",(long)self.provinceIn,(long)self.cityIn);
     
-    NSString *api = [NSString stringWithFormat:STORELISTWITHPROVINCEANDCITY,NSStringFromInt(self.provinceIn),NSStringFromInt(self.cityIn)];
+    NSString *api = [NSString stringWithFormat:STORELISTWITHPROVINCEANDCITY,NSStringFromInt((int)self.provinceIn),NSStringFromInt((int)self.cityIn)];
     
     GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
     
