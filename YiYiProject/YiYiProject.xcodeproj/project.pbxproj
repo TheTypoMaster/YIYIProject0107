@@ -257,6 +257,26 @@
 		13CEC8A31A5D974900FE273F /* xingji_kong@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13CEC89B1A5D974900FE273F /* xingji_kong@2x.png */; };
 		13CEC8A41A5D974900FE273F /* xingji_man@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13CEC89C1A5D974900FE273F /* xingji_man@2x.png */; };
 		13CEC8A51A5D974900FE273F /* zhixiangjiantou@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13CEC89D1A5D974900FE273F /* zhixiangjiantou@2x.png */; };
+		13D03D151AEDD4790078AA9E /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D03D111AEDD4790078AA9E /* SVIndefiniteAnimatedView.m */; };
+		13D03D161AEDD4790078AA9E /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 13D03D121AEDD4790078AA9E /* SVProgressHUD.bundle */; };
+		13D03D171AEDD4790078AA9E /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D03D141AEDD4790078AA9E /* SVProgressHUD.m */; };
+		13D03D3E1AEDD60F0078AA9E /* EditMyInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D03D1B1AEDD60F0078AA9E /* EditMyInfoViewController.m */; };
+		13D03D3F1AEDD60F0078AA9E /* EditInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D03D1E1AEDD60F0078AA9E /* EditInfoView.m */; };
+		13D03D401AEDD60F0078AA9E /* EditInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13D03D1F1AEDD60F0078AA9E /* EditInfoView.xib */; };
+		13D03D411AEDD60F0078AA9E /* about_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13D03D221AEDD60F0078AA9E /* about_icon@2x.png */; };
+		13D03D421AEDD60F0078AA9E /* AboutTailCircleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D03D241AEDD60F0078AA9E /* AboutTailCircleViewController.m */; };
+		13D03D431AEDD60F0078AA9E /* AboutTailCircleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13D03D251AEDD60F0078AA9E /* AboutTailCircleViewController.xib */; };
+		13D03D441AEDD60F0078AA9E /* MySettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D03D271AEDD60F0078AA9E /* MySettingsViewController.m */; };
+		13D03D451AEDD60F0078AA9E /* MySettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13D03D281AEDD60F0078AA9E /* MySettingsViewController.xib */; };
+		13D03D461AEDD60F0078AA9E /* MyseetingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D03D2B1AEDD60F0078AA9E /* MyseetingTableViewCell.m */; };
+		13D03D471AEDD60F0078AA9E /* MyseetingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13D03D2C1AEDD60F0078AA9E /* MyseetingTableViewCell.xib */; };
+		13D03D481AEDD60F0078AA9E /* GmyMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D03D301AEDD60F0078AA9E /* GmyMainViewController.m */; };
+		13D03D491AEDD60F0078AA9E /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 13D03D331AEDD60F0078AA9E /* placeholder.png */; };
+		13D03D4A1AEDD60F0078AA9E /* WaterF.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D03D351AEDD60F0078AA9E /* WaterF.m */; };
+		13D03D4B1AEDD60F0078AA9E /* WaterFallFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D03D371AEDD60F0078AA9E /* WaterFallFooter.m */; };
+		13D03D4C1AEDD60F0078AA9E /* WaterFallHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D03D391AEDD60F0078AA9E /* WaterFallHeader.m */; };
+		13D03D4D1AEDD60F0078AA9E /* WaterFCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D03D3B1AEDD60F0078AA9E /* WaterFCell.m */; };
+		13D03D4E1AEDD60F0078AA9E /* WaterFLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D03D3D1AEDD60F0078AA9E /* WaterFLayout.m */; };
 		13D560DE1AA1B3C800C28927 /* LDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D560D91AA1B3C800C28927 /* LDataBase.m */; };
 		13D560E31AA1B3F500C28927 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D560E21AA1B3F500C28927 /* DataManager.m */; };
 		13D560E51AA1B40C00C28927 /* yiyiDB.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 13D560E41AA1B40C00C28927 /* yiyiDB.sqlite */; };
@@ -507,26 +527,6 @@
 		E3ECC7051A7E7EA00024A734 /* GBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = E3ECC7041A7E7EA00024A734 /* GBtn.m */; };
 		E3FC8DE71A3C4B430025525D /* GeditUserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FC8DE61A3C4B430025525D /* GeditUserInfoViewController.m */; };
 		E3FE67F81AD7D57100DC6612 /* g_linkdelete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3FE67F71AD7D57100DC6612 /* g_linkdelete@2x.png */; };
-		EF72DCD81A6BFEB50021F311 /* about_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EF72DCD71A6BFEB50021F311 /* about_icon@2x.png */; };
-		EF9329F31A617DD500A8BD18 /* MySettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9329E61A617DD500A8BD18 /* MySettingsViewController.m */; };
-		EF9329F41A617DD500A8BD18 /* MySettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF9329E71A617DD500A8BD18 /* MySettingsViewController.xib */; };
-		EF9329F91A617DD500A8BD18 /* MyseetingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9329F01A617DD500A8BD18 /* MyseetingTableViewCell.m */; };
-		EF9329FA1A617DD500A8BD18 /* MyseetingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF9329F11A617DD500A8BD18 /* MyseetingTableViewCell.xib */; };
-		EF9329FD1A617E1F00A8BD18 /* EditMyInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9329FC1A617E1F00A8BD18 /* EditMyInfoViewController.m */; };
-		EF932A011A617E2B00A8BD18 /* EditInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9329FF1A617E2B00A8BD18 /* EditInfoView.m */; };
-		EF932A021A617E2B00A8BD18 /* EditInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF932A001A617E2B00A8BD18 /* EditInfoView.xib */; };
-		EF932A151A6236AD00A8BD18 /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = EF932A081A6236AD00A8BD18 /* placeholder.png */; };
-		EF932A161A6236AD00A8BD18 /* WaterF.m in Sources */ = {isa = PBXBuildFile; fileRef = EF932A0A1A6236AD00A8BD18 /* WaterF.m */; };
-		EF932A171A6236AD00A8BD18 /* WaterFallFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = EF932A0C1A6236AD00A8BD18 /* WaterFallFooter.m */; };
-		EF932A181A6236AD00A8BD18 /* WaterFallHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = EF932A0E1A6236AD00A8BD18 /* WaterFallHeader.m */; };
-		EF932A191A6236AD00A8BD18 /* WaterFCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF932A101A6236AD00A8BD18 /* WaterFCell.m */; };
-		EF932A1A1A6236AD00A8BD18 /* WaterFLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = EF932A121A6236AD00A8BD18 /* WaterFLayout.m */; };
-		EFD42C821A6A8FE600E5C5E3 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = EFD42C7E1A6A8FE600E5C5E3 /* SVIndefiniteAnimatedView.m */; };
-		EFD42C831A6A8FE600E5C5E3 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EFD42C7F1A6A8FE600E5C5E3 /* SVProgressHUD.bundle */; };
-		EFD42C841A6A8FE600E5C5E3 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = EFD42C811A6A8FE600E5C5E3 /* SVProgressHUD.m */; };
-		EFD42C881A6AAAB700E5C5E3 /* AboutTailCircleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFD42C861A6AAAB700E5C5E3 /* AboutTailCircleViewController.m */; };
-		EFD42C891A6AAAB700E5C5E3 /* AboutTailCircleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFD42C871A6AAAB700E5C5E3 /* AboutTailCircleViewController.xib */; };
-		EFDCC9DF1A62A3F300911782 /* GmyMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFDCC9DE1A62A3F300911782 /* GmyMainViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -906,6 +906,39 @@
 		13CEC89B1A5D974900FE273F /* xingji_kong@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xingji_kong@2x.png"; sourceTree = "<group>"; };
 		13CEC89C1A5D974900FE273F /* xingji_man@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xingji_man@2x.png"; sourceTree = "<group>"; };
 		13CEC89D1A5D974900FE273F /* zhixiangjiantou@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zhixiangjiantou@2x.png"; sourceTree = "<group>"; };
+		13D03D101AEDD4790078AA9E /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
+		13D03D111AEDD4790078AA9E /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
+		13D03D121AEDD4790078AA9E /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
+		13D03D131AEDD4790078AA9E /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
+		13D03D141AEDD4790078AA9E /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
+		13D03D1A1AEDD60F0078AA9E /* EditMyInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditMyInfoViewController.h; sourceTree = "<group>"; };
+		13D03D1B1AEDD60F0078AA9E /* EditMyInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditMyInfoViewController.m; sourceTree = "<group>"; };
+		13D03D1D1AEDD60F0078AA9E /* EditInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditInfoView.h; sourceTree = "<group>"; };
+		13D03D1E1AEDD60F0078AA9E /* EditInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditInfoView.m; sourceTree = "<group>"; };
+		13D03D1F1AEDD60F0078AA9E /* EditInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditInfoView.xib; sourceTree = "<group>"; };
+		13D03D221AEDD60F0078AA9E /* about_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about_icon@2x.png"; sourceTree = "<group>"; };
+		13D03D231AEDD60F0078AA9E /* AboutTailCircleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutTailCircleViewController.h; sourceTree = "<group>"; };
+		13D03D241AEDD60F0078AA9E /* AboutTailCircleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutTailCircleViewController.m; sourceTree = "<group>"; };
+		13D03D251AEDD60F0078AA9E /* AboutTailCircleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutTailCircleViewController.xib; sourceTree = "<group>"; };
+		13D03D261AEDD60F0078AA9E /* MySettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySettingsViewController.h; sourceTree = "<group>"; };
+		13D03D271AEDD60F0078AA9E /* MySettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySettingsViewController.m; sourceTree = "<group>"; };
+		13D03D281AEDD60F0078AA9E /* MySettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MySettingsViewController.xib; sourceTree = "<group>"; };
+		13D03D2A1AEDD60F0078AA9E /* MyseetingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyseetingTableViewCell.h; sourceTree = "<group>"; };
+		13D03D2B1AEDD60F0078AA9E /* MyseetingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyseetingTableViewCell.m; sourceTree = "<group>"; };
+		13D03D2C1AEDD60F0078AA9E /* MyseetingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyseetingTableViewCell.xib; sourceTree = "<group>"; };
+		13D03D2F1AEDD60F0078AA9E /* GmyMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GmyMainViewController.h; sourceTree = "<group>"; };
+		13D03D301AEDD60F0078AA9E /* GmyMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GmyMainViewController.m; sourceTree = "<group>"; };
+		13D03D331AEDD60F0078AA9E /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
+		13D03D341AEDD60F0078AA9E /* WaterF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaterF.h; sourceTree = "<group>"; };
+		13D03D351AEDD60F0078AA9E /* WaterF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaterF.m; sourceTree = "<group>"; };
+		13D03D361AEDD60F0078AA9E /* WaterFallFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaterFallFooter.h; sourceTree = "<group>"; };
+		13D03D371AEDD60F0078AA9E /* WaterFallFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaterFallFooter.m; sourceTree = "<group>"; };
+		13D03D381AEDD60F0078AA9E /* WaterFallHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaterFallHeader.h; sourceTree = "<group>"; };
+		13D03D391AEDD60F0078AA9E /* WaterFallHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaterFallHeader.m; sourceTree = "<group>"; };
+		13D03D3A1AEDD60F0078AA9E /* WaterFCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaterFCell.h; sourceTree = "<group>"; };
+		13D03D3B1AEDD60F0078AA9E /* WaterFCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaterFCell.m; sourceTree = "<group>"; };
+		13D03D3C1AEDD60F0078AA9E /* WaterFLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaterFLayout.h; sourceTree = "<group>"; };
+		13D03D3D1AEDD60F0078AA9E /* WaterFLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaterFLayout.m; sourceTree = "<group>"; };
 		13D560D81AA1B3C800C28927 /* LDataBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDataBase.h; sourceTree = "<group>"; };
 		13D560D91AA1B3C800C28927 /* LDataBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDataBase.m; sourceTree = "<group>"; };
 		13D560E11AA1B3F500C28927 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
@@ -1350,39 +1383,6 @@
 		E3FC8DE51A3C4B430025525D /* GeditUserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeditUserInfoViewController.h; sourceTree = "<group>"; };
 		E3FC8DE61A3C4B430025525D /* GeditUserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeditUserInfoViewController.m; sourceTree = "<group>"; };
 		E3FE67F71AD7D57100DC6612 /* g_linkdelete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "g_linkdelete@2x.png"; sourceTree = "<group>"; };
-		EF72DCD71A6BFEB50021F311 /* about_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about_icon@2x.png"; sourceTree = "<group>"; };
-		EF9329E51A617DD500A8BD18 /* MySettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySettingsViewController.h; sourceTree = "<group>"; };
-		EF9329E61A617DD500A8BD18 /* MySettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySettingsViewController.m; sourceTree = "<group>"; };
-		EF9329E71A617DD500A8BD18 /* MySettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MySettingsViewController.xib; sourceTree = "<group>"; };
-		EF9329EF1A617DD500A8BD18 /* MyseetingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyseetingTableViewCell.h; sourceTree = "<group>"; };
-		EF9329F01A617DD500A8BD18 /* MyseetingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyseetingTableViewCell.m; sourceTree = "<group>"; };
-		EF9329F11A617DD500A8BD18 /* MyseetingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyseetingTableViewCell.xib; sourceTree = "<group>"; };
-		EF9329FB1A617E1F00A8BD18 /* EditMyInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditMyInfoViewController.h; sourceTree = "<group>"; };
-		EF9329FC1A617E1F00A8BD18 /* EditMyInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditMyInfoViewController.m; sourceTree = "<group>"; };
-		EF9329FE1A617E2B00A8BD18 /* EditInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditInfoView.h; sourceTree = "<group>"; };
-		EF9329FF1A617E2B00A8BD18 /* EditInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditInfoView.m; sourceTree = "<group>"; };
-		EF932A001A617E2B00A8BD18 /* EditInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditInfoView.xib; sourceTree = "<group>"; };
-		EF932A081A6236AD00A8BD18 /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
-		EF932A091A6236AD00A8BD18 /* WaterF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaterF.h; sourceTree = "<group>"; };
-		EF932A0A1A6236AD00A8BD18 /* WaterF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaterF.m; sourceTree = "<group>"; };
-		EF932A0B1A6236AD00A8BD18 /* WaterFallFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaterFallFooter.h; sourceTree = "<group>"; };
-		EF932A0C1A6236AD00A8BD18 /* WaterFallFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaterFallFooter.m; sourceTree = "<group>"; };
-		EF932A0D1A6236AD00A8BD18 /* WaterFallHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaterFallHeader.h; sourceTree = "<group>"; };
-		EF932A0E1A6236AD00A8BD18 /* WaterFallHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaterFallHeader.m; sourceTree = "<group>"; };
-		EF932A0F1A6236AD00A8BD18 /* WaterFCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaterFCell.h; sourceTree = "<group>"; };
-		EF932A101A6236AD00A8BD18 /* WaterFCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaterFCell.m; sourceTree = "<group>"; };
-		EF932A111A6236AD00A8BD18 /* WaterFLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaterFLayout.h; sourceTree = "<group>"; };
-		EF932A121A6236AD00A8BD18 /* WaterFLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaterFLayout.m; sourceTree = "<group>"; };
-		EFD42C7D1A6A8FE600E5C5E3 /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
-		EFD42C7E1A6A8FE600E5C5E3 /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
-		EFD42C7F1A6A8FE600E5C5E3 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
-		EFD42C801A6A8FE600E5C5E3 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
-		EFD42C811A6A8FE600E5C5E3 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
-		EFD42C851A6AAAB700E5C5E3 /* AboutTailCircleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutTailCircleViewController.h; sourceTree = "<group>"; };
-		EFD42C861A6AAAB700E5C5E3 /* AboutTailCircleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutTailCircleViewController.m; sourceTree = "<group>"; };
-		EFD42C871A6AAAB700E5C5E3 /* AboutTailCircleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutTailCircleViewController.xib; sourceTree = "<group>"; };
-		EFDCC9DD1A62A3F300911782 /* GmyMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GmyMainViewController.h; path = "YiYiProject/王龙/他人中心/ViewController/GmyMainViewController.h"; sourceTree = SOURCE_ROOT; };
-		EFDCC9DE1A62A3F300911782 /* GmyMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GmyMainViewController.m; path = "YiYiProject/王龙/他人中心/ViewController/GmyMainViewController.m"; sourceTree = SOURCE_ROOT; };
 		F47272E4C36CD60C81CD9A79 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -1603,7 +1603,6 @@
 			isa = PBXGroup;
 			children = (
 				13D560D51AA1B3C800C28927 /* DataBase */,
-				EF9329D71A617DD500A8BD18 /* 王龙 */,
 				DF68557E1A592181004D924F /* ZYQAssetPickerController */,
 				13681C6F1A4527A200671D07 /* AllImages */,
 				138C2BC91A39E08500EA59F5 /* UMengShare */,
@@ -2083,6 +2082,7 @@
 		13A389511A38768400ABBACB /* PublicClasses */ = {
 			isa = PBXGroup;
 			children = (
+				13D03D0F1AEDD4790078AA9E /* SVProgressHUD */,
 				1391DC4A1A8704E4006A2E15 /* SinaMenuView */,
 				1391DC361A87033A006A2E15 /* LNavigationController */,
 				1382C5121A812A5A0079AF55 /* MJRefresh */,
@@ -2115,6 +2115,9 @@
 		13A389781A3877C800ABBACB /* 我的 */ = {
 			isa = PBXGroup;
 			children = (
+				13D03D181AEDD60F0078AA9E /* 编辑资料 */,
+				13D03D201AEDD60F0078AA9E /* 设置 */,
+				13D03D2D1AEDD60F0078AA9E /* 他人中心 */,
 				19B9372C1A5ACF5F009B359F /* zkingControl */,
 				19D5E6AF1A4FB4EF008401E0 /* views */,
 				19D5E6AE1A4FB4E0008401E0 /* models */,
@@ -2462,6 +2465,123 @@
 				13CEC89D1A5D974900FE273F /* zhixiangjiantou@2x.png */,
 			);
 			path = "搭配师";
+			sourceTree = "<group>";
+		};
+		13D03D0F1AEDD4790078AA9E /* SVProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				13D03D101AEDD4790078AA9E /* SVIndefiniteAnimatedView.h */,
+				13D03D111AEDD4790078AA9E /* SVIndefiniteAnimatedView.m */,
+				13D03D121AEDD4790078AA9E /* SVProgressHUD.bundle */,
+				13D03D131AEDD4790078AA9E /* SVProgressHUD.h */,
+				13D03D141AEDD4790078AA9E /* SVProgressHUD.m */,
+			);
+			path = SVProgressHUD;
+			sourceTree = "<group>";
+		};
+		13D03D181AEDD60F0078AA9E /* 编辑资料 */ = {
+			isa = PBXGroup;
+			children = (
+				13D03D191AEDD60F0078AA9E /* VIewControllers */,
+				13D03D1C1AEDD60F0078AA9E /* Views */,
+			);
+			path = "编辑资料";
+			sourceTree = "<group>";
+		};
+		13D03D191AEDD60F0078AA9E /* VIewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				13D03D1A1AEDD60F0078AA9E /* EditMyInfoViewController.h */,
+				13D03D1B1AEDD60F0078AA9E /* EditMyInfoViewController.m */,
+			);
+			path = VIewControllers;
+			sourceTree = "<group>";
+		};
+		13D03D1C1AEDD60F0078AA9E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				13D03D1D1AEDD60F0078AA9E /* EditInfoView.h */,
+				13D03D1E1AEDD60F0078AA9E /* EditInfoView.m */,
+				13D03D1F1AEDD60F0078AA9E /* EditInfoView.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		13D03D201AEDD60F0078AA9E /* 设置 */ = {
+			isa = PBXGroup;
+			children = (
+				13D03D211AEDD60F0078AA9E /* VIewControllers */,
+				13D03D291AEDD60F0078AA9E /* Views */,
+			);
+			path = "设置";
+			sourceTree = "<group>";
+		};
+		13D03D211AEDD60F0078AA9E /* VIewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				13D03D221AEDD60F0078AA9E /* about_icon@2x.png */,
+				13D03D231AEDD60F0078AA9E /* AboutTailCircleViewController.h */,
+				13D03D241AEDD60F0078AA9E /* AboutTailCircleViewController.m */,
+				13D03D251AEDD60F0078AA9E /* AboutTailCircleViewController.xib */,
+				13D03D261AEDD60F0078AA9E /* MySettingsViewController.h */,
+				13D03D271AEDD60F0078AA9E /* MySettingsViewController.m */,
+				13D03D281AEDD60F0078AA9E /* MySettingsViewController.xib */,
+			);
+			path = VIewControllers;
+			sourceTree = "<group>";
+		};
+		13D03D291AEDD60F0078AA9E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				13D03D2A1AEDD60F0078AA9E /* MyseetingTableViewCell.h */,
+				13D03D2B1AEDD60F0078AA9E /* MyseetingTableViewCell.m */,
+				13D03D2C1AEDD60F0078AA9E /* MyseetingTableViewCell.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		13D03D2D1AEDD60F0078AA9E /* 他人中心 */ = {
+			isa = PBXGroup;
+			children = (
+				13D03D2E1AEDD60F0078AA9E /* ViewController */,
+				13D03D311AEDD60F0078AA9E /* Views */,
+			);
+			path = "他人中心";
+			sourceTree = "<group>";
+		};
+		13D03D2E1AEDD60F0078AA9E /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				13D03D2F1AEDD60F0078AA9E /* GmyMainViewController.h */,
+				13D03D301AEDD60F0078AA9E /* GmyMainViewController.m */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		13D03D311AEDD60F0078AA9E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				13D03D321AEDD60F0078AA9E /* waterflowview */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		13D03D321AEDD60F0078AA9E /* waterflowview */ = {
+			isa = PBXGroup;
+			children = (
+				13D03D331AEDD60F0078AA9E /* placeholder.png */,
+				13D03D341AEDD60F0078AA9E /* WaterF.h */,
+				13D03D351AEDD60F0078AA9E /* WaterF.m */,
+				13D03D361AEDD60F0078AA9E /* WaterFallFooter.h */,
+				13D03D371AEDD60F0078AA9E /* WaterFallFooter.m */,
+				13D03D381AEDD60F0078AA9E /* WaterFallHeader.h */,
+				13D03D391AEDD60F0078AA9E /* WaterFallHeader.m */,
+				13D03D3A1AEDD60F0078AA9E /* WaterFCell.h */,
+				13D03D3B1AEDD60F0078AA9E /* WaterFCell.m */,
+				13D03D3C1AEDD60F0078AA9E /* WaterFLayout.h */,
+				13D03D3D1AEDD60F0078AA9E /* WaterFLayout.m */,
+			);
+			path = waterflowview;
 			sourceTree = "<group>";
 		};
 		13D560D51AA1B3C800C28927 /* DataBase */ = {
@@ -3110,158 +3230,6 @@
 			path = "GimagePicker@3x";
 			sourceTree = "<group>";
 		};
-		EF9329D71A617DD500A8BD18 /* 王龙 */ = {
-			isa = PBXGroup;
-			children = (
-				EFD42C7C1A6A8FE600E5C5E3 /* SVProgressHUD */,
-				EF9329D81A617DD500A8BD18 /* 他人中心 */,
-				EF9329DC1A617DD500A8BD18 /* 编辑资料 */,
-				EF9329E01A617DD500A8BD18 /* 设置 */,
-			);
-			path = "王龙";
-			sourceTree = "<group>";
-		};
-		EF9329D81A617DD500A8BD18 /* 他人中心 */ = {
-			isa = PBXGroup;
-			children = (
-				EF9329D91A617DD500A8BD18 /* Modal */,
-				EF9329DA1A617DD500A8BD18 /* VIewControllers */,
-				EF9329DB1A617DD500A8BD18 /* Views */,
-			);
-			path = "他人中心";
-			sourceTree = "<group>";
-		};
-		EF9329D91A617DD500A8BD18 /* Modal */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Modal;
-			sourceTree = "<group>";
-		};
-		EF9329DA1A617DD500A8BD18 /* VIewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				EFDCC9DD1A62A3F300911782 /* GmyMainViewController.h */,
-				EFDCC9DE1A62A3F300911782 /* GmyMainViewController.m */,
-			);
-			path = VIewControllers;
-			sourceTree = "<group>";
-		};
-		EF9329DB1A617DD500A8BD18 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				EF932A071A6236AD00A8BD18 /* waterflowview */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		EF9329DC1A617DD500A8BD18 /* 编辑资料 */ = {
-			isa = PBXGroup;
-			children = (
-				EF9329DD1A617DD500A8BD18 /* Modal */,
-				EF9329DE1A617DD500A8BD18 /* VIewControllers */,
-				EF9329DF1A617DD500A8BD18 /* Views */,
-			);
-			path = "编辑资料";
-			sourceTree = "<group>";
-		};
-		EF9329DD1A617DD500A8BD18 /* Modal */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Modal;
-			sourceTree = "<group>";
-		};
-		EF9329DE1A617DD500A8BD18 /* VIewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				EF9329FB1A617E1F00A8BD18 /* EditMyInfoViewController.h */,
-				EF9329FC1A617E1F00A8BD18 /* EditMyInfoViewController.m */,
-			);
-			path = VIewControllers;
-			sourceTree = "<group>";
-		};
-		EF9329DF1A617DD500A8BD18 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				EF9329FE1A617E2B00A8BD18 /* EditInfoView.h */,
-				EF9329FF1A617E2B00A8BD18 /* EditInfoView.m */,
-				EF932A001A617E2B00A8BD18 /* EditInfoView.xib */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		EF9329E01A617DD500A8BD18 /* 设置 */ = {
-			isa = PBXGroup;
-			children = (
-				EF9329E11A617DD500A8BD18 /* Modal */,
-				EF9329E21A617DD500A8BD18 /* VIewControllers */,
-				EF9329E81A617DD500A8BD18 /* Views */,
-			);
-			path = "设置";
-			sourceTree = "<group>";
-		};
-		EF9329E11A617DD500A8BD18 /* Modal */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Modal;
-			sourceTree = "<group>";
-		};
-		EF9329E21A617DD500A8BD18 /* VIewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				EF9329E51A617DD500A8BD18 /* MySettingsViewController.h */,
-				EF9329E61A617DD500A8BD18 /* MySettingsViewController.m */,
-				EF9329E71A617DD500A8BD18 /* MySettingsViewController.xib */,
-				EFD42C851A6AAAB700E5C5E3 /* AboutTailCircleViewController.h */,
-				EFD42C861A6AAAB700E5C5E3 /* AboutTailCircleViewController.m */,
-				EFD42C871A6AAAB700E5C5E3 /* AboutTailCircleViewController.xib */,
-				EF72DCD71A6BFEB50021F311 /* about_icon@2x.png */,
-			);
-			path = VIewControllers;
-			sourceTree = "<group>";
-		};
-		EF9329E81A617DD500A8BD18 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				EF9329EF1A617DD500A8BD18 /* MyseetingTableViewCell.h */,
-				EF9329F01A617DD500A8BD18 /* MyseetingTableViewCell.m */,
-				EF9329F11A617DD500A8BD18 /* MyseetingTableViewCell.xib */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		EF932A071A6236AD00A8BD18 /* waterflowview */ = {
-			isa = PBXGroup;
-			children = (
-				EF932A081A6236AD00A8BD18 /* placeholder.png */,
-				EF932A091A6236AD00A8BD18 /* WaterF.h */,
-				EF932A0A1A6236AD00A8BD18 /* WaterF.m */,
-				EF932A0B1A6236AD00A8BD18 /* WaterFallFooter.h */,
-				EF932A0C1A6236AD00A8BD18 /* WaterFallFooter.m */,
-				EF932A0D1A6236AD00A8BD18 /* WaterFallHeader.h */,
-				EF932A0E1A6236AD00A8BD18 /* WaterFallHeader.m */,
-				EF932A0F1A6236AD00A8BD18 /* WaterFCell.h */,
-				EF932A101A6236AD00A8BD18 /* WaterFCell.m */,
-				EF932A111A6236AD00A8BD18 /* WaterFLayout.h */,
-				EF932A121A6236AD00A8BD18 /* WaterFLayout.m */,
-			);
-			path = waterflowview;
-			sourceTree = "<group>";
-		};
-		EFD42C7C1A6A8FE600E5C5E3 /* SVProgressHUD */ = {
-			isa = PBXGroup;
-			children = (
-				EFD42C7D1A6A8FE600E5C5E3 /* SVIndefiniteAnimatedView.h */,
-				EFD42C7E1A6A8FE600E5C5E3 /* SVIndefiniteAnimatedView.m */,
-				EFD42C7F1A6A8FE600E5C5E3 /* SVProgressHUD.bundle */,
-				EFD42C801A6A8FE600E5C5E3 /* SVProgressHUD.h */,
-				EFD42C811A6A8FE600E5C5E3 /* SVProgressHUD.m */,
-			);
-			path = SVProgressHUD;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -3349,6 +3317,7 @@
 			files = (
 				19F7B4461A67FFA600087BCB /* send1sss@2x.png in Resources */,
 				1391DC5E1A870673006A2E15 /* t_dapei@2x.png in Resources */,
+				13D03D411AEDD60F0078AA9E /* about_icon@2x.png in Resources */,
 				13A8A38F1A655879008D3D44 /* MessageViewCell.xib in Resources */,
 				13681C8C1A453ECB00671D07 /* login_xinfeng@2x.png in Resources */,
 				137E0ADF1A4C65D000B59F64 /* product_like_cancel@2x.png in Resources */,
@@ -3395,7 +3364,6 @@
 				19F7B4341A67FFA600087BCB /* background@2x.png in Resources */,
 				564387C31A5ABD3A00499AD3 /* match_segment_unselected_image@2x.png in Resources */,
 				E3ECC7021A7E07D60024A734 /* grzx150_150@2x.png in Resources */,
-				EF932A021A617E2B00A8BD18 /* EditInfoView.xib in Resources */,
 				E36B2B771AC26D73004A87B3 /* xuanze_up_44_44@2x.png in Resources */,
 				E37EB4F81ABFC2BF009F5797 /* ios7_newssearchbar@2x.png in Resources */,
 				1391DC611A870673006A2E15 /* t_shoucang@2x.png in Resources */,
@@ -3413,7 +3381,6 @@
 				13681C811A453B3200671D07 /* share_QQ@2x.png in Resources */,
 				137B088E1A4EBAAB00DE7DCC /* xihuanb_down@2x.png in Resources */,
 				E3996EC81A5E1DBA00673147 /* gstart_half@2x.png in Resources */,
-				EF932A151A6236AD00A8BD18 /* placeholder.png in Resources */,
 				1391DC461A8703E3006A2E15 /* LoginViewController.xib in Resources */,
 				138986161A6A18C600F187C9 /* my_tixing@2x.png in Resources */,
 				13684A791A37583E00A508FB /* LaunchScreen.xib in Resources */,
@@ -3434,15 +3401,16 @@
 				E308939F1AE05D1900DA342C /* road_select@2x.png in Resources */,
 				19F7B4421A67FFA600087BCB /* nav_bg.png in Resources */,
 				E3B9A9751ADE6E1200EE1415 /* gphone_down@2x.png in Resources */,
+				13D03D491AEDD60F0078AA9E /* placeholder.png in Resources */,
 				E386E8511AE4F4A1005A8725 /* gactivityback@2x.png in Resources */,
+				13D03D401AEDD60F0078AA9E /* EditInfoView.xib in Resources */,
 				E33737411AD7D1FB00EAA23C /* gTtai_dianwo@2x.png in Resources */,
 				E3B7BE061AC9557D00FE8495 /* gfujin_up@2x.png in Resources */,
-				EF9329F41A617DD500A8BD18 /* MySettingsViewController.xib in Resources */,
 				E337373F1AD7D0A500EAA23C /* g_redline_down@2x.png in Resources */,
 				1391DC621A870673006A2E15 /* t_title@2x.png in Resources */,
 				E380ADF21AD5FD5F008219A0 /* GTtailj_bg@2x.png in Resources */,
-				EF9329FA1A617DD500A8BD18 /* MyseetingTableViewCell.xib in Resources */,
 				138C2BF61A39E09200EA59F5 /* UMSCommentDetailController.xib in Resources */,
+				13D03D451AEDD60F0078AA9E /* MySettingsViewController.xib in Resources */,
 				138C2C021A39E09200EA59F5 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				19F7B43C1A67FFA600087BCB /* messages_right_bubble@2x.png in Resources */,
 				E3EAA8C61A8782C7008F3183 /* ios7_goahead4032@2x.png in Resources */,
@@ -3465,7 +3433,6 @@
 				E35EF1581A6B6E0700B493A9 /* garea.plist in Resources */,
 				19F7B4351A67FFA600087BCB /* icon_rightArrow@2x.png in Resources */,
 				137B08571A4E993C00DE7DCC /* shaixuan@2x.png in Resources */,
-				EFD42C831A6A8FE600E5C5E3 /* SVProgressHUD.bundle in Resources */,
 				E36B2B761AC26D73004A87B3 /* xuanze_down_44_44@2x.png in Resources */,
 				E3E913821A7FF1E700BF54C8 /* dian_da@2x.png in Resources */,
 				137B08391A4E716700DE7DCC /* quxian_left@2x.png in Resources */,
@@ -3482,6 +3449,7 @@
 				138986151A6A18C600F187C9 /* my_shoucang@2x.png in Resources */,
 				13963F5A1A4FE3B8007BE68B /* fabu_shous@2x.png in Resources */,
 				19F7B4411A67FFA600087BCB /* nav_bar_bg@2x.png in Resources */,
+				13D03D431AEDD60F0078AA9E /* AboutTailCircleViewController.xib in Resources */,
 				E3B9A9761ADE6E1200EE1415 /* gphone_up@2x.png in Resources */,
 				138986131A6A18C600F187C9 /* my_shenqing@2x.png in Resources */,
 				13B6905D1A566A4A007FE152 /* Ttai_pinglun@2x.png in Resources */,
@@ -3490,14 +3458,13 @@
 				E3B54C2D1ADFBEC8004EC301 /* gqiandao_up@2x.png in Resources */,
 				19F7B4381A67FFA600087BCB /* item_cancel_selected@2x.png in Resources */,
 				138986111A6A18C600F187C9 /* my_jiantou@2x.png in Resources */,
+				13D03D161AEDD4790078AA9E /* SVProgressHUD.bundle in Resources */,
 				137B08441A4E716700DE7DCC /* zhidemai_botton@2x.png in Resources */,
 				137B088C1A4EBAAB00DE7DCC /* shoucangb_down@2x.png in Resources */,
 				19F7B4471A67FFA600087BCB /* send_selected@2x.png in Resources */,
-				EF72DCD81A6BFEB50021F311 /* about_icon@2x.png in Resources */,
 				139886A61A45673500241962 /* ProductDetailController.xib in Resources */,
 				13A389971A3893D000ABBACB /* TTaiViewController.xib in Resources */,
 				E3FE67F81AD7D57100DC6612 /* g_linkdelete@2x.png in Resources */,
-				EFD42C891A6AAAB700E5C5E3 /* AboutTailCircleViewController.xib in Resources */,
 				13684A761A37583E00A508FB /* Images.xcassets in Resources */,
 				133B17631A74EF3D005B8B3F /* xia_down@2x.png in Resources */,
 				137B6FED1A6B97A3007035DE /* my_bg@2x.png in Resources */,
@@ -3556,6 +3523,7 @@
 				13681C821A453B3200671D07 /* share_sina@2x.png in Resources */,
 				56A8A82D1A458FF200E85F6B /* clock_image@2x.png in Resources */,
 				564387C41A5ABD3A00499AD3 /* match_segment_selected_image@2x.png in Resources */,
+				13D03D471AEDD60F0078AA9E /* MyseetingTableViewCell.xib in Resources */,
 				E3C923EC1AE12276005C2BE1 /* saoyisao@2x.png in Resources */,
 				13CEC8A11A5D974900FE273F /* time_iocn@2x.png in Resources */,
 				137B08921A4ECDD100DE7DCC /* shaixuan_boy@2x.png in Resources */,
@@ -3675,7 +3643,6 @@
 				E3E64A9F1AE0D971002F00A4 /* JKPhotoBrowser.m in Sources */,
 				13B6907C1A580430007FE152 /* ShopViewCell.m in Sources */,
 				1366A4E11AEA493A004F83FD /* LPhotoView.m in Sources */,
-				EF932A171A6236AD00A8BD18 /* WaterFallFooter.m in Sources */,
 				138C2C1D1A39E77300EA59F5 /* BaseModel.m in Sources */,
 				56DAB21B1A46DB6000273140 /* ApplyForViewController.m in Sources */,
 				E3996EDC1A5E1DBA00673147 /* GScrollView.m in Sources */,
@@ -3698,6 +3665,8 @@
 				138986301A6A5DDF00F187C9 /* MessageModel.m in Sources */,
 				133B17761A750988005B8B3F /* MJPhotoBrowser.m in Sources */,
 				565321471A59769300E43F80 /* RegexKitLite.m in Sources */,
+				13D03D481AEDD60F0078AA9E /* GmyMainViewController.m in Sources */,
+				13D03D4A1AEDD60F0078AA9E /* WaterF.m in Sources */,
 				13A4AC621AE4C0A400EA5F2C /* PropertyImageView.m in Sources */,
 				56A8A8351A45BB1300E85F6B /* MatchTopicCell.m in Sources */,
 				139558D61A40781C00CABC9E /* ProductModel.m in Sources */,
@@ -3709,12 +3678,12 @@
 				13963F4C1A4FC5FB007BE68B /* PublishHuatiController.m in Sources */,
 				E37EB4F61ABFB50E009F5797 /* GsearchViewController.m in Sources */,
 				13CEC8931A5D96CF00FE273F /* TTPublishViewController.m in Sources */,
+				13D03D4E1AEDD60F0078AA9E /* WaterFLayout.m in Sources */,
 				13AD17B11A603E4300AB24F5 /* TopicParseModel.m in Sources */,
 				E36B2B731AC25C14004A87B3 /* GEditProductTableViewCell.m in Sources */,
 				137B6FE31A6B682E007035DE /* MessageDetailController.m in Sources */,
 				13CD36361A3C51BE0068C12A /* ForgetPwdController.m in Sources */,
 				E3C923EA1AE108F2005C2BE1 /* GShopPhoneViewController.m in Sources */,
-				EF932A181A6236AD00A8BD18 /* WaterFallHeader.m in Sources */,
 				E3ECC7051A7E7EA00024A734 /* GBtn.m in Sources */,
 				E30893861AE0079400DA342C /* GmyshopErweimaViewController.m in Sources */,
 				5640317A1A4ED57100680E08 /* TopicDetailViewController.m in Sources */,
@@ -3724,8 +3693,8 @@
 				E304794B1A6109DE00709985 /* GStorePinpaiViewController.m in Sources */,
 				E37486D01AC2B08B004A722F /* GEditActivityTableViewCell.m in Sources */,
 				133B17771A750988005B8B3F /* MJPhotoLoadingView.m in Sources */,
-				EF932A1A1A6236AD00A8BD18 /* WaterFLayout.m in Sources */,
 				566FE2471A5018BA00A96B5F /* TopicCommentsModel.m in Sources */,
+				13D03D421AEDD60F0078AA9E /* AboutTailCircleViewController.m in Sources */,
 				13A389871A387A8800ABBACB /* UIView+Frame.m in Sources */,
 				13963F471A4FC54D007BE68B /* UIView+Frame.m in Sources */,
 				E36BFC841A693974009DAF81 /* DataBase.m in Sources */,
@@ -3733,11 +3702,11 @@
 				564264661A5EB2550069AEBD /* CustomInputView.m in Sources */,
 				13D560DE1AA1B3C800C28927 /* LDataBase.m in Sources */,
 				E3996EE21A5E1DBA00673147 /* GLeadbuyTableViewCell.m in Sources */,
+				13D03D171AEDD4790078AA9E /* SVProgressHUD.m in Sources */,
 				DF5E89B31A5E7B0D00535EBA /* ChooseImageViewController.m in Sources */,
 				136875B81A598EE40048CB4D /* BrandModel.m in Sources */,
 				19F7B44D1A67FFA600087BCB /* UMFeedbackViewController.m in Sources */,
 				E3996EBF1A5E1DBA00673147 /* GpinpaiDetailViewController.m in Sources */,
-				EFD42C881A6AAAB700E5C5E3 /* AboutTailCircleViewController.m in Sources */,
 				13CD364E1A3C6BD90068C12A /* TMPhotoQuiltViewCell.m in Sources */,
 				1391DC561A8704E4006A2E15 /* MenuView.m in Sources */,
 				E3996EE61A5E1E0600673147 /* HomeClothController.m in Sources */,
@@ -3749,6 +3718,7 @@
 				56DAB20D1A46A35F00273140 /* ZSNApi.m in Sources */,
 				E3996ED01A5E1DBA00673147 /* GMAPI.m in Sources */,
 				E3996EDD1A5E1DBA00673147 /* GShowStarsView.m in Sources */,
+				13D03D151AEDD4790078AA9E /* SVIndefiniteAnimatedView.m in Sources */,
 				1382C51E1A812A5A0079AF55 /* MJRefreshBaseView.m in Sources */,
 				566FE24F1A50264A00A96B5F /* TopicDetailBottomView.m in Sources */,
 				566FE2541A503A9E00A96B5F /* MatchInfoViewController.m in Sources */,
@@ -3757,12 +3727,11 @@
 				565321521A59896600E43F80 /* TopicModel.m in Sources */,
 				E37EB5691AC00BEC009F5797 /* GloadingView.m in Sources */,
 				E3937E261AC797CA00AA1A15 /* GcustomSearchTableViewCell.m in Sources */,
-				EF932A161A6236AD00A8BD18 /* WaterF.m in Sources */,
 				13C404D81A6FF42100C4B516 /* ActivityModel.m in Sources */,
+				13D03D441AEDD60F0078AA9E /* MySettingsViewController.m in Sources */,
 				19D5E6B51A4FE8E1008401E0 /* YichuListTableViewCell.m in Sources */,
 				13A389961A3893D000ABBACB /* TTaiViewController.m in Sources */,
 				5658C79A1A4C486E00DC86F8 /* MatchWaterflowView.m in Sources */,
-				EFD42C821A6A8FE600E5C5E3 /* SVIndefiniteAnimatedView.m in Sources */,
 				E35EF1231A6A756900B493A9 /* GchooseFloorPinpaiViewController.m in Sources */,
 				DF626D651A6964E200093568 /* TMPhotoViewQuiltViewCell.m in Sources */,
 				DF6855831A592181004D924F /* ZYQAssetPickerController.m in Sources */,
@@ -3781,9 +3750,7 @@
 				13CEC88F1A5D95F400FE273F /* TDetailModel.m in Sources */,
 				13963F431A4FC54D007BE68B /* LEditor.m in Sources */,
 				13B6906A1A5694C5007FE152 /* MyCollectionController.m in Sources */,
-				EF9329F31A617DD500A8BD18 /* MySettingsViewController.m in Sources */,
 				E38E2D9F1ACD49D0002C63EF /* GAddTtaiImageLinkViewController.m in Sources */,
-				EF932A191A6236AD00A8BD18 /* WaterFCell.m in Sources */,
 				E35EF1161A6A54A900B493A9 /* GChooseStoreViewController.m in Sources */,
 				1366A4D51AE9DEFC004F83FD /* PulsingHaloLayer.m in Sources */,
 				E3996EDE1A5E1DBA00673147 /* GStarsView.m in Sources */,
@@ -3803,14 +3770,13 @@
 				1382C5201A812A5A0079AF55 /* MJRefreshFooterView.m in Sources */,
 				DFB196EB1A6D3D900006633F /* UIImageView+LBBlurredImage.m in Sources */,
 				56A8A8311A45946000E85F6B /* MatchTopicModel.m in Sources */,
-				EFD42C841A6A8FE600E5C5E3 /* SVProgressHUD.m in Sources */,
+				13D03D4B1AEDD60F0078AA9E /* WaterFallFooter.m in Sources */,
 				566FE24B1A501C4E00A96B5F /* TopicCommentsCell.m in Sources */,
 				E37EB56C1AC00BEC009F5797 /* GrefreshTableHeaderView.m in Sources */,
 				1387B08D1A5EC2D0006365D8 /* TopicImageModel.m in Sources */,
 				E35EF15F1A6B947800B493A9 /* GupClothesViewController.m in Sources */,
 				E3996ED41A5E1DBA00673147 /* GRootScrollView.m in Sources */,
 				133B17781A750988005B8B3F /* MJPhotoProgressView.m in Sources */,
-				EF9329F91A617DD500A8BD18 /* MyseetingTableViewCell.m in Sources */,
 				139A05201A66ADB100A8EB49 /* MailMessageViewController.m in Sources */,
 				13CEC8891A5D956B00FE273F /* TTaiDetailController.m in Sources */,
 				13963F441A4FC54D007BE68B /* LImageCell.m in Sources */,
@@ -3840,22 +3806,25 @@
 				E30893941AE04AE700DA342C /* GScanViewController.m in Sources */,
 				E3E64AAB1AE0D971002F00A4 /* PhotoCell.m in Sources */,
 				E3E64AA31AE0D971002F00A4 /* PhotoAlbumManager.m in Sources */,
+				13D03D3F1AEDD60F0078AA9E /* EditInfoView.m in Sources */,
 				DF6855861A592CD2004D924F /* UploadPicViewController.m in Sources */,
 				E3E64AA41AE0D971002F00A4 /* UIView+JKPicker.m in Sources */,
 				DF5E89A71A5E115900535EBA /* MyBodyViewController.m in Sources */,
 				E37374001AC4FE4B00935D2B /* GchatSettingViewController.m in Sources */,
 				E305222D1A6ED1B5007BEAFD /* GHolderTextView.m in Sources */,
+				13D03D3E1AEDD60F0078AA9E /* EditMyInfoViewController.m in Sources */,
 				566FE2571A503B1000A96B5F /* MatchInfoModel.m in Sources */,
 				E3E64A9E1AE0D971002F00A4 /* JKImagePickerController.m in Sources */,
 				E3E64A9B1AE0D971002F00A4 /* JKAssetsGroupsView.m in Sources */,
-				EF932A011A617E2B00A8BD18 /* EditInfoView.m in Sources */,
 				13B690671A56797E007FE152 /* TPlatCell.m in Sources */,
 				13684A6B1A37583E00A508FB /* main.m in Sources */,
 				13CD36541A3C732D0068C12A /* LWaterflowView.m in Sources */,
+				13D03D4D1AEDD60F0078AA9E /* WaterFCell.m in Sources */,
 				133B17791A750988005B8B3F /* MJPhotoToolbar.m in Sources */,
 				E3996EE31A5E1DBA00673147 /* GTableViewCell.m in Sources */,
 				19F7B44C1A67FFA600087BCB /* UMFeedbackTableViewCellRight.m in Sources */,
 				E305222A1A6ECD3A007BEAFD /* GupHuoDongViewController.m in Sources */,
+				13D03D461AEDD60F0078AA9E /* MyseetingTableViewCell.m in Sources */,
 				E38E2D351ACD2726002C63EF /* GTTPublishViewController.m in Sources */,
 				13A3897E1A3878FE00ABBACB /* MyViewController.m in Sources */,
 				13B690631A56784D007FE152 /* TPlatModel.m in Sources */,
@@ -3871,18 +3840,17 @@
 				13B690721A56A30E007FE152 /* MyConcernController.m in Sources */,
 				137B6FE61A6B8B47007035DE /* MyShopViewController.m in Sources */,
 				13963F451A4FC54D007BE68B /* LPropertyActionSheet.m in Sources */,
-				EF9329FD1A617E1F00A8BD18 /* EditMyInfoViewController.m in Sources */,
 				13A389BA1A38974F00ABBACB /* LRefreshTableHeaderView.m in Sources */,
 				19D5E6B21A4FE39B008401E0 /* YiChuListModel.m in Sources */,
 				E3FC8DE71A3C4B430025525D /* GeditUserInfoViewController.m in Sources */,
 				5653214F1A59785F00E43F80 /* OHLableHelper.m in Sources */,
 				13D560E31AA1B3F500C28927 /* DataManager.m in Sources */,
+				13D03D4C1AEDD60F0078AA9E /* WaterFallHeader.m in Sources */,
 				E37EB56D1AC00BEC009F5797 /* GrefreshTableView.m in Sources */,
 				1391DC491A87049A006A2E15 /* RootViewController.m in Sources */,
 				E3C923EF1AE13A3F005C2BE1 /* GuserPhoneViewController.m in Sources */,
 				138986331A6A6A5B00F187C9 /* LDataInstance.m in Sources */,
 				13B690451A564825007FE152 /* CHTumblrMenuView.m in Sources */,
-				EFDCC9DF1A62A3F300911782 /* GmyMainViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
