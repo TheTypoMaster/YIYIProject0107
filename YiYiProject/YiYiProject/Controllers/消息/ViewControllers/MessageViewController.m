@@ -35,13 +35,13 @@
 {
     [super viewWillAppear:animated];
     
-    [self refreshChatListView];//刷新列表
+//    [self refreshChatListView];//刷新列表
     
     [self updateTabbarNumber:[self unreadMessgeNum]];
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
-    
+
 }
 
 - (void)viewDidLoad {
@@ -52,6 +52,7 @@
     [self setNavigationTitle:@"消息" textColor:[UIColor whiteColor]];
     self.navigationItem.leftBarButtonItem = nil;
     self.navigationItem.rightBarButtonItem = nil;
+
     
     if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] )
     {

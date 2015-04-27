@@ -65,7 +65,7 @@
     [self.view addSubview:topView];
     
     //顶部
-    UIButton *closeButton = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(0, 0, 49, 49) normalTitle:nil image:BACK_DEFAULT_IMAGE backgroudImage:nil superView:self.view target:self action:@selector(clickToClose:)];
+    UIButton *closeButton = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(0, 0, 49, 49) normalTitle:nil image:[UIImage imageNamed:@"closeImage"] backgroudImage:nil superView:self.view target:self action:@selector(clickToClose:)];
     [topView addSubview:closeButton];
     
     //转发
@@ -245,55 +245,7 @@
 
 - (void)clickToClose:(UIButton *)sender
 {
-//    CGFloat duration = 0.15;
-//    
-//    MJPhoto *photo = ((MJPhotoView *)[self currentPhotoView]).photo;
-//    
-//    UIImageView *bigImageView = ((MJPhotoView *)[self currentPhotoView]).imageView;
-    
-//    for (int i = 0; i < [bigImageView.subviews count]; i ++) {
-//        
-//        UIView *aView = [[bigImageView subviews]objectAtIndex:i];
-//
-//        [UIView animateWithDuration:duration + 0.1 + 0.1 animations:^{
-//            
-//            
-//            aView.frame = [photo.srcImageView.superview convertRect:photo.srcImageView.frame toView:[UIApplication sharedApplication].keyWindow];
-//            
-//        } completion:^(BOOL finished) {
-//            
-//            [aView removeFromSuperview];
-//            // 设置底部的小图片
-////            aView = nil;
-//        }];
-//    }
-    
-//    [UIView animateWithDuration:duration + 0.1 + 0.1 animations:^{
-//        
-//        _imageView.frame = [_photo.srcImageView.superview convertRect:_photo.srcImageView.frame toView:[UIApplication sharedApplication].keyWindow];
-//        
-//        
-//        
-//        // 通知代理
-//        if ([self.photoViewDelegate respondsToSelector:@selector(photoViewSingleTap:)]) {
-//            [self.photoViewDelegate photoViewSingleTap:self];
-//        }
-//        
-//    } completion:^(BOOL finished) {
-//        
-//        [_imageView removeFromSuperview];
-//        // 设置底部的小图片
-//        _photo.srcImageView.image = _photo.placeholder;
-//        
-//    }];
-    
-    
-//    UIImageView *bigImageView = ((MJPhotoView *)[self currentPhotoView]).imageView;
-//
-//    [self removeMaoDianForCell:bigImageView];
-    
     [self.clearView removeFromSuperview];
-    
     [self hide];
 }
 
@@ -321,11 +273,11 @@
     GStorePinpaiViewController *detail = [[GStorePinpaiViewController alloc]init];
     detail.storeIdStr =[NSString stringWithFormat:@"%ld",sender.view.tag] ;
     detail.storeNameStr=testlabel.text;
-//    [self.navigationController pushViewController:detail animated:YES];
+    [self.navigationController pushViewController:detail animated:YES];
     
 //    LNavigationController *unvc = [[LNavigationController alloc]initWithRootViewController:detail];
     
-    [self presentViewController:detail animated:YES completion:nil];
+//    [self presentViewController:detail animated:YES completion:nil];
     
 }
 //到单品的
@@ -532,6 +484,7 @@
         self.clearView = [[UIView alloc]initWithFrame:CGRectMake(0, dis, realWidth, realHeight)];
         _clearView.backgroundColor = [UIColor clearColor];
         [imageView addSubview:_clearView];
+        imageView.userInteractionEnabled = YES;
 
         MJPhotoView *bigImageView = (MJPhotoView *)[self currentPhotoView];
         bigImageView.clearView = self.clearView;
@@ -703,6 +656,8 @@
     GStorePinpaiViewController *detail = [[GStorePinpaiViewController alloc]init];
     detail.storeIdStr = infoId;
     detail.storeNameStr = infoName;
+    detail.lastPageNavigationHidden = YES;
+
     [self.navigationController pushViewController:detail animated:YES];
     
 }
@@ -713,6 +668,7 @@
     
     ProductDetailController *detail = [[ProductDetailController alloc]init];
     detail.product_id = infoId;
+    detail.lastPageNavigationHidden = YES;
     [self.navigationController pushViewController:detail animated:YES];
     
 }

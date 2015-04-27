@@ -465,8 +465,6 @@
 {
     [self.navigationController pushViewController:viewController animated:YES];
     
-    self.navigationController.navigationBarHidden = NO;
-    
 }
 
 - (void)updateStatusBarColor:(BOOL)isWhite
@@ -541,18 +539,21 @@
             GupClothesViewController *ccc = [[GupClothesViewController alloc]init];
             ccc.userInfo = self.userInfo;
             ccc.mallInfo = self.mallInfo;
+            ccc.lastPageNavigationHidden = YES;
             [self.navigationController pushViewController:ccc animated:YES];
         }else if (buttonIndex == 1){
             NSLog(@"发布活动");
             GupHuoDongViewController *ccc = [[GupHuoDongViewController alloc]init];
             ccc.mallInfo = self.mallInfo;
             ccc.userInfo = self.userInfo;
+            ccc.lastPageNavigationHidden = YES;
             [self.navigationController pushViewController:ccc animated:YES];
         }else if (buttonIndex == 2){
             NSLog(@"管理单品");
             GmyproductsListViewController *ccc = [[GmyproductsListViewController alloc]init];
             ccc.userInfo = self.userInfo;
             ccc.mallInfo = self.mallInfo;
+            ccc.lastPageNavigationHidden = YES;
             [self.navigationController pushViewController:ccc animated:YES];
             
         }else if (buttonIndex == 3){
@@ -561,11 +562,13 @@
             GmyActivetiesViewController *ccc = [[GmyActivetiesViewController alloc]init];
             ccc.userInfo = self.userInfo;
             ccc.mallInfo = self.mallInfo;
+            ccc.lastPageNavigationHidden = YES;
             [self.navigationController pushViewController:ccc animated:YES];
         }else if (buttonIndex == 4){
             NSLog(@"联系电话");
             GShopPhoneViewController *ccc = [[GShopPhoneViewController alloc]init];
             ccc.shop_id = self.userInfo.shop_id;
+            ccc.lastPageNavigationHidden = YES;
             [self.navigationController pushViewController:ccc animated:YES];
             
         }

@@ -678,6 +678,7 @@ typedef enum{
                 dd.theType = GMYSELF;
                 dd.bannerUrl = user_bannerUrl;
                 dd.headImageUrl = headImageUrl;
+                dd.lastPageNavigationHidden = YES;
                 dd.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:dd animated:YES];
             }else if (indexPath.row == 1){//已经为店主时候的我的店铺
@@ -686,6 +687,7 @@ typedef enum{
                     NSLog(@"店主");
                     MyShopViewController *shop = [[MyShopViewController alloc]init];
                     shop.userInfo = _userInfo;
+                    shop.lastPageNavigationHidden = YES;
                     shop.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:shop animated:YES];
                 }
@@ -727,6 +729,7 @@ typedef enum{
                     NSLog(@"普通");
                     ShenQingDianPuViewController *_shenqingVC = [[ShenQingDianPuViewController alloc]init];
                     _shenqingVC.hidesBottomBarWhenPushed = YES;
+                    _shenqingVC.lastPageNavigationHidden = YES;
                     [self.navigationController pushViewController:_shenqingVC animated:YES];
                 }else if (shopMan == 2){//已经是店主
                     //邀请好友

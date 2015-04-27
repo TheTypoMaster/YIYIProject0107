@@ -51,7 +51,7 @@
 //    
 //    if ([UIApplication sharedApplication].isStatusBarHidden) {
 //
-//        [[UIApplication sharedApplication]setStatusBarHidden:NO];
+//        [[UIApplication sharedApplication]setStatusBarHidden:YES];
 //
 //    }
 //    

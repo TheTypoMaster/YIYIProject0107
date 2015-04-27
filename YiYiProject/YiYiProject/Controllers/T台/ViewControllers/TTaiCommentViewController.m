@@ -54,12 +54,9 @@
     [super viewWillAppear:animated];
     [_input_view addKeyBordNotification];
     
-    if ([UIApplication sharedApplication].isStatusBarHidden) {
-        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
-    }
-    
     self.navigationController.navigationBarHidden = NO;
-//    self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    
+    [[UIApplication sharedApplication]setStatusBarHidden:NO];
 
 }
 
@@ -69,17 +66,7 @@
     [_input_view deleteKeyBordNotification];
     
     [self.navigationController setNavigationBarHidden:YES animated:animated];
-    
-//    self.navigationController.interactivePopGestureRecognizer.enabled = YES;
 }
-
-//-(void)viewDidDisappear:(BOOL)animated
-//{
-//    [super viewDidDisappear:animated];
-//    
-//    self.navigationController.navigationBarHidden = YES;
-//
-//}
 
 - (void)dealloc
 {

@@ -528,6 +528,12 @@
 {
     CGFloat height = MAX(qtmquitView.contentSize.height, qtmquitView.frame.size.height);
     
+    //没有数据的时候 需要显示没有更多数据
+    if (self.dataArray.count == 0 && self.isHaveMoreData == NO) {
+        
+        height = 0.f;
+    }
+    
     if (tableFooterView && [tableFooterView superview]) {
         
         _refreshFooterView.frame = CGRectMake(0.0f,height,qtmquitView.frame.size.width,self.bounds.size.height);

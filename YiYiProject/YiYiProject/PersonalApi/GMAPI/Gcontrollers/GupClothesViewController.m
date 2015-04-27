@@ -65,7 +65,7 @@
     if (self.thetype == GEDITCLOTH) {
         return;
     }
-    self.navigationController.navigationBarHidden = YES;
+    [self.navigationController setNavigationBarHidden:self.lastPageNavigationHidden animated:animated];
 }
 
 

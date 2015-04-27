@@ -95,8 +95,7 @@
     
     [super viewWillDisappear:YES];
 
-    self.navigationController.navigationBarHidden=YES;
-
+    [self.navigationController setNavigationBarHidden:self.lastPageNavigationHidden animated:animated];
 }
 
 - (void)viewDidLoad {

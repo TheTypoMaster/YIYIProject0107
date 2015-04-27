@@ -277,6 +277,7 @@
 		13D03D4C1AEDD60F0078AA9E /* WaterFallHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D03D391AEDD60F0078AA9E /* WaterFallHeader.m */; };
 		13D03D4D1AEDD60F0078AA9E /* WaterFCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D03D3B1AEDD60F0078AA9E /* WaterFCell.m */; };
 		13D03D4E1AEDD60F0078AA9E /* WaterFLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D03D3D1AEDD60F0078AA9E /* WaterFLayout.m */; };
+		13D03D501AEDE47F0078AA9E /* closeImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13D03D4F1AEDE47F0078AA9E /* closeImage@2x.png */; };
 		13D560DE1AA1B3C800C28927 /* LDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D560D91AA1B3C800C28927 /* LDataBase.m */; };
 		13D560E31AA1B3F500C28927 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D560E21AA1B3F500C28927 /* DataManager.m */; };
 		13D560E51AA1B40C00C28927 /* yiyiDB.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 13D560E41AA1B40C00C28927 /* yiyiDB.sqlite */; };
@@ -939,6 +940,7 @@
 		13D03D3B1AEDD60F0078AA9E /* WaterFCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaterFCell.m; sourceTree = "<group>"; };
 		13D03D3C1AEDD60F0078AA9E /* WaterFLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaterFLayout.h; sourceTree = "<group>"; };
 		13D03D3D1AEDD60F0078AA9E /* WaterFLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaterFLayout.m; sourceTree = "<group>"; };
+		13D03D4F1AEDE47F0078AA9E /* closeImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "closeImage@2x.png"; sourceTree = "<group>"; };
 		13D560D81AA1B3C800C28927 /* LDataBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDataBase.h; sourceTree = "<group>"; };
 		13D560D91AA1B3C800C28927 /* LDataBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDataBase.m; sourceTree = "<group>"; };
 		13D560E11AA1B3F500C28927 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
@@ -2342,6 +2344,7 @@
 		13B690591A566A4A007FE152 /* T台 */ = {
 			isa = PBXGroup;
 			children = (
+				13D03D4F1AEDE47F0078AA9E /* closeImage@2x.png */,
 				13B6905E1A566A7F007FE152 /* rizhi_xiangji@2x.png */,
 				13B6905A1A566A4A007FE152 /* love_up@2x.png */,
 				13B6905B1A566A4A007FE152 /* Ttai_pinglun@2x.png */,
@@ -3454,6 +3457,7 @@
 				138986131A6A18C600F187C9 /* my_shenqing@2x.png in Resources */,
 				13B6905D1A566A4A007FE152 /* Ttai_pinglun@2x.png in Resources */,
 				137B08561A4E993C00DE7DCC /* love_up@2x.png in Resources */,
+				13D03D501AEDE47F0078AA9E /* closeImage@2x.png in Resources */,
 				137B08331A4E716700DE7DCC /* dian_xiaojiantou@2x.png in Resources */,
 				E3B54C2D1ADFBEC8004EC301 /* gqiandao_up@2x.png in Resources */,
 				19F7B4381A67FFA600087BCB /* item_cancel_selected@2x.png in Resources */,
@@ -4022,7 +4026,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ccb05848-943b-4165-a3b9-dbef9d49dde7";
+				PROVISIONING_PROFILE = "8666d12f-26f9-42b1-8629-08669b44260a";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Debug;
@@ -4059,7 +4063,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ccb05848-943b-4165-a3b9-dbef9d49dde7";
+				PROVISIONING_PROFILE = "8666d12f-26f9-42b1-8629-08669b44260a";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Release;

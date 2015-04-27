@@ -58,9 +58,17 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-    [self.view removeGestureRecognizer:panGestureRecognizer];
-    [self.view removeGestureRecognizer:swipe];
+    [super viewWillDisappear:animated];
+    
+    [self.navigationController setNavigationBarHidden:self.lastPageNavigationHidden animated:animated];
+    
 }
+
+//-(void)viewWillDisappear:(BOOL)animated
+//{
+//    [self.view removeGestureRecognizer:panGestureRecognizer];
+//    [self.view removeGestureRecognizer:swipe];
+//}
 
 - (void)viewDidLoad
 {

@@ -327,6 +327,7 @@
     bgScroll.delegate = self;
     [self.view addSubview:bgScroll];
     bgScroll.pagingEnabled = YES;
+    bgScroll.bounces = NO;
     bgScroll.contentSize = CGSizeMake(DEVICE_WIDTH * 2, bgScroll.height);
     
     //店铺

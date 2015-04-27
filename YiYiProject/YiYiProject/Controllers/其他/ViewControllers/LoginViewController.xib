@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
@@ -45,7 +45,7 @@
                         <action selector="clickToQQ:" destination="-1" eventType="touchUpInside" id="wVz-6k-Y1V"/>
                     </connections>
                 </button>
-                <button hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uxt-mE-7us">
+                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uxt-mE-7us">
                     <rect key="frame" x="-8" y="374" width="209" height="30"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="50" id="GG3-SU-qLU"/>
@@ -301,7 +301,7 @@
                         <constraint firstAttribute="width" constant="150" id="uoq-2s-D6s"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                     <variation key="default">
                         <mask key="constraints">
@@ -350,7 +350,7 @@
             <constraints>
                 <constraint firstAttribute="centerX" secondItem="mqh-6D-Cl0" secondAttribute="centerX" id="2Yx-vC-aaX"/>
                 <constraint firstItem="3TE-Vu-8yl" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="57" id="3lN-2X-rd3">
-                    <variation key="heightClass=regular-widthClass=compact" constant="85"/>
+                    <variation key="heightClass=regular-widthClass=compact" constant="40"/>
                 </constraint>
                 <constraint firstItem="iUg-1o-2SZ" firstAttribute="top" secondItem="piZ-2q-e1b" secondAttribute="bottom" constant="14" id="BRb-rS-hEb"/>
                 <constraint firstAttribute="trailing" secondItem="iUg-1o-2SZ" secondAttribute="trailing" constant="13" id="Cex-B5-UOF"/>
@@ -360,7 +360,7 @@
                 <constraint firstItem="iUg-1o-2SZ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="60" id="LoK-ba-fb5"/>
                 <constraint firstAttribute="trailing" secondItem="wTO-oV-3wg" secondAttribute="trailing" constant="20" id="NaZ-mG-zWZ"/>
                 <constraint firstAttribute="trailing" secondItem="6JF-35-i9Z" secondAttribute="trailing" constant="57" id="Ogx-TV-v07">
-                    <variation key="heightClass=regular-widthClass=compact" constant="85"/>
+                    <variation key="heightClass=regular-widthClass=compact" constant="40"/>
                 </constraint>
                 <constraint firstItem="6JF-35-i9Z" firstAttribute="top" secondItem="pI7-sj-waQ" secondAttribute="bottom" constant="54" id="SqF-0H-rM2"/>
                 <constraint firstItem="wTO-oV-3wg" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="Xxu-1L-BiA"/>
@@ -448,7 +448,7 @@
             <connections>
                 <outletCollection property="gestureRecognizers" destination="pxU-Ig-mg6" appends="YES" id="d3x-2I-8nc"/>
             </connections>
-            <point key="canvasLocation" x="204" y="139"/>
+            <point key="canvasLocation" x="78" y="93"/>
         </view>
         <tapGestureRecognizer id="pxU-Ig-mg6">
             <connections>
