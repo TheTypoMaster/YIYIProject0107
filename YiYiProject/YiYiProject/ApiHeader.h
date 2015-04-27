@@ -195,9 +195,9 @@ typedef enum{
 //获取我关注的品牌
 #define HOME_CLOTH_GUANZHUPINPAI_MINE @"http://www.alayy.com/index.php?d=api&c=brand&m=get_attend_brands&authcode=%@&page=%d&lat=%@&long=%@"
 
-//店铺详情  mall_id
+//店铺详情  mall_id  精品店
 #define HOME_CLOTH_NEARBYSTORE_DETAIL @"http://www.alayy.com?d=api&c=mall&m=getMallDetail"
-//店铺详情 shop_id
+//店铺详情 shop_id   品牌店
 #define GET_MAIL_DETAIL_INFO @"http://www.alayy.com/index.php?d=api&c=mall&m=get_shop_info"
 
 //点击品牌进入该品牌的商铺列表

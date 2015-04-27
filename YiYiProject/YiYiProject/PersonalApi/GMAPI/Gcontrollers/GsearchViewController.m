@@ -329,9 +329,15 @@
         NSDictionary *dic = _dataArray[indexPath.row];
         GStorePinpaiViewController *ccc = [[GStorePinpaiViewController alloc]init];
         ccc.storeIdStr = [dic stringValueForKey:@"mb_id"];
-        if ([[dic stringValueForKey:@"mall_type"]intValue] != 1) {//商场店
+        if ([[dic stringValueForKey:@"mall_type"]intValue]== 1) {//大商场
+            ccc.guanzhuleixing = @"商场";
+        }else if ([[dic stringValueForKey:@"mall_type"]intValue]== 2){
             ccc.guanzhuleixing = @"精品店";
+        }else if ([[dic stringValueForKey:@"mall_type"]intValue]== 3){
+            ccc.guanzhuleixing = @"品牌店";
         }
+        
+        
         ccc.storeNameStr = [dic stringValueForKey:@"mall_name"];
         ccc.pinpaiNameStr = [dic stringValueForKey:@"brand_name"];
         if (self.isChooseProductLink) {

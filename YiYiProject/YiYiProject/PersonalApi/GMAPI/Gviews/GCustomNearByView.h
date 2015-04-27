@@ -24,7 +24,7 @@ typedef enum{
 
 @property(nonatomic,assign)GjiaoyaType theType;//类型 根据脚丫上下位置判断
 
-@property(nonatomic,strong)NSString *shopType;//1商场店铺 2精品店
+@property(nonatomic,strong)NSString *shopType;//1商场店铺 2精品店 3品牌店
 
 @property(nonatomic,strong)UILabel *titleLabel;//商场名字
 

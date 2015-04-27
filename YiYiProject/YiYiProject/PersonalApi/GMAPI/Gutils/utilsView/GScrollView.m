@@ -99,8 +99,10 @@
             [view addGestureRecognizer:tt];
             
             view.dataDic = dic;
-            view.tag = [[dic stringValueForKey:@"mall_id"]integerValue]+10;;
-            
+            view.tag = [[dic stringValueForKey:@"mall_id"]integerValue]+10;
+            if ([[dic stringValueForKey:@"mall_type"]intValue] == 3) {
+                view.tag = [[dic stringValueForKey:@"shop_id"]integerValue]+10;
+            }
             
             [self addSubview:view];
             
@@ -127,14 +129,6 @@
 }
 
 
-
-//点击商城 Gbtn
--(void)goNearbyStoreVC:(GBtn*)sender{
-    NSString *ssidStr = [NSString stringWithFormat:@"%d",sender.tag-10];
-    
-    NSLog(@"%@",sender.titleLabel.text);
-    [self.delegate1 pushToNearbyStoreVCWithIdStr:ssidStr theStoreName:sender.titleLabel.text theType:sender.shopType];
-}
 
 //点击商城 GCustomNearbyView
 -(void)goNearbyStore:(UIGestureRecognizer *)sender{

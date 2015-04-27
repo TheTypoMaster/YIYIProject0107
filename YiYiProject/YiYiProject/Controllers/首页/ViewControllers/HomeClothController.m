@@ -889,7 +889,14 @@
         [self.rootViewController.navigationController pushViewController:cc animated:YES];
         
         
-    }else{
+    }else if ([mallType intValue] ==3){//品牌店
+        GStorePinpaiViewController *cc = [[GStorePinpaiViewController alloc]init];
+        cc.storeIdStr = theID;
+        cc.storeNameStr = nameStr;
+        cc.guanzhuleixing = @"品牌店";
+        cc.hidesBottomBarWhenPushed = YES;
+        [self.rootViewController.navigationController pushViewController:cc animated:YES];
+    }else if ([mallType intValue] == 1){//商场
         GnearbyStoreViewController *dd = [[GnearbyStoreViewController alloc]init];
         dd.storeIdStr = theID;
         dd.storeNameStr = nameStr;
