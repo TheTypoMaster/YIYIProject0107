@@ -275,7 +275,9 @@
     browser.lastViewController = self;
     [browser showWithController:self.tabBarController];
     
-    //    self.tabBarController.tabBar.top = DEVICE_HEIGHT;
+//    browser.isPresent = YES;
+//    
+//    [self presentViewController:browser animated:NO completion:nil];
 }
 
 - (void)tapImage:(UITapGestureRecognizer *)tap

@@ -24,4 +24,6 @@
 
 @property(nonatomic,strong)UIView *clearView;//透明view,上面放锚点
 
+@property(nonatomic,assign)BOOL isPresent;//是否是模态
+
 @end

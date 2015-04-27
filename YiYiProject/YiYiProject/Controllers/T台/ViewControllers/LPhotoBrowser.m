@@ -111,7 +111,7 @@
 
     //喜欢的数字
     
-    NSString *likeNum = [NSString stringWithFormat:@"%@人喜欢",detail_model.tt_like_num];
+    NSString *likeNum = [NSString stringWithFormat:@"%d人喜欢",[detail_model.tt_like_num intValue]];
     CGFloat likeWidth = [LTools widthForText:likeNum font:14];
     
     likeNumButton = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(zan_btn.left - likeWidth - 20, 0, likeWidth, bottomView.height) normalTitle:likeNum image:nil backgroudImage:nil superView:nil target:self action:@selector(clickToCommentPage:)];
@@ -120,7 +120,7 @@
     
     //评论数字
     
-    NSString *commentNum = [NSString stringWithFormat:@"%@条评论",detail_model.tt_comment_num];
+    NSString *commentNum = [NSString stringWithFormat:@"%d条评论",[detail_model.tt_comment_num intValue]];
     likeWidth = [LTools widthForText:commentNum font:14];
     
     commentButton = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(likeNumButton.left - likeWidth - 20, 0, likeWidth, bottomView.height) normalTitle:commentNum image:nil backgroudImage:nil superView:nil target:self action:@selector(clickToCommentPage:)];
@@ -245,6 +245,15 @@
 
 - (void)clickToClose:(UIButton *)sender
 {
+//    if (self.isPresent) {
+//        
+//        [self hide];
+//        [self dismissViewControllerAnimated:NO completion:^{
+//            
+//        }];
+//        return;
+//    }
+    
     [self.clearView removeFromSuperview];
     [self hide];
 }
@@ -578,74 +587,6 @@
     }
     
 }
-
-
-//-(void)createbuttonWithModel:(NSDictionary*)maodian_detail imageView:(UIImageView *)imageView{
-//    
-//    NSString *productId = maodian_detail[@"product_id"];
-//    
-//    NSInteger product_id = [productId integerValue];
-//    
-//    NSString *shopId = maodian_detail[@"shop_id"];
-//    
-////    NSInteger shop_id = [shopId integerValue];
-//    
-//    float dx=[maodian_detail[@"img_x"] floatValue];
-//    float dy=[maodian_detail[@"img_y"] floatValue];
-//    
-//    /**
-//     *  由于image 和 imageView不能一样大小,需要计算image实际坐标
-//     */
-//    
-//    CGSize size_image = imageView.image.size;//图片实际大小
-//    
-//    CGFloat realWidth = DEVICE_WIDTH;//显示大小
-//    
-//    CGFloat realHeight = size_image.height / (size_image.width/DEVICE_WIDTH);//显示大小
-//    
-//    CGFloat dis = (DEVICE_HEIGHT - realHeight) / 2.f;//imageView和屏幕一样大小,image相对于imageView坐标偏移
-//    
-//    __weak typeof(self)weakSelf = self;
-//    if (product_id>0) {
-//        //说明是单品
-//        
-//        NSString *title = maodian_detail[@"product_name"];
-//        CGPoint point = CGPointMake(dx * realWidth, dy * realHeight + dis);
-//        AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title];
-//        [imageView addSubview:pointView];
-//        pointView.infoId = productId;
-//        pointView.infoName = title;
-//        
-//        
-//        [pointView setAnchorBlock:^(NSString *infoId,NSString *infoName){
-//            
-//            [weakSelf turnToDanPinInfoId:infoId infoName:infoName];
-//        }];
-//        
-//        NSLog(@"单品--title %@",title);
-//        
-//    }else{
-//        
-//        //说明是品牌店面
-//        
-//        NSString *title = maodian_detail[@"shop_name"];
-//        CGPoint point = CGPointMake(dx * imageView.width, dy * imageView.height);
-//        AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title];
-//        [imageView addSubview:pointView];
-//        
-//        pointView.infoId = shopId;
-//        pointView.infoName = title;
-//        
-//        [pointView setAnchorBlock:^(NSString *infoId,NSString *infoName){
-//            
-//            [weakSelf turnToShangChangInfoId:infoId infoName:infoName];
-//        }];
-//        
-//        NSLog(@"品牌--title %@",title);
-//        
-//    }
-//    
-//}
 
 #pragma mark---锚点的点击方法
 //到商场的
