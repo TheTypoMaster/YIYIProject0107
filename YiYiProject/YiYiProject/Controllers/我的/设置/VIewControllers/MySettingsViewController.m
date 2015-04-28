@@ -196,7 +196,7 @@
     
     if (indexPath.row == 0) {
         AboutTailCircleViewController *aboutVC = [[AboutTailCircleViewController alloc] initWithNibName:@"AboutTailCircleViewController" bundle:nil];
-        
+//        aboutVC.lastPageNavigationHidden = YES;
         [self.navigationController pushViewController:aboutVC animated:YES];
     }
     

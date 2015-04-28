@@ -378,7 +378,7 @@ static UITapGestureRecognizer *tapRecognizer;
 //    }
 
     UMFeedback *    umFeedback = [UMFeedback sharedInstance];
-    [umFeedback setAppkey:@"5153e5e456240b79e20006b9" delegate:self];
+    [umFeedback setAppkey:@"548bae91fd98c50d0c000b8b" delegate:self];
 
     
     if (self.mTextField.text.length==0) {
