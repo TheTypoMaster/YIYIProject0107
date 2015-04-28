@@ -164,8 +164,6 @@
         }
     }
     
-    
-    
     return cell;
 
 }
@@ -173,7 +171,7 @@
 #pragma mark------------------UItableVIewDelegate
 -(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    return 50;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
