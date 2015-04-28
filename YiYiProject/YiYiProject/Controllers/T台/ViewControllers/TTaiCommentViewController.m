@@ -19,6 +19,7 @@
 #import "ProductDetailController.h"
 
 #import "GStorePinpaiViewController.h"
+
 @interface TTaiCommentViewController ()<RefreshDelegate,UITableViewDataSource>
 {
     TDetailModel *detail_model;
@@ -108,6 +109,20 @@
 }
 
 #pragma mark - 事件处理
+
+- (void)updateCommentNum:(int)commentNum
+{
+    
+    comment_label.text = NSStringFromInt(commentNum);
+    comment_num_label.text = NSStringFromInt(commentNum);
+    
+    if (_aParmasBlock) {
+        
+        //更新评论
+        _aParmasBlock(@{UPDATE_PARAM:UPDATE_TPLAT_COMENTNUM,
+                        UPDATE_TPLAT_COMENTNUM:[NSNumber numberWithInt:commentNum]});
+    }
+}
 
 -(void)leftButtonTap:(UIButton *)sender
 {
@@ -214,6 +229,8 @@
     
     
     NSLog(@"请求t台评论接口 --  %@",url);
+    
+    __weak typeof(self)weakSelf = self;
     __weak typeof(RefreshTableView) *weakTable = _table;
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
@@ -241,6 +258,8 @@
         if (sum < total) {
             haveMore = YES;
         }
+        
+        [weakSelf updateCommentNum:total];//更新评论
         
         [weakTable reloadData:arr isHaveMore:haveMore];
         
@@ -332,6 +351,8 @@
         url = TTAI_ZAN_CANCEL;
     }
     
+    __weak typeof(self)weakSelf = self;
+    
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
@@ -342,6 +363,18 @@
         int like_num = [detail_model.tt_like_num intValue];
         detail_model.tt_like_num = [NSString stringWithFormat:@"%d",zan ? like_num + 1 : like_num - 1];
         zan_num_label.text = detail_model.tt_like_num;
+        
+        weakSelf.t_model.tt_like_num = detail_model.tt_like_num;//喜欢个数更新
+        weakSelf.t_model.is_like = zan ? 1 : 0;
+        
+        //更新赞的数字
+        if (_aParmasBlock) {
+            
+            _aParmasBlock(@{UPDATE_PARAM:@"UpdateLike",
+                            UPDATE_TPLAT_LIKENUM:[LTools safeString:weakSelf.t_model.tt_like_num],
+                                         UPDATE_TPLAT_ISLIKE:[NSNumber numberWithBool:zan]});
+        }
+        
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         

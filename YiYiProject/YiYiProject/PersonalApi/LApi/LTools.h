@@ -140,6 +140,8 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
 
 #pragma mark - 小工具
 
++ (NSString *)safeString:(NSString *)string;
+
 + (NSString *)stringHeadNoSpace:(NSString *)string;
 
 + (NSString *) md5:(NSString *) text;

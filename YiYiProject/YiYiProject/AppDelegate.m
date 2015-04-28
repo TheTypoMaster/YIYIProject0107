@@ -26,6 +26,8 @@
 
 #import "LDataInstance.h"
 
+#import "NSString+Additions.h"
+
 //融云cloud
 
 
@@ -70,6 +72,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     // Override point for customization after application launch.
+    
+    NSString *str = nil;
+    
+    
+    NSLog(@"--->str:%@",[str safeString]);
    
 #pragma mark 融云
     

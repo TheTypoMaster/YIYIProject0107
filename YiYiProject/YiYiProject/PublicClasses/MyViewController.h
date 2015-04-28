@@ -29,6 +29,7 @@ typedef enum
     MyViewControllerRightbuttonTypeOther
 }MyViewControllerRightbuttonType;
 
+typedef void(^UpdateParamsBlock)(NSDictionary *params);
 
 @interface MyViewController : UIViewController
 {
@@ -36,7 +37,12 @@ typedef enum
     
     MyViewControllerLeftbuttonType leftType;
     MyViewControllerRightbuttonType myRightType;
+    
+    UpdateParamsBlock _aParmasBlock;
+    
 }
+
+@property(nonatomic,assign)UpdateParamsBlock updateParamsBlock;
 
 @property(nonatomic,assign)MyViewControllerLeftbuttonType * leftButtonType;
 

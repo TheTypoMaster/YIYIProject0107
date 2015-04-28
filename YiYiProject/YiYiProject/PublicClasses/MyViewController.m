@@ -100,6 +100,11 @@
 
 }
 
+-(void)setUpdateParamsBlock:(UpdateParamsBlock)updateParamsBlock
+{
+    _aParmasBlock = updateParamsBlock;
+}
+
 
 -(void)setMyViewControllerLeftButtonType:(MyViewControllerLeftbuttonType)theType WithRightButtonType:(MyViewControllerRightbuttonType)rightType
 {

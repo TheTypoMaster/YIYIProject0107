@@ -745,6 +745,14 @@
 
 #pragma - mark 小工具
 
++ (NSString *)safeString:(NSString *)string
+{
+    if (string == nil) {
+        return @"";
+    }
+    return string;
+}
+
 /**
  *  去除开头的空格
  */

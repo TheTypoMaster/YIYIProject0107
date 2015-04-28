@@ -29,6 +29,14 @@ alpha:(a)]
 #define NSStringFromFloat(float) [NSString stringWithFormat:@"%f",(float)]
 #define NSStringFromInt(int) [NSString stringWithFormat:@"%d",(int)]
 
+//数据更新状态
+
+#define UPDATE_PARAM @"updateParam" //要更新的参数
+#define UPDATE_TPLAT_ISLIKE @"tPlatIsLike" //是否喜欢标识
+#define UPDATE_TPLAT_LIKENUM @"likeNum" //喜欢个数
+#define UPDATE_TPLAT_COMENTNUM @"commentNum" //评论个数
+
+
 //保存用户信息设备信息相关
 
 #define USER_INFO @"userInfo"//用户信息

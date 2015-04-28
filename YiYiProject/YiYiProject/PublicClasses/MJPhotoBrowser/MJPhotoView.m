@@ -55,7 +55,7 @@
         // 进度条
         _photoLoadingView = [[MJPhotoLoadingView alloc] init];
         _photoLoadingView.center = CGPointMake(self.frame.size.width / 2.f, self.frame.size.height / 2.f);
-        
+        [self addSubview:_photoLoadingView];
         
         // 监听点击
         UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
@@ -107,7 +107,7 @@
     }
 
     // 调整frame参数
-//    [self adjustFrame];
+    [self adjustFrame];
 }
 
 #pragma mark 开始加载图片
@@ -119,6 +119,7 @@
         
     } else {
         self.scrollEnabled = NO;
+        
         // 直接显示进度条
         [_photoLoadingView showLoading];
         [self addSubview:_photoLoadingView];

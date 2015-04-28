@@ -51,6 +51,13 @@
     loading = [LTools MBProgressWithText:@"加载中..." addToView:self.view];
     
 //    [self getTTaiDetail];//获取t台详情
+    
+    [self.t_model addObserver:self forKeyPath:@"platModel" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+}
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    NSLog(@"observeValueForKeyPath %@",change);
 }
 
 #pragma - mark 创建视图
@@ -144,7 +151,7 @@
  */
 - (void)updateCommentNum
 {
-    NSString *commentNum = [NSString stringWithFormat:@"%@条评论",detail_model.tt_like_num];
+    NSString *commentNum = [NSString stringWithFormat:@"%@条评论",detail_model.tt_comment_num];
     [commentButton setTitle:commentNum forState:UIControlStateNormal];
 }
 
@@ -156,12 +163,55 @@
     
     comment.tt_id = self.tt_id;
     
+    comment.t_model = self.t_model;
+    
+    __weak typeof(self)weakSelf = self;
+    
+    comment.updateParamsBlock = ^(NSDictionary *params){
+        
+        NSLog(@"----->%@",params);
+        
+        [weakSelf updateLikeOrZanState:params];
+        
+    };
     //    LNavigationController *unVc = [[LNavigationController alloc]initWithRootViewController:comment];
     
     //    [self presentViewController:unVc animated:YES completion:nil];
     
     [self.navigationController pushViewController:comment animated:YES];
     
+}
+
+/**
+ *  更新喜欢数据源及显示视图
+ */
+- (void)updateLikeOrZanState:(NSDictionary *)params
+{
+    if (![params isKindOfClass:[NSDictionary class]]) {
+        
+        return;
+    }
+    NSString *updateParam = params[UPDATE_PARAM];
+    
+    //评论
+    if ([updateParam isEqualToString:UPDATE_TPLAT_COMENTNUM]) {
+        
+        int commentNum = [params[UPDATE_TPLAT_COMENTNUM]intValue];
+        self.t_model.tt_comment_num = NSStringFromInt(commentNum);
+        detail_model.tt_comment_num = NSStringFromInt(commentNum);
+        
+        [self updateCommentNum];
+        
+    }else //赞
+    {
+        self.t_model.is_like = [params[UPDATE_TPLAT_ISLIKE] intValue];
+        self.t_model.tt_like_num = params[UPDATE_TPLAT_LIKENUM];
+        
+        detail_model.is_like = self.t_model.is_like;
+        detail_model.tt_like_num = self.t_model.tt_like_num;
+        
+        [self updateLikeNum];
+    }
 }
 
 - (void)clickToZan:(UIButton *)sender
@@ -188,6 +238,8 @@
         
         sender.selected = !sender.selected;
         [self zanTTaiDetail:sender.selected];
+        
+        return;
     }
     
     
@@ -672,7 +724,10 @@
         
         int like_num = [detail_model.tt_like_num intValue];
         detail_model.tt_like_num = [NSString stringWithFormat:@"%d",zan ? like_num + 1 : like_num - 1];
-
+        
+        self.t_model.tt_like_num = detail_model.tt_like_num;//更新上一页数字
+        self.t_model.is_like = zan ? 1 : 0;
+        
         [weakSelf updateLikeNum];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
