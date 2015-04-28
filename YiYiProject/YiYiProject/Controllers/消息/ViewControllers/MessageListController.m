@@ -59,6 +59,8 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateHotpoint:) name:NOTIFICATION_CANCEL_HOTPOINT object:Nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateRemoteMessage:) name:NOTIFICATION_REMOTE_MESSAGE object:nil];
     
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateHotpoint:) name:NOTIFICATION_LOGOUT object:nil];
+    
     arr_images = @[@"yixx150_150",@"sjxx150_150",@"my_shoucang",@"my_shenqing"];
     arr_titles = @[@"衣+衣团队",@"商家消息",@"动态消息",@"聊天消息"];
     
