@@ -336,7 +336,7 @@
 /**
  *  添加锚点
  */
-- (void)addMaoDian:(TPlatModel *)aModel imageView:(UIImageView *)imageView
+- (void)addMaoDian:(TPlatModel *)aModel imageView:(UIView *)imageView
 {
     //史忠坤修改
     
@@ -376,7 +376,7 @@
 
 //等到加载完图片之后再加载图片上的三个button
 
--(void)createbuttonWithModel:(NSDictionary*)maodian_detail imageView:(UIImageView *)imageView{
+-(void)createbuttonWithModel:(NSDictionary*)maodian_detail imageView:(UIView *)imageView{
     
     NSString *productId = maodian_detail[@"product_id"];
     
@@ -407,7 +407,7 @@
             [weakSelf turnToDanPinInfoId:infoId infoName:infoName];
         }];
         
-        NSLog(@"单品--title %@",title);
+//        NSLog(@"单品--title %@",title);
         
     }else{
         
@@ -426,7 +426,7 @@
             [weakSelf turnToShangChangInfoId:infoId infoName:infoName];
         }];
         
-        NSLog(@"品牌--title %@",title);
+//        NSLog(@"品牌--title %@",title);
 
     }
     
@@ -443,6 +443,7 @@
         [aView removeFromSuperview];
         aView = nil;
     }
+    
 }
 
 #pragma mark---锚点的点击方法
@@ -515,21 +516,21 @@
     
     return 75 + [LTools heightForImageHeight:image_height imageWidth:image_width originalWidth:DEVICE_WIDTH] - 35/2.f;
 }
-//将要显示
-- (void)refreshTableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [self removeMaoDianForCell:cell];
-    
-    TPlatModel *aModel = (TPlatModel *)[_table.dataArray objectAtIndex:indexPath.row];
-    
-    [self addMaoDian:aModel imageView:((TTaiBigPhotoCell2 *)cell).bigImageView];
-    
-}
-//显示完了
-- (void)refreshTableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath
-{
-    [self removeMaoDianForCell:cell];
-}
+////将要显示
+//- (void)refreshTableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    [self removeMaoDianForCell:cell];
+//    
+//    TPlatModel *aModel = (TPlatModel *)[_table.dataArray objectAtIndex:indexPath.row];
+//    
+//    [self addMaoDian:aModel imageView:((TTaiBigPhotoCell2 *)cell).bigImageView];
+//    
+//}
+////显示完了
+//- (void)refreshTableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath
+//{
+//    [self removeMaoDianForCell:cell];
+//}
 
 #pragma - UITableViewDataSource
 
@@ -567,6 +568,25 @@
 //    cell.bigImageView.userInteractionEnabled = NO;
     [cell.bigImageView.tapGesture addTarget:self action:@selector(tapImage:)];
     
+    
+    if (cell.maoDianView) {
+        
+        for (int i = 0; i < cell.maoDianView.subviews.count; i ++) {
+            
+            UIView *sub = [[cell.maoDianView subviews] objectAtIndex:i];
+            [sub removeFromSuperview];
+            sub = nil;
+        }
+        [cell.maoDianView removeFromSuperview];
+    }
+    
+    cell.maoDianView = [[UIView alloc]initWithFrame:cell.bigImageView.frame];
+    cell.maoDianView.backgroundColor = [UIColor clearColor];
+    [cell.contentView addSubview:cell.maoDianView];
+    
+//    [self removeMaoDianForCell:cell];
+    
+    [self addMaoDian:aModel imageView:cell.maoDianView];
     
     return cell;
 }

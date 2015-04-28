@@ -17,6 +17,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UIView *toolView;
 
+@property (nonatomic,retain) UIView *maoDianView;//锚点view
+
 @property (nonatomic, strong) PulsingHaloLayer *halo;//动画layer
 
 

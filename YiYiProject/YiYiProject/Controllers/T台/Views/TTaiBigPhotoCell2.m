@@ -14,22 +14,6 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    
-//    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(50, 50, 10, 10)];
-//    [self addSubview:view];
-//    view.backgroundColor = [UIColor whiteColor];
-//    view.layer.cornerRadius = 5.f;
-//    view.clipsToBounds = YES;
-//    
-//    self.halo = [PulsingHaloLayer layer];
-//    self.halo.position = view.center;
-//    self.halo.animationDuration = 1.f;
-//    self.halo.radius = 20.f;
-//    self.halo.backgroundColor = [UIColor blackColor].CGColor;
-//    [self.layer insertSublayer:self.halo below:view.layer];
-    
-//    AnchorPiontView *anchor = [[AnchorPiontView alloc]initWithAnchorPoint:CGPointMake(50, 50) title:@"这里是标签品牌"];
-//    [self addSubview:anchor];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
