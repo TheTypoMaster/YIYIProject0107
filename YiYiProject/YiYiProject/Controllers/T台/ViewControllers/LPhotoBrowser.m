@@ -52,7 +52,7 @@
     
 //    [self getTTaiDetail];//获取t台详情
     
-    [self.t_model addObserver:self forKeyPath:@"platModel" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+//    [self.t_model addObserver:self forKeyPath:@"platModel" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -209,6 +209,8 @@
         
         detail_model.is_like = self.t_model.is_like;
         detail_model.tt_like_num = self.t_model.tt_like_num;
+        
+        zan_btn.selected = detail_model.is_like == 1 ? YES : NO;
         
         [self updateLikeNum];
     }
