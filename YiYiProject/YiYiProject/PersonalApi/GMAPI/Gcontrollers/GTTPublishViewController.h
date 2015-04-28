@@ -18,9 +18,7 @@
 @property (strong, nonatomic) UILabel  *placeHolderLabel;
 @property (strong, nonatomic) GHolderTextView *contentTF;
 @property (strong, nonatomic) UIButton *addImageButton;
-@property (strong, nonatomic) UITextField *brandTF;
-@property (strong, nonatomic) UITextField *modelTF;
-@property (strong, nonatomic) UITextField *priceTF;
+
 
 @property (nonatomic,strong)UIImage *publishImage;//发布图片
 @property (strong, nonatomic) UIScrollView *mainScrollview;

@@ -272,7 +272,7 @@ typedef enum{
 //根据id获取用户信息
 #define GET_PERSONINFO_WITHID @"http://www.alayy.com/index.php?d=api&c=user_api&m=get_user_by_uid&uid=%@"
 
-//关注商场
+//关注商场或精品店
 #define GUANZHUSHANGCHANG @"http://www.alayy.com/?d=api&c=friendship&m=mallShipCreate"
 //取消关注商场
 #define QUXIAOGUANZHU_SHANGCHANG @"http://www.alayy.com/?d=api&c=friendship&m=mallDestory"
@@ -492,7 +492,7 @@ typedef enum{
 
 
 //获取店铺二维码
-#define GMYSHOPERWEIMA @"http://www.alayy.com/index.php?d=api&c=mall&m=get_qrcode"
+#define GMYSHOPERWEIMA @"http://www.alayy.com/index.php?d=api&c=mall&m=get_qrcode_v2"
 
 
 //获取店铺会员 也就是关注该店铺的人

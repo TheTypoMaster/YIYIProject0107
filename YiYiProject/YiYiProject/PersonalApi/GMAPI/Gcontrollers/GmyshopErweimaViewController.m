@@ -10,6 +10,8 @@
 
 #import "GMapShowMyshopViewController.h"
 
+#import "NSDictionary+GJson.h"
+
 @interface GmyshopErweimaViewController ()
 {
     UIView *_upErweimaView;//最上面的二维码界面
@@ -95,10 +97,11 @@
     
     //店铺名
     UILabel *shopNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(12, 12, _shopInfoView.frame.size.width-12, 50)];
-    self.shop_Name = self.mallInfo.shop_name;
-//    NSString *mall_name = result[@"mall_name"];
-    if (self.mallInfo.mall_name.length>0) {
-        self.shop_Name = [NSString stringWithFormat:@"%@.%@",self.mallInfo.shop_name,self.mallInfo.mall_name];
+    int mall_type = [[result stringValueForKey:@"mall_type"]intValue];
+    if (mall_type == 2) {//精品店
+        self.shop_Name = [NSString stringWithFormat:@"%@",[result stringValueForKey:@"mall_name"]];
+    }else if (mall_type == 3){//品牌店
+        self.shop_Name = [NSString stringWithFormat:@"%@.%@",[result stringValueForKey:@"brand_name"],[result stringValueForKey:@"mall_name"]];
     }
     shopNameLabel.text = [NSString stringWithFormat:@"店铺名：%@",self.shop_Name];
     shopNameLabel.font = [UIFont systemFontOfSize:15];
@@ -115,14 +118,14 @@
     adressLabel.font = [UIFont systemFontOfSize:15];
     adressLabel.textColor = [UIColor whiteColor];
     adressLabel.numberOfLines = 2;
-    adressLabel.text = [NSString stringWithFormat:@"地址：%@",self.mallInfo.address];
+    adressLabel.text = [NSString stringWithFormat:@"地址：%@",[result stringValueForKey:@"address"]];
     [adressLabel sizeToFit];
     [_shopInfoView addSubview:adressLabel];
     
     //门牌号
     UILabel *doorNum = [[UILabel alloc]initWithFrame:CGRectMake(12, CGRectGetMaxY(adressLabel.frame)+10, _shopInfoView.frame.size.width-12, 50)];
     doorNum.textColor = [UIColor whiteColor];
-    doorNum.text = [NSString stringWithFormat:@"门牌号：%@",self.mallInfo.doorno];
+    doorNum.text = [NSString stringWithFormat:@"门牌号：%@",[result stringValueForKey:@"doorno"]];
     doorNum.font = [UIFont systemFontOfSize:15];
     doorNum.numberOfLines = 2;
     [doorNum sizeToFit];

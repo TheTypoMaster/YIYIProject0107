@@ -45,6 +45,7 @@
 @property(nonatomic,assign)BOOL isChooseProductLink;//是否为发布T台选择商品
 
 @property(nonatomic,strong)NSString *phoneNumber;//电话号码
+@property(nonatomic,strong)NSString *adressLabelStr;//地址
 
 
 

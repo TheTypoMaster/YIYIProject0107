@@ -501,7 +501,8 @@
     
     if (self.isChooseProductLink) {
         GAddTtaiImageLinkViewController *cc = self.navigationController.viewControllers[0];
-        [cc setGmoveImvProductId:self.product_id shopid:self.theModel.product_shop_id productName:self.shangChangLabel.text shopName:self.titleLabel.text price:self.theModel.product_price];
+        
+        [cc setGmoveImvProductId:self.product_id shopid:self.theModel.product_shop_id productName:self.titleLabel.text shopName:self.shangChangLabel.text price:self.theModel.product_price type:@"单品"];
         [self.navigationController popToViewController:cc animated:YES];
         return;
     }

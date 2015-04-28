@@ -56,6 +56,10 @@
     UILabel *_huodongTime_title;//活动图片上的活动时间title
     UILabel *_huodongTime_content;//活动图片上的活动时间内容title
     UIImageView *_activity_backImv;//活动上带黑底的透明图
+    
+    
+    UILabel *_huodongFlag;//活动标示
+    UIView *_downLine;//分割线
 }
 
 @end
@@ -111,6 +115,7 @@
     [_my_right_button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_my_right_button addTarget:self action:@selector(rightButtonTap:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
+    _my_right_button.userInteractionEnabled = NO;
     
     
     
@@ -287,6 +292,16 @@
         if (_huodongLabel.text.length>3) {//有文字
             [_upStoreInfoView addSubview:_huodongLabel];
             [_upStoreInfoView setFrame:CGRectMake(0, 0, DEVICE_WIDTH, 65)];
+            _downLine = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_huodongLabel.frame)+15, DEVICE_WIDTH, 0.5)];
+            _downLine.backgroundColor = RGBCOLOR(255, 72, 135);
+            [_upStoreInfoView addSubview:_downLine];
+            
+            _huodongFlag = [[UILabel alloc]initWithFrame:CGRectMake(DEVICE_WIDTH-82, CGRectGetMaxY(_huodongLabel.frame), 70, 15)];
+            _huodongFlag.font = [UIFont systemFontOfSize:11];
+            _huodongFlag.text = @"活动";
+            _huodongFlag.textColor = RGBCOLOR(252, 74, 139);
+            _huodongFlag.textAlignment = NSTextAlignmentRight;
+            [_upStoreInfoView addSubview:_huodongFlag];
         }else{
             [_upStoreInfoView setFrame:CGRectMake(0, 0, DEVICE_WIDTH, 0)];
             
@@ -296,11 +311,7 @@
     self.upinfoview_height = _upStoreInfoView.frame.size.height;
     
     _huodongLabel.userInteractionEnabled = YES;
-    _huodongLabel.layer.shadowColor = [UIColor grayColor].CGColor;
-    _huodongLabel.layer.shadowOpacity = 1.0;
-    _huodongLabel.layer.shadowRadius = 3.0;
-    _huodongLabel.layer.shadowOffset = CGSizeMake(0, 2);
-    _huodongLabel.clipsToBounds = NO;
+    _huodongLabel.textColor = RGBCOLOR(68, 99, 160);
     
     
     
@@ -461,6 +472,7 @@
         
         NSLog(@"%@",result);
         
+        
         self.mallName = result[@"mall_name"];//商场名
         self.activityId = @" ";
         if ([result[@"activity"] isKindOfClass:[NSDictionary class]]) {
@@ -473,6 +485,8 @@
         
         self.mall_id = [result stringValueForKey:@"mall_id"];
         self.guanzhu = [result stringValueForKey:@"following"];
+        _my_right_button.userInteractionEnabled = YES;
+        
         if ([self.guanzhu intValue]==0) {//未关注
             [_my_right_button setTitle:@"关注" forState:UIControlStateNormal];
             self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
@@ -520,6 +534,9 @@
         [_upStoreInfoView setFrame:CGRectMake(0, 0, DEVICE_WIDTH, 0)];
         [_activeImv setFrame:CGRectMake(0, 0, DEVICE_WIDTH, 0)];
         [_activity_backImv setFrame:_activeImv.frame];
+        [_huodongLabel setFrame:CGRectZero];
+        [_huodongFlag setFrame:CGRectZero];
+        [_downLine setFrame:CGRectZero];
         [_huodongTime_title setFrame:CGRectZero];
         [_huodongTime_content setFrame:CGRectZero];
         [_floorView setFrame:CGRectMake(12, CGRectGetMaxY(_upStoreInfoView.frame)+12, DEVICE_WIDTH-24, DEVICE_HEIGHT-_upStoreInfoView.frame.size.height-12-35-64)];
@@ -543,6 +560,9 @@
         [_upStoreInfoView setFrame:CGRectMake(0, 0, DEVICE_WIDTH, self.upinfoview_height)];
         [_activeImv setFrame:CGRectMake(0, 0, DEVICE_WIDTH, self.upinfoview_height)];
         [_activity_backImv setFrame:_activeImv.frame];
+        [_huodongLabel setFrame:CGRectMake(15, 15, DEVICE_WIDTH-15-15, 35)];
+        [_huodongFlag setFrame:CGRectMake(DEVICE_WIDTH-82, CGRectGetMaxY(_huodongLabel.frame), 70, 15)];
+        [_downLine setFrame:CGRectMake(0, CGRectGetMaxY(_huodongLabel.frame)+15, DEVICE_WIDTH, 0.5)];
         [_huodongTime_title setFrame:CGRectMake(12, _activeImv.frame.size.height-50, 60, 17)];
         [_huodongTime_content setFrame:CGRectMake(12, CGRectGetMaxY(_huodongTime_title.frame)+5, _activeImv.frame.size.width-24, 17)];
         [_floorView setFrame:CGRectMake(12, CGRectGetMaxY(_upStoreInfoView.frame)+12, DEVICE_WIDTH-24, DEVICE_HEIGHT-_upStoreInfoView.frame.size.height-12-35-64)];

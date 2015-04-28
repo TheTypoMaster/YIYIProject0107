@@ -8,6 +8,8 @@
 
 #import "GmyShopHuiyuanViewController.h"
 #import "GrefreshTableView.h"
+#import "NSDictionary+GJson.h"
+#import "YIYIChatViewController.h"
 
 @interface GmyShopHuiyuanViewController ()<GrefreshDelegate,UITableViewDataSource>
 
@@ -15,7 +17,9 @@
     GrefreshTableView *_tableView;//主tableview
     
     int _page;//第几页
+    int _pageCapacity;//每页几个
     NSArray *_dataArray;//数据源
+    
 }
 
 @end
@@ -62,6 +66,7 @@
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     
+    _pageCapacity = 20;
     [_tableView showRefreshHeader:YES];
     
     
@@ -71,18 +76,28 @@
 //请求网络数据
 -(void)prepareNetData{
     
-    NSString *url = [NSString stringWithFormat:@"%@&mall_id=%@",GMYSHOPHUIYUANLIST,self.mallInfo.mall_id];
+    NSString *url = [NSString stringWithFormat:@"%@&shop_id=%@&page=%d&per_page=%d",GMYSHOPHUIYUANLIST,self.mallInfo.id,_page,_pageCapacity];
     
     GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:nil postData:nil];
     [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"关注我的店铺的人:%@",result);
+        NSArray *arr = [result arrayValueForKey:@"list"];
+        
+        if (arr.count < _pageCapacity) {
+            
+            _tableView.isHaveMoreData = NO;
+        }else
+        {
+            _tableView.isHaveMoreData = YES;
+        }
         
         
-//        [self reloadData:arr isReload:YES];
+        [self reloadData:arr isReload:_tableView.isReloadData];
+        
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         if (_tableView.isReloadData) {
             _page --;
-            [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
+            [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:0.1];
         }
     }];
     
@@ -112,7 +127,7 @@
         _dataArray = newArr;
     }
     
-    [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
+    [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:0.1];
 }
 
 
@@ -138,12 +153,21 @@
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"%s",__FUNCTION__);
+    NSDictionary *dic = _dataArray[indexPath.row];
+    YIYIChatViewController *contact = [[YIYIChatViewController alloc]init];
+    contact.GTitleLabel.text = [dic stringValueForKey:@"user_name"];
+    contact.currentTarget = [dic stringValueForKey:@"uid"];
+    contact.portraitStyle = RCUserAvatarCycle;
+    contact.enableSettings = NO;
+    contact.conversationType = ConversationType_PRIVATE;
+    
+    [self.navigationController pushViewController:contact animated:YES];
     
 }
 
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
 {
-    return 90;
+    return 60;
 }
 
 
@@ -159,8 +183,32 @@
         [view removeFromSuperview];
     }
     
-    
+    //头像
+    UIImageView *touxiangImv = [[UIImageView alloc]initWithFrame:CGRectMake(12, 5, 50, 50)];
+    touxiangImv.layer.cornerRadius = 25;
+    touxiangImv.layer.borderWidth = 0.5;
+    touxiangImv.layer.borderColor = [[UIColor grayColor]CGColor];
+    touxiangImv.layer.masksToBounds = YES;
+    [cell.contentView addSubview:touxiangImv];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.separatorInset = UIEdgeInsetsMake(0,74,0,0);
+    
+    //名称
+    UILabel *nameLable = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(touxiangImv.frame)+12, 10, DEVICE_WIDTH-74-12, 32)];
+    nameLable.font = [UIFont boldSystemFontOfSize:15];
+    nameLable.textColor = [UIColor blackColor];
+    [cell.contentView addSubview:nameLable];
+    
+    
+    //数据填充
+    
+    NSDictionary *dic = _dataArray[indexPath.row];
+    [touxiangImv sd_setImageWithURL:[NSURL URLWithString:[dic stringValueForKey:@"photo"]] placeholderImage:nil];
+    nameLable.text = [dic stringValueForKey:@"user_name"];
+    [cell.contentView addSubview:nameLable];
+    
+    
+    
     
     return cell;
 }

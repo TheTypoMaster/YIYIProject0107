@@ -286,6 +286,7 @@
     NSLog(@"%@",stringValue);
 
     _urlStr = stringValue;
+    NSArray *aaa = [_urlStr componentsSeparatedByString:@","];
     
     if (([stringValue rangeOfString:@"http://"].length && [stringValue rangeOfString:@"."].length)||([stringValue rangeOfString:@"https://"].length && [stringValue rangeOfString:@"."].length))
     {
@@ -296,10 +297,8 @@
         
         [alert show];
         
-    }else if ([stringValue rangeOfString:@"yes"].location != NSNotFound){//有yes这个字符串
+    }else if ([aaa[0]intValue]==2){//关注精品店
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"是否关注该店铺" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-        
-        NSArray *aaa = [_urlStr componentsSeparatedByString:@","];
         
         if (aaa.count>2) {
             _urlStr = aaa[1];
@@ -307,8 +306,11 @@
         
         alert.tag = 31;
         [alert show];
-    }else if ([stringValue rangeOfString:@"no"].location != NSNotFound){//有no这个字符串
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"品牌店暂未开通该功能" message:nil delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil,nil];
+    }else if ([aaa[0]intValue]==3){//关注品牌店
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"是否关注该店铺" message:nil delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil,nil];
+        if (aaa.count>2) {
+            _urlStr = aaa[1];
+        }
         alert.tag = 32;
         [alert show];
     }else{
@@ -353,18 +355,50 @@
             [self guanzhuShopWithShopId:_urlStr];
         }
     }else if (alertView.tag == 32){//品牌店
-        [self dismissViewControllerAnimated:YES completion:^{
-            
-        }];
+        if (buttonIndex == 0) {//取消
+            [self dismissViewControllerAnimated:YES completion:^{
+            }];
+        }else if (buttonIndex == 1){
+            [self guanzhuPinpaidianWithShopId:_urlStr];
+        }
     }
 }
 
 
 
+//关注精品店
 -(void)guanzhuShopWithShopId:(NSString *)shopId{
     NSString *post = [NSString stringWithFormat:@"&mall_id=%@&authcode=%@",shopId,[GMAPI getAuthkey]];
     NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     NSString *url = [NSString stringWithFormat:GUANZHUSHANGCHANG];
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
+    [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        if ([[result stringValueForKey:@"errorcode"]intValue] == 0) {
+            [GMAPI showAutoHiddenMBProgressWithText:@"关注成功" addToView:self.view];
+            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_STORE object:nil];
+            
+            [self performSelector:@selector(gdismiss) withObject:[NSNumber numberWithBool:YES] afterDelay:2];
+            
+            
+        }else{
+            [GMAPI showAutoHiddenMBProgressWithText:result[@"msg"] addToView:self.view];
+            [self performSelector:@selector(gdismiss) withObject:[NSNumber numberWithBool:YES] afterDelay:2];
+        }
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [GMAPI showAutoHiddenMBProgressWithText:@"关注失败" addToView:self.view];
+        [self performSelector:@selector(gdismiss) withObject:[NSNumber numberWithBool:YES] afterDelay:2];
+    }];
+}
+
+//关注品牌店
+-(void)guanzhuPinpaidianWithShopId:(NSString *)shopId{
+    NSString *post = [NSString stringWithFormat:@"&shop_id=%@&authcode=%@",shopId,[GMAPI getAuthkey]];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    NSString *url = [NSString stringWithFormat:GGUANZHUPINPAIDIAN];
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];

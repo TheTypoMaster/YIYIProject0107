@@ -389,7 +389,7 @@
     [_backView addSubview:self.userFaceImv];
     [_backView addSubview:self.shop_mobile];
     [_backView addSubview:self.erweima];
-//    [_backView addSubview:self.shop_huiyuan];
+    [_backView addSubview:self.shop_huiyuan];
     
     
     
@@ -399,22 +399,7 @@
 }
 
 
--(void)lableClicked:(UITapGestureRecognizer*)ttt{
-    
-    if (ttt.view.tag == 50) {//手机号
-        
-    }else if (ttt.view.tag == 51){//店铺二维码
-        GmyshopErweimaViewController *ccc = [[GmyshopErweimaViewController alloc]init];
-        ccc.lastPageNavigationHidden = YES;
-        [self.navigationController pushViewController:ccc animated:YES];
-        
-        
-    }else if (ttt.view.tag == 51){//店铺会员
-        GmyShopHuiyuanViewController *ccc = [[GmyShopHuiyuanViewController alloc]init];
-        ccc.lastPageNavigationHidden = YES;
-        [self.navigationController pushViewController:ccc animated:YES];
-    }
-}
+
 
 //店铺二维码点击
 -(void)erweimaClicked{

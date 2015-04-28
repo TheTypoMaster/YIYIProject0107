@@ -30,65 +30,96 @@
         NSLog(@"imv.shopid = %@ imv.pid = %@",imv.shop_id,imv.product_id);
         NSLog(@"imv.shopName = %@  imv.pname = %@",imv.shop_name,imv.product_name);
         
-        
         if (imv.shop_id == nil) {
             continue;
         }
-        
-        
         
         for (UIView *view in imv.subviews) {
             [view removeFromSuperview];
         }
         
         
+        if ([imv.type isEqualToString:@"单品"]) {
+            //背景图
+            [imv setImage:[UIImage imageNamed:@"gttailink_have.png"]];
+            
+            //产品名称
+            UILabel *productName = [[UILabel alloc]initWithFrame:CGRectMake(17, 7, 85, 24)];
+            productName.text = imv.product_name;
+            productName.font = [UIFont systemFontOfSize:10];
+            productName.numberOfLines = 2;
+            productName.textColor = [UIColor whiteColor];
+            [imv addSubview:productName];
+            
+            //单价
+            UILabel *priceLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, CGRectGetMaxY(productName.frame), 90, 11)];
+            priceLabel.text = [NSString stringWithFormat:@"￥%@",imv.product_price];
+            priceLabel.font = [UIFont systemFontOfSize:10];
+            priceLabel.textColor = [UIColor whiteColor];
+            [imv addSubview:priceLabel];
+            
+            //地址：商场名
+            UILabel *adressLabel = [[UILabel alloc]initWithFrame:CGRectMake(7, CGRectGetMaxY(priceLabel.frame)+3, 97, 25)];
+            adressLabel.text = imv.shop_name;
+            adressLabel.font = [UIFont systemFontOfSize:10];
+            adressLabel.textAlignment = NSTextAlignmentLeft;
+            adressLabel.numberOfLines = 2;
+            adressLabel.textColor = [UIColor whiteColor];
+            [imv addSubview:adressLabel];
+            
+            //删除按钮
+            UIButton *deletBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            [deletBtn setFrame:CGRectMake(1, 1, 17, 17)];
+            [deletBtn setImage:[UIImage imageNamed:@"g_linkdelete.png"] forState:UIControlStateNormal];
+            [imv addSubview:deletBtn];
+            [deletBtn addTarget:self action:@selector(removeSelf:) forControlEvents:UIControlEventTouchUpInside];
+            deletBtn.tag = -imv.tag;
+            
+            CGPoint center = imv.center;
+            CGRect r = imv.frame;
+            r.size.height = 70;
+            r.size.width = 105;
+            [imv setFrame:r];
+            imv.center = center;
+        }else if ([imv.type isEqualToString:@"店铺"]){
+            //背景图
+            [imv setImage:[UIImage imageNamed:@"gttailink_have.png"]];
+            
+            //店铺名
+            UILabel *productName = [[UILabel alloc]initWithFrame:CGRectMake(17, 7, 85, 35)];
+            productName.text = imv.shop_name;
+            productName.font = [UIFont systemFontOfSize:10];
+            productName.numberOfLines = 3;
+            productName.textColor = [UIColor whiteColor];
+            [imv addSubview:productName];
+            
+            
+            //地址
+            UILabel *adressLabel = [[UILabel alloc]initWithFrame:CGRectMake(9, CGRectGetMaxY(productName.frame)+3, 97, 25)];
+            adressLabel.text = [NSString stringWithFormat:@"地址:%@",imv.product_price];
+            adressLabel.font = [UIFont systemFontOfSize:10];
+            adressLabel.textAlignment = NSTextAlignmentLeft;
+            adressLabel.numberOfLines = 2;
+            adressLabel.textColor = [UIColor whiteColor];
+            [imv addSubview:adressLabel];
+            
+            //删除按钮
+            UIButton *deletBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            [deletBtn setFrame:CGRectMake(1, 1, 17, 17)];
+            [deletBtn setImage:[UIImage imageNamed:@"g_linkdelete.png"] forState:UIControlStateNormal];
+            [imv addSubview:deletBtn];
+            [deletBtn addTarget:self action:@selector(removeSelf:) forControlEvents:UIControlEventTouchUpInside];
+            deletBtn.tag = -imv.tag;
+            
+            CGPoint center = imv.center;
+            CGRect r = imv.frame;
+            r.size.height = 70;
+            r.size.width = 105;
+            [imv setFrame:r];
+            imv.center = center;
+        }
         
         
-        
-        //背景图
-        [imv setImage:[UIImage imageNamed:@"gttailink_have.png"]];
-        
-        
-        //产品名称
-        UILabel *productName = [[UILabel alloc]initWithFrame:CGRectMake(17, 7, 85, 24)];
-        productName.text = imv.product_name;
-        productName.font = [UIFont systemFontOfSize:10];
-        productName.numberOfLines = 2;
-        productName.textColor = [UIColor whiteColor];
-        [imv addSubview:productName];
-        
-        //单价
-        UILabel *priceLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, CGRectGetMaxY(productName.frame), 90, 11)];
-        priceLabel.text = [NSString stringWithFormat:@"￥%@",imv.product_price];
-        priceLabel.font = [UIFont systemFontOfSize:10];
-        priceLabel.textColor = [UIColor whiteColor];
-        [imv addSubview:priceLabel];
-        
-        //地址
-        UILabel *adressLabel = [[UILabel alloc]initWithFrame:CGRectMake(7, CGRectGetMaxY(priceLabel.frame)+3, 97, 25)];
-        adressLabel.text = imv.shop_name;
-        adressLabel.font = [UIFont systemFontOfSize:10];
-        adressLabel.textAlignment = NSTextAlignmentCenter;
-        adressLabel.numberOfLines = 2;
-        adressLabel.textColor = [UIColor whiteColor];
-        [imv addSubview:adressLabel];
-        
-        //删除按钮
-        UIButton *deletBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [deletBtn setFrame:CGRectMake(1, 1, 17, 17)];
-        [deletBtn setImage:[UIImage imageNamed:@"g_linkdelete.png"] forState:UIControlStateNormal];
-        [imv addSubview:deletBtn];
-        [deletBtn addTarget:self action:@selector(removeSelf:) forControlEvents:UIControlEventTouchUpInside];
-        deletBtn.tag = -imv.tag;
-        
-        
-        
-        CGPoint center = imv.center;
-        CGRect r = imv.frame;
-        r.size.height = 70;
-        r.size.width = 105;
-        [imv setFrame:r];
-        imv.center = center;
         
         
         
@@ -292,7 +323,8 @@
 }
 
 
--(void)setGmoveImvProductId:(NSString *)productId shopid:(NSString*)theShopId productName:(NSString *)theProductName shopName:(NSString *)theShopName price:(NSString *)thePrice{
+//当锚点为店铺的时候 shopName为店铺名 price为地址
+-(void)setGmoveImvProductId:(NSString *)productId shopid:(NSString*)theShopId productName:(NSString *)theProductName shopName:(NSString *)theShopName price:(NSString *)thePrice type:(NSString *)theType{
     
     if (!productId) {
         productId = @"0";
@@ -306,9 +338,10 @@
             [imv setImage:[UIImage imageNamed:@"GTtailj_bg.png"]];
             imv.shop_id = theShopId;
             imv.product_id = productId;
-            imv.shop_name = theProductName;
-            imv.product_name = theShopName;
+            imv.shop_name = theShopName;
+            imv.product_name = theProductName;
             imv.product_price = thePrice;
+            imv.type = theType;
         }
     }
     

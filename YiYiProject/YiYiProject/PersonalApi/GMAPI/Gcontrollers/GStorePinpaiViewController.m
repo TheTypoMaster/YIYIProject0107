@@ -109,12 +109,6 @@
     
     self.view.backgroundColor = RGBCOLOR(242, 242, 242);
     
-    if ([self.guanzhuleixing isEqualToString:@"精品店"]) {
-        
-    }else{
-        
-    }
-    
     
 
     
@@ -419,6 +413,7 @@
     
     //地址
     UILabel *adressLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(daohangBtn.frame)+8, 0, DEVICE_WIDTH-CGRectGetMaxX(daohangBtn.frame)-58, downDanghangView.frame.size.height)];
+    self.adressLabelStr = [result stringValueForKey:@"address"];
     adressLabel.text = [NSString stringWithFormat:@"地址：%@",[result stringValueForKey:@"address"]];
     adressLabel.font = [UIFont systemFontOfSize:13];
     adressLabel.numberOfLines = 2;
@@ -588,7 +583,14 @@
     
     if (self.isChooseProductLink) {
         GAddTtaiImageLinkViewController *rrr = self.navigationController.viewControllers[0];
-        [rrr setGmoveImvProductId:@"0" shopid:self.shopId productName:@" " shopName:_mallNameLabel.text price:@" "];
+        if ([self.guanzhuleixing isEqualToString:@"精品店"]) {
+            [rrr setGmoveImvProductId:@"0" shopid:self.shopId productName:@" " shopName:self.storeNameStr price:self.adressLabelStr type:@"店铺"];
+            
+        }else if ([self.guanzhuleixing isEqualToString:@"品牌店"]){
+            NSString *aaa = [NSString stringWithFormat:@"%@.%@",self.pinpaiNameStr,self.storeNameStr];
+            [rrr setGmoveImvProductId:@"0" shopid:self.shopId productName:@" " shopName:aaa price:self.adressLabelStr type:@"店铺"];
+            
+        }
         [self.navigationController popToViewController:rrr animated:YES];
         return;
     }

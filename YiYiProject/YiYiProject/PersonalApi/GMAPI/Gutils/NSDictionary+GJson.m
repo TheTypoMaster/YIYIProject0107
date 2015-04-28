@@ -112,6 +112,7 @@
 }
 
 - (NSString *)stringValueForKey:(NSString *)key {
+    
     return [self stringValueForKey:key defaultValue:@" "];
 }
 

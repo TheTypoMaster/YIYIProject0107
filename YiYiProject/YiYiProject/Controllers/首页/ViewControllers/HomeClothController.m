@@ -198,23 +198,23 @@
 }
 
 //关注
--(void)notificationGuanzhupinpai{
+-(void)notificationGuanzhupinpai{//品牌
     _guanzhuPinpaiDataArray = nil;
     [self prepareGuanzhuPinpai];
 }
 
--(void)notificationGuanzhustore{
+-(void)notificationGuanzhustore{//商场
     _guanzhuStoreDataArray = nil;
     [self prepareGuanzhuStore];
 }
 
 
 //取消关注
--(void)notificationquxiaoguanzhustore{
+-(void)notificationquxiaoguanzhustore{//商场
     _guanzhuStoreDataArray = nil;
     [self prepareGuanzhuStore];
 }
--(void)notificationquxiaoguanzhupinpai{
+-(void)notificationquxiaoguanzhupinpai{//品牌
     _guanzhuPinpaiDataArray = nil;
     [self prepareGuanzhuPinpai];
 }
@@ -396,7 +396,11 @@
         NSLog(@"%@",result);
         
         _guanzhuStoreDataArray = [result objectForKey:@"list"];
-        _scrollview_nearbyView.dataArray = _guanzhuStoreDataArray;
+        
+        if (_guanzhuBtn_Store.selected == YES) {
+            _scrollview_nearbyView.dataArray = _guanzhuStoreDataArray;
+        }
+        
         if (_guanzhuStoreDataArray.count == 0) {
             [GMAPI showAutoHiddenMidleQuicklyMBProgressWithText:@"您还没有关注任何商场" addToView:self.view];
         }
@@ -489,7 +493,10 @@
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         NSLog(@"%@",result);
         _guanzhuPinpaiDataArray = [result objectForKey:@"brand_data"];
-        _scrollView_pinpai.dataArray = _guanzhuPinpaiDataArray;
+        if (_guanzhuBtn_pinpai.selected == YES) {
+            _scrollView_pinpai.dataArray = _guanzhuPinpaiDataArray;
+        }
+        
         if (_guanzhuPinpaiDataArray.count == 0) {
             [GMAPI showAutoHiddenMidleQuicklyMBProgressWithText:@"您还没有关注任何品牌" addToView:self.view];
         }

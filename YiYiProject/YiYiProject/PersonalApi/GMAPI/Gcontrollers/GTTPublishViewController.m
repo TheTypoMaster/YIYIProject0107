@@ -13,6 +13,8 @@
 #import "GImvUpScrollView.h"
 #import "GAddTtaiImageLinkViewController.h"
 
+#import "NSDictionary+GJson.h"
+
 @interface GTTPublishViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate>
 {
     BOOL imageIsValid;//图片是否有效
@@ -82,11 +84,34 @@
 -(void)upLoadImage:(UIImage *)aImage{
     
     NSString *content = self.contentTF.text;
-    NSString *brand = [NSString stringWithFormat:@"%@,%@,%@",self.brandTF.text,self.modelTF.text,self.priceTF.text];
-    NSString *img_x = [self.maodianDic objectForKey:@"locationxbili"];
-    NSString *img_y = [self.maodianDic objectForKey:@"locationybili"];
-    NSString *shop_ids = [self.maodianDic objectForKey:@"shopIds"];
-    NSString *product_ids = [self.maodianDic objectForKey:@"productid"];
+    if (self.contentTF.text.length == 0) {
+        content = @" ";
+    }
+//    NSString *brand = [NSString stringWithFormat:@"%@,%@,%@",self.brandTF.text,self.modelTF.text,self.priceTF.text];
+    
+    NSDictionary *theDic;
+    if (self.maodianDic) {
+        NSString *img_x = [self.maodianDic stringValueForKey:@"locationxbili"];
+        NSString *img_y = [self.maodianDic stringValueForKey:@"locationybili"];
+        NSString *shop_ids = [self.maodianDic stringValueForKey:@"shopIds"];
+        NSString *product_ids = [self.maodianDic stringValueForKey:@"productid"];
+        theDic = @{
+                   @"authcode":[GMAPI getAuthkey],
+                   @"tt_content":content,
+                   @"img_x":img_x,
+                   @"img_y":img_y,
+                   @"shop_ids":shop_ids,
+                   @"product_ids":product_ids
+                   };
+    }else{
+        theDic = @{
+                   @"authcode":[GMAPI getAuthkey],
+                   @"tt_content":content
+                           };
+    }
+    
+    
+    
     
     //上传的url
     NSString *uploadImageUrlStr = TTAI_ADD;
@@ -96,15 +121,7 @@
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     AFHTTPRequestOperation  * o2= [manager
                                    POST:uploadImageUrlStr
-                                   parameters:@{
-                                                @"authcode":[GMAPI getAuthkey],
-                                                @"ttInfo":brand,
-                                                @"tt_content":content,
-                                                @"img_x":img_x,
-                                                @"img_y":img_y,
-                                                @"shop_ids":shop_ids,
-                                                @"product_ids":product_ids
-                                                }
+                                   parameters:theDic
                                    constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
                                    {
                                        //开始拼接表单
@@ -173,9 +190,9 @@
 - (void)tapToHiddenKeyboard:(UITapGestureRecognizer *)tap
 {
     [self.contentTF resignFirstResponder];
-    [self.brandTF resignFirstResponder];
-    [self.modelTF resignFirstResponder];
-    [self.priceTF resignFirstResponder];
+//    [self.brandTF resignFirstResponder];
+//    [self.modelTF resignFirstResponder];
+//    [self.priceTF resignFirstResponder];
     
     [self updateViewFrameY:64];
 }
@@ -309,15 +326,15 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if (textField == self.brandTF) {
-        
-        [_modelTF becomeFirstResponder];
-    }else if (textField == _modelTF){
-        [_priceTF becomeFirstResponder];
-    }else if (textField == _priceTF){
-        
-        [self tapToHiddenKeyboard:nil];
-    }
+//    if (textField == self.brandTF) {
+//        
+//        [_modelTF becomeFirstResponder];
+//    }else if (textField == _modelTF){
+//        [_priceTF becomeFirstResponder];
+//    }else if (textField == _priceTF){
+//        
+//        [self tapToHiddenKeyboard:nil];
+//    }
     
     return YES;
 }

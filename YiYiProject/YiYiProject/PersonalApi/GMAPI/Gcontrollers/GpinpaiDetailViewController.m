@@ -29,6 +29,9 @@
     
     GcustomStoreTableViewCell *_tmpCell;//用户获取自定义单元格高度
     
+    //关注相关
+    UIButton *_my_right_button;
+    
 }
 @end
 
@@ -45,15 +48,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeText];
     self.view.backgroundColor = [UIColor whiteColor];
     self.myTitleLabel.textColor = RGBCOLOR(252, 74, 139);
     self.myTitle = self.pinpaiName;
-    
-    
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(100, 100, 100, 100)];
-    label.text = self.pinpaiIdStr;
-    [self.view addSubview:label];
     
     
     
@@ -72,7 +70,27 @@
     _refreshHeaderView.delegate = self;
     [_tableView addSubview:_refreshHeaderView];
     
-    [self prepareNetData];
+    
+    
+    _my_right_button = [UIButton buttonWithType:UIButtonTypeCustom];
+    _my_right_button.frame = CGRectMake(0,0,60,44);
+    _my_right_button.titleLabel.textAlignment = NSTextAlignmentRight;
+    _my_right_button.titleLabel.font = [UIFont systemFontOfSize:15];
+    [_my_right_button setTitleColor:RGBCOLOR(253, 104, 157) forState:UIControlStateNormal];
+    [_my_right_button addTarget:self action:@selector(rightButtonTap:) forControlEvents:UIControlEventTouchUpInside];
+//    _my_right_button.userInteractionEnabled = NO;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:_my_right_button];
+    
+    
+    
+    [self getGuanzhuYesOrNoForPinpai];//获取是否关注了该品牌
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -250,5 +268,118 @@
     return 0.01f;
 }
 
+
+
+
+
+
+//关注品牌
+-(void)guanzhupinpai{
+    //判断是否关注品牌
+    NSLog(@"self.guanzhu:%@",self.guanzhu);
+    
+    if ([self.guanzhu intValue] == 0) {//未关注
+        NSString *post = [NSString stringWithFormat:@"&brand_id=%@&authcode=%@",self.pinpaiIdStr,[GMAPI getAuthkey]];
+        NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+        NSString *url = [NSString stringWithFormat:GUANZHUPINPAI];
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        
+        GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
+        [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            if ([[result stringValueForKey:@"errorcode"]intValue] == 0) {
+                [GMAPI showAutoHiddenMBProgressWithText:@"关注成功" addToView:self.view];
+                [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_PINPAI object:nil];
+                [_my_right_button setTitle:@"已关注" forState:UIControlStateNormal];
+                self.guanzhu = @"1";
+            }
+        } failBlock:^(NSDictionary *failDic, NSError *erro) {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [GMAPI showAutoHiddenMBProgressWithText:@"关注失败" addToView:self.view];
+        }];
+    }else if ([self.guanzhu intValue] == 1){
+        NSString *post = [NSString stringWithFormat:@"&brand_id=%@&authcode=%@",self.pinpaiIdStr,[GMAPI getAuthkey]];
+        NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+        NSString *url = [NSString stringWithFormat:QUXIAOGUANZHUPINPAI];
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
+        [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            
+            if ([[result stringValueForKey:@"errorcode"]intValue]==0) {
+                [GMAPI showAutoHiddenMBProgressWithText:@"取消关注成功" addToView:self.view];
+                [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_PINPAI_QUXIAO object:nil];
+                [_my_right_button setTitle:@"关注" forState:UIControlStateNormal];
+                self.guanzhu = @"0";
+            }
+            
+            
+        } failBlock:^(NSDictionary *failDic, NSError *erro) {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [GMAPI showAutoHiddenMBProgressWithText:@"取消关注失败" addToView:self.view];
+        }];
+    }
+}
+
+
+//获取是否关注 品牌
+-(void)getGuanzhuYesOrNoForPinpai{
+    
+    NSString *api = [NSString stringWithFormat:@"%@&brand_id=%@&authcode=%@",GUANZHUPINPAI_ISORNO,self.pinpaiIdStr,[GMAPI getAuthkey]];
+    GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+    [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        NSLog(@"%@",result);
+        
+        if ([result stringValueForKey:@"errorcode"]) {
+            self.guanzhu = [result stringValueForKey:@"relation"];
+        }
+        
+        if ([self.guanzhu intValue]==0) {//未关注
+            [_my_right_button setTitle:@"关注" forState:UIControlStateNormal];
+        }else if ([self.guanzhu intValue] == 1){//已关注
+            [_my_right_button setTitle:@"已关注" forState:UIControlStateNormal];
+        }
+        
+        [self prepareNetData];//获取品牌附近的商场
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    }];
+}
+
+
+-(void)rightButtonTap:(UIButton *)sender
+{
+    
+    NSLog(@"在这里添加关注");
+    
+    
+    //判断是否登录
+    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
+        
+        LoginViewController *login = [[LoginViewController alloc]init];
+        
+        UINavigationController *unVc = [[UINavigationController alloc]initWithRootViewController:login];
+        
+        [self presentViewController:unVc animated:YES completion:nil];
+        
+        
+        return;
+        
+    }else{
+        
+        
+        [self guanzhupinpai];
+        
+        
+    }
+    
+    
+    
+    
+}
 
 @end
