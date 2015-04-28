@@ -50,12 +50,13 @@
         _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,frame.size.width,frame.size.height)];
         //        _imageView.image = theImage;
         _imageView.contentMode = UIViewContentModeScaleAspectFit;
+        
         [self addSubview:_imageView];
         
         // 进度条
         _photoLoadingView = [[MJPhotoLoadingView alloc] init];
-        _photoLoadingView.center = CGPointMake(self.frame.size.width / 2.f, self.frame.size.height / 2.f);
-        [self addSubview:_photoLoadingView];
+//        _photoLoadingView.center = CGPointMake(self.frame.size.width / 2.f, self.frame.size.height / 2.f);
+//        [self addSubview:_photoLoadingView];
         
         // 监听点击
         UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
@@ -254,6 +255,9 @@
     [_imageView removeFromSuperview];
     [[UIApplication sharedApplication].keyWindow addSubview:_imageView];
     
+//    [_clearView removeFromSuperview];
+//    [[UIApplication sharedApplication].keyWindow addSubview:_clearView];
+    
     if ([self.photoViewDelegate respondsToSelector:@selector(photoViewDidEndZoom:)]) {
         [self.photoViewDelegate photoViewDidEndZoom:self];
     }
@@ -262,9 +266,9 @@
         
         _imageView.frame = [_photo.srcImageView.superview convertRect:_photo.srcImageView.frame toView:[UIApplication sharedApplication].keyWindow];
         
-        _clearView.frame = [_photo.srcImageView.superview convertRect:_photo.srcImageView.frame toView:[UIApplication sharedApplication].keyWindow];
-        
-        //        _clearView.top -= 64;
+//        _clearView.frame = [_photo.srcImageView.superview convertRect:_photo.srcImageView.frame toView:[UIApplication sharedApplication].keyWindow];
+//
+//                _clearView.top -= 64;
         
         // gif图片仅显示第0张
         if (_imageView.image.images) {

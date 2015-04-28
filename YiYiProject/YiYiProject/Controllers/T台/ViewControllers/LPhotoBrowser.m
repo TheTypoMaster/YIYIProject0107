@@ -297,14 +297,15 @@
 
 - (void)clickToClose:(UIButton *)sender
 {
-//    if (self.isPresent) {
-//        
-//        [self hide];
-//        [self dismissViewControllerAnimated:NO completion:^{
-//            
-//        }];
-//        return;
-//    }
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        
+        
+        
+    } completion:^(BOOL finished) {
+        
+        
+    }];
     
     [self.clearView removeFromSuperview];
     [self hide];
@@ -367,130 +368,6 @@
 }
 
 /**
- *  添加锚点
- */
-- (void)addMaoDian:(TDetailModel *)aModel
-{
-    //史忠坤修改
-    
-    int image_have_detail=0;
-    
-    NSArray *img_detail=[NSArray array];
-    
-    if ([aModel.image isKindOfClass:[NSDictionary class]]) {
-        
-        image_have_detail=[aModel.image[@"have_detail"]intValue ];
-        
-        img_detail=aModel.image[@"img_detail"];
-        
-    }
-       if (image_have_detail>0) {
-        //代表有锚点，0代表没有锚点
-           
-           
-        for (int i=0; i<img_detail.count; i++) {
-            
-            /*{
-             dateline = 1427958416;
-             "img_x" = "0.2000";
-             "img_y" = "0.4000";
-             "product_id" = 100;
-             "shop_id" = 2654;
-             "tt_id" = 26;
-             "tt_img_id" = 0;
-             "tt_img_info_id" = 1;
-             },*/
-            NSDictionary *maodian_detail=(NSDictionary *)[img_detail objectAtIndex:i];
-            
-            
-            [self createbuttonWithModel:maodian_detail];
-            
-        }}
-
-}
-
-#pragma mark--等到加载完图片之后再加载图片上的三个button
-
--(void)createbuttonWithModel:(NSDictionary*)maodian_detail{
-    
-    
-    UIView *bigImageView = ((MJPhotoView *)[self currentPhotoView]).imageView;
-    
-    bigImageView.userInteractionEnabled= YES;
-    
-    
-    NSInteger product_id=[maodian_detail[@"product_id"] integerValue];
-    
-    NSInteger shop_id=[maodian_detail[@"shop_id"] integerValue];
-    
-    float dx=[maodian_detail[@"img_x"] floatValue];
-    float dy=[maodian_detail[@"img_y"] floatValue];
-    
-    if (product_id>0) {
-        //说明是单品
-        
-        UILabel *_centerLabel=[[UILabel alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH/3, 100)];
-        _centerLabel.backgroundColor=RGBCOLOR(70,81,76);
-        _centerLabel.alpha = 0.8f;
-        _centerLabel.textColor=[UIColor whiteColor];
-        _centerLabel.font=[UIFont systemFontOfSize:13];
-        _centerLabel.layer.cornerRadius=5;
-        _centerLabel.layer.masksToBounds=YES;
-        _centerLabel.layer.borderWidth = 1.f;
-        _centerLabel.layer.borderColor = [RGBCOLOR(252, 76, 139)CGColor];
-        _centerLabel.numberOfLines=3;
-        _centerLabel.textAlignment = NSTextAlignmentCenter;
-        _centerLabel.text=maodian_detail[@"product_name"];
-        _centerLabel.tag=product_id;
-        
-        
-        //        _centerLabel.center = CGPointMake(dx*bigImageView.frame.size.width, dy*bigImageView.frame.size.height);
-        
-        UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 13, 13)];
-        [imv setImage:[UIImage imageNamed:@"gbutton.png"]];
-        imv.center = CGPointMake(dx*bigImageView.frame.size.width, dy*bigImageView.frame.size.height);
-        [bigImageView addSubview:imv];
-        
-        _centerLabel.frame=CGRectMake(CGRectGetMaxX(imv.frame), imv.frame.origin.y, _centerLabel.frame.size.width+4, _centerLabel.frame.size.height+4);
-        [_centerLabel sizeToFit];
-        
-        [bigImageView addSubview:_centerLabel];
-        
-        UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(turntodanpin:)];
-        _centerLabel.userInteractionEnabled=YES;
-        
-        [_centerLabel addGestureRecognizer:tap];
-        
-    }else{
-        
-        //说明是品牌店面
-        UILabel *_centerLabel=[[UILabel alloc]initWithFrame:CGRectZero];
-        _centerLabel.backgroundColor=RGBCOLOR(255, 0, 0);
-        _centerLabel.textColor=[UIColor colorWithRed:220/255.f green:220/255.f blue:230/255.f alpha:1];
-        _centerLabel.font=[UIFont systemFontOfSize:12];
-        _centerLabel.layer.cornerRadius=3;
-        _centerLabel.layer.masksToBounds=YES;
-        _centerLabel.numberOfLines=3;
-        _centerLabel.textAlignment=NSTextAlignmentCenter;
-        _centerLabel.text=maodian_detail[@"shop_name"];
-        [_centerLabel sizeToFit];
-        _centerLabel.tag=shop_id;
-        _centerLabel.frame=CGRectMake(dx*bigImageView.frame.size.width, dy*bigImageView.frame.size.height, _centerLabel.frame.size.width+4, _centerLabel.frame.size.height+4);
-        [bigImageView addSubview:_centerLabel];
-        
-        UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(turntoshangchang:)];
-        _centerLabel.userInteractionEnabled=YES;
-        
-        [_centerLabel addGestureRecognizer:tap];
-        
-    }
-    
-}
-
-
-
-
-/**
  *  显示或隐藏tools
  */
 - (void)showOrHiddenTool
@@ -507,6 +384,7 @@
     }];
 }
 
+#pragma mark---添加锚点
 
 /**
  *  添加锚点
@@ -534,17 +412,22 @@
          *  由于image 和 imageView不能一样大小,需要计算image实际坐标
          */
         
-        CGSize size_image = imageView.image.size;//图片实际大小
+//        CGSize size_image = imageView.image.size;//图片实际大小
+//        
+//        CGFloat realWidth = DEVICE_WIDTH;//显示大小
+//        
+//        CGFloat realHeight = size_image.height / (size_image.width/DEVICE_WIDTH);//显示大小
+//        
+//        CGFloat dis = (DEVICE_HEIGHT - realHeight) / 2.f;//imageView和屏幕一样大小,image相对于imageView坐标偏移
         
-        CGFloat realWidth = DEVICE_WIDTH;//显示大小
+//        self.clearView = [[UIView alloc]initWithFrame:CGRectMake(0, dis, realWidth, realHeight)];
         
-        CGFloat realHeight = size_image.height / (size_image.width/DEVICE_WIDTH);//显示大小
+        self.clearView = [[UIView alloc]initWithFrame:imageView.bounds];
+//        _clearView.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.5];
         
-        CGFloat dis = (DEVICE_HEIGHT - realHeight) / 2.f;//imageView和屏幕一样大小,image相对于imageView坐标偏移
-        
-        self.clearView = [[UIView alloc]initWithFrame:CGRectMake(0, dis, realWidth, realHeight)];
         _clearView.backgroundColor = [UIColor clearColor];
-        [imageView addSubview:_clearView];
+        
+        [imageView.superview addSubview:_clearView];
         imageView.userInteractionEnabled = YES;
 
         MJPhotoView *bigImageView = (MJPhotoView *)[self currentPhotoView];
@@ -590,20 +473,24 @@
      *  由于image 和 imageView不能一样大小,需要计算image实际坐标
      */
     
-//    CGSize size_image = imageView.image.size;//图片实际大小
-//    
-//    CGFloat realWidth = DEVICE_WIDTH;//显示大小
-//    
-//    CGFloat realHeight = size_image.height / (size_image.width/DEVICE_WIDTH);//显示大小
-//    
-//    CGFloat dis = (DEVICE_HEIGHT - realHeight) / 2.f;//imageView和屏幕一样大小,image相对于imageView坐标偏移
+    CGSize size_image = imageView.image.size;//图片实际大小
+    
+    CGFloat realWidth = DEVICE_WIDTH;//显示大小
+    
+    CGFloat realHeight = size_image.height / (size_image.width/DEVICE_WIDTH);//显示大小
+    
+    CGFloat dis = (DEVICE_HEIGHT - realHeight) / 2.f;//imageView和屏幕一样大小,image相对于imageView坐标偏移
     
     __weak typeof(self)weakSelf = self;
     if (product_id>0) {
         //说明是单品
         
         NSString *title = maodian_detail[@"product_name"];
-        CGPoint point = CGPointMake(dx * self.clearView.width, dy * self.clearView.height);
+//        CGPoint point = CGPointMake(dx * self.clearView.width, dy * self.clearView.height);
+        
+        CGPoint point = CGPointMake(dx * realWidth, dy * realHeight + dis);
+
+        
         AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title];
         [self.clearView addSubview:pointView];
         pointView.infoId = productId;
@@ -622,9 +509,13 @@
         //说明是品牌店面
         
         NSString *title = maodian_detail[@"shop_name"];
-        CGPoint point = CGPointMake(dx * imageView.width, dy * imageView.height);
+//        CGPoint point = CGPointMake(dx * self.clearView.width, dy * self.clearView.width);
+        
+        CGPoint point = CGPointMake(dx * realWidth, dy * realHeight + dis);
+
+        
         AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title];
-        [imageView addSubview:pointView];
+        [self.clearView addSubview:pointView];
         
         pointView.infoId = shopId;
         pointView.infoName = title;

@@ -142,7 +142,7 @@
         
         UIButton *clickButton = [UIButton buttonWithType:UIButtonTypeCustom];
         clickButton.frame = self.bounds;
-//        clickButton.backgroundColor = [UIColor redColor];
+        clickButton.backgroundColor = [UIColor clearColor];
         [clickButton addTarget:self action:@selector(clickToDo:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:clickButton];
         
