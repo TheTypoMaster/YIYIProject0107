@@ -615,7 +615,11 @@
                     self.guanzhu = @"1";
                 }else{
                     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                    [GMAPI showAutoHiddenMBProgressWithText:result[@"msg"] addToView:self.view];
+                    if ([[result stringValueForKey:@"errorcode"]intValue] > 2000) {
+                        [GMAPI showAutoHiddenMBProgressWithText:[result stringValueForKey:@"msg"] addToView:self.view];
+                    }else{
+                        [GMAPI showAutoHiddenMBProgressWithText:@"关注失败" addToView:self.view];
+                    }
                 }
             } failBlock:^(NSDictionary *failDic, NSError *erro) {
                 [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
@@ -639,7 +643,11 @@
                     self.guanzhu = @"0";
                 }else{
                     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                    [GMAPI showAutoHiddenMBProgressWithText:result[@"msg"] addToView:self.view];
+                    if ([[result stringValueForKey:@"errorcode"]intValue] > 2000) {
+                        [GMAPI showAutoHiddenMBProgressWithText:[result stringValueForKey:@"msg"] addToView:self.view];
+                    }else{
+                        [GMAPI showAutoHiddenMBProgressWithText:@"取消关注失败" addToView:self.view];
+                    }
                 }
                 
                 
@@ -674,7 +682,14 @@
                     self.guanzhu = @"1";
                 }else{
                     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                    [GMAPI showAutoHiddenMBProgressWithText:@"关注失败" addToView:self.view];
+                    
+                    if ([[result stringValueForKey:@"errorcode"]intValue] > 2000) {
+                        [GMAPI showAutoHiddenMBProgressWithText:[result stringValueForKey:@"msg"] addToView:self.view];
+                    }else{
+                        [GMAPI showAutoHiddenMBProgressWithText:@"关注失败" addToView:self.view];
+                    }
+                    
+                    
                 }
             } failBlock:^(NSDictionary *failDic, NSError *erro) {
                 [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
@@ -695,7 +710,12 @@
                     self.guanzhu = @"0";
                 }else{
                     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                    [GMAPI showAutoHiddenMBProgressWithText:@"取消关注失败" addToView:self.view];
+                    if ([[result stringValueForKey:@"errorcode"]intValue] > 2000) {
+                        [GMAPI showAutoHiddenMBProgressWithText:[result stringValueForKey:@"msg"] addToView:self.view];
+                    }else{
+                        [GMAPI showAutoHiddenMBProgressWithText:@"取消关注失败" addToView:self.view];
+                    }
+                    
                 }
             } failBlock:^(NSDictionary *failDic, NSError *erro) {
                 [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
