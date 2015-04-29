@@ -414,22 +414,22 @@
          *  由于image 和 imageView不能一样大小,需要计算image实际坐标
          */
         
-//        CGSize size_image = imageView.image.size;//图片实际大小
-//        
-//        CGFloat realWidth = DEVICE_WIDTH;//显示大小
-//        
-//        CGFloat realHeight = size_image.height / (size_image.width/DEVICE_WIDTH);//显示大小
-//        
-//        CGFloat dis = (DEVICE_HEIGHT - realHeight) / 2.f;//imageView和屏幕一样大小,image相对于imageView坐标偏移
+        CGSize size_image = imageView.image.size;//图片实际大小
         
-//        self.clearView = [[UIView alloc]initWithFrame:CGRectMake(0, dis, realWidth, realHeight)];
+        CGFloat realWidth = DEVICE_WIDTH;//显示大小
         
-        self.clearView = [[UIView alloc]initWithFrame:imageView.bounds];
+        CGFloat realHeight = size_image.height / (size_image.width/DEVICE_WIDTH);//显示大小
+        
+        CGFloat dis = (DEVICE_HEIGHT - realHeight) / 2.f;//imageView和屏幕一样大小,image相对于imageView坐标偏移
+        
+        self.clearView = [[UIView alloc]initWithFrame:CGRectMake(0, dis, realWidth, realHeight)];
+        
+//        self.clearView = [[UIView alloc]initWithFrame:imageView.bounds];
 //        _clearView.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.5];
         
         _clearView.backgroundColor = [UIColor clearColor];
         
-        [imageView.superview addSubview:_clearView];
+        [imageView addSubview:_clearView];
         imageView.userInteractionEnabled = YES;
 
         MJPhotoView *bigImageView = (MJPhotoView *)[self currentPhotoView];
@@ -488,9 +488,9 @@
         //说明是单品
         
         NSString *title = maodian_detail[@"product_name"];
-//        CGPoint point = CGPointMake(dx * self.clearView.width, dy * self.clearView.height);
+        CGPoint point = CGPointMake(dx * self.clearView.width, dy * self.clearView.height);
         
-        CGPoint point = CGPointMake(dx * realWidth, dy * realHeight + dis);
+//        CGPoint point = CGPointMake(dx * realWidth, dy * realHeight + dis);
 
         
         AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title];
@@ -511,9 +511,9 @@
         //说明是品牌店面
         
         NSString *title = maodian_detail[@"shop_name"];
-//        CGPoint point = CGPointMake(dx * self.clearView.width, dy * self.clearView.width);
+        CGPoint point = CGPointMake(dx * self.clearView.width, dy * self.clearView.width);
         
-        CGPoint point = CGPointMake(dx * realWidth, dy * realHeight + dis);
+//        CGPoint point = CGPointMake(dx * realWidth, dy * realHeight + dis);
 
         
         AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title];
