@@ -111,6 +111,9 @@ alpha:(a)]
 //获取坐标
 #define NOTIFICATION_REMOTE_MESSAGE @"remoteMessage"
 
+//修改单品完成
+#define GEDITPRODUCT_SUCCESS @"GeditProduct_success"
+
 
 //登录类型 normal为正常手机登陆，sweibo、qq、weixin分别代表新浪微博、qq、微信登陆
 typedef enum{

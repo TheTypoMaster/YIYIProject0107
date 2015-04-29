@@ -77,7 +77,7 @@
     
     self.indexes = [NSMutableArray arrayWithCapacity:1];
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GupDateProduct) name:NOTIFICATION_FABUDANPIN_SUCCESS object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GupDateProduct) name:GEDITPRODUCT_SUCCESS object:nil];
     
     
 }

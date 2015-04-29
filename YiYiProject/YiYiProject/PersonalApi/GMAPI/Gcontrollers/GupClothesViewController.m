@@ -118,6 +118,12 @@
 }
 
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    
+    return YES;
+}
+
 
 -(void)setDataWithModel:(ProductModel *)theModel{
     UITextField *tf = _shurukuangArray[0];//品牌
@@ -131,7 +137,7 @@
         tf.text = theModel.product_brand_name;
     }
     tf1.text = theModel.product_name;
-    tf2.text = theModel.product_sku;
+    tf2.text = theModel.original_price;
     tf3.text = theModel.product_price;
     CGFloat zhekou = theModel.discount_num;
     int zhe = zhekou*100;
@@ -149,7 +155,13 @@
     _leixingLabel.textColor = [UIColor blackColor];
     
     
-    
+    if ([theModel.product_gender intValue] ==2) {
+        _genderLabel.text = @"男";
+        _genderLabel.textColor = [UIColor blackColor];
+    }else if ([theModel.product_gender intValue] == 1){
+        _genderLabel.text = @"女";
+        _genderLabel.textColor = [UIColor blackColor];
+    }
     
     UIButton *btn = (UIButton*)[_mainScrollView viewWithTag:567];
     [btn setTitle:@"完成" forState:UIControlStateNormal];
@@ -257,6 +269,9 @@
 }
 
 //空白点击手键盘end======
+
+
+
 
 
 -(void)creatTijiaoBtn{
@@ -384,7 +399,6 @@
                                                     @"product_brand_id":self.mallInfo.brand_id,//产品品牌id
                                                     @"product_brand_name":tf.text,//品牌名称
                                                     @"product_shop_id":self.userInfo.shop_id,//商店id
-                                                    @"product_sku":tf2.text,//产品唯一标示
                                                     @"product_hotsale":product_hotsale,//是否热销
                                                     @"product_new":product_new,//是否新品
                                                     @"discount_num":zhekouStr,//打折力度
@@ -435,8 +449,8 @@
                                            
                                            if ([[mydic objectForKey:@"errorcode"]intValue]==0) {
                                                [GMAPI showAutoHiddenMBProgressWithText:@"修改成功" addToView:self.view];
-                                               [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_FABUDANPIN_SUCCESS object:nil];
-                                               [self performSelector:@selector(fabuyifuSuccessToGoBack) withObject:[NSNumber numberWithBool:YES] afterDelay:1];
+                                               [[NSNotificationCenter defaultCenter]postNotificationName:GEDITPRODUCT_SUCCESS object:nil];
+                                               [self performSelector:@selector(fabuyifuSuccessToGoBack) withObject:[NSNumber numberWithBool:YES] afterDelay:1.2];
                                                
                                            }else{
                                                [GMAPI showAutoHiddenMBProgressWithText:[mydic objectForKey:@"msg"] addToView:self.view];
@@ -531,7 +545,7 @@
                                        if ([[mydic objectForKey:@"errorcode"]intValue]==0) {
                                            [GMAPI showAutoHiddenMBProgressWithText:@"添加成功" addToView:self.view];
                                            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_FABUDANPIN_SUCCESS object:nil];
-                                           [self performSelector:@selector(fabuyifuSuccessToGoBack) withObject:[NSNumber numberWithBool:YES] afterDelay:1];
+                                           [self performSelector:@selector(fabuyifuSuccessToGoBack) withObject:[NSNumber numberWithBool:YES] afterDelay:1.2];
                                            
                                        }else{
                                            [GMAPI showAutoHiddenMBProgressWithText:[mydic objectForKey:@"msg"] addToView:self.view];

@@ -77,6 +77,19 @@
 
 @implementation MyShopViewController
 
+
+
+
+- (void)dealloc
+{
+    waterFlow.waterDelegate = nil;
+    waterFlow = nil;
+    rightTable.refreshDelegate = nil;
+    rightTable.dataSource = nil;
+    
+}
+
+
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -415,6 +428,7 @@
 -(void)shophuiyuanClicked{
     GmyShopHuiyuanViewController *ccc = [[GmyShopHuiyuanViewController alloc]init];
     ccc.mallInfo = self.mallInfo;
+    ccc.lastPageNavigationHidden = YES;
     [self.navigationController pushViewController:ccc animated:YES];
     
     self.navigationController.navigationBarHidden = NO;
