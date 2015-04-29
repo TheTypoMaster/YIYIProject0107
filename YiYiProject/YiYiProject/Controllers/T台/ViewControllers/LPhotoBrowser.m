@@ -178,6 +178,18 @@
     
     //    [self presentViewController:unVc animated:YES completion:nil];
     
+    //push 反转动画
+
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.7f;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type = @"oglFlip";
+    transition.subtype = kCATransitionFromRight;
+    transition.delegate = self;
+    [self.navigationController.view.layer addAnimation:transition forKey:nil];
+    
+    //end
+    
     [self.navigationController pushViewController:comment animated:YES];
     
 }
@@ -475,13 +487,13 @@
      *  由于image 和 imageView不能一样大小,需要计算image实际坐标
      */
     
-    CGSize size_image = imageView.image.size;//图片实际大小
-    
-    CGFloat realWidth = DEVICE_WIDTH;//显示大小
-    
-    CGFloat realHeight = size_image.height / (size_image.width/DEVICE_WIDTH);//显示大小
-    
-    CGFloat dis = (DEVICE_HEIGHT - realHeight) / 2.f;//imageView和屏幕一样大小,image相对于imageView坐标偏移
+//    CGSize size_image = imageView.image.size;//图片实际大小
+//    
+//    CGFloat realWidth = DEVICE_WIDTH;//显示大小
+//    
+//    CGFloat realHeight = size_image.height / (size_image.width/DEVICE_WIDTH);//显示大小
+//    
+//    CGFloat dis = (DEVICE_HEIGHT - realHeight) / 2.f;//imageView和屏幕一样大小,image相对于imageView坐标偏移
     
     __weak typeof(self)weakSelf = self;
     if (product_id>0) {
