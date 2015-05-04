@@ -78,7 +78,7 @@
     
     NSString *url = [NSString stringWithFormat:@"%@&shop_id=%@&page=%d&per_page=%d",GMYSHOPHUIYUANLIST,self.mallInfo.id,_page,_pageCapacity];
     
-    GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:nil postData:nil];
+    GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:NO postData:nil];
     [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"关注我的店铺的人:%@",result);
         NSArray *arr = [result arrayValueForKey:@"list"];

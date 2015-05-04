@@ -37,6 +37,8 @@
     RefreshTableView *_table;
     LPhotoBrowser *browser;
     BOOL isFirst;
+    
+    CGFloat lastContenOffsetY;
 }
 
 @end
@@ -516,16 +518,57 @@
     
     return 75 + [LTools heightForImageHeight:image_height imageWidth:image_width originalWidth:DEVICE_WIDTH] - 35/2.f;
 }
-////将要显示
-//- (void)refreshTableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-//{
+//将要显示
+- (void)refreshTableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
 //    [self removeMaoDianForCell:cell];
 //    
 //    TPlatModel *aModel = (TPlatModel *)[_table.dataArray objectAtIndex:indexPath.row];
 //    
 //    [self addMaoDian:aModel imageView:((TTaiBigPhotoCell2 *)cell).bigImageView];
+    
+    NSLog(@"willDisPlay");
+    
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        
+    });
+    
+//    if (tableView.isDragging == NO && tableView.isDecelerating == NO) {
+//        
+//        return;
+//    }
 //    
-//}
+//    
+//    if (tableView.contentOffset.y > 40 && tableView.contentOffset.y > lastContenOffsetY) {
+//        
+//        //下边是嵌套使用,先变大再恢复的动画效果.
+//        [UIView animateWithDuration:0.f animations:^{
+//            CGAffineTransform newTransform = CGAffineTransformMakeScale(0.85, 1);
+//            [cell.contentView setTransform:newTransform];
+//            
+//        }
+//                         completion:^(BOOL finished){
+//                             
+//                             [UIView animateWithDuration:1.f animations:^{
+//                                 
+//                                 [cell.contentView setTransform:CGAffineTransformIdentity];
+//                                 
+//                             } completion:^(BOOL finished){
+//                                 
+//                                 
+//                             }];
+//                         }];
+//
+//    }
+//    
+//    if (tableView.contentOffset.y <= ((tableView.contentSize.height - tableView.frame.size.height-40))) {
+//        
+//        lastContenOffsetY = tableView.contentOffset.y;
+//    }
+    
+    
+}
 ////显示完了
 //- (void)refreshTableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath
 //{
