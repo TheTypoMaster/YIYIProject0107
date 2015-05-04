@@ -293,11 +293,11 @@ typedef enum{
         
         if ([_userInfo.is_sign intValue] == 0) {//未签到
             _qiandaoBtn.userInteractionEnabled = YES;
-            [_qiandaoBtn setImage:[UIImage imageNamed:@"gqiandao_up.png"] forState:UIControlStateNormal];
+//            [_qiandaoBtn setImage:[UIImage imageNamed:@"gqiandao_up.png"] forState:UIControlStateNormal];
             _qiandaoBtn.selected = NO;
         }else if ([_userInfo.is_sign intValue] == 1){//已签到
             _qiandaoBtn.userInteractionEnabled = NO;
-            [_qiandaoBtn setImage:[UIImage imageNamed:@"gqiandao_down.png"] forState:UIControlStateNormal];
+//            [_qiandaoBtn setImage:[UIImage imageNamed:@"gqiandao_down.png"] forState:UIControlStateNormal];
             _qiandaoBtn.selected = YES;
         }
         
@@ -414,6 +414,10 @@ typedef enum{
     [_backView addSubview:_qiandaoBtn];
     
     
+    [_qiandaoBtn setImage:[UIImage imageNamed:@"gqiandao_up.png"] forState:UIControlStateNormal];
+    [_qiandaoBtn setImage:[UIImage imageNamed:@"gqiandao_down.png"] forState:UIControlStateSelected];
+    
+    
     
     
     
@@ -441,6 +445,7 @@ typedef enum{
         self.userFaceImv.hidden = YES;
         _editBtn.hidden = YES;
         _chilunBtn.hidden = YES;
+        _qiandaoBtn.hidden = YES;
         
     }
     
@@ -481,13 +486,14 @@ typedef enum{
         _editBtn.hidden = NO;
         _chilunBtn.hidden = NO;
         _loginBtn.hidden = YES;
+        _qiandaoBtn.hidden = NO;
     }else{//未登录
         self.userNameLabel.hidden = YES;
         self.userScoreLabel.hidden = YES;
         self.userFaceImv.hidden = YES;
         _editBtn.hidden = YES;
         _chilunBtn.hidden = YES;
-        
+        _qiandaoBtn.hidden = YES;
         _loginBtn.hidden = NO;
         
     }
