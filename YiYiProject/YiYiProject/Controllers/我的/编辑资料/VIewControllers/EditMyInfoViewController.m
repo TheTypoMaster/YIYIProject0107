@@ -235,7 +235,7 @@
 #pragma mark------------获取个人资料
 
 -(void)getMyUserInfo{
-    NSString *url = url = [NSString stringWithFormat:@"%@&authcode=%@",GET_UPDATEMYINFO_URL,[GMAPI getAuthkey]];
+    NSString *url = url = [NSString stringWithFormat:@"%@&authcode=%@",PERSON_GETUSERINFO,[GMAPI getAuthkey]];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         

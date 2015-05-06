@@ -220,7 +220,9 @@
     __weak typeof(self)weakSelf = self;
     
     __weak typeof(RefreshTableView)*weakTable = _table;
-    NSString *url = [NSString stringWithFormat:TTAI_LIST,_table.pageNum,L_PAGE_SIZE,[GMAPI getAuthkey]];
+    
+    NSString *url = [NSString stringWithFormat:@"%@&page=%d&count=%d&authcode=%@",TTAi_LIST,_table.pageNum,L_PAGE_SIZE,[GMAPI getAuthkey]];
+    
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         

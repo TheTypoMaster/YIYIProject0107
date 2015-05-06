@@ -1,0 +1,4 @@
+Documentation set was installed to Xcode!
+
+Path: /Users/lcw/Library/Developer/Shared/Documentation/DocSets/com.youdao.ynote.ynote.docset
+Time: 2015-05-05 01:50:28 +0000

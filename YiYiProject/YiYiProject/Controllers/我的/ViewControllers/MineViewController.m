@@ -278,10 +278,7 @@ typedef enum{
         
         [self setUpuserInfoViewWithLoginState:[LTools cacheBoolForKey:LOGIN_SERVER_STATE]];
         
-        
-        
-        
-        
+
         _getUserinfoSuccess = YES;
         
         [_hud stopAnimating];
@@ -345,7 +342,7 @@ typedef enum{
 -(UIView *)creatTableViewHeaderView{
     //底层view
     _backView = [ParallaxHeaderView parallaxHeaderViewWithCGSize:CGSizeMake(DEVICE_WIDTH, 150.00*DEVICE_WIDTH/320)];
-    _backView.headerImage = [UIImage imageNamed:@"my_bg.png"];
+    _backView.headerImage = DEFAULT_BANNER_IMAGE;
     
     NSLog(@"%@",NSStringFromCGRect(_backView.frame));
     
@@ -686,7 +683,7 @@ typedef enum{
         {
             if (indexPath.row == 0) {//我的主页
                 GmyMainViewController *dd = [[GmyMainViewController alloc]init];
-                dd.theType = GMYSELF;
+                dd.userType = G_Default;
                 dd.bannerUrl = user_bannerUrl;
                 dd.headImageUrl = headImageUrl;
                 dd.lastPageNavigationHidden = YES;

@@ -218,7 +218,10 @@
 {
     
     __weak typeof(self)weakSelf = self;
-    NSString *url = [NSString stringWithFormat:TTAI_LIST,waterFlow.pageNum,L_PAGE_SIZE,[GMAPI getAuthkey]];
+    
+    
+    NSString *url = [NSString stringWithFormat:@"%@&page=%d&count=%d&authcode=%@",TTAi_LIST,waterFlow.pageNum,L_PAGE_SIZE,[GMAPI getAuthkey]];
+    
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         

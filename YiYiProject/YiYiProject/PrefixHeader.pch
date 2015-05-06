@@ -17,6 +17,7 @@
 #import <UIKit/UIKit.h>
 
 #import "LTools.h"
+#import "MiddleTools.h"
 
 #import "UIView+Frame.h"
 #import "UIColor+ConvertColor.h"
@@ -26,7 +27,7 @@
 #import "GMAPI.h"
 #import "UIImageView+WebCache.h"
 #import "JSONKit.h"
-#import "AFHTTPRequestOperation.h"
+#import "AFNetworking.h"
 #import "UIImageView+WebCache.h"
 #import "ZSNApi.h" //Users/gaomeng/Desktop/项目经验/百度地图搜索周边.zip
 
@@ -58,20 +59,25 @@ alpha:(a)]
 
 #define iPhone6 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(750, 1334), [[UIScreen mainScreen] currentMode].size) : NO)
 
-#define isHaveNetWork [[LTools checkNetWork ]isEqualToString:@"NONetWork"]?YES:NO
+
 #define MY_MACRO_NAME ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
-#define IOS7DAOHANGLANBEIJING @"sliderBBSNavigationBarImage_ios7.png"
-#define IOS7DAOHANGLANBEIJING_PUSH @"navigationBarBackground"
 
-#define IOS7DAOHANGLANBEIJING_PUSH2 @"navigationBarColor_black" //黑色背景
-
-
+/**
+ *  导航栏背景图
+ */
+#define IOS7DAOHANGLANBEIJING_PUSH @"navigationBarBackground_1" //导航栏背景
 #define IOS6DAOHANGLANBEIJING @"sliderBBSNavigationBarImage_ios6.png"
-#define TheNavigationBarBackgroundImg MY_MACRO_NAME?[UIImage imageNamed:IOS7DAOHANGLANBEIJING]:[UIImage imageNamed:@"ios7eva320_44.png"]
 
+/**
+ *  返回按钮
+ */
 #define BACK_DEFAULT_IMAGE [UIImage imageNamed:@"back"]
 
+/**
+ *  默认头像
+ */
 #define DEFAULT_HEADIMAGE [UIImage imageNamed:@"defaultFace"] //默认头像
+#define DEFAULT_BANNER_IMAGE [UIImage imageNamed:@"my_bg.png"] //默认banner
 
 #define WRITE_DEFAULT_IMAGE @"default_write_pen_image.png"
 #define NAVIGATION_MENU_IMAGE_NAME @"navigaiton_menu_image"

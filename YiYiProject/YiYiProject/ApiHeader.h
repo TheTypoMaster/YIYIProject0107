@@ -236,11 +236,8 @@ typedef enum{
 
 
 //T 台
-#define TTAI_LIST @"http://www.alayy.com/?d=api&c=tplat&m=listT&page=%d&count=%d&authcode=%@"
 
-//T 台 通过user_id查看某个用户id
-
-#define TTAI_LIST_UID @"http://www.alayy.com/?d=api&c=tplat&m=listT&page=%d&count=%d&authcode=%@&user_id=%@"
+#define TTAi_LIST @"http://www.alayy.com/?d=api&c=tplat&m=listT"
 
 //添加T台
 #define TTAI_ADD @"http://www.alayy.com/?d=api&c=tplat&m=addTplat"
@@ -432,29 +429,17 @@ typedef enum{
 #define POST_MYBODY_URL @"http://www.alayy.com/index.php?d=api&c=user_api&m=update_user_body_info"//修改我的体型
 
 
-
-
-
 #pragma - mark 搭配师话题
 
 #define TOPIC_ADD @"http://www.alayy.com/index.php?d=api&c=topic&m=publish_topic"//添加话题
-
-
-
 
 
 #pragma mark-----设置
 #define	APP_RATING_URL	 @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=951259287"
 
 #pragma mark-------------编辑个人资料
-#define GET_UPDATEMYINFO_URL @"http://www.alayy.com/index.php?d=api&c=user_api&m=get_user_info"  //获取个人资料
 
 #define POST_UPDATEMYINFO_URL @"http://www.alayy.com/index.php?d=api&c=user_api&m=update_user_info"  //修改个人资料
-
-#define POST_GETMYINFO_URL @"http://www.alayy.com/index.php?d=api&c=user_api&m=get_user_info"  //获取个人资料
-
-#define POST_TLIST_URL @"http://www.alayy.com/?d=api&c=tplat&m=listT"  //获取个人资料
-
 
 #pragma mark - 消息
 
@@ -468,7 +453,6 @@ typedef enum{
 #define GET_MAIL_ACTIVITY_LIST @"http://www.alayy.com/index.php?d=api&c=mall&m=get_activities&authcode=%@"
 //店主单品列表
 #define GET_MAIL_PRODUCT_LIST @"http://www.alayy.com/index.php?d=api&c=products&m=getProductList&mb_id=%@&page=%d&per_page=%d&authcode=%@"
-
 
 
 //活动详情
@@ -489,36 +473,34 @@ typedef enum{
 //搜索接口 品牌 商铺 单品
 #define GSEARCH @"http://www.alayy.com/index.php?d=api&&c=search"
 
-
 //签到
 #define GQIANDAO @"http://www.alayy.com/index.php?d=api&c=user_api&m=sign"
-
 
 //获取店铺二维码
 #define GMYSHOPERWEIMA @"http://www.alayy.com/index.php?d=api&c=mall&m=get_qrcode_v2"
 
-
 //获取店铺会员 也就是关注该店铺的人
 #define GMYSHOPHUIYUANLIST @"http://www.alayy.com/index.php?d=api&c=mall&m=get_attention_list"
-
-
 
 //修改店铺联系方式 telephone
 
 #define GCHANGESHOPTELEPHONE @"http://www.alayy.com/index.php?d=api&c=mall&m=set_shop_phone"
 
-
-
 //绑定手机
 #define GBANGDINGPHONE @"http://www119.alayy.com/index.php?d=api&c=user_api&m=bind_mobile"
-
-
 
 //关注品牌店
 #define GGUANZHUPINPAIDIAN @"http://www.alayy.com/index.php?d=api&c=friendship&m=attend_shop"
 
 //取消关注品牌店
 #define GQUXIAOGUANZHUPINPAIDIAN @"http://www.alayy.com/index.php?d=api&c=friendship&m=cancel_attend_shop"
+
+
+#pragma - mark T台相关接口
+
+//获取赞的列表(relation 是关注关系 0代表未关注  1代表已关注 3代表以互相关注)
+
+#define TPLat_ZanList @"http://www.alayy.com/index.php?d=api&c=tplat&m=get_like_user&tt_id=%@"
 
 
 #endif

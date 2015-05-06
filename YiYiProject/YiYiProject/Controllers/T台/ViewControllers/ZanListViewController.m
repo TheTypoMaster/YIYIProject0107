@@ -1,0 +1,292 @@
+//
+//  ZanListViewController.m
+//  YiYiProject
+//
+//  Created by lichaowei on 15/5/5.
+//  Copyright (c) 2015年 lcw. All rights reserved.
+//
+
+#import "ZanListViewController.h"
+#import "RefreshTableView.h"
+#import "ZanUserModel.h"
+#import "ZanUserCell.h"
+#import "TPlatModel.h"
+
+@interface ZanListViewController ()<RefreshDelegate,UITableViewDataSource>
+{
+    RefreshTableView *_table;
+    
+    NSString *cellIdentify;
+    
+    UIButton *zan_btn;//赞按钮
+}
+
+@end
+
+@implementation ZanListViewController
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBarHidden = NO;
+    
+    [[UIApplication sharedApplication]setStatusBarHidden:NO];
+    
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    
+    self.myTitleLabel.text = [NSString stringWithFormat:@"%@人喜欢",self.t_model.tt_like_num];
+    
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
+    
+    _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT - 64 - 49) showLoadMore:YES];
+    _table.refreshDelegate = self;
+    _table.dataSource = self;
+    [self.view addSubview:_table];
+    
+    [self createBottomTools];
+    
+    cellIdentify = @"ZanUserCell";
+    UINib *nib = [UINib nibWithNibName:cellIdentify bundle:nil];
+    [_table registerNib:nib forCellReuseIdentifier:cellIdentify];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [_table showRefreshHeader:YES];
+
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma - mark 创建视图
+
+- (void)createBottomTools
+{
+    //底部
+    
+    UIView *bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT - 49 - 64, DEVICE_WIDTH, 49)];
+    [self.view addSubview:bottomView];
+    bottomView.backgroundColor = [UIColor whiteColor];
+    
+    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, -0.5, bottomView.width, 0.5)];
+    line.backgroundColor = [UIColor grayColor];
+    [bottomView addSubview:line];
+    
+    NSString *iconUrl = @"";
+    NSString *userName = @"";
+    if ([self.t_model.uinfo isKindOfClass:[NSDictionary class]]) {
+        
+        iconUrl = self.t_model.uinfo[@"photo"];
+        userName = self.t_model.uinfo[@"user_name"];
+    }
+    
+    
+    //头像
+    UIImageView *iconImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 7, 35, 35)];
+    iconImageView.layer.cornerRadius = 35/2.f;
+    iconImageView.clipsToBounds = YES;
+    //    iconImageView.backgroundColor = [UIColor redColor];
+    [bottomView addSubview:iconImageView];
+    [iconImageView sd_setImageWithURL:[NSURL URLWithString:iconUrl] placeholderImage:DEFAULT_HEADIMAGE];
+    
+    UILabel *nameLabel = [LTools createLabelFrame:CGRectMake(iconImageView.right + 10, 0, DEVICE_WIDTH - 20 - iconImageView.width - 50 - 10, 49) title:userName font:14 align:NSTextAlignmentLeft textColor:[UIColor grayColor]];
+    [bottomView addSubview:nameLabel];
+    
+    //红心
+    zan_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(DEVICE_WIDTH - 10 - 50, 0, 50, 50) normalTitle:nil image:[UIImage imageNamed:@"xq_love_up_gray"] backgroudImage:nil superView:nil target:self action:@selector(clickToZan:)];
+    [bottomView addSubview:zan_btn];
+    [zan_btn setImage:[UIImage imageNamed:@"xq_love_down"] forState:UIControlStateSelected];
+    
+    zan_btn.selected = self.t_model.is_like == 1 ? YES : NO;
+    
+}
+
+#pragma - mark 事件处理
+
+/**
+ *  更新赞列表
+ */
+- (void)refreshZanList
+{
+    _table.isReloadData = YES;
+    [self getZanList];
+}
+
+/**
+ *  更新和赞相关的视图和数据源
+ *
+ *  @param zan 是否是赞
+ */
+- (void)updateZanState:(BOOL)zan
+{
+    zan_btn.selected = zan;
+    
+    int like_num = [self.t_model.tt_like_num intValue];
+    self.t_model.tt_like_num = [NSString stringWithFormat:@"%d",zan ? like_num + 1 : like_num - 1];
+    
+    self.t_model.is_like = zan ? 1 : 0;
+    
+    
+    //更新赞的数字
+    if (_aParmasBlock) {
+        
+        _aParmasBlock(@{UPDATE_PARAM:@"UpdateLike",
+                        UPDATE_TPLAT_LIKENUM:[LTools safeString:self.t_model.tt_like_num],
+                        UPDATE_TPLAT_ISLIKE:[NSNumber numberWithBool:zan]});
+    }
+}
+
+- (void)clickToCencern:(UIButton *)sender
+{
+    
+}
+
+- (void)clickToZan:(UIButton *)sender
+{
+    if ([LTools isLogin:self]) {
+        
+        sender.selected = !sender.selected;
+        [self zanTTaiDetail:sender.selected];
+        
+        [LTools animationToBigger:sender duration:0.2 scacle:1.5];
+        
+        return;
+    }
+}
+
+#pragma - mark 网络请求
+
+//T台赞 或 取消
+
+- (void)zanTTaiDetail:(BOOL)zan
+{
+    NSString *authkey = [GMAPI getAuthkey];
+    NSString *post = [NSString stringWithFormat:@"tt_id=%@&authcode=%@",self.t_model.tt_id,authkey];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    
+    NSString *url;
+    
+    if (zan) {
+        url = TTAI_ZAN;
+    }else
+    {
+        url = TTAI_ZAN_CANCEL;
+    }
+    
+    __weak typeof(self)weakSelf = self;
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"-->%@",result);
+        [weakSelf updateZanState:zan];
+        
+        [weakSelf refreshZanList];
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        [LTools showMBProgressWithText:failDic[@"msg"] addToView:self.view];
+    }];
+}
+
+/**
+ *  获取店铺详情
+ */
+- (void)getZanList
+{
+    //    NSString *key = [GMAPI getAuthkey];
+    
+    __weak typeof(self)weakSelf = self;
+    
+    __weak typeof(_table)weakTable = _table;
+    
+    NSString *api = [NSString stringWithFormat:TPLat_ZanList,self.t_model.tt_id];
+    
+    NSString *url = [NSString stringWithFormat:@"%@&authcode=%@&page=%d&per_page=%d",api,[GMAPI getAuthkey],_table.pageNum,L_PAGE_SIZE];
+    
+    NSLog(@"%@",url);
+    
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"获取赞列表:%@",result);
+        NSArray *list = [result objectForKey:@"list"];
+        NSMutableArray *temp = [NSMutableArray arrayWithCapacity:list.count];
+        for (NSDictionary *aDic in list) {
+            
+            ZanUserModel *zan = [[ZanUserModel alloc]initWithDictionary:aDic];
+            [temp addObject:zan];
+            
+        }
+        
+        [weakTable reloadData:temp pageSize:L_PAGE_SIZE];
+        
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        NSLog(@"获取赞列表failDic %@",failDic);
+        
+        [weakTable loadFail];
+    }];
+}
+
+#pragma - mark RefreshDelegate
+
+- (void)loadNewData
+{
+    [self getZanList];
+}
+- (void)loadMoreData
+{
+    [self getZanList];
+
+}
+
+//新加
+- (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
+{
+    
+}
+- (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
+{
+    return 70;
+}
+
+#pragma - mark UITableDataSource
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
+    return _table.dataArray.count;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    ZanUserCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentify];
+    
+    ZanUserModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
+    
+    [cell setCellWithModel:aModel];
+    
+    [cell.concernButton addTarget:self action:@selector(clickToCencern:) forControlEvents:UIControlEventTouchUpInside];
+    
+    return cell;
+}
+
+
+@end

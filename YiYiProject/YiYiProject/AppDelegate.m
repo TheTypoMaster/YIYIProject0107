@@ -73,11 +73,7 @@
     
     // Override point for customization after application launch.
     
-    NSString *str = nil;
     
-    
-    NSLog(@"--->str:%@",[str safeString]);
-   
 #pragma mark 融云
     
     [RCIM initWithAppKey:RONGCLOUD_IM_APPKEY deviceToken:nil];

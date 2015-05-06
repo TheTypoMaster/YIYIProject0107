@@ -33,7 +33,13 @@
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     
     self.navigationController.navigationBarHidden = NO;
+}
 
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [self.navigationController setNavigationBarHidden:self.lastPageNavigationHidden animated:animated];
 }
 
 
@@ -67,6 +73,9 @@
     if (self.isProductDetailVcPush) {
         //发送产品图文链接
         [self sendProductDetailMessage];
+    }else
+    {
+        self.GTitleLabel.text = self.currentTargetName;
     }
     
     //设置点击跳转

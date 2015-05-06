@@ -22,4 +22,6 @@
 
 @property(nonatomic,assign)BOOL isProductDetailVcPush;//是否从产品详情页跳转过来的
 
+@property (nonatomic,assign)BOOL lastPageNavigationHidden;//上一个navigationBar是否是隐藏
+
 @end

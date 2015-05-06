@@ -12,10 +12,9 @@
 #import <UIKit/UIKit.h>
 
 typedef enum{
-    GDEFAUL = 0,
-    GMYSELF,
-    GSOMEONE
-}GMAINVIEWTYPE;
+    G_Default = 0, //自己
+    G_Other = 1, //他人
+}GmainViewType;
 
 #import "WaterF.h"
 #import "ParallaxHeaderView.h"
@@ -23,7 +22,10 @@ typedef enum{
 @interface GmyMainViewController : MyViewController<UIScrollViewDelegate>
 
 
-@property(nonatomic,assign)GMAINVIEWTYPE theType;//类型  自己的 别人的
+@property(nonatomic,assign)GmainViewType userType;//类型  自己的 别人的
+
+@property(nonatomic,retain)NSString *userId;//用户id
+
 @property (nonatomic,strong) NSString *bannerUrl;
 @property (nonatomic,strong) NSString *headImageUrl;
 @end

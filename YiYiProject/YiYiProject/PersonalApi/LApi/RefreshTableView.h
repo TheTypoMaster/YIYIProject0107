@@ -65,7 +65,7 @@
 
 - (void)reloadData:(NSArray *)data total:(int)totalPage;//更新数据
 - (void)reloadData:(NSArray *)data isHaveMore:(BOOL)isHave;
-
+- (void)reloadData:(NSArray *)data pageSize:(int)pageSize;//根据pageSize判断是否有更多
 
 - (void)loadFail;//请求数据失败
 

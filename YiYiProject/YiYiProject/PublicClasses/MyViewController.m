@@ -8,8 +8,6 @@
 
 #import "MyViewController.h"
 
-#define MY_MACRO_NAME ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
-
 @interface MyViewController ()
 {
     UIPanGestureRecognizer * panGestureRecognizer;
@@ -45,14 +43,13 @@
 {
     [super viewWillAppear:animated];
 
-    
     if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] )
     {
         //iOS 5 new UINavigationBar custom background
         
         [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:MY_MACRO_NAME?IOS7DAOHANGLANBEIJING_PUSH:IOS6DAOHANGLANBEIJING] forBarMetrics: UIBarMetricsDefault];
     }
-    
+        
 }
 
 
@@ -64,39 +61,23 @@
     
 }
 
-//-(void)viewWillDisappear:(BOOL)animated
-//{
-//    [self.view removeGestureRecognizer:panGestureRecognizer];
-//    [self.view removeGestureRecognizer:swipe];
-//}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-//    [XTSideMenuManager resetSideMenuRecognizerEnable:NO];
-
     
     if (MY_MACRO_NAME) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
     
-    spaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    //        spaceButton.width = MY_MACRO_NAME?-5:5;
-//    if (self.customNavigationTitleView == NO) {
-//        
-        _myTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0,100,44)];
-        _myTitleLabel.textAlignment = NSTextAlignmentCenter;
-        _myTitleLabel.text = _myTitle;
-        _myTitleLabel.textColor = RGBCOLOR(253, 106, 157);
-        _myTitleLabel.font = [UIFont systemFontOfSize:17];
-        self.navigationItem.titleView = _myTitleLabel;
-//
-//
-//        
-//    }
+    self.view.backgroundColor = [UIColor whiteColor];
     
-//    self.navigationController.navigationBarHidden=NO;
+    spaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    _myTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0,100,44)];
+    _myTitleLabel.textAlignment = NSTextAlignmentCenter;
+    _myTitleLabel.text = _myTitle;
+    _myTitleLabel.textColor = RGBCOLOR(253, 106, 157);
+    _myTitleLabel.font = [UIFont systemFontOfSize:17];
+    self.navigationItem.titleView = _myTitleLabel;
 
 }
 

@@ -11,8 +11,9 @@
 #import "TMQuiltView.h"
 #import "LWaterflowView.h"
 #import "TPlatModel.h"
-
+#import "UserInfo.h"
 #import "TTaiDetailController.h"
+#import "YIYIChatViewController.h"//聊天
 
 #define NORMAL_TEXT @"上拉加载更多"
 #define NOMORE_TEXT @"没有更多数据"
@@ -24,9 +25,6 @@
 
 @interface GmyMainViewController ()<TMQuiltViewDataSource,WaterFlowDelegate>
 {
-    
-    
-    
     //第一层
     UIView *_upUserInfoView;//用户信息view
     UIImageView *_userFaceImv;//头像
@@ -40,14 +38,16 @@
     
     UIView *_ttaiView;
     
+    UIButton *concernButton;//关注按钮
+    
+    UIView *bottomView;//底部view
     
     UIView *_backView_water;
     LWaterflowView *_waterFlow;
     int _per_page;
     int _page;
     
-    
-    
+    UserInfo *currentUser;//当前用户信息
 }
 
 @property(nonatomic,retain)UIActivityIndicatorView *loadingIndicator;
@@ -84,20 +84,195 @@
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     }
     
-    _per_page = 20;
-    _page = 1;
-    
     [self creatHeadView];
+    
+    [self getUserInfo];
     
     [self creatWaterFlowView];
     
+    [self createBottomView];
+    
     [_waterFlow showRefreshHeader:YES];
+}
+
+#pragma - mark 网络请求
+
+/**
+ *  通过userId获取用户信息
+ */
+- (void)getUserInfo
+{
     
-    NSLog(@"%f",DEVICE_WIDTH);
+    NSString *userId = self.userType == G_Default ? [GMAPI getUid] : self.userId;
+
+    NSString *api = [NSString stringWithFormat:GET_PERSONINFO_WITHID,userId];
     
+    NSString *url = [NSString stringWithFormat:@"%@&authcode=%@",api,[GMAPI getAuthkey]];
+    
+    __weak typeof(self)weakSelf = self;
+    
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        UserInfo *user = [[UserInfo alloc]initWithDictionary:result];
+        
+        [weakSelf setViewsWithUserInfo:user];
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        NSLog(@"获取个人信息失败--->%@",failDic);
+        
+    }];
+}
+
+/**
+ *  获取个人T台
+ */
+- (void)getUserTPlat
+{
+    
+    NSString *userId = self.userType == G_Default ? [GMAPI getUid] : self.userId;
+    
+    //请求网络数据
+    NSString *api = [NSString stringWithFormat:@"%@&page=%d&count=%d&user_id=%@&authcode=%@",TTAi_LIST,_waterFlow.pageNum,L_PAGE_SIZE,userId,[GMAPI getAuthkey]];
+    NSLog(@"请求的接口%@",api);
+    
+    GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+    [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"result : %@",result);
+        NSMutableArray *arr;
+        if ([result isKindOfClass:[NSDictionary class]]) {
+            
+            NSArray *list = result[@"list"];
+            arr = [NSMutableArray arrayWithCapacity:list.count];
+            if ([list isKindOfClass:[NSArray class]]) {
+                
+                for (NSDictionary *aDic in list) {
+                    
+                    TPlatModel *aModel = [[TPlatModel alloc]initWithDictionary:aDic];
+                    
+                    [arr addObject:aModel];
+                }
+                
+            }
+        }
+        
+        [_waterFlow reloadData:arr pageSize:L_PAGE_SIZE];
+        
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+        [_waterFlow loadFail];
+    }];
+
+}
+
+#pragma - mark 事件处理
+
+/**
+ *  控制底部view显示或者隐藏
+ *
+ *  @param isHidden 是否是隐藏
+ */
+- (void)bottomShowOrHidden:(BOOL)isHidden
+{
+    __weak typeof(UIView) *weakBottom = bottomView;
+    [UIView animateWithDuration:0.5 animations:^{
+       
+        weakBottom.top = isHidden == YES ? DEVICE_HEIGHT : DEVICE_HEIGHT - 49;
+        
+    }];
+}
+
+/**
+ *  去关注或者取消关注
+ *
+ *  @param sender
+ */
+- (void)clickToConcern:(UIButton *)sender
+{
     
 }
 
+- (void)clickToChat:(UIButton *)sender
+{
+    //聊天
+    [MiddleTools chatWithUserId:self.userId userName:currentUser.user_name forViewController:self lastNavigationHidden:YES];
+}
+
+-(void)gGoBackVc{
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+/**
+ *  给headview赋值
+ *
+ *  @param userInfo 当前用户信息model
+ */
+- (void)setViewsWithUserInfo:(UserInfo *)userInfo
+{
+    currentUser = userInfo;
+    
+    //banner背景图
+    
+    [_userBannerImv sd_setImageWithURL:[NSURL URLWithString:userInfo.user_banner] placeholderImage:DEFAULT_BANNER_IMAGE];
+    
+    //用户头像
+    
+    [_userFaceImv sd_setImageWithURL:[NSURL URLWithString:userInfo.photo] placeholderImage:DEFAULT_HEADIMAGE];
+    
+    //用户名
+    
+    _userNameLabel.text = userInfo.user_name;
+
+}
+
+#pragma - mark 创建视图
+
+- (void)createBottomView
+{
+    bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT - 49, DEVICE_WIDTH, 49)];
+    bottomView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:bottomView];
+    
+    //上横线
+    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, -0.5, DEVICE_WIDTH, 0.5)];
+    line.backgroundColor = [UIColor lightGrayColor];
+    [bottomView addSubview:line];
+    
+    //中间竖线
+    UIView *lineMiddle = [[UIView alloc]initWithFrame:CGRectMake(DEVICE_WIDTH/2.f - 0.5, 5 + 5 + 5, 0.5, bottomView.height - 30)];
+    lineMiddle.backgroundColor = [UIColor lightGrayColor];
+    [bottomView addSubview:lineMiddle];
+    
+    //关注按钮
+    concernButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [concernButton setFrame:CGRectMake(0, 0, DEVICE_WIDTH /2.f - 0.5, bottomView.height)];
+    [concernButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
+    [concernButton addTarget:self action:@selector(clickToConcern:) forControlEvents:UIControlEventTouchUpInside];
+    [concernButton.titleLabel setFont:[UIFont systemFontOfSize:12]];
+    [concernButton setTitle:@"+ 关注" forState:UIControlStateNormal];
+    [concernButton setTitle:@"已关注" forState:UIControlStateSelected];
+
+    [concernButton setTitleColor:RGBCOLOR(226, 102, 127) forState:UIControlStateNormal];
+    [concernButton setTitleColor:[UIColor grayColor] forState:UIControlStateSelected];
+    
+    [bottomView addSubview:concernButton];
+    
+    
+    //关注按钮
+    UIButton *chatButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [chatButton setFrame:CGRectMake(lineMiddle.right, 0, DEVICE_WIDTH /2.f - 0.5, bottomView.height)];
+    [chatButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
+    [chatButton addTarget:self action:@selector(clickToChat:) forControlEvents:UIControlEventTouchUpInside];
+    [chatButton.titleLabel setFont:[UIFont systemFontOfSize:12]];
+    [chatButton setTitle:@"私聊" forState:UIControlStateNormal];
+    [chatButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [bottomView addSubview:chatButton];
+}
 
 ///初始化头部的view
 -(void)creatHeadView{
@@ -109,11 +284,7 @@
     
     _userBannerImv = [[UIImageView alloc]initWithFrame:_upUserInfoView.bounds];
     _userBannerImv.userInteractionEnabled = YES;
-    _userBannerImv.image = [GMAPI getUserBannerImage];
     [_upUserInfoView addSubview:_userBannerImv];
-    
-    
-    
     
     //返回按钮
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -127,24 +298,57 @@
     
     
     //头像
-    _userFaceImv = [[UIImageView alloc]initWithFrame:CGRectMake((DEVICE_WIDTH-60)*0.5, 35, 60, 60)];
+    _userFaceImv = [[UIImageView alloc]initWithFrame:CGRectMake((DEVICE_WIDTH-60)*0.5, 30, 60, 60)];
     _userFaceImv.backgroundColor = RGBCOLOR_ONE;
     _userFaceImv.layer.cornerRadius = 30;
     _userFaceImv.layer.borderWidth = 1;
     _userFaceImv.layer.borderColor = [[UIColor whiteColor]CGColor];
     _userFaceImv.layer.masksToBounds = YES;
-    [_userFaceImv sd_setImageWithURL:[NSURL URLWithString:_headImageUrl] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-    }];
+    
     [_upUserInfoView addSubview:_userFaceImv];
     
     //用户名
     _userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0 , CGRectGetMaxY(_userFaceImv.frame)+5, DEVICE_WIDTH, 20)];
     _userNameLabel.backgroundColor = [UIColor clearColor];
-    _userNameLabel.font = [UIFont systemFontOfSize:18];
-    _userNameLabel.text = [GMAPI getUsername];
+    _userNameLabel.font = [UIFont systemFontOfSize:14];
     _userNameLabel.textColor = [UIColor whiteColor];
     _userNameLabel.textAlignment = NSTextAlignmentCenter;
     [_upUserInfoView addSubview:_userNameLabel];
+    
+    //关注 | 粉丝
+    
+    UIView *concernBackView = [[UIView alloc]initWithFrame:CGRectMake(0, _userNameLabel.bottom, DEVICE_WIDTH, _upUserInfoView.height - _userNameLabel.bottom)];
+    concernBackView.backgroundColor = [UIColor clearColor];
+    [_upUserInfoView addSubview:concernBackView];
+    
+    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(DEVICE_WIDTH/2.f - 0.5, 5 + 5, 1, concernBackView.height - 20)];
+    line.backgroundColor = [UIColor whiteColor];
+    [concernBackView addSubview:line];
+    
+    //关注的数字
+    
+    NSString *concernNum = @"100";
+    CGFloat aWidth = [LTools widthForText:concernNum font:14];
+    
+    UILabel *concernLabel = [LTools createLabelFrame:CGRectMake(line.left - 10 - aWidth, 0, aWidth, concernBackView.height) title:concernNum font:14 align:NSTextAlignmentRight textColor:[UIColor whiteColor]];
+    [concernBackView addSubview:concernLabel];
+    
+    //关注文字
+    UILabel *concern = [LTools createLabelFrame:CGRectMake(concernLabel.left - 5 - 30, 0, 30, concernBackView.height) title:@"关注" font:14 align:NSTextAlignmentRight textColor:[UIColor whiteColor]];
+    [concernBackView addSubview:concern];
+    
+    //粉丝文字
+    UILabel *fan = [LTools createLabelFrame:CGRectMake(line.right + 10, 0, 30, concernBackView.height) title:@"粉丝" font:14 align:NSTextAlignmentRight textColor:[UIColor whiteColor]];
+    [concernBackView addSubview:fan];
+    
+    //粉丝的数字
+    
+    concernNum = @"1006";
+    aWidth = [LTools widthForText:concernNum font:14];
+    
+    UILabel *fansLabel = [LTools createLabelFrame:CGRectMake(fan.right + 5, 0, aWidth, concernBackView.height) title:concernNum font:14 align:NSTextAlignmentRight textColor:[UIColor whiteColor]];
+    [concernBackView addSubview:fansLabel];
+    
     
     //整个view
     _ttaiView = [[UIView alloc]initWithFrame:CGRectMake(0, _upUserInfoView.frame.size.height+_upUserInfoView.frame.origin.y, DEVICE_WIDTH, 25)];
@@ -163,22 +367,10 @@
     titaiLabel.text = @"我的T台";
     [_ttaiView addSubview:titaiLabel];
     
-    
-    
-    
-    
-    
-}
-
-
--(void)gGoBackVc{
-    
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 //初始化瀑布流
 -(void)creatWaterFlowView{
-    
     
     //瀑布流相关
     _backView_water = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_ttaiView.frame), ALL_FRAME_WIDTH, ALL_FRAME_HEIGHT - _upUserInfoView.frame.size.height)];
@@ -191,13 +383,6 @@
 }
 
 
-
-
-
-
-#pragma mark-----------------获取数据
-
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -207,86 +392,30 @@
 
 #pragma mark - _waterFlowDelegate
 
+- (void)waterScrollViewDidScroll:(UIScrollView *)scrollView
+{
+    static CGFloat lastOffsetY = 0.f;
+    
+    CGFloat currentOffset = scrollView.contentOffset.y;
+    
+    if (currentOffset > 20 && currentOffset > lastOffsetY) {
+        
+        [self bottomShowOrHidden:YES];
+    }else
+    {
+        [self bottomShowOrHidden:NO];
+    }
+    
+    lastOffsetY = currentOffset;
+}
+
 - (void)waterLoadNewData
 {
-    
-    //请求网络数据
-    NSString *api = nil;
-    
-    _page = 1;
-    
-    
-    api = [NSString stringWithFormat:@"%@&page=%d&count=%d&user_id=%@&authcode=%@",POST_TLIST_URL,_page,_per_page,[GMAPI getUid],[GMAPI getAuthkey]];
-    NSLog(@"请求的接口%@",api);
-    
-    GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
-    [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
-        
-        NSLog(@"result : %@",result);
-        NSMutableArray *arr;
-        if ([result isKindOfClass:[NSDictionary class]]) {
-            
-            NSArray *list = result[@"list"];
-            arr = [NSMutableArray arrayWithCapacity:list.count];
-            if ([list isKindOfClass:[NSArray class]]) {
-                
-                for (NSDictionary *aDic in list) {
-                    
-                    TPlatModel *aModel = [[TPlatModel alloc]initWithDictionary:aDic];
-                    
-                    [arr addObject:aModel];
-                }
-                
-            }
-        }
-        
-        [_waterFlow reloadData:arr pageSize:_per_page];
-        
-        
-    } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-        [_waterFlow loadFail];
-    }];
-    
+    [self getUserTPlat];
 }
 - (void)waterLoadMoreData
 {
-    //加载更多
-    //请求网络数据
-    NSString *api = nil;
-    
-    NSLog(@"请求的接口%@",api);
-    
-    GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
-    [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
-        
-        NSLog(@"result : %@",result);
-        NSMutableArray *arr;
-        if ([result isKindOfClass:[NSDictionary class]]) {
-            
-            NSArray *list = result[@"list"];
-            arr = [NSMutableArray arrayWithCapacity:list.count];
-            if ([list isKindOfClass:[NSArray class]]) {
-                
-                for (NSDictionary *aDic in list) {
-                    
-                    TPlatModel *aModel = [[TPlatModel alloc]initWithDictionary:aDic];
-                    
-                    [arr addObject:aModel];
-                }
-                
-            }
-        }
-        
-        
-        //重载瀑布流
-        [_waterFlow reloadData:arr pageSize:_per_page];
-        
-        
-    } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-        [_waterFlow loadFail];
-    }];
+    [self getUserTPlat];
 }
 
 //点击方法
@@ -340,17 +469,6 @@
     
     TPlatModel *aMode = _waterFlow.dataArray[indexPath.row];
     [cell setCellWithModel:aMode];
-    
-//    CGRect r = cell.photoView.frame;
-//    
-//    NSLog(@"%@",NSStringFromCGRect(r));
-//    r.origin.y = 0;
-//    
-//    NSLog(@"%@",NSStringFromCGRect(r));
-//    cell.photoView.frame = r;
-//    
-//    NSLog(@"%@",NSStringFromCGRect(cell.photoView.frame));
-    
     
     cell.like_btn.tag = 100 + indexPath.row;
     

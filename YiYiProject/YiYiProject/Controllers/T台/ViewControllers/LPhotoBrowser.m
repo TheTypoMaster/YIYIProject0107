@@ -23,6 +23,10 @@
 
 #import "MJPhoto.h"
 
+#import "ZanListViewController.h"//赞列表
+
+#import "GmyMainViewController.h" //个人主页
+
 @implementation LPhotoBrowser
 {
     TDetailModel *detail_model;
@@ -67,7 +71,7 @@
  */
 - (void)createToolbar
 {
-    topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 49)];
+    topView = [[UIView alloc]initWithFrame:CGRectMake(0, 10, DEVICE_WIDTH, 49)];
     topView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:topView];
     
@@ -94,10 +98,12 @@
     
     NSString *iconUrl = @"";
     NSString *userName = @"";
+    NSString *userId = @"";
     if ([detail_model.uinfo isKindOfClass:[NSDictionary class]]) {
         
         iconUrl = detail_model.uinfo[@"photo"];
         userName = detail_model.uinfo[@"user_name"];
+        userId = detail_model.uinfo[@"uid"];
     }
 
     
@@ -107,7 +113,15 @@
     iconImageView.clipsToBounds = YES;
 //    iconImageView.backgroundColor = [UIColor redColor];
     [bottomView addSubview:iconImageView];
+    iconImageView.userInteractionEnabled = YES;
     [iconImageView sd_setImageWithURL:[NSURL URLWithString:iconUrl] placeholderImage:DEFAULT_HEADIMAGE];
+    
+    UIButton *personalButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [personalButton addTarget:self action:@selector(clickToPersonal:) forControlEvents:UIControlEventTouchUpInside];
+    personalButton.frame = iconImageView.bounds;
+    personalButton.tag = 100 + [userId integerValue];
+    [iconImageView addSubview:personalButton];
+    
     
     //红心
     zan_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(DEVICE_WIDTH - 10 - 50, 0, 50, 50) normalTitle:nil image:[UIImage imageNamed:@"xq_love_up"] backgroudImage:nil superView:nil target:self action:@selector(clickToZan:)];
@@ -121,7 +135,7 @@
     NSString *likeNum = [NSString stringWithFormat:@"%d人喜欢",[detail_model.tt_like_num intValue]];
     CGFloat likeWidth = [LTools widthForText:likeNum font:14];
     
-    likeNumButton = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(zan_btn.left - likeWidth - 20, 0, likeWidth, bottomView.height) normalTitle:likeNum image:nil backgroudImage:nil superView:nil target:self action:@selector(clickToCommentPage:)];
+    likeNumButton = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(zan_btn.left - likeWidth - 20, 0, likeWidth, bottomView.height) normalTitle:likeNum image:nil backgroudImage:nil superView:nil target:self action:@selector(clickToZanList:)];
     [likeNumButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
     [bottomView addSubview:likeNumButton];
     
@@ -137,6 +151,16 @@
 
 #pragma - mark 事件处理
 
+/**
+ *  跳转至个人页
+ *
+ *  @param sender 按钮
+ */
+- (void)clickToPersonal:(UIButton *)sender
+{
+
+    [MiddleTools pushToPersonalId:NSStringFromInt((int)sender.tag - 100) userType:G_Other forViewController:self lastNavigationHidden:YES];
+}
 
 /**
  *  更新喜欢数
@@ -155,6 +179,35 @@
     [commentButton setTitle:commentNum forState:UIControlStateNormal];
 }
 
+/**
+ *  跳转到评论页
+ *
+ *  @param sender 按钮
+ */
+- (void)clickToZanList:(UIButton *)sender
+{
+    ZanListViewController *zanlist = [[ZanListViewController alloc]init];
+        
+    zanlist.t_model = self.t_model;
+    
+    __weak typeof(self)weakSelf = self;
+    
+    zanlist.updateParamsBlock = ^(NSDictionary *params){
+        
+        NSLog(@"----->%@",params);
+        
+        [weakSelf updateLikeOrZanState:params];
+        
+    };
+    
+    [self.navigationController pushViewController:zanlist animated:YES];
+}
+
+/**
+ *  跳转到评论页
+ *
+ *  @param sender 按钮
+ */
 - (void)clickToCommentPage:(UIButton *)sender
 {
     //评论页面
@@ -253,11 +306,12 @@
         sender.selected = !sender.selected;
         [self zanTTaiDetail:sender.selected];
         
+        [LTools animationToBigger:sender duration:0.2 scacle:1.5];
+        
         return;
     }
     
     
-    [LTools animationToBigger:sender duration:0.2 scacle:1.5];
 }
 
 - (void)clickToZhuanFa:(UIButton *)sender
@@ -392,9 +446,9 @@
     __block UIView *bBottom = bottom;
     [UIView animateWithDuration:0.2 animations:^{
        
-        top.top = show ? 0 : -49;
-        bBottom.top = show ? DEVICE_HEIGHT - 49 : DEVICE_HEIGHT;
-        bBottomV.top = show ? DEVICE_HEIGHT - 49 : DEVICE_HEIGHT;
+        top.top = show ? 0 : -49-10;
+        bBottom.top = show ? DEVICE_HEIGHT - 49 - 10: DEVICE_HEIGHT;
+        bBottomV.top = show ? DEVICE_HEIGHT - 49 - 10: DEVICE_HEIGHT;
     }];
 }
 

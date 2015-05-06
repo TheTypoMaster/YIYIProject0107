@@ -55,6 +55,70 @@
     return md5String;
 }
 
+#pragma - mark AFNetWork 网络请求
+
++ (void)getRequestWithBaseUrl:(NSString *)baseUrl
+                   parameters:(NSDictionary *)paramsDic
+                   completion:(void(^)(NSDictionary *result,NSError *erro))completionBlock
+                    failBlock:(void(^)(NSDictionary *result,NSError *erro))failBlock
+{
+    baseUrl = [baseUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    AFHTTPRequestOperationManager *operation = [[AFHTTPRequestOperationManager alloc]init];
+    
+    operation.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html",@"text/json",@"text/javascript", nil];;
+    
+    [operation GET:baseUrl parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *result = [NSJSONSerialization JSONObjectWithData:operation.responseData options:NSJSONReadingAllowFragments error:nil];
+        
+        if ([result isKindOfClass:[NSDictionary class]]) {
+            
+            int erroCode = [[result objectForKey:@"errcode"]intValue];
+            NSString *erroInfo = [result objectForKey:@"errinfo"];
+            
+            if (erroCode != 0) { //0代表无错误,  && erroCode != 1 1代表无结果
+                
+                NSDictionary *failDic = @{RESULT_INFO:erroInfo,@"errcode":[NSString stringWithFormat:@"%d",erroCode]};
+                failBlock(failDic,0);
+                
+                return ;
+            }else
+            {
+                completionBlock(result,0);//传递的已经是没有错误的结果
+            }
+            
+        }
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        NSLog(@"---->response %@",operation.responseString);
+        
+        
+        NSString *errInfo = @"网络有问题,请检查网络";
+        switch (error.code) {
+            case NSURLErrorNotConnectedToInternet:
+                
+                errInfo = @"无网络连接";
+                break;
+            case NSURLErrorTimedOut:
+                
+                errInfo = @"网络连接超时";
+                break;
+            default:
+                break;
+        }
+        
+        NSDictionary *failDic = @{RESULT_INFO: errInfo};
+        failBlock(failDic,error);
+        
+    }];
+    
+}
+
+
+
 #pragma - mark 网络数据请求
 
 - (id)initWithUrl:(NSString *)url isPost:(BOOL)isPost postData:(NSData *)postData//post
@@ -350,87 +414,6 @@
     NSDictionary *failDic = @{RESULT_INFO: errInfo,RESULT_CODE:NSStringFromInt(-11)};
     failBlock(failDic,error);
     
-}
-
-
-- (void)requestSpecialCompletion:(void(^)(NSDictionary *result,NSError *erro))completionBlock failBlock:(void(^)(NSDictionary *failDic,NSError *erro))failedBlock{
-    successBlock = completionBlock;
-    failBlock = failedBlock;
-    
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    
-//    NSString *newStr = [requestUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
-    NSString *newStr = requestUrl;
-    
-    NSLog(@"requestUrl %@",newStr);
-    NSURL *urlS = [NSURL URLWithString:newStr];
-    
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:urlS cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:30];
-    
-    
-    if (isPostRequest) {
-        
-        [request setHTTPMethod:@"POST"];
-        
-        [request setHTTPBody:requestData];
-    }
-
-    
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        
-        if (data.length > 0) {
-            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            
-            NSLog(@"response :%@",response);
-            
-            if ([dic isKindOfClass:[NSDictionary class]]) {
-                
-                int erroCode = [[dic objectForKey:RESULT_CODE]intValue];
-                NSString *erroInfo = [dic objectForKey:RESULT_INFO];
-                
-
-
-                if (erroCode != 0) { //0代表无错误,  && erroCode != 1 1代表无结果
-
-
-                    NSDictionary *failDic = @{RESULT_INFO:erroInfo,RESULT_CODE:[NSString stringWithFormat:@"%d",erroCode]};
-                    failBlock(failDic,connectionError);
-                    
-                    return ;
-                }else
-                {
-                    successBlock(dic,connectionError);//传递的已经是没有错误的结果
-                }
-            }
-            
-        }else
-        {
-            NSLog(@"data 为空 connectionError %@",connectionError);
-            
-            NSString *errInfo = @"网络有问题,请检查网络";
-            switch (connectionError.code) {
-                case NSURLErrorNotConnectedToInternet:
-                    
-                    errInfo = @"无网络连接";
-                    break;
-                case NSURLErrorTimedOut:
-                    
-                    errInfo = @"网络连接超时";
-                    break;
-                default:
-                    break;
-            }
-            
-            NSDictionary *failDic = @{RESULT_INFO: errInfo};
-            failBlock(failDic,connectionError);
-            
-        }
-        
-    }];
-
 }
 
 #pragma mark - NSUserDefault缓存

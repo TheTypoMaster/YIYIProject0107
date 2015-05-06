@@ -20,7 +20,7 @@ static UITapGestureRecognizer *tapRecognizer;
 
 @implementation UINavigationBar (CustomImage)
 - (void)drawRect:(CGRect)rect {
-    UIImage *image = MY_MACRO_NAME?[UIImage imageNamed:IOS7DAOHANGLANBEIJING]:[UIImage imageNamed:@"ios7eva320_44.png"];//[UIImage imageNamed:@"pinglun_bg.png"];
+    UIImage *image = MY_MACRO_NAME?[UIImage imageNamed:IOS7DAOHANGLANBEIJING_PUSH]:[UIImage imageNamed:IOS6DAOHANGLANBEIJING];//[UIImage imageNamed:@"pinglun_bg.png"];
     
     [image drawInRect:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
 }
@@ -52,7 +52,8 @@ static UITapGestureRecognizer *tapRecognizer;
 - (void)customizeNavigationBar:(UINavigationBar *)bar {
     bar.clipsToBounds = YES;
     if ([bar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)]) {
-        UIImage *image = MY_MACRO_NAME?[UIImage imageNamed:IOS7DAOHANGLANBEIJING]:[UIImage imageNamed:@"ios7eva320_44.png"];//[UIImage imageNamed:@"pinglun_bg.png"] ;
+        
+        UIImage *image = MY_MACRO_NAME?[UIImage imageNamed:IOS7DAOHANGLANBEIJING_PUSH]:[UIImage imageNamed:IOS6DAOHANGLANBEIJING];//[UIImage imageNamed:@"pinglun_bg.png"];
 
         [bar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
     }
