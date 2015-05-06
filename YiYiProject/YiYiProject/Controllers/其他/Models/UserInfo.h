@@ -36,7 +36,8 @@
 @property(nonatomic,retain)NSString *role;
 @property(nonatomic,retain)NSString *birthday;
 @property(nonatomic,retain)NSString *friends_num;
-@property(nonatomic,retain)NSString *fans_num;
+@property(nonatomic,retain)NSString *fans_num; //粉丝数
+@property(nonatomic,retain)NSString *attend_num;//关注数
 @property(nonatomic,retain)NSString *favor_num;
 @property(nonatomic,retain)NSString *authcode;
 @property(nonatomic,retain)NSString *attentions_num;
@@ -49,5 +50,7 @@
 @property(nonatomic,retain)NSString *shop_id;//店铺id
 
 @property(nonatomic,strong)NSString *is_sign;//是否签到
+
+@property(nonatomic,assign)int relation;//0 互相未关注 1关注了别人 2别人关注你 3互相关注
 
 @end

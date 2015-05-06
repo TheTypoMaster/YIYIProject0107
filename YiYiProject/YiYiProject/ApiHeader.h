@@ -502,6 +502,14 @@ typedef enum{
 
 #define TPLat_ZanList @"http://www.alayy.com/index.php?d=api&c=tplat&m=get_like_user&tt_id=%@"
 
+//关注/取消关注某用户
+
+//关注某用户 &friend_uid=%@&authcode=%@
+#define USER_CONCERN_ADD @"http://www.alayy.com/index.php?d=api&c=my_api&m=attention&action=at_friend"
+
+//取消关注某用户 &friend_uid=%@&authcode=%@
+#define USER_CONCERN_CANCEL @"http://www.alayy.com/index.php?d=api&c=my_api&m=attention&action=can_friend"
+
 
 #endif
 

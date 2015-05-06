@@ -66,7 +66,12 @@
 {
     [super viewDidAppear:animated];
     
-    [_table showRefreshHeader:YES];
+//    [_table showRefreshHeader:NO];
+    
+    _table.isReloadData = YES;
+    
+    [self getZanList];
+
 
 }
 
@@ -91,10 +96,13 @@
     
     NSString *iconUrl = @"";
     NSString *userName = @"";
+    NSString *userId = @"";
     if ([self.t_model.uinfo isKindOfClass:[NSDictionary class]]) {
         
         iconUrl = self.t_model.uinfo[@"photo"];
         userName = self.t_model.uinfo[@"user_name"];
+        userId = self.t_model.uinfo[@"uid"];
+
     }
     
     
@@ -106,8 +114,14 @@
     [bottomView addSubview:iconImageView];
     [iconImageView sd_setImageWithURL:[NSURL URLWithString:iconUrl] placeholderImage:DEFAULT_HEADIMAGE];
     
+    //跳转个人中心
+    
+    [iconImageView addTaget:self action:@selector(clickToPersonal:) tag:(100 + [userId intValue])];
+    
+    
     UILabel *nameLabel = [LTools createLabelFrame:CGRectMake(iconImageView.right + 10, 0, DEVICE_WIDTH - 20 - iconImageView.width - 50 - 10, 49) title:userName font:14 align:NSTextAlignmentLeft textColor:[UIColor grayColor]];
     [bottomView addSubview:nameLabel];
+    
     
     //红心
     zan_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(DEVICE_WIDTH - 10 - 50, 0, 50, 50) normalTitle:nil image:[UIImage imageNamed:@"xq_love_up_gray"] backgroudImage:nil superView:nil target:self action:@selector(clickToZan:)];
@@ -119,6 +133,17 @@
 }
 
 #pragma - mark 事件处理
+
+/**
+ *  跳转至个人页
+ *
+ *  @param sender 按钮
+ */
+- (void)clickToPersonal:(UIButton *)sender
+{
+    
+    [MiddleTools pushToPersonalId:NSStringFromInt((int)sender.tag - 100) userType:G_Other forViewController:self lastNavigationHidden:YES];
+}
 
 /**
  *  更新赞列表
@@ -155,7 +180,39 @@
 
 - (void)clickToCencern:(UIButton *)sender
 {
+    __weak typeof(self)weakSelf = self;
     
+    NSInteger indexRow = sender.tag - 100;
+    
+    ZanUserModel *aModel = [_table.dataArray objectAtIndex:indexRow];
+
+    NSString *userId = aModel.uid;
+    
+    NSString *api = sender.selected ? USER_CONCERN_CANCEL : USER_CONCERN_ADD;
+    
+    NSString *url = [NSString stringWithFormat:@"%@&friend_uid=%@&authcode=%@",api,userId,[GMAPI getAuthkey]];
+    
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"result %@",result);
+        
+//        ZanUserModel *aModel = [_table.dataArray objectAtIndex:userId];
+        
+        aModel.relation = 1;
+
+        [_table reloadData];
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+        [GMAPI showAutoHiddenMBProgressWithText:failDic[RESULT_INFO] addToView:weakSelf.view];
+        if ([failDic[RESULT_CODE] intValue] == -11) {
+            
+            [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:weakSelf.view];
+        }
+    }];
+
 }
 
 - (void)clickToZan:(UIButton *)sender
@@ -235,6 +292,10 @@
             
         }
         
+        int total_num = [[result objectForKey:@"total_num"]intValue];
+        
+        weakSelf.myTitleLabel.text = [NSString stringWithFormat:@"%d人喜欢",total_num];
+        
         [weakTable reloadData:temp pageSize:L_PAGE_SIZE];
         
         
@@ -261,6 +322,16 @@
 //新加
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    ZanUserModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
+
+    [MiddleTools pushToPersonalId:aModel.uid userType:0 forViewController:self lastNavigationHidden:NO];
+    
+//    [MiddleTools pushToPersonalId:aModel.uid forViewController:self lastNavigationHidden:NO updateParmsBlock:^(NSDictionary *params) {
+//        
+//        
+//    }];
     
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
@@ -282,6 +353,8 @@
     ZanUserModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
     
     [cell setCellWithModel:aModel];
+    
+    cell.concernButton.tag = 100 + indexPath.row;
     
     [cell.concernButton addTarget:self action:@selector(clickToCencern:) forControlEvents:UIControlEventTouchUpInside];
     

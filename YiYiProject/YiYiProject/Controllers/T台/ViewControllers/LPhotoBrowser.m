@@ -113,15 +113,9 @@
     iconImageView.clipsToBounds = YES;
 //    iconImageView.backgroundColor = [UIColor redColor];
     [bottomView addSubview:iconImageView];
-    iconImageView.userInteractionEnabled = YES;
     [iconImageView sd_setImageWithURL:[NSURL URLWithString:iconUrl] placeholderImage:DEFAULT_HEADIMAGE];
     
-    UIButton *personalButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [personalButton addTarget:self action:@selector(clickToPersonal:) forControlEvents:UIControlEventTouchUpInside];
-    personalButton.frame = iconImageView.bounds;
-    personalButton.tag = 100 + [userId integerValue];
-    [iconImageView addSubview:personalButton];
-    
+    [iconImageView addTaget:self action:@selector(clickToPersonal:) tag:(100 + [userId intValue])];
     
     //红心
     zan_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(DEVICE_WIDTH - 10 - 50, 0, 50, 50) normalTitle:nil image:[UIImage imageNamed:@"xq_love_up"] backgroudImage:nil superView:nil target:self action:@selector(clickToZan:)];

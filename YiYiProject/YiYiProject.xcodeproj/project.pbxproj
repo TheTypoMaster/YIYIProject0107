@@ -221,6 +221,7 @@
 		13A7A03E1AF8D1570045C75F /* ZanUserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13A7A03C1AF8D1570045C75F /* ZanUserCell.xib */; };
 		13A7A0401AF8E9B80045C75F /* xq_love_up_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13A7A03F1AF8E9B80045C75F /* xq_love_up_gray@2x.png */; };
 		13A7A0481AF9B58F0045C75F /* MiddleTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A7A0471AF9B58F0045C75F /* MiddleTools.m */; };
+		13A7A04E1AFA21BC0045C75F /* UIImageView+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A7A04D1AFA21BC0045C75F /* UIImageView+Extensions.m */; };
 		13A8A38E1A655879008D3D44 /* MessageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A8A38C1A655879008D3D44 /* MessageViewCell.m */; };
 		13A8A38F1A655879008D3D44 /* MessageViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13A8A38D1A655879008D3D44 /* MessageViewCell.xib */; };
 		13AD17B11A603E4300AB24F5 /* TopicParseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AD17B01A603E4300AB24F5 /* TopicParseModel.m */; };
@@ -852,6 +853,8 @@
 		13A7A03F1AF8E9B80045C75F /* xq_love_up_gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xq_love_up_gray@2x.png"; sourceTree = "<group>"; };
 		13A7A0461AF9B58F0045C75F /* MiddleTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MiddleTools.h; sourceTree = "<group>"; };
 		13A7A0471AF9B58F0045C75F /* MiddleTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MiddleTools.m; sourceTree = "<group>"; };
+		13A7A04C1AFA21BC0045C75F /* UIImageView+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Extensions.h"; sourceTree = "<group>"; };
+		13A7A04D1AFA21BC0045C75F /* UIImageView+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Extensions.m"; sourceTree = "<group>"; };
 		13A8A38B1A655879008D3D44 /* MessageViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageViewCell.h; sourceTree = "<group>"; };
 		13A8A38C1A655879008D3D44 /* MessageViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageViewCell.m; sourceTree = "<group>"; };
 		13A8A38D1A655879008D3D44 /* MessageViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageViewCell.xib; sourceTree = "<group>"; };
@@ -2311,6 +2314,8 @@
 			children = (
 				13A7A0461AF9B58F0045C75F /* MiddleTools.h */,
 				13A7A0471AF9B58F0045C75F /* MiddleTools.m */,
+				13A7A04C1AFA21BC0045C75F /* UIImageView+Extensions.h */,
+				13A7A04D1AFA21BC0045C75F /* UIImageView+Extensions.m */,
 			);
 			path = MiddleClass;
 			sourceTree = "<group>";
@@ -3810,6 +3815,7 @@
 				13A4AC581AE49CB600EA5F2C /* TTaiBigPhotoCell.m in Sources */,
 				DF5E89B01A5E676E00535EBA /* ChooseClothesViewController.m in Sources */,
 				13A389861A387A8800ABBACB /* UIColor+ConvertColor.m in Sources */,
+				13A7A04E1AFA21BC0045C75F /* UIImageView+Extensions.m in Sources */,
 				19B937761A5D8780009B359F /* ShenQingDianPuViewController.m in Sources */,
 				139607BC1A46D82400AACAC4 /* FilterViewController.m in Sources */,
 				139A05241A66B9C500A8EB49 /* MailMessageCell.m in Sources */,

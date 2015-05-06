@@ -30,8 +30,9 @@
     UIImageView *_userFaceImv;//头像
     UIImageView *_userBannerImv;//banner
     UILabel *_userNameLabel;//用户名
-    UILabel *_guanzhuLabel;//关注
-    UILabel *_fensiLabel;//粉丝
+    
+    UILabel *concernLabel;//关注label
+    UILabel *fansLabel;//关注
     
     //第二层 (自己的主页没有这一层)
     UIView *_jiaoliuGuanzhuView;//交流关注view
@@ -90,7 +91,6 @@
     
     [self creatWaterFlowView];
     
-    [self createBottomView];
     
     [_waterFlow showRefreshHeader:YES];
 }
@@ -172,6 +172,28 @@
 #pragma - mark 事件处理
 
 /**
+ *  更新关注数
+ *
+ *  @param num 关注总数
+ */
+- (void)updateConcernNum:(int)num
+{
+    NSString *concernNum = [NSString stringWithFormat:@"关注 %d",num];
+    concernLabel.text = concernNum;
+}
+
+/**
+ *  更新粉丝数
+ *
+ *  @param num 粉丝总数
+ */
+- (void)updateFansNum:(int)num
+{
+    NSString *concernNum = [NSString stringWithFormat:@"粉丝 %d",num];
+    fansLabel.text = concernNum;
+}
+
+/**
  *  控制底部view显示或者隐藏
  *
  *  @param isHidden 是否是隐藏
@@ -194,6 +216,38 @@
 - (void)clickToConcern:(UIButton *)sender
 {
     
+    __weak typeof(self)weakSelf = self;
+    
+    __block BOOL isZan = !sender.selected;
+    
+    __block typeof(UserInfo) *weakUserInfo = currentUser;
+    
+    NSString *api = sender.selected ? USER_CONCERN_CANCEL : USER_CONCERN_ADD;
+    
+    NSString *url = [NSString stringWithFormat:@"%@&friend_uid=%@&authcode=%@",api,self.userId,[GMAPI getAuthkey]];
+    
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"result %@",result);
+        sender.selected = isZan;
+        
+        int fansNum = [weakUserInfo.fans_num intValue];
+        
+        weakUserInfo.fans_num = [NSString stringWithFormat:@"%d",isZan ? fansNum + 1 : fansNum - 1];
+        
+        [weakSelf updateFansNum:[weakUserInfo.fans_num intValue]];
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+        [GMAPI showAutoHiddenMBProgressWithText:failDic[RESULT_INFO] addToView:weakSelf.view];
+        if ([failDic[RESULT_CODE] intValue] == -11) {
+            
+            [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:weakSelf.view];
+        }
+    }];
+
 }
 
 - (void)clickToChat:(UIButton *)sender
@@ -228,6 +282,18 @@
     
     _userNameLabel.text = userInfo.user_name;
 
+    //创建底部工具
+    
+    //是自己的时候不需要
+    
+    if (![self.userId isEqualToString:[GMAPI getUid]] && self.userId.length > 0) {
+        
+        [self createBottomView];
+
+    }
+    
+    [self updateConcernNum:[userInfo.attend_num intValue]];//更新关注数
+    [self updateFansNum:[userInfo.fans_num intValue]];//更新粉丝数
 }
 
 #pragma - mark 创建视图
@@ -249,11 +315,11 @@
     [bottomView addSubview:lineMiddle];
     
     //关注按钮
-    concernButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    concernButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [concernButton setFrame:CGRectMake(0, 0, DEVICE_WIDTH /2.f - 0.5, bottomView.height)];
     [concernButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
     [concernButton addTarget:self action:@selector(clickToConcern:) forControlEvents:UIControlEventTouchUpInside];
-    [concernButton.titleLabel setFont:[UIFont systemFontOfSize:12]];
+    [concernButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
     [concernButton setTitle:@"+ 关注" forState:UIControlStateNormal];
     [concernButton setTitle:@"已关注" forState:UIControlStateSelected];
 
@@ -262,13 +328,24 @@
     
     [bottomView addSubview:concernButton];
     
+    //0 互相未关注 1关注了别人 2别人关注你 3互相关注
+    
+    if (currentUser.relation == 1 || currentUser.relation == 3) {
+        
+        concernButton.selected = YES;
+
+    }else
+    {
+        concernButton.selected = NO;
+    }
+    
     
     //关注按钮
     UIButton *chatButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [chatButton setFrame:CGRectMake(lineMiddle.right, 0, DEVICE_WIDTH /2.f - 0.5, bottomView.height)];
     [chatButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
     [chatButton addTarget:self action:@selector(clickToChat:) forControlEvents:UIControlEventTouchUpInside];
-    [chatButton.titleLabel setFont:[UIFont systemFontOfSize:12]];
+    [chatButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
     [chatButton setTitle:@"私聊" forState:UIControlStateNormal];
     [chatButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [bottomView addSubview:chatButton];
@@ -304,7 +381,7 @@
     _userFaceImv.layer.borderWidth = 1;
     _userFaceImv.layer.borderColor = [[UIColor whiteColor]CGColor];
     _userFaceImv.layer.masksToBounds = YES;
-    
+    _userFaceImv.image = DEFAULT_HEADIMAGE;
     [_upUserInfoView addSubview:_userFaceImv];
     
     //用户名
@@ -327,26 +404,16 @@
     
     //关注的数字
     
-    NSString *concernNum = @"100";
-    CGFloat aWidth = [LTools widthForText:concernNum font:14];
+    NSString *concernNum = [NSString stringWithFormat:@"关注 %d",0];
     
-    UILabel *concernLabel = [LTools createLabelFrame:CGRectMake(line.left - 10 - aWidth, 0, aWidth, concernBackView.height) title:concernNum font:14 align:NSTextAlignmentRight textColor:[UIColor whiteColor]];
+    concernLabel = [LTools createLabelFrame:CGRectMake(line.left - 100 - 10, 0, 100, concernBackView.height) title:concernNum font:14 align:NSTextAlignmentRight textColor:[UIColor whiteColor]];
     [concernBackView addSubview:concernLabel];
-    
-    //关注文字
-    UILabel *concern = [LTools createLabelFrame:CGRectMake(concernLabel.left - 5 - 30, 0, 30, concernBackView.height) title:@"关注" font:14 align:NSTextAlignmentRight textColor:[UIColor whiteColor]];
-    [concernBackView addSubview:concern];
-    
-    //粉丝文字
-    UILabel *fan = [LTools createLabelFrame:CGRectMake(line.right + 10, 0, 30, concernBackView.height) title:@"粉丝" font:14 align:NSTextAlignmentRight textColor:[UIColor whiteColor]];
-    [concernBackView addSubview:fan];
     
     //粉丝的数字
     
-    concernNum = @"1006";
-    aWidth = [LTools widthForText:concernNum font:14];
+    concernNum = [NSString stringWithFormat:@"粉丝 %d",0];
     
-    UILabel *fansLabel = [LTools createLabelFrame:CGRectMake(fan.right + 5, 0, aWidth, concernBackView.height) title:concernNum font:14 align:NSTextAlignmentRight textColor:[UIColor whiteColor]];
+    fansLabel = [LTools createLabelFrame:CGRectMake(line.right + 10, 0, 100, concernBackView.height) title:concernNum font:14 align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
     [concernBackView addSubview:fansLabel];
     
     

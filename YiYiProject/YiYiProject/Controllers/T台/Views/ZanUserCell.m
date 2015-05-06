@@ -32,11 +32,17 @@
     
     //只有未关注的时候才显示关注按钮
     
-    if ([aModel.relation intValue] == relation_concern_no) {
+    if (aModel.relation == relation_concern_no) {
         
         self.concernButton.hidden = NO;
     }else
     {
+        self.concernButton.hidden = YES;
+    }
+    
+    //自己的时候 不显示关注按钮
+    if ([aModel.uid isEqualToString:[GMAPI getUid]]) {
+        
         self.concernButton.hidden = YES;
     }
 }
