@@ -82,6 +82,12 @@ typedef enum{
     
     UIButton *_chilunBtn;//小齿轮
     
+    
+    UIView *_qiandaoSuccessViewBgView;//签到成功的黑色背景图
+    UIImageView *_qiandaoSuccessView_imvbgimage;//背景图上面的图片背景
+    UIButton *_qiandaoSuccessView_closeBtn;//签到成功关闭按钮
+    UIImageView *_zhu_imv;//小猪
+    
 }
 @end
 
@@ -290,11 +296,9 @@ typedef enum{
         
         if ([_userInfo.is_sign intValue] == 0) {//未签到
             _qiandaoBtn.userInteractionEnabled = YES;
-//            [_qiandaoBtn setImage:[UIImage imageNamed:@"gqiandao_up.png"] forState:UIControlStateNormal];
             _qiandaoBtn.selected = NO;
         }else if ([_userInfo.is_sign intValue] == 1){//已签到
             _qiandaoBtn.userInteractionEnabled = NO;
-//            [_qiandaoBtn setImage:[UIImage imageNamed:@"gqiandao_down.png"] forState:UIControlStateNormal];
             _qiandaoBtn.selected = YES;
         }
         
@@ -407,7 +411,7 @@ typedef enum{
     _qiandaoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_qiandaoBtn setFrame:CGRectMake(_editBtn.frame.origin.x, CGRectGetMaxY(_backView.frame)-50, 50, 40)];
     [_qiandaoBtn addTarget:self action:@selector(gQiandao:) forControlEvents:UIControlEventTouchUpInside];
-    _qiandaoBtn.userInteractionEnabled = NO;
+    _qiandaoBtn.userInteractionEnabled = YES;
     [_backView addSubview:_qiandaoBtn];
     
     
@@ -517,6 +521,10 @@ typedef enum{
             if ([errorcode intValue] == 0) {
                 [GMAPI showAutoHiddenMBProgressWithText:result[@"msg"] addToView:self.view];
                 sender.selected = YES;
+                
+                NSString *scroe = [NSString stringWithFormat:@"%d",[result intValueForKey:@"the_score"]];
+                [self showTheQiandaoSuccessView:scroe];
+                
                 [self GgetUserInfo];
             }else{
                 sender.selected = NO;
@@ -537,6 +545,94 @@ typedef enum{
 }
 
 
+
+-(void)showTheQiandaoSuccessView:(NSString *)theScore{
+    //黑色背景
+    _qiandaoSuccessViewBgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT)];
+    _qiandaoSuccessViewBgView.backgroundColor = [UIColor blackColor];
+    _qiandaoSuccessViewBgView.alpha = 0.8;
+    [[[UIApplication sharedApplication]keyWindow] addSubview:_qiandaoSuccessViewBgView];
+    
+    //图片背景
+    _qiandaoSuccessView_imvbgimage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH-30, DEVICE_WIDTH-30)];
+    _qiandaoSuccessView_imvbgimage.center = _qiandaoSuccessViewBgView.center;
+    [_qiandaoSuccessView_imvbgimage setImage:[UIImage imageNamed:@"gxiaozhu_bg.png"]];
+    [[[UIApplication sharedApplication]keyWindow] addSubview:_qiandaoSuccessView_imvbgimage];
+    
+    //得分lable
+    UILabel *scoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(203.0f/345 *(DEVICE_WIDTH-30), 77.0f/345*(DEVICE_WIDTH-30), 25, 16)];
+    scoreLabel.textColor = RGBCOLOR(251, 110, 43);
+    scoreLabel.font = [UIFont systemFontOfSize:15];
+    scoreLabel.backgroundColor = RGBCOLOR(239, 239, 239);
+    scoreLabel.text = theScore;
+    scoreLabel.textAlignment = NSTextAlignmentCenter;
+    [_qiandaoSuccessView_imvbgimage addSubview:scoreLabel];
+    
+    //小猪
+    _zhu_imv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 50*GscreenRatio_320, 50*GscreenRatio_320)];
+    
+    _zhu_imv.center = CGPointMake((DEVICE_WIDTH-30)*0.5, (DEVICE_WIDTH-30)*0.5+30*GscreenRatio_320);
+    [_zhu_imv setImage:[UIImage imageNamed:@"gqiandao_zhu.png"]];
+    [_qiandaoSuccessView_imvbgimage addSubview:_zhu_imv];
+    
+    
+    //关闭按钮
+    _qiandaoSuccessView_closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_qiandaoSuccessView_closeBtn setFrame:CGRectMake(CGRectGetMaxX(_qiandaoSuccessView_imvbgimage.frame)-35, _qiandaoSuccessView_imvbgimage.frame.origin.y-35, 35, 35)];
+    [_qiandaoSuccessView_closeBtn setImage:[UIImage imageNamed:@"gqiandaoguanbi.png"] forState:UIControlStateNormal];
+    [_qiandaoSuccessViewBgView addSubview:_qiandaoSuccessView_closeBtn];
+    [_qiandaoSuccessView_closeBtn addTarget:self action:@selector(removeTheQiandaoSuccessView) forControlEvents:UIControlEventTouchUpInside];
+    [[[UIApplication sharedApplication]keyWindow] addSubview:_qiandaoSuccessView_closeBtn];
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        [_zhu_imv setFrame:CGRectMake(0, 0, 150*GscreenRatio_320, 150*GscreenRatio_320)];
+        _zhu_imv.center = CGPointMake((DEVICE_WIDTH-30)*0.5, (DEVICE_WIDTH-30)*0.5+30*GscreenRatio_320);
+    } completion:^(BOOL finished) {
+        [self huangdong];
+    }];
+    
+    
+}
+
+
+-(void)removeTheQiandaoSuccessView{
+    [_qiandaoSuccessViewBgView removeFromSuperview];
+    [_qiandaoSuccessView_imvbgimage removeFromSuperview];
+    [_qiandaoSuccessView_closeBtn removeFromSuperview];
+    
+}
+
+
+
+-(void)huangdong{
+    // 晃动次数
+    static int numberOfShakes = 4;
+    // 晃动幅度（相对于总宽度）
+    static float vigourOfShake = 0.04f;
+    // 晃动延续时常（秒）
+    static float durationOfShake = 0.5f;
+    CAKeyframeAnimation *shakeAnimation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
+    // 方法一：绘制路径
+    CGRect frame = _zhu_imv.frame;
+    // 创建路径
+    CGMutablePathRef shakePath = CGPathCreateMutable();
+    // 起始点
+    CGPathMoveToPoint(shakePath, NULL, CGRectGetMidX(frame), CGRectGetMidY(frame));
+    for (int index = 0; index < numberOfShakes; index++)
+    {
+        // 添加晃动路径 幅度由大变小
+        CGPathAddLineToPoint(shakePath, NULL, CGRectGetMidX(frame) - frame.size.width * vigourOfShake*(1-(float)index/numberOfShakes),CGRectGetMidY(frame));
+        CGPathAddLineToPoint(shakePath, NULL,  CGRectGetMidX(frame) + frame.size.width * vigourOfShake*(1-(float)index/numberOfShakes),CGRectGetMidY(frame));
+    }
+    // 闭合
+    CGPathCloseSubpath(shakePath);
+    shakeAnimation.path = shakePath;
+    shakeAnimation.duration = durationOfShake;
+    // 释放
+    CFRelease(shakePath);
+    
+    [_zhu_imv.layer addAnimation:shakeAnimation forKey:kCATransition];
+}
 
 
 //跳转个人设置界面
@@ -847,7 +943,7 @@ typedef enum{
     
     _changeImageType = USERBANNER;
     GcustomActionSheet *aaa = [[GcustomActionSheet alloc]initWithTitle:nil
-                                                          buttonTitles:@[@"更换相册封面"]
+                                                          buttonTitles:@[@"更换背景图片"]
                                                      buttonTitlesColor:[UIColor blackColor]
                                                            buttonColor:[UIColor whiteColor]
                                                            CancelTitle:@"取消"

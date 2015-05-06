@@ -126,7 +126,7 @@
         NSLog(@"动态消息调整到T台详情");
         
         NSLog(@"%@",aModel.type);
-        if ([aModel.type intValue] == 12) {
+        if ([aModel.type intValue] == 12 ||[aModel.type intValue] == 2) {//12关注店铺  2关注用户
             return;
         }
         
