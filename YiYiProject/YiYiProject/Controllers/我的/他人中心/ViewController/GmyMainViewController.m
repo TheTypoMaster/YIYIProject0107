@@ -14,6 +14,7 @@
 #import "UserInfo.h"
 #import "TTaiDetailController.h"
 #import "YIYIChatViewController.h"//聊天
+#import "ParallaxHeaderView.h"
 
 #define NORMAL_TEXT @"上拉加载更多"
 #define NOMORE_TEXT @"没有更多数据"
@@ -26,7 +27,7 @@
 @interface GmyMainViewController ()<TMQuiltViewDataSource,WaterFlowDelegate>
 {
     //第一层
-    UIView *_upUserInfoView;//用户信息view
+    ParallaxHeaderView *_upUserInfoView;//用户信息view
     UIImageView *_userFaceImv;//头像
     UIImageView *_userBannerImv;//banner
     UILabel *_userNameLabel;//用户名
@@ -49,6 +50,9 @@
     int _page;
     
     UserInfo *currentUser;//当前用户信息
+    
+    BOOL notFirst;
+
 }
 
 @property(nonatomic,retain)UIActivityIndicatorView *loadingIndicator;
@@ -64,6 +68,18 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = YES;
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    if (notFirst == NO) {
+        
+        [self getUserInfo];
+        
+        notFirst = YES;
+    }
 }
 
 - (void)dealloc
@@ -85,14 +101,15 @@
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     }
     
-    [self creatHeadView];
+//    [self creatHeadView];
     
-    [self getUserInfo];
     
     [self creatWaterFlowView];
     
-    
-    [_waterFlow showRefreshHeader:YES];
+    [self getUserTPlat];
+
+//    [self getUserInfo];
+//    [_waterFlow showRefreshHeader:YES];
 }
 
 #pragma - mark 网络请求
@@ -272,7 +289,18 @@
     
     //banner背景图
     
-    [_userBannerImv sd_setImageWithURL:[NSURL URLWithString:userInfo.user_banner] placeholderImage:DEFAULT_BANNER_IMAGE];
+//    [_userBannerImv sd_setImageWithURL:[NSURL URLWithString:userInfo.user_banner] placeholderImage:DEFAULT_BANNER_IMAGE];
+    
+    [_upUserInfoView.imageView sd_setImageWithURL:[NSURL URLWithString:userInfo.user_banner] placeholderImage:DEFAULT_BANNER_IMAGE completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        
+        if (image) {
+            _upUserInfoView.headerImage = image;
+
+        }else
+        {
+            _upUserInfoView.headerImage = DEFAULT_BANNER_IMAGE;
+        }
+    }];
     
     //用户头像
     
@@ -351,17 +379,22 @@
     [bottomView addSubview:chatButton];
 }
 
+
 ///初始化头部的view
--(void)creatHeadView{
+-(UIView *)headView{
     
     //整个view
-    _upUserInfoView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_upUserInfoView.frame), DEVICE_WIDTH, 150)];
-    _upUserInfoView.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:_upUserInfoView];
+//    _upUserInfoView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 150 + 25)];
+//    _upUserInfoView.backgroundColor = [UIColor clearColor];
     
-    _userBannerImv = [[UIImageView alloc]initWithFrame:_upUserInfoView.bounds];
-    _userBannerImv.userInteractionEnabled = YES;
-    [_upUserInfoView addSubview:_userBannerImv];
+    
+    _upUserInfoView = [ParallaxHeaderView parallaxHeaderViewWithCGSize:CGSizeMake(DEVICE_WIDTH, 150 +25)];
+    _upUserInfoView.headerImage = DEFAULT_BANNER_IMAGE;
+
+    
+//    _userBannerImv = [[UIImageView alloc]initWithFrame:_upUserInfoView.bounds];
+//    _userBannerImv.userInteractionEnabled = YES;
+//    [_upUserInfoView addSubview:_userBannerImv];
     
     //返回按钮
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -371,7 +404,7 @@
     [backBtn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
     [backBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 12, 0, 12)];
     [backBtn addTarget:self action:@selector(gGoBackVc) forControlEvents:UIControlEventTouchUpInside];
-    [_upUserInfoView addSubview:backBtn];
+    [self.view addSubview:backBtn];
     
     
     //头像
@@ -394,7 +427,7 @@
     
     //关注 | 粉丝
     
-    UIView *concernBackView = [[UIView alloc]initWithFrame:CGRectMake(0, _userNameLabel.bottom, DEVICE_WIDTH, _upUserInfoView.height - _userNameLabel.bottom)];
+    UIView *concernBackView = [[UIView alloc]initWithFrame:CGRectMake(0, _userNameLabel.bottom, DEVICE_WIDTH, 150 - _userNameLabel.bottom)];
     concernBackView.backgroundColor = [UIColor clearColor];
     [_upUserInfoView addSubview:concernBackView];
     
@@ -418,9 +451,9 @@
     
     
     //整个view
-    _ttaiView = [[UIView alloc]initWithFrame:CGRectMake(0, _upUserInfoView.frame.size.height+_upUserInfoView.frame.origin.y, DEVICE_WIDTH, 25)];
+    _ttaiView = [[UIView alloc]initWithFrame:CGRectMake(0, 150, DEVICE_WIDTH, 25)];
     _ttaiView.backgroundColor = RGBCOLOR(235, 235, 235);
-    [self.view addSubview:_ttaiView];
+    [_upUserInfoView addSubview:_ttaiView];
     
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(10, 0, 2, 25)];
     lineView.backgroundColor = RGBCOLOR(239, 47, 48);
@@ -434,18 +467,109 @@
     titaiLabel.text = @"我的T台";
     [_ttaiView addSubview:titaiLabel];
     
+    return _upUserInfoView;
+    
 }
+
+
+/////初始化头部的view
+//-(void)creatHeadView{
+//    
+//    //整个view
+//    _upUserInfoView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_upUserInfoView.frame), DEVICE_WIDTH, 150)];
+//    _upUserInfoView.backgroundColor = [UIColor clearColor];
+//    [self.view addSubview:_upUserInfoView];
+//    
+//    _userBannerImv = [[UIImageView alloc]initWithFrame:_upUserInfoView.bounds];
+//    _userBannerImv.userInteractionEnabled = YES;
+//    [_upUserInfoView addSubview:_userBannerImv];
+//    
+//    //返回按钮
+//    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [backBtn setImage:BACK_DEFAULT_IMAGE forState:UIControlStateNormal];
+//    [backBtn setImageEdgeInsets:UIEdgeInsetsMake(30, 15, 30, 50)];
+//    [backBtn setFrame:CGRectMake(0, 0, 80, 80)];
+//    [backBtn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+//    [backBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 12, 0, 12)];
+//    [backBtn addTarget:self action:@selector(gGoBackVc) forControlEvents:UIControlEventTouchUpInside];
+//    [_upUserInfoView addSubview:backBtn];
+//    
+//    
+//    //头像
+//    _userFaceImv = [[UIImageView alloc]initWithFrame:CGRectMake((DEVICE_WIDTH-60)*0.5, 30, 60, 60)];
+//    _userFaceImv.backgroundColor = RGBCOLOR_ONE;
+//    _userFaceImv.layer.cornerRadius = 30;
+//    _userFaceImv.layer.borderWidth = 1;
+//    _userFaceImv.layer.borderColor = [[UIColor whiteColor]CGColor];
+//    _userFaceImv.layer.masksToBounds = YES;
+//    _userFaceImv.image = DEFAULT_HEADIMAGE;
+//    [_upUserInfoView addSubview:_userFaceImv];
+//    
+//    //用户名
+//    _userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0 , CGRectGetMaxY(_userFaceImv.frame)+5, DEVICE_WIDTH, 20)];
+//    _userNameLabel.backgroundColor = [UIColor clearColor];
+//    _userNameLabel.font = [UIFont systemFontOfSize:14];
+//    _userNameLabel.textColor = [UIColor whiteColor];
+//    _userNameLabel.textAlignment = NSTextAlignmentCenter;
+//    [_upUserInfoView addSubview:_userNameLabel];
+//    
+//    //关注 | 粉丝
+//    
+//    UIView *concernBackView = [[UIView alloc]initWithFrame:CGRectMake(0, _userNameLabel.bottom, DEVICE_WIDTH, _upUserInfoView.height - _userNameLabel.bottom)];
+//    concernBackView.backgroundColor = [UIColor clearColor];
+//    [_upUserInfoView addSubview:concernBackView];
+//    
+//    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(DEVICE_WIDTH/2.f - 0.5, 5 + 5, 1, concernBackView.height - 20)];
+//    line.backgroundColor = [UIColor whiteColor];
+//    [concernBackView addSubview:line];
+//    
+//    //关注的数字
+//    
+//    NSString *concernNum = [NSString stringWithFormat:@"关注 %d",0];
+//    
+//    concernLabel = [LTools createLabelFrame:CGRectMake(line.left - 100 - 10, 0, 100, concernBackView.height) title:concernNum font:14 align:NSTextAlignmentRight textColor:[UIColor whiteColor]];
+//    [concernBackView addSubview:concernLabel];
+//    
+//    //粉丝的数字
+//    
+//    concernNum = [NSString stringWithFormat:@"粉丝 %d",0];
+//    
+//    fansLabel = [LTools createLabelFrame:CGRectMake(line.right + 10, 0, 100, concernBackView.height) title:concernNum font:14 align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
+//    [concernBackView addSubview:fansLabel];
+//    
+//    
+//    //整个view
+//    _ttaiView = [[UIView alloc]initWithFrame:CGRectMake(0, _upUserInfoView.frame.size.height+_upUserInfoView.frame.origin.y, DEVICE_WIDTH, 25)];
+//    _ttaiView.backgroundColor = RGBCOLOR(235, 235, 235);
+//    [self.view addSubview:_ttaiView];
+//    
+//    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(10, 0, 2, 25)];
+//    lineView.backgroundColor = RGBCOLOR(239, 47, 48);
+//    lineView.layer.cornerRadius = 3;
+//    [_ttaiView addSubview:lineView];
+//    
+//    UILabel *titaiLabel = [[UILabel alloc]initWithFrame:CGRectMake(lineView.frame.size.width+lineView.frame.origin.x+5, 0,150,25)];
+//    titaiLabel.font = [UIFont systemFontOfSize:15];
+//    titaiLabel.backgroundColor = [UIColor clearColor];
+//    titaiLabel.textAlignment = NSTextAlignmentLeft;
+//    titaiLabel.text = @"我的T台";
+//    [_ttaiView addSubview:titaiLabel];
+//    
+//}
 
 //初始化瀑布流
 -(void)creatWaterFlowView{
     
     //瀑布流相关
-    _backView_water = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_ttaiView.frame), ALL_FRAME_WIDTH, ALL_FRAME_HEIGHT - _upUserInfoView.frame.size.height)];
-    _backView_water.backgroundColor = [UIColor orangeColor];
-    [self.view addSubview:_backView_water];
-    _waterFlow = [[LWaterflowView alloc]initWithFrame:_backView_water.bounds waterDelegate:self waterDataSource:self];
+//    _backView_water = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_ttaiView.frame), ALL_FRAME_WIDTH, ALL_FRAME_HEIGHT - _upUserInfoView.frame.size.height)];
+//    _backView_water.backgroundColor = [UIColor orangeColor];
+//    [self.view addSubview:_backView_water];
+    
+    _waterFlow = [[LWaterflowView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT) waterDelegate:self waterDataSource:self noHeadeRefresh:YES noFooterRefresh:NO];
     _waterFlow.backgroundColor = RGBCOLOR(235, 235, 235);
-    [_backView_water addSubview:_waterFlow];
+    [self.view addSubview:_waterFlow];
+    
+    _waterFlow.headerView = [self headView];
     
 }
 
@@ -461,11 +585,18 @@
 
 - (void)waterScrollViewDidScroll:(UIScrollView *)scrollView
 {
+    
+    [(ParallaxHeaderView *)_waterFlow.headerView layoutHeaderViewForScrollViewOffset:scrollView.contentOffset];
+    
     static CGFloat lastOffsetY = 0.f;
     
     CGFloat currentOffset = scrollView.contentOffset.y;
     
-    if (currentOffset > 20 && currentOffset > lastOffsetY) {
+//    NSLog(@"offset %f height %f content %f",currentOffset,DEVICE_HEIGHT,scrollView.contentSize.height);
+    
+    CGFloat dis = scrollView.contentSize.height - DEVICE_HEIGHT; //控制滑动到底部时 bottom隐藏
+    
+    if ((currentOffset > 20 && currentOffset > lastOffsetY) || currentOffset - dis >= 0) {
         
         [self bottomShowOrHidden:YES];
     }else

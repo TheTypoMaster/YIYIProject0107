@@ -10,6 +10,13 @@
 
 @interface UIImageView (Extensions)
 
+/**
+ *  imageView 封装一个button,支持点击
+ *
+ *  @param target   target
+ *  @param selector slector
+ *  @param tag      包含button tag值
+ */
 - (void)addTaget:(id)target action:(SEL)selector tag:(int)tag;
 
 @end

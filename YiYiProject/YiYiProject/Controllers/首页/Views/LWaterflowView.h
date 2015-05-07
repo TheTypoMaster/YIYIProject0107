@@ -22,6 +22,8 @@
 - (CGFloat)waterHeightForCellIndexPath:(NSIndexPath *)indexPath;
 - (CGFloat)waterViewNumberOfColumns;
 - (void)waterScrollViewDidScroll:(UIScrollView *)scrollView;
+//- (CGFloat)waterHeaderHeightquiltViewMargin:(TMQuiltView *)quilView marginType:(TMQuiltViewMarginType)marginType
+
 
 @end
 
@@ -57,6 +59,10 @@
 
 @property(nonatomic,assign)TMQuiltView *quitView;
 
+@property(nonatomic,assign)CGFloat waterHeaderHeight;//头部高度
+
+@property(nonatomic,retain)UIView *headerView;//头view
+
 -(instancetype)initWithFrame:(CGRect)frame
                waterDelegate:(id<WaterFlowDelegate>)waterDelegate
              waterDataSource:(id<TMQuiltViewDataSource>)waterDatasource;
@@ -64,6 +70,17 @@
 -(instancetype)initWithFrame:(CGRect)frame
                waterDelegate:(id<WaterFlowDelegate>)waterDelegate
              waterDataSource:(id<TMQuiltViewDataSource>)waterDatasource noloadView:(BOOL)noloadView;
+
+/**
+ *  灵活控制 刷新 header 和 footer的显示
+ *  @param noHeaderRefresh 头部刷新
+ *  @param noFooterRefresh 底部刷新
+ */
+-(instancetype)initWithFrame:(CGRect)frame
+               waterDelegate:(id<WaterFlowDelegate>)waterDelegate
+             waterDataSource:(id<TMQuiltViewDataSource>)waterDatasource
+              noHeadeRefresh:(BOOL)noHeaderRefresh
+             noFooterRefresh:(BOOL)noFooterRefresh;
 
 - (void)reloadData;
 -(void)showRefreshHeader:(BOOL)animated;

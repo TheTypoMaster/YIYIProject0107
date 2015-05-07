@@ -31,6 +31,47 @@
 
 -(instancetype)initWithFrame:(CGRect)frame
                waterDelegate:(id<WaterFlowDelegate>)waterDelegate
+             waterDataSource:(id<TMQuiltViewDataSource>)waterDatasource
+              noHeadeRefresh:(BOOL)noHeaderRefresh
+              noFooterRefresh:(BOOL)noFooterRefresh
+
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.pageNum = 1;
+        self.dataArray = [NSMutableArray array];
+        
+        qtmquitView = [[TMQuiltView alloc] initWithFrame:frame];
+        qtmquitView.delegate = self;
+        qtmquitView.dataSource = waterDatasource;
+        self.waterDelegate = waterDelegate;
+        
+        self.quitView = qtmquitView;
+        
+        [self addSubview:qtmquitView];
+        
+        if (noHeaderRefresh == NO) {
+            
+            [self createHeaderView];
+        }
+        
+        _noloadView = noFooterRefresh;
+
+        
+        if (noFooterRefresh == NO) {
+            
+//            [self createFooterView];
+        }
+        
+        //        [self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0.0f];
+    }
+    return self;
+}
+
+
+
+-(instancetype)initWithFrame:(CGRect)frame
+               waterDelegate:(id<WaterFlowDelegate>)waterDelegate
              waterDataSource:(id<TMQuiltViewDataSource>)waterDatasource noloadView:(BOOL)noloadView
 {
     self = [super initWithFrame:frame];
@@ -153,8 +194,16 @@
 }
 
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-//初始化刷新视图
+#pragma - mark 初始化刷新视图
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+
+-(void)setHeaderView:(UIView *)headerView
+{
+    [self.quitView addSubview:headerView];
+    
+    _headerView = headerView;
+}
+
 #pragma mark
 #pragma methods for creating and removing the header view
 
@@ -479,6 +528,19 @@
 }
 
 #pragma mark - TMQuiltViewDelegate
+
+- (CGFloat)quiltViewMargin:(TMQuiltView *)quilView marginType:(TMQuiltViewMarginType)marginType
+{
+    if (marginType == TMQuiltViewCellMarginTop || marginType == TMQuiltViewCellMarginBottom) {
+        
+//        return self.waterHeaderHeight > 0 ? self.waterHeaderHeight : 5;
+        
+        return self.headerView ? self.headerView.height : 5;
+
+    }
+    
+    return 5;
+}
 
 //列数
 
