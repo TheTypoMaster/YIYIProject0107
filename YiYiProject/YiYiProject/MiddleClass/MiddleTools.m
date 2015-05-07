@@ -19,9 +19,42 @@
     GmyMainViewController *main = [[GmyMainViewController alloc]init];
     main.userType = userType;
     main.userId = userId;
+    
+    if ([userId isEqualToString:[GMAPI getUid]]) {
+        
+        main.userType = G_Default;
+    }else
+    {
+        main.userType = G_Other;
+    }
+    
     main.lastPageNavigationHidden = hidden;
     [viewController.navigationController pushViewController:main animated:YES];
 }
+
++ (void)pushToPersonalId:(NSString *)userId
+       forViewController:(UIViewController *)viewController
+    lastNavigationHidden:(BOOL)hidden
+        updateParmsBlock:(UpdateParamsBlock)aBlock
+
+{
+    GmyMainViewController *main = [[GmyMainViewController alloc]init];
+    main.userId = userId;
+    
+    if ([userId isEqualToString:[GMAPI getUid]]) {
+        
+        main.userType = G_Default;
+    }else
+    {
+        main.userType = G_Other;
+    }
+    
+    main.updateParamsBlock = aBlock;
+    
+    main.lastPageNavigationHidden = hidden;
+    [viewController.navigationController pushViewController:main animated:YES];
+}
+
 
 + (void)chatWithUserId:(NSString *)userId
                      userName:(NSString *)userName
