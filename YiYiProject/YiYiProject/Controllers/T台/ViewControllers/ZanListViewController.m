@@ -248,6 +248,7 @@
     }
     
     __weak typeof(self)weakSelf = self;
+    __weak typeof(_table)weakTable = _table;
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         

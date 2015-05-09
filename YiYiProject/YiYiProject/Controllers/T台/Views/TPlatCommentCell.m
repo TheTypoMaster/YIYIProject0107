@@ -73,7 +73,8 @@
         NSRange range = [content rangeOfString:model.user_name];
         label.underlineLinks = NO;
         [label addCustomLink:[NSURL URLWithString:model.repost_uid] inRange:range];
-        [label setLinkColor:RGBCOLOR(87,106,154)];
+//        [label setLinkColor:RGBCOLOR(87,106,154)];
+        [label setLinkColor:[UIColor colorWithHexString:@"5175a7"]];
         label.textColor = [UIColor colorWithHexString:@"727272"];
         label.labelSelectedColor = [UIColor lightGrayColor];
 
@@ -165,6 +166,8 @@
     
     self.commentButton.center = CGPointMake(_commentButton.center.x, _header_imageView.center.y);
     
+    [self.commentButton addTarget:self action:@selector(clickToComment) forControlEvents:UIControlEventTouchUpInside];
+    
     NSString *contentString = [NSString stringWithFormat:@"%@:%@",model.user_name,model.repost_content];
     
     CGFloat aWidth = DEVICE_WIDTH - 40 - 36;//减掉左侧和右侧
@@ -187,7 +190,8 @@
     NSRange range = [contentString rangeOfString:model.user_name];
     label.underlineLinks = NO;
     [label addCustomLink:[NSURL URLWithString:model.repost_uid] inRange:range];
-    [label setLinkColor:RGBCOLOR(87,106,154)];
+
+    [label setLinkColor:[UIColor colorWithHexString:@"5175a7"]];
     label.textColor = [UIColor colorWithHexString:@"727272"];
 
 //    label.backgroundColor = [UIColor orangeColor];
@@ -195,13 +199,6 @@
     //label赋值
     NSDictionary *params = @{USER_NAME:model.user_name,USER_UID:model.repost_uid};
     label.params = params;
-    
-//    label.backgroundColor = [UIColor redColor];
-    
-    //手势 点击 回复该条评论
-//    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCnontentToComment:)];
-//    [label addGestureRecognizer:tap];
-    
 
     //底部线的坐标top
     
@@ -276,6 +273,12 @@
     TopicCommentsCell_block(TPlatCommentCellClickType_Comment,aModel.user_name,aModel.repost_uid,aModel.reply_id);
 }
 
+/// 点击评论按钮进行评论
+- (void)clickToComment
+{
+    TopicCommentsCell_block(TPlatCommentCellClickType_Comment,aModel.user_name,aModel.repost_uid,aModel.reply_id);
+}
+
 
 #pragma mark - OHAttributedLabelDelegate
 
@@ -283,19 +286,6 @@
 
 -(BOOL)attributedLabel:(OHAttributedLabel*)attributedLabel shouldFollowLink:(NSTextCheckingResult*)linkInfo
 {
-//    NSString * uid = [linkInfo.URL absoluteString];
-    
-//    NSDictionary *params = attributedLabel.params;
-//    
-//    if (params && [params isKindOfClass:[NSDictionary class]]) {
-//        
-//        NSString *userName = params[USER_NAME];
-//        NSString *uid = params[USER_UID];
-//        
-//        //点击名字 调到个人中心
-//        
-//        TopicCommentsCell_block(TPlatCommentCellClickType_UserCenter,userName,uid,@"");
-//    }
     
     TopicCommentsCell_block(TPlatCommentCellClickType_UserCenter,aModel.user_name,aModel.repost_uid,aModel.reply_id);
     

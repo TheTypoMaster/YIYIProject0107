@@ -95,6 +95,7 @@
                 </subviews>
             </tableViewCellContentView>
             <connections>
+                <outlet property="arrowImageView" destination="aj2-xl-BTW" id="Oyl-Wb-dUM"/>
                 <outlet property="commentButton" destination="ELC-ss-AFs" id="ecc-Fh-d3t"/>
                 <outlet property="commentLabel" destination="98K-kQ-J8j" id="sQY-ll-zNb"/>
                 <outlet property="descriptionLabel" destination="CpG-Po-Dmt" id="KlA-yc-e4w"/>

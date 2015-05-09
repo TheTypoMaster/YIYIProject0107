@@ -40,6 +40,10 @@
     
     NSArray *_zanListArray;//赞人员列表
     int _zanTotalNum;//赞人员总数
+    
+    TCommentHeadCell *_headCell;
+    
+    BOOL needRefreshZan;//是否刷新赞
 }
 
 ///评论界面
@@ -57,7 +61,6 @@
 
 @implementation TTaiCommentViewController
 
-
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -66,7 +69,13 @@
     self.navigationController.navigationBarHidden = NO;
     
     [[UIApplication sharedApplication]setStatusBarHidden:NO];
-
+    
+    if (needRefreshZan) {
+        
+        [self getZanList];
+        
+        needRefreshZan = NO;
+    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -97,8 +106,20 @@
     
     _comments_array = [NSMutableArray array];
     
+    //头部赞人员
+    
+    CGFloat height = [TCommentHeadCell cellHeightForString:self.t_model.tt_content];
+
+    NSString *identify = @"TCommentHeadCell";
+    _headCell = [[[NSBundle mainBundle]loadNibNamed:identify owner:self options:nil]lastObject];
+    _headCell.frame = CGRectMake(0, 0, DEVICE_WIDTH, height);
+    [_headCell setCellWithModel:self.t_model];
+    [_headCell addZanList:_zanListArray total:_zanTotalNum];
+    [_headCell.zanUserView addTaget:self action:@selector(clickToZanList:) tag:0];
+    [self.view addSubview:_headCell];
+    
     //店铺
-    _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH,DEVICE_HEIGHT-64)];
+    _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, _headCell.bottom, DEVICE_WIDTH,DEVICE_HEIGHT-64 - height)];
     _table.refreshDelegate = self;
     _table.dataSource = self;
     [self.view addSubview:_table];
@@ -107,6 +128,8 @@
     
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
     loading = [LTools MBProgressWithText:@"加载..." addToView:self.view];
+    
+    [self createheaderView];
     
     [self createToolsView];//创建底部工具
     
@@ -123,6 +146,11 @@
 
 #pragma mark - 事件处理
 
+- (void)reloadZanUsers
+{
+    [_headCell addZanList:_zanListArray total:_zanTotalNum];
+}
+
 /**
  *  跳转至赞列表
  *
@@ -130,6 +158,9 @@
  */
 - (void)clickToZanList:(UIButton *)sender
 {
+    
+    needRefreshZan = YES;
+    
     [MiddleTools pushToZanListWithModel:self.t_model forViewController:self lastNavigationHidden:NO updateParmsBlock:^(NSDictionary *params) {
         
     }];
@@ -316,7 +347,9 @@
         
         _zanTotalNum = [[result objectForKey:@"total_num"]intValue];
         
-        [weakTable reloadData];
+//        [weakTable reloadData];
+        
+        [weakSelf reloadZanUsers];
         
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
@@ -524,37 +557,69 @@
 
 #pragma mark - 创建视图
 
+- (void)createheaderView
+{
+    NSString *identify = @"TCommentHeadCell";
+    TCommentHeadCell *headCell = [[[NSBundle mainBundle]loadNibNamed:identify owner:self options:nil]lastObject];
+    
+//    TCommentHeadCell *cell = (TCommentHeadCell *)[LTools cellForIdentify:identify cellName:identify forTable:tableView];
+    
+    [headCell setCellWithModel:self.t_model];
+    
+//    headCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    [headCell addZanList:_zanListArray total:_zanTotalNum];
+    
+    [headCell.zanUserView addTaget:self action:@selector(clickToZanList:) tag:0];
+    
+//    _table.tableHeaderView = headCell;
+}
+
 /**
  *  底部工具条
  */
 - (void)createToolsView
 {
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT - 64 - 50, DEVICE_WIDTH, 50)];
-    view.backgroundColor = [UIColor colorWithHexString:@"252525"];
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT - 64 - 40, DEVICE_WIDTH, 40)];
+//    view.backgroundColor = [UIColor colorWithHexString:@"252525"];
+    view.backgroundColor = [UIColor colorWithHexString:@"f6f6f6"];
     [self.view addSubview:view];
     
-    //喜欢
-    zan_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(35, 0, 29, 50) normalTitle:nil image:[UIImage imageNamed:@"xq_love_up"] backgroudImage:nil superView:nil target:self action:@selector(clickToZan:)];
-    [view addSubview:zan_btn];
+    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, -1, DEVICE_WIDTH, 1)];
+    line.backgroundColor = [UIColor colorWithHexString:@"dcdcdc"];
+    [view addSubview:line];
     
-    [zan_btn setImage:[UIImage imageNamed:@"xq_love_down"] forState:UIControlStateSelected];
+    UIButton *comment = [LTools createButtonWithType:UIButtonTypeRoundedRect frame:CGRectMake(10, 5, view.width - 20, 30) normalTitle:@"  我要说两句" image:nil backgroudImage:nil superView:nil target:self action:@selector(clickToComment:)];
+    [view addSubview:comment];
+    comment.backgroundColor = [UIColor whiteColor];
+    [comment addCornerRadius:5.f];
+    comment.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    comment.layer.borderWidth = 0.5f;
+    [comment setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [comment setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
     
-    zan_num_label = [LTools createLabelFrame:CGRectMake(zan_btn.right + 5, 0, 50, 50) title:@"0" font:13 align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
-    [view addSubview:zan_num_label];
-    
-    //评论
-    UIButton *comment_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(DEVICE_WIDTH/2.f - 20, 0, 26, 50) normalTitle:nil image:[UIImage imageNamed:@"xq_pinglun"] backgroudImage:nil superView:nil target:self action:@selector(clickToComment:)];
-    [view addSubview:comment_btn];
-    
-    comment_num_label = [LTools createLabelFrame:CGRectMake(comment_btn.right + 5, 0, 50, 50) title:@"0" font:13 align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
-    [view addSubview:comment_num_label];
-    
-    //转发
-    UIButton *zhuan_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(DEVICE_WIDTH - 85, 0, 26, 50) normalTitle:nil image:[UIImage imageNamed:@"fenxiangb"] backgroudImage:nil superView:nil target:self action:@selector(clickToZhuanFa:)];
-    [view addSubview:zhuan_btn];
-    
-    zhuan_num_label = [LTools createLabelFrame:CGRectMake(zhuan_btn.right + 5, 0, 50, 50) title:@"0" font:13 align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
-    [view addSubview:zhuan_num_label];
+//    //喜欢
+//    zan_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(35, 0, 29, 50) normalTitle:nil image:[UIImage imageNamed:@"xq_love_up"] backgroudImage:nil superView:nil target:self action:@selector(clickToZan:)];
+//    [view addSubview:zan_btn];
+//    
+//    [zan_btn setImage:[UIImage imageNamed:@"xq_love_down"] forState:UIControlStateSelected];
+//    
+//    zan_num_label = [LTools createLabelFrame:CGRectMake(zan_btn.right + 5, 0, 50, 50) title:@"0" font:13 align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
+//    [view addSubview:zan_num_label];
+//    
+//    //评论
+//    UIButton *comment_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(DEVICE_WIDTH/2.f - 20, 0, 26, 50) normalTitle:nil image:[UIImage imageNamed:@"xq_pinglun"] backgroudImage:nil superView:nil target:self action:@selector(clickToComment:)];
+//    [view addSubview:comment_btn];
+//    
+//    comment_num_label = [LTools createLabelFrame:CGRectMake(comment_btn.right + 5, 0, 50, 50) title:@"0" font:13 align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
+//    [view addSubview:comment_num_label];
+//    
+//    //转发
+//    UIButton *zhuan_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(DEVICE_WIDTH - 85, 0, 26, 50) normalTitle:nil image:[UIImage imageNamed:@"fenxiangb"] backgroudImage:nil superView:nil target:self action:@selector(clickToZhuanFa:)];
+//    [view addSubview:zhuan_btn];
+//    
+//    zhuan_num_label = [LTools createLabelFrame:CGRectMake(zhuan_btn.right + 5, 0, 50, 50) title:@"0" font:13 align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
+//    [view addSubview:zhuan_num_label];
     
     __weak typeof(self)weakSelf = self;
     
@@ -689,13 +754,13 @@
 
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
-    if (indexPath.row == 0) {
-        
-        return [TCommentHeadCell cellHeightForString:self.t_model.tt_content];
-    }
+//    if (indexPath.row == 0) {
+//        
+//        return [TCommentHeadCell cellHeightForString:self.t_model.tt_content];
+//    }
     
     
-    TopicCommentsModel * model = [_table.dataArray objectAtIndex:indexPath.row - 1];
+    TopicCommentsModel * model = [_table.dataArray objectAtIndex:indexPath.row];
     
 //    /数字一次代表距离顶部距离、头像高度、内容离头像距离、底部距离、评论的回复高度
     return [TPlatCommentCell heightForCellWithModel:model];
@@ -706,21 +771,21 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
-        
-        static NSString *identify = @"TCommentHeadCell";
-        TCommentHeadCell *cell = (TCommentHeadCell *)[LTools cellForIdentify:identify cellName:identify forTable:tableView];
-        
-        [cell setCellWithModel:self.t_model];
-        
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        [cell addZanList:_zanListArray total:_zanTotalNum];
-        
-        [cell.zanUserView addTaget:self action:@selector(clickToZanList:) tag:0];
-        
-        return cell;
-    }
+//    if (indexPath.row == 0) {
+//        
+//        static NSString *identify = @"TCommentHeadCell";
+//        TCommentHeadCell *cell = (TCommentHeadCell *)[LTools cellForIdentify:identify cellName:identify forTable:tableView];
+//        
+//        [cell setCellWithModel:self.t_model];
+//        
+//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//        
+//        [cell addZanList:_zanListArray total:_zanTotalNum];
+//        
+//        [cell.zanUserView addTaget:self action:@selector(clickToZanList:) tag:0];
+//        
+//        return cell;
+//    }
     
     
     static NSString * identifier = @"TPlatCommentCell";
@@ -728,7 +793,7 @@
     TPlatCommentCell * cell = (TPlatCommentCell *)[LTools cellForIdentify:@"llll" cellName:identifier forTable:tableView];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    TopicCommentsModel * model = [_table.dataArray objectAtIndex:indexPath.row - 1];
+    TopicCommentsModel * model = [_table.dataArray objectAtIndex:indexPath.row];
     
     [cell setInfoWithCommentsModel:model];
     
@@ -790,7 +855,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _table.dataArray.count + 1;
+    return _table.dataArray.count;
 }
 
 @end

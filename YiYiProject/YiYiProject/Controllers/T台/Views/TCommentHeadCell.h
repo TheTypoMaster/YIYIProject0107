@@ -20,6 +20,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *zanButton;
 @property (strong, nonatomic) IBOutlet UILabel *zanLabel;
 @property (strong, nonatomic) IBOutlet UILabel *commentLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *arrowImageView;
 
 //放置赞人员头像
 @property (strong, nonatomic) IBOutlet UIView *zanUserView;

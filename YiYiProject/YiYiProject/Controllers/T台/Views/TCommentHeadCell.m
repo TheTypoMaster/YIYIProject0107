@@ -119,6 +119,19 @@
 
 - (void)addZanList:(NSArray *)zanList total:(int)total
 {
+    //移除subviews
+    if ([_zanUserView subviews].count > 0) {
+        for (int i = 0; i < _zanUserView.subviews.count; i ++) {
+            UIView *aView = [[_zanUserView subviews]objectAtIndex:i];
+            
+            if (([aView isKindOfClass:[UIImageView class]] || [aView isKindOfClass:[UILabel class]]) && aView != self.arrowImageView) {
+                
+                [aView removeFromSuperview];
+                aView = nil;
+            }
+        }
+    }
+    
     NSString *likeStr = [NSString stringWithFormat:@"%d人觉得很赞",total];
     CGFloat aWidth = [LTools widthForText:likeStr font:12];
 
