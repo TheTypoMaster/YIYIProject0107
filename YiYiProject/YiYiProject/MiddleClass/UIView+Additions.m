@@ -1,15 +1,14 @@
 //
-//  UIImageView+Extensions.m
+//  UIView+Additions.m
 //  YiYiProject
 //
-//  Created by lichaowei on 15/5/6.
+//  Created by lichaowei on 15/5/8.
 //  Copyright (c) 2015年 lcw. All rights reserved.
 //
 
-#import "UIImageView+Extensions.h"
+#import "UIView+Additions.h"
 
-@implementation UIImageView (Extensions)
-
+@implementation UIView (Additions)
 
 - (void)addTaget:(id)target action:(SEL)selector tag:(int)tag
 {

@@ -222,9 +222,14 @@
 		13A7A0401AF8E9B80045C75F /* xq_love_up_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13A7A03F1AF8E9B80045C75F /* xq_love_up_gray@2x.png */; };
 		13A7A0481AF9B58F0045C75F /* MiddleTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A7A0471AF9B58F0045C75F /* MiddleTools.m */; };
 		13A7A04E1AFA21BC0045C75F /* UIImageView+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A7A04D1AFA21BC0045C75F /* UIImageView+Extensions.m */; };
+		13A7A0521AFB75720045C75F /* TCommentHeadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A7A0501AFB75720045C75F /* TCommentHeadCell.m */; };
+		13A7A0531AFB75720045C75F /* TCommentHeadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13A7A0511AFB75720045C75F /* TCommentHeadCell.xib */; };
 		13A8A38E1A655879008D3D44 /* MessageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A8A38C1A655879008D3D44 /* MessageViewCell.m */; };
 		13A8A38F1A655879008D3D44 /* MessageViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13A8A38D1A655879008D3D44 /* MessageViewCell.xib */; };
 		13AD17B11A603E4300AB24F5 /* TopicParseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AD17B01A603E4300AB24F5 /* TopicParseModel.m */; };
+		13ADF83E1AFC877F001B0D29 /* UIView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 13ADF83D1AFC877F001B0D29 /* UIView+Additions.m */; };
+		13ADF8471AFC9B03001B0D29 /* TPlatCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13ADF8451AFC9B03001B0D29 /* TPlatCommentCell.m */; };
+		13ADF8481AFC9B03001B0D29 /* TPlatCommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13ADF8461AFC9B03001B0D29 /* TPlatCommentCell.xib */; };
 		13B690451A564825007FE152 /* CHTumblrMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B690441A564825007FE152 /* CHTumblrMenuView.m */; };
 		13B690521A564BF6007FE152 /* tianjia_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13B6904C1A564BF6007FE152 /* tianjia_down@2x.png */; };
 		13B6905C1A566A4A007FE152 /* love_up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13B6905A1A566A4A007FE152 /* love_up@2x.png */; };
@@ -855,11 +860,19 @@
 		13A7A0471AF9B58F0045C75F /* MiddleTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MiddleTools.m; sourceTree = "<group>"; };
 		13A7A04C1AFA21BC0045C75F /* UIImageView+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Extensions.h"; sourceTree = "<group>"; };
 		13A7A04D1AFA21BC0045C75F /* UIImageView+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Extensions.m"; sourceTree = "<group>"; };
+		13A7A04F1AFB75720045C75F /* TCommentHeadCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCommentHeadCell.h; sourceTree = "<group>"; };
+		13A7A0501AFB75720045C75F /* TCommentHeadCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCommentHeadCell.m; sourceTree = "<group>"; };
+		13A7A0511AFB75720045C75F /* TCommentHeadCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCommentHeadCell.xib; sourceTree = "<group>"; };
 		13A8A38B1A655879008D3D44 /* MessageViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageViewCell.h; sourceTree = "<group>"; };
 		13A8A38C1A655879008D3D44 /* MessageViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageViewCell.m; sourceTree = "<group>"; };
 		13A8A38D1A655879008D3D44 /* MessageViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageViewCell.xib; sourceTree = "<group>"; };
 		13AD17AF1A603E4300AB24F5 /* TopicParseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopicParseModel.h; sourceTree = "<group>"; };
 		13AD17B01A603E4300AB24F5 /* TopicParseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopicParseModel.m; sourceTree = "<group>"; };
+		13ADF83C1AFC877F001B0D29 /* UIView+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Additions.h"; sourceTree = "<group>"; };
+		13ADF83D1AFC877F001B0D29 /* UIView+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Additions.m"; sourceTree = "<group>"; };
+		13ADF8441AFC9B03001B0D29 /* TPlatCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPlatCommentCell.h; sourceTree = "<group>"; };
+		13ADF8451AFC9B03001B0D29 /* TPlatCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPlatCommentCell.m; sourceTree = "<group>"; };
+		13ADF8461AFC9B03001B0D29 /* TPlatCommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TPlatCommentCell.xib; sourceTree = "<group>"; };
 		13B690431A564825007FE152 /* CHTumblrMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHTumblrMenuView.h; sourceTree = "<group>"; };
 		13B690441A564825007FE152 /* CHTumblrMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHTumblrMenuView.m; sourceTree = "<group>"; };
 		13B6904C1A564BF6007FE152 /* tianjia_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tianjia_down@2x.png"; sourceTree = "<group>"; };
@@ -2316,6 +2329,8 @@
 				13A7A0471AF9B58F0045C75F /* MiddleTools.m */,
 				13A7A04C1AFA21BC0045C75F /* UIImageView+Extensions.h */,
 				13A7A04D1AFA21BC0045C75F /* UIImageView+Extensions.m */,
+				13ADF83C1AFC877F001B0D29 /* UIView+Additions.h */,
+				13ADF83D1AFC877F001B0D29 /* UIView+Additions.m */,
 			);
 			path = MiddleClass;
 			sourceTree = "<group>";
@@ -2403,6 +2418,12 @@
 				13A7A03A1AF8D1570045C75F /* ZanUserCell.h */,
 				13A7A03B1AF8D1570045C75F /* ZanUserCell.m */,
 				13A7A03C1AF8D1570045C75F /* ZanUserCell.xib */,
+				13A7A04F1AFB75720045C75F /* TCommentHeadCell.h */,
+				13A7A0501AFB75720045C75F /* TCommentHeadCell.m */,
+				13A7A0511AFB75720045C75F /* TCommentHeadCell.xib */,
+				13ADF8441AFC9B03001B0D29 /* TPlatCommentCell.h */,
+				13ADF8451AFC9B03001B0D29 /* TPlatCommentCell.m */,
+				13ADF8461AFC9B03001B0D29 /* TPlatCommentCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3359,6 +3380,7 @@
 				137B083D1A4E716700DE7DCC /* shangchang_d@2x.png in Resources */,
 				E3996ED21A5E1DBA00673147 /* gGray@2x.png in Resources */,
 				E3B7BE131ACA578100FE8495 /* xiaoxi_down@2x.png in Resources */,
+				13ADF8481AFC9B03001B0D29 /* TPlatCommentCell.xib in Resources */,
 				137B082F1A4E716700DE7DCC /* 1+1_botton@2x.png in Resources */,
 				E3C49A951AFA0A3B003D30B4 /* gqiandao_down@2x.png in Resources */,
 				56D187E41A5C274A006A606D /* dapeishi_bg@2x.png in Resources */,
@@ -3582,6 +3604,7 @@
 				1391DC5F1A870673006A2E15 /* t_guanzhu@2x.png in Resources */,
 				138C2BFD1A39E09200EA59F5 /* UMSShareListController.xib in Resources */,
 				13BEEE461AE505A9009C5BA7 /* TTaiBigPhotoCell2.xib in Resources */,
+				13A7A0531AFB75720045C75F /* TCommentHeadCell.xib in Resources */,
 				E3E913831A7FF1E700BF54C8 /* dian_xiao@2x.png in Resources */,
 				565321421A59769300E43F80 /* emotionImage.plist in Resources */,
 				E30522261A6E9962007BEAFD /* gaddphoto@2x.png in Resources */,
@@ -3709,6 +3732,7 @@
 				E3C923EA1AE108F2005C2BE1 /* GShopPhoneViewController.m in Sources */,
 				E3ECC7051A7E7EA00024A734 /* GBtn.m in Sources */,
 				E30893861AE0079400DA342C /* GmyshopErweimaViewController.m in Sources */,
+				13ADF83E1AFC877F001B0D29 /* UIView+Additions.m in Sources */,
 				5640317A1A4ED57100680E08 /* TopicDetailViewController.m in Sources */,
 				13FBC4091AEF284800DD8311 /* ProductModel.m in Sources */,
 				139562CB1A3C11EC007BB183 /* RegisterViewController.m in Sources */,
@@ -3721,6 +3745,7 @@
 				13D03D421AEDD60F0078AA9E /* AboutTailCircleViewController.m in Sources */,
 				13A389871A387A8800ABBACB /* UIView+Frame.m in Sources */,
 				E36BFC841A693974009DAF81 /* DataBase.m in Sources */,
+				13A7A0521AFB75720045C75F /* TCommentHeadCell.m in Sources */,
 				E3996ED81A5E1DBA00673147 /* UILabel+GautoMatchedText.m in Sources */,
 				564264661A5EB2550069AEBD /* CustomInputView.m in Sources */,
 				13D560DE1AA1B3C800C28927 /* LDataBase.m in Sources */,
@@ -3787,6 +3812,7 @@
 				565321481A59769300E43F80 /* SCGIFImageView.m in Sources */,
 				E3E64A9A1AE0D971002F00A4 /* JKAssetsGroupCell.m in Sources */,
 				139886A51A45673500241962 /* ProductDetailController.m in Sources */,
+				13ADF8471AFC9B03001B0D29 /* TPlatCommentCell.m in Sources */,
 				13EA3D241A3B2E13002AF7D6 /* HomeMatchController.m in Sources */,
 				E3996EDA1A5E1DBA00673147 /* GcustomActionSheet.m in Sources */,
 				133B177D1A751C1C005B8B3F /* MJPhotoView.m in Sources */,

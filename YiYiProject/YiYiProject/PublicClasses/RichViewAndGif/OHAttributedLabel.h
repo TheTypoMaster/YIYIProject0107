@@ -47,6 +47,9 @@ CTLineBreakMode CTLineBreakModeFromUILineBreakMode(UILineBreakMode lineBreakMode
 @protocol OHAttributedLabelDelegate <NSObject>
 @optional
 -(BOOL)attributedLabel:(OHAttributedLabel*)attributedLabel shouldFollowLink:(NSTextCheckingResult*)linkInfo;
+
+-(void)didSelectedAttributedLabel:(OHAttributedLabel*)attributedLabel;//整个label被选中
+
 -(UIColor*)colorForLink:(NSTextCheckingResult*)linkInfo underlineStyle:(int32_t*)underlineStyle; //!< Combination of CTUnderlineStyle and CTUnderlineStyleModifiers
 @end
 
@@ -73,6 +76,9 @@ CTLineBreakMode CTLineBreakModeFromUILineBreakMode(UILineBreakMode lineBreakMode
 @property(nonatomic, copy) NSAttributedString* attributedText; //!< Use this instead of the "text" property inherited from UILabel to set and get text
 
 @property (nonatomic,retain)NSDictionary *params;//lcw
+@property (nonatomic,retain)NSString *targetSting;//lcw
+
+@property (nonatomic,retain)UIColor *labelSelectedColor;//整个选中颜色 lcw
 
 -(void)resetAttributedText; //!< rebuild the attributedString based on UILabel's text/font/color/alignment/... properties
 - (CGSize)sizeThatFits:(CGSize)size;

@@ -139,8 +139,6 @@ typedef enum{
         [self GgetUserInfo];
     }
     
-    
-    
 }
 
 - (void)didReceiveMemoryWarning {

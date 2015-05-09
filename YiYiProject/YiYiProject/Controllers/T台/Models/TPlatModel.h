@@ -15,7 +15,7 @@
 @property(nonatomic,retain)NSString *add_time;
 @property(nonatomic,retain)NSArray *tt_detail;//t台详情 数组
 
-@property(nonatomic,retain)NSArray *tt_content;
+@property(nonatomic,retain)NSString *tt_content;
 
 @property(nonatomic,retain)NSString *tt_like_num;
 @property(nonatomic,retain)NSString *tt_share_num;

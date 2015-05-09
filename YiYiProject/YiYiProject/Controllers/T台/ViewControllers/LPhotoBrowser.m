@@ -194,6 +194,8 @@
         
     };
     
+    zanlist.lastPageNavigationHidden = YES;
+    
     [self.navigationController pushViewController:zanlist animated:YES];
 }
 

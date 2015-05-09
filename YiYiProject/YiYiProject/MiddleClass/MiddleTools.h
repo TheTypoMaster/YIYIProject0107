@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "GmyMainViewController.h"//个人主页
 #import "YIYIChatViewController.h"//聊天
+#import "ZanListViewController.h" //赞列表
 
 /**
  *  中间层工具 (连接)
@@ -50,4 +51,17 @@
                      userName:(NSString *)userName
             forViewController:(UIViewController *)viewController
         lastNavigationHidden:(BOOL)hidden;
+
+/**
+ *  跳转至赞人员列表
+ *
+ *  @param tt_model       t台model
+ *  @param viewController push上一个页面
+ *  @param hidden         上一个页面是否隐藏navigationBar
+ *  @param aBlock         数据更新block
+ */
++ (void)pushToZanListWithModel:(TPlatModel *)tt_model
+             forViewController:(UIViewController *)viewController
+          lastNavigationHidden:(BOOL)hidden
+              updateParmsBlock:(UpdateParamsBlock)aBlock;
 @end

@@ -577,8 +577,6 @@
     return 0;
 }
 
-
-
 +(NSString*)getTimeWithDate:(NSDate*)theDate{
     //获取当前时间
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];

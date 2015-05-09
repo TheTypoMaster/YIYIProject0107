@@ -129,6 +129,9 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
 
 + (CGFloat)widthForText:(NSString *)text font:(CGFloat)size;
 + (CGFloat)widthForText:(NSString *)text boldFont:(CGFloat)size;
+
++ (CGFloat)widthForText:(NSString *)text height:(CGFloat)height font:(CGFloat)size;
+
 + (CGFloat)heightForText:(NSString *)text width:(CGFloat)width font:(CGFloat)size;
 + (CGFloat)heightForText:(NSString *)text width:(CGFloat)width Boldfont:(CGFloat)size;//加粗
 
@@ -143,6 +146,19 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
 + (void)alertText:(NSString *)text viewController:(UIViewController *)vc;
 
 + (void)alertText:(NSString *)text;
+
+#pragma - mark 时间相关
+
+/**
+ *  时间戳转化为响应格式时间
+ *
+ *  @param placetime 时间线
+ *  @param format    时间格式 @"YYYY-MM-dd HH:mm:ss"
+ *
+ *  @return 返回时间字符串
+ */
++(NSString *)timeString:(NSString *)placetime withFormat:(NSString *)format;
+
 +(NSString *)timechange:(NSString *)placetime;
 +(NSString *)timechange2:(NSString *)placetime;
 +(NSString *)timechange3:(NSString *)placetime;

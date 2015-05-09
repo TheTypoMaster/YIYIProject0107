@@ -14,11 +14,16 @@
 
 #import "CustomInputView.h"
 #import "TopicCommentsModel.h"
-#import "TopicCommentsCell.h"
 
 #import "ProductDetailController.h"
 
 #import "GStorePinpaiViewController.h"
+
+#import "TCommentHeadCell.h"//头部cell
+//#import "TCommentCell.h"//评论新版cell
+#import "TPlatCommentCell.h"
+
+#import "ZanUserModel.h"//赞人员model
 
 @interface TTaiCommentViewController ()<RefreshDelegate,UITableViewDataSource>
 {
@@ -32,6 +37,9 @@
     MBProgressHUD *loading;
     
     UIImageView *bigImageView;
+    
+    NSArray *_zanListArray;//赞人员列表
+    int _zanTotalNum;//赞人员总数
 }
 
 ///评论界面
@@ -80,7 +88,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = RGBCOLOR(246, 246, 246);
+    
+    self.view.backgroundColor = [UIColor whiteColor];
     
     self.myTitleLabel.text = @"T台评论";
     
@@ -89,17 +98,21 @@
     _comments_array = [NSMutableArray array];
     
     //店铺
-    _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH,DEVICE_HEIGHT-64-50)];
+    _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH,DEVICE_HEIGHT-64)];
     _table.refreshDelegate = self;
     _table.dataSource = self;
     [self.view addSubview:_table];
     _table.backgroundColor = [UIColor clearColor];
-    _table.separatorInset = UIEdgeInsetsMake(0,15,0,0);
+//    _table.separatorInset = UIEdgeInsetsMake(0,0,0,0);
+    
+    _table.separatorStyle = UITableViewCellSeparatorStyleNone;
     loading = [LTools MBProgressWithText:@"加载..." addToView:self.view];
     
-    [self getTTaiDetail];
-    [self getTTaiComments];
-    [self createToolsView];
+    [self createToolsView];//创建底部工具
+    
+    [self getZanList];//赞列表
+
+    [self getTTaiComments];//评论
     
 }
 
@@ -109,6 +122,18 @@
 }
 
 #pragma mark - 事件处理
+
+/**
+ *  跳转至赞列表
+ *
+ *  @param sender
+ */
+- (void)clickToZanList:(UIButton *)sender
+{
+    [MiddleTools pushToZanListWithModel:self.t_model forViewController:self lastNavigationHidden:NO updateParmsBlock:^(NSDictionary *params) {
+        
+    }];
+}
 
 - (void)updateCommentNum:(int)commentNum
 {
@@ -127,6 +152,15 @@
 -(void)leftButtonTap:(UIButton *)sender
 {
 //    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.7f;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type = @"oglFlip";
+    transition.subtype = kCATransitionFromLeft;
+    transition.delegate = self;
+    [self.navigationController.view.layer addAnimation:transition forKey:nil];
     
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -152,14 +186,38 @@
     }
 }
 
+/**
+ *  直接对T台进行评论
+ */
 - (void)clickToComment:(UIButton *)sender
 {
-    _parent_post = @"0";
-    
-    [self beiginComment];
-    
+    [self addCommentParentId:@"0" reply_uid:@"0" replyName:@"0"];
 }
 
+/**
+ *  添加评论
+ *
+ *  @param parentId  上一级id,如果直接评论主题,则为 0
+ *  @param reply_uid 评论的评论人id,评论主题时为空
+ *  @param replyName 评论的评论人name,评论主题时为空
+ */
+- (void)addCommentParentId:(NSString *)parentId
+                 reply_uid:(NSString *)reply_uid
+                 replyName:(NSString *)replyName
+{
+    //评论
+    self.parent_post = parentId;
+    self.r_reply_uid = reply_uid;
+    self.r_reply_userName = replyName;
+
+    _input_view.text_input_view.text = [parentId isEqualToString:@"0"] ? @"" : [NSString stringWithFormat:@"回复%@:",replyName];
+    
+    [self beiginComment];
+}
+
+/**
+ *  弹出评论框
+ */
 - (void)beiginComment
 {
     if ([LTools isLogin:self]) {
@@ -167,6 +225,9 @@
     }
 }
 
+/**
+ *  弹出转发视图
+ */
 - (void)clickToZhuanFa:(UIButton *)sender
 {
     [[LShareSheetView shareInstance] showShareContent:detail_model.tt_content title:@"衣加衣" shareUrl:@"http://www.alayy.com" shareImage:bigImageView.image targetViewController:self];
@@ -217,17 +278,61 @@
 
 #pragma mark - 网络请求
 
+/**
+ *  获取赞人员列表
+ */
+- (void)getZanList
+{
+    //    NSString *key = [GMAPI getAuthkey];
+    
+    __weak typeof(self)weakSelf = self;
+    
+    __weak typeof(_table)weakTable = _table;
+    
+//    __block int blockTotal = _zanTotalNum;
+//    
+//    __block NSArray *blockZanList = _zanListArray;
+    
+    NSString *api = [NSString stringWithFormat:TPLat_ZanList,self.t_model.tt_id];
+    
+    NSString *url = [NSString stringWithFormat:@"%@&authcode=%@&page=%d&per_page=%d",api,[GMAPI getAuthkey],_table.pageNum,L_PAGE_SIZE];
+    
+    NSLog(@"%@",url);
+    
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"获取赞列表:%@",result);
+        NSArray *list = [result objectForKey:@"list"];
+        NSMutableArray *temp = [NSMutableArray arrayWithCapacity:list.count];
+        for (NSDictionary *aDic in list) {
+            
+            ZanUserModel *zan = [[ZanUserModel alloc]initWithDictionary:aDic];
+            [temp addObject:zan];
+            
+        }
+        
+        _zanListArray = [NSArray arrayWithArray:temp];
+        
+        _zanTotalNum = [[result objectForKey:@"total_num"]intValue];
+        
+        [weakTable reloadData];
+        
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        NSLog(@"获取赞列表failDic %@",failDic);
+        
+    }];
+}
+
 ///T台评论
 -(void)getTTaiComments
 {
-//    NSString * url = [NSString stringWithFormat:TTAI_COMMENTS_URL,_table.pageNum,@"7"];//test
+//    _tt_id = @"47";
     
-    NSString * url = [NSString stringWithFormat:TTAI_COMMENTS_URL,_table.pageNum,_tt_id];//test
+    NSString * url = [NSString stringWithFormat:TTAI_COMMENTS_URL,_table.pageNum,_tt_id];
 
-    //test
-    //  NSString * testurl = [NSString stringWithFormat:TTAI_COMMENTS_URL,_table.pageNum,@"26"];
-    
-    
     NSLog(@"请求t台评论接口 --  %@",url);
     
     __weak typeof(self)weakSelf = self;
@@ -271,11 +376,16 @@
 
 #pragma mark - 话题评论
 
--(void)tPlatCommentWithUserName:(NSString *)aName WithUid:(NSString *)aUid
+/**
+ *  评论的网络请求
+ *
+ *  @param r_replyId 对谁进行评论,为0时代表主题,不为0代表具体的评论
+ */
+-(void)commentNetworkWithParenetPostId:(NSString *)r_replyId
 {
     NSString *content = _input_view.text_input_view.text;
     
-    NSString *post = [NSString stringWithFormat:@"authcode=%@&tt_id=%@&parent_post=%@&content=%@",[GMAPI getAuthkey],self.tt_id,_parent_post,content];
+    NSString *post = [NSString stringWithFormat:@"authcode=%@&tt_id=%@&parent_post=%@&content=%@",[GMAPI getAuthkey],self.tt_id,r_replyId,content];
     NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     
     __weak typeof(_table)weakTable = _table;
@@ -467,9 +577,7 @@
         
         NSLog(@"发表评论 ---  %@",[GMAPI getAuthkey]);
         
-        
-        [weakSelf tPlatCommentWithUserName:weakSelf.r_reply_userName WithUid:weakSelf.r_reply_uid];
-        
+        [weakSelf commentNetworkWithParenetPostId:weakSelf.parent_post];
     }];
     
     [self.view addSubview:_input_view];
@@ -488,6 +596,8 @@
         userName = aModel.uinfo[@"user_name"];
     }
     
+    //头像
+    
     UIImageView *iconView = [[UIImageView alloc]initWithFrame:CGRectMake(12, 12, 50, 50)];
     iconView.layer.cornerRadius = 25.f;
     iconView.layer.borderColor = [UIColor whiteColor].CGColor;
@@ -495,12 +605,17 @@
     iconView.clipsToBounds = YES;
     [head_view addSubview:iconView];
     [iconView sd_setImageWithURL:[NSURL URLWithString:iconUrl] placeholderImage:DEFAULT_HEADIMAGE];
+    
     //名称 375 240
-    UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(iconView.right + 12, 0, DEVICE_WIDTH - 135, 13)];
+    
+    UIColor *textColor1 = [UIColor colorWithHexString:@"333333"];//深色
+    UIColor *textColor2 = [UIColor colorWithHexString:@"8c8c8c"];//浅色
+    
+    UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(iconView.right + 12, iconView.top, DEVICE_WIDTH - 135, 13)];
     nameLabel.font = [UIFont systemFontOfSize:13];
     nameLabel.text = userName;
+    nameLabel.textColor = textColor1;
     [head_view addSubview:nameLabel];
-    nameLabel.center = CGPointMake(nameLabel.center.x, iconView.center.y);
     
     //时间
     
@@ -508,40 +623,26 @@
     time = [LTools timechange:time];
     CGFloat aWidth = [LTools widthForText:time font:10];
     
-    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(DEVICE_WIDTH - 12 - aWidth, 0, aWidth, 10)];
-    timeLabel.font = [UIFont systemFontOfSize:10];
-    timeLabel.text = time;
-    timeLabel.textColor = [UIColor colorWithHexString:@"8c8c8c"];
+    UILabel *timeLabel = [LTools createLabelFrame:CGRectMake(nameLabel.left, iconView.bottom - 10, aWidth, 10) title:time font:10 align:NSTextAlignmentLeft textColor:textColor2];
     [head_view addSubview:timeLabel];
-    timeLabel.center = CGPointMake(timeLabel.center.x, iconView.center.y);
     
+    //t台描述
     
-    UIImageView *time_icon = [[UIImageView alloc]initWithFrame:CGRectMake(timeLabel.left - 5- 12, 0, 12, 12)];
-    time_icon.image = [UIImage imageNamed:@"time_iocn"];
-    //    time_icon.backgroundColor = [UIColor orangeColor];
-    [head_view addSubview:time_icon];
-    time_icon.center = CGPointMake(time_icon.center.x, iconView.center.y);
+    NSString *descriptionString = aModel.tt_content;
     
+    aWidth = DEVICE_WIDTH - 12 - timeLabel.left;//描述label宽度
     
-//    UIColor *color = [UIColor colorWithHexString:@"b9b9b9"];
-//    UIColor *color2 = [UIColor colorWithHexString:@"262626"];
+    CGFloat aHeight = [LTools heightForText:descriptionString width:aWidth font:14];
+   
+    UILabel *descriptionLabel = [LTools createLabelFrame:CGRectMake(timeLabel.left, timeLabel.bottom + 10, aWidth, aHeight) title:descriptionString font:14 align:NSTextAlignmentLeft textColor:textColor1];
+    [head_view addSubview:descriptionLabel];
     
+    //工具条 赞 和 评论
     
-//    //评论
-//    
-//    UIImageView *comment_icon = [[UIImageView alloc]initWithFrame:CGRectMake(29, iconView.bottom + 20, 17, 17)];
-//    comment_icon.image = [UIImage imageNamed:@"pinglun_icon"];
-//    [head_view addSubview:comment_icon];
-//    
-//    UILabel *comment = [LTools createLabelFrame:CGRectMake(comment_icon.right + 12, comment_icon.top, 34, 17) title:@"评论" font:17 align:NSTextAlignmentLeft textColor:color];
-//    [head_view addSubview:comment];
-//    
-//    comment_label = [LTools createLabelFrame:CGRectMake(comment.right + 10, comment.top, 100, 17) title:@"(10)" font:17 align:NSTextAlignmentLeft textColor:color];
-//    [head_view addSubview:comment_label];
-//    
-//    UIImageView *line = [[UIImageView alloc]initWithFrame:CGRectMake(10, comment_icon.bottom + 10, DEVICE_WIDTH - 10 * 2, 17/2.f)];
-//    line.image = [UIImage imageNamed:@"zhixiangjiantou"];
-//    [head_view addSubview:line];
+    UIView *toolsView = [[UIView alloc]initWithFrame:CGRectMake(0, descriptionLabel.bottom + 10, DEVICE_WIDTH, 25)];
+    toolsView.backgroundColor = [UIColor orangeColor];
+    [head_view addSubview:toolsView];
+    
     
     UIImageView *line = [[UIImageView alloc]initWithFrame:CGRectMake(10, iconView.bottom + 10, DEVICE_WIDTH - 10 * 2, 0.5)];
     line.backgroundColor = [UIColor grayColor];
@@ -552,190 +653,52 @@
 }
 
 
-#pragma mark--等到加载完图片之后再加载图片上的三个button
-
--(void)createbuttonWithModel:(NSDictionary*)maodian_detail{
-    bigImageView.userInteractionEnabled= YES;
-    
-    
-    NSInteger product_id=[maodian_detail[@"product_id"] integerValue];
-    
-    NSInteger shop_id=[maodian_detail[@"shop_id"] integerValue];
-    
-    float dx=[maodian_detail[@"img_x"] floatValue];
-    float dy=[maodian_detail[@"img_y"] floatValue];
-    
-    if (product_id>0) {
-        //说明是单品
-        
-        //        UIView *theFlag = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 105, 75)];
-        //        UIImageView *backImv = [[UIImageView alloc]initWithFrame:theFlag.bounds];
-        //        [backImv setImage:[UIImage imageNamed:@"gttailink_have.png"]];
-        //        [theFlag addSubview:backImv];
-        //        //产品名称
-        //        UILabel *productName = [[UILabel alloc]initWithFrame:CGRectMake(15, 5, 90, 23)];
-        //        productName.text = maodian_detail[@"product_name"];
-        //        productName.font = [UIFont systemFontOfSize:10];
-        //        productName.textColor = [UIColor whiteColor];
-        //        [theFlag addSubview:productName];
-        //
-        //        //单价
-        //        UILabel *priceLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, CGRectGetMaxY(productName.frame), 90, 13)];
-        ////        priceLabel.text = [NSString stringWithFormat:@"￥%@",imv.product_price];
-        //        priceLabel.font = [UIFont systemFontOfSize:10];
-        //        priceLabel.textColor = [UIColor whiteColor];
-        //        [theFlag addSubview:priceLabel];
-        //
-        //        //地址
-        //        UILabel *adressLabel = [[UILabel alloc]initWithFrame:CGRectMake(7, CGRectGetMaxY(priceLabel.frame)+3, 97, 25)];
-        //        adressLabel.text = maodian_detail[@"shop_name"];
-        //        adressLabel.font = [UIFont systemFontOfSize:10];
-        //        adressLabel.textAlignment = NSTextAlignmentCenter;
-        //        adressLabel.numberOfLines = 2;
-        //        adressLabel.textColor = [UIColor whiteColor];
-        //        [theFlag addSubview:adressLabel];
-        //
-        //        theFlag.center = CGPointMake(bigImageView.frame.size.width*dx, dy*bigImageView.frame.size.height*dy);
-        //        [bigImageView addSubview:theFlag];
-        //        theFlag.tag = product_id;
-        //        UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(turntodanpin:)];
-        //        theFlag.userInteractionEnabled=YES;
-        //        [theFlag addGestureRecognizer:tap];
-        
-        UILabel *_centerLabel=[[UILabel alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH/3, 100)];
-        _centerLabel.backgroundColor=RGBCOLOR(70,81,76);
-        _centerLabel.alpha = 0.8f;
-        _centerLabel.textColor=[UIColor whiteColor];
-        _centerLabel.font=[UIFont systemFontOfSize:13];
-        _centerLabel.layer.cornerRadius=5;
-        _centerLabel.layer.masksToBounds=YES;
-        _centerLabel.layer.borderWidth = 1.f;
-        _centerLabel.layer.borderColor = [RGBCOLOR(252, 76, 139)CGColor];
-        _centerLabel.numberOfLines=3;
-        _centerLabel.textAlignment = NSTextAlignmentCenter;
-        _centerLabel.text=maodian_detail[@"product_name"];
-        _centerLabel.tag=product_id;
-        
-        
-        //        _centerLabel.center = CGPointMake(dx*bigImageView.frame.size.width, dy*bigImageView.frame.size.height);
-        
-        UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 13, 13)];
-        [imv setImage:[UIImage imageNamed:@"gbutton.png"]];
-        imv.center = CGPointMake(dx*bigImageView.frame.size.width, dy*bigImageView.frame.size.height);
-        [bigImageView addSubview:imv];
-        
-        _centerLabel.frame=CGRectMake(CGRectGetMaxX(imv.frame), imv.frame.origin.y, _centerLabel.frame.size.width+4, _centerLabel.frame.size.height+4);
-        [_centerLabel sizeToFit];
-        
-        [bigImageView addSubview:_centerLabel];
-        
-        UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(turntodanpin:)];
-        _centerLabel.userInteractionEnabled=YES;
-        
-        [_centerLabel addGestureRecognizer:tap];
-        
-    }else{
-        
-        //说明是品牌店面
-        UILabel *_centerLabel=[[UILabel alloc]initWithFrame:CGRectZero];
-        _centerLabel.backgroundColor=RGBCOLOR(255, 0, 0);
-        _centerLabel.textColor=[UIColor colorWithRed:220/255.f green:220/255.f blue:230/255.f alpha:1];
-        _centerLabel.font=[UIFont systemFontOfSize:12];
-        _centerLabel.layer.cornerRadius=3;
-        _centerLabel.layer.masksToBounds=YES;
-        _centerLabel.numberOfLines=3;
-        _centerLabel.textAlignment=NSTextAlignmentCenter;
-        _centerLabel.text=maodian_detail[@"shop_name"];
-        [_centerLabel sizeToFit];
-        _centerLabel.tag=shop_id;
-        _centerLabel.frame=CGRectMake(dx*bigImageView.frame.size.width, dy*bigImageView.frame.size.height, _centerLabel.frame.size.width+4, _centerLabel.frame.size.height+4);
-        [bigImageView addSubview:_centerLabel];
-        
-        UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(turntoshangchang:)];
-        _centerLabel.userInteractionEnabled=YES;
-        
-        [_centerLabel addGestureRecognizer:tap];
-        
-    }
-    
-    
-    
-    
-    
-    
-}
-
-
-
-
-
-#pragma mark---锚点的点击方法
-//到商场的
--(void)turntoshangchang:(UITapGestureRecognizer *)sender{
-    
-    NSLog(@"xxxshanchang==%ld",sender.view.tag);
-    
-    UILabel *testlabel=(UILabel *)sender.view;
-    
-    GStorePinpaiViewController *detail = [[GStorePinpaiViewController alloc]init];
-    detail.storeIdStr =[NSString stringWithFormat:@"%ld",sender.view.tag] ;
-    detail.storeNameStr=testlabel.text;
-    [self.navigationController pushViewController:detail animated:YES];
-    
-}
-//到单品的
--(void)turntodanpin:(UITapGestureRecognizer *)sender{
-    
-    NSLog(@"xxxsdanpin==%ld",sender.view.tag);
-    
-    ProductDetailController *detail = [[ProductDetailController alloc]init];
-    detail.product_id =[NSString stringWithFormat:@"%ld",sender.view.tag] ;
-    [self.navigationController pushViewController:detail animated:YES];
-    
-}
-
 #pragma mark - 代理
 
 #pragma - mark RefreshDelegate
 
 - (void)loadNewData
 {
-    [self getTTaiDetail];
+//    [self getTTaiDetail];
+    
+    [self getZanList];
     [self getTTaiComments];
 }
 - (void)loadMoreData
 {
-    [self getTTaiDetail];
+    [self getZanList];
     [self getTTaiComments];
 }
 
 //新加
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
-    TopicCommentsModel * model = [_table.dataArray objectAtIndex:indexPath.row];
-    _parent_post = model.reply_id;
-    _r_reply_uid = model.repost_uid;
-    _r_reply_userName = model.user_name;
+    if (indexPath.row == 0) {
+        return;
+    }
     
-    _input_view.text_input_view.text = [NSString stringWithFormat:@"回复 %@:",model.user_name];
-    
-    [self beiginComment];
+//    TopicCommentsModel * model = [_table.dataArray objectAtIndex:indexPath.row - 1];
+//    _parent_post = model.reply_id;
+//    _r_reply_uid = model.repost_uid;
+//    _r_reply_userName = model.user_name;
+//    
+//    _input_view.text_input_view.text = [NSString stringWithFormat:@"回复 %@:",model.user_name];
+//    
+//    [self beiginComment];
 }
 
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
-    TopicCommentsModel * model = [_table.dataArray objectAtIndex:indexPath.row];
-    NSString * content_string = model.repost_content;
-    
-    CGFloat string_height = [LTools heightForText:content_string width:DEVICE_WIDTH-60-12 font:14];
-    
-    
-    SecondForwardView * _second_view = [[SecondForwardView alloc] initWithFrame:CGRectMake(60,string_height+46,DEVICE_WIDTH-60-12,0)];
-    CGFloat second_height = [_second_view setupWithArray:model.child_array] + 10;
+    if (indexPath.row == 0) {
+        
+        return [TCommentHeadCell cellHeightForString:self.t_model.tt_content];
+    }
     
     
-    ///数字一次代表距离顶部距离、头像高度、内容离头像距离、底部距离、评论的回复高度
-    return string_height + 12 + 36 + 10 + 12 + second_height;
+    TopicCommentsModel * model = [_table.dataArray objectAtIndex:indexPath.row - 1];
+    
+//    /数字一次代表距离顶部距离、头像高度、内容离头像距离、底部距离、评论的回复高度
+    return [TPlatCommentCell heightForCellWithModel:model];
     
 }
 
@@ -743,52 +706,83 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString * identifier = @"identifier";
-    
-    TopicCommentsCell * cell = (TopicCommentsCell *)[tableView dequeueReusableCellWithIdentifier:identifier];
-    if (cell == nil) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"TopicCommentsCell" owner:self options:nil] objectAtIndex:0];
+    if (indexPath.row == 0) {
+        
+        static NSString *identify = @"TCommentHeadCell";
+        TCommentHeadCell *cell = (TCommentHeadCell *)[LTools cellForIdentify:identify cellName:identify forTable:tableView];
+        
+        [cell setCellWithModel:self.t_model];
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        [cell addZanList:_zanListArray total:_zanTotalNum];
+        
+        [cell.zanUserView addTaget:self action:@selector(clickToZanList:) tag:0];
+        
+        return cell;
     }
+    
+    
+    static NSString * identifier = @"TPlatCommentCell";
+    
+    TPlatCommentCell * cell = (TPlatCommentCell *)[LTools cellForIdentify:@"llll" cellName:identifier forTable:tableView];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    cell.backgroundColor = [UIColor clearColor];
-    
-    TopicCommentsModel * model = [_table.dataArray objectAtIndex:indexPath.row];
+    TopicCommentsModel * model = [_table.dataArray objectAtIndex:indexPath.row - 1];
     
     [cell setInfoWithCommentsModel:model];
     
     __weak typeof(self)bself = self;
-    [cell setTopicCommentsCellBlock:^(TopicCommentsCellClickType aType, NSString *userName, NSString *uid, NSString *reply_id) {
-        bself.parent_post = reply_id;
-        bself.r_reply_uid = uid;
-        bself.r_reply_userName = userName;
+    [cell setTopicCommentsCellBlock:^(TPlatCommentCellClickType aType, NSString *userName, NSString *uid, NSString *reply_id) {
         
-        _input_view.text_input_view.text = [NSString stringWithFormat:@"回复 %@:",userName];
+        if (aType == TPlatCommentCellClickType_UserCenter) {
+            
+            //调到个人主页
+            
+            NSLog(@"个人主页");
+            
+            [MiddleTools pushToPersonalId:uid forViewController:self lastNavigationHidden:NO updateParmsBlock:^(NSDictionary *params) {
+                
+            }];
+            
+        }else if(aType == TPlatCommentCellClickType_Comment){
+
+            
+            [bself addCommentParentId:reply_id reply_uid:uid replyName:userName];
+            
+            NSLog(@"进行评论 userName %@",userName);
+
+        }
         
-        [self beiginComment];
-        
-        
-        //        NSString *reply_msg = [NSString stringWithFormat:@"topic = p:%@ r:%@",reply_id,uid];
-        //
-        //        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:reply_msg delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil, nil];
-        //        [alert show];
-        
-        NSLog(@"userName %@",userName);
     }];
-    [cell.second_view setSeconForwardViewBlock:^(TopicCommentsCellClickType aType, NSString *userName, NSString *uid, NSString *reply_id) {
-        bself.parent_post = reply_id;
-        bself.r_reply_uid = uid;
-        bself.r_reply_userName = userName;
-        _input_view.text_input_view.text = [NSString stringWithFormat:@"回复 %@:",userName];
+    
+    [cell.second_view setSeconForwardViewBlock:^(TPlatCommentCellClickType aType, NSString *userName, NSString *uid, NSString *reply_id) {
+//        bself.parent_post = reply_id;
+//        bself.r_reply_uid = uid;
+//        bself.r_reply_userName = userName;
+//        _input_view.text_input_view.text = [NSString stringWithFormat:@"回复 %@:",userName];
+//        
+//        [self beiginComment];
         
-        [self beiginComment];
+        if (aType == TPlatCommentCellClickType_UserCenter) {
+            
+            //调到个人主页
+            
+            NSLog(@"个人主页");
+            
+            [MiddleTools pushToPersonalId:uid forViewController:self lastNavigationHidden:NO updateParmsBlock:^(NSDictionary *params) {
+                
+            }];
+            
+        }else if(aType == TPlatCommentCellClickType_Comment){
+            
+            
+            [bself addCommentParentId:reply_id reply_uid:uid replyName:userName];
+            
+            NSLog(@"进行评论 userName %@",userName);
+            
+        }
         
-        //        NSString *reply_msg = [NSString stringWithFormat:@"second = p:%@ r:%@",reply_id,uid];
-        //        
-        //        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:reply_msg delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil, nil];
-        //        [alert show];
-        
-        NSLog(@"userName2 %@",userName);
     }];
     
     return cell;
@@ -796,7 +790,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _table.dataArray.count;
+    return _table.dataArray.count + 1;
 }
 
 @end

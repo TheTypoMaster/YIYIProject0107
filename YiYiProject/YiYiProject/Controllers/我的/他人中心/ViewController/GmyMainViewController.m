@@ -32,26 +32,32 @@
     UIImageView *_userBannerImv;//banner
     UILabel *_userNameLabel;//用户名
     
-    UILabel *concernLabel;//关注label
-    UILabel *fansLabel;//关注
+    UILabel *_concernLabel;//关注label
+    UILabel *_fansLabel;//关注
     
     //第二层 (自己的主页没有这一层)
     UIView *_jiaoliuGuanzhuView;//交流关注view
     
     UIView *_ttaiView;
     
-    UIButton *concernButton;//关注按钮
+    UIButton *_concernButton;//关注按钮
     
-    UIView *bottomView;//底部view
+    UIView *_bottomView;//底部view
     
     UIView *_backView_water;
     LWaterflowView *_waterFlow;
     int _per_page;
     int _page;
     
-    UserInfo *currentUser;//当前用户信息
+    UserInfo *_currentUser;//当前用户信息
     
-    BOOL notFirst;
+    BOOL _notFirst;//是否是第一次加载数据
+    
+    UIActivityIndicatorView *_refreshLoading;//刷新loading
+    BOOL _isReload;//是否是刷新数据
+    BOOL _reloading;//正在加载数据
+    
+    CGFloat _lastOffsetY;
 
 }
 
@@ -74,11 +80,13 @@
 {
     [super viewDidAppear:animated];
     
-    if (notFirst == NO) {
+    if (_notFirst == NO) {
+        
+        [_refreshLoading startAnimating];
         
         [self getUserInfo];
         
-        notFirst = YES;
+        _notFirst = YES;
     }
 }
 
@@ -119,6 +127,7 @@
  */
 - (void)getUserInfo
 {
+//    [_refreshLoading startAnimating];
     
     NSString *userId = self.userType == G_Default ? [GMAPI getUid] : self.userId;
 
@@ -136,10 +145,13 @@
         
         [weakSelf setViewsWithUserInfo:user];
         
+        [_refreshLoading stopAnimating];
+        
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"获取个人信息失败--->%@",failDic);
-        
+        [_refreshLoading stopAnimating];
+
     }];
 }
 
@@ -178,6 +190,8 @@
         
         [_waterFlow reloadData:arr pageSize:L_PAGE_SIZE];
         
+        _waterFlow.isReloadData = NO;
+        
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
@@ -196,7 +210,7 @@
 - (void)updateConcernNum:(int)num
 {
     NSString *concernNum = [NSString stringWithFormat:@"关注 %d",num];
-    concernLabel.text = concernNum;
+    _concernLabel.text = concernNum;
 }
 
 /**
@@ -207,7 +221,7 @@
 - (void)updateFansNum:(int)num
 {
     NSString *concernNum = [NSString stringWithFormat:@"粉丝 %d",num];
-    fansLabel.text = concernNum;
+    _fansLabel.text = concernNum;
 }
 
 /**
@@ -217,7 +231,7 @@
  */
 - (void)bottomShowOrHidden:(BOOL)isHidden
 {
-    __weak typeof(UIView) *weakBottom = bottomView;
+    __weak typeof(UIView) *weakBottom = _bottomView;
     [UIView animateWithDuration:0.5 animations:^{
        
         weakBottom.top = isHidden == YES ? DEVICE_HEIGHT : DEVICE_HEIGHT - 49;
@@ -237,7 +251,7 @@
     
     __block BOOL isZan = !sender.selected;
     
-    __block typeof(UserInfo) *weakUserInfo = currentUser;
+    __block typeof(UserInfo) *weakUserInfo = _currentUser;
     
     NSString *api = sender.selected ? USER_CONCERN_CANCEL : USER_CONCERN_ADD;
     
@@ -270,7 +284,7 @@
 - (void)clickToChat:(UIButton *)sender
 {
     //聊天
-    [MiddleTools chatWithUserId:self.userId userName:currentUser.user_name forViewController:self lastNavigationHidden:YES];
+    [MiddleTools chatWithUserId:self.userId userName:_currentUser.user_name forViewController:self lastNavigationHidden:YES];
 }
 
 -(void)gGoBackVc{
@@ -285,7 +299,7 @@
  */
 - (void)setViewsWithUserInfo:(UserInfo *)userInfo
 {
-    currentUser = userInfo;
+    _currentUser = userInfo;
     
     //banner背景图
     
@@ -316,7 +330,7 @@
     
     if (![self.userId isEqualToString:[GMAPI getUid]] && self.userId.length > 0) {
         
-        [self createBottomView];
+        [self create_bottomView];
 
     }
     
@@ -326,57 +340,62 @@
 
 #pragma - mark 创建视图
 
-- (void)createBottomView
+- (void)create_bottomView
 {
-    bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT - 49, DEVICE_WIDTH, 49)];
-    bottomView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:bottomView];
+    if (_bottomView) {
+        
+        return;
+    }
+    
+    _bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT - 49, DEVICE_WIDTH, 49)];
+    _bottomView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:_bottomView];
     
     //上横线
     UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, -0.5, DEVICE_WIDTH, 0.5)];
     line.backgroundColor = [UIColor lightGrayColor];
-    [bottomView addSubview:line];
+    [_bottomView addSubview:line];
     
     //中间竖线
-    UIView *lineMiddle = [[UIView alloc]initWithFrame:CGRectMake(DEVICE_WIDTH/2.f - 0.5, 5 + 5 + 5, 0.5, bottomView.height - 30)];
+    UIView *lineMiddle = [[UIView alloc]initWithFrame:CGRectMake(DEVICE_WIDTH/2.f - 0.5, 5 + 5 + 5, 0.5, _bottomView.height - 30)];
     lineMiddle.backgroundColor = [UIColor lightGrayColor];
-    [bottomView addSubview:lineMiddle];
+    [_bottomView addSubview:lineMiddle];
     
     //关注按钮
-    concernButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [concernButton setFrame:CGRectMake(0, 0, DEVICE_WIDTH /2.f - 0.5, bottomView.height)];
-    [concernButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
-    [concernButton addTarget:self action:@selector(clickToConcern:) forControlEvents:UIControlEventTouchUpInside];
-    [concernButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
-    [concernButton setTitle:@"+ 关注" forState:UIControlStateNormal];
-    [concernButton setTitle:@"已关注" forState:UIControlStateSelected];
+    _concernButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_concernButton setFrame:CGRectMake(0, 0, DEVICE_WIDTH /2.f - 0.5, _bottomView.height)];
+    [_concernButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
+    [_concernButton addTarget:self action:@selector(clickToConcern:) forControlEvents:UIControlEventTouchUpInside];
+    [_concernButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
+    [_concernButton setTitle:@"+ 关注" forState:UIControlStateNormal];
+    [_concernButton setTitle:@"已关注" forState:UIControlStateSelected];
 
-    [concernButton setTitleColor:RGBCOLOR(226, 102, 127) forState:UIControlStateNormal];
-    [concernButton setTitleColor:[UIColor grayColor] forState:UIControlStateSelected];
+    [_concernButton setTitleColor:RGBCOLOR(226, 102, 127) forState:UIControlStateNormal];
+    [_concernButton setTitleColor:[UIColor grayColor] forState:UIControlStateSelected];
     
-    [bottomView addSubview:concernButton];
+    [_bottomView addSubview:_concernButton];
     
     //0 互相未关注 1关注了别人 2别人关注你 3互相关注
     
-    if (currentUser.relation == 1 || currentUser.relation == 3) {
+    if (_currentUser.relation == 1 || _currentUser.relation == 3) {
         
-        concernButton.selected = YES;
+        _concernButton.selected = YES;
 
     }else
     {
-        concernButton.selected = NO;
+        _concernButton.selected = NO;
     }
     
     
     //关注按钮
     UIButton *chatButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [chatButton setFrame:CGRectMake(lineMiddle.right, 0, DEVICE_WIDTH /2.f - 0.5, bottomView.height)];
+    [chatButton setFrame:CGRectMake(lineMiddle.right, 0, DEVICE_WIDTH /2.f - 0.5, _bottomView.height)];
     [chatButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
     [chatButton addTarget:self action:@selector(clickToChat:) forControlEvents:UIControlEventTouchUpInside];
     [chatButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
     [chatButton setTitle:@"私聊" forState:UIControlStateNormal];
     [chatButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    [bottomView addSubview:chatButton];
+    [_bottomView addSubview:chatButton];
 }
 
 
@@ -405,6 +424,18 @@
     [backBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 12, 0, 12)];
     [backBtn addTarget:self action:@selector(gGoBackVc) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:backBtn];
+    
+    
+    //刷新loading
+    
+    _refreshLoading = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    //    _refreshLoading.hidden = YES;
+    _refreshLoading.backgroundColor = [UIColor clearColor];
+    _refreshLoading.hidesWhenStopped = YES;
+    _refreshLoading.frame = CGRectMake(DEVICE_WIDTH - 30 - 24,50, 24, 24);
+    [self.view addSubview:_refreshLoading];
+    
+    _refreshLoading.center = CGPointMake(_refreshLoading.center.x, backBtn.center.y);
     
     
     //头像
@@ -439,15 +470,15 @@
     
     NSString *concernNum = [NSString stringWithFormat:@"关注 %d",0];
     
-    concernLabel = [LTools createLabelFrame:CGRectMake(line.left - 100 - 10, 0, 100, concernBackView.height) title:concernNum font:14 align:NSTextAlignmentRight textColor:[UIColor whiteColor]];
-    [concernBackView addSubview:concernLabel];
+    _concernLabel = [LTools createLabelFrame:CGRectMake(line.left - 100 - 10, 0, 100, concernBackView.height) title:concernNum font:14 align:NSTextAlignmentRight textColor:[UIColor whiteColor]];
+    [concernBackView addSubview:_concernLabel];
     
     //粉丝的数字
     
     concernNum = [NSString stringWithFormat:@"粉丝 %d",0];
     
-    fansLabel = [LTools createLabelFrame:CGRectMake(line.right + 10, 0, 100, concernBackView.height) title:concernNum font:14 align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
-    [concernBackView addSubview:fansLabel];
+    _fansLabel = [LTools createLabelFrame:CGRectMake(line.right + 10, 0, 100, concernBackView.height) title:concernNum font:14 align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
+    [concernBackView addSubview:_fansLabel];
     
     
     //整个view
@@ -527,15 +558,15 @@
 //    
 //    NSString *concernNum = [NSString stringWithFormat:@"关注 %d",0];
 //    
-//    concernLabel = [LTools createLabelFrame:CGRectMake(line.left - 100 - 10, 0, 100, concernBackView.height) title:concernNum font:14 align:NSTextAlignmentRight textColor:[UIColor whiteColor]];
-//    [concernBackView addSubview:concernLabel];
+//    _concernLabel = [LTools createLabelFrame:CGRectMake(line.left - 100 - 10, 0, 100, concernBackView.height) title:concernNum font:14 align:NSTextAlignmentRight textColor:[UIColor whiteColor]];
+//    [concernBackView addSubview:_concernLabel];
 //    
 //    //粉丝的数字
 //    
 //    concernNum = [NSString stringWithFormat:@"粉丝 %d",0];
 //    
-//    fansLabel = [LTools createLabelFrame:CGRectMake(line.right + 10, 0, 100, concernBackView.height) title:concernNum font:14 align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
-//    [concernBackView addSubview:fansLabel];
+//    _fansLabel = [LTools createLabelFrame:CGRectMake(line.right + 10, 0, 100, concernBackView.height) title:concernNum font:14 align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
+//    [concernBackView addSubview:_fansLabel];
 //    
 //    
 //    //整个view
@@ -583,20 +614,38 @@
 
 #pragma mark - _waterFlowDelegate
 
+- (void)waterScrollViewDidEndDragging:(UIScrollView *)scrollView
+{
+    NSLog(@"waterScrollViewDidEndDragging1");
+
+    
+    if (_waterFlow.isReloadData && _waterFlow.reloading == NO) {
+        
+        _waterFlow.pageNum = 1;
+        [self waterLoadNewData];
+        
+        NSLog(@"waterScrollViewDidEndDragging1");
+
+    }
+    
+}
+
+
 - (void)waterScrollViewDidScroll:(UIScrollView *)scrollView
 {
+    NSLog(@"scrollView %f",scrollView.contentOffset.y);
+    
+    //头部下拉动画
     
     [(ParallaxHeaderView *)_waterFlow.headerView layoutHeaderViewForScrollViewOffset:scrollView.contentOffset];
     
-    static CGFloat lastOffsetY = 0.f;
+    //控制底部工具条的显示状态
     
     CGFloat currentOffset = scrollView.contentOffset.y;
     
-//    NSLog(@"offset %f height %f content %f",currentOffset,DEVICE_HEIGHT,scrollView.contentSize.height);
-    
     CGFloat dis = scrollView.contentSize.height - DEVICE_HEIGHT; //控制滑动到底部时 bottom隐藏
     
-    if ((currentOffset > 20 && currentOffset > lastOffsetY) || currentOffset - dis >= 0) {
+    if ((currentOffset > 20 && currentOffset > _lastOffsetY) || currentOffset - dis >= 0) {
         
         [self bottomShowOrHidden:YES];
     }else
@@ -604,16 +653,33 @@
         [self bottomShowOrHidden:NO];
     }
     
-    lastOffsetY = currentOffset;
+    NSLog(@"waterScrollViewDidScroll1");
+
+    
+    //加载数据菊花 偏移量<-85 并且是下拉
+    if (scrollView.contentOffset.y < -80 && currentOffset < _lastOffsetY) {
+        
+        NSLog(@"waterScrollViewDidScroll2");
+
+        _waterFlow.isReloadData = YES;
+        [_refreshLoading startAnimating];
+    }
+    
+    _lastOffsetY = currentOffset;
 }
 
 - (void)waterLoadNewData
 {
     [self getUserTPlat];
+    
+    [self getUserInfo];
 }
 - (void)waterLoadMoreData
 {
     [self getUserTPlat];
+    
+    [self getUserInfo];
+
 }
 
 //点击方法

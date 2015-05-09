@@ -18,7 +18,10 @@
 
 #import "LTools.h"
 #import "MiddleTools.h"
+
 #import "UIImageView+Extensions.h"
+#import "UIView+Additions.h"
+
 #import "UIView+Frame.h"
 #import "UIColor+ConvertColor.h"
 

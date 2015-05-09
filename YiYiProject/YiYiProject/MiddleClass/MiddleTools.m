@@ -74,4 +74,20 @@
     }
 }
 
+
++ (void)pushToZanListWithModel:(TPlatModel *)tt_model
+       forViewController:(UIViewController *)viewController
+    lastNavigationHidden:(BOOL)hidden
+        updateParmsBlock:(UpdateParamsBlock)aBlock
+
+{
+    ZanListViewController *main = [[ZanListViewController alloc]init];
+    main.t_model = tt_model;
+    
+    main.updateParamsBlock = aBlock;
+    
+    main.lastPageNavigationHidden = hidden;
+    [viewController.navigationController pushViewController:main animated:YES];
+}
+
 @end

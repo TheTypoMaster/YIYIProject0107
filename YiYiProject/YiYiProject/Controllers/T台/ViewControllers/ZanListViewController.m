@@ -39,7 +39,7 @@
 {
     [super viewWillDisappear:animated];
     
-    [self.navigationController setNavigationBarHidden:YES animated:animated];
+    [self.navigationController setNavigationBarHidden:self.lastPageNavigationHidden animated:animated];
 }
 
 - (void)viewDidLoad {
@@ -263,7 +263,7 @@
 }
 
 /**
- *  获取店铺详情
+ *  获取赞人员列表
  */
 - (void)getZanList
 {

@@ -374,6 +374,20 @@ BOOL CTRunContainsCharactersFromStringRange(CTRunRef run, NSRange range) {
 	activeLink = [[self linkAtPoint:pt] retain];
 	touchStartPoint = pt;
 	
+    //lichaowei 点击颜色
+
+    //判断点击的是链接还是非链接
+    
+    if (activeLink.range.length > 0) {
+        
+        NSLog(@"点击了链接");
+    }else
+    {
+        self.backgroundColor = self.labelSelectedColor ? self.labelSelectedColor : self.backgroundColor;
+    }
+    
+    //end
+    
 	// we're using activeLink to draw a highlight in -drawRect:
 	[self setNeedsDisplay];
 }
@@ -391,8 +405,20 @@ BOOL CTRunContainsCharactersFromStringRange(CTRunRef run, NSRange range) {
 		BOOL openLink = (self.delegate && [self.delegate respondsToSelector:@selector(attributedLabel:shouldFollowLink:)])
 		? [self.delegate attributedLabel:self shouldFollowLink:activeLink] : YES;
 		if (openLink) [[UIApplication sharedApplication] openURL:activeLink.URL];
-	}
+	}else
+    {
+        NSLog(@"整个label被选中");
+        
+        if (self.delegate && [self.delegate respondsToSelector:@selector(didSelectedAttributedLabel:)]) {
+            
+            [self.delegate didSelectedAttributedLabel:self];
+        }
+    }
 	
+    //lichaowei 点击颜色
+    self.backgroundColor = [UIColor clearColor];
+    //end
+    
 	[activeLink release];
 	activeLink = nil;
 	[self setNeedsDisplay];

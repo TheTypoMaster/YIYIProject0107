@@ -21,8 +21,10 @@
 - (void)waterDidSelectRowAtIndexPath:(NSIndexPath *)indexPath;
 - (CGFloat)waterHeightForCellIndexPath:(NSIndexPath *)indexPath;
 - (CGFloat)waterViewNumberOfColumns;
+
 - (void)waterScrollViewDidScroll:(UIScrollView *)scrollView;
-//- (CGFloat)waterHeaderHeightquiltViewMargin:(TMQuiltView *)quilView marginType:(TMQuiltViewMarginType)marginType
+- (void)waterScrollViewDidEndDragging:(UIScrollView *)scrollView;
+
 
 
 @end
@@ -58,8 +60,6 @@
 @property(nonatomic,assign)BOOL hiddenLoadMore;//隐藏加载更多,默认隐藏
 
 @property(nonatomic,assign)TMQuiltView *quitView;
-
-@property(nonatomic,assign)CGFloat waterHeaderHeight;//头部高度
 
 @property(nonatomic,retain)UIView *headerView;//头view
 

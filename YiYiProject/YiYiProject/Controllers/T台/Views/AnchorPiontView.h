@@ -40,4 +40,8 @@ typedef void(^AnchorClickBlock)(NSString *infoId,NSString *infoName);
 -(instancetype)initWithAnchorPoint:(CGPoint)anchorPoint
                              title:(NSString *)title;
 
+-(instancetype)initWithAnchorPoint:(CGPoint)anchorPoint
+                             title:(NSString *)title
+                    superViewWidth:(CGFloat)superViewWidth;
+
 @end

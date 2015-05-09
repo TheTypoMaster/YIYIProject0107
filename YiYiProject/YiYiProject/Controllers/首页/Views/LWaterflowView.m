@@ -189,7 +189,7 @@
     if (self.isLoadMoreData) {
         self.pageNum --;
     }
-    [self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0.1];
+    [self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0];
     
 }
 
@@ -418,6 +418,12 @@
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    
+    if (_waterDelegate && [_waterDelegate respondsToSelector:@selector(waterScrollViewDidEndDragging:)]) {
+        
+        [_waterDelegate waterScrollViewDidEndDragging:scrollView];
+    }
+    
     if (_refreshHeaderView)
     {
         [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
@@ -533,7 +539,7 @@
 {
     if (marginType == TMQuiltViewCellMarginTop || marginType == TMQuiltViewCellMarginBottom) {
         
-//        return self.waterHeaderHeight > 0 ? self.waterHeaderHeight : 5;
+
         
         return self.headerView ? self.headerView.height : 5;
 

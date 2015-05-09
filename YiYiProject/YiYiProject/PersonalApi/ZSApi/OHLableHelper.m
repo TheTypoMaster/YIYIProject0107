@@ -106,7 +106,7 @@
     label.automaticallyAddLinksForType = 0;//不让系统自动检测网址链接
     NSMutableArray *httpArr = [OHLableHelper addHttpArr:o_text];
     NSString *text = [OHLableHelper transformString:o_text WithImageWidth:image_widht WithHeight:image_height];
-    text = [NSString stringWithFormat:@"<font color='black' face='Palatino-Roman'>%@",text];
+//    text = [NSString stringWithFormat:@"<font color='black' face='Palatino-Roman'>%@",text];
     
     MarkupParser* p = [[MarkupParser alloc] init];
     NSMutableAttributedString* attString = [p attrStringFromMarkup: text];
@@ -136,7 +136,14 @@
     
     label.delegate = delegate;
     CGRect labelRect = label.frame;
-    labelRect.size.width = isBreak?labelRect.size.width:[label sizeThatFits:CGSizeMake(label.frame.size.width, CGFLOAT_MAX)].width;
+    
+    CGFloat width = isBreak ? labelRect.size.width:[label sizeThatFits:CGSizeMake(label.frame.size.width, CGFLOAT_MAX)].width;
+    
+    // lichaowei 修改,文字少于一行时也能保证宽度一致
+    width = width >= label.width ? width : label.width;
+    labelRect.size.width = width;
+    //end
+    
     labelRect.size.height = isBreak?label.frame.size.height:[label sizeThatFits:CGSizeMake(label.frame.size.width, CGFLOAT_MAX)].height;
     label.frame = labelRect;
     label.onlyCatchTouchesOnLinks = NO;
@@ -156,7 +163,7 @@
     label.automaticallyAddLinksForType = 0;//不让系统自动检测网址链接
     
     NSString *text = [OHLableHelper transformString:o_text WithImageWidth:image_widht WithHeight:image_height];
-    text = [NSString stringWithFormat:@"<font color='black' face='Palatino-Roman'>%@",text];
+//    text = [NSString stringWithFormat:@"<font color='black' face='Palatino-Roman'>%@",text];
     
     MarkupParser* p = [[MarkupParser alloc] init];
     NSMutableAttributedString* attString = [p attrStringFromMarkup: text];

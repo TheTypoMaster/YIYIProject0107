@@ -578,6 +578,13 @@
     return aSize.width;
 }
 
++ (CGFloat)widthForText:(NSString *)text height:(CGFloat)height font:(CGFloat)size
+{
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:size]};
+    CGSize aSize = [text boundingRectWithSize:CGSizeMake(MAXFLOAT,height) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:Nil].size;
+    return aSize.width;
+}
+
 + (CGFloat)heightForText:(NSString *)text width:(CGFloat)width font:(CGFloat)size
 {
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:size]};
@@ -745,6 +752,27 @@
     NSMutableString *mu_str = [NSMutableString stringWithString:string];
     [mu_str replaceOccurrencesOfString:@" " withString:@"" options:0 range:NSMakeRange(0, mu_str.length)];
     return mu_str;
+}
+
+#pragma - mark 时间相关
+
+/**
+ *  时间戳转化为响应格式时间
+ *
+ *  @param placetime 时间线
+ *  @param format    时间格式 @"YYYY-MM-dd HH:mm:ss"
+ *
+ *  @return 返回时间字符串
+ */
++(NSString *)timeString:(NSString *)placetime withFormat:(NSString *)format
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init] ;
+    [formatter setDateStyle:NSDateFormatterMediumStyle];
+    [formatter setTimeStyle:NSDateFormatterShortStyle];
+    [formatter setDateFormat:format];
+    NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[placetime doubleValue]];
+    NSString *confromTimespStr = [formatter stringFromDate:confromTimesp];
+    return confromTimespStr;
 }
 
 +(NSString*)showTimeWithTimestamp:(NSString*)myTime{

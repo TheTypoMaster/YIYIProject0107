@@ -1,26 +1,25 @@
 //
-//  UIImageView+Extensions.h
+//  UIView+Additions.h
 //  YiYiProject
 //
-//  Created by lichaowei on 15/5/6.
+//  Created by lichaowei on 15/5/8.
 //  Copyright (c) 2015年 lcw. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface UIImageView (Extensions)
+@interface UIView (Additions)
 
 /**
- *  imageView 封装一个button,支持点击
+ *  view 封装一个button,支持点击
  *
  *  @param target   target
  *  @param selector slector
  *  @param tag      包含button tag值
  */
 - (void)addTaget:(id)target action:(SEL)selector tag:(int)tag;
-
 /**
- *  给imageView加圆角
+ *  给view加圆角
  *
  *  @param radius 角度
  */
