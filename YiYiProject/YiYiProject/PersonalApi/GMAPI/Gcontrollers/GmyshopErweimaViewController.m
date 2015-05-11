@@ -12,10 +12,13 @@
 
 #import "NSDictionary+GJson.h"
 
-@interface GmyshopErweimaViewController ()
+@interface GmyshopErweimaViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UIView *_upErweimaView;//最上面的二维码界面
     UIView *_shopInfoView;//店铺信息view
+    
+    UITableView *_tableView;//主tableview
+    NSDictionary *_result;//数据源
 }
 @end
 
@@ -43,11 +46,23 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    self.myTitleLabel.text = @"店铺二维码";
+    self.myTitleLabel.text = @"店铺资料";
     self.myTitleLabel.textColor = RGBCOLOR(252, 76, 139);
     
     
+    [self creatTableView];
+    
     [self prepareNetData];
+}
+
+
+
+-(void)creatTableView{
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT-64) style:UITableViewStylePlain];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.hidden = YES;
+    [self.view addSubview:_tableView];
 }
 
 
@@ -59,11 +74,94 @@
     GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:NO postData:nil];
     [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"%@",result);
-        [self creatCustomViewWithResult:result];
+        _result = result;
+        [_tableView reloadData];
+        _tableView.hidden = NO;
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
     }];
 }
+
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    CGFloat height = 0.0f;
+    if (indexPath.row == 0) {
+        height = 92;
+    }else if (indexPath.row == 3){
+        height = 205;
+    }else{
+        height = 55;
+    }
+    
+    return height;
+}
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 4;
+}
+
+-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *identifier = @"aaa";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if (!cell) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        
+    }
+    
+    for (UIView *view in cell.contentView.subviews) {
+        [view removeFromSuperview];
+    }
+    
+    if (indexPath.row == 0) {
+        //logo
+        UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 64, 64)];
+        imv.layer.cornerRadius = 32;
+        imv.layer.borderWidth = 0.5;
+        imv.layer.borderColor = [RGBCOLOR(200, 200, 200)CGColor];
+        imv.layer.masksToBounds = YES;
+        [cell.contentView addSubview:imv];
+        
+        //店铺名
+        UILabel *shopName = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(imv.frame)+6, 25, DEVICE_WIDTH-105, 20)];
+        shopName.textColor = [UIColor blackColor];
+        shopName.font = [UIFont boldSystemFontOfSize:16];
+        int mall_type = [[_result stringValueForKey:@"mall_type"]intValue];
+        if (mall_type == 2) {//精品店
+            self.shop_Name = [NSString stringWithFormat:@"%@",[_result stringValueForKey:@"mall_name"]];
+        }else if (mall_type == 3){//品牌店
+            self.shop_Name = [NSString stringWithFormat:@"%@.%@",[_result stringValueForKey:@"brand_name"],[_result stringValueForKey:@"mall_name"]];
+        }
+        shopName.text = [NSString stringWithFormat:@"店铺名：%@",self.shop_Name];
+        [cell.contentView addSubview:shopName];
+        
+        //门牌号
+        UILabel *menpaihao = [[UILabel alloc]initWithFrame:CGRectMake(shopName.frame.origin.x, CGRectGetMaxY(shopName.frame)+8, shopName.frame.size.width, 15)];
+        menpaihao.font = [UIFont systemFontOfSize:14];
+        menpaihao.textColor = RGBCOLOR(81, 82, 83);
+        menpaihao.text = [NSString stringWithFormat:@"门牌号：%@",[_result stringValueForKey:@"doorno"]];
+        [cell.contentView addSubview:menpaihao];
+        
+    }else if (indexPath.row == 1){//手机号
+        cell.textLabel.textColor = RGBCOLOR(81, 82, 83);
+        cell.textLabel.font = [UIFont systemFontOfSize:14];
+        
+    }else if (indexPath.row == 2){//地址
+        cell.textLabel.textColor = RGBCOLOR(81, 82, 83);
+        cell.textLabel.font = [UIFont systemFontOfSize:14];
+        cell.textLabel.text = [NSString stringWithFormat:@"地址：%@",[_result stringValueForKey:@"address"]];
+    }else if (indexPath.row == 3){//二维码
+        UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(75, 20, 166, 166)];
+        [imv sd_setImageWithURL:[NSURL URLWithString:_result[@"qrcode_img"]] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            
+        }];
+        [cell.contentView addSubview:imv];
+        
+    }
+    
+    return cell;
+}
+
+
+
 
 
 

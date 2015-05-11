@@ -169,7 +169,11 @@
     self.oldImageArray = [NSMutableArray arrayWithCapacity:1];
     
     NSArray *imageList = theModel.imagelist;
-    for (int i = 0;i<imageList.count;i++) {
+    NSInteger imageListCount = imageList.count;
+    if (imageListCount>5) {
+        imageListCount = 5;
+    }
+    for (int i = 0;i<imageListCount;i++) {
         NSDictionary *dic = imageList[i];
         NSString *imageName = [[dic objectForKey:@"original"]objectForKey:@"src"];
         UIImageView *imv = [[UIImageView alloc]init];

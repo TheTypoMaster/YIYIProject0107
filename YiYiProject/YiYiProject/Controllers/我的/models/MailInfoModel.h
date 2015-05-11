@@ -27,5 +27,6 @@
 @property(nonatomic,strong)NSString *longitude;
 @property(nonatomic,strong)NSString *mall_name;
 @property(nonatomic,strong)NSString *mall_type;
+@property(nonatomic,strong)NSString *shop_view_num;//访客
 
 @end
