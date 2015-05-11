@@ -27,6 +27,7 @@ typedef enum {
 @property(nonatomic,retain)NSString *add_time;
 @property(nonatomic,retain)NSString *user_name;
 @property(nonatomic,retain)NSString *photo;
+@property(nonatomic,retain)NSString *friend_uid;//粉丝、关注 代表对方uid
 @property(nonatomic,assign)int relation;//关注关系 0代表未关注  1代表已关注 3代表以互相关注
 
 @end

@@ -53,6 +53,8 @@ alpha:(a)]
 #define USER_CHECKUSER @"checkfbuser"
 #define USER_HEAD_IMAGEURL @"userHeadImageUrl"//头像url
 
+#define USER_SHOP_ID @"shop_id"//店铺id
+
 #define USER_AUTHKEY_OHTER @"otherKey"//第三方key
 #define USRR_AUTHKEY @"authkey"
 #define USER_DEVICE_TOKEN @"DEVICE_TOKEN"
@@ -512,6 +514,16 @@ typedef enum{
 //取消关注某用户 &friend_uid=%@&authcode=%@
 #define USER_CONCERN_CANCEL @"http://www.alayy.com/index.php?d=api&c=my_api&m=attention&action=can_friend"
 
+//d=api&c=my_api&m=get_friend_list&action=get_my_attend&friend_uid=21&authcode=VCsAeVsiBeMAuwyRArIM21P2UbMH8lKjUXwGNwdiUWcBMFBhVzUCNgQzVmNSNAx8BTFXaQ==
+
+//action=get_fans 获取粉丝
+#define USER_FANS_LIST @"http://www.alayy.com/index.php?d=api&c=my_api&m=get_friend_list&action=get_fans"
+
+//action=get_my_attend 获取我关注的
+#define USER_CONCERN_LIST @"http://www.alayy.com/index.php?d=api&c=my_api&m=get_friend_list&action=get_my_attend"
+
+//action=get_friends 获取好友
+#define USER_FRIENDS_LIST @"http://www.alayy.com/index.php?d=api&c=my_api&m=get_friend_list&action=get_friends"
 
 #endif
 

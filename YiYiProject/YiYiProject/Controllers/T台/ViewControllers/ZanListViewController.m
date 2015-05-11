@@ -46,16 +46,27 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.myTitleLabel.text = [NSString stringWithFormat:@"%@人喜欢",self.t_model.tt_like_num];
+    if (self.listType == User_TPlatZanList) {
+        self.myTitleLabel.text = [NSString stringWithFormat:@"%@人喜欢",self.t_model.tt_like_num];
+
+    }else
+    {
+        [self updateNavigationTitle];
+    }
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     
-    _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT - 64 - 49) showLoadMore:YES];
+    _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT - 64) showLoadMore:NO];
     _table.refreshDelegate = self;
     _table.dataSource = self;
     [self.view addSubview:_table];
     
-    [self createBottomTools];
+    if (self.listType == User_TPlatZanList) {
+        
+        _table.height = DEVICE_HEIGHT - 64 - 49;
+        [self createBottomTools];
+
+    }
     
     cellIdentify = @"ZanUserCell";
     UINib *nib = [UINib nibWithNibName:cellIdentify bundle:nil];
@@ -132,6 +143,26 @@
 }
 
 #pragma - mark 事件处理
+
+- (void)updateNavigationTitle
+{
+    NSString *url = nil;
+    if (self.listType == User_ShopMember) { //店铺会员
+        
+        url = @"店铺会员";
+        
+    }else if (self.listType == User_MyConcernList) //关注列表
+    {
+        url = @"关注";
+        
+    }else if (self.listType == User_MyFansList) //粉丝
+    {
+        
+        url = @"粉丝";
+    }
+
+    self.myTitleLabel.text = url;
+}
 
 /**
  *  跳转至个人页
@@ -286,9 +317,25 @@
     
     __weak typeof(_table)weakTable = _table;
     
-    NSString *api = [NSString stringWithFormat:TPLat_ZanList,self.t_model.tt_id];
-    
-    NSString *url = [NSString stringWithFormat:@"%@&authcode=%@&page=%d&per_page=%d",api,[GMAPI getAuthkey],_table.pageNum,L_PAGE_SIZE];
+    NSString *url = nil;
+    if (self.listType == User_ShopMember) { //店铺会员
+        
+        url = [NSString stringWithFormat:@"%@&shop_id=%@&page=%d&per_page=%d",GMYSHOPHUIYUANLIST,self.objectId,_table.pageNum,L_PAGE_SIZE];
+        
+    }else if (self.listType == User_TPlatZanList){ //t台赞人员列表
+        
+        NSString *api = [NSString stringWithFormat:TPLat_ZanList,self.t_model.tt_id];
+        url = [NSString stringWithFormat:@"%@&authcode=%@&page=%d&per_page=%d",api,[GMAPI getAuthkey],_table.pageNum,L_PAGE_SIZE];
+        
+    }else if (self.listType == User_MyConcernList) //关注列表
+    {
+        url = [NSString stringWithFormat:@"%@&authcode=%@&uid=%@&page=%d&per_page=%d",USER_CONCERN_LIST,[GMAPI getAuthkey],self.objectId,_table.pageNum,L_PAGE_SIZE];
+        
+    }else if (self.listType == User_MyFansList)
+    {
+        
+        url = [NSString stringWithFormat:@"%@&authcode=%@&uid=%@&page=%d&per_page=%d",USER_FANS_LIST,[GMAPI getAuthkey],self.objectId,_table.pageNum,L_PAGE_SIZE];
+    }
     
     NSLog(@"%@",url);
     
@@ -307,7 +354,11 @@
         
         int total_num = [[result objectForKey:@"total_num"]intValue];
         
-        weakSelf.myTitleLabel.text = [NSString stringWithFormat:@"%d人喜欢",total_num];
+        if (weakSelf.listType == User_TPlatZanList) {
+            
+            weakSelf.myTitleLabel.text = [NSString stringWithFormat:@"%d人喜欢",total_num];
+
+        }
         
         [weakTable reloadData:temp pageSize:L_PAGE_SIZE];
         
@@ -337,8 +388,28 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     ZanUserModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
+    
+    
+    NSString *url = nil;
+    if (self.listType == User_ShopMember) { //店铺会员
+        
+        url = aModel.uid;
+        
+    }else if (self.listType == User_TPlatZanList){ //t台赞人员列表
+        
+        url = aModel.uid;
+        
+    }else if (self.listType == User_MyConcernList) //关注列表
+    {
+        url = aModel.friend_uid;
+        
+    }else if (self.listType == User_MyFansList) //粉丝
+    {
+        
+        url = aModel.friend_uid;
+    }
 
-    [MiddleTools pushToPersonalId:aModel.uid userType:0 forViewController:self lastNavigationHidden:NO];
+    [MiddleTools pushToPersonalId:url userType:0 forViewController:self lastNavigationHidden:NO];
     
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView

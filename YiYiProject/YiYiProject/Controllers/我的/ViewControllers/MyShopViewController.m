@@ -216,12 +216,16 @@
 
 //跳转店铺会员
 -(void)pushToHuiyuanVC{
-    GmyShopHuiyuanViewController *ccc = [[GmyShopHuiyuanViewController alloc]init];
-    ccc.mallInfo = self.mallInfo;
-    ccc.lastPageNavigationHidden = YES;
-    [self.navigationController pushViewController:ccc animated:YES];
+//    GmyShopHuiyuanViewController *ccc = [[GmyShopHuiyuanViewController alloc]init];
+//    ccc.mallInfo = self.mallInfo;
+//    ccc.lastPageNavigationHidden = YES;
+//    [self.navigationController pushViewController:ccc animated:YES];
+//    
+//    self.navigationController.navigationBarHidden = NO;
     
-    self.navigationController.navigationBarHidden = NO;
+    [MiddleTools pushToUserListWithObjectId:self.mallInfo.id listType:User_ShopMember forViewController:self lastNavigationHidden:YES updateParmsBlock:^(NSDictionary *params) {
+        
+    }];
 }
 
 

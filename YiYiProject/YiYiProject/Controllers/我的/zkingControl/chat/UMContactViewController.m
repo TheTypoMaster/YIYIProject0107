@@ -34,6 +34,12 @@
     [self backToPrevious];
 }
 
+-(void)rightButtonTap:(UIButton *)sender
+{
+    [self updateContactInfo];
+}
+
+
 - (void)setupCancelBtn {
     UIButton *cancelBarBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [cancelBarBtn setBackgroundImage:[UIImage imageNamed:@"item_cancel.png"] forState:UIControlStateNormal];

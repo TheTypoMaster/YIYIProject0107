@@ -203,6 +203,36 @@
 #pragma - mark 事件处理
 
 /**
+ *  跳转到关注列表
+ */
+- (void)clickToConcernList:(UIButton *)sender
+{
+    NSString *userId = self.userId;
+    if (self.userType == G_Default) {
+        
+        userId = [GMAPI getUid];
+    }
+    [MiddleTools pushToUserListWithObjectId:userId listType:User_MyConcernList forViewController:self lastNavigationHidden:YES updateParmsBlock:^(NSDictionary *params) {
+        
+    }];
+}
+
+/**
+ *  跳转到粉丝列表
+ */
+- (void)clickToFansList
+{
+    NSString *userId = self.userId;
+    if (self.userType == G_Default) {
+        
+        userId = [GMAPI getUid];
+    }
+    [MiddleTools pushToUserListWithObjectId:userId listType:User_MyFansList forViewController:self lastNavigationHidden:YES updateParmsBlock:^(NSDictionary *params) {
+        
+    }];
+}
+
+/**
  *  更新关注数
  *
  *  @param num 关注总数
@@ -473,6 +503,8 @@
     _concernLabel = [LTools createLabelFrame:CGRectMake(line.left - 100 - 10, 0, 100, concernBackView.height) title:concernNum font:14 align:NSTextAlignmentRight textColor:[UIColor whiteColor]];
     [concernBackView addSubview:_concernLabel];
     
+    [_concernLabel addTaget:self action:@selector(clickToConcernList:) tag:0];
+    
     //粉丝的数字
     
     concernNum = [NSString stringWithFormat:@"粉丝 %d",0];
@@ -480,6 +512,7 @@
     _fansLabel = [LTools createLabelFrame:CGRectMake(line.right + 10, 0, 100, concernBackView.height) title:concernNum font:14 align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
     [concernBackView addSubview:_fansLabel];
     
+    [_fansLabel addTaget:self action:@selector(clickToFansList) tag:0];
     
     //整个view
     _ttaiView = [[UIView alloc]initWithFrame:CGRectMake(0, 150, DEVICE_WIDTH, 25)];

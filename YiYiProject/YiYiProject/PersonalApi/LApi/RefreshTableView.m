@@ -242,6 +242,11 @@
         self.isReloadData = NO;
     }
     
+    if (self.tableFooterView == nil) {
+        [self createFooterView];
+        
+    }
+    
     @try {
         
         [self reloadData];

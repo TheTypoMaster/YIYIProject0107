@@ -254,6 +254,10 @@
         [LTools cache:user.authcode ForKey:USER_AUTHOD];
         [LTools cache:user.photo ForKey:USER_HEAD_IMAGEURL];
         
+        //保存店铺id
+        
+        [LTools cache:([user.shopman isEqualToString:@"2"] ? user.shop_id : @"") ForKey:USER_SHOP_ID];
+
         //保存登录状态 yes
         
         [LTools cacheBool:YES ForKey:LOGIN_SERVER_STATE];

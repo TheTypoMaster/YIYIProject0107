@@ -101,7 +101,7 @@
     RCRichContentMessage *message = [[RCRichContentMessage alloc] init];
     message.title = self.theModel.product_name;
     NSString *zhekou = [NSString stringWithFormat:@"%.1f折",self.theModel.discount_num * 10];
-    message.digest = [NSString stringWithFormat:@"现价：%@元\n折扣：%@\n标签：%@",self.theModel.product_price,zhekou,self.theModel.product_tag];
+    message.digest = [NSString stringWithFormat:@"  现价：%@元\n  折扣：%@\n  标签：%@",self.theModel.product_price,zhekou,self.theModel.product_tag];
     message.imageURL = self.theModel.product_tag;
     NSArray *imageArray = self.theModel.images;
     if (imageArray.count>0) {
