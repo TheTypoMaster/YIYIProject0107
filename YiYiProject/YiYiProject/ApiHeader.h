@@ -534,6 +534,10 @@ typedef enum{
 //单品浏览量+1
 #define LIULAN_NUM_PRODUCT @"http://www.alayy.com/index.php?d=api&c=statistic&m=add_product_view"
 
+//店铺访客
+#define FANGKE_MYSHOP @"http://www.alayy.com/index.php?d=api&c=mall&m=get_track_to_shop&shop_id=2711"
+
+
 
 #endif
 

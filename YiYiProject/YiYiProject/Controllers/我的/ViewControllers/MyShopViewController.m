@@ -15,6 +15,7 @@
 #import "GmyActivetiesViewController.h"
 #import "GShopPhoneViewController.h"
 #import "GmyshopErweimaViewController.h"//二维码
+#import "GfangkeViewController.h"//访客
 
 
 @interface MyShopViewController ()
@@ -210,17 +211,14 @@
 
 //跳转访客
 -(void)pushToFangkeVC{
-    
+    GfangkeViewController *ccc = [[GfangkeViewController alloc]init];
+    ccc.shop_id = self.userInfo.shop_id;
+    ccc.lastPageNavigationHidden = YES;
+    [self.navigationController pushViewController:ccc animated:YES];
 }
 
 //跳转店铺会员
 -(void)pushToHuiyuanVC{
-//    GmyShopHuiyuanViewController *ccc = [[GmyShopHuiyuanViewController alloc]init];
-//    ccc.mallInfo = self.mallInfo;
-//    ccc.lastPageNavigationHidden = YES;
-//    [self.navigationController pushViewController:ccc animated:YES];
-//    
-//    self.navigationController.navigationBarHidden = NO;
     
     [MiddleTools pushToUserListWithObjectId:self.mallInfo.id listType:User_ShopMember forViewController:self lastNavigationHidden:YES updateParmsBlock:^(NSDictionary *params) {
         

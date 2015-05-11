@@ -505,6 +505,7 @@
 		E3BFB14D1B00548C007DA1C1 /* gdanpinxiugai@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3BFB14C1B00548C007DA1C1 /* gdanpinxiugai@2x.png */; };
 		E3BFB14F1B00B10C007DA1C1 /* gdpnav@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3BFB14E1B00B10C007DA1C1 /* gdpnav@2x.png */; };
 		E3BFB1511B00BC66007DA1C1 /* gzanwupeitu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3BFB1501B00BC66007DA1C1 /* gzanwupeitu@2x.png */; };
+		E3BFB1541B00C4C8007DA1C1 /* GfangkeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BFB1531B00C4C8007DA1C1 /* GfangkeViewController.m */; };
 		E3C49A911AFA0187003D30B4 /* gqiandao_zhu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3C49A901AFA0187003D30B4 /* gqiandao_zhu@2x.png */; };
 		E3C49A941AFA0A3B003D30B4 /* gqiandao_up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3C49A921AFA0A3B003D30B4 /* gqiandao_up@2x.png */; };
 		E3C49A951AFA0A3B003D30B4 /* gqiandao_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3C49A931AFA0A3B003D30B4 /* gqiandao_down@2x.png */; };
@@ -1369,6 +1370,8 @@
 		E3BFB14C1B00548C007DA1C1 /* gdanpinxiugai@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gdanpinxiugai@2x.png"; sourceTree = "<group>"; };
 		E3BFB14E1B00B10C007DA1C1 /* gdpnav@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gdpnav@2x.png"; sourceTree = "<group>"; };
 		E3BFB1501B00BC66007DA1C1 /* gzanwupeitu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gzanwupeitu@2x.png"; sourceTree = "<group>"; };
+		E3BFB1521B00C4C8007DA1C1 /* GfangkeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GfangkeViewController.h; sourceTree = "<group>"; };
+		E3BFB1531B00C4C8007DA1C1 /* GfangkeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GfangkeViewController.m; sourceTree = "<group>"; };
 		E3C49A901AFA0187003D30B4 /* gqiandao_zhu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gqiandao_zhu@2x.png"; sourceTree = "<group>"; };
 		E3C49A921AFA0A3B003D30B4 /* gqiandao_up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gqiandao_up@2x.png"; sourceTree = "<group>"; };
 		E3C49A931AFA0A3B003D30B4 /* gqiandao_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gqiandao_down@2x.png"; sourceTree = "<group>"; };
@@ -3081,6 +3084,8 @@
 				E3C923E91AE108F2005C2BE1 /* GShopPhoneViewController.m */,
 				E3C923ED1AE13A3F005C2BE1 /* GuserPhoneViewController.h */,
 				E3C923EE1AE13A3F005C2BE1 /* GuserPhoneViewController.m */,
+				E3BFB1521B00C4C8007DA1C1 /* GfangkeViewController.h */,
+				E3BFB1531B00C4C8007DA1C1 /* GfangkeViewController.m */,
 			);
 			path = Gcontrollers;
 			sourceTree = "<group>";
@@ -3768,6 +3773,7 @@
 				137E0AC11A4C559500B59F64 /* LShareSheetView.m in Sources */,
 				E3996EBE1A5E1DBA00673147 /* GnearbyStoreViewController.m in Sources */,
 				E3996ED91A5E1DBA00673147 /* UIView+Gstring.m in Sources */,
+				E3BFB1541B00C4C8007DA1C1 /* GfangkeViewController.m in Sources */,
 				13B690801A580B76007FE152 /* MailModel.m in Sources */,
 				13A389BD1A38974F00ABBACB /* RefreshTableView.m in Sources */,
 				13963F4C1A4FC5FB007BE68B /* PublishHuatiController.m in Sources */,
