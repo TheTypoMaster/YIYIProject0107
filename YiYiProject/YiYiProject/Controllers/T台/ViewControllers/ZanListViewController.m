@@ -102,9 +102,7 @@
         iconUrl = self.t_model.uinfo[@"photo"];
         userName = self.t_model.uinfo[@"user_name"];
         userId = self.t_model.uinfo[@"uid"];
-
     }
-    
     
     //头像
     UIImageView *iconImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 7, 35, 35)];
@@ -178,8 +176,19 @@
     }
 }
 
+/**
+ *  点击去关注
+ *
+ *  @param sender
+ */
+
 - (void)clickToCencern:(UIButton *)sender
 {
+    if (![LTools isLogin:self]) {
+        
+        return;
+    }
+    
     __weak typeof(self)weakSelf = self;
     
     NSInteger indexRow = sender.tag - 100;
@@ -330,11 +339,6 @@
     ZanUserModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
 
     [MiddleTools pushToPersonalId:aModel.uid userType:0 forViewController:self lastNavigationHidden:NO];
-    
-//    [MiddleTools pushToPersonalId:aModel.uid forViewController:self lastNavigationHidden:NO updateParmsBlock:^(NSDictionary *params) {
-//        
-//        
-//    }];
     
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView

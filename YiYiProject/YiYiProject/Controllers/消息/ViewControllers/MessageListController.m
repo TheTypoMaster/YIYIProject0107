@@ -30,6 +30,8 @@
     MessageModel *shop_model;//商家消息
     MessageModel *other_model;//动态消息
     MessageModel *mes_model;//即时消息
+    
+    LTools *tool_message;//未读消息tool
 }
 
 @end
@@ -71,6 +73,9 @@
     [self.view addSubview:_table];
     
     [self getMyMessage];
+    
+    //10分钟更新消息
+    [NSTimer scheduledTimerWithTimeInterval:10 * 60 target:self selector:@selector(getMyMessage) userInfo:nil repeats:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -99,6 +104,11 @@
 
 }
 
+/**
+ *  接受到推送消息时更新消息
+ *
+ *  @param
+ */
 - (void)updateRemoteMessage:(NSNotification *)notification
 {
     __weak typeof(self)weakSelf = self;
@@ -106,9 +116,10 @@
         
         [weakSelf getMyMessage];
         
-        [weakSelf updateRongMessage];
     });
 }
+
+//给动态消息model设置参数
 
 - (void)setMesModelWithInfo:(NSString *)info num:(int)unreadNum
 {
@@ -127,11 +138,13 @@
 {
     __weak typeof(self)weakSelf = self;
     
+    if (tool_message) {
+        [tool_message cancelRequest];
+    }
     NSString *key = [GMAPI getAuthkey];
-    
     NSString *url = [NSString stringWithFormat:MESSAGE_GET_MINE,key];
-    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
-    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+    tool_message = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool_message requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@",result);
         
         if ([LTools isDictinary:result]) {
@@ -155,7 +168,9 @@
 
 #pragma mark - 事件处理
 
-//更新红点
+//更新未读消息状态,已读时置为0
+// type :yy shop dynamic
+
 - (void)updateHotpoint:(NSNotification *)notification
 {
     NSLog(@"updateHotpoint %@ %@",notification.userInfo,notification.object);
@@ -236,50 +251,6 @@
     return 65;
 }
 
-///**
-// *  衣加衣团队
-// */
-//- (void)tapToYIJiaYi:(UITapGestureRecognizer *)tap
-//{
-//    NSLog(@"衣加衣团队");
-////    MailMessageViewController *mail = [[MailMessageViewController alloc]init];
-////    mail.aType = Message_Yy;
-////    mail.hidesBottomBarWhenPushed = YES;
-////    [self.navigationController pushViewController:mail animated:YES];
-//    
-//    
-//    MyCollectionController *mail = [[MyCollectionController alloc]init];
-////    mail.aType = Message_/Yy;
-//    mail.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:mail animated:YES];
-//
-//}
-//
-///**
-// *  商家消息
-// */
-//- (void)tapToMail:(UITapGestureRecognizer *)tap
-//{
-//    NSLog(@"商家消息");
-//    MailMessageViewController *mail = [[MailMessageViewController alloc]init];
-//    mail.aType = Message_Shop;
-//    mail.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:mail animated:YES];
-//}
-//
-///**
-// *  衣加衣团队
-// */
-//- (void)tapToDynamic:(UITapGestureRecognizer *)tap
-//{
-//    NSLog(@"动态消息");
-//    MailMessageViewController *mail = [[MailMessageViewController alloc]init];
-//    mail.aType = Message_Dynamic;
-//    mail.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:mail animated:YES];
-//}
-
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
@@ -330,6 +301,7 @@
     if (indexPath.row == 0) {
         
         [cell setCellWithModel:yiyi_model placeHolder:@"欢迎使用!"];
+        
     }else if (indexPath.row == 1){
         [cell setCellWithModel:shop_model placeHolder:@"您关注的商家没有最新消息!"];
     }else if (indexPath.row == 2){
