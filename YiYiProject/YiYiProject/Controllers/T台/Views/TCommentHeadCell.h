@@ -25,6 +25,8 @@
 //放置赞人员头像
 @property (strong, nonatomic) IBOutlet UIView *zanUserView;
 
+@property (strong,nonatomic) UIView *zanMiddleView;//放在zanUserView上
+
 - (void)setCellWithModel:(id)aModel;
 
 + (CGFloat)cellHeightForString:(NSString *)string;

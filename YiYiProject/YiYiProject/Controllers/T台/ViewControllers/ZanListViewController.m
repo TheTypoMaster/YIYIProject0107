@@ -199,7 +199,7 @@
         
 //        ZanUserModel *aModel = [_table.dataArray objectAtIndex:userId];
         
-        aModel.relation = 1;
+        aModel.relation = sender.selected ? 0 : 1;
 
         [_table reloadData];
         
@@ -248,12 +248,14 @@
     }
     
     __weak typeof(self)weakSelf = self;
-    __weak typeof(_table)weakTable = _table;
+//    __weak typeof(_table)weakTable = _table;
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"-->%@",result);
         [weakSelf updateZanState:zan];
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"zanList" object:nil];//刷新赞列表
         
         [weakSelf refreshZanList];
         

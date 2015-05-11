@@ -53,10 +53,6 @@
     isShowTool = YES;
     
     loading = [LTools MBProgressWithText:@"加载中..." addToView:self.view];
-    
-//    [self getTTaiDetail];//获取t台详情
-    
-//    [self.t_model addObserver:self forKeyPath:@"platModel" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -442,7 +438,7 @@
     __block UIView *bBottom = bottom;
     [UIView animateWithDuration:0.2 animations:^{
        
-        top.top = show ? 0 : -49-10;
+        top.top = show ? 10 : -49-10;
         bBottom.top = show ? DEVICE_HEIGHT - 49 - 10: DEVICE_HEIGHT;
         bBottomV.top = show ? DEVICE_HEIGHT - 49 - 10: DEVICE_HEIGHT;
     }];

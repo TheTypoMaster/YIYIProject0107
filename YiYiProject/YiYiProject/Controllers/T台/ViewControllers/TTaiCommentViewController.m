@@ -114,9 +114,10 @@
     _headCell = [[[NSBundle mainBundle]loadNibNamed:identify owner:self options:nil]lastObject];
     _headCell.frame = CGRectMake(0, 0, DEVICE_WIDTH, height);
     [_headCell setCellWithModel:self.t_model];
-    [_headCell addZanList:_zanListArray total:_zanTotalNum];
     [_headCell.zanUserView addTaget:self action:@selector(clickToZanList:) tag:0];
     [self.view addSubview:_headCell];
+    
+    [self reloadZanUsers];
     
     //店铺
     _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, _headCell.bottom, DEVICE_WIDTH,DEVICE_HEIGHT-64 - height)];
@@ -129,14 +130,13 @@
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
     loading = [LTools MBProgressWithText:@"加载..." addToView:self.view];
     
-    [self createheaderView];
-    
     [self createToolsView];//创建底部工具
     
     [self getZanList];//赞列表
 
     [self getTTaiComments];//评论
     
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshZanlist) name:@"zanList" object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -145,6 +145,14 @@
 }
 
 #pragma mark - 事件处理
+
+/**
+ *  需要更新的时候重新获取赞列表
+ */
+- (void)refreshZanlist
+{
+    needRefreshZan = YES;
+}
 
 - (void)reloadZanUsers
 {
@@ -163,6 +171,9 @@
     
     [MiddleTools pushToZanListWithModel:self.t_model forViewController:self lastNavigationHidden:NO updateParmsBlock:^(NSDictionary *params) {
         
+        if (_aParmasBlock) {
+            _aParmasBlock(params);
+        }
     }];
 }
 
@@ -346,8 +357,6 @@
         _zanListArray = [NSArray arrayWithArray:temp];
         
         _zanTotalNum = [[result objectForKey:@"total_num"]intValue];
-        
-//        [weakTable reloadData];
         
         [weakSelf reloadZanUsers];
         
@@ -562,13 +571,9 @@
     NSString *identify = @"TCommentHeadCell";
     TCommentHeadCell *headCell = [[[NSBundle mainBundle]loadNibNamed:identify owner:self options:nil]lastObject];
     
-//    TCommentHeadCell *cell = (TCommentHeadCell *)[LTools cellForIdentify:identify cellName:identify forTable:tableView];
-    
     [headCell setCellWithModel:self.t_model];
     
-//    headCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    [headCell addZanList:_zanListArray total:_zanTotalNum];
+//    [headCell addZanList:_zanListArray total:_zanTotalNum];
     
     [headCell.zanUserView addTaget:self action:@selector(clickToZanList:) tag:0];
     

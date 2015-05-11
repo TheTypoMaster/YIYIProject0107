@@ -66,6 +66,14 @@ alpha:(a)]
 #define CACHE_DESERVE_BUY @"deserveBuy"//值得买
 #define CACHE_TPLAT @"tPlat"//t台
 
+//错误提示信息 
+
+#define ALERT_ERRO_PHONE @"请输入有效手机号"
+#define ALERT_ERRO_PASSWORD @"密码格式有误,请输入6~15位英文字母或数字"
+#define ALERT_ERRO_SECURITYCODE @"验证码格式有误,请输入6位数字"
+#define ALERT_ERRO_FINDPWD @"两次密码不一致"
+
+#define L_PAGE_SIZE 20
 
 //通知 信息相关
 
@@ -77,17 +85,6 @@ alpha:(a)]
 #define NOTIFICATION_SHENQINGDIANPU_SUCCESS @"GSHENQINGDIANPU_SUCCESS"//申请店铺成功
 
 #define NOTIFICATION_SHENQINGDIANPU_STATE @"GSHENQINGDIANPU_STATE"//申请店铺成功状态 成功或者失败
-
-
-//错误提示信息 
-
-#define ALERT_ERRO_PHONE @"请输入有效手机号"
-#define ALERT_ERRO_PASSWORD @"密码格式有误,请输入6~15位英文字母或数字"
-#define ALERT_ERRO_SECURITYCODE @"验证码格式有误,请输入6位数字"
-#define ALERT_ERRO_FINDPWD @"两次密码不一致"
-
-#define L_PAGE_SIZE 20
-
 
 //关注商场
 #define NOTIFICATION_GUANZHU_STORE @"guanzhu_store"
@@ -113,6 +110,11 @@ alpha:(a)]
 
 //修改单品完成
 #define GEDITPRODUCT_SUCCESS @"GeditProduct_success"
+
+//更新赞数字
+#define NOTIFICATION_UPDATE_ZANNUM @"updateZanNum"
+//更新评论数字
+#define NOTIFICATION_UPDATE_COMMENTNUM @"updateCommentNum"
 
 
 //登录类型 normal为正常手机登陆，sweibo、qq、weixin分别代表新浪微博、qq、微信登陆

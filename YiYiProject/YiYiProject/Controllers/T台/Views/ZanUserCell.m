@@ -34,10 +34,17 @@
     
     if (aModel.relation == relation_concern_no) {
         
-        self.concernButton.hidden = NO;
+//        self.concernButton.hidden = NO;
+        [self.concernButton setBackgroundColor:[UIColor colorWithHexString:@"e87f92"]];
+        self.concernButton.selected = NO;
+        
     }else
     {
-        self.concernButton.hidden = YES;
+//        self.concernButton.hidden = YES;
+        [self.concernButton setBackgroundColor:[UIColor lightGrayColor]];
+        self.concernButton.selected = YES;
+
+
     }
     
     //自己的时候 不显示关注按钮

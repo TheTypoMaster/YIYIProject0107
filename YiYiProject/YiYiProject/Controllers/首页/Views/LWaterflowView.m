@@ -282,7 +282,7 @@
 -(void)setFooterView{
     //    UIEdgeInsets test = self.aoView.contentInset;
     // if the footerView is nil, then create it, reset the position of the footer
-    CGFloat height = MAX(qtmquitView.contentSize.height, qtmquitView.frame.size.height);
+    CGFloat height = MAX(qtmquitView.contentSize.height, qtmquitView.frame.size.height + self.headerView.height);
     if (_refreshFooterView && [_refreshFooterView superview])
     {
         // reset position

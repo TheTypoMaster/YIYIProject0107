@@ -119,18 +119,15 @@
 
 - (void)addZanList:(NSArray *)zanList total:(int)total
 {
-    //移除subviews
-    if ([_zanUserView subviews].count > 0) {
-        for (int i = 0; i < _zanUserView.subviews.count; i ++) {
-            UIView *aView = [[_zanUserView subviews]objectAtIndex:i];
-            
-            if (([aView isKindOfClass:[UIImageView class]] || [aView isKindOfClass:[UILabel class]]) && aView != self.arrowImageView) {
-                
-                [aView removeFromSuperview];
-                aView = nil;
-            }
-        }
+    if (self.zanMiddleView) {
+        [self.zanMiddleView removeFromSuperview];
+        self.zanMiddleView = nil;
     }
+    
+    self.zanMiddleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, _zanUserView.width - 20, _zanUserView.height - 1)];
+    _zanMiddleView.backgroundColor = [UIColor clearColor];
+    _zanMiddleView.userInteractionEnabled = NO;
+    [_zanUserView addSubview:_zanMiddleView];
     
     NSString *likeStr = [NSString stringWithFormat:@"%d人觉得很赞",total];
     CGFloat aWidth = [LTools widthForText:likeStr font:12];
@@ -139,7 +136,7 @@
     likeLabel.textColor = [UIColor colorWithHexString:@"656565"];
     likeLabel.font = [UIFont systemFontOfSize:12];
     likeLabel.text = likeStr;
-    [_zanUserView addSubview:likeLabel];
+    [_zanMiddleView addSubview:likeLabel];
     
     for (int i = 0; i < zanList.count;i ++) {
         
@@ -148,7 +145,7 @@
         UIImageView *icon = [[UIImageView alloc]initWithFrame:CGRectMake(10 + (5 + 25) * i, 0, 25, 25)];
         icon.center = CGPointMake(icon.center.x, self.zanUserView.height/2.f);
         
-        [_zanUserView addSubview:icon];
+        [_zanMiddleView addSubview:icon];
         
         [icon sd_setImageWithURL:[NSURL URLWithString:user.photo] placeholderImage:DEFAULT_HEADIMAGE];
         [icon addRoundCorner];
