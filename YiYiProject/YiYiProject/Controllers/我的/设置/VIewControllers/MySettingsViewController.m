@@ -288,6 +288,8 @@
     //融云Token
     
     [LTools cache:@"" ForKey:RONGCLOUD_TOKEN];
+    
+    [LTools cache:@"" ForKey:USER_SHOP_ID];
     [[RCIM sharedRCIM]disconnect];
     
     
