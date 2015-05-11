@@ -439,8 +439,8 @@
     [UIView animateWithDuration:0.2 animations:^{
        
         top.top = show ? 10 : -49-10;
-        bBottom.top = show ? DEVICE_HEIGHT - 49 - 10: DEVICE_HEIGHT;
-        bBottomV.top = show ? DEVICE_HEIGHT - 49 - 10: DEVICE_HEIGHT;
+        bBottom.top = show ? DEVICE_HEIGHT - 49: DEVICE_HEIGHT;
+        bBottomV.top = show ? DEVICE_HEIGHT - 49: DEVICE_HEIGHT;
     }];
 }
 
