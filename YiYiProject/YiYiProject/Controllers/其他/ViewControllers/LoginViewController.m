@@ -34,7 +34,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
+        
     self.myTitleLabel.text = @"登录";
     self.myTitleLabel.textColor = [UIColor whiteColor];
     self.rightString = @"注册";

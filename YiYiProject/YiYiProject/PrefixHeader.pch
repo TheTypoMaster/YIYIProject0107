@@ -87,5 +87,10 @@ alpha:(a)]
 #define NAVIGATION_MENU_IMAGE_NAME @"navigaiton_menu_image"
 #define TITLEFONT [UIFont fontWithName:@"Helvetica" size:20]
 
+/**
+ *  自定义一些颜色
+ */
+
+#define DEFAULT_VIEW_BACKGROUNDCOLOR RGBCOLOR(239, 239, 239)
 
 #endif

@@ -211,7 +211,7 @@
     if (_refreshHeaderView && [_refreshHeaderView superview]) {
         [_refreshHeaderView removeFromSuperview];
     }
-    _refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:
+    _refreshHeaderView = [[LRefreshTableHeaderView alloc] initWithFrame:
                           CGRectMake(0.0f, 0.0f - self.bounds.size.height,
                                      self.frame.size.width, self.bounds.size.height)];
     _refreshHeaderView.delegate = self;

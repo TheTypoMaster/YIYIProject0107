@@ -16,14 +16,18 @@
 #import "GnearbyStoreViewController.h"
 #import "GClothWaveCustomView.h"
 #import "LoginViewController.h"
-#import "EGORefreshTableHeaderView.h"
+
+#import "LRefreshTableHeaderView.h"
+
+//#import "EGORefreshTableHeaderView.h"
+
 #import "GStorePinpaiViewController.h"
 #import "GwebViewController.h"
 #import "MessageDetailController.h"
 #import "GsearchViewController.h"
 #import "ProductDetailController.h"
 
-@interface HomeClothController ()<GCycleScrollViewDatasource,GCycleScrollViewDelegate,UIScrollViewDelegate,EGORefreshTableDelegate,GgetllocationDelegate,UISearchBarDelegate>
+@interface HomeClothController ()<GCycleScrollViewDatasource,GCycleScrollViewDelegate,UIScrollViewDelegate,L_EGORefreshTableDelegate,GgetllocationDelegate,UISearchBarDelegate>
 {
     
 //    //第零行
@@ -55,7 +59,7 @@
     
     
     //下拉刷新
-    EGORefreshTableHeaderView *_refreshHeaderView;
+    LRefreshTableHeaderView *_refreshHeaderView;
     BOOL _reloading;
     
     
@@ -112,7 +116,7 @@
     
     //下拉刷新
     
-    _refreshHeaderView = [[EGORefreshTableHeaderView alloc]initWithFrame:CGRectMake(0, 0-_mainScrollView.bounds.size.height, DEVICE_WIDTH, _mainScrollView.bounds.size.height)];
+    _refreshHeaderView = [[LRefreshTableHeaderView alloc]initWithFrame:CGRectMake(0, 0-_mainScrollView.bounds.size.height, DEVICE_WIDTH, _mainScrollView.bounds.size.height)];
     _refreshHeaderView.delegate = self;
     [_mainScrollView addSubview:_refreshHeaderView];
     

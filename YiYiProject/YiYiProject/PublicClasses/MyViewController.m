@@ -69,7 +69,7 @@
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
     
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = DEFAULT_VIEW_BACKGROUNDCOLOR;
     
     spaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     _myTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0,100,44)];

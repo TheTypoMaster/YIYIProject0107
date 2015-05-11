@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "EGORefreshTableHeaderView.h"
+#import "LRefreshTableHeaderView.h"
 #import "EGORefreshTableFooterView.h"
 #import "TMQuiltView.h"
 #import "TMPhotoQuiltViewCell.h"
@@ -29,10 +29,10 @@
 
 @end
 
-@interface LWaterflowView : UIView<EGORefreshTableDelegate,TMQuiltViewDataSource,TMQuiltViewDelegate>
+@interface LWaterflowView : UIView<L_EGORefreshTableDelegate,TMQuiltViewDataSource,TMQuiltViewDelegate>
 {
     //EGOHeader
-    EGORefreshTableHeaderView *_refreshHeaderView;
+    LRefreshTableHeaderView *_refreshHeaderView;
     //EGOFoot
     EGORefreshTableFooterView *_refreshFooterView;
     //

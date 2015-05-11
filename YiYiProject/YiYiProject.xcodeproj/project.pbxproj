@@ -193,6 +193,7 @@
 		139A05201A66ADB100A8EB49 /* MailMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 139A051F1A66ADB100A8EB49 /* MailMessageViewController.m */; };
 		139A05241A66B9C500A8EB49 /* MailMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 139A05221A66B9C500A8EB49 /* MailMessageCell.m */; };
 		139A05251A66B9C500A8EB49 /* MailMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 139A05231A66B9C500A8EB49 /* MailMessageCell.xib */; };
+		139DC34F1B00560000C94073 /* AMPActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 139DC34E1B00560000C94073 /* AMPActivityIndicator.m */; };
 		13A3897E1A3878FE00ABBACB /* MyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A3897D1A3878FE00ABBACB /* MyViewController.m */; };
 		13A389861A387A8800ABBACB /* UIColor+ConvertColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A389821A387A8800ABBACB /* UIColor+ConvertColor.m */; };
 		13A389871A387A8800ABBACB /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A389851A387A8800ABBACB /* UIView+Frame.m */; };
@@ -810,6 +811,8 @@
 		139A05211A66B9C500A8EB49 /* MailMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MailMessageCell.h; sourceTree = "<group>"; };
 		139A05221A66B9C500A8EB49 /* MailMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MailMessageCell.m; sourceTree = "<group>"; };
 		139A05231A66B9C500A8EB49 /* MailMessageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MailMessageCell.xib; sourceTree = "<group>"; };
+		139DC34D1B00560000C94073 /* AMPActivityIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPActivityIndicator.h; sourceTree = "<group>"; };
+		139DC34E1B00560000C94073 /* AMPActivityIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPActivityIndicator.m; sourceTree = "<group>"; };
 		13A3897C1A3878FE00ABBACB /* MyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyViewController.h; sourceTree = "<group>"; };
 		13A3897D1A3878FE00ABBACB /* MyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyViewController.m; sourceTree = "<group>"; };
 		13A3897F1A38796D00ABBACB /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
@@ -2076,6 +2079,15 @@
 			path = "消息";
 			sourceTree = "<group>";
 		};
+		139DC34C1B00560000C94073 /* AMPActivityIndicator */ = {
+			isa = PBXGroup;
+			children = (
+				139DC34D1B00560000C94073 /* AMPActivityIndicator.h */,
+				139DC34E1B00560000C94073 /* AMPActivityIndicator.m */,
+			);
+			path = AMPActivityIndicator;
+			sourceTree = "<group>";
+		};
 		13A3894F1A38768400ABBACB /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -2102,6 +2114,7 @@
 		13A389511A38768400ABBACB /* PublicClasses */ = {
 			isa = PBXGroup;
 			children = (
+				139DC34C1B00560000C94073 /* AMPActivityIndicator */,
 				13D03D0F1AEDD4790078AA9E /* SVProgressHUD */,
 				1391DC4A1A8704E4006A2E15 /* SinaMenuView */,
 				1391DC361A87033A006A2E15 /* LNavigationController */,
@@ -3753,6 +3766,7 @@
 				13D03D171AEDD4790078AA9E /* SVProgressHUD.m in Sources */,
 				DF5E89B31A5E7B0D00535EBA /* ChooseImageViewController.m in Sources */,
 				136875B81A598EE40048CB4D /* BrandModel.m in Sources */,
+				139DC34F1B00560000C94073 /* AMPActivityIndicator.m in Sources */,
 				19F7B44D1A67FFA600087BCB /* UMFeedbackViewController.m in Sources */,
 				E3996EBF1A5E1DBA00673147 /* GpinpaiDetailViewController.m in Sources */,
 				13CD364E1A3C6BD90068C12A /* TMPhotoQuiltViewCell.m in Sources */,
