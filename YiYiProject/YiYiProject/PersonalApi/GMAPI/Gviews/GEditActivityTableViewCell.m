@@ -29,7 +29,7 @@
 -(void)loadCustomViewWithData:(ActivityModel*)aModel indexpath:(NSIndexPath*)theIndexPath{
     //图片
     UIImageView *picImv = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 50, 70)];
-    [picImv sd_setImageWithURL:[NSURL URLWithString:aModel.pic] placeholderImage:nil];
+    [picImv sd_setImageWithURL:[NSURL URLWithString:aModel.pic] placeholderImage:[UIImage imageNamed:@"gzanwupeitu.png"]];
     [self.contentView addSubview:picImv];
     
     //标题

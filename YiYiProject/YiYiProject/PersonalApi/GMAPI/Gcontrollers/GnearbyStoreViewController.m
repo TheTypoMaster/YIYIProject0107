@@ -84,7 +84,20 @@
     }
     
     
-    
+    //判断是否登录
+    NSString *url = @" ";
+    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == YES) {
+        url = [NSString stringWithFormat:@"%@&mall_id=%@&authcode=%@",LIULAN_NUM_STORE,self.mall_id,[GMAPI getAuthkey]];
+        
+    }else{
+        url = [NSString stringWithFormat:@"%@&mall_id=%@",LIULAN_NUM_STORE,self.mall_id];
+    }
+    GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:NO postData:nil];
+    [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+    }];
     
 }
 

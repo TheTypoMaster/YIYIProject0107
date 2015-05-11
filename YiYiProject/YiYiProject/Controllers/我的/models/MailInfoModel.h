@@ -28,5 +28,6 @@
 @property(nonatomic,strong)NSString *mall_name;
 @property(nonatomic,strong)NSString *mall_type;
 @property(nonatomic,strong)NSString *shop_view_num;//访客
+@property(nonatomic,strong)NSString *attend_num;//店铺粉丝
 
 @end

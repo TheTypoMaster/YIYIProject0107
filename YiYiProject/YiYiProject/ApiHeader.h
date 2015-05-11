@@ -525,6 +525,16 @@ typedef enum{
 //action=get_friends 获取好友
 #define USER_FRIENDS_LIST @"http://www.alayy.com/index.php?d=api&c=my_api&m=get_friend_list&action=get_friends"
 
+
+//统计功能
+//店铺浏览量加1
+#define LIULAN_NUM_SHOP @"http://www.alayy.com/index.php?d=api&c=statistic&m=add_shop_view"
+//商场浏览量+1
+#define LIULAN_NUM_STORE @"http://www.alayy.com/index.php?d=api&c=statistic&m=add_mall_view"
+//单品浏览量+1
+#define LIULAN_NUM_PRODUCT @"http://www.alayy.com/index.php?d=api&c=statistic&m=add_product_view"
+
+
 #endif
 
 

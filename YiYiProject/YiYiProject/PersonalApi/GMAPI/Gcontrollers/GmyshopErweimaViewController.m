@@ -118,6 +118,7 @@
         imv.layer.borderWidth = 0.5;
         imv.layer.borderColor = [RGBCOLOR(200, 200, 200)CGColor];
         imv.layer.masksToBounds = YES;
+        [imv sd_setImageWithURL:[NSURL URLWithString:[_result stringValueForKey:@"photo"]] placeholderImage:[UIImage imageNamed:@"grzx150_150.png"]];
         [cell.contentView addSubview:imv];
         
         //店铺名
@@ -141,25 +142,78 @@
         [cell.contentView addSubview:menpaihao];
         
     }else if (indexPath.row == 1){//手机号
-        cell.textLabel.textColor = RGBCOLOR(81, 82, 83);
-        cell.textLabel.font = [UIFont systemFontOfSize:14];
+        UILabel *tt = [[UILabel alloc]initWithFrame:CGRectMake(7, 0, 60, cell.contentView.frame.size.height)];
+        tt.font = [UIFont systemFontOfSize:14];
+        [cell.contentView addSubview:tt];
+        tt.text = @"手机号:";
+        tt.textAlignment = NSTextAlignmentCenter;
+        
+        [cell.contentView addSubview:tt];
+        
+        UILabel *content = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(tt.frame), 0, DEVICE_WIDTH-tt.frame.size.width - 30, cell.contentView.frame.size.height)];
+        content.font = [UIFont systemFontOfSize:14];
+        content.numberOfLines = 2;
+        content.text = [_result stringValueForKey:@"shop_mobile"];
+        [cell.contentView addSubview:content];
         
     }else if (indexPath.row == 2){//地址
-        cell.textLabel.textColor = RGBCOLOR(81, 82, 83);
-        cell.textLabel.font = [UIFont systemFontOfSize:14];
-        cell.textLabel.text = [NSString stringWithFormat:@"地址：%@",[_result stringValueForKey:@"address"]];
+        
+        UILabel *tt = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 60, cell.contentView.frame.size.height)];
+        tt.font = [UIFont systemFontOfSize:14];
+        [cell.contentView addSubview:tt];
+        tt.text = @"地址:";
+        tt.textAlignment = NSTextAlignmentCenter;
+
+        [cell.contentView addSubview:tt];
+        
+        UILabel *content = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(tt.frame), 0, DEVICE_WIDTH-tt.frame.size.width - 30, cell.contentView.frame.size.height)];
+        content.font = [UIFont systemFontOfSize:14];
+        content.numberOfLines = 2;
+        content.text = [_result stringValueForKey:@"address"];
+        [content sizeToFit];
+        [content setFrame:CGRectMake(CGRectGetMaxX(tt.frame), 0, content.frame.size.width, cell.contentView.frame.size.height)];
+        [cell.contentView addSubview:content];
+        
+        UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(content.frame)+3, cell.contentView.frame.size.height*0.5-10, 17, 17)];
+        [imv setImage:[UIImage imageNamed:@"gdpnav.png"]];
+        [cell.contentView addSubview:imv];
+        
+        
     }else if (indexPath.row == 3){//二维码
         UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(75, 20, 166, 166)];
         [imv sd_setImageWithURL:[NSURL URLWithString:_result[@"qrcode_img"]] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             
         }];
+        
+        imv.center = CGPointMake(cell.contentView.center.x, cell.contentView.center.y-20);
+        
         [cell.contentView addSubview:imv];
+        
+        UILabel *tt = [[UILabel alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(imv.frame)+10, cell.contentView.frame.size.width, 20)];
+        tt.font = [UIFont systemFontOfSize:14];
+        tt.textAlignment = NSTextAlignmentCenter;
+        tt.textColor = RGBCOLOR(79, 80, 81);
+        tt.text = @"扫一扫上面的二维码关注店铺";
+        [cell.contentView addSubview:tt];
+        
         
     }
     
     return cell;
 }
 
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.row == 2) {//地址
+        GMapShowMyshopViewController *ccc = [[GMapShowMyshopViewController alloc]init];
+        ccc.storeName = self.shop_Name;
+        ccc.coordinate_store = CLLocationCoordinate2DMake([self.mallInfo.latitude floatValue], [self.mallInfo.longitude floatValue]);
+        [self presentViewController:ccc animated:YES completion:^{
+            
+        }];
+    }
+}
 
 
 

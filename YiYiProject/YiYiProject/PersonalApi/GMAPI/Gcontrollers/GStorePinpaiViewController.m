@@ -71,6 +71,27 @@
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     
     self.navigationController.navigationBarHidden = NO;
+    
+    if (![self.guanzhuleixing isEqualToString:@"精品店"]) {
+        self.shopId = self.storeIdStr;
+    }
+    
+    //判断是否登录
+    NSString *url = @" ";
+    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == YES) {
+        
+        url = [NSString stringWithFormat:@"%@&shop_id=%@&authcode=%@",LIULAN_NUM_SHOP,self.shopId,[GMAPI getAuthkey]];
+        
+    }else{
+        url = [NSString stringWithFormat:@"%@&shop_id=%@",LIULAN_NUM_SHOP,self.shopId];
+    }
+    GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:NO postData:nil];
+    [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+    }];
+    
 }
 
 

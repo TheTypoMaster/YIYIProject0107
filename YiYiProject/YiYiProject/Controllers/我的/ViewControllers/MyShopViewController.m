@@ -85,7 +85,7 @@
     [self.userFaceImv sd_setImageWithURL:[NSURL URLWithString:aModel.logo] placeholderImage:nil];
     _titleLabel.text = aModel.shop_name;
     _fangkeLabel.text = aModel.shop_view_num;
-    
+    _huiyuanLabel.text = aModel.attend_num;
     
 }
 
@@ -185,7 +185,6 @@
     _huiyuanLabel.font = [UIFont systemFontOfSize:12];
     _huiyuanLabel.textAlignment = NSTextAlignmentCenter;
     _huiyuanLabel.textColor = [UIColor whiteColor];
-    _huiyuanLabel.text = @"59";
     [huiyuanView addSubview:_huiyuanLabel];
     
     UILabel *dianpuhuiyuan = [[UILabel alloc]initWithFrame:CGRectMake(0, jinrifangke.frame.origin.y, jinrifangke.frame.size.width, jinrifangke.frame.size.height)];
