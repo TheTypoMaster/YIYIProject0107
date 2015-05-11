@@ -60,6 +60,8 @@
     cellIdentify = @"ZanUserCell";
     UINib *nib = [UINib nibWithNibName:cellIdentify bundle:nil];
     [_table registerNib:nib forCellReuseIdentifier:cellIdentify];
+    
+    [_table showRefreshHeader:YES];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -68,10 +70,9 @@
     
 //    [_table showRefreshHeader:NO];
     
-    _table.isReloadData = YES;
-    
-    [self getZanList];
-
+//    _table.isReloadData = YES;
+//    
+//    [self getZanList];
 
 }
 
@@ -149,7 +150,7 @@
 - (void)refreshZanList
 {
     _table.isReloadData = YES;
-    [self getZanList];
+    [self getUserList];
 }
 
 /**
@@ -275,9 +276,9 @@
 }
 
 /**
- *  获取赞人员列表
+ *  获人员列表
  */
-- (void)getZanList
+- (void)getUserList
 {
     //    NSString *key = [GMAPI getAuthkey];
     
@@ -323,12 +324,11 @@
 
 - (void)loadNewData
 {
-    [self getZanList];
+    [self getUserList];
 }
 - (void)loadMoreData
 {
-    [self getZanList];
-
+    [self getUserList];
 }
 
 //新加
