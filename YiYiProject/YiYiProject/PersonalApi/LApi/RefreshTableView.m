@@ -28,6 +28,7 @@
         
         [self createHeaderView];
         [self createFooterView];
+        self.backgroundColor = [UIColor clearColor];
         self.delegate = self;
         
     }
@@ -44,6 +45,23 @@
     _refreshHeaderView.delegate = nil;
     _refreshHeaderView = nil;
     NSLog(@"%s dealloc",__FUNCTION__);
+}
+
+-(id)initWithFrame:(CGRect)frame superView:(UIView *)superView
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        // Initialization code
+        
+        self.pageNum = 1;
+        self.dataArray = [NSMutableArray array];
+        self.delegate = self;
+        [self createHeaderViewWithSuperView:superView];
+        
+        self.backgroundColor = [UIColor clearColor];
+        
+    }
+    return self;
 }
 
 -(id)initWithFrame:(CGRect)frame showLoadMore:(BOOL)show
@@ -64,15 +82,34 @@
     return self;
 }
 
+/**
+ *  创建headerView 需要制定父视图
+ *
+ *  @param superView 父视图
+ */
+-(void)createHeaderViewWithSuperView:(UIView *)superView
+{
+    if (_refreshHeaderView && _refreshHeaderView.superview) {
+        [_refreshHeaderView removeFromSuperview];
+    }
+    _refreshHeaderView = [[LRefreshTableHeaderView alloc]initWithFrame:CGRectMake(0.0f,0.f, self.frame.size.width, self.bounds.size.height)];
+    _refreshHeaderView.delegate = self;
+    _refreshHeaderView.backgroundColor = [UIColor clearColor];
+    [_refreshHeaderView refreshLastUpdatedDate];
+    [superView addSubview:_refreshHeaderView];
+
+}
+
 -(void)createHeaderView
 {
     if (_refreshHeaderView && _refreshHeaderView.superview) {
         [_refreshHeaderView removeFromSuperview];
     }
-    _refreshHeaderView = [[LRefreshTableHeaderView alloc]initWithFrame:CGRectMake(0.0f,0.0f -self.bounds.size.height, self.frame.size.width, self.bounds.size.height)];
+    _refreshHeaderView = [[LRefreshTableHeaderView alloc]initWithFrame:CGRectMake(0.0f,0.0f, self.frame.size.width, self.bounds.size.height)];
     _refreshHeaderView.delegate = self;
     _refreshHeaderView.backgroundColor = [UIColor clearColor];
-    [self addSubview:_refreshHeaderView];
+    
+    [self.superview addSubview:_refreshHeaderView];
     [_refreshHeaderView refreshLastUpdatedDate];
 }
 -(void)removeHeaderView

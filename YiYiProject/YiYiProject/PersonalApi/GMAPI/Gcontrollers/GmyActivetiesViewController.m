@@ -54,8 +54,6 @@
 
 
 
-
-
 //请求网络数据
 -(void)prepareNetData{
     NSString *key = [GMAPI getAuthkey];

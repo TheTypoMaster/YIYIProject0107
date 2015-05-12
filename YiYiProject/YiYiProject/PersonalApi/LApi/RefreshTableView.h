@@ -54,6 +54,7 @@
 @property(nonatomic,retain)UILabel *loadingLabel;
 @property(nonatomic,assign)BOOL hiddenLoadMore;//隐藏加载更多,默认隐藏
 
+
 -(void)createHeaderView;
 -(void)removeHeaderView;
 
@@ -70,5 +71,7 @@
 - (void)loadFail;//请求数据失败
 
 -(id)initWithFrame:(CGRect)frame showLoadMore:(BOOL)show;
+
+-(id)initWithFrame:(CGRect)frame superView:(UIView *)superView;
 
 @end

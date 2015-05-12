@@ -11,7 +11,7 @@
 #import "ForgetPwdController.h"
 #import "UMSocial.h"
 #import "UserInfo.h"
-
+#import "WXApi.h"
 #import "RCIM.h"
 
 @interface LoginViewController ()
@@ -26,7 +26,17 @@
     
     if ([UIApplication sharedApplication].isStatusBarHidden) {
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
-
+    }
+    
+    //微信未安装或者不支持
+    if (![WXApi isWXAppInstalled] || ![WXApi isWXAppSupportApi]) {
+        
+        self.thirdLoginView2.hidden = NO;
+        self.thirdLoginView.hidden = YES;
+    }else
+    {
+        self.thirdLoginView.hidden = NO;
+        self.thirdLoginView2.hidden = YES;
     }
 }
 

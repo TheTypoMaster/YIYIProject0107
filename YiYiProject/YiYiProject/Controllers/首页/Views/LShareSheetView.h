@@ -10,7 +10,9 @@
 
 #import "UMSocial.h"
 
-#import <TencentOpenAPI/QQApi.h>
+//#import <TencentOpenAPI/QQApi.h>
+
+#import <TencentOpenAPI/QQApiInterface.h>
 
 #import "WXApi.h"
 

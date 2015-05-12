@@ -320,7 +320,7 @@
     NSString *url = nil;
     if (self.listType == User_ShopMember) { //店铺会员
         
-        url = [NSString stringWithFormat:@"%@&shop_id=%@&page=%d&per_page=%d",GMYSHOPHUIYUANLIST,self.objectId,_table.pageNum,L_PAGE_SIZE];
+        url = [NSString stringWithFormat:@"%@&shop_id=%@&page=%d&per_page=%d&authcode=%@",GMYSHOPHUIYUANLIST,self.objectId,_table.pageNum,L_PAGE_SIZE,[GMAPI getAuthkey]];
         
     }else if (self.listType == User_TPlatZanList){ //t台赞人员列表
         

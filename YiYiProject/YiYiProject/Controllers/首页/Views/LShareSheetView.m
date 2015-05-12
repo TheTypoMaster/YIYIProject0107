@@ -220,7 +220,7 @@
 {
     if ([type isEqualToString:UMShareToQQ] || [type isEqualToString:UMShareToQzone]) {
         
-        if (![QQApi isQQInstalled] || ![QQApi isQQSupportApi]) {
+        if (![QQApiInterface isQQInstalled] || ![QQApiInterface isQQSupportApi]) {
             
             [LTools alertText:@"抱歉,没有安装QQ客户端"];
             

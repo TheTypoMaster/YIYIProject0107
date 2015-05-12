@@ -31,7 +31,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor colorWithHexString:@"f2f2f2"];
     
     if (self.aType == Message_Yy) {
         
@@ -49,11 +49,11 @@
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     
-    _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH,DEVICE_HEIGHT - 64) showLoadMore:NO];
+    _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH,DEVICE_HEIGHT - 64) superView:self.view];
     _table.refreshDelegate = self;
     _table.dataSource = self;
     [self.view addSubview:_table];
-    _table.backgroundColor = [UIColor colorWithHexString:@"f2f2f2"];
+    _table.backgroundColor = [UIColor clearColor];
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [_table showRefreshHeader:YES];
@@ -196,7 +196,7 @@
     
     MessageModel *aModel = _table.dataArray[indexPath.row];
     [cell setCellWithModel:aModel cellType:icon_Yes seeAll:YES];
-    
+        
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
