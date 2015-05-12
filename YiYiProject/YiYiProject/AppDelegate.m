@@ -105,20 +105,40 @@
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     }
     
-#ifdef __IPHONE_8_0
-    // 在 iOS 8 下注册苹果推送，申请推送权限。
+//#ifdef __IPHONE_8_0
+//    // 在 iOS 8 下注册苹果推送，申请推送权限。
+//    
+//    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+//        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeAlert) categories:nil];
+//        [application registerUserNotificationSettings:settings];
+//    } else {
+//        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
+//        [application registerForRemoteNotificationTypes:myTypes];
+//    }
+//#else
+//    // 注册苹果推送，申请推送权限。
+//    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];
+//#endif
     
-    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
-        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeAlert) categories:nil];
-        [application registerUserNotificationSettings:settings];
-    } else {
-        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
-        [application registerForRemoteNotificationTypes:myTypes];
+    if ([[[UIDevice currentDevice] systemVersion] doubleValue] > 8.0)
+    {
+        if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+            UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge
+                                                                                                 |UIRemoteNotificationTypeSound
+                                                                                                 |UIRemoteNotificationTypeAlert) categories:nil];
+            [application registerUserNotificationSettings:settings];
+        }else{
+            
+            //注册推送, iOS 8
+            UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert) categories:nil];
+            [application registerUserNotificationSettings:settings];
+        }
+    }else
+    {
+        // 注册苹果推送，申请推送权限。
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];
     }
-#else
-    // 注册苹果推送，申请推送权限。
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];
-#endif
+    
     
     //UIApplicationLaunchOptionsRemoteNotificationKey,判断是通过推送消息启动的
     
@@ -279,7 +299,6 @@
 
 #pragma mark 远程推送
 
-#ifdef __IPHONE_8_0
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
 {
     // Register to receive notifications.
@@ -294,7 +313,6 @@
     else if ([identifier isEqualToString:@"answerAction"]){
     }
 }
-#endif
 
 // 获取苹果推送权限成功。
 
