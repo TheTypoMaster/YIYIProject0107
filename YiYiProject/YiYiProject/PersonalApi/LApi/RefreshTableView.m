@@ -105,11 +105,11 @@
     if (_refreshHeaderView && _refreshHeaderView.superview) {
         [_refreshHeaderView removeFromSuperview];
     }
-    _refreshHeaderView = [[LRefreshTableHeaderView alloc]initWithFrame:CGRectMake(0.0f,0.0f, self.frame.size.width, self.bounds.size.height)];
+    _refreshHeaderView = [[LRefreshTableHeaderView alloc]initWithFrame:CGRectMake(0.0f,0.0f - self.bounds.size.height, self.frame.size.width, self.bounds.size.height)];
     _refreshHeaderView.delegate = self;
     _refreshHeaderView.backgroundColor = [UIColor clearColor];
     
-    [self.superview addSubview:_refreshHeaderView];
+    [self addSubview:_refreshHeaderView];
     [_refreshHeaderView refreshLastUpdatedDate];
 }
 -(void)removeHeaderView

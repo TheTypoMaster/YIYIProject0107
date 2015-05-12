@@ -100,7 +100,7 @@
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 //        self.backgroundColor = [UIColor colorWithRed:221/255.0 green:221/255.0 blue:221/255.0 alpha:1.0];
         
-        UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 120, 50)];
+        UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, frame.size.height - 50, 120, 50)];
         headerView.backgroundColor = [UIColor clearColor];
         [self addSubview:headerView];
         headerView.center = CGPointMake(frame.size.width/2.f, headerView.center.y);
