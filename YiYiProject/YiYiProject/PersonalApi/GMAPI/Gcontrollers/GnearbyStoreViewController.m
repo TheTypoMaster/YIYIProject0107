@@ -19,6 +19,7 @@
 #import "LoginViewController.h"
 
 #import "MessageDetailController.h"
+#import "LTools.h"
 
 
 @interface GnearbyStoreViewController ()<UIScrollViewDelegate>
@@ -87,6 +88,7 @@
     //判断是否登录
     NSString *url = @" ";
     if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == YES) {
+        
         url = [NSString stringWithFormat:@"%@&mall_id=%@&authcode=%@",LIULAN_NUM_STORE,self.mall_id,[GMAPI getAuthkey]];
         
     }else{

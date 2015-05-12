@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
+#import "EGOViewCommon.h"
+#import "AMPActivityIndicator.h"
 @class SCGIFImageView;
 
 typedef enum{
@@ -38,7 +40,8 @@ typedef enum{
     UILabel *_lastUpdatedLabel;
     UILabel *_statusLabel;
     CALayer *_arrowImage;
-    UIActivityIndicatorView *_activityView;
+//    UIActivityIndicatorView *_activityView;
+    AMPActivityIndicator *_activityView;
 }
 
 @property(nonatomic,assign) NSObject <GRefreshTableDelegate>* delegate;

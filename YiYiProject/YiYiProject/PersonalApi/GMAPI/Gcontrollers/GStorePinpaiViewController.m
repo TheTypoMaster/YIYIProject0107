@@ -79,7 +79,10 @@
     //判断是否登录
     NSString *url = @" ";
     if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == YES) {
-        
+        NSString *aaa = [LTools cacheForKey:USER_SHOP_ID];
+        if ([aaa isEqualToString:self.shopId] ) {
+            return;
+        }
         url = [NSString stringWithFormat:@"%@&shop_id=%@&authcode=%@",LIULAN_NUM_SHOP,self.shopId,[GMAPI getAuthkey]];
         
     }else{

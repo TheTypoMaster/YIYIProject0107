@@ -172,7 +172,7 @@
     jinrifangke.textColor = [UIColor whiteColor];
     jinrifangke.textAlignment = NSTextAlignmentCenter;
     jinrifangke.font = [UIFont systemFontOfSize:12];
-    jinrifangke.text = @"今日访客";
+    jinrifangke.text = @"我的访客";
     [fangkeView addSubview:jinrifangke];
     
     
@@ -215,6 +215,8 @@
     ccc.shop_id = self.userInfo.shop_id;
     ccc.lastPageNavigationHidden = YES;
     [self.navigationController pushViewController:ccc animated:YES];
+    
+    
 }
 
 //跳转店铺会员

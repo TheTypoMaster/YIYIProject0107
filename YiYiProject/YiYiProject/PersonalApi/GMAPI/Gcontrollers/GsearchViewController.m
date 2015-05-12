@@ -63,7 +63,7 @@
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeText];
     
-    self.myTitleLabel.textColor = [UIColor whiteColor];
+    self.myTitleLabel.textColor = RGBCOLOR(253, 105, 155);
     self.myTitle = @"搜索";
     self.view.backgroundColor = [UIColor whiteColor];
     

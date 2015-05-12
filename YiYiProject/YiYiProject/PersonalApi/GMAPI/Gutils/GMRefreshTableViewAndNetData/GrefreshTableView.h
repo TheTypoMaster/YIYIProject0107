@@ -38,7 +38,7 @@
 -(void)removeHeaderView;
 
 -(void)beginToReloadData:(GRefreshPos)aRefreshPos;
--(void)showRefreshHeader:(BOOL)animated;//代码出发刷新
+-(void)showRefreshHeader:(BOOL)animated;//代码触发刷新
 - (void)finishReloadigData;
 
 

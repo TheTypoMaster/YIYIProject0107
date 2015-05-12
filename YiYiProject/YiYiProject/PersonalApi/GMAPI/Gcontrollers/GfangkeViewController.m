@@ -143,6 +143,9 @@
 {
     NSLog(@"%s",__FUNCTION__);
     
+    NSDictionary *dic = _dataArray[indexPath.row];
+    [MiddleTools pushToPersonalId:[dic stringValueForKey:@"uid"] userType:G_Other forViewController:self lastNavigationHidden:YES];
+    
 }
 
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath

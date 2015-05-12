@@ -61,7 +61,7 @@
     _phoneTf.layer.cornerRadius = 4;
     _phoneTf.font = [UIFont systemFontOfSize:15];
     _phoneTf.keyboardType = UIKeyboardTypeNumberPad;
-    _phoneTf.placeholder = @"请输入手机号";
+    _phoneTf.placeholder = @"请输入联系电话";
     [self.view addSubview:_phoneTf];
     
     UIButton *quedingBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -82,6 +82,7 @@
 
 
 -(void)telePhone{
+    [_phoneTf resignFirstResponder];
     NSString *thePhone = @"";
     
     thePhone = _phoneTf.text;

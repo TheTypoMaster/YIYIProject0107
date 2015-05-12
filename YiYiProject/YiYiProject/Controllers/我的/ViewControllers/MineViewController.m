@@ -558,9 +558,13 @@ typedef enum{
     [[[UIApplication sharedApplication]keyWindow] addSubview:_qiandaoSuccessView_imvbgimage];
     
     //得分lable
-    UILabel *scoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(203.0f/345 *(DEVICE_WIDTH-30), 77.0f/345*(DEVICE_WIDTH-30), 25, 16)];
+    UILabel *scoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(203.0f/345 *(DEVICE_WIDTH-30), 78.0f/345*(DEVICE_WIDTH-30), 17, 16)];
     scoreLabel.textColor = RGBCOLOR(251, 110, 43);
     scoreLabel.font = [UIFont systemFontOfSize:15];
+    if (DEVICE_WIDTH<=320) {
+        scoreLabel.font = [UIFont systemFontOfSize:12];
+        [scoreLabel setFrame:CGRectMake(203.0f/345 *(DEVICE_WIDTH-30), 77.0f/345*(DEVICE_WIDTH-30), 14, 16)];
+    }
     scoreLabel.backgroundColor = RGBCOLOR(239, 239, 239);
     scoreLabel.text = theScore;
     scoreLabel.textAlignment = NSTextAlignmentCenter;
