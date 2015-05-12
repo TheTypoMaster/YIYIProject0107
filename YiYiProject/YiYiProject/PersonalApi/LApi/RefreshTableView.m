@@ -27,7 +27,7 @@
         self.dataArray = [NSMutableArray array];
         
         [self createHeaderView];
-        [self createFooterView];
+//        [self createFooterView];
         self.backgroundColor = [UIColor clearColor];
         self.delegate = self;
         

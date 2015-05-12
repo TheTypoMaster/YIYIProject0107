@@ -108,7 +108,7 @@ alpha:(a)]
 #define NOTIFICATION_REMOTE_MESSAGE @"remoteMessage"
 
 //获取坐标
-#define NOTIFICATION_REMOTE_MESSAGE @"remoteMessage"
+//#define NOTIFICATION_REMOTE_MESSAGE @"remoteMessage"
 
 //修改单品完成
 #define GEDITPRODUCT_SUCCESS @"GeditProduct_success"

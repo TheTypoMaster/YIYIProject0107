@@ -59,6 +59,9 @@ typedef void(^ ShareResultBlock) (Share_Result result,Share_Type type);//分享�
     UIImage *_shareImage;
     
     UIViewController *_targetViewController;
+    
+    CGFloat _height_bgView;//bgView的高度
+
 }
 
 + (id)shareInstance;

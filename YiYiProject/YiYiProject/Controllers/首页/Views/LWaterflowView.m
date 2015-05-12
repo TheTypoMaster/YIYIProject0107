@@ -123,7 +123,7 @@
         [self addSubview:qtmquitView];
                 
         [self createHeaderView];
-        [self createFooterView];
+//        [self createFooterView];
 //        [self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0.0f];
     }
     return self;

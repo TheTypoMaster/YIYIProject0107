@@ -114,7 +114,9 @@
     __weak typeof(self)weakSelf = self;
     dispatch_async(dispatch_get_main_queue(), ^{
         
-        [weakSelf getMyMessage];
+        [weakSelf getMyMessage];//更新即时通讯之外的消息
+        
+        [weakSelf updateRongMessage];//更新即时通讯消息
         
     });
 }

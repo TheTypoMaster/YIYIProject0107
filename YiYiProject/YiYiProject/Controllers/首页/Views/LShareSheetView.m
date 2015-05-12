@@ -13,9 +13,8 @@
 #define DIS_SMALL 10
 #define DIS_BIG 22
 
-#define VIEW_HEIGHT 236
-
 @interface CustomButton : UIButton
+
 
 @property(nonatomic,assign)Share_Type shareType;
 
@@ -66,19 +65,37 @@
         
         self.alpha = 0.0;
         
-        bgView = [[UIView alloc]initWithFrame:CGRectMake(0, [UIApplication sharedApplication].keyWindow.bottom, DEVICE_WIDTH, VIEW_HEIGHT)];
+        NSArray *images = nil;
+        
+        NSArray *shareType = nil;
+        
+        
+//        if (![WXApi isWXAppInstalled] || ![WXApi isWXAppSupportApi]) {
+//            //微信未安装或微信不支持
+//            
+//            images = @[@"weibo",@"kongjian",@"qq"];
+//            shareType = @[UMShareToSina,UMShareToQzone,UMShareToQQ];
+//            items = @[@"微博",@"QQ空间",@"QQ"];
+//            
+//            _height_bgView = 236.f - 80.f;
+//            
+//        }else
+//        {
+            images = @[@"quan",@"weibo",@"kongjian",@"weixin",@"qq"];
+            shareType = @[UMShareToWechatTimeline,UMShareToSina,UMShareToQzone,UMShareToWechatSession,UMShareToQQ];
+            items = @[@"朋友圈",@"微博",@"QQ空间",@"微信",@"QQ"];
+            _height_bgView = 236.f;
+//        }
+    
+        
+        bgView = [[UIView alloc]initWithFrame:CGRectMake(0, [UIApplication sharedApplication].keyWindow.bottom, DEVICE_WIDTH, _height_bgView)];
         bgView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.95];
         [self addSubview:bgView];
         
-        items = @[@"朋友圈",@"微博",@"QQ空间",@"微信",@"QQ"];
-        NSArray *images = @[@"pengyouquan72_7222x",@"weibo90_72",@"qqzone",@"weixin72_72",@"QQ72_72"];
-        
-        NSArray *shareType = @[UMShareToWechatTimeline,UMShareToSina,UMShareToQzone,UMShareToWechatSession,UMShareToQQ];
-        
-        CGFloat aWidth = 36.0;
-        CGFloat left = (DEVICE_WIDTH - 36 * 3) / 4;
-        CGFloat aHeight = 36.f;
-        CGFloat top = 55 / 2.f;
+        CGFloat aWidth = 50.f;
+        CGFloat left = (DEVICE_WIDTH - 50.f * 3) / 4;
+        CGFloat aHeight = 50.f;
+        CGFloat top = 20.f;
         
         int line = 0;
         for (int i = 0; i < items.count; i ++) {
@@ -103,12 +120,16 @@
             [bgView addSubview:titleLabel];
         }
         
+        UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, bgView.height - 50, DEVICE_WIDTH, 0.5f)];
+        lineView.backgroundColor = RGBCOLOR(221, 221, 221);
+        [bgView addSubview:lineView];
+        
+        
         UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        cancelButton.frame = CGRectMake(KLEFT, 350/2.0, DEVICE_WIDTH - KLEFT * 2, 45);
+        cancelButton.frame = CGRectMake(KLEFT, lineView.bottom, DEVICE_WIDTH - KLEFT * 2, 49.5);
         [cancelButton setTitle:@"取消" forState:UIControlStateNormal];
         [cancelButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 
-        [cancelButton setBackgroundImage:[UIImage imageNamed:@"quxiao_button600_90"] forState:UIControlStateNormal];
         [bgView addSubview:cancelButton];
         
         [cancelButton addTarget:self action:@selector(hidden) forControlEvents:UIControlEventTouchUpInside];
@@ -137,7 +158,7 @@
     
     [UIView animateWithDuration:0.3 animations:^{
         CGRect aFrame = bgView.frame;
-        aFrame.origin.y = [UIApplication sharedApplication].keyWindow.bottom - VIEW_HEIGHT;
+        aFrame.origin.y = [UIApplication sharedApplication].keyWindow.bottom - _height_bgView;
         bgView.frame = aFrame;
         
         self.alpha = 1.0;

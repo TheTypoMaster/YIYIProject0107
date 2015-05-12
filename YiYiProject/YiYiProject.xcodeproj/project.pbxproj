@@ -66,12 +66,6 @@
 		137B6FFB1A6B995D007035DE /* dz_tianjia@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 137B6FF81A6B995D007035DE /* dz_tianjia@2x.png */; };
 		137C39131A714ABA00CE3971 /* MailInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 137C39121A714ABA00CE3971 /* MailInfoModel.m */; };
 		137E0AC11A4C559500B59F64 /* LShareSheetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 137E0AC01A4C559500B59F64 /* LShareSheetView.m */; };
-		137E0AD81A4C567500B59F64 /* pengyouquan72_7222x.png in Resources */ = {isa = PBXBuildFile; fileRef = 137E0AD21A4C567500B59F64 /* pengyouquan72_7222x.png */; };
-		137E0AD91A4C567500B59F64 /* QQ72_72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 137E0AD31A4C567500B59F64 /* QQ72_72@2x.png */; };
-		137E0ADA1A4C567500B59F64 /* qqzone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 137E0AD41A4C567500B59F64 /* qqzone@2x.png */; };
-		137E0ADB1A4C567500B59F64 /* quxiao_button600_90@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 137E0AD51A4C567500B59F64 /* quxiao_button600_90@2x.png */; };
-		137E0ADC1A4C567500B59F64 /* weibo90_72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 137E0AD61A4C567500B59F64 /* weibo90_72@2x.png */; };
-		137E0ADD1A4C567500B59F64 /* weixin72_72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 137E0AD71A4C567500B59F64 /* weixin72_72@2x.png */; };
 		137E0ADF1A4C65D000B59F64 /* product_like_cancel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 137E0ADE1A4C65D000B59F64 /* product_like_cancel@2x.png */; };
 		137E0AE11A4C66F200B59F64 /* product_shoucang_cancel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 137E0AE01A4C66F200B59F64 /* product_shoucang_cancel@2x.png */; };
 		137FC2A01A4DADB80039E3FF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 137FC29F1A4DADB80039E3FF /* AudioToolbox.framework */; };
@@ -207,6 +201,11 @@
 		13ABB07E1B01ADCD002DC700 /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 13ABB0681B01ADCD002DC700 /* TencentOpenApi_IOS_Bundle.bundle */; };
 		13ABB07F1B01ADCD002DC700 /* libSocialWechat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 13ABB06B1B01ADCD002DC700 /* libSocialWechat.a */; };
 		13ABB0801B01ADCD002DC700 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 13ABB06C1B01ADCD002DC700 /* libWeChatSDK.a */; };
+		13ABB0861B01F905002DC700 /* kongjian@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13ABB0811B01F905002DC700 /* kongjian@2x.png */; };
+		13ABB0871B01F905002DC700 /* qq@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13ABB0821B01F905002DC700 /* qq@2x.png */; };
+		13ABB0881B01F905002DC700 /* quan@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13ABB0831B01F905002DC700 /* quan@2x.png */; };
+		13ABB0891B01F905002DC700 /* weibo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13ABB0841B01F905002DC700 /* weibo@2x.png */; };
+		13ABB08A1B01F905002DC700 /* weixin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13ABB0851B01F905002DC700 /* weixin@2x.png */; };
 		13AD17B11A603E4300AB24F5 /* TopicParseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AD17B01A603E4300AB24F5 /* TopicParseModel.m */; };
 		13ADF83E1AFC877F001B0D29 /* UIView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 13ADF83D1AFC877F001B0D29 /* UIView+Additions.m */; };
 		13ADF8471AFC9B03001B0D29 /* TPlatCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13ADF8451AFC9B03001B0D29 /* TPlatCommentCell.m */; };
@@ -622,12 +621,6 @@
 		137C39121A714ABA00CE3971 /* MailInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MailInfoModel.m; sourceTree = "<group>"; };
 		137E0ABF1A4C559500B59F64 /* LShareSheetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LShareSheetView.h; sourceTree = "<group>"; };
 		137E0AC01A4C559500B59F64 /* LShareSheetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LShareSheetView.m; sourceTree = "<group>"; };
-		137E0AD21A4C567500B59F64 /* pengyouquan72_7222x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pengyouquan72_7222x.png; sourceTree = "<group>"; };
-		137E0AD31A4C567500B59F64 /* QQ72_72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "QQ72_72@2x.png"; sourceTree = "<group>"; };
-		137E0AD41A4C567500B59F64 /* qqzone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qqzone@2x.png"; sourceTree = "<group>"; };
-		137E0AD51A4C567500B59F64 /* quxiao_button600_90@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "quxiao_button600_90@2x.png"; sourceTree = "<group>"; };
-		137E0AD61A4C567500B59F64 /* weibo90_72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weibo90_72@2x.png"; sourceTree = "<group>"; };
-		137E0AD71A4C567500B59F64 /* weixin72_72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weixin72_72@2x.png"; sourceTree = "<group>"; };
 		137E0ADE1A4C65D000B59F64 /* product_like_cancel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "product_like_cancel@2x.png"; sourceTree = "<group>"; };
 		137E0AE01A4C66F200B59F64 /* product_shoucang_cancel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "product_shoucang_cancel@2x.png"; sourceTree = "<group>"; };
 		137FC29F1A4DADB80039E3FF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -836,6 +829,11 @@
 		13ABB06D1B01ADCD002DC700 /* UMSocialWechatHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialWechatHandler.h; sourceTree = "<group>"; };
 		13ABB06E1B01ADCD002DC700 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
 		13ABB06F1B01ADCD002DC700 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		13ABB0811B01F905002DC700 /* kongjian@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kongjian@2x.png"; sourceTree = "<group>"; };
+		13ABB0821B01F905002DC700 /* qq@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qq@2x.png"; sourceTree = "<group>"; };
+		13ABB0831B01F905002DC700 /* quan@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "quan@2x.png"; sourceTree = "<group>"; };
+		13ABB0841B01F905002DC700 /* weibo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weibo@2x.png"; sourceTree = "<group>"; };
+		13ABB0851B01F905002DC700 /* weixin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weixin@2x.png"; sourceTree = "<group>"; };
 		13AD17AF1A603E4300AB24F5 /* TopicParseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopicParseModel.h; sourceTree = "<group>"; };
 		13AD17B01A603E4300AB24F5 /* TopicParseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopicParseModel.m; sourceTree = "<group>"; };
 		13ADF83C1AFC877F001B0D29 /* UIView+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Additions.h"; sourceTree = "<group>"; };
@@ -1737,12 +1735,11 @@
 		137E0AD11A4C567500B59F64 /* UM_share */ = {
 			isa = PBXGroup;
 			children = (
-				137E0AD21A4C567500B59F64 /* pengyouquan72_7222x.png */,
-				137E0AD31A4C567500B59F64 /* QQ72_72@2x.png */,
-				137E0AD41A4C567500B59F64 /* qqzone@2x.png */,
-				137E0AD51A4C567500B59F64 /* quxiao_button600_90@2x.png */,
-				137E0AD61A4C567500B59F64 /* weibo90_72@2x.png */,
-				137E0AD71A4C567500B59F64 /* weixin72_72@2x.png */,
+				13ABB0811B01F905002DC700 /* kongjian@2x.png */,
+				13ABB0821B01F905002DC700 /* qq@2x.png */,
+				13ABB0831B01F905002DC700 /* quan@2x.png */,
+				13ABB0841B01F905002DC700 /* weibo@2x.png */,
+				13ABB0851B01F905002DC700 /* weixin@2x.png */,
 			);
 			path = UM_share;
 			sourceTree = "<group>";
@@ -3345,7 +3342,6 @@
 				E389FDC31AE64FAD002D6566 /* DynamicMessageCell.xib in Resources */,
 				E3E64AA81AE0D971002F00A4 /* compose_pic_add_highlighted@2x.png in Resources */,
 				139A051C1A66AC3500A8EB49 /* sjxx150_150@2x.png in Resources */,
-				137E0AD81A4C567500B59F64 /* pengyouquan72_7222x.png in Resources */,
 				138986101A6A18C600F187C9 /* my_haoyou@2x.png in Resources */,
 				13681C831A453B3200671D07 /* share_weixin@2x.png in Resources */,
 				138986181A6A18C600F187C9 /* my_zhuye@2x.png in Resources */,
@@ -3355,6 +3351,7 @@
 				E36DAF021AD3BC0100C7FEA4 /* gyuanshixin@2x.png in Resources */,
 				E334B8271AFB943F00DC9209 /* dianzhu_03@2x.png in Resources */,
 				E3996ED21A5E1DBA00673147 /* gGray@2x.png in Resources */,
+				13ABB0861B01F905002DC700 /* kongjian@2x.png in Resources */,
 				E3B7BE131ACA578100FE8495 /* xiaoxi_down@2x.png in Resources */,
 				13ADF8481AFC9B03001B0D29 /* TPlatCommentCell.xib in Resources */,
 				E3C49A951AFA0A3B003D30B4 /* gqiandao_down@2x.png in Resources */,
@@ -3374,7 +3371,6 @@
 				13ABB0741B01ADCD002DC700 /* UMSCommentInputControlleriPad.xib in Resources */,
 				E36DAF0C1AD3D8B500C7FEA4 /* gjiaoyaup@2x.png in Resources */,
 				1387B08F1A5EDF51006365D8 /* apply_qq_image@2x.png in Resources */,
-				137E0ADA1A4C567500B59F64 /* qqzone@2x.png in Resources */,
 				E3E64AA91AE0D971002F00A4 /* compose_pic_add@3x.png in Resources */,
 				19F7B4341A67FFA600087BCB /* background@2x.png in Resources */,
 				564387C31A5ABD3A00499AD3 /* match_segment_unselected_image@2x.png in Resources */,
@@ -3410,6 +3406,7 @@
 				19F7B4481A67FFA600087BCB /* umeng_logo1.png in Resources */,
 				E308939F1AE05D1900DA342C /* road_select@2x.png in Resources */,
 				19F7B4421A67FFA600087BCB /* nav_bg.png in Resources */,
+				13ABB0881B01F905002DC700 /* quan@2x.png in Resources */,
 				E3B9A9751ADE6E1200EE1415 /* gphone_down@2x.png in Resources */,
 				13D03D491AEDD60F0078AA9E /* placeholder.png in Resources */,
 				E3D2EBFF1AF8DEAA00C09A49 /* gxiaozhu_bg@2x.png in Resources */,
@@ -3431,7 +3428,6 @@
 				139562CC1A3C11EC007BB183 /* RegisterViewController.xib in Resources */,
 				566FE2591A5042B700A96B5F /* default_navigation_clear_image@2x.png in Resources */,
 				13CEC8A51A5D974900FE273F /* zhixiangjiantou@2x.png in Resources */,
-				137E0ADD1A4C567500B59F64 /* weixin72_72@2x.png in Resources */,
 				137B6FFA1A6B995D007035DE /* dz_jiantou@2x.png in Resources */,
 				13963F591A4FE3B8007BE68B /* fabu_pic@2x.png in Resources */,
 				13B6907D1A580430007FE152 /* ShopViewCell.xib in Resources */,
@@ -3502,19 +3498,20 @@
 				138986171A6A18C600F187C9 /* my_yichu@2x.png in Resources */,
 				56A8A82E1A458FF200E85F6B /* match_pinglun_image@2x.png in Resources */,
 				E3B7BE101ACA578100FE8495 /* my_up@2x.png in Resources */,
-				137E0ADB1A4C567500B59F64 /* quxiao_button600_90@2x.png in Resources */,
 				565321411A59769300E43F80 /* emotion.plist in Resources */,
 				56A8A8211A456E0100E85F6B /* match_line_image@2x.png in Resources */,
 				139607BD1A46D82400AACAC4 /* FilterViewController.xib in Resources */,
 				13ABB0701B01ADCD002DC700 /* UMSocialLocalizable.strings in Resources */,
 				E3996EC71A5E1DBA00673147 /* gstart@2x.png in Resources */,
 				19F7B4431A67FFA600087BCB /* nav_btn_bg.png in Resources */,
+				13ABB08A1B01F905002DC700 /* weixin@2x.png in Resources */,
 				136B14D01AA56995000DB09B /* image_album_bg@2x.png in Resources */,
 				133B175E1A74EF3D005B8B3F /* dong_up@2x.png in Resources */,
 				E3BFB14F1B00B10C007DA1C1 /* gdpnav@2x.png in Resources */,
 				E3996ED31A5E1DBA00673147 /* gRed@2x.png in Resources */,
 				1391DC641A870673006A2E15 /* t_yichu@2x.png in Resources */,
 				137B08311A4E716700DE7DCC /* dian_shangchang@2x.png in Resources */,
+				13ABB0891B01F905002DC700 /* weibo@2x.png in Resources */,
 				1366A4DA1AE9F875004F83FD /* arrow_background@2x.png in Resources */,
 				E3601E821A61A75700CC41FE /* gcustomstore@2x.png in Resources */,
 				E3B7BE121ACA578100FE8495 /* ttai_up@2x.png in Resources */,
@@ -3525,6 +3522,7 @@
 				13B690781A580291007FE152 /* BrandViewCell.xib in Resources */,
 				13CEC8A01A5D974900FE273F /* pinglun_icon@2x.png in Resources */,
 				13B6905C1A566A4A007FE152 /* love_up@2x.png in Resources */,
+				13ABB0871B01F905002DC700 /* qq@2x.png in Resources */,
 				19F7B4451A67FFA600087BCB /* nav_btn_bg_lighted@2x.png in Resources */,
 				13681C8A1A453DE600671D07 /* login_suo@2x.png in Resources */,
 				13681C821A453B3200671D07 /* share_sina@2x.png in Resources */,
@@ -3542,9 +3540,7 @@
 				13CEC89E1A5D974900FE273F /* dapei_jiantou@2x.png in Resources */,
 				19F7B44E1A67FFA600087BCB /* UMFeedbackViewController.xib in Resources */,
 				E36DAF121AD40AD300C7FEA4 /* navigationBarBackground@2x.png in Resources */,
-				137E0ADC1A4C567500B59F64 /* weibo90_72@2x.png in Resources */,
 				19F7B43B1A67FFA600087BCB /* messages_left_bubble@2x.png in Resources */,
-				137E0AD91A4C567500B59F64 /* QQ72_72@2x.png in Resources */,
 				1391DC631A870673006A2E15 /* t_xiangce@2x.png in Resources */,
 				13A389B91A38974F00ABBACB /* blueup1@2x.png in Resources */,
 				E3C923E71AE0F7F9005C2BE1 /* gttailink_have@2x.png in Resources */,
