@@ -678,7 +678,14 @@
     
     CGFloat dis = scrollView.contentSize.height - DEVICE_HEIGHT; //控制滑动到底部时 bottom隐藏
     
-    if ((currentOffset > 20 && currentOffset > _lastOffsetY) || currentOffset - dis >= 0) {
+    
+    CGFloat contentHeight = _waterFlow.quitView.contentSize.height;//waterFlow contentSize高度
+    CGFloat frameHeight = _waterFlow.quitView.frame.size.height;//waterFlow frame的高度
+    
+    //条件一:只有当content高度大于frame高度时需要隐藏底部
+    //条件二:判断上拉还是下拉
+    //条件三:判断是否滑到了最底部
+    if (contentHeight > frameHeight && ( (currentOffset > 20 && currentOffset > _lastOffsetY) || currentOffset - dis >= 0)) {
         
         [self bottomShowOrHidden:YES];
     }else
@@ -686,13 +693,9 @@
         [self bottomShowOrHidden:NO];
     }
     
-    NSLog(@"waterScrollViewDidScroll1");
-
-    
     //加载数据菊花 偏移量<-85 并且是下拉
     if (scrollView.contentOffset.y < -80 && currentOffset < _lastOffsetY) {
         
-        NSLog(@"waterScrollViewDidScroll2");
 
         _waterFlow.isReloadData = YES;
         [_refreshLoading startAnimating];

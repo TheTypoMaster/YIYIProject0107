@@ -240,7 +240,7 @@
         
 //        ZanUserModel *aModel = [_table.dataArray objectAtIndex:userId];
         
-        aModel.relation = sender.selected ? 0 : 1;
+        aModel.flag = sender.selected ? 0 : 1;
 
         [_table reloadData];
         

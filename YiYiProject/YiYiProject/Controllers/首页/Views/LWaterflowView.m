@@ -56,14 +56,7 @@
         }
         
         _noloadView = noFooterRefresh;
-
         
-        if (noFooterRefresh == NO) {
-            
-//            [self createFooterView];
-        }
-        
-        //        [self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0.0f];
     }
     return self;
 }
@@ -599,7 +592,7 @@
     //没有数据的时候 需要显示没有更多数据
     if (self.dataArray.count == 0 && self.isHaveMoreData == NO) {
         
-        height = 0.f;
+        height = 0.f + self.headerView.height;
     }
     
     if (tableFooterView && [tableFooterView superview]) {

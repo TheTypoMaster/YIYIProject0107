@@ -32,7 +32,7 @@
     
     //只有未关注的时候才显示关注按钮
     
-    if (aModel.relation == relation_concern_no) {
+    if (aModel.flag == relation_concern_no) {
         
 //        self.concernButton.hidden = NO;
         [self.concernButton setBackgroundColor:[UIColor colorWithHexString:@"e87f92"]];
@@ -48,7 +48,7 @@
     }
     
     //自己的时候 不显示关注按钮
-    if ([aModel.uid isEqualToString:[GMAPI getUid]]) {
+    if ([aModel.friend_uid isEqualToString:[GMAPI getUid]]) {
         
         self.concernButton.hidden = YES;
     }
