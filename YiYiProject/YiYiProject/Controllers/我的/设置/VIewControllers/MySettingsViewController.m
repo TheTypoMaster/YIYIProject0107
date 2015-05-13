@@ -300,6 +300,7 @@
     [GMAPI cleanUserDefaulWithHomeCloth];//清除首页缓存
     
     [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_LOGOUT object:nil];
+    
     [self performSelector:@selector(leftButtonTap:) withObject:nil afterDelay:0.2];
     
     

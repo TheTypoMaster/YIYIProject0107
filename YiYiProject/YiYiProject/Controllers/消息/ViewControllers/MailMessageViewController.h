@@ -8,7 +8,9 @@
 
 #import "MyViewController.h"
 
-
+/**
+ *  具体消息列表
+ */
 @interface MailMessageViewController : MyViewController
 
 @property(nonatomic,assign)Message_Type aType;

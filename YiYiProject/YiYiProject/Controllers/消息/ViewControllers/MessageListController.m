@@ -43,7 +43,6 @@
     [super viewWillAppear:animated];
     
     //单独处理 即时消息的条数
-    
     [self updateRongMessage];
     
     self.navigationController.navigationBarHidden = NO;
@@ -61,7 +60,9 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateHotpoint:) name:NOTIFICATION_CANCEL_HOTPOINT object:Nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateRemoteMessage:) name:NOTIFICATION_REMOTE_MESSAGE object:nil];
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateHotpoint:) name:NOTIFICATION_LOGOUT object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(logoutCancelHotpoint:) name:NOTIFICATION_LOGOUT object:nil];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateRemoteMessage:) name:NOTIFICATION_LOGIN object:nil];
     
     arr_images = @[@"yixx150_150",@"sjxx150_150",@"my_shoucang",@"my_shenqing"];
     arr_titles = @[@"衣+衣团队",@"商家消息",@"动态消息",@"聊天消息"];
@@ -84,9 +85,29 @@
 }
 
 #pragma mark - 推送消息
+/**
+ *  退出登录取消红点
+ *
+ *  @param notify 退出登录通知
+ */
+- (void)logoutCancelHotpoint:(NSNotification *)notify
+{
+    
+    yiyi_model.unread_msg_num = 0;
+    
+
+    shop_model.unread_msg_num = 0;
+    
+
+    other_model.unread_msg_num = 0;
+    
+    [self updateTabbarNumber:[self unreadMessgeNum]];
+    
+    [_table reloadData];
+}
 
 /**
- *  更新融云即时通讯消息
+ *  更新融云即时通讯消息 未读条数
  */
 - (void)updateRongMessage
 {
@@ -194,19 +215,6 @@
     [self updateTabbarNumber:[self unreadMessgeNum]];
     
     [_table reloadData];
-}
-
-/**
- *  未读消息条数
- *
- *  @return 不包含融云
- */
-- (int)unreadMessgeNumWithOutRongCloud
-{
-    int sum = 0;
-    sum = yiyi_model.unread_msg_num + shop_model.unread_msg_num + other_model.unread_msg_num;
-    
-    return sum;
 }
 
 /**
