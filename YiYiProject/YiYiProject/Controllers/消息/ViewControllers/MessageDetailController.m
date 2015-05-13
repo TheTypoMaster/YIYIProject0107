@@ -146,10 +146,10 @@
     
     if (_isActivity) {
         
-        [cell setCellWithModel:detail_model cellType:icon_No seeAll:NO];
+        [cell setCellWithModel:detail_model cellType:icon_No seeAll:NO timeType:Time_StartAndEnd];
     }else
     {
-        [cell setCellWithModel:detail_model cellType:icon_Yes seeAll:NO];
+        [cell setCellWithModel:detail_model cellType:icon_Yes seeAll:NO timeType:Time_AddTime];
     }
     
     

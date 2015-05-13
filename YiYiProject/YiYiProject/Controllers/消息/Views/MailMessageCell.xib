@@ -27,17 +27,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12月28日" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8VJ-gK-qwV">
-                                <rect key="frame" x="10" y="73" width="214" height="15"/>
+                                <rect key="frame" x="10" y="77" width="274" height="15"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <color key="textColor" red="0.58823529411764708" green="0.58823529411764708" blue="0.58823529411764708" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12月29日" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="boW-Pk-B9s">
-                                <rect key="frame" x="10" y="91" width="214" height="15"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <color key="textColor" red="0.58823529409999997" green="0.58823529409999997" blue="0.58823529409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" id="pyE-hW-YNn">
@@ -49,7 +42,7 @@
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                         <color key="backgroundColor" red="0.85098039215686272" green="0.85098039215686272" blue="0.85098039215686272" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ajm-hC-94m">
+                                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ajm-hC-94m">
                                         <rect key="frame" x="10" y="0.0" width="294" height="45"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -113,13 +106,12 @@
                 <outlet property="centerImageView" destination="GcB-xt-pC8" id="8Ov-3L-DYT"/>
                 <outlet property="clickButton" destination="ajm-hC-94m" id="eGM-X8-cb0"/>
                 <outlet property="contentLabel" destination="cNq-UM-OY5" id="Ytz-1L-zc9"/>
-                <outlet property="endTimeLabel" destination="boW-Pk-B9s" id="aXd-ff-BgO"/>
                 <outlet property="iconImageView" destination="Hmy-w8-rUD" id="k65-gp-DtQ"/>
                 <outlet property="nameLabel" destination="9GM-iw-AMF" id="Wpw-tB-ert"/>
                 <outlet property="timeLabel" destination="8VJ-gK-qwV" id="QnR-iG-hWo"/>
                 <outlet property="userView" destination="HDe-aP-eJK" id="ixk-Fu-zdj"/>
             </connections>
-            <point key="canvasLocation" x="-1619" y="428.5"/>
+            <point key="canvasLocation" x="-2015" y="421.5"/>
         </tableViewCell>
     </objects>
     <resources>

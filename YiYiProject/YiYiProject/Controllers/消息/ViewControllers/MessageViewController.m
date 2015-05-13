@@ -219,7 +219,7 @@
 {
     NSLog(@"衣加衣团队");
     MailMessageViewController *mail = [[MailMessageViewController alloc]init];
-    mail.aType = Message_Yy;
+    mail.aType = Message_List_Yy;
     mail.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:mail animated:YES];
 }
@@ -231,7 +231,7 @@
 {
     NSLog(@"商家消息");
     MailMessageViewController *mail = [[MailMessageViewController alloc]init];
-    mail.aType = Message_Shop;
+    mail.aType = Message_List_Shop;
     mail.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:mail animated:YES];
 }
@@ -243,7 +243,7 @@
 {
     NSLog(@"动态消息");
     MailMessageViewController *mail = [[MailMessageViewController alloc]init];
-    mail.aType = Message_Dynamic;
+    mail.aType = Message_List_Dynamic;
     mail.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:mail animated:YES];
 }

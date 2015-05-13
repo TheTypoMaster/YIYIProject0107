@@ -274,17 +274,17 @@
         return;
     }
     
-    Message_Type aType;
+    Message_List_Type aType;
     if (indexPath.row == 0) {
-        aType = Message_Yy;
+        aType = Message_List_Yy;
 
     }else if (indexPath.row == 1){
 
-        aType = Message_Shop;
+        aType = Message_List_Shop;
         
     }else if (indexPath.row == 2){
         
-        aType = Message_Dynamic;
+        aType = Message_List_Dynamic;
     }
     
     MailMessageViewController *mail = [[MailMessageViewController alloc]init];

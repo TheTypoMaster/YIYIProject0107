@@ -268,7 +268,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Sw-jR-Ksy">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3TE-Vu-8yl">
+                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3TE-Vu-8yl">
                             <rect key="frame" x="-10" y="285" width="209" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="Y7e-Ic-0wl"/>
@@ -296,7 +296,7 @@
                                 <action selector="clickToQQ:" destination="-1" eventType="touchUpInside" id="wVz-6k-Y1V"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uxt-mE-7us">
+                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uxt-mE-7us">
                             <rect key="frame" x="-8" y="374" width="209" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="50" id="2LV-YQ-wNZ"/>
@@ -324,7 +324,7 @@
                                 <action selector="clickToWeiXin:" destination="-1" eventType="touchUpInside" id="iBc-UD-G4Y"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6JF-35-i9Z">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6JF-35-i9Z">
                             <rect key="frame" x="-10" y="218" width="209" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="50" id="bNS-iq-zx4"/>
@@ -374,15 +374,15 @@
                         </mask>
                         <mask key="constraints">
                             <exclude reference="cve-Hi-cBS"/>
+                            <exclude reference="Bkn-7q-agV"/>
+                            <exclude reference="IEC-Ie-FvE"/>
+                            <exclude reference="mmb-WD-WWk"/>
                             <exclude reference="ExE-oC-heV"/>
                             <exclude reference="UmW-Do-tic"/>
                             <exclude reference="CCg-3D-Zga"/>
                             <exclude reference="Hm0-Wp-SuX"/>
                             <exclude reference="JPg-Rc-EQj"/>
                             <exclude reference="xOa-TL-PgX"/>
-                            <exclude reference="Bkn-7q-agV"/>
-                            <exclude reference="IEC-Ie-FvE"/>
-                            <exclude reference="mmb-WD-WWk"/>
                         </mask>
                     </variation>
                     <variation key="heightClass=regular-widthClass=compact">
@@ -393,22 +393,22 @@
                         </mask>
                         <mask key="constraints">
                             <include reference="cve-Hi-cBS"/>
+                            <exclude reference="Bkn-7q-agV"/>
+                            <include reference="IEC-Ie-FvE"/>
+                            <include reference="mmb-WD-WWk"/>
                             <include reference="ExE-oC-heV"/>
                             <include reference="UmW-Do-tic"/>
                             <include reference="CCg-3D-Zga"/>
                             <include reference="Hm0-Wp-SuX"/>
                             <include reference="JPg-Rc-EQj"/>
                             <include reference="xOa-TL-PgX"/>
-                            <exclude reference="Bkn-7q-agV"/>
-                            <include reference="IEC-Ie-FvE"/>
-                            <include reference="mmb-WD-WWk"/>
                         </mask>
                     </variation>
                 </view>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zty-wm-AUp">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wf3-4W-bxp">
+                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wf3-4W-bxp">
                             <rect key="frame" x="-10" y="285" width="209" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="50" id="QHU-ac-Rip"/>
@@ -436,7 +436,7 @@
                                 <action selector="clickToQQ:" destination="-1" eventType="touchUpInside" id="cRE-e2-vI5"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q25-5d-hpR">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q25-5d-hpR">
                             <rect key="frame" x="-10" y="218" width="209" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="50" id="79Q-m8-MfH"/>
@@ -482,10 +482,10 @@
                         <mask key="constraints">
                             <exclude reference="NWb-9C-huu"/>
                             <exclude reference="qyX-uw-gaJ"/>
-                            <exclude reference="CO9-vl-nY6"/>
-                            <exclude reference="cID-TV-mOq"/>
                             <exclude reference="SbK-78-A8X"/>
                             <exclude reference="xx5-pi-Frh"/>
+                            <exclude reference="CO9-vl-nY6"/>
+                            <exclude reference="cID-TV-mOq"/>
                         </mask>
                     </variation>
                     <variation key="heightClass=regular-widthClass=compact">
@@ -496,10 +496,10 @@
                         <mask key="constraints">
                             <include reference="NWb-9C-huu"/>
                             <include reference="qyX-uw-gaJ"/>
-                            <include reference="CO9-vl-nY6"/>
-                            <include reference="cID-TV-mOq"/>
                             <include reference="SbK-78-A8X"/>
                             <include reference="xx5-pi-Frh"/>
+                            <include reference="CO9-vl-nY6"/>
+                            <include reference="cID-TV-mOq"/>
                         </mask>
                     </variation>
                 </view>
@@ -542,25 +542,25 @@
                     <exclude reference="zty-wm-AUp"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="J5z-t8-Agh"/>
-                    <exclude reference="mvX-ID-gAc"/>
-                    <exclude reference="sj2-Pe-rXB"/>
+                    <exclude reference="2Yx-vC-aaX"/>
+                    <exclude reference="t5D-xf-xPP"/>
+                    <exclude reference="BRb-rS-hEb"/>
+                    <exclude reference="Cex-B5-UOF"/>
+                    <exclude reference="LoK-ba-fb5"/>
                     <exclude reference="YSB-Ye-kZK"/>
                     <exclude reference="dmK-eZ-aVb"/>
                     <exclude reference="g6q-GA-5U2"/>
                     <exclude reference="ibz-gd-FVJ"/>
-                    <exclude reference="BRb-rS-hEb"/>
-                    <exclude reference="Cex-B5-UOF"/>
-                    <exclude reference="LoK-ba-fb5"/>
-                    <exclude reference="NaZ-mG-zWZ"/>
-                    <exclude reference="Xxu-1L-BiA"/>
-                    <exclude reference="riN-vq-Jjf"/>
-                    <exclude reference="2Yx-vC-aaX"/>
-                    <exclude reference="t5D-xf-xPP"/>
                     <exclude reference="T8Z-xd-Gdt"/>
                     <exclude reference="jcu-el-Ex7"/>
                     <exclude reference="oLe-3g-91l"/>
                     <exclude reference="y85-W9-Dif"/>
+                    <exclude reference="J5z-t8-Agh"/>
+                    <exclude reference="mvX-ID-gAc"/>
+                    <exclude reference="sj2-Pe-rXB"/>
+                    <exclude reference="NaZ-mG-zWZ"/>
+                    <exclude reference="Xxu-1L-BiA"/>
+                    <exclude reference="riN-vq-Jjf"/>
                     <exclude reference="Fwm-A1-pC4"/>
                     <exclude reference="PNY-2B-dAK"/>
                     <exclude reference="nnf-YH-DzU"/>
@@ -577,25 +577,25 @@
                     <include reference="zty-wm-AUp"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="J5z-t8-Agh"/>
-                    <include reference="mvX-ID-gAc"/>
-                    <include reference="sj2-Pe-rXB"/>
+                    <include reference="2Yx-vC-aaX"/>
+                    <include reference="t5D-xf-xPP"/>
+                    <include reference="BRb-rS-hEb"/>
+                    <include reference="Cex-B5-UOF"/>
+                    <exclude reference="LoK-ba-fb5"/>
                     <include reference="YSB-Ye-kZK"/>
                     <include reference="dmK-eZ-aVb"/>
                     <include reference="g6q-GA-5U2"/>
                     <exclude reference="ibz-gd-FVJ"/>
-                    <include reference="BRb-rS-hEb"/>
-                    <include reference="Cex-B5-UOF"/>
-                    <exclude reference="LoK-ba-fb5"/>
-                    <include reference="NaZ-mG-zWZ"/>
-                    <include reference="Xxu-1L-BiA"/>
-                    <include reference="riN-vq-Jjf"/>
-                    <include reference="2Yx-vC-aaX"/>
-                    <include reference="t5D-xf-xPP"/>
                     <exclude reference="T8Z-xd-Gdt"/>
                     <include reference="jcu-el-Ex7"/>
                     <include reference="oLe-3g-91l"/>
                     <include reference="y85-W9-Dif"/>
+                    <include reference="J5z-t8-Agh"/>
+                    <include reference="mvX-ID-gAc"/>
+                    <include reference="sj2-Pe-rXB"/>
+                    <include reference="NaZ-mG-zWZ"/>
+                    <include reference="Xxu-1L-BiA"/>
+                    <include reference="riN-vq-Jjf"/>
                     <include reference="Fwm-A1-pC4"/>
                     <include reference="PNY-2B-dAK"/>
                     <include reference="nnf-YH-DzU"/>

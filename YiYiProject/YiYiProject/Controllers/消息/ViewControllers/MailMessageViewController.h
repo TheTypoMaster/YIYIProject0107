@@ -13,7 +13,7 @@
  */
 @interface MailMessageViewController : MyViewController
 
-@property(nonatomic,assign)Message_Type aType;
+@property(nonatomic,assign)Message_List_Type aType;
 
 @end
     

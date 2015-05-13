@@ -13,7 +13,10 @@
 @property (strong, nonatomic) IBOutlet UIImageView *iconImageView;
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *contentLabel;
+@property (strong, nonatomic) IBOutlet UIView *seeAllView;
 
 - (void)setCellWithModel:(id)aModel;
+
++ (CGFloat)heightForWithModel:(id)aModel;
 
 @end

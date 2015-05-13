@@ -168,10 +168,41 @@ typedef enum {
 //action= yy(衣加衣) shop（商家） dynamic（动态）
 
 typedef enum{
-    Message_Yy = 0,
-    Message_Shop,
-    Message_Dynamic
-}Message_Type;
+    Message_List_Yy = 0,
+    Message_List_Shop,
+    Message_List_Dynamic
+}Message_List_Type;
+
+
+/**
+ * 消息类型
+ * 1 衣加衣通知消息 2 关注用户通知消息 3 回复主题消息 4 回复主题回复
+ * 5 回复T台通知消息 6 回复T台回复通知消息 7 品牌促销通知消息 8 商场促销通知
+ * 9 申请店铺成功  10 申请店铺失败
+ * 11 修改活动
+ * 12关注商家通知消息
+ */
+typedef enum {
+    
+    MessageType_yiyiTeam = 1,//衣衣团队消息
+    MessageType_concernUser = 2,//关注用户消息
+    MessageType_concernShop = 12,//关注商家通知消息
+    MessageType_replyTopic = 3,//回复主题
+    MessageType_replyTopicReply = 4,//回复主题的回复
+    MessageType_replyTPlat = 5,//评论t台
+    MessageType_replyTPlatReply = 6,//回复t台评论
+    MessageType_promotionBrand = 7,//平铺促销
+    MessageType_promotionMarket = 8,//商场促销
+    MessageType_applyShopSuccess = 9,//申请店铺成功
+    MessageType_applyShopFail = 10,//申请店铺失败
+    
+}MessageType;
+
+
+
+//typedef enum {
+//    
+//}Message;
 
 
 //接口地址

@@ -446,21 +446,21 @@
     
     if (type == 1) {
         
-        [self pushToMessageDetail:Message_Yy];
+        [self pushToMessageDetail:Message_List_Yy];
         
     }else if (type == 2 || type == 3 || type == 4 || type == 5 || type == 6)
     {
-        [self pushToMessageDetail:Message_Dynamic];
+        [self pushToMessageDetail:Message_List_Dynamic];
         
     }else if (type == 7 || type == 8){
         
-        [self pushToMessageDetail:Message_Shop];
+        [self pushToMessageDetail:Message_List_Shop];
     }else if (type == 9 || type == 10){
         
         //店铺申请状态通知
         [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_SHENQINGDIANPU_STATE object:nil];
     }else if (type == 11){
-        [self pushToMessageDetail:Message_Shop];
+        [self pushToMessageDetail:Message_List_Shop];
     }
 
 }
@@ -471,7 +471,7 @@
  *  @param aType 消息类型
  */
 
-- (void)pushToMessageDetail:(Message_Type)aType
+- (void)pushToMessageDetail:(Message_List_Type)aType
 {
     self.rootViewController.selectedIndex = 2;
     

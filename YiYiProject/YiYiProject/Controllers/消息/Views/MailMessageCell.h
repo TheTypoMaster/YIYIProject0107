@@ -14,6 +14,13 @@ typedef enum{
     icon_No
 }Cell_Type;//分有头像 和 无头像
 
+typedef enum {
+   
+    Time_StartAndEnd = 0,//开始时间和结束时间
+    Time_AddTime = 1 //发布时间
+    
+}TimeType;
+
 /**
  *  商家消息
  */
@@ -30,8 +37,20 @@ typedef enum{
 @property (strong, nonatomic) IBOutlet UIView *bottomBackView;
 @property (strong, nonatomic) IBOutlet UILabel *endTimeLabel;
 
+/**
+ *  cell赋值
+ *
+ *  @param aModel 消息model
+ *  @param aType  是否有头像
+ *  @param seeAll 是否有 查看全文
+ *  @param timeType 显示时间类型 开始和结束 发布时间
+ */
+- (void)setCellWithModel:(id)aModel
+                cellType:(Cell_Type)aType
+                  seeAll:(BOOL)seeAll
+                timeType:(TimeType)timeType;
 
-- (void)setCellWithModel:(id)aModel cellType:(Cell_Type)aType seeAll:(BOOL)seeAll;
+//- (void)setCellWithModel:(id)aModel cellType:(Cell_Type)aType seeAll:(BOOL)seeAll;
 
 + (CGFloat)heightForModel:(id)aModel cellType:(Cell_Type)aType seeAll:(BOOL)seeAll;
 

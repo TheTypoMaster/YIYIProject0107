@@ -33,16 +33,16 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithHexString:@"f2f2f2"];
     
-    if (self.aType == Message_Yy) {
+    if (self.aType == Message_List_Yy) {
         
         self.myTitleLabel.text = @"衣+衣团队消息";
         
-    }else if (self.aType == Message_Shop){
+    }else if (self.aType == Message_List_Shop){
         
         self.myTitleLabel.text = @"商家消息";
 
         
-    }else if (self.aType == Message_Dynamic){
+    }else if (self.aType == Message_List_Dynamic){
         
         self.myTitleLabel.text = @"动态消息";
     }
@@ -72,11 +72,11 @@
     NSString *key = [GMAPI getAuthkey];
     
     NSString *type;
-    if (self.aType == Message_Yy) {
+    if (self.aType == Message_List_Yy) {
         type = @"yy";
-    }else if (self.aType == Message_Shop){
+    }else if (self.aType == Message_List_Shop){
         type = @"shop";
-    }else if (self.aType == Message_Dynamic){
+    }else if (self.aType == Message_List_Dynamic){
         type = @"dynamic";
     }
     
@@ -121,24 +121,48 @@
     MessageModel *aModel = _table.dataArray[indexPath.row];
 
     
-    if (self.aType == Message_Dynamic){
+    if (self.aType == Message_List_Dynamic){
 
         NSLog(@"动态消息调整到T台详情");
         
-        NSLog(@"%@",aModel.type);
-        if ([aModel.type intValue] == 12 ||[aModel.type intValue] == 2) {//12关注店铺  2关注用户
+        NSLog(@"消息类型 %@",aModel.type);
+        
+        MessageType aType = [aModel.type intValue];
+        
+        // 2关注用户
+        if (aType == MessageType_concernUser) {
+            //跳转至粉丝
+            
+            [MiddleTools pushToUserListWithObjectId:aModel.to_uid listType:User_MyFansList forViewController:self lastNavigationHidden:NO updateParmsBlock:^(NSDictionary *params) {
+                
+            }];
+            
+            return;
+        }
+        //12关注店铺
+        if (aType == MessageType_concernShop ) {
+            
+            [MiddleTools pushToUserListWithObjectId:aModel.to_uid listType:User_ShopMember forViewController:self lastNavigationHidden:NO updateParmsBlock:^(NSDictionary *params) {
+                
+            }];
             return;
         }
         
-        TTaiDetailController *t_detail = [[TTaiDetailController alloc]init];
-        t_detail.tt_id = aModel.theme_id;
-        [self.navigationController pushViewController:t_detail animated:YES];
+        //t台评论 和 评论的回复
+        if (aType == MessageType_replyTPlat || aType == MessageType_replyTPlatReply) {
+            
+            TTaiDetailController *t_detail = [[TTaiDetailController alloc]init];
+            t_detail.tt_id = aModel.theme_id;
+            [self.navigationController pushViewController:t_detail animated:YES];
+            
+            return;
+        }
         
         return;
     }
     
     
-    if (self.aType == Message_Shop) {
+    if (self.aType == Message_List_Shop) {
         
         NSLog(@"amodel.type:%@",aModel.type);
         if ([aModel.type intValue] == 11) {//修改活动
@@ -161,9 +185,9 @@
 {
     MessageModel *aModel = _table.dataArray[indexPath.row];
     
-    if (self.aType == Message_Dynamic){
+    if (self.aType == Message_List_Dynamic){
         
-        return 45 + 55 + 50;
+        return [DynamicMessageCell heightForWithModel:aModel];
     }
     
     return [MailMessageCell heightForModel:aModel cellType:icon_Yes seeAll:YES];
@@ -178,7 +202,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.aType == Message_Dynamic) {
+    if (self.aType == Message_List_Dynamic) {
         
         static NSString *identify = @"DynamicMessageCell";
         DynamicMessageCell *cell = (DynamicMessageCell *)[LTools cellForIdentify:identify cellName:identify forTable:tableView];
@@ -195,8 +219,17 @@
     MailMessageCell *cell = (MailMessageCell *)[LTools cellForIdentify:identify cellName:identify forTable:tableView];
     
     MessageModel *aModel = _table.dataArray[indexPath.row];
-    [cell setCellWithModel:aModel cellType:icon_Yes seeAll:YES];
+    
+    if (self.aType == Message_List_Yy) {
         
+        [cell setCellWithModel:aModel cellType:icon_Yes seeAll:YES timeType:Time_AddTime];
+
+    }else if (self.aType == Message_List_Shop){
+        
+        [cell setCellWithModel:aModel cellType:icon_Yes seeAll:YES timeType:Time_StartAndEnd];
+    }
+    
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
