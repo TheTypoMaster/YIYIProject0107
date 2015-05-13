@@ -50,7 +50,9 @@
     
     //按钮
     UIButton *editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [editBtn setTitle:@"修改" forState:UIControlStateNormal];
+//    [editBtn setTitle:@"修改" forState:UIControlStateNormal];
+    [editBtn setImage:[UIImage imageNamed:@"gdanpinxiugai.png"] forState:UIControlStateNormal];
+    
     editBtn.titleLabel.textColor = [UIColor grayColor];
     [self.contentView addSubview:editBtn];
     editBtn.tag = theIndexPath.row+10;
