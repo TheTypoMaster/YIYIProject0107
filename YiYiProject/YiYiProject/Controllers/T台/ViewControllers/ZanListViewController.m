@@ -227,7 +227,7 @@
     
     ZanUserModel *aModel = [_table.dataArray objectAtIndex:indexRow];
 
-    NSString *userId = aModel.uid;
+    NSString *userId = aModel.friend_uid;
     
     NSString *api = sender.selected ? USER_CONCERN_CANCEL : USER_CONCERN_ADD;
     

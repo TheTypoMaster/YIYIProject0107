@@ -32,7 +32,7 @@
     
     //只有未关注的时候才显示关注按钮
     
-    if (aModel.flag == relation_concern_no) {
+    if (aModel.flag == relation_concern_no || aModel.flag == relation_concern_yes_otherSide) {
         
 //        self.concernButton.hidden = NO;
         [self.concernButton setBackgroundColor:[UIColor colorWithHexString:@"e87f92"]];

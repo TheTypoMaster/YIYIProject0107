@@ -249,8 +249,6 @@ typedef enum{
                                  ];
     
     
-    
-    
     _customInfo_tabelViewCell = @{@"titleLogo":_logoImageArray,
                                   @"titleArray":_tabelViewCellTitleArray
                                   };
@@ -299,8 +297,7 @@ typedef enum{
             _qiandaoBtn.userInteractionEnabled = NO;
             _qiandaoBtn.selected = YES;
         }
-        
-        
+
         
         if ([_userInfo.shopman intValue] == 2) {//已经是店主
             [self changeTheTitleAndPicArray_dianzhu];
@@ -668,6 +665,50 @@ typedef enum{
 
 
 #pragma mark 事件处理
+
+/**
+ *  views赋值
+ *
+ *  @param userInfoDic 用户信息字典
+ */
+- (void)setViewsWithDataInfo:(NSDictionary *)userInfoDic
+{
+    _userInfo = [[UserInfo alloc]initWithDictionary:userInfoDic];
+    
+    if ([_userInfo.is_sign intValue] == 0) {//未签到
+        _qiandaoBtn.userInteractionEnabled = YES;
+        _qiandaoBtn.selected = NO;
+    }else if ([_userInfo.is_sign intValue] == 1){//已签到
+        _qiandaoBtn.userInteractionEnabled = NO;
+        _qiandaoBtn.selected = YES;
+    }
+    
+    if ([_userInfo.shopman intValue] == 2) {//已经是店主
+        [self changeTheTitleAndPicArray_dianzhu];
+    }else if ([_userInfo.shopman intValue]==1){//正在审核
+        [self changeTheTitleAndPicArray_shenhe];
+    }
+    
+    NSString *name = [userInfoDic stringValueForKey:@"user_name"];
+    NSString *score = [userInfoDic stringValueForKey:@"score"];
+    self.userNameLabel.text = [NSString stringWithFormat:@"昵称:%@",name];
+    self.userScoreLabel.text = [NSString stringWithFormat:@"积分:%@",score];
+    
+    user_bannerUrl = [userInfoDic stringValueForKey:@"user_banner"];
+    [_backView.imageView sd_setImageWithURL:[NSURL URLWithString:user_bannerUrl] placeholderImage:[UIImage imageNamed:@"my_bg.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        [GMAPI setUserBannerImageWithData:UIImagePNGRepresentation(_backView.imageView.image)];
+    }];
+    
+    NSString *userFaceUrl = [NSString stringWithFormat:@"%@",[userInfoDic stringValueForKey:@"photo"]];
+    headImageUrl = userFaceUrl;
+    
+    
+    [self.userFaceImv sd_setImageWithURL:[NSURL URLWithString:userFaceUrl] placeholderImage:[UIImage imageNamed:@"grzx150_150.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        [GMAPI setUserFaceImageWithData:UIImagePNGRepresentation(self.userFaceImv.image)];
+    }];
+    
+    [_tableView reloadData];
+}
 
 - (void)clickToShare:(UIButton *)sender
 {
