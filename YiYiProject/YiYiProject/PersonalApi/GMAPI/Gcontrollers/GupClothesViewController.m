@@ -12,6 +12,7 @@
 #import "JKImagePickerController.h"
 #import "PhotoCell.h"
 
+
 @interface GupClothesViewController ()<UIActionSheetDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,UITextFieldDelegate,UIAlertViewDelegate,JKImagePickerControllerDelegate>
 {
     UIView *_view1;//填写信息view
@@ -37,7 +38,8 @@
     //性别
     UILabel *_genderLabel;
     
-    
+    NSString *_oldImages_Ids_str;//老图id字符串
+    NSMutableArray *_oldImages_Ids_Array;//老图id数组
     
     
     
@@ -45,6 +47,12 @@
 @end
 
 @implementation GupClothesViewController
+
+
+-(void)dealloc{
+    NSLog(@"%s",__FUNCTION__);
+}
+
 
 
 -(id)initWithType:(GUPCLOTHTYPE)theType editProduct:(ProductModel*)theModel{
@@ -180,7 +188,15 @@
         [imv sd_setImageWithURL:[NSURL URLWithString:imageName] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             UIButton *btn = _showPicsBtnArray[i];
             [btn setBackgroundImage:imv.image forState:UIControlStateNormal];
+            NSString *image_idstr = [[dic objectForKey:@"original"]objectForKey:@"img_id"];
+            
+            if (!_oldImages_Ids_Array) {
+                _oldImages_Ids_Array = [NSMutableArray arrayWithCapacity:1];
+            }
+            [_oldImages_Ids_Array addObject:image_idstr];
             [self.oldImageArray addObject:imv.image];
+            
+            NSLog(@"%@",_oldImages_Ids_Array);
         }];
     }
     
@@ -329,6 +345,11 @@
 -(void)upLoadImage:(NSArray *)aImage_arr{
     
     
+    NSLog(@"老图id:%@",_oldImages_Ids_str);
+    NSLog(@"老图 %@",_oldImages_Ids_Array);
+    
+    
+    
     NSLog(@"uploadImage and info");
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -342,8 +363,7 @@
     UITextField *tf3 = _shurukuangArray[3];//现价
     UITextField *tf4 = _shurukuangArray[4];//折扣
     UITextField *tf5 = _shurukuangArray[5];//标签
-//    UITextField *tf6 = _shurukuangArray[6];//类型
-//    UITextField *tf7 = _shurukuangArray[7];//性别
+
     
     
     //类型
@@ -385,31 +405,86 @@
     zhekou = zhekou*0.1;
     NSString *zhekouStr = [NSString stringWithFormat:@"%.2f",zhekou];
     
-    
+    NSDictionary *dataDic = [NSDictionary dictionary];
     
     if (self.thetype == GEDITCLOTH) {
+        
         NSString *product_id = self.theEditProduct.product_id;
         uploadImageUrlStr = GEDITPRODUCT_MANAGE;
+        
+        
+        if (self.oldImageArray.count>0 && self.assetsArray.count>0) {//有老图有新图
+            dataDic = @{
+                        @"product_name":tf1.text,//产品名
+                        @"product_gender":gengder,//产品适用性别
+                        @"product_price":tf3.text,//现价
+                        @"original_price":tf2.text,//原价
+                        @"product_brand_id":self.mallInfo.brand_id,//产品品牌id
+                        @"product_brand_name":tf.text,//品牌名称
+                        @"product_shop_id":self.userInfo.shop_id,//商店id
+                        @"product_hotsale":product_hotsale,//是否热销
+                        @"product_new":product_new,//是否新品
+                        @"discount_num":zhekouStr,//打折力度
+                        @"product_tag":tf5.text,//标签
+                        @"authcode":[GMAPI getAuthkey],//用户标示
+                        @"product_id":product_id,
+                        @"img_id":_oldImages_Ids_str
+                        };
+        }else if (self.oldImageArray.count>0){//只有老图
+            
+            NSString *postStr = [NSString stringWithFormat:@"&product_name=%@&product_gender=%@&product_price=%@&original_price=%@&product_brand_id=%@&product_brand_name=%@&product_shop_id=%@&product_hotsale=%@&product_new=%@&discount_num=%@&product_tag=%@&authcode=%@&product_id=%@&img_id=%@",tf1.text,gengder,tf3.text,tf2.text,self.mallInfo.brand_id,tf.text,self.userInfo.shop_id,product_hotsale,product_new,zhekouStr,tf5.text,[GMAPI getAuthkey],product_id,_oldImages_Ids_str];
+            
+            NSData *postData = [postStr dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+            
+            GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:uploadImageUrlStr isPost:YES postData:postData];
+            [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                NSDictionary *mydic=result;
+                if (mydic == nil) {
+                    [GMAPI showAutoHiddenMBProgressWithText:@"上传失败" addToView:self.view];
+                    return;
+                }
+                
+                if ([[mydic objectForKey:@"errorcode"]intValue]==0) {
+                    [GMAPI showAutoHiddenMBProgressWithText:@"修改成功" addToView:self.view];
+                    [[NSNotificationCenter defaultCenter]postNotificationName:GEDITPRODUCT_SUCCESS object:nil];
+                    [self performSelector:@selector(fabuyifuSuccessToGoBack) withObject:[NSNumber numberWithBool:YES] afterDelay:1.2];
+                    
+                }else{
+                    [GMAPI showAutoHiddenMBProgressWithText:[mydic objectForKey:@"msg"] addToView:self.view];
+                }
+            } failBlock:^(NSDictionary *failDic, NSError *erro) {
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                [GMAPI showAutoHiddenMBProgressWithText:@"修改失败请重新修改" addToView:self.view];
+            }];
+            return;
+        }else if (self.assetsArray.count>0){//只有新图
+            dataDic = @{
+                        @"product_name":tf1.text,//产品名
+                        @"product_gender":gengder,//产品适用性别
+                        @"product_price":tf3.text,//现价
+                        @"original_price":tf2.text,//原价
+                        @"product_brand_id":self.mallInfo.brand_id,//产品品牌id
+                        @"product_brand_name":tf.text,//品牌名称
+                        @"product_shop_id":self.userInfo.shop_id,//商店id
+                        @"product_hotsale":product_hotsale,//是否热销
+                        @"product_new":product_new,//是否新品
+                        @"discount_num":zhekouStr,//打折力度
+                        @"product_tag":tf5.text,//标签
+                        @"authcode":[GMAPI getAuthkey],//用户标示
+                        @"product_id":product_id
+                        };
+        }else{
+            [GMAPI showAutoHiddenMidleQuicklyMBProgressWithText:@"请添加图片" addToView:self.view];
+            return;
+        }
+        
         //设置接收响应类型为标准HTTP类型(默认为响应类型为JSON)
         AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
         AFHTTPRequestOperation  * o2= [manager
                                        POST:uploadImageUrlStr
-                                       parameters:@{
-                                                    @"product_name":tf1.text,//产品名
-                                                    @"product_gender":gengder,//产品适用性别
-                                                    @"product_price":tf3.text,//现价
-                                                    @"original_price":tf2.text,//原价
-                                                    @"product_brand_id":self.mallInfo.brand_id,//产品品牌id
-                                                    @"product_brand_name":tf.text,//品牌名称
-                                                    @"product_shop_id":self.userInfo.shop_id,//商店id
-                                                    @"product_hotsale":product_hotsale,//是否热销
-                                                    @"product_new":product_new,//是否新品
-                                                    @"discount_num":zhekouStr,//打折力度
-                                                    @"product_tag":tf5.text,//标签
-                                                    @"authcode":[GMAPI getAuthkey],//用户标示
-                                                    @"product_id":product_id
-                                                    }
+                                       parameters:dataDic
                                        constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
                                        {
                                            
@@ -786,7 +861,7 @@
             [btn addTarget:self action:@selector(tianjiatupian:) forControlEvents:UIControlEventTouchUpInside];
         }else{
             [btn setBackgroundImage:[UIImage imageNamed:@"gremovephoto.png"] forState:UIControlStateNormal];
-//            [btn addTarget:self action:@selector(removeSelf:) forControlEvents:UIControlEventTouchUpInside];
+            [btn addTarget:self action:@selector(removeSelf:) forControlEvents:UIControlEventTouchUpInside];
             [_showPicsBtnArray addObject:btn];
         }
         
@@ -800,7 +875,12 @@
     
     
     
-    
+    //提示
+    UILabel *tishiLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, _view2.frame.size.height-50, DEVICE_WIDTH-24, 20)];
+    tishiLabel.font = [UIFont systemFontOfSize:13];
+    tishiLabel.textColor = [UIColor grayColor];
+    tishiLabel.text = @"提示：选择图片完成后点击图片进行删除操作。";
+    [_view2 addSubview:tishiLabel];
     
     
     
@@ -809,7 +889,136 @@
 
 
 -(void)removeSelf:(UIButton *)sender{
-    [sender setBackgroundImage:[UIImage imageNamed:@"gremovephoto.png"] forState:UIControlStateNormal];
+    
+    NSInteger xiabiao = sender.tag - 101;
+    
+    
+    if (self.thetype == GEDITCLOTH) {//修改
+        
+        if (self.oldImageArray.count>0 && self.assetsArray.count>0) {//有老图有新图
+            if (self.oldImageArray.count>xiabiao) {//要删除的位置有老图
+                [self.oldImageArray removeObjectAtIndex:xiabiao];
+                [_oldImages_Ids_Array removeObjectAtIndex:xiabiao];
+                for (UIButton *btn in _showPicsBtnArray) {
+                    [btn setBackgroundImage:[UIImage imageNamed:@"gremovephoto.png"] forState:UIControlStateNormal];
+                }
+                for (int i = 0; i<self.oldImageArray.count; i++) {
+                    UIButton *btn = _showPicsBtnArray[i];
+                    [btn setBackgroundImage:self.oldImageArray[i] forState:UIControlStateNormal];
+                }
+                NSInteger oldImvArrayCount = self.oldImageArray.count;
+                NSInteger assetArrayCount = self.assetsArray.count;
+                for (int i = 0; i<assetArrayCount; i++) {
+                    JKAssets *asset = self.assetsArray[i];;
+                    ALAssetsLibrary  *lib = [[ALAssetsLibrary alloc] init];
+                    [lib assetForURL:asset.assetPropertyURL resultBlock:^(ALAsset *asset) {
+                        if (asset) {
+                            UIButton *btn = _showPicsBtnArray[i+oldImvArrayCount];
+                            [btn setBackgroundImage:[UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]] forState:UIControlStateNormal];
+                        }
+                    } failureBlock:^(NSError *error) {
+                        
+                    }];
+                }
+                
+                
+            }else{//再判断要删除的位置有没有新图
+                if (self.assetsArray.count>(xiabiao-self.oldImageArray.count)){//有新图
+                    
+                    NSInteger oldImvArrayCount = self.oldImageArray.count;
+                    NSInteger assetArrayCount = self.assetsArray.count;
+                    [self.assetsArray removeObjectAtIndex:(xiabiao - oldImvArrayCount)];
+                    
+                    for (UIButton *btn in _showPicsBtnArray) {
+                        [btn setBackgroundImage:[UIImage imageNamed:@"gremovephoto.png"] forState:UIControlStateNormal];
+                    }
+                    
+                    for (int i = 0; i<oldImvArrayCount; i++) {
+                        UIButton *btn = _showPicsBtnArray[i];
+                        [btn setBackgroundImage:self.oldImageArray[i] forState:UIControlStateNormal];
+                    }
+                    assetArrayCount = self.assetsArray.count;//新图的个数发生了变化
+                    for (int i = 0; i<assetArrayCount; i++) {
+                        JKAssets *asset = self.assetsArray[i];;
+                        ALAssetsLibrary  *lib = [[ALAssetsLibrary alloc] init];
+                        [lib assetForURL:asset.assetPropertyURL resultBlock:^(ALAsset *asset) {
+                            if (asset) {
+                                UIButton *btn = _showPicsBtnArray[i+oldImvArrayCount];
+                                [btn setBackgroundImage:[UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]] forState:UIControlStateNormal];
+                            }
+                        } failureBlock:^(NSError *error) {
+                            
+                        }];
+                    }
+
+                }
+            }
+        }else if (self.assetsArray.count>0){//只有新图
+            if (self.assetsArray.count>xiabiao){
+                [self.assetsArray removeObjectAtIndex:xiabiao];
+                for (UIButton *btn in _showPicsBtnArray) {
+                    [btn setBackgroundImage:[UIImage imageNamed:@"gremovephoto.png"] forState:UIControlStateNormal];
+                }
+                ALAssetsLibrary   *lib = [[ALAssetsLibrary alloc] init];
+                for (int i = 0; i<self.assetsArray.count; i++) {
+                    JKAssets *asset = self.assetsArray[i];
+                    [lib assetForURL:asset.assetPropertyURL resultBlock:^(ALAsset *asset) {
+                        if (asset) {
+                            UIButton *btn = _showPicsBtnArray[i];
+                            [btn setBackgroundImage:[UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]] forState:UIControlStateNormal];
+                        }
+                    } failureBlock:^(NSError *error) {
+                        
+                    }];
+                }
+            }
+            
+            
+        }else if (self.oldImageArray.count>0){//只有老图
+            if (self.oldImageArray.count>xiabiao) {//要删除的位置有老图
+                [self.oldImageArray removeObjectAtIndex:xiabiao];
+                [_oldImages_Ids_Array removeObjectAtIndex:xiabiao];
+                for (UIButton *btn in _showPicsBtnArray) {
+                    [btn setBackgroundImage:[UIImage imageNamed:@"gremovephoto.png"] forState:UIControlStateNormal];
+                }
+                for (int i = 0; i<self.oldImageArray.count; i++) {
+                    UIButton *btn = _showPicsBtnArray[i];
+                    [btn setBackgroundImage:self.oldImageArray[i] forState:UIControlStateNormal];
+                }
+            }
+        }else{//没图
+            
+        }
+        
+        
+        
+        
+    }else if (self.thetype == GUPCLOTH){//上传单品
+        if (self.assetsArray.count<=xiabiao) {
+            return;
+        }
+        [self.assetsArray removeObjectAtIndex:xiabiao];
+        for (UIButton *btn in _showPicsBtnArray) {
+            [btn setBackgroundImage:[UIImage imageNamed:@"gremovephoto.png"] forState:UIControlStateNormal];
+        }
+        ALAssetsLibrary   *lib = [[ALAssetsLibrary alloc] init];
+        for (int i = 0; i<self.assetsArray.count; i++) {
+            JKAssets *asset = self.assetsArray[i];
+            [lib assetForURL:asset.assetPropertyURL resultBlock:^(ALAsset *asset) {
+                if (asset) {
+                    UIButton *btn = _showPicsBtnArray[i];
+                    [btn setBackgroundImage:[UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]] forState:UIControlStateNormal];
+                }
+            } failureBlock:^(NSError *error) {
+                
+            }];
+        }
+    }
+    
+    
+    
+    
+    
 }
 
 
@@ -853,38 +1062,65 @@
 #pragma mark - 获取所选图片
 -(void)getChoosePics{
     
+    _oldImages_Ids_str = @" ";
+    
+    //老图
     self.uploadImageArray = [NSMutableArray arrayWithCapacity:1];
     
-    NSLog(@"-------%lu",(unsigned long)self.assetsArray.count);
     
-    for (int i = 0;i<self.assetsArray.count;i++) {
+    if (self.oldImageArray.count>0 && self.assetsArray.count>0) {//有老图有新图
+        //先传老图id
         
-        JKAssets* jkAsset = self.assetsArray[i];
-        
-        ALAssetsLibrary* lib = [[ALAssetsLibrary alloc] init];
-        [lib assetForURL:jkAsset.assetPropertyURL resultBlock:^(ALAsset *asset) {
-            
-            if (asset) {
-                
-                UIImage *image = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]];
-                [self.uploadImageArray addObject:image];
-                
-                if (self.uploadImageArray.count == self.assetsArray.count) {
-                    
-                    [self upLoadImage:self.uploadImageArray];
+        _oldImages_Ids_str = [_oldImages_Ids_Array componentsJoinedByString:@","];
+        //再传新图
+        for (int i = 0;i<self.assetsArray.count;i++) {
+            JKAssets* jkAsset = self.assetsArray[i];
+            ALAssetsLibrary* lib = [[ALAssetsLibrary alloc] init];
+            [lib assetForURL:jkAsset.assetPropertyURL resultBlock:^(ALAsset *asset) {
+                if (asset) {
+                    UIImage *image = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]];
+                    [self.uploadImageArray addObject:image];
+                    if (self.uploadImageArray.count == self.assetsArray.count) {
+                        [self upLoadImage:self.uploadImageArray];
+                    }
                 }
-            }
-            
-        } failureBlock:^(NSError *error) {
-            
-            
-        }];
+                
+            } failureBlock:^(NSError *error) {
+                
+            }];
+        }
+        
+    }else if (self.oldImageArray.count>0){//只有老图
+        //传老图id
+        _oldImages_Ids_str = [_oldImages_Ids_Array componentsJoinedByString:@","];
+        [self upLoadImage:nil];
+        
+        
+    }else if (self.assetsArray.count>0){//只有新图
+        //传新图
+        for (int i = 0;i<self.assetsArray.count;i++) {
+            JKAssets* jkAsset = self.assetsArray[i];
+            ALAssetsLibrary* lib = [[ALAssetsLibrary alloc] init];
+            [lib assetForURL:jkAsset.assetPropertyURL resultBlock:^(ALAsset *asset) {
+                if (asset) {
+                    UIImage *image = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]];
+                    [self.uploadImageArray addObject:image];
+                    if (self.uploadImageArray.count == self.assetsArray.count) {
+                        [self upLoadImage:self.uploadImageArray];
+                    }
+                }
+                
+            } failureBlock:^(NSError *error) {
+                
+            }];
+        }
+    }else{
+        [GMAPI showAutoHiddenMidleQuicklyMBProgressWithText:@"请添加图片" addToView:self.view];
     }
     
     
-    if (self.assetsArray.count == 0) {
-        [self upLoadImage:self.oldImageArray];
-    }
+    
+    
 
     
     
@@ -894,8 +1130,7 @@
 
 
 
-
-
+//相册
 - (void)composePicAdd
 {
     JKImagePickerController *imagePickerController = [[JKImagePickerController alloc] init];
@@ -904,6 +1139,11 @@
     imagePickerController.allowsMultipleSelection = YES;
     imagePickerController.minimumNumberOfSelection = 0;
     imagePickerController.maximumNumberOfSelection = 5;
+    if (self.thetype == GEDITCLOTH) {
+        if (self.oldImageArray.count>0) {
+            imagePickerController.maximumNumberOfSelection = 5 - self.oldImageArray.count;
+        }
+    }
     imagePickerController.selectedAssetArray = self.assetsArray;
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:imagePickerController];
     [self presentViewController:navigationController animated:YES completion:NULL];
@@ -926,7 +1166,34 @@
     
     [imagePicker dismissViewControllerAnimated:YES completion:^{
         
-//        if (self.thetype == GUPCLOTH) {
+        
+        if (self.thetype == GEDITCLOTH) {
+            
+            NSInteger oldImvArrayCount = self.oldImageArray.count;
+            NSInteger assetArrayCount = self.assetsArray.count;
+            
+            
+            for (int i = 0; i<oldImvArrayCount; i++) {
+                UIButton *btn = _showPicsBtnArray[i];
+                [btn setBackgroundImage:self.oldImageArray[i] forState:UIControlStateNormal];
+            }
+            
+            for (int i = 0; i<assetArrayCount; i++) {
+                JKAssets *asset = self.assetsArray[i];;
+                ALAssetsLibrary  *lib = [[ALAssetsLibrary alloc] init];
+                [lib assetForURL:asset.assetPropertyURL resultBlock:^(ALAsset *asset) {
+                    if (asset) {
+                        UIButton *btn = _showPicsBtnArray[i+oldImvArrayCount];
+                        [btn setBackgroundImage:[UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]] forState:UIControlStateNormal];
+                    }
+                } failureBlock:^(NSError *error) {
+                    
+                }];
+            }
+            
+            
+            
+        }else if (self.thetype == GUPCLOTH){
             ALAssetsLibrary   *lib = [[ALAssetsLibrary alloc] init];
             for (int i = 0; i<self.assetsArray.count; i++) {
                 JKAssets *asset = self.assetsArray[i];
@@ -939,36 +1206,7 @@
                     
                 }];
             }
-//        }
-        
-//        else if (self.thetype == GEDITCLOTH){
-//            ALAssetsLibrary   *lib = [[ALAssetsLibrary alloc] init];
-//            for (int i = 0; i<self.assetsArray.count; i++) {
-//                JKAssets *asset = self.assetsArray[i];
-//                [lib assetForURL:asset.assetPropertyURL resultBlock:^(ALAsset *asset) {
-//                    if (asset) {
-//                        UIImage *image = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]];
-//                        [self.oldImageArray addObject:image];
-//                        
-//                        if (i == self.assetsArray.count-1) {
-//                            for (int i = 0;i<self.oldImageArray.count; i++) {
-//                                UIButton *btn = _showPicsBtnArray[i];
-//                                [btn setBackgroundImage:self.oldImageArray[i] forState:UIControlStateNormal];
-//                            }
-//                        }
-//                        
-//                        
-//                    }
-//                    
-//                } failureBlock:^(NSError *error) {
-//                    
-//                }];
-//            }
-//            
-//            
-//            
-//        }
-        
+        }
         
         
     }];

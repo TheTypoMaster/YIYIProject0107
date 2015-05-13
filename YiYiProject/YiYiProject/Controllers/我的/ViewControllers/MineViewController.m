@@ -88,6 +88,8 @@ typedef enum{
     UIButton *_qiandaoSuccessView_closeBtn;//签到成功关闭按钮
     UIImageView *_zhu_imv;//小猪
     
+    CGFloat _lastOffsetY;
+    
 }
 @end
 
@@ -1250,6 +1252,27 @@ typedef enum{
 #pragma mark -
 #pragma mark UISCrollViewDelegate
 
+
+
+-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    
+    if (scrollView == _tableView) {
+        
+        if (!_getUserinfoSuccess) {
+            
+            [self GgetUserInfo];
+            
+            NSLog(@"scrollViewDidEndDragging");
+
+        }
+    }
+}
+
+
+
+
+
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     
@@ -1258,12 +1281,17 @@ typedef enum{
         // pass the current offset of the UITableView so that the ParallaxHeaderView layouts the subViews.
         [(ParallaxHeaderView *)_tableView.tableHeaderView layoutHeaderViewForScrollViewOffset:scrollView.contentOffset];
         
+        //加载数据菊花 偏移量<-85 并且是下拉
+        if (scrollView.contentOffset.y < -80) {
+            
+            [_hud startAnimating];
+            _getUserinfoSuccess = NO;
+            
+        }
         
-        NSLog(@"contentOffSet.y == %f",scrollView.contentOffset.y);
         
-//        if (scrollView.contentOffset.y <=-70) {
-//            [self GgetUserInfo];
-//        }
+        
+        
     }
 
     

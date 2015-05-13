@@ -29,9 +29,6 @@
 
 - (void)textViewDidChange:(UITextView *)textView {
     
-//    NSInteger last = 30.0 - (unsigned long)self.text.length;
-    
-    
     //placeholder
     if (self.text.length == 0) {
         self.TV.hidden = NO;
@@ -40,44 +37,13 @@
         self.TV.hidden = YES;
     }
     
-//    NSRange range;
-//    range.location = 0;
-//    range.length = 30;
-//    NSString *tmp = [[NSString alloc]init];
-//    if (self.text.length > 30) {
-//        tmp = [self.text substringWithRange:range];
-//        
-//    }
-//    
-//    NSLog(@"%@",self.text);
+
     
     
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
-//    BOOL edit = YES;
-//    if (range.location>30)
-//    {
-//        edit = NO;
-//    }
-//    else
-//    {
-//        edit = YES;
-//    }
-//    
-//    NSRange r;
-//    r.location = 0;
-//    r.length = 31;
-//    NSString *tmp = [[NSString alloc]init];
-//    if (self.text.length > 30) {
-//        tmp = [self.text substringWithRange:r];
-//        self.text = tmp;
-//        edit = YES;
-//    }
-//    
-//    
-//    
-//    return edit;
+
     return YES;
 }
 

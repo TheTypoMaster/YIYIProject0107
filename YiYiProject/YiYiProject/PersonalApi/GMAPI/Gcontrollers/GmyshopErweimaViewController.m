@@ -88,7 +88,7 @@
     if (indexPath.row == 0) {
         height = 92;
     }else if (indexPath.row == 3){
-        height = 205;
+        height = 210;
     }else{
         height = 55;
     }
@@ -185,7 +185,7 @@
             
         }];
         
-        imv.center = CGPointMake(cell.contentView.center.x, cell.contentView.center.y-20);
+        imv.center = CGPointMake(cell.contentView.center.x, cell.contentView.center.y-15);
         
         [cell.contentView addSubview:imv];
         
