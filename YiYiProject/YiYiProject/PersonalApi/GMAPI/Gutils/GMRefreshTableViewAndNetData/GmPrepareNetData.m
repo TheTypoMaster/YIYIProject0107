@@ -51,6 +51,10 @@
         if (data.length > 0) {
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
             
+            NSString *string = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+            
+            NSLog(@"dataStr = %@",string);
+            
             NSLog(@"response :%@",response);
             
             if ([dic isKindOfClass:[NSDictionary class]]) {

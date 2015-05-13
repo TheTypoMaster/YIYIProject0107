@@ -25,6 +25,7 @@ typedef enum{
 {
     UIScrollView *_mainScrollView;//主scrollview
     
+    
 }
 
 

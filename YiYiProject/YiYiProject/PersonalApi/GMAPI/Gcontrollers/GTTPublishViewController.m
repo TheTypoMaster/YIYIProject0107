@@ -49,6 +49,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
+    self.myTitleLabel.text = @"发表T台";
+    self.myTitleLabel.textColor = RGBCOLOR(253, 105, 155);
     self.rightString = @"发送";
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeText];
     

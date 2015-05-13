@@ -110,6 +110,7 @@
     _mainScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT -  64 - 44)];
     _mainScrollView.delegate = self;
     _mainScrollView.tag = 10000;
+    _mainScrollView.backgroundColor = [UIColor whiteColor];
 
     
     NSLog(@"devh===%f",DEVICE_HEIGHT);
@@ -597,7 +598,8 @@
     
     
     
-    _pinpaiView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_nearbyView.frame), DEVICE_WIDTH, 195)];
+    _pinpaiView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_nearbyView.frame), DEVICE_WIDTH, 200)];
+    _pinpaiView.backgroundColor = [UIColor whiteColor];
     
     UIView *fenge = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 6)];
     fenge.backgroundColor = RGBCOLOR(228, 228, 228);

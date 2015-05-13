@@ -340,7 +340,8 @@ typedef enum {
 //我是店主 发布单品
 #define GFABUDIANPIN @"http://www.alayy.com/?d=api&c=products&m=addProducts"
 //编辑单品
-#define GEDITPRODUCT_MANAGE @"http://www.alayy.com/index.php?d=api&c=products&m=edit_product"
+//#define GEDITPRODUCT_MANAGE @"http://www.alayy.com/index.php?d=api&c=products&m=edit_product"
+#define GEDITPRODUCT_MANAGE @"http://www.alayy.com/index.php?d=api&c=products&m=edit_product_v2"
 
 //我是店主 发布活动
 #define GFABUHUODONG @"http://www.alayy.com/index.php?d=api&c=mall&m=publish_activity"
