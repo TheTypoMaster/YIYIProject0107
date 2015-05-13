@@ -72,28 +72,7 @@
     
     self.navigationController.navigationBarHidden = NO;
     
-    if (![self.guanzhuleixing isEqualToString:@"精品店"]) {
-        self.shopId = self.storeIdStr;
-    }
     
-    //判断是否登录
-    NSString *url = @" ";
-    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == YES) {
-        NSString *aaa = [LTools cacheForKey:USER_SHOP_ID];
-        if ([aaa isEqualToString:self.shopId] ) {
-            return;
-        }
-        url = [NSString stringWithFormat:@"%@&shop_id=%@&authcode=%@",LIULAN_NUM_SHOP,self.shopId,[GMAPI getAuthkey]];
-        
-    }else{
-        url = [NSString stringWithFormat:@"%@&shop_id=%@",LIULAN_NUM_SHOP,self.shopId];
-    }
-    GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:NO postData:nil];
-    [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
-        
-    } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        
-    }];
     
 }
 
@@ -106,6 +85,10 @@
     
     NSLog(@"%s",__FUNCTION__);
 }
+
+
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -163,8 +146,32 @@
 
 
 
-
-
+//店铺浏览量加1
+-(void)dianpuLiulan{
+    
+    if (![self.guanzhuleixing isEqualToString:@"精品店"]) {
+        self.shopId = self.storeIdStr;
+    }
+    
+    //判断是否登录
+    NSString *url = @" ";
+    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == YES) {
+        NSString *aaa = [LTools cacheForKey:USER_SHOP_ID];
+        if ([aaa isEqualToString:self.shopId] ) {
+            return;
+        }
+        url = [NSString stringWithFormat:@"%@&shop_id=%@&authcode=%@",LIULAN_NUM_SHOP,self.shopId,[GMAPI getAuthkey]];
+        
+    }else{
+        url = [NSString stringWithFormat:@"%@&shop_id=%@",LIULAN_NUM_SHOP,self.shopId];
+    }
+    GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:NO postData:nil];
+    [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+    }];
+}
 
 
 //获取店铺详情
@@ -234,6 +241,13 @@
                 }
                 self.activityId = [dic stringValueForKey:@"activity_id"];
             }
+            
+            
+            
+            [self dianpuLiulan];
+            
+            
+            
             
             
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
