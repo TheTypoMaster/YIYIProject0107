@@ -144,7 +144,17 @@
     NSLog(@"%s",__FUNCTION__);
     
     NSDictionary *dic = _dataArray[indexPath.row];
-    [MiddleTools pushToPersonalId:[dic stringValueForKey:@"uid"] userType:G_Other forViewController:self lastNavigationHidden:YES];
+    
+    NSString *uid = [dic stringValueForKey:@"uid"];
+    
+    if ([uid isEqualToString:@"0"]) {
+        
+        [LTools showMBProgressWithText:@"不能查看未识别身份游客信息" addToView:self.view];
+        
+        return;
+    }
+    
+    [MiddleTools pushToPersonalId:uid userType:G_Other forViewController:self lastNavigationHidden:YES];
     
 }
 
