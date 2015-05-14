@@ -32,6 +32,8 @@
     
     UIView *_addPicView;
     
+    MBProgressHUD *loading;
+    
 }
 @end
 
@@ -65,6 +67,7 @@
 //        [self.addImageButton setImage:self.publishImage forState:UIControlStateNormal];
 //    }
     
+    loading = [LTools MBProgressWithText:@"发布中..." addToView:self.view];
     
     [self creatCustomView];
     
@@ -145,6 +148,7 @@
                                        
                                        NSDictionary *mydic=[NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:0 error:&myerr];
                                        
+                                       [loading hide:YES];
                                        
                                        NSLog(@"mydic == %@ err0 = %@",mydic,myerr);
                                        
@@ -168,6 +172,11 @@
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        
                                        
+                                       [loading hide:YES];
+                                                                              
+                    
+                                       [LTools showMBProgressWithText:@"发布失败" addToView:self.view];
+
                                        
                                        NSLog(@"失败 : %@",error);
                                        
@@ -241,6 +250,8 @@
     if (imageIsValid) {
         
         self.my_right_button.userInteractionEnabled = NO;
+        
+        [loading show:YES];
         
         [self upLoadImage:self.addImageButton.imageView.image];
     }else

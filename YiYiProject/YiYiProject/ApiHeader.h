@@ -191,7 +191,7 @@ typedef enum {
     MessageType_replyTopicReply = 4,//回复主题的回复
     MessageType_replyTPlat = 5,//评论t台
     MessageType_replyTPlatReply = 6,//回复t台评论
-    MessageType_promotionBrand = 7,//平铺促销
+    MessageType_promotionBrand = 7,//店铺促销
     MessageType_promotionMarket = 8,//商场促销
     MessageType_applyShopSuccess = 9,//申请店铺成功
     MessageType_applyShopFail = 10,//申请店铺失败
@@ -212,7 +212,7 @@ typedef enum {
 #define RONCLOUD_GET_TOKEN @"http://www.alayy.com/index.php?d=api&c=chat&m=get_token&user_id=%@&name=%@&portrait_uri=%@"//获取融云 token
 
 //登录
-#define USER_LOGIN_ACTION @"http://www.alayy.com/index.php?d=api&c=user_api&m=login&type=%@&password=%@&thirdid=%@&nickname=%@&third_photo=%@&gender=%d&devicetoken=%@&mobile=%@"
+#define USER_LOGIN_ACTION @"http://www.alayy.com/index.php?d=api&c=user_api&m=login&type=%@&password=%@&thirdid=%@&nickname=%@&third_photo=%@&gender=%d&devicetoken=%@&mobile=%@&login_source=%@"
 
 //退出登录
 

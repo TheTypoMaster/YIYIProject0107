@@ -28,6 +28,8 @@
     
     self.myTitleLabel.text = @"关于我们";
     
+    [self.iconImageView addCornerRadius:30.f];
+    
     NSString *version = [[NSString alloc] initWithString:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
     
     self.versionLabel.text = [NSString stringWithFormat:@"V %@",version];

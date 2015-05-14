@@ -10,10 +10,14 @@
 #import "ProductDetailController.h"
 #import "RCIM.h"
 #import "GchatSettingViewController.h"
+#import "RCPreviewViewController.h"
+#import "MJPhotoBrowser.h"
+#import "MJPhoto.h"
+
+#import "PreviewImageController.h" //浏览单张大图
+#import "FBMapViewController.h"//地图显示位置
 
 @implementation YIYIChatViewController
-
-
 
 
 -(id)init{
@@ -33,6 +37,8 @@
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     
     self.navigationController.navigationBarHidden = NO;
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:MY_MACRO_NAME?IOS7DAOHANGLANBEIJING_PUSH:IOS6DAOHANGLANBEIJING] forBarMetrics: UIBarMetricsDefault];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -46,22 +52,16 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+
+    [self addBackButtonWithTarget:self action:@selector(leftBarButtonItemPressed:)];
     
-    UIBarButtonItem * spaceButton1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    spaceButton1.width = MY_MACRO_NAME?-13:5;
-    
-    
-    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(MY_MACRO_NAME? -5:5,8,40,44)];
-    [button_back addTarget:self action:@selector(leftBarButtonItemPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [button_back setImage:BACK_DEFAULT_IMAGE forState:UIControlStateNormal];
-    UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
     UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH - 100, 44)];
     [self.GTitleLabel setFrame:titleView.bounds];
     self.GTitleLabel.textAlignment = NSTextAlignmentCenter;
     [titleView addSubview:self.GTitleLabel];
     self.GTitleLabel.textColor = [UIColor blackColor];
-    UIBarButtonItem *title_item = [[UIBarButtonItem alloc]initWithCustomView:titleView];
-    self.navigationItem.leftBarButtonItems=@[spaceButton1,back_item,title_item];
+    self.navigationItem.titleView = titleView;
+    
     
     
     //自定义导航左右按钮
@@ -80,9 +80,6 @@
     
     //设置点击跳转
     [self setDetailMessageViewClickedBlock];
-    
-    
-    
 }
 
 
@@ -121,8 +118,6 @@
     
     [self sendRichContentMessage:message];
     
-    
-    
 }
 
 
@@ -150,7 +145,63 @@
     [self.navigationController pushViewController:detail animated:YES];
 }
 
+/**
+ *  点击聊天小图看大图
+ *
+ *  @param rcMessage 图片消息
+ */
+-(void)showPreviewPictureController:(RCMessage*)rcMessage{
+    
+    
+    RCMessageContent *content = rcMessage.content;
+    
+    if ([content isKindOfClass:[RCImageMessage class]]) {
+        
+        RCImageMessage *imageMessage = (RCImageMessage *)content;
+        
+//        [self tapImageUrl:imageMessage.imageUrl];
+        
+//        FBPhotoBrowserController *browser = [[FBPhotoBrowserController alloc]init];
+//        browser.showIndex = 0;
+//        browser.imagesArray = @[imageMessage.imageUrl];
+        
+        
+        PreviewImageController *browser = [[PreviewImageController alloc]init];
+        browser.imageUrl = imageMessage.imageUrl;
+        browser.thumImage = imageMessage.thumbnailImage;
+        
+        LNavigationController *ll = [[LNavigationController alloc]initWithRootViewController:browser];
+        
+        [self presentViewController:ll animated:YES completion:nil];
+    }
+}
 
+/**
+ *  进入地图位置
+ *
+ *  @param location
+ *  @param locationName 地点名
+ */
+- (void)openLocation:(CLLocationCoordinate2D)location locationName:(NSString *)locationName {
+    
+    FBMapViewController * mapViewController = [[FBMapViewController alloc] init];
+    mapViewController.address_title = locationName;
+    mapViewController.address_latitude = location.latitude;
+    mapViewController.address_longitude = location.longitude;
+    
+    [self.navigationController pushViewController:mapViewController animated:YES];
+}
 
+- (void)openLocationPicker:(id)sender
+{
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"black"] forBarMetrics: UIBarMetricsDefault];
+    
+//    self.navigationController.delegate = self;
+    
+    [super openLocationPicker:sender];
+ 
+    
+}
 
 @end

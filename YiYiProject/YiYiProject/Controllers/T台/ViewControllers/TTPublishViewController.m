@@ -21,6 +21,8 @@
     UIImageView *_showImageView;//显示可以添加锚点的图片imageview
     UIControl *_theImvTouched;//图片点击
     
+    MBProgressHUD *loading;
+    
 }
 
 @end
@@ -39,6 +41,8 @@
     [self.view addGestureRecognizer:tap];
     
     [self.addImageButton addTarget:self action:@selector(clickToAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    loading = [LTools MBProgressWithText:@"发布中..." addToView:self.view];
     
     if (self.publishImage) {
         
@@ -71,6 +75,9 @@
 //上传
 -(void)upLoadImage:(UIImage *)aImage{
     
+    
+    [loading show:YES];
+    
     NSString *content = self.contentTF.text;
     NSString *brand = [NSString stringWithFormat:@"%@,%@,%@",self.brandTF.text,self.modelTF.text,self.priceTF.text];
     
@@ -101,6 +108,7 @@
                                    success:^(AFHTTPRequestOperation *operation, id responseObject)
                                    {
                                        
+                                       [loading hide:YES];
                                        
                                        NSLog(@"success %@",operation.responseString);
                                        
@@ -130,7 +138,16 @@
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        
+                                       [loading hide:YES];
                                        
+                                       NSError * myerr;
+                                       
+                                       NSDictionary *mydic=[NSJSONSerialization JSONObjectWithData:(NSData *)operation.responseData options:0 error:&myerr];
+                                       
+                                       
+                                       NSLog(@"mydic == %@ err0 = %@",mydic,myerr);
+                                       
+                                       [LTools showMBProgressWithText:mydic[@"msg"] addToView:self.view];
                                        
                                        NSLog(@"失败 : %@",error);
                                        
