@@ -141,7 +141,6 @@
     //t台文字描述
     
     NSString *content = detail_model.tt_content;
-    DEVICE_WIDTH
 //    //不为空 且不是空格
 //    if (![LTools isEmpty:content]) {
 //        
