@@ -245,6 +245,12 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    
+    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == YES){
+        [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_APPENTERFOREGROUND object:nil];
+    }
+    
+    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -438,7 +444,6 @@
     int type = [aps[@"type"] intValue];
     //1 衣加衣通知消息 2 关注用户通知消息 3 回复主题消息 4 回复主题回复
     //5 回复T台通知消息 6 回复T台回复通知消息 7 品牌促销通知消息 8 商场促销通知
-    
     // 9 申请店铺成功  10 申请店铺失败
     //11 修改活动
     //12关注商家通知消息

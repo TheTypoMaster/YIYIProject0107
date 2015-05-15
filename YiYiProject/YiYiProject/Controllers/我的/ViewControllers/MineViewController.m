@@ -193,6 +193,10 @@ typedef enum{
     
     //接收审核结果
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GgetUserInfo) name:NOTIFICATION_SHENQINGDIANPU_STATE object:nil];
+    
+    //从后台转到前台更新用户数据
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GgetUserInfo) name:NOTIFICATION_APPENTERFOREGROUND object:nil];
+    
 }
 
 

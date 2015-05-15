@@ -484,10 +484,10 @@
 		E3BFB14F1B00B10C007DA1C1 /* gdpnav@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3BFB14E1B00B10C007DA1C1 /* gdpnav@2x.png */; };
 		E3BFB1511B00BC66007DA1C1 /* gzanwupeitu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3BFB1501B00BC66007DA1C1 /* gzanwupeitu@2x.png */; };
 		E3BFB1541B00C4C8007DA1C1 /* GfangkeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BFB1531B00C4C8007DA1C1 /* GfangkeViewController.m */; };
+		E3C22EF01B047B2B00581F6B /* libbaidumapapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E3C22EEF1B047B2B00581F6B /* libbaidumapapi.a */; };
 		E3C49A911AFA0187003D30B4 /* gqiandao_zhu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3C49A901AFA0187003D30B4 /* gqiandao_zhu@2x.png */; };
 		E3C49A941AFA0A3B003D30B4 /* gqiandao_up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3C49A921AFA0A3B003D30B4 /* gqiandao_up@2x.png */; };
 		E3C49A951AFA0A3B003D30B4 /* gqiandao_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3C49A931AFA0A3B003D30B4 /* gqiandao_down@2x.png */; };
-		E3C49A991AFB229E003D30B4 /* libbaidumapapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E3C49A981AFB229E003D30B4 /* libbaidumapapi.a */; };
 		E3C923E71AE0F7F9005C2BE1 /* gttailink_have@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3C923E61AE0F7F9005C2BE1 /* gttailink_have@2x.png */; };
 		E3C923EA1AE108F2005C2BE1 /* GShopPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C923E91AE108F2005C2BE1 /* GShopPhoneViewController.m */; };
 		E3C923EC1AE12276005C2BE1 /* saoyisao@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3C923EB1AE12276005C2BE1 /* saoyisao@2x.png */; };
@@ -1328,10 +1328,10 @@
 		E3BFB1501B00BC66007DA1C1 /* gzanwupeitu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gzanwupeitu@2x.png"; sourceTree = "<group>"; };
 		E3BFB1521B00C4C8007DA1C1 /* GfangkeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GfangkeViewController.h; sourceTree = "<group>"; };
 		E3BFB1531B00C4C8007DA1C1 /* GfangkeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GfangkeViewController.m; sourceTree = "<group>"; };
+		E3C22EEF1B047B2B00581F6B /* libbaidumapapi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbaidumapapi.a; sourceTree = "<group>"; };
 		E3C49A901AFA0187003D30B4 /* gqiandao_zhu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gqiandao_zhu@2x.png"; sourceTree = "<group>"; };
 		E3C49A921AFA0A3B003D30B4 /* gqiandao_up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gqiandao_up@2x.png"; sourceTree = "<group>"; };
 		E3C49A931AFA0A3B003D30B4 /* gqiandao_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gqiandao_down@2x.png"; sourceTree = "<group>"; };
-		E3C49A981AFB229E003D30B4 /* libbaidumapapi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbaidumapapi.a; sourceTree = "<group>"; };
 		E3C923E61AE0F7F9005C2BE1 /* gttailink_have@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gttailink_have@2x.png"; sourceTree = "<group>"; };
 		E3C923E81AE108F2005C2BE1 /* GShopPhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GShopPhoneViewController.h; sourceTree = "<group>"; };
 		E3C923E91AE108F2005C2BE1 /* GShopPhoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GShopPhoneViewController.m; sourceTree = "<group>"; };
@@ -1420,13 +1420,13 @@
 				137FC2B01A4DAE550039E3FF /* libc++.dylib in Frameworks */,
 				137FC2AE1A4DAE4A0039E3FF /* Foundation.framework in Frameworks */,
 				13ABB0711B01ADCD002DC700 /* libUMSocial_Sdk_4.2.1.a in Frameworks */,
+				E3C22EF01B047B2B00581F6B /* libbaidumapapi.a in Frameworks */,
 				137FC2AC1A4DAE410039E3FF /* CoreVideo.framework in Frameworks */,
 				138C2C101A39E3FF00EA59F5 /* CoreTelephony.framework in Frameworks */,
 				137FC2AA1A4DAE320039E3FF /* CoreMedia.framework in Frameworks */,
 				E3E3E8481A3C6772001A1DD6 /* CoreLocation.framework in Frameworks */,
 				137FC2A81A4DAE1F0039E3FF /* CoreImage.framework in Frameworks */,
 				138C2C0C1A39E24600EA59F5 /* CoreGraphics.framework in Frameworks */,
-				E3C49A991AFB229E003D30B4 /* libbaidumapapi.a in Frameworks */,
 				137FC2A61A4DAE0F0039E3FF /* CoreAudio.framework in Frameworks */,
 				137FC2A41A4DAE070039E3FF /* CFNetwork.framework in Frameworks */,
 				137FC2A21A4DADFE0039E3FF /* AVFoundation.framework in Frameworks */,
@@ -2862,7 +2862,7 @@
 		E37C32C81AA23F6900B646EC /* BaiduMap_IOSSDK_v2.6.0_Lib */ = {
 			isa = PBXGroup;
 			children = (
-				E3C49A981AFB229E003D30B4 /* libbaidumapapi.a */,
+				E3C22EEF1B047B2B00581F6B /* libbaidumapapi.a */,
 				E37C32C91AA23F6900B646EC /* inc */,
 				E37C33081AA23F6900B646EC /* mapapi.bundle */,
 			);
@@ -4071,7 +4071,7 @@
 					"$(PROJECT_DIR)/YiYiProject/PersonalApi/GMAPI/Gutils/BaiduMap_IOSSDK_v2.6.0_Lib",
 					"$(PROJECT_DIR)/YiYiProject/UMengShare/UMSocial_Sdk_4.2.2",
 				);
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "b2892af7-44ba-408f-8b3a-8be1441e5936";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";

@@ -88,6 +88,8 @@ alpha:(a)]
 
 #define NOTIFICATION_SHENQINGDIANPU_STATE @"GSHENQINGDIANPU_STATE"//申请店铺成功状态 成功或者失败
 
+#define NOTIFICATION_APPENTERFOREGROUND @"notification_appEnterForeground" //应用从后台转向前台
+
 //关注商场
 #define NOTIFICATION_GUANZHU_STORE @"guanzhu_store"
 //取消关注商场
@@ -507,7 +509,7 @@ typedef enum {
 
 
 //搜索接口 品牌 商铺 单品
-#define GSEARCH @"http://www.alayy.com/index.php?d=api&&c=search"
+#define GSEARCH @"http://www.alayy.com/index.php?d=api&c=search"
 
 //签到
 #define GQIANDAO @"http://www.alayy.com/index.php?d=api&c=user_api&m=sign"
