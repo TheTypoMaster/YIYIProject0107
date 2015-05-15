@@ -9,5 +9,6 @@
 
 @interface AboutTailCircleViewController : MyViewController
 @property (strong, nonatomic) IBOutlet UILabel *versionLabel; //版本号
+@property (strong, nonatomic) IBOutlet UIImageView *iconImageView;
 
 @end

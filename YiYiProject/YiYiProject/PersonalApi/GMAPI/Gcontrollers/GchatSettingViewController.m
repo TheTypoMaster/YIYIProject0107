@@ -9,6 +9,20 @@
 #import "GchatSettingViewController.h"
 
 @implementation GchatSettingViewController
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+}
+
+//- (void)viewWillDisappear:(BOOL)animated
+//{
+//    [super viewWillDisappear:animated];
+//    
+//    [self.navigationController setNavigationBarHidden:NO animated:animated];
+//}
+
 -(void)viewDidLoad
 {
     [super viewDidLoad];
@@ -16,10 +30,16 @@
     [self setNavigationTitle:@"设置" textColor:RGBCOLOR(255, 78, 139)];
     
     //自定义导航左右按钮
-    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(leftBarButtonItemPressed:)];
-    [leftButton setTintColor:RGBCOLOR(255, 78, 139)];
-    self.navigationItem.leftBarButtonItem = leftButton;
     
+    UIBarButtonItem * spaceButton1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    spaceButton1.width = MY_MACRO_NAME?-10:5;
+    
+    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(0,8,40,44)];
+    [button_back addTarget:self action:@selector(leftBarButtonItemPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [button_back setImage:BACK_DEFAULT_IMAGE forState:UIControlStateNormal];
+    [button_back setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
+    self.navigationItem.leftBarButtonItems=@[spaceButton1,back_item];
     
     
     UIView *upview = [[UIView alloc]initWithFrame:CGRectMake(76*GscreenRatio_320, 15, 100, 75)];

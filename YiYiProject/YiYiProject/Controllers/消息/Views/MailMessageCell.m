@@ -42,9 +42,10 @@
     NSString *title;
     NSString *image_url;
     NSString *content;
-    NSString *time;
-    
+    NSString *starttime;
     NSString *endtime;
+    
+    NSString *sendTime;//发送时间
     
     CGFloat image_height = 0.f;
     CGFloat image_width = 0.f;
@@ -61,10 +62,11 @@
         content = model.content;
         name = model.from_username;
         photo = model.photo;
-        time = model.start_time;
+        starttime = model.start_time;
         endtime = model.end_time;
         image_height = [model.pic_height floatValue];
         image_width = [model.pic_width floatValue];
+        sendTime = model.send_time;
         
         NSLog(@"--> %f %f",image_height,image_width);
     }
@@ -76,11 +78,10 @@
         title = model.activity_title;
         image_url = model.pic;
         content = model.activity_info;
-        time = model.start_time;
+        starttime = model.start_time;
         endtime = model.end_time;
         image_height = [model.pic_height floatValue];
         image_width = [model.pic_width floatValue];
-        
     }
     
     if (aType == icon_Yes) {
@@ -124,17 +125,13 @@
     if (timeType == Time_AddTime) {
         
         //时间
-        self.timeLabel.text = [NSString stringWithFormat:@"发布时间:%@",[LTools timeString:time withFormat:@"YYYY年MM月dd日 hh:mm"]];//开始时间
+        self.timeLabel.text = [NSString stringWithFormat:@"发布时间:%@",[LTools timeString:sendTime withFormat:@"YYYY年MM月dd日 hh:mm"]];//开始时间
         
     }else if(timeType == Time_StartAndEnd)
     {
         //时间
-        self.timeLabel.text = [NSString stringWithFormat:@"有效期:%@ ~ %@",[LTools timeString:time withFormat:@"YYYY年MM月dd日 hh:mm"],[LTools timeString:endtime withFormat:@"YYYY年MM月dd日 hh:mm"]];//起止时间
+        self.timeLabel.text = [NSString stringWithFormat:@"有效期:%@ ~ %@",[LTools timeString:starttime withFormat:@"YYYY年MM月dd日 hh:mm"],[LTools timeString:endtime withFormat:@"YYYY年MM月dd日 hh:mm"]];//起止时间
     }
-    
-    
-    //    self.endTimeLabel.text = [NSString stringWithFormat:@"结束时间：%@",[LTools timechangeMMDD:endtime]];//结束时间
-    
     
     //图片
     self.centerImageView.top = _timeLabel.bottom + 12;

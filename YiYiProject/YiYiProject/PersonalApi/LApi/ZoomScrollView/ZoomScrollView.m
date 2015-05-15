@@ -48,6 +48,11 @@
     return self;
 }
 
+- (void)setGestureBlock:(GestureBlock)aBlock
+{
+    _gestureBlock = aBlock;
+}
+
 - (void)setFrame:(CGRect)theFrame
 {
 	// store position of the image view if we're scaled or panned so we can stay at that point
@@ -150,6 +155,10 @@
 
 - (void)handleTap
 {
+    if (_gestureBlock) {
+        
+        _gestureBlock(Gesture_Tap);
+    }
     
 //    if (_aDelegate && [_aDelegate respondsToSelector:@selector(singleClicked)]) {
 //        [_aDelegate singleClicked];

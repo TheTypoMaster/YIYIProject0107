@@ -137,6 +137,20 @@
     commentButton = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(likeNumButton.left - likeWidth - 20, 0, likeWidth, bottomView.height) normalTitle:commentNum image:nil backgroudImage:nil superView:nil target:self action:@selector(clickToCommentPage:)];
     [commentButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
     [bottomView addSubview:commentButton];
+    
+    //t台文字描述
+    
+    NSString *content = detail_model.tt_content;
+    DEVICE_WIDTH
+//    //不为空 且不是空格
+//    if (![LTools isEmpty:content]) {
+//        
+//        UIView *contentView = [[UIView alloc]initWithFrame:CGRectMake(0, - 60, DEVICE_WIDTH, 60)];
+//        contentView.backgroundColor = [UIColor orangeColor];
+//        [bottomView addSubview:contentView];
+//        
+//        UILabel *contentLabel = [UILabel alloc]initWithFrame:CGRectMake(<#CGFloat x#>, <#CGFloat y#>, <#CGFloat width#>, <#CGFloat height#>)
+//    }
 }
 
 #pragma - mark 事件处理
