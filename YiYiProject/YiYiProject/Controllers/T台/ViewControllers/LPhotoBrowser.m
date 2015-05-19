@@ -193,6 +193,9 @@
         
     zanlist.t_model = self.t_model;
     
+    
+//    [self.t_model addObserver:self forKeyPath:@"is_like" options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+    
     __weak typeof(self)weakSelf = self;
     
     zanlist.updateParamsBlock = ^(NSDictionary *params){

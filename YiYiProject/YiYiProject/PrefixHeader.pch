@@ -22,6 +22,7 @@
 #import "UIImageView+Extensions.h"
 #import "UIView+Additions.h"
 #import "UIViewController+Addtions.h"
+#import "NSDate+Additons.h"
 
 #import "UIView+Frame.h"
 #import "UIColor+ConvertColor.h"

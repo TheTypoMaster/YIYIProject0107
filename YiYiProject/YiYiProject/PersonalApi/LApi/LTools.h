@@ -88,6 +88,22 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
 + (NSString *)rongCloudUserIconWithUid:(NSString *)userId;
 
 /**
+ *  融云 记录更新数据时间
+ *
+ *  @param userId 用户id
+ */
++ (void)cacheRongCloudTimeForUserId:(NSString *)userId;
+
+/**
+ *  是否需要更新userId对应的信息
+ *
+ *  @param userId
+ *
+ *  @return 是否
+ */
++ (BOOL)rongCloudNeedRefreshUserId:(NSString *)userId;
+
+/**
  *  NSUserDefault 缓存
  */
 //存
@@ -168,6 +184,8 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
 +(NSString *)timechangeAll:(NSString *)placetime;//时间戳 显示全
 
 +(NSString*)showTimeWithTimestamp:(NSString*)myTime;//不满一天显示时、分 大于一天显示时间间隔
+
++(NSDate *)timeFromString:(NSString *)timeString;//时间戳转NSDate
 
 +(NSString *)timechangeToDateline;//转换为时间戳
 

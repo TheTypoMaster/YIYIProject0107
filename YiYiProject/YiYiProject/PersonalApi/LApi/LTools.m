@@ -362,10 +362,17 @@
             if (erroCode != 0) { //0代表无错误,  && erroCode != 1 1代表无结果
                 
                 
-                NSDictionary *failDic = @{RESULT_INFO:erroInfo,RESULT_CODE:[NSString stringWithFormat:@"%d",erroCode]};
-                failBlock(failDic,0);
+                //大于2000的可以正常提示错误,小于2000的为内部错误 参数错误等
+                if (erroCode > 2000) {
+                    
+                    NSDictionary *failDic = @{RESULT_INFO:erroInfo,RESULT_CODE:[NSString stringWithFormat:@"%d",erroCode]};
+                    failBlock(failDic,0);
+                    
+                }else
+                {
+                    NSLog(@"erroInfo:%@",erroInfo);
+                }
                 
-                return ;
             }else
             {
                 successBlock(dic,0);//传递的已经是没有错误的结果
@@ -425,7 +432,6 @@
     NSString *key = [NSString stringWithFormat:@"userName_%@",userId];
     [LTools cache:userName ForKey:key];
 }
-
 + (NSString *)rongCloudUserNameWithUid:(NSString *)userId
 {
     NSString *key = [NSString stringWithFormat:@"userName_%@",userId];
@@ -444,6 +450,44 @@
     return [LTools cacheForKey:key];
 }
 
+/**
+ *  融云 记录更新数据时间
+ *
+ *  @param userId 用户id
+ */
++ (void)cacheRongCloudTimeForUserId:(NSString *)userId
+{
+    NSString *key = [NSString stringWithFormat:@"updateTime_%@",userId];
+    
+    NSString *nowTime = [LTools timechangeToDateline];
+    
+    [LTools cache:nowTime ForKey:key];
+}
+
+/**
+ *  是否需要更新userId对应的信息
+ *
+ *  @param userId
+ *
+ *  @return 是否
+ */
++ (BOOL)rongCloudNeedRefreshUserId:(NSString *)userId
+{
+    NSString *key = [NSString stringWithFormat:@"updateTime_%@",userId];
+
+    NSDate *oldDate = [LTools timeFromString:[LTools cacheForKey:key]];
+    
+    NSInteger between = [oldDate hoursBetweenDate:oldDate];
+    
+    if (between >= 1) { //大于一个小时需要更新
+        
+        NSLog(@"需要更新融云用户信息 %@ bew:%ld",oldDate,between);
+        
+        return YES;
+    }
+    
+    return NO;
+}
 
 //存
 + (void)cache:(id)dataInfo ForKey:(NSString *)key
@@ -868,6 +912,17 @@
 +(NSString *)timechangeToDateline
 {
     return [NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]];
+}
+
+//时间戳 转 NSDate
++(NSDate *)timeFromString:(NSString *)timeString
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init] ;
+    [formatter setDateStyle:NSDateFormatterMediumStyle];
+    [formatter setTimeStyle:NSDateFormatterShortStyle];
+    [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+    NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[timeString doubleValue]];
+    return confromTimesp;
 }
 
 //时间线转化

@@ -11,7 +11,7 @@
 /**
  *  用户信息 model
  */
-@interface UserInfo : BaseModel
+@interface UserInfo : BaseModel<NSCoding>
 
 @property(nonatomic,retain)NSString *id;
 @property(nonatomic,retain)NSString *uid;

@@ -100,6 +100,13 @@ typedef enum{
     [super viewWillAppear:animated];
     
     [self.navigationController setNavigationBarHidden:YES animated:animated];
+    
+    NSData *data = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
+    
+    UserInfo *userInfo = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    
+    
+    
 
 }
 
