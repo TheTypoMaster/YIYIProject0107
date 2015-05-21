@@ -88,6 +88,22 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
 + (NSString *)rongCloudUserIconWithUid:(NSString *)userId;
 
 /**
+ *  融云 记录更新数据时间
+ *
+ *  @param userId 用户id
+ */
++ (void)cacheRongCloudTimeForUserId:(NSString *)userId;
+
+/**
+ *  是否需要更新userId对应的信息
+ *
+ *  @param userId
+ *
+ *  @return 是否
+ */
++ (BOOL)rongCloudNeedRefreshUserId:(NSString *)userId;
+
+/**
  *  NSUserDefault 缓存
  */
 //存
@@ -169,6 +185,8 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
 
 +(NSString*)showTimeWithTimestamp:(NSString*)myTime;//不满一天显示时、分 大于一天显示时间间隔
 
++(NSDate *)timeFromString:(NSString *)timeString;//时间戳转NSDate
+
 +(NSString *)timechangeToDateline;//转换为时间戳
 
 +(NSString*)timestamp:(NSString*)myTime;//模糊时间,如几天前
@@ -192,6 +210,23 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
 + (NSString *)NSStringAddComma:(NSString *)string; //添加逗号
 
 + (NSAttributedString *)attributedString:(NSString *)string lineSpaceing:(CGFloat)lineSpage;//行间距string
+
+/**
+ *  行间距string 字体大小
+ */
+
++ (NSAttributedString *)attributedString:(NSString *)string
+                            lineSpaceing:(CGFloat)lineSpage
+                                fontSize:(CGFloat)fontSize;
+
+/**
+ *  行间距string 字体大小 字体颜色
+ */
+
++ (NSAttributedString *)attributedString:(NSString *)string
+                            lineSpaceing:(CGFloat)lineSpage
+                                fontSize:(CGFloat)fontSize
+                               textColor:(UIColor *)textColor;
 
 + (NSAttributedString *)attributedString:(NSString *)content keyword:(NSString *)aKeyword color:(UIColor *)textColor;//关键词高亮
 

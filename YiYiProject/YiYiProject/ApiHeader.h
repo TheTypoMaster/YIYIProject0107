@@ -83,6 +83,7 @@ alpha:(a)]
 #define NOTIFICATION_LOGOUT @"logout_success" //退出登录通知
 
 #define NOTIFICATION_TTAI_PUBLISE_SUCCESS @"TTAI_PUBLISE_SUCCESS"//t台发布成功
+#define NOTIFICATION_TTAI_EDIT_SUCCESS @"TTAI_EDIT_SUCCESS"//T台编辑成功
 
 #define NOTIFICATION_SHENQINGDIANPU_SUCCESS @"GSHENQINGDIANPU_SUCCESS"//申请店铺成功
 
@@ -571,7 +572,12 @@ typedef enum {
 //店铺访客
 #define FANGKE_MYSHOP @"http://www.alayy.com/index.php?d=api&c=mall&m=get_track_to_shop&shop_id=2711"
 
+//删除T台
+#define DELETE_TTAI @"http://www.alayy.com/index.php?d=api&c=tplat&m=del_tt"
 
+
+//编辑T台
+#define EDIT_TTAI @"http://www.alayy.com/index.php?d=api&c=tplat&m=edit_tt"
 
 #endif
 

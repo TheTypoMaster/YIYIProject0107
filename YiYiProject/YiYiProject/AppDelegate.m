@@ -685,7 +685,8 @@
     
     NSLog(@"----->|%@|",userName);
     
-//    if (userName.length == 0) {
+    //没有保存用户名 或者 更新时间超过一个小时
+    if ([LTools isEmpty:userName] || [LTools rongCloudNeedRefreshUserId:userId]) {
     
         NSString *url = [NSString stringWithFormat:GET_PERSONINFO_WITHID,userId];
         LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
@@ -702,12 +703,15 @@
             
             NSString *icon = result[@"photo"];
             
-            if (name.length > 0) {
+            //不为空
+            if (![LTools isEmpty:name]) {
                 
                 [LTools cacheRongCloudUserName:name forUserId:userId];
             }
             
             [LTools cacheRongCloudUserIcon:icon forUserId:userId];
+            
+            
             
             RCUserInfo *userInfo = [[RCUserInfo alloc]initWithUserId:userId name:name portrait:icon];
             
@@ -716,7 +720,7 @@
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
             
         }];
-//    }
+    }
     
     NSLog(@"userId %@ %@",userId,userName);
     

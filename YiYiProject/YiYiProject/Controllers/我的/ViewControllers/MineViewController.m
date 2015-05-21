@@ -100,6 +100,13 @@ typedef enum{
     [super viewWillAppear:animated];
     
     [self.navigationController setNavigationBarHidden:YES animated:animated];
+    
+    NSData *data = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
+    
+    UserInfo *userInfo = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    
+    
+    
 
 }
 
@@ -942,6 +949,7 @@ typedef enum{
 
 -(void)saoyisaoClicked{
     NSLog(@"扫一扫");
+    
     GScanViewController *ccc = [[GScanViewController alloc]init];
     ccc.delegate = self;
     [self presentViewController:ccc animated:YES completion:^{

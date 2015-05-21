@@ -10,6 +10,7 @@
 //添加T台商品链接
 
 #import <UIKit/UIKit.h>
+#import "TPlatModel.h"
 @class GTTPublishViewController;
 
 @interface GAddTtaiImageLinkViewController : MyViewController
@@ -22,6 +23,11 @@
 //上传相关
 @property(nonatomic,strong)NSDictionary *maodianDic;//锚点信息dic
 @property(nonatomic,assign)GTTPublishViewController *delegate;
+
+
+//编辑T台相关
+@property(nonatomic,strong)TPlatModel *theTtaiModel;//判断是否为编辑T台
+@property(nonatomic,assign)BOOL isFirst;//是编辑T台进来先把锚点加上
 
 
 

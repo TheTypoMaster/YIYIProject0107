@@ -11,6 +11,8 @@
 #import "GmoveImv.h"
 
 #import "GTTPublishViewController.h"
+#import "NSDictionary+GJson.h"
+#import "GmaodianModel.h"
 
 @interface GAddTtaiImageLinkViewController ()
 {
@@ -26,17 +28,83 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    
+    
+    if (self.theTtaiModel && !self.isFirst && !self.delegate.GimvArray) {//编辑T台 把model数据放到锚点数组里
+        NSArray *maodianArray = [self.theTtaiModel.image arrayValueForKey:@"img_detail"];
+        NSInteger count = maodianArray.count;
+        NSMutableArray *arr = [NSMutableArray arrayWithCapacity:1];
+        
+        for (int i = 0;i<count;i++) {
+            GmoveImv *imv = [[GmoveImv alloc]initWithFrame:CGRectMake(0, 0, 60, 60)];
+            NSDictionary *dic = maodianArray[i];
+            NSString *product_name = [dic stringValueForKey:@"product_name"];
+            
+            if (product_name.length > 0 && ![product_name isEqualToString:@" "]) {
+                imv.type = @"单品";
+                imv.shop_id = [dic stringValueForKey:@"shop_id"];
+                imv.product_id = [dic stringValueForKey:@"product_id"];
+                imv.product_name = product_name;
+                imv.product_price = [dic stringValueForKey:@"product_price"];
+                imv.shop_name = [dic stringValueForKey:@"shop_name"];
+            }else{
+                imv.type = @"店铺";
+                imv.shop_name = [dic stringValueForKey:@"shop_name"];
+                imv.shop_id = [dic stringValueForKey:@"shop_id"];
+                imv.product_price = [dic stringValueForKey:@"address"];
+            }
+            
+            CGFloat img_x = [[dic stringValueForKey:@"img_x"] floatValue];
+            CGFloat img_y = [[dic stringValueForKey:@"img_y"] floatValue];
+            
+            
+            
+            CGFloat width = [[self.theTtaiModel.image stringValueForKey:@"width"]floatValue];
+            CGFloat height = [[self.theTtaiModel.image stringValueForKey:@"height"]floatValue];
+            
+            
+            NSArray *arr_bili = [self bilisuofangWithHeight:height withWidth:width];
+            NSString *newheight = arr_bili[0];
+            NSString *newwidth = arr_bili[1];
+            width = [newwidth floatValue];
+            height = [newheight floatValue];
+            imv.center = CGPointMake(width *img_x, height * img_y);
+            imv.location_x = imv.center.x;
+            imv.location_y = imv.center.y;
+            
+            [arr addObject:imv];
+            
+            
+        }
+        
+        self.maodianArray = arr;
+        self.isFirst = YES;
+        
+    }
+    
+    
+    //选择完成锚点之后返回上一个界面再进入
+    if (self.delegate.GimvArray) {
+        self.maodianArray = self.delegate.GimvArray;
+    }
+    
+    
+    
+    
+    
+    //把锚点里的Gimv展示到showImv上
     for (GmoveImv *imv in self.maodianArray) {
         NSLog(@"imv.shopid = %@ imv.pid = %@",imv.shop_id,imv.product_id);
         NSLog(@"imv.shopName = %@  imv.pname = %@",imv.shop_name,imv.product_name);
         
-        if (imv.shop_id == nil) {
+        if (imv.shop_id == nil && !self.theTtaiModel) {
             continue;
         }
         
         for (UIView *view in imv.subviews) {
             [view removeFromSuperview];
         }
+        
         
         
         if ([imv.type isEqualToString:@"单品"]) {
@@ -67,13 +135,6 @@
             adressLabel.textColor = [UIColor whiteColor];
             [imv addSubview:adressLabel];
             
-            //删除按钮
-            UIButton *deletBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-            [deletBtn setFrame:CGRectMake(1, 1, 17, 17)];
-            [deletBtn setImage:[UIImage imageNamed:@"g_linkdelete.png"] forState:UIControlStateNormal];
-            [imv addSubview:deletBtn];
-            [deletBtn addTarget:self action:@selector(removeSelf:) forControlEvents:UIControlEventTouchUpInside];
-            deletBtn.tag = -imv.tag;
             
             CGPoint center = imv.center;
             CGRect r = imv.frame;
@@ -103,14 +164,6 @@
             adressLabel.textColor = [UIColor whiteColor];
             [imv addSubview:adressLabel];
             
-            //删除按钮
-            UIButton *deletBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-            [deletBtn setFrame:CGRectMake(1, 1, 17, 17)];
-            [deletBtn setImage:[UIImage imageNamed:@"g_linkdelete.png"] forState:UIControlStateNormal];
-            [imv addSubview:deletBtn];
-            [deletBtn addTarget:self action:@selector(removeSelf:) forControlEvents:UIControlEventTouchUpInside];
-            deletBtn.tag = -imv.tag;
-            
             CGPoint center = imv.center;
             CGRect r = imv.frame;
             r.size.height = 70;
@@ -121,12 +174,58 @@
         
         
         
+        imv.tag = (_flagTag_gimv+=1);
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(addProductLink:)];
+        [imv addGestureRecognizer:tap];
         
+        UIButton *deletBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [deletBtn setFrame:CGRectMake(1, 1, 17, 17)];
+        [deletBtn setImage:[UIImage imageNamed:@"g_linkdelete.png"] forState:UIControlStateNormal];
+        [imv addSubview:deletBtn];
+        [deletBtn addTarget:self action:@selector(removeSelf:) forControlEvents:UIControlEventTouchUpInside];
+        deletBtn.tag = -imv.tag;
+        
+        [_showImv addSubview:imv];
         
     }
     
     
 }
+
+
+//等比例缩放到一个屏幕内
+-(NSArray*)bilisuofangWithHeight:(CGFloat)height withWidth:(CGFloat)width{
+    //原图相关
+    CGFloat image_width = 0.0f;//宽
+    CGFloat image_height = 0.0f;//高
+    CGFloat bili_wmw = 0.0f;//宽除以最大宽
+    CGFloat bili_hmh = 0.0f;//高除以最大高
+    CGFloat width_showImv_max = DEVICE_WIDTH;//最大宽
+    CGFloat height_showImv_max =  DEVICE_HEIGHT-64-45;//最大高
+    CGFloat new_width = 0.0f;//按比例缩放后的新宽
+    CGFloat new_height = 0.0f;//按比例缩放后的新高
+    
+    //赋值与计算
+    image_width = width;
+    image_height = height;
+    bili_wmw = image_width/width_showImv_max;
+    bili_hmh = image_height/height_showImv_max;
+    
+    if (bili_wmw>bili_hmh) {//宽图
+        new_width = image_width/bili_wmw;
+        new_height = image_height/bili_wmw;
+    }else{//长图或正方形图
+        new_width = image_width/bili_hmh;
+        new_height = image_height/bili_hmh;
+    }
+    
+    NSString *newWidth = [NSString stringWithFormat:@"%f",new_width];
+    NSString *newHeight = [NSString stringWithFormat:@"%f",new_height];
+    NSArray *arr = @[newHeight,newWidth];
+    
+    return arr;
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -252,6 +351,7 @@
     
     
     self.delegate.maodianDic = self.maodianDic;
+    self.delegate.GimvArray = self.maodianArray;
     
     [self dismissViewControllerAnimated:YES completion:^{
         
@@ -278,7 +378,7 @@
     [gimv addGestureRecognizer:tap];
     
     UIButton *deletBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [deletBtn setFrame:CGRectMake(1, 1, 27, 27)];
+    [deletBtn setFrame:CGRectMake(1, 1, 17, 17)];
     [deletBtn setImage:[UIImage imageNamed:@"g_linkdelete.png"] forState:UIControlStateNormal];
     [gimv addSubview:deletBtn];
     [deletBtn addTarget:self action:@selector(removeSelf:) forControlEvents:UIControlEventTouchUpInside];
@@ -308,6 +408,7 @@
 
 
 -(void)removeSelf:(UIButton *)sender{
+    
     GmoveImv *imv = (GmoveImv*)[self.view viewWithTag:(-sender.tag)];
     [self.maodianArray removeObject:imv];
     [imv removeFromSuperview];

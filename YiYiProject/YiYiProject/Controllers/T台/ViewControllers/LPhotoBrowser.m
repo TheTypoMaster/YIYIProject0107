@@ -84,13 +84,75 @@
 {
     //底部
     
+    CGFloat textHeight = 50 + 50;
+    CGFloat aDis = 10.f;//文字和底部间距
+    
     bottom = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT - 49, DEVICE_WIDTH, 49)];
     [self.view addSubview:bottom];
     bottom.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.9];
     
-    bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT - 49, DEVICE_WIDTH, 49)];
+    bottomView = [[UIView alloc]init];
     [self.view addSubview:bottomView];
-    bottomView.backgroundColor = [UIColor clearColor];
+    bottomView.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.5];
+    
+//    bottomView.backgroundColor = [UIColor clearColor];
+
+    
+    //t台描述
+    
+    //t台文字描述
+    
+    NSString *content = detail_model.tt_content;
+    
+//    content = @"敦煌天空的沙粒带着我们的记忆，我从半路看回去这秦关漫漫好。蜿踞梦想穿过了西域包含了多少的禅意爱情像一本游记我会找寻它的？天空的沙粒带着我们的记忆天空的沙粒带着我们的记忆天空的沙粒带着我们的记忆天空的沙粒带着我们的记忆。";
+    
+    //如果文字为空,不需要创建textView
+    
+    if ([LTools isEmpty:content]) {
+        
+        textHeight = 0.f;
+        aDis = 0.f;
+
+    }else
+    {
+        
+        
+        NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
+        [paragraphStyle1 setLineSpacing:7];
+        
+        CGSize textSize = [content boundingRectWithSize:CGSizeMake(DEVICE_WIDTH - 20, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14],NSParagraphStyleAttributeName:paragraphStyle1} context:nil].size;
+        
+        
+        if (textSize.height < textHeight) {
+            
+            textHeight = textSize.height;
+            
+            UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, DEVICE_WIDTH-20, textSize.height)];
+            [label setAttributedText:[LTools attributedString:content lineSpaceing:7 fontSize:14.f textColor:[UIColor whiteColor]]];
+            label.lineBreakMode = NSLineBreakByCharWrapping;
+            label.numberOfLines = 0.f;
+            [bottomView addSubview:label];
+            
+            aDis += 10;
+            
+        }else
+        {
+            textHeight = textHeight;
+            
+            UITextView *textView = [[UITextView alloc]init];
+            textView.backgroundColor = [UIColor clearColor];
+            textView.textColor = [UIColor whiteColor];
+            [textView setAttributedText:[LTools attributedString:content lineSpaceing:7 fontSize:14.f textColor:[UIColor whiteColor]]];
+            textView.editable = NO;
+            [bottomView addSubview:textView];
+            
+            textView.frame = CGRectMake(10, 0, DEVICE_WIDTH - 20, textHeight);
+
+        }
+        
+    }
+    
+    bottomView.frame = CGRectMake(0, DEVICE_HEIGHT - bottom.height - textHeight - aDis, DEVICE_WIDTH, bottom.height + textHeight + aDis);
     
     NSString *iconUrl = @"";
     NSString *userName = @"";
@@ -104,7 +166,7 @@
 
     
     //头像
-    UIImageView *iconImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 7, 35, 35)];
+    UIImageView *iconImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 7 + textHeight + aDis, 35, 35)];
     iconImageView.layer.cornerRadius = 35/2.f;
     iconImageView.clipsToBounds = YES;
 //    iconImageView.backgroundColor = [UIColor redColor];
@@ -114,7 +176,7 @@
     [iconImageView addTaget:self action:@selector(clickToPersonal:) tag:(100 + [userId intValue])];
     
     //红心
-    zan_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(DEVICE_WIDTH - 10 - 50, 0, 50, 50) normalTitle:nil image:[UIImage imageNamed:@"xq_love_up"] backgroudImage:nil superView:nil target:self action:@selector(clickToZan:)];
+    zan_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(DEVICE_WIDTH - 10 - 50, textHeight + aDis, 50, 50) normalTitle:nil image:[UIImage imageNamed:@"xq_love_up"] backgroudImage:nil superView:nil target:self action:@selector(clickToZan:)];
     [bottomView addSubview:zan_btn];
     [zan_btn setImage:[UIImage imageNamed:@"xq_love_down"] forState:UIControlStateSelected];
     
@@ -125,7 +187,7 @@
     NSString *likeNum = [NSString stringWithFormat:@"%d人喜欢",[detail_model.tt_like_num intValue]];
     CGFloat likeWidth = [LTools widthForText:likeNum font:14];
     
-    likeNumButton = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(zan_btn.left - likeWidth - 20, 0, likeWidth, bottomView.height) normalTitle:likeNum image:nil backgroudImage:nil superView:nil target:self action:@selector(clickToZanList:)];
+    likeNumButton = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(zan_btn.left - likeWidth - 20, textHeight + aDis, likeWidth, bottomView.height - textHeight - aDis) normalTitle:likeNum image:nil backgroudImage:nil superView:nil target:self action:@selector(clickToZanList:)];
     [likeNumButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
     [bottomView addSubview:likeNumButton];
     
@@ -134,22 +196,9 @@
     NSString *commentNum = [NSString stringWithFormat:@"%d条评论",[detail_model.tt_comment_num intValue]];
     likeWidth = [LTools widthForText:commentNum font:14];
     
-    commentButton = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(likeNumButton.left - likeWidth - 20, 0, likeWidth, bottomView.height) normalTitle:commentNum image:nil backgroudImage:nil superView:nil target:self action:@selector(clickToCommentPage:)];
+    commentButton = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(likeNumButton.left - likeWidth - 20, textHeight + aDis, likeWidth, bottomView.height - textHeight - aDis) normalTitle:commentNum image:nil backgroudImage:nil superView:nil target:self action:@selector(clickToCommentPage:)];
     [commentButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
     [bottomView addSubview:commentButton];
-    
-    //t台文字描述
-    
-    NSString *content = detail_model.tt_content;
-//    //不为空 且不是空格
-//    if (![LTools isEmpty:content]) {
-//        
-//        UIView *contentView = [[UIView alloc]initWithFrame:CGRectMake(0, - 60, DEVICE_WIDTH, 60)];
-//        contentView.backgroundColor = [UIColor orangeColor];
-//        [bottomView addSubview:contentView];
-//        
-//        UILabel *contentLabel = [UILabel alloc]initWithFrame:CGRectMake(<#CGFloat x#>, <#CGFloat y#>, <#CGFloat width#>, <#CGFloat height#>)
-//    }
 }
 
 #pragma - mark 事件处理
@@ -192,6 +241,9 @@
     ZanListViewController *zanlist = [[ZanListViewController alloc]init];
         
     zanlist.t_model = self.t_model;
+    
+    
+//    [self.t_model addObserver:self forKeyPath:@"is_like" options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
     
     __weak typeof(self)weakSelf = self;
     
@@ -453,7 +505,7 @@
        
         top.top = show ? 10 : -49-10;
         bBottom.top = show ? DEVICE_HEIGHT - 49: DEVICE_HEIGHT;
-        bBottomV.top = show ? DEVICE_HEIGHT - 49: DEVICE_HEIGHT;
+        bBottomV.top = show ? DEVICE_HEIGHT - bBottomV.height: DEVICE_HEIGHT;
     }];
 }
 

@@ -10,13 +10,15 @@
 //T台发布
 
 #import <UIKit/UIKit.h>
+#import "TPlatModel.h"
 @class GHolderTextView;
 @class GAddTtaiImageLinkViewController;
 
 @interface GTTPublishViewController : MyViewController
 
 @property (strong, nonatomic) UILabel  *placeHolderLabel;
-@property (strong, nonatomic) GHolderTextView *contentTF;
+@property (strong, nonatomic) UITextView *contentTV;
+@property(nonatomic,strong)UILabel *placeHolderTf;
 @property (strong, nonatomic) UIButton *addImageButton;
 
 
@@ -26,5 +28,13 @@
 
 //锚点数据
 @property(nonatomic,strong)NSDictionary *maodianDic;
+@property(nonatomic,strong)NSMutableArray *GimvArray;//选择锚点之后的可以拖动的图片数组
+
+
+
+//编辑T台
+@property(nonatomic,strong)TPlatModel *theTtaiModel;//此处用于判断是否为编辑T台
+
+
 
 @end

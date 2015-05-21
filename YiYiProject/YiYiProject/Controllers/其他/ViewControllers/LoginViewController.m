@@ -259,6 +259,16 @@
         
         //保存用户信息
         
+        /**
+         *  归档的方式保存userInfo
+         */
+        NSData *userData = [NSKeyedArchiver archivedDataWithRootObject:user];
+        
+        [[NSUserDefaults standardUserDefaults]setObject:userData forKey:@"userInfo"];
+        
+        [[NSUserDefaults standardUserDefaults]synchronize];
+        
+        
         [LTools cache:user.user_name ForKey:USER_NAME];
         [LTools cache:user.uid ForKey:USER_UID];
         [LTools cache:user.authcode ForKey:USER_AUTHOD];

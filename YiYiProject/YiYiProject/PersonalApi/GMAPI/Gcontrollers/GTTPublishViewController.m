@@ -15,7 +15,7 @@
 
 #import "NSDictionary+GJson.h"
 
-@interface GTTPublishViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate>
+@interface GTTPublishViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate,UITextViewDelegate>
 {
     BOOL imageIsValid;//图片是否有效
     
@@ -49,23 +49,25 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     self.myTitleLabel.text = @"发表T台";
+    if (self.theTtaiModel) {
+        self.myTitleLabel.text = @"修改T台";
+    }
+    
     self.myTitleLabel.textColor = RGBCOLOR(253, 105, 155);
     self.rightString = @"发送";
+    if (self.theTtaiModel) {
+        self.rightString = @"完成";
+    }
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeText];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapToHiddenKeyboard:)];
     [self.view addGestureRecognizer:tap];
     
-    
-//
-//    if (self.publishImage) {
-//        
-//        imageIsValid = YES;
-//        [self.addImageButton setImage:self.publishImage forState:UIControlStateNormal];
-//    }
+
     
     loading = [LTools MBProgressWithText:@"发布中..." addToView:self.view];
     
@@ -88,8 +90,8 @@
 //上传
 -(void)upLoadImage:(UIImage *)aImage{
     
-    NSString *content = self.contentTF.text;
-    if (self.contentTF.text.length == 0) {
+    NSString *content = self.contentTV.text;
+    if (self.contentTV.text.length == 0) {
         content = @" ";
     }
 //    NSString *brand = [NSString stringWithFormat:@"%@,%@,%@",self.brandTF.text,self.modelTF.text,self.priceTF.text];
@@ -100,19 +102,42 @@
         NSString *img_y = [self.maodianDic stringValueForKey:@"locationybili"];
         NSString *shop_ids = [self.maodianDic stringValueForKey:@"shopIds"];
         NSString *product_ids = [self.maodianDic stringValueForKey:@"productid"];
-        theDic = @{
-                   @"authcode":[GMAPI getAuthkey],
-                   @"tt_content":content,
-                   @"img_x":img_x,
-                   @"img_y":img_y,
-                   @"shop_ids":shop_ids,
-                   @"product_ids":product_ids
-                   };
+        if (self.theTtaiModel) {
+            theDic = @{
+                       @"authcode":[GMAPI getAuthkey],
+                       @"tt_content":content,
+                       @"img_x":img_x,
+                       @"img_y":img_y,
+                       @"shop_ids":shop_ids,
+                       @"product_ids":product_ids,
+                       @"tt_id":self.theTtaiModel.tt_id
+                       };
+        }else{
+            theDic = @{
+                       @"authcode":[GMAPI getAuthkey],
+                       @"tt_content":content,
+                       @"img_x":img_x,
+                       @"img_y":img_y,
+                       @"shop_ids":shop_ids,
+                       @"product_ids":product_ids
+                       };
+        }
+        
     }else{
-        theDic = @{
-                   @"authcode":[GMAPI getAuthkey],
-                   @"tt_content":content
-                           };
+        if (self.theTtaiModel) {
+            theDic = @{
+                       @"authcode":[GMAPI getAuthkey],
+                       @"tt_content":content,
+                       @"tt_id":self.theTtaiModel.tt_id
+                       };
+
+        }else{
+            theDic = @{
+                       @"authcode":[GMAPI getAuthkey],
+                       @"tt_content":content
+                       };
+        }
+        
     }
     
     
@@ -120,6 +145,12 @@
     
     //上传的url
     NSString *uploadImageUrlStr = TTAI_ADD;
+    
+    
+    if (self.theTtaiModel) {
+        uploadImageUrlStr = EDIT_TTAI;
+        
+    }
     
     //设置接收响应类型为标准HTTP类型(默认为响应类型为JSON)
     AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
@@ -161,8 +192,13 @@
                                            
                                            NSLog(@"成功了");
                                            
+                                           if (self.theTtaiModel) {
+                                               
+                                               [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_TTAI_EDIT_SUCCESS object:nil];
+                                           }else{
+                                               [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_TTAI_PUBLISE_SUCCESS object:nil];
+                                           }
                                            
-                                           [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_TTAI_PUBLISE_SUCCESS object:nil];
                                            
                                            [self performSelector:@selector(leftButtonTap:) withObject:nil afterDelay:0.5];
                                        }
@@ -173,9 +209,13 @@
                                        
                                        
                                        [loading hide:YES];
-                                                                              
-                    
-                                       [LTools showMBProgressWithText:@"发布失败" addToView:self.view];
+                                       
+                                       if (self.theTtaiModel) {
+                                           [LTools showMBProgressWithText:@"修改失败" addToView:self.view];
+                                       }else{
+                                           [LTools showMBProgressWithText:@"发布失败" addToView:self.view];
+                                       }
+                                       
 
                                        
                                        NSLog(@"失败 : %@",error);
@@ -200,10 +240,7 @@
 
 - (void)tapToHiddenKeyboard:(UITapGestureRecognizer *)tap
 {
-    [self.contentTF resignFirstResponder];
-//    [self.brandTF resignFirstResponder];
-//    [self.modelTF resignFirstResponder];
-//    [self.priceTF resignFirstResponder];
+    [self.contentTV resignFirstResponder];
     
     [self updateViewFrameY:64];
 }
@@ -220,32 +257,6 @@
     NSLog(@"发送");
     
     [self tapToHiddenKeyboard:nil];
-    
-    //    self.brandTF.text,self.modelTF.text,self.priceTF.text
-    
-    //    if ([LTools isEmpty:self.brandTF.text]) {
-    //
-    //        [LTools showMBProgressWithText:@"品牌不能为空" addToView:self.view];
-    //        return;
-    //    }
-    //    if ([LTools isEmpty:self.modelTF.text]) {
-    //
-    //        [LTools showMBProgressWithText:@"型号不能为空" addToView:self.view];
-    //        return;
-    //    }
-    //
-    //    if ([LTools isEmpty:self.priceTF.text]) {
-    //
-    //        [LTools showMBProgressWithText:@"价格不能为空" addToView:self.view];
-    //        return;
-    //    }
-    //
-    //    if ([LTools isValidateFloat:self.priceTF.text]) {
-    //
-    //        [LTools showMBProgressWithText:@"请填写有效价格" addToView:self.view];
-    //        return;
-    //    }
-    
     
     if (imageIsValid) {
         
@@ -285,6 +296,9 @@
 
 - (void)clickToPhoto:(UIButton *)sender
 {
+    
+    
+    
     UIImagePickerController *picker = [[UIImagePickerController alloc]init];
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     picker.delegate = self;
@@ -311,22 +325,11 @@
 }
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     
-    //    if (textField == self.brandTF) {
-    //
-    //        [self updateViewFrameY:_brandTF.top * -1];
-    //
-    //    }else if (textField == _modelTF){
-    //
-    //        [self updateViewFrameY:_modelTF.top * -1];
-    //
-    //    }else if (textField == _priceTF){
-    //
-    //        [self updateViewFrameY:_priceTF.top * -1];
-    //    }
-    
-    
     
 }
+
+
+
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     
@@ -339,16 +342,6 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-//    if (textField == self.brandTF) {
-//        
-//        [_modelTF becomeFirstResponder];
-//    }else if (textField == _modelTF){
-//        [_priceTF becomeFirstResponder];
-//    }else if (textField == _priceTF){
-//        
-//        [self tapToHiddenKeyboard:nil];
-//    }
-    
     return YES;
 }
 
@@ -357,7 +350,11 @@
 
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
-    
+    if (textView.text.length>0) {
+        self.placeHolderLabel.hidden = YES;
+    }else{
+        self.placeHolderLabel.hidden = NO;
+    }
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView
@@ -400,6 +397,10 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
+    
+    
+    self.maodianDic = nil;
+    
     NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
     
     if ([mediaType isEqualToString:@"public.image"]) {
@@ -479,18 +480,38 @@
     [self.view addSubview:self.mainScrollview];
     
     //发表内容输入框
-    self.contentTF = [[GHolderTextView alloc]initWithFrame:CGRectMake(10, 10, DEVICE_WIDTH-20, 100) placeholder:@"发表这一刻的想法" holderSize:15];
-    self.contentTF.backgroundColor = [UIColor whiteColor];
-    self.contentTF.font = [UIFont systemFontOfSize:15];
-    [self.mainScrollview addSubview:self.contentTF];
+    self.contentTV = [[UITextView alloc]initWithFrame:CGRectMake(10, 10, DEVICE_WIDTH-20, 100)];
+    self.contentTV.font = [UIFont systemFontOfSize:15];
+    self.contentTV.delegate = self;
     
-    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(12, CGRectGetMaxY(self.contentTF.frame), DEVICE_WIDTH-24, 0.5)];
+    self.placeHolderLabel = [[UILabel alloc]initWithFrame:CGRectMake(5,5, DEVICE_WIDTH-20, 20)];
+    self.placeHolderLabel.font = [UIFont systemFontOfSize:15];
+    
+    [self.contentTV addSubview:self.placeHolderLabel];
+    
+    self.placeHolderLabel.text = @"发表这一刻的想法";
+    self.placeHolderLabel.textColor = [UIColor grayColor];
+    
+    
+    if (self.theTtaiModel) {
+        
+        if (self.theTtaiModel.tt_content.length>0 && ![self.theTtaiModel.tt_content isEqualToString:@" "]) {//有文字
+            self.contentTV.text = self.theTtaiModel.tt_content;
+            self.placeHolderLabel.hidden = YES;
+        }
+        
+    }
+    
+    
+    [self.mainScrollview addSubview:self.contentTV];
+    
+    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(12, CGRectGetMaxY(self.contentTV.frame), DEVICE_WIDTH-24, 0.5)];
     lineView.backgroundColor = RGBCOLOR(208, 208, 208);
     [self.mainScrollview addSubview:lineView];
     
     
     //添加图片的按钮
-    _addPicView = [[UIView alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(lineView.frame)+10, self.contentTF.frame.size.width, 80)];
+    _addPicView = [[UIView alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(lineView.frame)+10, self.contentTV.frame.size.width, 80)];
     _addPicView.backgroundColor = [UIColor whiteColor];
     [self.mainScrollview addSubview:_addPicView];
     self.addImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -499,51 +520,35 @@
     [self.addImageButton addTarget:self action:@selector(clickToAction:) forControlEvents:UIControlEventTouchUpInside];
     [_addPicView addSubview:self.addImageButton];
     
-    
-    
-    
-    
-    
-//    //品牌型号价格
-//    _tfBackview = [[UIView alloc]initWithFrame:CGRectMake(16, CGRectGetMaxY(addPicView.frame)+7, DEVICE_WIDTH-32, 145)];
-//    NSArray *titleArray = @[@"品牌",@"型号",@"价格"];
-//    for (int i = 0; i<3; i++) {
-//        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, i*44, _tfBackview.frame.size.width, 44)];
-//        [_tfBackview addSubview:view];
-//        _tfBackview.tag = 1000000;
-//        UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, 0, view.frame.size.width, 1)];
-//        line.backgroundColor = RGBCOLOR(208, 208, 208);
-//        [view addSubview:line];
-//        UILabel *tt = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 70, 44)];
-//        tt.font = [UIFont systemFontOfSize:15];
-//        tt.text = titleArray[i];
-//        [view addSubview:tt];
-//        
-//        if (i == 0) {
-//            self.brandTF = [[UITextField alloc]initWithFrame:CGRectMake(75, 0, _tfBackview.frame.size.width-75, 44)];
-//            self.brandTF.textAlignment = NSTextAlignmentRight;
-//            self.brandTF.font = [UIFont systemFontOfSize:15];
-//            self.brandTF.placeholder = @"例如：ONLY";
-//            [view addSubview:self.brandTF];
-//        }else if (i==1){
-//            self.modelTF = [[UITextField alloc]initWithFrame:CGRectMake(75, 0, _tfBackview.frame.size.width-75, 44)];
-//            self.modelTF.textAlignment = NSTextAlignmentRight;
-//            self.modelTF.font = [UIFont systemFontOfSize:15];
-//            self.modelTF.placeholder = @"例如：BH1431938";
-//            [view addSubview:self.modelTF];
-//        }else if (i==2){
-//            self.priceTF = [[UITextField alloc]initWithFrame:CGRectMake(75, 0, _tfBackview.frame.size.width-75, 44)];
-//            self.priceTF.textAlignment = NSTextAlignmentRight;
-//            self.priceTF.font = [UIFont systemFontOfSize:15];
-//            self.priceTF.placeholder = @"例如：1000";
-//            [view addSubview:self.priceTF];
-//            
-//        }
-//    }
-    
     [self.mainScrollview addSubview:_tfBackview];
     
+    
+    
+    if (self.theTtaiModel) {
+        
+        UIImageView *imv = [[UIImageView alloc]init];
+        [imv sd_setImageWithURL:[NSURL URLWithString:[self.theTtaiModel.image stringValueForKey:@"url"]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            if (image) {
+                
+                imageIsValid = YES;
+            }
+            
+            [self.addImageButton setImage:image forState:UIControlStateNormal];
+            
+            
+            _theChooseImage = image;
+            [self creatShowImageView];
+        }];
+        
+        
+        
+    }
+    
+    
+    
 }
+
+
 
 
 
@@ -553,6 +558,9 @@
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setTitle:@"添加商品链接" forState:UIControlStateNormal];
+    if (self.theTtaiModel) {
+        [btn setTitle:@"修改商品链接" forState:UIControlStateNormal];
+    }
     [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     btn.backgroundColor = RGBCOLOR(235, 235, 235);
     [btn setFrame:CGRectMake(0, CGRectGetMaxY(_addPicView.frame)+10, DEVICE_WIDTH, 40)];
@@ -566,6 +574,15 @@
     GAddTtaiImageLinkViewController *ddd = [[GAddTtaiImageLinkViewController alloc]init];
     ddd.theImage = _theChooseImage;
     ddd.delegate = self;
+    
+    
+    if (self.maodianDic) {
+        ddd.maodianArray = self.GimvArray;
+    }
+    if (self.theTtaiModel) {
+        ddd.theTtaiModel = self.theTtaiModel;
+    }
+    
     UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:ddd];
     
     [self presentViewController:navc animated:YES completion:^{

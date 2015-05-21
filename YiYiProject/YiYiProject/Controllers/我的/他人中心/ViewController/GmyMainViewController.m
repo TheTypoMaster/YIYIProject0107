@@ -24,6 +24,8 @@
 
 #import "TPlatCell.h"
 
+#import "GEditMyTtaiViewController.h"//编辑T台
+
 @interface GmyMainViewController ()<TMQuiltViewDataSource,WaterFlowDelegate>
 {
     //第一层
@@ -108,17 +110,28 @@
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     }
-    
-//    [self creatHeadView];
-    
-    
+
     [self creatWaterFlowView];
     
     [self getUserTPlat];
+    
+    
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateUserTtai) name:NOTIFICATION_TTAI_EDIT_SUCCESS object:nil];
+    
+    
 
-//    [self getUserInfo];
-//    [_waterFlow showRefreshHeader:YES];
 }
+
+
+#pragma mark - 通知方法
+-(void)updateUserTtai{
+    _waterFlow.pageNum = 1;
+    [_waterFlow.dataArray removeAllObjects];
+    [self waterLoadNewData];
+}
+
+
 
 #pragma - mark 网络请求
 
@@ -127,7 +140,6 @@
  */
 - (void)getUserInfo
 {
-//    [_refreshLoading startAnimating];
     
     NSString *userId = self.userType == G_Default ? [GMAPI getUid] : self.userId;
 
@@ -433,17 +445,9 @@
 -(UIView *)headView{
     
     //整个view
-//    _upUserInfoView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 150 + 25)];
-//    _upUserInfoView.backgroundColor = [UIColor clearColor];
-    
     
     _upUserInfoView = [ParallaxHeaderView parallaxHeaderViewWithCGSize:CGSizeMake(DEVICE_WIDTH, 150 +25)];
     _upUserInfoView.headerImage = DEFAULT_BANNER_IMAGE;
-
-    
-//    _userBannerImv = [[UIImageView alloc]initWithFrame:_upUserInfoView.bounds];
-//    _userBannerImv.userInteractionEnabled = YES;
-//    [_upUserInfoView addSubview:_userBannerImv];
     
     //返回按钮
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -459,7 +463,6 @@
     //刷新loading
     
     _refreshLoading = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    //    _refreshLoading.hidden = YES;
     _refreshLoading.backgroundColor = [UIColor clearColor];
     _refreshLoading.hidesWhenStopped = YES;
     _refreshLoading.frame = CGRectMake(DEVICE_WIDTH - 30 - 24,50, 24, 24);
@@ -486,12 +489,16 @@
     _userNameLabel.textAlignment = NSTextAlignmentCenter;
     [_upUserInfoView addSubview:_userNameLabel];
     
-    //关注 | 粉丝
     
+    
+    
+    
+    
+    
+    //关注 | 粉丝
     UIView *concernBackView = [[UIView alloc]initWithFrame:CGRectMake(0, _userNameLabel.bottom, DEVICE_WIDTH, 150 - _userNameLabel.bottom)];
     concernBackView.backgroundColor = [UIColor clearColor];
     [_upUserInfoView addSubview:concernBackView];
-    
     UIView *line = [[UIView alloc]initWithFrame:CGRectMake(DEVICE_WIDTH/2.f - 0.5, 5 + 5, 1, concernBackView.height - 20)];
     line.backgroundColor = [UIColor whiteColor];
     [concernBackView addSubview:line];
@@ -499,20 +506,22 @@
     //关注的数字
     
     NSString *concernNum = [NSString stringWithFormat:@"关注 %d",0];
-    
     _concernLabel = [LTools createLabelFrame:CGRectMake(line.left - 100 - 10, 0, 100, concernBackView.height) title:concernNum font:14 align:NSTextAlignmentRight textColor:[UIColor whiteColor]];
     [concernBackView addSubview:_concernLabel];
-    
     [_concernLabel addTaget:self action:@selector(clickToConcernList:) tag:0];
     
     //粉丝的数字
-    
     concernNum = [NSString stringWithFormat:@"粉丝 %d",0];
-    
     _fansLabel = [LTools createLabelFrame:CGRectMake(line.right + 10, 0, 100, concernBackView.height) title:concernNum font:14 align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
     [concernBackView addSubview:_fansLabel];
-    
     [_fansLabel addTaget:self action:@selector(clickToFansList) tag:0];
+    
+    
+    //编辑T台
+    UILabel *editTtai = [LTools createLabelFrame:CGRectMake(concernBackView.frame.size.width - 50, 0, 40, concernBackView.frame.size.height) title:@"编辑" font:14 align:NSTextAlignmentCenter textColor:[UIColor whiteColor]];
+    [concernBackView addSubview:editTtai];
+    [editTtai addTaget:self action:@selector(editMyTtai) tag:0];
+    
     
     //整个view
     _ttaiView = [[UIView alloc]initWithFrame:CGRectMake(0, 150, DEVICE_WIDTH, 25)];
@@ -535,100 +544,19 @@
     
 }
 
-
-/////初始化头部的view
-//-(void)creatHeadView{
-//    
-//    //整个view
-//    _upUserInfoView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_upUserInfoView.frame), DEVICE_WIDTH, 150)];
-//    _upUserInfoView.backgroundColor = [UIColor clearColor];
-//    [self.view addSubview:_upUserInfoView];
-//    
-//    _userBannerImv = [[UIImageView alloc]initWithFrame:_upUserInfoView.bounds];
-//    _userBannerImv.userInteractionEnabled = YES;
-//    [_upUserInfoView addSubview:_userBannerImv];
-//    
-//    //返回按钮
-//    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [backBtn setImage:BACK_DEFAULT_IMAGE forState:UIControlStateNormal];
-//    [backBtn setImageEdgeInsets:UIEdgeInsetsMake(30, 15, 30, 50)];
-//    [backBtn setFrame:CGRectMake(0, 0, 80, 80)];
-//    [backBtn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
-//    [backBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 12, 0, 12)];
-//    [backBtn addTarget:self action:@selector(gGoBackVc) forControlEvents:UIControlEventTouchUpInside];
-//    [_upUserInfoView addSubview:backBtn];
-//    
-//    
-//    //头像
-//    _userFaceImv = [[UIImageView alloc]initWithFrame:CGRectMake((DEVICE_WIDTH-60)*0.5, 30, 60, 60)];
-//    _userFaceImv.backgroundColor = RGBCOLOR_ONE;
-//    _userFaceImv.layer.cornerRadius = 30;
-//    _userFaceImv.layer.borderWidth = 1;
-//    _userFaceImv.layer.borderColor = [[UIColor whiteColor]CGColor];
-//    _userFaceImv.layer.masksToBounds = YES;
-//    _userFaceImv.image = DEFAULT_HEADIMAGE;
-//    [_upUserInfoView addSubview:_userFaceImv];
-//    
-//    //用户名
-//    _userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0 , CGRectGetMaxY(_userFaceImv.frame)+5, DEVICE_WIDTH, 20)];
-//    _userNameLabel.backgroundColor = [UIColor clearColor];
-//    _userNameLabel.font = [UIFont systemFontOfSize:14];
-//    _userNameLabel.textColor = [UIColor whiteColor];
-//    _userNameLabel.textAlignment = NSTextAlignmentCenter;
-//    [_upUserInfoView addSubview:_userNameLabel];
-//    
-//    //关注 | 粉丝
-//    
-//    UIView *concernBackView = [[UIView alloc]initWithFrame:CGRectMake(0, _userNameLabel.bottom, DEVICE_WIDTH, _upUserInfoView.height - _userNameLabel.bottom)];
-//    concernBackView.backgroundColor = [UIColor clearColor];
-//    [_upUserInfoView addSubview:concernBackView];
-//    
-//    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(DEVICE_WIDTH/2.f - 0.5, 5 + 5, 1, concernBackView.height - 20)];
-//    line.backgroundColor = [UIColor whiteColor];
-//    [concernBackView addSubview:line];
-//    
-//    //关注的数字
-//    
-//    NSString *concernNum = [NSString stringWithFormat:@"关注 %d",0];
-//    
-//    _concernLabel = [LTools createLabelFrame:CGRectMake(line.left - 100 - 10, 0, 100, concernBackView.height) title:concernNum font:14 align:NSTextAlignmentRight textColor:[UIColor whiteColor]];
-//    [concernBackView addSubview:_concernLabel];
-//    
-//    //粉丝的数字
-//    
-//    concernNum = [NSString stringWithFormat:@"粉丝 %d",0];
-//    
-//    _fansLabel = [LTools createLabelFrame:CGRectMake(line.right + 10, 0, 100, concernBackView.height) title:concernNum font:14 align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
-//    [concernBackView addSubview:_fansLabel];
-//    
-//    
-//    //整个view
-//    _ttaiView = [[UIView alloc]initWithFrame:CGRectMake(0, _upUserInfoView.frame.size.height+_upUserInfoView.frame.origin.y, DEVICE_WIDTH, 25)];
-//    _ttaiView.backgroundColor = RGBCOLOR(235, 235, 235);
-//    [self.view addSubview:_ttaiView];
-//    
-//    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(10, 0, 2, 25)];
-//    lineView.backgroundColor = RGBCOLOR(239, 47, 48);
-//    lineView.layer.cornerRadius = 3;
-//    [_ttaiView addSubview:lineView];
-//    
-//    UILabel *titaiLabel = [[UILabel alloc]initWithFrame:CGRectMake(lineView.frame.size.width+lineView.frame.origin.x+5, 0,150,25)];
-//    titaiLabel.font = [UIFont systemFontOfSize:15];
-//    titaiLabel.backgroundColor = [UIColor clearColor];
-//    titaiLabel.textAlignment = NSTextAlignmentLeft;
-//    titaiLabel.text = @"我的T台";
-//    [_ttaiView addSubview:titaiLabel];
-//    
-//}
+//编辑T台
+-(void)editMyTtai{
+    GEditMyTtaiViewController *ccc = [[GEditMyTtaiViewController alloc]init];
+    ccc.lastPageNavigationHidden = YES;
+    [self.navigationController pushViewController:ccc animated:YES];
+    
+    
+}
 
 //初始化瀑布流
 -(void)creatWaterFlowView{
     
     //瀑布流相关
-//    _backView_water = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_ttaiView.frame), ALL_FRAME_WIDTH, ALL_FRAME_HEIGHT - _upUserInfoView.frame.size.height)];
-//    _backView_water.backgroundColor = [UIColor orangeColor];
-//    [self.view addSubview:_backView_water];
-    
     _waterFlow = [[LWaterflowView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT) waterDelegate:self waterDataSource:self noHeadeRefresh:YES noFooterRefresh:NO];
     _waterFlow.backgroundColor = RGBCOLOR(235, 235, 235);
     [self.view addSubview:_waterFlow];

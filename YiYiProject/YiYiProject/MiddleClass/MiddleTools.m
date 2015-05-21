@@ -20,7 +20,7 @@
     main.userType = userType;
     main.userId = userId;
     
-    if ([userId isEqualToString:[GMAPI getUid]]) {
+    if (([userId isKindOfClass:[NSString class]] && [userId isEqualToString:[GMAPI getUid]]) || [userId integerValue] == [[GMAPI getUid]integerValue]) {
         
         main.userType = G_Default;
     }else
