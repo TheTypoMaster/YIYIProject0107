@@ -389,25 +389,25 @@
     
     ZanUserModel *aModel = [_table.dataArray objectAtIndex:indexPath.row];
     
+    NSString *url = aModel.friend_uid;//uid代表当前登录用户、friend_uid对方id
     
-    NSString *url = nil;
-    if (self.listType == User_ShopMember) { //店铺会员
-        
-        url = aModel.uid;
-        
-    }else if (self.listType == User_TPlatZanList){ //t台赞人员列表
-        
-        url = aModel.uid;
-        
-    }else if (self.listType == User_MyConcernList) //关注列表
-    {
-        url = aModel.friend_uid;
-        
-    }else if (self.listType == User_MyFansList) //粉丝
-    {
-        
-        url = aModel.friend_uid;
-    }
+//    if (self.listType == User_ShopMember) { //店铺会员
+//        
+//        url = aModel.friend_uid;
+//        
+//    }else if (self.listType == User_TPlatZanList){ //t台赞人员列表
+//        
+//        url = aModel.friend_uid;
+//        
+//    }else if (self.listType == User_MyConcernList) //关注列表
+//    {
+//        url = aModel.friend_uid;
+//        
+//    }else if (self.listType == User_MyFansList) //粉丝
+//    {
+//        
+//        url = aModel.friend_uid;
+//    }
 
     [MiddleTools pushToPersonalId:url userType:0 forViewController:self lastNavigationHidden:NO];
     

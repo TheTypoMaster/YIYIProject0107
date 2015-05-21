@@ -51,6 +51,9 @@
     if ([aModel.friend_uid isEqualToString:[GMAPI getUid]]) {
         
         self.concernButton.hidden = YES;
+    }else
+    {
+        self.concernButton.hidden = NO;
     }
 }
 

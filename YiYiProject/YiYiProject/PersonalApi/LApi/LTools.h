@@ -211,6 +211,23 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
 
 + (NSAttributedString *)attributedString:(NSString *)string lineSpaceing:(CGFloat)lineSpage;//行间距string
 
+/**
+ *  行间距string 字体大小
+ */
+
++ (NSAttributedString *)attributedString:(NSString *)string
+                            lineSpaceing:(CGFloat)lineSpage
+                                fontSize:(CGFloat)fontSize;
+
+/**
+ *  行间距string 字体大小 字体颜色
+ */
+
++ (NSAttributedString *)attributedString:(NSString *)string
+                            lineSpaceing:(CGFloat)lineSpage
+                                fontSize:(CGFloat)fontSize
+                               textColor:(UIColor *)textColor;
+
 + (NSAttributedString *)attributedString:(NSString *)content keyword:(NSString *)aKeyword color:(UIColor *)textColor;//关键词高亮
 
 + (NSAttributedString *)attributedString:(NSMutableAttributedString *)attibutedString originalString:(NSString *)string AddKeyword:(NSString *)keyword color:(UIColor *)color;//每次一个关键词高亮,多次调用

@@ -1214,6 +1214,40 @@
     return attributedString1;
 }
 
+/**
+ *  行间距string 字体大小
+ */
+
++ (NSAttributedString *)attributedString:(NSString *)string
+                            lineSpaceing:(CGFloat)lineSpage
+                                fontSize:(CGFloat)fontSize
+{
+    NSMutableAttributedString * attributedString1 = [[NSMutableAttributedString alloc] initWithString:string];
+    NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle1 setLineSpacing:lineSpage];
+    [attributedString1 addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [string length])];
+    
+    [attributedString1 addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:fontSize] range:NSMakeRange(0, [string length])];
+    
+    return attributedString1;
+}
+
+/**
+ *  行间距string 字体大小 字体颜色
+ */
+
++ (NSAttributedString *)attributedString:(NSString *)string
+                            lineSpaceing:(CGFloat)lineSpage
+                                fontSize:(CGFloat)fontSize
+                               textColor:(UIColor *)textColor
+{
+    NSMutableAttributedString * attributedString1 = (NSMutableAttributedString *)[self attributedString:string lineSpaceing:lineSpage fontSize:fontSize];
+    
+    [attributedString1 addAttribute:NSForegroundColorAttributeName value:textColor range:NSMakeRange(0, [string length])];
+    
+    return attributedString1;
+}
+
 
 /**
  *  关键词特殊显示
