@@ -283,7 +283,7 @@ typedef enum{
     
     
     
-    NSString *URLstr = [NSString stringWithFormat:@"%@&authcode=%@",PERSON_GETUSERINFO,[GMAPI getAuthkey]];
+    NSString *URLstr = [NSString stringWithFormat:@"%@&authcode=%@&extra=%@",PERSON_GETUSERINFO,[GMAPI getAuthkey],@"tt_num"];
     
     
     GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:URLstr isPost:NO postData:nil];

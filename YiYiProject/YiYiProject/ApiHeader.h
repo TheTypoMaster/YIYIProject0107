@@ -304,6 +304,8 @@ typedef enum {
 
 //个人信息相关
 #define PERSON_CHANGEUSERBANNER @"http://www.alayy.com/index.php?d=api&c=user_api&m=update_user_banner"
+
+//加额外参数extra  extra=tt_num时代表需要返回t台总数
 #define PERSON_GETUSERINFO @"http://www.alayy.com/index.php?d=api&c=user_api&m=get_user_info"
 #define PERSON_CHANGEUSERFACE @"http://www.alayy.com/index.php?d=api&c=user_api&m=update_user_info"
 
