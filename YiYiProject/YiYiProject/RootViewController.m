@@ -82,10 +82,10 @@
 //    NSArray *classNames = @[@"HomeViewController",@"TTaiViewController",@"UIViewController",@"MessageListController",@"MineViewController"];
 //    NSArray *item_names = @[@"首页",@"T台",@"+",@"消息",@"我的"];
     
-    NSArray *classNames = @[@"HomeViewController",@"BigPhotoTTaiViewController",@"MessageListController",@"MineViewController"];
-    NSArray *item_names = @[@"附近",@"T台",@"消息",@"我的"];
-    NSMutableArray *items = [NSMutableArray arrayWithCapacity:5];
-    for (int i = 0; i < 4;i ++) {
+    NSArray *classNames = @[@"HomeViewController",@"BigPhotoTTaiViewController",@"MineViewController"];
+    NSArray *item_names = @[@"附近",@"T台",@"我的"];
+    NSMutableArray *items = [NSMutableArray arrayWithCapacity:classNames.count];
+    for (int i = 0; i < classNames.count;i ++) {
         
         if (i == 0) {
             
@@ -119,10 +119,10 @@
 //    NSArray *selectedImages = @[@"home_down",@"ttai_down",@"tianjia_up",@"xiaoxi_down",@"my_down"];
     
     
-    NSArray *normalImages = @[@"gfujin_up",@"ttai_up",@"xiaoxi_up",@"my_up"];
-    NSArray *selectedImages = @[@"gfujin_down",@"ttai_down",@"xiaoxi_down",@"my_down"];
+    NSArray *normalImages = @[@"gfujin_up",@"ttai_up",@"my_up"];
+    NSArray *selectedImages = @[@"gfujin_down",@"ttai_down",@"my_down"];
     
-    for (int i = 0; i < 4; i ++) {
+    for (int i = 0; i < normalImages.count; i ++) {
         
         UITabBarItem *item = self.tabBar.items[i];
         UIImage *aImage = [UIImage imageNamed:[normalImages objectAtIndex:i]];
