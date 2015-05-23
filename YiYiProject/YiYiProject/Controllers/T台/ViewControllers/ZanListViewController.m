@@ -100,11 +100,11 @@
     
     UIView *bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT - 49 - 64, DEVICE_WIDTH, 49)];
     [self.view addSubview:bottomView];
-    bottomView.backgroundColor = [UIColor whiteColor];
+    bottomView.backgroundColor = [UIColor colorWithHexString:@"666666"];
     
-    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, -0.5, bottomView.width, 0.5)];
-    line.backgroundColor = [UIColor grayColor];
-    [bottomView addSubview:line];
+//    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, -0.5, bottomView.width, 0.5)];
+//    line.backgroundColor = [UIColor grayColor];
+//    [bottomView addSubview:line];
     
     NSString *iconUrl = @"";
     NSString *userName = @"";
@@ -129,7 +129,7 @@
     [iconImageView addTaget:self action:@selector(clickToPersonal:) tag:(100 + [userId intValue])];
     
     
-    UILabel *nameLabel = [LTools createLabelFrame:CGRectMake(iconImageView.right + 10, 0, DEVICE_WIDTH - 20 - iconImageView.width - 50 - 10, 49) title:userName font:14 align:NSTextAlignmentLeft textColor:[UIColor grayColor]];
+    UILabel *nameLabel = [LTools createLabelFrame:CGRectMake(iconImageView.right + 10, 0, DEVICE_WIDTH - 20 - iconImageView.width - 50 - 10, 49) title:userName font:14 align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
     [bottomView addSubview:nameLabel];
     
     

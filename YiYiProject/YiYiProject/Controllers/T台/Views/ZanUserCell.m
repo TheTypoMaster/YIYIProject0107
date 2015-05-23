@@ -14,7 +14,7 @@
 - (void)awakeFromNib {
     // Initialization code
     
-    self.iconImageView.layer.cornerRadius = 25.f;
+    self.iconImageView.layer.cornerRadius = 20.f;
     self.iconImageView.clipsToBounds = YES;
     self.concernButton.layer.cornerRadius = 5.f;
 }
@@ -35,7 +35,7 @@
     if (aModel.flag == relation_concern_no || aModel.flag == relation_concern_yes_otherSide) {
         
 //        self.concernButton.hidden = NO;
-        [self.concernButton setBackgroundColor:[UIColor colorWithHexString:@"e87f92"]];
+        [self.concernButton setBackgroundColor:[UIColor colorWithHexString:@"ff679a"]];
         self.concernButton.selected = NO;
         
     }else

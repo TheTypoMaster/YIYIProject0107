@@ -13,11 +13,11 @@
 ///nib文件加载
 -(void)awakeFromNib
 {
-    self.userInteractionEnabled = YES;
-    
-    self.tapGesture = [[UITapGestureRecognizer alloc]init];
-    
-    [self addGestureRecognizer:_tapGesture];
+//    self.userInteractionEnabled = YES;
+//    
+//    self.tapGesture = [[UITapGestureRecognizer alloc]init];
+//    
+//    [self addGestureRecognizer:_tapGesture];
 }
 
 //init 初始化
@@ -27,11 +27,11 @@
     
     if (self) {
         
-        self.userInteractionEnabled = YES;
-        
-        self.tapGesture = [[UITapGestureRecognizer alloc]init];
-        
-        [self addGestureRecognizer:_tapGesture];
+//        self.userInteractionEnabled = YES;
+//        
+//        self.tapGesture = [[UITapGestureRecognizer alloc]init];
+//        
+//        [self addGestureRecognizer:_tapGesture];
     }
     return self;
 }

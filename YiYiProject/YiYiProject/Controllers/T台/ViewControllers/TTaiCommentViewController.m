@@ -585,23 +585,44 @@
  */
 - (void)createToolsView
 {
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT - 64 - 40, DEVICE_WIDTH, 40)];
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT - 64 - 40 - 16, DEVICE_WIDTH, 40 + 16)];
 //    view.backgroundColor = [UIColor colorWithHexString:@"252525"];
-    view.backgroundColor = [UIColor colorWithHexString:@"f6f6f6"];
+//    view.backgroundColor = [UIColor colorWithHexString:@"f6f6f6"];
+    view.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.6];
+
     [self.view addSubview:view];
     
-    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, -1, DEVICE_WIDTH, 1)];
-    line.backgroundColor = [UIColor colorWithHexString:@"dcdcdc"];
-    [view addSubview:line];
+//    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, -1, DEVICE_WIDTH, 1)];
+//    line.backgroundColor = [UIColor colorWithHexString:@"dcdcdc"];
+//    [view addSubview:line];
     
-    UIButton *comment = [LTools createButtonWithType:UIButtonTypeRoundedRect frame:CGRectMake(10, 5, view.width - 20, 30) normalTitle:@"  我要说两句" image:nil backgroudImage:nil superView:nil target:self action:@selector(clickToComment:)];
+    UIButton *comment = [LTools createButtonWithType:UIButtonTypeRoundedRect frame:CGRectMake(10, 5 + 8, view.width - 20  - 70, 30) normalTitle:@"  我也说一句..." image:nil backgroudImage:nil superView:nil target:self action:@selector(clickToComment:)];
     [view addSubview:comment];
-    comment.backgroundColor = [UIColor whiteColor];
+    comment.backgroundColor = [UIColor clearColor];
     [comment addCornerRadius:5.f];
-    comment.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    comment.layer.borderColor = [UIColor whiteColor].CGColor;
     comment.layer.borderWidth = 0.5f;
-    [comment setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [comment.titleLabel setFont:[UIFont systemFontOfSize:12]];
+    [comment setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [comment setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    
+    UIButton *send_button = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    send_button.frame = CGRectMake(DEVICE_WIDTH - 80 + 10,comment.top,60,30);
+    
+    [send_button setTitle:@"发送" forState:UIControlStateNormal];
+    
+    [send_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    send_button.backgroundColor = RGBCOLOR(213,77,125);
+    
+    send_button.titleLabel.font = [UIFont boldSystemFontOfSize:15];
+    
+    [send_button addTarget:self action:@selector(clickToComment:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [send_button addCornerRadius:5.f];
+    
+    [view addSubview:send_button];
     
 //    //喜欢
 //    zan_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(35, 0, 29, 50) normalTitle:nil image:[UIImage imageNamed:@"xq_love_up"] backgroudImage:nil superView:nil target:self action:@selector(clickToZan:)];

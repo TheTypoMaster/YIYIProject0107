@@ -172,6 +172,7 @@
 
 #pragma mark 网络请求
 
+
 //T台赞 或 取消
 
 - (void)zanTTaiDetail:(UIButton *)zan_btn
@@ -180,6 +181,9 @@
         return;
     }
     
+    [LTools animationToBigger:zan_btn duration:0.2 scacle:1.5];
+
+    
     NSString *authkey = [GMAPI getAuthkey];
     
     TPlatModel *detail_model = _table.dataArray[zan_btn.tag - 100];
@@ -187,22 +191,31 @@
     NSString *post = [NSString stringWithFormat:@"tt_id=%@&authcode=%@",t_id,authkey];
     NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     
-    NSString * url = TTAI_ZAN;
+    NSString *url;
+    
+    BOOL zan = zan_btn.selected ? NO : YES;
     
     
-    TTaiBigPhotoCell *cell = (TTaiBigPhotoCell *)[_table cellForRowAtIndexPath:[NSIndexPath indexPathForRow:zan_btn.tag - 100 inSection:0]];
+    if (zan) {
+        url = TTAI_ZAN;
+    }else
+    {
+        url = TTAI_ZAN_CANCEL;
+    }
+    
+    
+//    TTaiBigPhotoCell *cell = (TTaiBigPhotoCell *)[_table cellForRowAtIndexPath:[NSIndexPath indexPathForRow:zan_btn.tag - 100 inSection:0]];
     
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"-->%@",result);
         
-        zan_btn.selected = YES;
+        zan_btn.selected = !zan_btn.selected;
         
         int like_num = [detail_model.tt_like_num intValue];
-        detail_model.tt_like_num = [NSString stringWithFormat:@"%d",like_num + 1];
-        cell.zanNumLabel.text = detail_model.tt_like_num;
-        detail_model.is_like = 1;
+        detail_model.tt_like_num = [NSString stringWithFormat:@"%d",zan ? like_num + 1 : like_num - 1];
+        detail_model.is_like = zan ? 1 : 0;
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
@@ -244,7 +257,6 @@
 
 
 #pragma mark 事件处理
-
 
 - (void)tapToPhotoBrowserFromImageView:(PropertyImageView *)aImageView
 {
@@ -518,7 +530,7 @@
 //    return 50 + 36 + [LTools heightForImageHeight:image_height imageWidth:image_width originalWidth:DEVICE_WIDTH];
     
     
-    return 75 + [LTools heightForImageHeight:image_height imageWidth:image_width originalWidth:DEVICE_WIDTH] - 35/2.f;
+    return [LTools heightForImageHeight:image_height imageWidth:image_width originalWidth:DEVICE_WIDTH];
 }
 //将要显示
 - (void)refreshTableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -610,9 +622,9 @@
     [cell setCellWithModel:aModel];
     
     cell.bigImageView.aModel = aModel;
-//    cell.bigImageView.userInteractionEnabled = NO;
-    [cell.bigImageView.tapGesture addTarget:self action:@selector(tapImage:)];
-    
+    cell.bigImageView.userInteractionEnabled = NO;
+    cell.bigImageView.tapGesture.enabled = NO;
+//    [cell.bigImageView.tapGesture addTarget:self action:@selector(tapImage:)];
     
     if (cell.maoDianView) {
         
@@ -623,6 +635,7 @@
             sub = nil;
         }
         [cell.maoDianView removeFromSuperview];
+        cell.maoDianView = nil;
     }
     
     cell.maoDianView = [[UIView alloc]initWithFrame:cell.bigImageView.frame];
@@ -632,6 +645,12 @@
 //    [self removeMaoDianForCell:cell];
     
     [self addMaoDian:aModel imageView:cell.maoDianView];
+    
+    //赞按钮
+    
+    cell.zanBtn.tag = 100 + indexPath.row;
+    [cell.contentView bringSubviewToFront:cell.zanBackView];
+    [cell.zanBtn addTarget:self action:@selector(zanTTaiDetail:) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
 }

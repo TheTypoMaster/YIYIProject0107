@@ -20,6 +20,8 @@
 @property (nonatomic,retain) UIView *maoDianView;//锚点view
 
 @property (nonatomic, strong) PulsingHaloLayer *halo;//动画layer
+@property (strong, nonatomic) IBOutlet UIButton *zanBtn;
+@property (strong, nonatomic) IBOutlet UIView *zanBackView;
 
 
 - (void)setCellWithModel:(id)aModel;

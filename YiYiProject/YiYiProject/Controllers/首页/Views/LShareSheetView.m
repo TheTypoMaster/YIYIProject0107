@@ -89,7 +89,9 @@
     
         
         bgView = [[UIView alloc]initWithFrame:CGRectMake(0, [UIApplication sharedApplication].keyWindow.bottom, DEVICE_WIDTH, _height_bgView)];
-        bgView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.95];
+//        bgView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.95];
+        
+        bgView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.2];
         [self addSubview:bgView];
         
         CGFloat aWidth = 50.f;
@@ -115,21 +117,24 @@
             
             UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(itemBtn.left - aWidth / 2.0, itemBtn.bottom + 5, aWidth * 2, 20)];
             titleLabel.text = [items objectAtIndex:i];
-            titleLabel.font = [UIFont systemFontOfSize:14];
+            titleLabel.font = [UIFont systemFontOfSize:12];
             titleLabel.textAlignment = NSTextAlignmentCenter;
+            titleLabel.textColor = [UIColor whiteColor];
             [bgView addSubview:titleLabel];
         }
         
-        UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, bgView.height - 50, DEVICE_WIDTH, 0.5f)];
-        lineView.backgroundColor = RGBCOLOR(221, 221, 221);
-        [bgView addSubview:lineView];
+//        UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, bgView.height - 50, DEVICE_WIDTH, 0.5f)];
+//        lineView.backgroundColor = RGBCOLOR(221, 221, 221);
+//        [bgView addSubview:lineView];
         
         
         UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        cancelButton.frame = CGRectMake(KLEFT, lineView.bottom, DEVICE_WIDTH - KLEFT * 2, 49.5);
+        cancelButton.frame = CGRectMake(left, bgView.height - 50, DEVICE_WIDTH - left * 2, 40.f);
         [cancelButton setTitle:@"取消" forState:UIControlStateNormal];
         [cancelButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-
+        [cancelButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
+        cancelButton.backgroundColor = [[UIColor whiteColor]colorWithAlphaComponent:0.6];
+        [cancelButton addCornerRadius:5.f];
         [bgView addSubview:cancelButton];
         
         [cancelButton addTarget:self action:@selector(hidden) forControlEvents:UIControlEventTouchUpInside];

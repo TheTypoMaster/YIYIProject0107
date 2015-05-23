@@ -179,6 +179,8 @@
     
     send_button.titleLabel.font = [UIFont boldSystemFontOfSize:15];
     
+    [send_button addCornerRadius:5.f];
+    
     [send_button addTarget:self action:@selector(submitPingLunTap:) forControlEvents:UIControlEventTouchUpInside];
     
     [text_background_view addSubview:send_button];
@@ -393,7 +395,7 @@
     
     if (text_input_view.text.length > 0)
     {
-        send_button.backgroundColor = RGBCOLOR(235,79,83);
+        send_button.backgroundColor = RGBCOLOR(213,77,125);
         
         send_button.enabled = YES;
     }else

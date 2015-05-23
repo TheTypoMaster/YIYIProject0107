@@ -14,6 +14,8 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    
+    [self.zanBackView addCornerRadius:5.f];//赞按钮圆角
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -34,14 +36,16 @@
     self.bigImageView.imageUrls = @[imageUrl];//imageView对应的图集url
     self.bigImageView.infoId = aModel.tt_id;//imageView对应的信息id
     
-    self.toolView.top = self.bigImageView.bottom - 35/2.f;
+    self.zanBtn.selected = aModel.is_like == 1 ? YES : NO;
     
-    NSString *userImageUrl = aModel.uinfo[@"photo"];
-    
-    _iconImageView.layer.cornerRadius = 35/2.f;
-    _iconImageView.clipsToBounds = YES;
-    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:userImageUrl] placeholderImage:DEFAULT_HEADIMAGE];
-    self.nameLabel.text = aModel.uinfo[@"user_name"];
+//    self.toolView.top = self.bigImageView.bottom - 35/2.f;
+//    
+//    NSString *userImageUrl = aModel.uinfo[@"photo"];
+//    
+//    _iconImageView.layer.cornerRadius = 35/2.f;
+//    _iconImageView.clipsToBounds = YES;
+//    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:userImageUrl] placeholderImage:DEFAULT_HEADIMAGE];
+//    self.nameLabel.text = aModel.uinfo[@"user_name"];
 }
 
 @end

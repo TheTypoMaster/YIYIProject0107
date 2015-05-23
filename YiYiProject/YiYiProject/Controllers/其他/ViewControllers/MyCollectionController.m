@@ -21,7 +21,7 @@
 #import "ProductDetailController.h"
 
 
-@interface MyCollectionController ()<TMQuiltViewDataSource,WaterFlowDelegate>
+@interface MyCollectionController ()<TMQuiltViewDataSource,WaterFlowDelegate,UIScrollViewDelegate>
 {
     LWaterflowView *waterFlow;
     
@@ -60,13 +60,21 @@
     
     self.view.backgroundColor = RGBCOLOR(200, 200, 200);
     
-    self.myTitleLabel.text = @"我的收藏";
+    self.myTitleLabel.text = @"我的收藏——old";
+    
+    //单品、商家、品牌
+    
+    UIScrollView *backScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT - 90)];
+    backScroll.delegate = self;
+    [self.view addSubview:backScroll];
+    backScroll.contentSize = CGSizeMake(DEVICE_WIDTH * 3, DEVICE_HEIGHT);
+    
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     
-    waterFlow = [[LWaterflowView alloc]initWithFrame:CGRectMake(0, 0, ALL_FRAME_WIDTH, ALL_FRAME_HEIGHT - 44) waterDelegate:self waterDataSource:self];
+    waterFlow = [[LWaterflowView alloc]initWithFrame:CGRectMake(0, 0, backScroll.width, backScroll.height) waterDelegate:self waterDataSource:self];
     waterFlow.backgroundColor = RGBCOLOR(235, 235, 235);
-    [self.view addSubview:waterFlow];
+    [backScroll addSubview:waterFlow];
     
 //    [waterFlow showRefreshHeader:YES];
     
