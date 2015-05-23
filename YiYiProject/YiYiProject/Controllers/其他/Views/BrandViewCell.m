@@ -12,6 +12,9 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    
+    [self.cancelButton addCornerRadius:3.f];
+    [self.iconImageView addRoundCorner];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -27,12 +30,11 @@
     
     self.iconImageView.backgroundColor = [UIColor lightGrayColor];
     
-    self.cancelButton.layer.cornerRadius = 3.f;
     self.cancelButton.layer.borderColor = [UIColor colorWithHexString:@"ef7186"].CGColor;
     self.cancelButton.layer.borderWidth = 1.f;
     
-    self.iconImageView.layer.cornerRadius = 35.f;
-    self.iconImageView.clipsToBounds = YES;
+//    self.iconImageView.layer.cornerRadius = 35.f;
+//    self.iconImageView.clipsToBounds = YES;
 }
 
 @end

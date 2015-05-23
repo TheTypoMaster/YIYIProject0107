@@ -364,6 +364,8 @@
     [heartButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
     [rightView addSubview:heartButton];
     
+    heartButton.hidden = YES;
+    
     UIBarButtonItem *comment_item=[[UIBarButtonItem alloc]initWithCustomView:rightView];
     self.navigationItem.rightBarButtonItem = comment_item;
 }
@@ -653,6 +655,14 @@
         UIButton *btn1 = (UIButton *)[self.view viewWithTag:10000];
         UIButton *btn2 = (UIButton *)[self.view viewWithTag:10001];
         UIButton *btn3 = (UIButton *)[self.view viewWithTag:10002];
+        
+        if (page == 0) {
+            
+            heartButton.hidden = YES;
+        }else
+        {
+            heartButton.hidden = NO;
+        }
         
         if (page == 0) {
             
