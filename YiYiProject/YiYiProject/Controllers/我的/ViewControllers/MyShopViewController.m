@@ -47,8 +47,8 @@
     [self getMailDetailInfo];
     [self creatEditBtnView];
     [self creatAnimationArray];
-//    [self performSelector:@selector(animationStart) withObject:self afterDelay:0.5];
     
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getMailDetailInfo) name:EDIT_SHOP_PHONE_SUCCESS object:nil];
     
     
     
