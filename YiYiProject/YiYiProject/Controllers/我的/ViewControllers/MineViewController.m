@@ -354,9 +354,8 @@ typedef enum{
         
         
         _fensiNumLabel.text = [dic stringValueForKey:@"fans_num"];
-        _guanzhuNumLabel.text = [dic stringValueForKey:@"favor_num"];
+        _guanzhuNumLabel.text = _userInfo.attentions_num;
         _ttaiNumLabel.text = [dic stringValueForKey:@"tt_num"];
-        
         
         [_tableView reloadData];
         
@@ -548,24 +547,32 @@ typedef enum{
 }
 
 
+#pragma mark - 事件处理
+
 //粉丝 关注 T台点击跳转
 -(void)fensiClicked{
     NSLog(@"%s",__FUNCTION__);
     NSString *userId = [GMAPI getUid];
     
-    [MiddleTools pushToUserListWithObjectId:userId listType:User_MyFansList forViewController:self lastNavigationHidden:YES updateParmsBlock:^(NSDictionary *params) {
+    [MiddleTools pushToUserListWithObjectId:userId listType:User_MyFansList forViewController:self lastNavigationHidden:YES hiddenBottom:YES updateParmsBlock:^(NSDictionary *params) {
         
     }];
 }
 
+/**
+ *  跳转至关注列表
+ */
 -(void)guanzuClicked{
     NSLog(@"%s",__FUNCTION__);
     NSString *userId = [GMAPI getUid];
-    [MiddleTools pushToUserListWithObjectId:userId listType:User_MyConcernList forViewController:self lastNavigationHidden:YES updateParmsBlock:^(NSDictionary *params) {
+    [MiddleTools pushToUserListWithObjectId:userId listType:User_MyConcernList forViewController:self lastNavigationHidden:YES hiddenBottom:YES updateParmsBlock:^(NSDictionary *params) {
         
     }];
 }
 
+/**
+ *  跳转至t台列表
+ */
 -(void)ttaiClicked{
     NSLog(@"%s",__FUNCTION__);
     GmyTtaiViewController *ccc = [[GmyTtaiViewController alloc]init];
@@ -573,13 +580,7 @@ typedef enum{
     ccc.lastPageNavigationHidden = YES;
     [self.navigationController pushViewController:ccc animated:YES];
     
-    
 }
-
-
-
-
-
 
 //修改顶部信息view登录未登录状态
 -(void)setUpuserInfoViewWithLoginState:(BOOL)theState{

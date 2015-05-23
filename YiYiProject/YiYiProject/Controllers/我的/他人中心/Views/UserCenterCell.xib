@@ -116,7 +116,7 @@
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="wLr-Z9-e1M">
-                                <rect key="frame" x="50" y="10" width="46" height="30"/>
+                                <rect key="frame" x="28" y="10" width="46" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="收藏">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -128,7 +128,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="7jV-Aj-pdi">
-                                <rect key="frame" x="210" y="10" width="46" height="30"/>
+                                <rect key="frame" x="249" y="10" width="46" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="店铺">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -158,7 +158,7 @@
                 <outlet property="tPlatButton" destination="oph-E6-5P9" id="CLe-tD-cFv"/>
                 <outlet property="toolsView" destination="JWH-LZ-iZI" id="vTd-m3-Vfl"/>
             </connections>
-            <point key="canvasLocation" x="-818" y="202.5"/>
+            <point key="canvasLocation" x="-1108" y="213.5"/>
         </tableViewCell>
     </objects>
     <resources>

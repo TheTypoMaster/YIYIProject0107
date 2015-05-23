@@ -584,6 +584,14 @@ typedef enum {
 //编辑T台
 #define EDIT_TTAI @"http://www.alayy.com/index.php?d=api&c=tplat&m=edit_tt"
 
+//分享地址
+
+//T台详情wap
+#define SHARE_TPLAT_DETAIL @"http://www.alayy.com/index.php?d=wap&c=tplat&m=getttinfo&tt_id=%@"
+
+//单品产品详情
+#define SHARE_PRODUCT_DETAIL @"http://www.alayy.com/index.php?d=wap&c=products&m=getProductInfo&product_id=%@"
+
 #endif
 
 

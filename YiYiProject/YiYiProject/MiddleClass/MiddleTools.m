@@ -106,4 +106,21 @@
     [viewController.navigationController pushViewController:main animated:YES];
 }
 
++ (void)pushToUserListWithObjectId:(NSString *)objectId
+                          listType:(UserListType)listType
+                 forViewController:(UIViewController *)viewController
+              lastNavigationHidden:(BOOL)hidden
+                      hiddenBottom:(BOOL)hiddenBottom
+                  updateParmsBlock:(UpdateParamsBlock)aBlock
+
+{
+    ZanListViewController *main = [[ZanListViewController alloc]init];
+    main.hidesBottomBarWhenPushed = hiddenBottom;
+    main.objectId = objectId;
+    main.listType = listType;
+    main.updateParamsBlock = aBlock;
+    main.lastPageNavigationHidden = hidden;
+    [viewController.navigationController pushViewController:main animated:YES];
+}
+
 @end

@@ -78,4 +78,20 @@
                  forViewController:(UIViewController *)viewController
               lastNavigationHidden:(BOOL)hidden
                   updateParmsBlock:(UpdateParamsBlock)aBlock;
+
+/**
+ *  获取人员列表(关注列表、粉丝列表、店铺会员列表)
+ *
+ *  @param objectId       主题id,店铺列表时为店铺id\关注列表或者粉丝列表则为目标用户id
+ *  @param listType       人员列表类型
+ *  @param hidden         上个页面navigationBar是否隐藏
+ *  @param hiddenBottom   底部导航是否隐藏
+ *  @param aBlock         数据更新block
+ */
++ (void)pushToUserListWithObjectId:(NSString *)objectId
+                          listType:(UserListType)listType
+                 forViewController:(UIViewController *)viewController
+              lastNavigationHidden:(BOOL)hidden
+                      hiddenBottom:(BOOL)hiddenBottom
+                  updateParmsBlock:(UpdateParamsBlock)aBlock;
 @end

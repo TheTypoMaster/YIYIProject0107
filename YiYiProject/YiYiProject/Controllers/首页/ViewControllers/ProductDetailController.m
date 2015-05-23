@@ -103,17 +103,7 @@
     // Do any additional setup after loading the view from its nib.
     
     
-    
-    
-    
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
-    
-//    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(0,8,40,44)];
-//    [button_back setImage:[UIImage imageNamed:@"gback_white.png"] forState:UIControlStateNormal];
-//    [button_back setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
-//    UIBarButtonItem *back_item=[[UIBarButtonItem alloc]initWithCustomView:button_back];
-//    self.navigationItem.leftBarButtonItems=@[back_item];
-    
     
     [self createNavigationbarTools];
     
@@ -462,13 +452,19 @@
     }
 }
 
+
 /*
   分享
  */
 
 - (void)clickToShare:(UIButton *)sender
 {
-    [[LShareSheetView shareInstance] showShareContent:aModel.product_name title:@"衣加衣" shareUrl:@"http://www.alayy.com" shareImage:self.bigImageView.image targetViewController:self];
+    NSString *productString = [NSString stringWithFormat:SHARE_PRODUCT_DETAIL,self.product_id];
+    
+    NSString *safeString = [LTools safeString:self.theModel.product_name];
+    NSString *title = safeString.length > 0 ? safeString : @"衣加衣";
+    
+    [[LShareSheetView shareInstance] showShareContent:aModel.product_name title:title shareUrl:productString shareImage:self.bigImageView.image targetViewController:self];
     [[LShareSheetView shareInstance]actionBlock:^(NSInteger buttonIndex, Share_Type shareType) {
        
         if (shareType == Share_QQ) {

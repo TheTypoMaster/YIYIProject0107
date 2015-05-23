@@ -30,6 +30,9 @@
 
 #import "MyConcernController.h"//收藏
 
+#import "GStorePinpaiViewController.h"//品牌店
+#import "GnearbyStoreViewController.h"//大商场
+
 @interface GmyMainViewController ()<TMQuiltViewDataSource,WaterFlowDelegate>
 {
     //第一层
@@ -76,6 +79,7 @@
 @property(nonatomic,retain)UIActivityIndicatorView *loadingIndicator;
 @property(nonatomic,retain)UILabel *normalLabel;
 @property(nonatomic,retain)UILabel *loadingLabel;
+@property(nonatomic,retain)UIButton *backButton;
 
 @end
 
@@ -93,8 +97,6 @@
     [super viewDidAppear:animated];
     
     if (_notFirst == NO) {
-        
-        [_refreshLoading startAnimating];
         
         [self getUserInfo];
         
@@ -148,6 +150,9 @@
 - (void)getUserInfo
 {
     [loading show:YES];
+    
+    [_refreshLoading startAnimating];
+
     
     NSString *userId = self.userType == G_Default ? [GMAPI getUid] : self.userId;
 
@@ -231,7 +236,102 @@
 
 }
 
+/**
+ *  赞 取消赞 收藏 取消收藏
+ */
+
+- (void)clickToZan:(UIButton *)sender
+{
+    if (![LTools isLogin:self]) {
+        
+        return;
+    }
+    //直接变状态
+    //更新数据
+    
+    [LTools animationToBigger:sender duration:0.2 scacle:1.5];
+    
+    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[_waterFlow.quitView cellAtIndexPath:[NSIndexPath indexPathForRow:sender.tag - 100 inSection:0]];
+    
+    __weak typeof(self)weakSelf = self;
+    
+    __block BOOL isZan = !sender.selected;
+    
+    NSString *api = sender.selected ? TTAI_ZAN_CANCEL : TTAI_ZAN;
+    
+    TPlatModel *detail_model = _waterFlow.dataArray[sender.tag - 100];
+    NSString *t_id = detail_model.tt_id;
+    NSString *post = [NSString stringWithFormat:@"tt_id=%@&authcode=%@",t_id,[GMAPI getAuthkey]];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    
+    NSString *url = api;
+    
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"result %@",result);
+        sender.selected = isZan;
+        detail_model.is_like = isZan ? 1 : 0;
+        detail_model.tt_like_num = NSStringFromInt([detail_model.tt_like_num intValue] + (isZan ? 1 : -1));
+        cell.like_label.text = detail_model.tt_like_num;
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+        [GMAPI showAutoHiddenMBProgressWithText:failDic[RESULT_INFO] addToView:weakSelf.view];
+        if ([failDic[RESULT_CODE] intValue] == -11) {
+            
+            [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:weakSelf.view];
+        }
+        detail_model.tt_like_num = NSStringFromInt([detail_model.tt_like_num intValue]);
+        cell.like_label.text = detail_model.tt_like_num;
+    }];
+}
+
+
 #pragma - mark 事件处理
+
+- (void)clickToShop:(UIButton *)sender
+{
+    NSString *shopId = @"";
+    NSString *shopName = @"";
+    int mallType = [_currentUser.mall_type intValue];
+    
+    if (mallType == 3 ) {//品牌店
+        [self pushToNearbyStoreVCWithIdStr:shopId theStoreName:shopName mailType:mallType];
+    }else if (mallType == 1 || mallType == 2){//大商场 精品店
+        [self pushToNearbyStoreVCWithIdStr:shopId theStoreName:shopName mailType:mallType];
+    }
+}
+
+//商场
+-(void)pushToNearbyStoreVCWithIdStr:(NSString *)theID
+                       theStoreName:(NSString *)nameStr
+                           mailType:(int)mailType {
+    
+    if (mailType ==2) {//精品店
+        
+        GStorePinpaiViewController *cc = [[GStorePinpaiViewController alloc]init];
+        cc.storeIdStr = theID;
+        cc.storeNameStr = nameStr;
+        cc.guanzhuleixing = @"精品店";
+        cc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:cc animated:YES];
+        
+    }else if (mailType == 1){//大商场
+        GnearbyStoreViewController *dd = [[GnearbyStoreViewController alloc]init];
+        dd.storeIdStr = theID;
+        dd.storeNameStr = nameStr;
+        dd.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:dd animated:YES];
+    }else if (mailType == 3){//品牌店
+        GStorePinpaiViewController *cc = [[GStorePinpaiViewController alloc]init];
+        cc.storeIdStr = theID;
+        cc.guanzhuleixing = @"品牌店";
+        cc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:cc animated:YES];
+    }
+}
 
 /**
  *  跳转到收藏列表
@@ -361,7 +461,7 @@
     [MiddleTools chatWithUserId:self.userId userName:_currentUser.user_name forViewController:self lastNavigationHidden:YES];
 }
 
--(void)gGoBackVc{
+-(void)clickToBack:(UIButton *)sender{
     
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -530,13 +630,15 @@
     
     //整个view
     
-    _upUserInfoView = [ParallaxHeaderView parallaxHeaderViewWithCGSize:CGSizeMake(DEVICE_WIDTH, initTop)];
-//    _upUserInfoView.headerImage = DEFAULT_BANNER_IMAGE;
-    [headBackView addSubview:_upUserInfoView];
-    
-    UIView *aView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT)];
-    aView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.3];
-    [_upUserInfoView.imageView addSubview:aView];
+    if (_upUserInfoView == nil) {
+        
+        _upUserInfoView = [ParallaxHeaderView parallaxHeaderViewWithCGSize:CGSizeMake(DEVICE_WIDTH, initTop)];
+        [headBackView addSubview:_upUserInfoView];
+        
+        UIView *aView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT)];
+        aView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.3];
+        [_upUserInfoView.imageView addSubview:aView];
+    }
     
     //返回按钮
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -545,26 +647,27 @@
     [backBtn setFrame:CGRectMake(0, 0, 80, 80)];
     [backBtn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
     [backBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 12, 0, 12)];
-    [backBtn addTarget:self action:@selector(gGoBackVc) forControlEvents:UIControlEventTouchUpInside];
+        [backBtn addTarget:self action:@selector(clickToBack:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:backBtn];
-    
     
     //刷新loading
     
-    _refreshLoading = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    _refreshLoading.backgroundColor = [UIColor clearColor];
-    _refreshLoading.hidesWhenStopped = YES;
-    _refreshLoading.frame = CGRectMake(DEVICE_WIDTH - 30 - 24,50, 24, 24);
-    [self.view addSubview:_refreshLoading];
+    if (_refreshLoading == nil) {
+        _refreshLoading = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        _refreshLoading.backgroundColor = [UIColor clearColor];
+        _refreshLoading.hidesWhenStopped = YES;
+        _refreshLoading.frame = CGRectMake(DEVICE_WIDTH - 30 - 24,50, 24, 24);
+        [self.view addSubview:_refreshLoading];
+        
+        _refreshLoading.center = CGPointMake(_refreshLoading.center.x, self.backButton.center.y);
+    }
     
-    _refreshLoading.center = CGPointMake(_refreshLoading.center.x, backBtn.center.y);
-    
-    
-    
-    _headCell = [[[NSBundle mainBundle]loadNibNamed:@"UserCenterCell" owner:self options:nil]lastObject];
-    [_upUserInfoView addSubview:_headCell];
-    _headCell.frame = CGRectMake(0, 0, DEVICE_WIDTH, initTop);
-    _headCell.backgroundColor = [UIColor clearColor];
+    if (!_headCell) {
+        _headCell = [[[NSBundle mainBundle]loadNibNamed:@"UserCenterCell" owner:self options:nil]lastObject];
+        [_upUserInfoView addSubview:_headCell];
+        _headCell.frame = CGRectMake(0, 0, DEVICE_WIDTH, initTop);
+        _headCell.backgroundColor = [UIColor clearColor];
+    }
     
     if (isLoginUser) {
         
@@ -580,33 +683,7 @@
     [_headCell.chatButton addTarget:self action:@selector(clickToChat:) forControlEvents:UIControlEventTouchUpInside];
     //关注
     [_headCell.concernButton addTarget:self action:@selector(clickToConcern:) forControlEvents:UIControlEventTouchUpInside];
-    //关注 | 粉丝
-    UIView *concernBackView = [[UIView alloc]initWithFrame:CGRectMake(0, _userNameLabel.bottom, DEVICE_WIDTH, 150 - _userNameLabel.bottom)];
-    concernBackView.backgroundColor = [UIColor clearColor];
-    [_upUserInfoView addSubview:concernBackView];
-    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(DEVICE_WIDTH/2.f - 0.5, 5 + 5, 1, concernBackView.height - 20)];
-    line.backgroundColor = [UIColor whiteColor];
-    [concernBackView addSubview:line];
-    
-    //关注的数字
-    
-    NSString *concernNum = [NSString stringWithFormat:@"关注 %d",0];
-    _concernNumLabel = [LTools createLabelFrame:CGRectMake(line.left - 100 - 10, 0, 100, concernBackView.height) title:concernNum font:14 align:NSTextAlignmentRight textColor:[UIColor whiteColor]];
-    [concernBackView addSubview:_concernNumLabel];
-    [_concernNumLabel addTaget:self action:@selector(clickToConcernList:) tag:0];
-    
-    //粉丝的数字
-    concernNum = [NSString stringWithFormat:@"粉丝 %d",0];
-    _fansLabel = [LTools createLabelFrame:CGRectMake(line.right + 10, 0, 100, concernBackView.height) title:concernNum font:14 align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
-    [concernBackView addSubview:_fansLabel];
-    [_fansLabel addTaget:self action:@selector(clickToFansList) tag:0];
-    
-    
-//    //编辑T台
-//    UILabel *editTtai = [LTools createLabelFrame:CGRectMake(concernBackView.frame.size.width - 50, 0, 40, concernBackView.frame.size.height) title:@"编辑" font:14 align:NSTextAlignmentCenter textColor:[UIColor whiteColor]];
-//    [concernBackView addSubview:editTtai];
-//    [editTtai addTaget:self action:@selector(editMyTtai) tag:0];
-    
+
     
     //跳转粉丝列表
     [_headCell.fansView addTaget:self action:@selector(clickToFansList) tag:0];
@@ -616,6 +693,8 @@
     
     //跳转我的收藏
     [_headCell.collectionButton addTarget:self action:@selector(clickToCollect:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [_headCell.shopButton addTarget:self action:@selector(clickToShop:) forControlEvents:UIControlEventTouchUpInside];
 
     
     return headBackView;
@@ -628,14 +707,6 @@
     ccc.lastPageNavigationHidden = YES;
     [self.navigationController pushViewController:ccc animated:YES];
 }
-////编辑T台
-//-(void)editMyTtai{
-//    GEditMyTtaiViewController *ccc = [[GEditMyTtaiViewController alloc]init];
-//    ccc.lastPageNavigationHidden = YES;
-//    [self.navigationController pushViewController:ccc animated:YES];
-//    
-//    
-//}
 
 //初始化瀑布流
 -(void)creatWaterFlowView{
@@ -778,6 +849,8 @@
     [cell setCellWithModel:aMode];
     
     cell.like_btn.tag = 100 + indexPath.row;
+    
+    [cell.like_btn addTarget:self action:@selector(clickToZan:) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
 }

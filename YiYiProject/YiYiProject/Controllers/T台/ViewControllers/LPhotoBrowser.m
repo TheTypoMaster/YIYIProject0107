@@ -340,23 +340,6 @@
 
 - (void)clickToZan:(UIButton *)sender
 {
-    //    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
-    //
-    //        LoginViewController *login = [[LoginViewController alloc]init];
-    //
-    //        login.isSpecial = YES;
-    //
-    //        LNavigationController *unVc = [[LNavigationController alloc]initWithRootViewController:login];
-    //
-    //        UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    //        [window addSubview:unVc.view];
-    //        [window.rootViewController addChildViewController:unVc];
-    //
-    //    }else
-    //    {
-    //        sender.selected = !sender.selected;
-    //        [self zanTTaiDetail:sender.selected];
-    //    }
     
     if ([LTools isLogin:self]) {
         
@@ -373,7 +356,9 @@
 
 - (void)clickToZhuanFa:(UIButton *)sender
 {
-    [[LShareSheetView shareInstance] showShareContent:detail_model.tt_content title:@"衣加衣" shareUrl:@"http://www.alayy.com" shareImage:self.showImageView.image targetViewController:self];
+    NSString *productString = [NSString stringWithFormat:SHARE_PRODUCT_DETAIL,self.t_model.tt_id];
+    
+    [[LShareSheetView shareInstance] showShareContent:detail_model.tt_content title:@"衣加衣" shareUrl:productString shareImage:self.showImageView.image targetViewController:self];
     [[LShareSheetView shareInstance]actionBlock:^(NSInteger buttonIndex, Share_Type shareType) {
         
         if (shareType == Share_QQ) {
