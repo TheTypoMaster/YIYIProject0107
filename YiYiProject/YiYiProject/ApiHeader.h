@@ -91,6 +91,8 @@ alpha:(a)]
 
 #define NOTIFICATION_APPENTERFOREGROUND @"notification_appEnterForeground" //应用从后台转向前台
 
+#define NOTIFICATION_EDIT_SHOP_PHONE_SUCCESS @" NOTIFICATION_EDIT_SHOP_PHONE_SUCCESS"//编辑店铺电话成功
+
 //关注商场
 #define NOTIFICATION_GUANZHU_STORE @"guanzhu_store"
 //取消关注商场
@@ -120,6 +122,8 @@ alpha:(a)]
 #define NOTIFICATION_UPDATE_ZANNUM @"updateZanNum"
 //更新评论数字
 #define NOTIFICATION_UPDATE_COMMENTNUM @"updateCommentNum"
+
+
 
 
 //登录类型 normal为正常手机登陆，sweibo、qq、weixin分别代表新浪微博、qq、微信登陆

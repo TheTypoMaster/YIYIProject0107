@@ -106,7 +106,7 @@
         
         if ([result[@"errorcode"]intValue] == 0) {
             [GMAPI showAutoHiddenMBProgressWithText:result[@"msg"] addToView:self.view];
-//            [[NSNotificationCenter defaultCenter]postNotificationName:EDIT_SHOP_PHONE_SUCCESS object:nil];
+            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_EDIT_SHOP_PHONE_SUCCESS object:nil];
             [self performSelector:@selector(ggggoback) withObject:[NSNumber numberWithBool:YES] afterDelay:1.5];
         }else{
             [GMAPI showAutoHiddenMBProgressWithText:result[@"msg"] addToView:self.view];
