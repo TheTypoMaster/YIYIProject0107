@@ -68,7 +68,7 @@
     [self.contentView addSubview:nameLabel];
     [self.contentView addSubview:activeLabel];
     
-    self.contentView.backgroundColor = RGBCOLOR(248, 248, 248);
+    
 }
 
 

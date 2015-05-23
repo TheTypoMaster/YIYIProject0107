@@ -443,7 +443,7 @@
     [self.view addSubview:downDanghangView];
     
     UIButton *daohangBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [daohangBtn setFrame:CGRectMake(12, 4, 62, 28)];
+    [daohangBtn setFrame:CGRectMake(6, 4, 62, 28)];
     [daohangBtn setImage:[UIImage imageNamed:@"gdaohang_product.png"] forState:UIControlStateNormal];
     [downDanghangView addSubview:daohangBtn];
     [daohangBtn addTarget:self action:@selector(leadYouBuy) forControlEvents:UIControlEventTouchUpInside];
@@ -478,6 +478,7 @@
     
     if ([self.phoneNumber intValue] == 0) {
         phoneBtn.hidden = YES;
+        [adressLabel setFrame:CGRectMake(CGRectGetMaxX(daohangBtn.frame)+8, 0, DEVICE_WIDTH-CGRectGetMaxX(daohangBtn.frame)-14, downDanghangView.frame.size.height)];
     }
     
     

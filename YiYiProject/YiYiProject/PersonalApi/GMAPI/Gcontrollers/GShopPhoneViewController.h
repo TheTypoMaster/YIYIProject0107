@@ -13,4 +13,6 @@
 
 @property(nonatomic,strong)NSString *shop_id;
 
+@property(nonatomic,strong)NSString *theShopPhone;//店铺电话
+
 @end

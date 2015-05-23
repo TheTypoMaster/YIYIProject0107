@@ -333,10 +333,11 @@
     //导航 地址
     UIView *downDanghangView = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT-35-64, DEVICE_WIDTH, 35)];
     NSLog(@"%@",NSStringFromCGRect(downDanghangView.frame));
+    downDanghangView.backgroundColor = RGBCOLOR(74, 74, 74);
     [self.view addSubview:downDanghangView];
     
     UIButton *daohangBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [daohangBtn setFrame:CGRectMake(12, 4, 62, 28)];
+    [daohangBtn setFrame:CGRectMake(6, 4, 62, 28)];
     [daohangBtn setImage:[UIImage imageNamed:@"gdaohang_product.png"] forState:UIControlStateNormal];
     [downDanghangView addSubview:daohangBtn];
     [daohangBtn addTarget:self action:@selector(leadYouBuy) forControlEvents:UIControlEventTouchUpInside];

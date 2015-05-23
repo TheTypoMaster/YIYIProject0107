@@ -54,10 +54,11 @@
     
         for (int i = 0; i<[self.myTopScrollView.nameArray count]; i++) {
             UITableView *tab = [[UITableView alloc]initWithFrame:CGRectMake(0+self.frame.size.width*i, 0, self.frame.size.width, self.frame.size.height) style:UITableViewStylePlain];
-            tab.backgroundColor = RGBCOLOR(248, 248, 248);
+            tab.backgroundColor =[UIColor whiteColor];
             tab.tag = 200+i;
             tab.delegate = self;
             tab.dataSource = self;
+            tab.showsVerticalScrollIndicator = NO;
             [self.tabelViewArray addObject:tab];
             if (i==0) {
                 

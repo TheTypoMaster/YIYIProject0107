@@ -61,7 +61,13 @@
     _phoneTf.layer.cornerRadius = 4;
     _phoneTf.font = [UIFont systemFontOfSize:15];
     _phoneTf.keyboardType = UIKeyboardTypeNumberPad;
-    _phoneTf.placeholder = @"请输入联系电话";
+    
+    NSLog(@"---------%@-------",self.theShopPhone);
+    if (self.theShopPhone.length>0) {
+        _phoneTf.text = self.theShopPhone;
+    }else{
+        _phoneTf.placeholder = @"请输入联系电话";
+    }
     [self.view addSubview:_phoneTf];
     
     UIButton *quedingBtn = [UIButton buttonWithType:UIButtonTypeCustom];

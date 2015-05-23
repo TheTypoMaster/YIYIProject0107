@@ -19,6 +19,7 @@
 @property(nonatomic,retain)NSString *floor;
 @property(nonatomic,retain)NSString *doorno;
 @property(nonatomic,retain)NSString *shop_mobile;
+@property(nonatomic,strong)NSString *shop_phone;//店铺联系电话
 @property(nonatomic,retain)NSString *status;
 @property(nonatomic,retain)NSString *address;
 @property(nonatomic,retain)NSString *logo;
