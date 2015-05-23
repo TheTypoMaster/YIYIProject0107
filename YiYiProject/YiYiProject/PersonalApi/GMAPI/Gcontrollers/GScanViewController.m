@@ -60,12 +60,6 @@
     
     
     
-    //半透明的浮层
-//    UIImageView *backImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT-64)];
-//    backImageView.image = [UIImage imageNamed:@"saoyisao_bg_640_996.png"];
-//    [self.view addSubview:backImageView];
-    
-    
     //四个角
     _fourJiaoImageView =[[UIImageView alloc]init];
     
@@ -200,10 +194,13 @@
     
     [MBProgressHUD showHUDAddedTo:_fourJiaoImageView animated:YES];
     dispatch_async(dispatch_get_main_queue(), ^{
-        if (!TARGET_IPHONE_SIMULATOR) {
-            [self checkAVAuthorizationStatus];
-            [MBProgressHUD hideHUDForView:_fourJiaoImageView animated:YES];
-        }
+//        if (!TARGET_IPHONE_SIMULATOR) {
+//            [self checkAVAuthorizationStatus];
+//            [MBProgressHUD hideHUDForView:_fourJiaoImageView animated:YES];
+//        }
+        [self checkAVAuthorizationStatus];
+        [MBProgressHUD hideHUDForView:_fourJiaoImageView animated:YES];
+        
     });
     
     
@@ -211,15 +208,16 @@
 
 - (void)checkAVAuthorizationStatus
 {
-    AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
-    //    NSString *tips = NSLocalizedString(@"AVAuthorization", @"您没有权限访问相机");
-    if(status == AVAuthorizationStatusAuthorized) {
-        // authorized
-        [self setupCamera];
-    } else {
-        UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"您没有权限访问相机,请到设置界面打开相机设置" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
-        [alertView show];
-    }
+    
+    [self setupCamera];
+//    AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+//    if(status == AVAuthorizationStatusAuthorized) {
+//        // authorized
+//        [self setupCamera];
+//    } else {
+//        UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"请到设置界面允许衣加衣获取使用相机的权限" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil,nil];
+//        [alertView show];
+//    }
 }
 
 - (void)setupCamera

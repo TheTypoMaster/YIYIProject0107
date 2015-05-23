@@ -110,7 +110,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    
+    self.view.backgroundColor = [UIColor whiteColor];
     
     _spaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     
@@ -142,7 +142,6 @@
     
     NSLog(@"哪个vc %s",__FUNCTION__);
     
-    self.view.backgroundColor = RGBCOLOR(248, 248, 248);
     
     
 }
@@ -302,13 +301,13 @@
             [_upStoreInfoView addSubview:_huodongLabel];
             [_upStoreInfoView setFrame:CGRectMake(0, 0, DEVICE_WIDTH, 65)];
             _downLine = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_huodongLabel.frame)+15, DEVICE_WIDTH, 0.5)];
-            _downLine.backgroundColor = RGBCOLOR(255, 72, 135);
+            _downLine.backgroundColor = RGBCOLOR(255, 100, 154);
             [_upStoreInfoView addSubview:_downLine];
             
             _huodongFlag = [[UILabel alloc]initWithFrame:CGRectMake(DEVICE_WIDTH-82, CGRectGetMaxY(_huodongLabel.frame), 70, 15)];
             _huodongFlag.font = [UIFont systemFontOfSize:11];
             _huodongFlag.text = @"活动";
-            _huodongFlag.textColor = RGBCOLOR(252, 74, 139);
+            _huodongFlag.textColor = RGBCOLOR(255, 100, 154);
             _huodongFlag.textAlignment = NSTextAlignmentRight;
             [_upStoreInfoView addSubview:_huodongFlag];
         }else{
@@ -334,7 +333,6 @@
     //导航 地址
     UIView *downDanghangView = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT-35-64, DEVICE_WIDTH, 35)];
     NSLog(@"%@",NSStringFromCGRect(downDanghangView.frame));
-    downDanghangView.backgroundColor = RGBCOLOR(74, 74, 74);
     [self.view addSubview:downDanghangView];
     
     UIButton *daohangBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -397,7 +395,7 @@
     _topScrollView = [[GtopScrollView alloc]initWithFrame:CGRectMake(0, 0, _floorView.frame.size.width, 28)];
     _rootScrollView = [[GRootScrollView alloc]initWithFrame:CGRectMake(0, 28, _topScrollView.frame.size.width, _floorView.frame.size.height-_topScrollView.frame.size.height)];
     _rootScrollView.nearbyStoreVC = self;
-    _rootScrollView.backgroundColor = RGBCOLOR(248, 248, 248);
+    _rootScrollView.backgroundColor = [UIColor whiteColor];
     _topScrollView.myRootScrollView = _rootScrollView;
     _rootScrollView.myTopScrollView = _topScrollView;
     

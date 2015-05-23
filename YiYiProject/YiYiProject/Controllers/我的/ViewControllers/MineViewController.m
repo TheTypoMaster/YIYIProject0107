@@ -29,7 +29,6 @@
 #import "MySettingsViewController.h" //设置
 #import "EditMyInfoViewController.h"  //编辑资料
 
-//#import "ShenQingDianPuViewController.h"
 #import "ShenQingDianPuViewController.h"
 
 #import "MyShopViewController.h"//我的店铺
@@ -46,13 +45,15 @@
 
 #import "GwebViewController.h"//web界面
 
+#import "GmyTtaiViewController.h"//我的T台
+
 typedef enum{
     USERFACE = 0,//头像
     USERBANNER,//banner
     USERIMAGENULL,
 }CHANGEIMAGETYPE;
 
-#define CROPIMAGERATIO_USERBANNER 320.00/150 //banner 图片裁剪框宽高比
+#define CROPIMAGERATIO_USERBANNER 748.0/420 //banner 图片裁剪框宽高比
 #define CROPIMAGERATIO_USERFACE 1.0//头像 图片裁剪框宽高比例
 
 #define UPIMAGECGSIZE_USERBANNER CGSizeMake(1080,1080*0.4687)//需要上传的banner的分辨率
@@ -92,6 +93,13 @@ typedef enum{
     
     UILabel *_unreadLabel;//未读消息label
     
+    UILabel *_fensiNumLabel;//粉丝数目
+    UILabel *_guanzhuNumLabel;//关注数目
+    UILabel *_ttaiNumLabel;//T台数目
+    
+    UIView *_fensiView;
+    UIView *_guanzhuView;
+    UIView *_ttaiView;
 }
 @end
 
@@ -102,8 +110,6 @@ typedef enum{
     [super viewWillAppear:animated];
     
     [self.navigationController setNavigationBarHidden:YES animated:animated];
-    
-//    NSData *data = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
 
 }
 
@@ -188,6 +194,7 @@ typedef enum{
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.tableHeaderView = [self creatTableViewHeaderView];
+    _tableView.backgroundColor = RGBCOLOR(242, 242, 242);
     [self.view addSubview:_tableView];
     
     
@@ -345,6 +352,12 @@ typedef enum{
             [GMAPI setUserFaceImageWithData:UIImagePNGRepresentation(self.userFaceImv.image)];
         }];
         
+        
+        _fensiNumLabel.text = [dic stringValueForKey:@"fans_num"];
+        _guanzhuNumLabel.text = [dic stringValueForKey:@"favor_num"];
+        _ttaiNumLabel.text = [dic stringValueForKey:@"tt_num"];
+        
+        
         [_tableView reloadData];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
@@ -361,7 +374,7 @@ typedef enum{
 ///创建用户头像banner的view
 -(UIView *)creatTableViewHeaderView{
     //底层view
-    _backView = [ParallaxHeaderView parallaxHeaderViewWithCGSize:CGSizeMake(DEVICE_WIDTH, 150.00*DEVICE_WIDTH/320)];
+    _backView = [ParallaxHeaderView parallaxHeaderViewWithCGSize:CGSizeMake(DEVICE_WIDTH, DEVICE_WIDTH*420/748.0)];
     _backView.headerImage = DEFAULT_BANNER_IMAGE;
     
     NSLog(@"%@",NSStringFromCGRect(_backView.frame));
@@ -376,19 +389,10 @@ typedef enum{
     titleLabel.textColor = [UIColor whiteColor];
     [_backView addSubview:titleLabel];
     
-    //小齿轮设置按钮
-//    _chilunBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [_chilunBtn setFrame:CGRectMake(15, 30, 40, 40)];
-//    [_chilunBtn setImage:[UIImage imageNamed:@"my_shezhi.png"] forState:UIControlStateNormal];
-//    [_chilunBtn addTarget:self action:@selector(xiaochilun) forControlEvents:UIControlEventTouchUpInside];
-//    _chilunBtn.layer.masksToBounds = NO;
-//    _chilunBtn.layer.shadowColor = [UIColor blackColor].CGColor;
-//    _chilunBtn.layer.shadowOffset = CGSizeMake(0.0f, 5.0f);
-//    _chilunBtn.layer.shadowOpacity = 0.5f;
     
     
     //头像
-    self.userFaceImv = [[UIImageView alloc]initWithFrame:CGRectMake(30*GscreenRatio_320, _backView.frame.size.height - 75, 50, 50)];
+    self.userFaceImv = [[UIImageView alloc]initWithFrame:CGRectMake(20*GscreenRatio_320, _backView.frame.size.height - 125, 50, 50)];
     [self.userFaceImv setImage:[UIImage imageNamed:@"grzx150_150.png"]];
     self.userFaceImv.layer.cornerRadius = 25;
     self.userFaceImv.layer.masksToBounds = YES;
@@ -408,24 +412,9 @@ typedef enum{
     
     
     
-    
-    
-//    //编辑按钮
-//    _editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [_editBtn setFrame:CGRectMake(DEVICE_WIDTH-60, _chilunBtn.frame.origin.y-7, 55, 44)];
-//    _editBtn.titleLabel.font = [UIFont systemFontOfSize:16*GscreenRatio_320];
-//    [_editBtn addTarget:self action:@selector(goToEdit) forControlEvents:UIControlEventTouchUpInside];
-//    [_editBtn setTitle:@"编辑" forState:UIControlStateNormal];
-//    _editBtn.layer.masksToBounds = NO;
-//    _editBtn.layer.shadowColor = [UIColor blackColor].CGColor;
-//    _editBtn.layer.shadowOffset = CGSizeMake(0.0f, 5.0f);
-//    _editBtn.layer.shadowOpacity = 0.5f;
-    
-    
-    
     //签到
     _qiandaoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_qiandaoBtn setFrame:CGRectMake(DEVICE_WIDTH-60, CGRectGetMaxY(_backView.frame)-50, 50, 40)];
+    [_qiandaoBtn setFrame:CGRectMake(DEVICE_WIDTH-60, CGRectGetMaxY(_backView.frame)-120, 50, 40)];
     [_qiandaoBtn addTarget:self action:@selector(gQiandao:) forControlEvents:UIControlEventTouchUpInside];
     _qiandaoBtn.userInteractionEnabled = YES;
     [_backView addSubview:_qiandaoBtn];
@@ -433,6 +422,73 @@ typedef enum{
     
     [_qiandaoBtn setImage:[UIImage imageNamed:@"gqiandao_up.png"] forState:UIControlStateNormal];
     [_qiandaoBtn setImage:[UIImage imageNamed:@"gqiandao_down.png"] forState:UIControlStateSelected];
+    
+    
+    
+    
+    UIImageView *theBlackBackView = [[UIImageView alloc]initWithFrame:CGRectMake(0, _backView.frame.size.height-50, DEVICE_WIDTH, 50)];
+    [theBlackBackView setImage:[UIImage imageNamed:@"shouye_bg.png"]];
+    theBlackBackView.userInteractionEnabled = YES;
+    [_backView addSubview:theBlackBackView];
+    
+    
+    CGFloat dddd = DEVICE_WIDTH/3;
+    CGFloat yyyy = _backView.frame.size.height-50;
+    
+    //粉丝
+    _fensiView = [[UIView alloc]initWithFrame:CGRectMake(0, yyyy, dddd, 50)];
+    _fensiNumLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 5, dddd, 25)];
+    _fensiNumLabel.text = @"";
+    _fensiNumLabel.textAlignment = NSTextAlignmentCenter;
+    _fensiNumLabel.font = [UIFont systemFontOfSize:13];
+    [_fensiView addSubview:_fensiNumLabel];
+    _fensiNumLabel.textColor = [UIColor whiteColor];
+    UILabel *fensit = [[UILabel alloc]initWithFrame:CGRectMake(0, 25, dddd, 25)];
+    fensit.textAlignment = NSTextAlignmentCenter;
+    fensit.text = @"粉丝";
+    fensit.font = [UIFont systemFontOfSize:13];
+    fensit.textColor = [UIColor whiteColor];
+    [_fensiView addSubview:fensit];
+    [_backView addSubview:_fensiView];
+    
+    //关注
+    _guanzhuView = [[UIView alloc]initWithFrame:CGRectMake(dddd, yyyy, dddd, 50)];
+    _guanzhuNumLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 5, dddd, 25)];
+    _guanzhuNumLabel.text = @"";
+    _guanzhuNumLabel.textColor = [UIColor whiteColor];
+    _guanzhuNumLabel.textAlignment = NSTextAlignmentCenter;
+    _guanzhuNumLabel.font = [UIFont systemFontOfSize:13];
+    
+    UILabel *guanzhut = [[UILabel alloc]initWithFrame:CGRectMake(0, 25, dddd, 25)];
+    guanzhut.textColor = [UIColor whiteColor];
+    guanzhut.text = @"关注";
+    guanzhut.font = [UIFont systemFontOfSize:13];
+    guanzhut.textAlignment = NSTextAlignmentCenter;
+    [_guanzhuView addSubview:guanzhut];
+    [_guanzhuView addSubview:_guanzhuNumLabel];
+    [_backView addSubview:_guanzhuView];
+    
+    //T台
+    _ttaiView = [[UIView alloc]initWithFrame:CGRectMake(2*dddd, yyyy, dddd, 50)];
+    _ttaiNumLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 5, dddd, 25)];
+    _ttaiNumLabel.text = @"";
+    _ttaiNumLabel.textColor = [UIColor whiteColor];
+    _ttaiNumLabel.textAlignment = NSTextAlignmentCenter;
+    _ttaiNumLabel.font = [UIFont systemFontOfSize:13];
+    UILabel *ttt = [[UILabel alloc]initWithFrame:CGRectMake(0, 25, dddd, 25)];
+    ttt.textAlignment = NSTextAlignmentCenter;
+    ttt.font = [UIFont systemFontOfSize:13];
+    ttt.text = @"T台";
+    ttt.textColor = [UIColor whiteColor];
+    [_ttaiView addSubview:ttt];
+    [_ttaiView addSubview:_ttaiNumLabel];
+    [_backView addSubview:_ttaiView];
+    
+    [_fensiView addTaget:self action:@selector(fensiClicked) tag:0];
+    [_guanzhuView addTaget:self action:@selector(guanzuClicked) tag:0];
+    [_ttaiView addTaget:self action:@selector(ttaiClicked) tag:0];
+    
+    
     
     
     
@@ -452,19 +508,17 @@ typedef enum{
     [_backView addSubview:self.userFaceImv];
     [_backView addSubview:self.userNameLabel];
     [_backView addSubview:self.userScoreLabel];
-//    [_backView addSubview:_editBtn];
-//    [_backView addSubview:_chilunBtn];
+
     
-    //判断是否登录
-    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
-        self.userNameLabel.hidden = YES;
-        self.userScoreLabel.hidden = YES;
-        self.userFaceImv.hidden = YES;
-//        _editBtn.hidden = YES;
-//        _chilunBtn.hidden = YES;
-        _qiandaoBtn.hidden = YES;
-        
-    }
+//    //判断是否登录
+//    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
+//        self.userNameLabel.hidden = YES;
+//        self.userScoreLabel.hidden = YES;
+//        self.userFaceImv.hidden = YES;
+//        _qiandaoBtn.hidden = YES;
+//        
+//        
+//    }
     
     
     
@@ -494,6 +548,39 @@ typedef enum{
 }
 
 
+//粉丝 关注 T台点击跳转
+-(void)fensiClicked{
+    NSLog(@"%s",__FUNCTION__);
+    NSString *userId = [GMAPI getUid];
+    
+    [MiddleTools pushToUserListWithObjectId:userId listType:User_MyFansList forViewController:self lastNavigationHidden:YES updateParmsBlock:^(NSDictionary *params) {
+        
+    }];
+}
+
+-(void)guanzuClicked{
+    NSLog(@"%s",__FUNCTION__);
+    NSString *userId = [GMAPI getUid];
+    [MiddleTools pushToUserListWithObjectId:userId listType:User_MyConcernList forViewController:self lastNavigationHidden:YES updateParmsBlock:^(NSDictionary *params) {
+        
+    }];
+}
+
+-(void)ttaiClicked{
+    NSLog(@"%s",__FUNCTION__);
+    GmyTtaiViewController *ccc = [[GmyTtaiViewController alloc]init];
+    ccc.hidesBottomBarWhenPushed = YES;
+    ccc.lastPageNavigationHidden = YES;
+    [self.navigationController pushViewController:ccc animated:YES];
+    
+    
+}
+
+
+
+
+
+
 //修改顶部信息view登录未登录状态
 -(void)setUpuserInfoViewWithLoginState:(BOOL)theState{
     if (theState) {//登录
@@ -501,17 +588,21 @@ typedef enum{
         self.userScoreLabel.hidden = NO;
         self.userFaceImv.hidden = NO;
         _editBtn.hidden = NO;
-        
         _loginBtn.hidden = YES;
         _qiandaoBtn.hidden = NO;
+        _fensiView.hidden = NO;
+        _guanzhuView.hidden = NO;
+        _ttaiView.hidden = NO;
     }else{//未登录
         self.userNameLabel.hidden = YES;
         self.userScoreLabel.hidden = YES;
         self.userFaceImv.hidden = YES;
         _editBtn.hidden = YES;
-        
         _qiandaoBtn.hidden = YES;
         _loginBtn.hidden = NO;
+        _fensiView.hidden = YES;
+        _guanzhuView.hidden = YES;
+        _ttaiView.hidden = YES;
         
     }
 }
@@ -519,6 +610,13 @@ typedef enum{
 
 //签到
 -(void)gQiandao:(UIButton *)sender{
+    
+    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
+        return;
+    }
+    
+    
+    
     
     
     if (sender.selected == YES) {//已经签到
@@ -872,6 +970,7 @@ typedef enum{
     NSLog(@"%@",_tabelViewCellTitleArray[indexPath.row]);
     
     [cell creatCustomViewWithGcellType:GPERSON indexPath:indexPath customObject:_customInfo_tabelViewCell];
+    
     
     return cell;
 }
@@ -1370,6 +1469,13 @@ typedef enum{
     [self presentViewController:unVc animated:YES completion:nil];
 }
 
+
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.01f;
+}
 
 
 

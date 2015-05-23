@@ -385,6 +385,7 @@
 		E308939A1AE04E7D00DA342C /* fshan@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E30893991AE04E7D00DA342C /* fshan@2x.png */; };
 		E308939D1AE0587700DA342C /* GChooseLocationMoveAnViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E308939C1AE0587700DA342C /* GChooseLocationMoveAnViewController.m */; };
 		E308939F1AE05D1900DA342C /* road_select@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E308939E1AE05D1900DA342C /* road_select@2x.png */; };
+		E3142BDD1B10D08E00883BA7 /* GmyTtaiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3142BDC1B10D08E00883BA7 /* GmyTtaiViewController.m */; };
 		E334B81E1AFB47DB00DC9209 /* MyShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E334B81D1AFB47DB00DC9209 /* MyShopViewController.m */; };
 		E334B8251AFB943F00DC9209 /* dianzhu_01@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E334B81F1AFB943F00DC9209 /* dianzhu_01@2x.png */; };
 		E334B8261AFB943F00DC9209 /* dianzhu_02@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E334B8201AFB943F00DC9209 /* dianzhu_02@2x.png */; };
@@ -443,6 +444,7 @@
 		E37F843E1B1072D70086CBB7 /* my_shoucang@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E37F84361B1072D70086CBB7 /* my_shoucang@2x.png */; };
 		E37F843F1B1072D70086CBB7 /* my_store@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E37F84371B1072D70086CBB7 /* my_store@2x.png */; };
 		E37F84431B10784C0086CBB7 /* my_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E37F84421B10784C0086CBB7 /* my_bg@2x.png */; };
+		E37F84451B1080890086CBB7 /* shouye_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E37F84441B1080890086CBB7 /* shouye_bg@2x.png */; };
 		E380ADE61AD4E302008219A0 /* gcamera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E380ADE51AD4E302008219A0 /* gcamera@2x.png */; };
 		E380ADEC1AD5F5B6008219A0 /* gback_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E380ADEB1AD5F5B6008219A0 /* gback_white@2x.png */; };
 		E380ADF21AD5FD5F008219A0 /* GTtailj_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E380ADF11AD5FD5F008219A0 /* GTtailj_bg@2x.png */; };
@@ -1140,6 +1142,8 @@
 		E308939B1AE0587700DA342C /* GChooseLocationMoveAnViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GChooseLocationMoveAnViewController.h; sourceTree = "<group>"; };
 		E308939C1AE0587700DA342C /* GChooseLocationMoveAnViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GChooseLocationMoveAnViewController.m; sourceTree = "<group>"; };
 		E308939E1AE05D1900DA342C /* road_select@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "road_select@2x.png"; sourceTree = "<group>"; };
+		E3142BDB1B10D08E00883BA7 /* GmyTtaiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GmyTtaiViewController.h; sourceTree = "<group>"; };
+		E3142BDC1B10D08E00883BA7 /* GmyTtaiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GmyTtaiViewController.m; sourceTree = "<group>"; };
 		E334B81C1AFB47DB00DC9209 /* MyShopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyShopViewController.h; sourceTree = "<group>"; };
 		E334B81D1AFB47DB00DC9209 /* MyShopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyShopViewController.m; sourceTree = "<group>"; };
 		E334B81F1AFB943F00DC9209 /* dianzhu_01@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dianzhu_01@2x.png"; sourceTree = "<group>"; };
@@ -1283,6 +1287,7 @@
 		E37F84361B1072D70086CBB7 /* my_shoucang@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "my_shoucang@2x.png"; sourceTree = "<group>"; };
 		E37F84371B1072D70086CBB7 /* my_store@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "my_store@2x.png"; sourceTree = "<group>"; };
 		E37F84421B10784C0086CBB7 /* my_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "my_bg@2x.png"; sourceTree = "<group>"; };
+		E37F84441B1080890086CBB7 /* shouye_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shouye_bg@2x.png"; sourceTree = "<group>"; };
 		E380ADE51AD4E302008219A0 /* gcamera@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gcamera@2x.png"; sourceTree = "<group>"; };
 		E380ADEB1AD5F5B6008219A0 /* gback_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gback_white@2x.png"; sourceTree = "<group>"; };
 		E380ADF11AD5FD5F008219A0 /* GTtailj_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GTtailj_bg@2x.png"; sourceTree = "<group>"; };
@@ -1576,6 +1581,7 @@
 			isa = PBXGroup;
 			children = (
 				13CC03881B10A0A300A42BC1 /* 我的收藏 */,
+				E37F84441B1080890086CBB7 /* shouye_bg@2x.png */,
 				13A7A0321AF8A95A0045C75F /* navigationBarBackground_1@2x.png */,
 				E36DAF111AD40AD300C7FEA4 /* navigationBarBackground@2x.png */,
 				E36DAF0F1AD40A6900C7FEA4 /* navigationBarColor_black@2x.png */,
@@ -3096,6 +3102,8 @@
 				E3BFB1531B00C4C8007DA1C1 /* GfangkeViewController.m */,
 				E3FB5C381B0ADB8E00787D5A /* GEditMyTtaiViewController.h */,
 				E3FB5C391B0ADB8E00787D5A /* GEditMyTtaiViewController.m */,
+				E3142BDB1B10D08E00883BA7 /* GmyTtaiViewController.h */,
+				E3142BDC1B10D08E00883BA7 /* GmyTtaiViewController.m */,
 			);
 			path = Gcontrollers;
 			sourceTree = "<group>";
@@ -3468,6 +3476,7 @@
 				1391DC611A870673006A2E15 /* t_shoucang@2x.png in Resources */,
 				19F7B4371A67FFA600087BCB /* item_cancel@2x.png in Resources */,
 				137E0AE11A4C66F200B59F64 /* product_shoucang_cancel@2x.png in Resources */,
+				E37F84451B1080890086CBB7 /* shouye_bg@2x.png in Resources */,
 				137B08321A4E716700DE7DCC /* dian_xiaodian_@2x.png in Resources */,
 				13A389A31A38942D00ABBACB /* MineViewController.xib in Resources */,
 				E3B7BE141ACA578100FE8495 /* xiaoxi_up@2x.png in Resources */,
@@ -3954,6 +3963,7 @@
 				139607C01A46DC4E00AACAC4 /* FilterView.m in Sources */,
 				13A3898B1A38937600ABBACB /* HomeViewController.m in Sources */,
 				E308939D1AE0587700DA342C /* GChooseLocationMoveAnViewController.m in Sources */,
+				E3142BDD1B10D08E00883BA7 /* GmyTtaiViewController.m in Sources */,
 				E3996EDB1A5E1DBA00673147 /* GCycleScrollView.m in Sources */,
 				19F7B44B1A67FFA600087BCB /* UMFeedbackTableViewCellLeft.m in Sources */,
 				E3996EBB1A5E1DBA00673147 /* GLeadBuyMapViewController.m in Sources */,

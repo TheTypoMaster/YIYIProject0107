@@ -14,9 +14,10 @@
 #import "GStorePinpaiViewController.h"//店铺主页
 #import "GnearbyStoreViewController.h"//商场主页
 #import "ProductDetailController.h"//单品详情页
+#import "RefreshTableView.h"
+#import "GpinpaiDetailViewController.h"//品牌主页
 
-
-@interface GsearchViewController ()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate,GrefreshDelegate,UIScrollViewDelegate>
+@interface GsearchViewController ()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate,RefreshDelegate,UIScrollViewDelegate>
 {
     UIView *_searchHeaderView;
     UITextField * _searchTextField;
@@ -24,10 +25,8 @@
     NSMutableArray *_btnArray;
     int _selectIndex;
     
-    GrefreshTableView *_tableView;
-    int _page;//第几页
-    int _pageCapacity;//一页请求几条数据
-    NSArray *_dataArray;//数据源
+    RefreshTableView *_tableView;
+    
     
     //定位相关
     NSDictionary *_locationDic;
@@ -44,7 +43,7 @@
 
 - (void)dealloc
 {
-    _tableView.GrefreshDelegate = nil;
+    _tableView.refreshDelegate = nil;
     _tableView.dataSource = nil;
     _tableView.delegate = nil;
     _tableView = nil;
@@ -68,16 +67,14 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     
-    _pageCapacity = 20;
-    
     //创建搜索标题
     [self creatSearchHeaderView];
     
     _selectIndex = 100;
     
     //创建tableview
-    _tableView = [[GrefreshTableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_searchHeaderView.frame), DEVICE_WIDTH, DEVICE_HEIGHT - _searchHeaderView.frame.size.height-64)];
-    _tableView.GrefreshDelegate = self;
+    _tableView = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_searchHeaderView.frame), DEVICE_WIDTH, DEVICE_HEIGHT - _searchHeaderView.frame.size.height-64)];
+    _tableView.refreshDelegate = self;
     _tableView.dataSource =self;
     _tableView.hidden = YES;
     [self.view addSubview:_tableView];
@@ -234,10 +231,10 @@
     
     NSString *theWord = _searchTextField.text;
     
-    NSString *url = [NSString stringWithFormat:@"%@&keywords=%@&page=%d&per_page=%d&long=%@&lat=%@",GSEARCH,theWord,_page,_pageCapacity,[_locationDic stringValueForKey:@"long"],[_locationDic stringValueForKey:@"lat"]];
+    NSString *url = [NSString stringWithFormat:@"%@&keywords=%@&page=%d&per_page=%d&long=%@&lat=%@",GSEARCH,theWord,_tableView.pageNum,L_PAGE_SIZE,[_locationDic stringValueForKey:@"long"],[_locationDic stringValueForKey:@"lat"]];
     
     if (_selectIndex == 100) {//搜索品牌
-        url = [url stringByAppendingString:@"&type=brand"];
+        url = [url stringByAppendingString:@"&action=brand"];
     }else if (_selectIndex == 101){//搜索商铺
         url = [url stringByAppendingString:@"&type=mall"];
     }else if (_selectIndex == 102){//搜索单品
@@ -247,27 +244,16 @@
     //接口url:
     NSLog(@"请求用户通知接口:%@",url);
     
-    __weak typeof (self)bself = self;
     
-    GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:url isPost:NO postData:nil];
+    LTools *cc = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSArray *arr = [result arrayValueForKey:@"list"];
         
-        if (arr.count < _pageCapacity) {
-            
-            _tableView.isHaveMoreData = NO;
-        }else
-        {
-            _tableView.isHaveMoreData = YES;
-        }
+        [_tableView reloadData:arr pageSize:L_PAGE_SIZE];
         
-        
-        [bself reloadData:arr isReload:_tableView.isReloadData];
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         if (_tableView.isReloadData) {
-            
-            _page --;
             
             [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:0.1];
         }
@@ -275,50 +261,24 @@
     
 }
 
-#pragma mark - 下拉刷新上提加载更多
-/**
- *  刷新数据列表
- *
- *  @param dataArr  新请求的数据
- *  @param isReload 判断在刷新或者加载更多
- */
-- (void)reloadData:(NSArray *)dataArr isReload:(BOOL)isReload
-{
-    if (isReload) {
-        
-        _dataArray = dataArr;
-        
-    }else
-    {
-        NSMutableArray *newArr = [NSMutableArray arrayWithArray:_dataArray];
-        [newArr addObjectsFromArray:dataArr];
-        _dataArray = newArr;
-    }
-    
-    [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:0.1];
-}
 
-
-
-#pragma - mark RefreshDelegate <NSObject>
+#pragma - mark RefreshDelegate 
 
 - (void)loadNewData
 {
-    _page = 1;
     
     [self prepareNetData];
 }
 
 - (void)loadMoreData
 {
-    NSLog(@"loadMoreData");
-    
-    _page ++;
     
     [self prepareNetData];
 }
 
-- (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+
+//新加
+- (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
     NSLog(@"%s",__FUNCTION__);
     
@@ -326,28 +286,24 @@
     
     
     if (_selectIndex == 100) {//搜索的是品牌
-        NSDictionary *dic = _dataArray[indexPath.row];
-        GStorePinpaiViewController *ccc = [[GStorePinpaiViewController alloc]init];
-        ccc.storeIdStr = [dic stringValueForKey:@"mb_id"];
-        if ([[dic stringValueForKey:@"mall_type"]intValue]== 1) {//大商场
-            ccc.guanzhuleixing = @"商场";
-        }else if ([[dic stringValueForKey:@"mall_type"]intValue]== 2){
-            ccc.guanzhuleixing = @"精品店";
-        }else if ([[dic stringValueForKey:@"mall_type"]intValue]== 3){
-            ccc.guanzhuleixing = @"品牌店";
-        }
         
-        
-        ccc.storeNameStr = [dic stringValueForKey:@"mall_name"];
-        ccc.pinpaiNameStr = [dic stringValueForKey:@"brand_name"];
+        NSDictionary *dic = _tableView.dataArray[indexPath.row];
+        GpinpaiDetailViewController *ccc = [[GpinpaiDetailViewController alloc]init];
         if (self.isChooseProductLink) {
             ccc.isChooseProductLink = YES;
         }
-        
+        ccc.pinpaiIdStr = [dic stringValueForKey:@"brand_id"];
+        ccc.pinpaiName = [dic stringValueForKey:@"brand_name"];
+        ccc.locationDic = _locationDic;
         [self.navigationController pushViewController:ccc animated:YES];
         
+        
+        
+        
+        
+        
     }else if (_selectIndex == 101){//搜索的是商铺
-        NSDictionary *dic = _dataArray[indexPath.row];
+        NSDictionary *dic = _tableView.dataArray[indexPath.row];
         if ([[dic stringValueForKey:@"mall_type"]intValue] == 1) {//商场店
             GnearbyStoreViewController *ccc = [[GnearbyStoreViewController alloc]init];
             ccc.storeIdStr = [dic stringValueForKey:@"mall_id"];
@@ -368,7 +324,7 @@
             
         }
     }else if (_selectIndex == 102){//搜索的是单品
-        NSDictionary *dic = _dataArray[indexPath.row];
+        NSDictionary *dic = _tableView.dataArray[indexPath.row];
         ProductDetailController *ccc = [[ProductDetailController alloc]init];
         ccc.product_id = [dic stringValueForKey:@"product_id"];
         if (self.isChooseProductLink) {
@@ -377,10 +333,8 @@
         [self.navigationController pushViewController:ccc animated:YES];
     }
     
-    
 }
-
-- (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
     if (!_tmpCell) {
         _tmpCell = [[GcustomSearchTableViewCell alloc]init];
@@ -394,12 +348,12 @@
         _tmpCell.theType = GSEARCHTYPE_DANPIN;
     }
     
-    NSDictionary *dic = _dataArray[indexPath.row];
+    NSDictionary *dic = _tableView.dataArray[indexPath.row];
     CGFloat height = [_tmpCell loadCustomViewWithData:dic indexPath:indexPath];
     
     return height;
-    
 }
+
 
 
 
@@ -432,7 +386,7 @@
         cell.theType = GSEARCHTYPE_DANPIN;
     }
     
-    NSDictionary *data_dic = _dataArray[indexPath.row];
+    NSDictionary *data_dic = _tableView.dataArray[indexPath.row];
     
     [cell loadCustomViewWithData:data_dic indexPath:indexPath];
     
@@ -445,7 +399,7 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return _dataArray.count;
+    return _tableView.dataArray.count;
 }
 
 
@@ -469,10 +423,6 @@
 
 -(void)leftButtonTap:(UIButton *)sender
 {
-    
-    _tableView.delegate = nil;
-    _tableView.GrefreshDelegate = nil;
-    _tableView = nil;
     [self.navigationController popViewControllerAnimated:YES];
 }
 

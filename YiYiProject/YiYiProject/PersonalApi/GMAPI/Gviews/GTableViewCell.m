@@ -39,6 +39,12 @@
         UIImageView *jiantou = [[UIImageView alloc]initWithFrame:CGRectMake(DEVICE_WIDTH - 28, titleLabel.frame.origin.y+5, 7, 12)];
         [jiantou setImage:[UIImage imageNamed:@"my_jiantou.png"]];
         [self.contentView addSubview:jiantou];
+        
+        
+        
+        
+        
+        
     }
 }
 

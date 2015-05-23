@@ -24,6 +24,7 @@
 
 -(void)loadCustomViewWithModel:(NSDictionary *)theModel{
     
+    
     CGFloat customheight = DEVICE_WIDTH*375.0/621;
     
     UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, customheight)];
@@ -31,8 +32,8 @@
     [self.contentView addSubview:imv];
     
     
-    UIImageView *backImv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, customheight)];
-    [backImv setImage:[UIImage imageNamed:@"gactivityback.png"]];
+    UIImageView *backImv = [[UIImageView alloc]initWithFrame:CGRectMake(0, customheight-100, DEVICE_WIDTH, 100)];
+    [backImv setImage:[UIImage imageNamed:@"shouye_bg@2x.png"]];
     [self.contentView addSubview:backImv];
     
     

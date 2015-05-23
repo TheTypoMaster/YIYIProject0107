@@ -580,6 +580,33 @@
     [_headCell.chatButton addTarget:self action:@selector(clickToChat:) forControlEvents:UIControlEventTouchUpInside];
     //关注
     [_headCell.concernButton addTarget:self action:@selector(clickToConcern:) forControlEvents:UIControlEventTouchUpInside];
+    //关注 | 粉丝
+    UIView *concernBackView = [[UIView alloc]initWithFrame:CGRectMake(0, _userNameLabel.bottom, DEVICE_WIDTH, 150 - _userNameLabel.bottom)];
+    concernBackView.backgroundColor = [UIColor clearColor];
+    [_upUserInfoView addSubview:concernBackView];
+    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(DEVICE_WIDTH/2.f - 0.5, 5 + 5, 1, concernBackView.height - 20)];
+    line.backgroundColor = [UIColor whiteColor];
+    [concernBackView addSubview:line];
+    
+    //关注的数字
+    
+    NSString *concernNum = [NSString stringWithFormat:@"关注 %d",0];
+    _concernNumLabel = [LTools createLabelFrame:CGRectMake(line.left - 100 - 10, 0, 100, concernBackView.height) title:concernNum font:14 align:NSTextAlignmentRight textColor:[UIColor whiteColor]];
+    [concernBackView addSubview:_concernNumLabel];
+    [_concernNumLabel addTaget:self action:@selector(clickToConcernList:) tag:0];
+    
+    //粉丝的数字
+    concernNum = [NSString stringWithFormat:@"粉丝 %d",0];
+    _fansLabel = [LTools createLabelFrame:CGRectMake(line.right + 10, 0, 100, concernBackView.height) title:concernNum font:14 align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
+    [concernBackView addSubview:_fansLabel];
+    [_fansLabel addTaget:self action:@selector(clickToFansList) tag:0];
+    
+    
+//    //编辑T台
+//    UILabel *editTtai = [LTools createLabelFrame:CGRectMake(concernBackView.frame.size.width - 50, 0, 40, concernBackView.frame.size.height) title:@"编辑" font:14 align:NSTextAlignmentCenter textColor:[UIColor whiteColor]];
+//    [concernBackView addSubview:editTtai];
+//    [editTtai addTaget:self action:@selector(editMyTtai) tag:0];
+    
     
     //跳转粉丝列表
     [_headCell.fansView addTaget:self action:@selector(clickToFansList) tag:0];
@@ -601,6 +628,14 @@
     ccc.lastPageNavigationHidden = YES;
     [self.navigationController pushViewController:ccc animated:YES];
 }
+////编辑T台
+//-(void)editMyTtai{
+//    GEditMyTtaiViewController *ccc = [[GEditMyTtaiViewController alloc]init];
+//    ccc.lastPageNavigationHidden = YES;
+//    [self.navigationController pushViewController:ccc animated:YES];
+//    
+//    
+//}
 
 //初始化瀑布流
 -(void)creatWaterFlowView{
