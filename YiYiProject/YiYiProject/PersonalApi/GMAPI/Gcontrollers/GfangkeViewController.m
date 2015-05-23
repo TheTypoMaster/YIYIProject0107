@@ -154,7 +154,7 @@
         return;
     }
     
-    [MiddleTools pushToPersonalId:uid userType:G_Other forViewController:self lastNavigationHidden:YES];
+    [MiddleTools pushToPersonalId:uid userType:G_Other forViewController:self lastNavigationHidden:NO];
     
 }
 

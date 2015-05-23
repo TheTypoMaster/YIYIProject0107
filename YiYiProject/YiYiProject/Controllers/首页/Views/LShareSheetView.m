@@ -89,9 +89,9 @@
     
         
         bgView = [[UIView alloc]initWithFrame:CGRectMake(0, [UIApplication sharedApplication].keyWindow.bottom, DEVICE_WIDTH, _height_bgView)];
-//        bgView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.95];
+        bgView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.8];
         
-        bgView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.2];
+//        bgView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5];
         [self addSubview:bgView];
         
         CGFloat aWidth = 50.f;
@@ -119,14 +119,15 @@
             titleLabel.text = [items objectAtIndex:i];
             titleLabel.font = [UIFont systemFontOfSize:12];
             titleLabel.textAlignment = NSTextAlignmentCenter;
-            titleLabel.textColor = [UIColor whiteColor];
+            titleLabel.textColor = [UIColor blackColor];
             [bgView addSubview:titleLabel];
         }
         
-//        UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, bgView.height - 50, DEVICE_WIDTH, 0.5f)];
-//        lineView.backgroundColor = RGBCOLOR(221, 221, 221);
-//        [bgView addSubview:lineView];
+        UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, bgView.height - 50, DEVICE_WIDTH, 0.5f)];
+        lineView.backgroundColor = RGBCOLOR(221, 221, 221);
+        [bgView addSubview:lineView];
         
+        left = 10.f;
         
         UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
         cancelButton.frame = CGRectMake(left, bgView.height - 50, DEVICE_WIDTH - left * 2, 40.f);

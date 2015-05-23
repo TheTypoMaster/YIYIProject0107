@@ -30,4 +30,13 @@
  */
 - (void)addRoundCorner;
 
+/**
+ *  加边框
+ *
+ *  @param borderWidth  边框宽度
+ *  @param _borderColor 边框颜色
+ */
+- (void)setBorderWidth:(CGFloat)borderWidth
+           borderColor:(UIColor *)_borderColor;
+
 @end

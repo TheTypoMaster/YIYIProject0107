@@ -21,7 +21,7 @@
 #import "MyYiChuViewController.h"//我的衣橱
 
 #import "MyConcernController.h"//我的关注
-#import "MyCollectionController.h"//我的收藏
+#import "MessageListController.h"//消息中心
 
 #import "MyBodyViewController.h"//我的体型
 #import "MyMatchViewController.h"//我的搭配
@@ -88,6 +88,10 @@ typedef enum{
     
     CGFloat _lastOffsetY;
     
+    int _unreadNum;//未读消息条数
+    
+    UILabel *_unreadLabel;//未读消息label
+    
 }
 @end
 
@@ -99,11 +103,7 @@ typedef enum{
     
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     
-    NSData *data = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
-    
-    
-    
-    
+//    NSData *data = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
 
 }
 
@@ -131,6 +131,11 @@ typedef enum{
     
     //加载视图
     [self loadMineView];
+    
+    //获取未读消息条数
+    
+    _unreadNum = [self unreadMessageNum];
+    [self getUnreadMessageNum];
     
     //判断是否登录
     if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
@@ -679,6 +684,57 @@ typedef enum{
     [self.navigationController pushViewController:mySettingVC animated:YES];
 }
 
+#pragma mark 数据处理
+
+/**
+ *  tabbar上显示的未读消息数
+ *
+ *  @return 返回显示的个数
+ */
+- (int)unreadMessageNum
+{
+    UINavigationController *unvc = [[LTools appDelegate].rootViewController.viewControllers objectAtIndex:2];
+    int num = [unvc.tabBarItem.badgeValue intValue];
+    
+    return num > 0 ? num : 0;
+}
+
+/**
+ *  注册通知,获取未读消息条数
+ */
+- (void)getUnreadMessageNum
+{
+    UINavigationController *unvc = [[LTools appDelegate].rootViewController.viewControllers objectAtIndex:2];
+//    int num = [unvc.tabBarItem.badgeValue intValue];
+    
+    [unvc.tabBarItem addObserver:self forKeyPath:@"badgeValue" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+    
+}
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    NSLog(@"observeValueForKeyPath %@",change);
+    
+    if ([keyPath isEqualToString:@"badgeValue"]) {
+        
+        id new = [change objectForKey:@"new"];
+        
+        int newNum = 0.f;
+        if ([new isKindOfClass:[NSNull class]]) {
+            
+            newNum = 0;
+        }else
+        {
+            newNum = [new intValue];
+        }
+        
+        NSLog(@"mine未读消息 %d",newNum);
+        
+        _unreadNum = newNum > 0 ? newNum : 0;
+        
+        [_tableView reloadData];
+    }
+}
 
 #pragma mark 事件处理
 
@@ -794,9 +850,24 @@ typedef enum{
     for (UIView *view in cell.contentView.subviews) {
         [view removeFromSuperview];
     }
-    
-    
 //    cell.separatorInset = UIEdgeInsetsMake(0,0,0,0);//上左下右
+    
+    if (indexPath.row == 1) {
+        
+        //消息中心
+        
+        if (_unreadNum > 0) {
+            
+            UILabel *unreadLabel = [[UILabel alloc]initWithFrame:CGRectMake(DEVICE_WIDTH - 28 - 30, 18, 20, 20)];
+            [unreadLabel addRoundCorner];
+            unreadLabel.backgroundColor = RGBCOLOR(255, 30, 29);
+            unreadLabel.textColor = [UIColor whiteColor];
+            unreadLabel.text = [NSString stringWithFormat:@"%d",_unreadNum];
+            unreadLabel.textAlignment = NSTextAlignmentCenter;
+            [cell.contentView addSubview:unreadLabel];
+        }
+        
+    }
     
     NSLog(@"%@",_tabelViewCellTitleArray[indexPath.row]);
     
@@ -835,13 +906,17 @@ typedef enum{
         {
             MyConcernController *concern = [[MyConcernController alloc]init];
             concern.hidesBottomBarWhenPushed = YES;
+            concern.lastPageNavigationHidden = YES;
             [self.navigationController pushViewController:concern animated:YES];
         }
             break;
         case 1://消息中心
         {
             
-            
+            MessageListController *messageList = [[MessageListController alloc]init];
+            messageList.hidesBottomBarWhenPushed = YES;
+            messageList.lastPageNavigationHidden = YES;
+            [self.navigationController pushViewController:messageList animated:YES];
         }
             break;
         case 2://申请店铺/我的店铺

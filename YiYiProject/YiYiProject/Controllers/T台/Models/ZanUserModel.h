@@ -8,15 +8,6 @@
 
 #import "BaseModel.h"
 
-typedef enum {
-   
-    relation_concern_no = 0,//未关注
-    relation_concern_yes = 1,//已关注对方
-    relation_concern_yes_otherSide = 2,//被对方关注
-    relation_concern_all = 3 //相互关注
-    
-}RelationConcernType;//关注关系
-
 /**
  *  赞人员model
  */

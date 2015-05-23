@@ -543,24 +543,25 @@
 
 - (void)loadNewData
 {
-    if ([self buttonForTag:100].selected) {
+    if ([self buttonForTag:10001].selected) {
         
         [self getShop];
     }
     
-    if ([self buttonForTag:101].selected) {
+    if ([self buttonForTag:10002].selected) {
         
         [self getBrand];
     }
+    
 }
 - (void)loadMoreData
 {
-    if ([self buttonForTag:100].selected) {
+    if ([self buttonForTag:10001].selected) {
         
         [self getShop];
     }
     
-    if ([self buttonForTag:101].selected) {
+    if ([self buttonForTag:10002].selected) {
         
         [self getBrand];
     }

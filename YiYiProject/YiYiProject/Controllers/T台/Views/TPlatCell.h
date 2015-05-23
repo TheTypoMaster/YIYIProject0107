@@ -32,8 +32,9 @@
 @property(nonatomic,retain)UIButton *like_btn;//喜欢标识
 @property(nonatomic,retain)UILabel *like_label;//喜欢数量
 
+@property (nonatomic,assign)BOOL needIconImage;//是否需要显示头像
+
 - (void)setCellWithModel:(TPlatModel *)aModel;
 
--(void)aaaaa;
 
 @end

@@ -31,4 +31,17 @@
     [self addCornerRadius:self.width/2.f];
 }
 
+/**
+ *  加边框
+ *
+ *  @param borderWidth  边框宽度
+ *  @param _borderColor 边框颜色
+ */
+- (void)setBorderWidth:(CGFloat)borderWidth
+           borderColor:(UIColor *)_borderColor
+{
+    self.layer.borderWidth = borderWidth;
+    self.layer.borderColor = _borderColor.CGColor;
+}
+
 @end

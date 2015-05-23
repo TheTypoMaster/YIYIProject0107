@@ -37,6 +37,8 @@
     
 //    [self refreshChatListView];//刷新列表
     
+    self.navigationController.navigationBarHidden = NO;
+    
     [self updateTabbarNumber:[self unreadMessgeNum]];
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
