@@ -83,7 +83,9 @@
 //    UIWindow *window = [UIApplication sharedApplication].keyWindow;
 //    [window.rootViewController addChildViewController:self];
     
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    
+    [self.testViewController.navigationController setNavigationBarHidden:NO animated:YES];
     
     MJPhotoView *photoView = (MJPhotoView *)[_photoScrollView viewWithTag:_currentPhotoIndex + kPhotoViewTagOffset];
     [photoView hide];

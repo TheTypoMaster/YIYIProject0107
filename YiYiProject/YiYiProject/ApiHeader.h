@@ -123,6 +123,12 @@ alpha:(a)]
 //更新评论数字
 #define NOTIFICATION_UPDATE_COMMENTNUM @"updateCommentNum"
 
+//隐藏t台详情状态栏和导航栏
+#define NOTIFICATION_TPLATDETAIL_HIDDEN @"TPlatDetailhiddenAction"
+
+//显示t台详情状态栏和导航栏
+#define NOTIFICATION_TPLATDETAIL_SHOW @"TPlatDetailShowAction"
+
 
 
 

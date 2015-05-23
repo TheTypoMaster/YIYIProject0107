@@ -236,7 +236,11 @@
     //    }
     
     
-    if (_doubleTap) return;
+    if (_doubleTap){
+       
+        _doubleTap = NO;
+        return;
+    }
     
     // 移除进度条
     [_photoLoadingView removeFromSuperview];
@@ -290,123 +294,6 @@
     }];
     
 }
-
-//- (void)hide
-//{
-//    //    //是否需要单击隐藏操作
-//    //    if (self.cancelSingleTap) {
-//    //        return;
-//    //    }
-//    
-//    
-//    if (_doubleTap) return;
-//    
-//    // 移除进度条
-//    [_photoLoadingView removeFromSuperview];
-//    self.contentOffset = CGPointZero;
-//    
-//    // 清空底部的小图
-//    
-//    _photo.srcImageView.image = nil;
-//    
-//    CGFloat duration = 0.15;
-//    if (_photo.srcImageView.clipsToBounds) {
-//        [self performSelector:@selector(reset) withObject:nil afterDelay:duration];
-//    }
-//   
-//    //_imageView从父视图上移除,加载在windows上,然后做动画
-//    [_imageView removeFromSuperview];
-//    [[UIApplication sharedApplication].keyWindow addSubview:_imageView];
-//    
-//    if ([self.photoViewDelegate respondsToSelector:@selector(photoViewDidEndZoom:)]) {
-//                            [self.photoViewDelegate photoViewDidEndZoom:self];
-//                        }
-//    
-//    [UIView animateWithDuration:duration + 0.1 + 0.1 animations:^{
-//        
-//        _imageView.frame = [_photo.srcImageView.superview convertRect:_photo.srcImageView.frame toView:[UIApplication sharedApplication].keyWindow];
-//        
-//        _clearView.frame = [_photo.srcImageView.superview convertRect:_photo.srcImageView.frame toView:[UIApplication sharedApplication].keyWindow];
-//        
-////        _clearView.top -= 64;
-//
-//        // gif图片仅显示第0张
-//        if (_imageView.image.images) {
-//            _imageView.image = _imageView.image.images[0];
-//        }
-//        
-//        // 通知代理
-//        if ([self.photoViewDelegate respondsToSelector:@selector(photoViewSingleTap:)]) {
-//            [self.photoViewDelegate photoViewSingleTap:self];
-//        }
-//        
-//    } completion:^(BOOL finished) {
-//        
-//        [_imageView removeFromSuperview];
-//                // 设置底部的小图片
-//                _photo.srcImageView.image = _photo.placeholder;
-////                // 通知代理
-////                if ([self.photoViewDelegate respondsToSelector:@selector(photoViewDidEndZoom:)]) {
-////                    [self.photoViewDelegate photoViewDidEndZoom:self];
-////                }
-//    }];
-//    
-//}
-
-//- (void)hide
-//{
-////    //是否需要单击隐藏操作
-////    if (self.cancelSingleTap) {
-////        return;
-////    }
-//    
-//    
-//    if (_doubleTap) return;
-//    
-//    // 移除进度条
-//    [_photoLoadingView removeFromSuperview];
-//    self.contentOffset = CGPointZero;
-//    
-//    // 清空底部的小图
-//    _photo.srcImageView.image = nil;
-//    
-//    CGFloat duration = 0.15;
-//    if (_photo.srcImageView.clipsToBounds) {
-//        [self performSelector:@selector(reset) withObject:nil afterDelay:duration];
-//    }
-//    
-//    [UIView animateWithDuration:duration + 0.1 animations:^{
-//        _imageView.frame = [_photo.srcImageView convertRect:_photo.srcImageView.bounds toView:nil];
-//        
-//        // gif图片仅显示第0张
-//        if (_imageView.image.images) {
-//            _imageView.image = _imageView.image.images[0];
-//        }
-//        
-//        // 通知代理
-//        if ([self.photoViewDelegate respondsToSelector:@selector(photoViewSingleTap:)]) {
-//            [self.photoViewDelegate photoViewSingleTap:self];
-//        }
-//        
-//    } completion:^(BOOL finished) {
-////        // 设置底部的小图片
-////        _photo.srcImageView.image = _photo.placeholder;
-//////
-////        // 通知代理
-////        if ([self.photoViewDelegate respondsToSelector:@selector(photoViewDidEndZoom:)]) {
-////            [self.photoViewDelegate photoViewDidEndZoom:self];
-////        }
-//    }];
-//    
-//    
-//    // 设置底部的小图片
-//    _photo.srcImageView.image = _photo.placeholder;
-//    //
-//    // 通知代理
-//    if ([self.photoViewDelegate respondsToSelector:@selector(photoViewDidEndZoom:)]) {
-//        [self.photoViewDelegate photoViewDidEndZoom:self];
-//    }
-//}
 
 - (void)reset
 {

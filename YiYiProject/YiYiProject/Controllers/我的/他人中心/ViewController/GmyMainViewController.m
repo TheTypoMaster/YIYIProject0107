@@ -104,6 +104,13 @@
     }
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_TPLATDETAIL_HIDDEN object:nil];
+}
+
 - (void)dealloc
 {
     _waterFlow.waterDelegate = nil;
@@ -290,6 +297,13 @@
 
 
 #pragma - mark 事件处理
+
+- (void)tapCell:(TPlatCell *)cell
+{
+    PropertyImageView *aImageView = (PropertyImageView *)((TPlatCell *)cell).photoView;
+    
+    [MiddleTools showTPlatDetailFromPropertyImageView:aImageView withController:self.tabBarController cancelSingleTap:YES];
+}
 
 - (void)clickToShop:(UIButton *)sender
 {
@@ -798,14 +812,9 @@
 //点击方法
 - (void)waterDidSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TPlatModel *model = (TPlatModel *)_waterFlow.dataArray[indexPath.row];
+    TPlatCell *cell = (TPlatCell *)[_waterFlow.quitView cellAtIndexPath:indexPath];
     
-    TTaiDetailController *t_detail = [[TTaiDetailController alloc]init];
-    t_detail.tt_id = model.tt_id;
-    
-    t_detail.lastPageNavigationHidden = YES;
-    [self.navigationController pushViewController:t_detail animated:YES];
-    
+    [self tapCell:cell];
 }
 
 - (CGFloat)waterHeightForCellIndexPath:(NSIndexPath *)indexPath
@@ -847,6 +856,10 @@
     
     TPlatModel *aMode = _waterFlow.dataArray[indexPath.row];
     [cell setCellWithModel:aMode];
+    
+    NSString *imageUrl = aMode.image[@"url"];
+    
+    [cell.photoView setImageUrls:@[imageUrl] infoId:aMode.tt_id aModel:aMode];
     
     cell.like_btn.tag = 100 + indexPath.row;
     

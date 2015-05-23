@@ -55,6 +55,7 @@
     loading = [LTools MBProgressWithText:@"加载中..." addToView:self.view];
 }
 
+
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     NSLog(@"observeValueForKeyPath %@",change);
@@ -300,6 +301,8 @@
     
     //end
     
+    comment.hidesBottomBarWhenPushed = YES;
+    
     [self.navigationController pushViewController:comment animated:YES];
     
 }
@@ -408,14 +411,9 @@
 - (void)clickToClose:(UIButton *)sender
 {
     
-    [UIView animateWithDuration:0.2 animations:^{
-        
-        
-        
-    } completion:^(BOOL finished) {
-        
-        
-    }];
+    [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_TPLATDETAIL_SHOW object:nil];
+    
+    NSLog(@"__func__%s",__FUNCTION__);
     
     [self.clearView removeFromSuperview];
     [self hide];

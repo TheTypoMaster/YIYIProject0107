@@ -17,6 +17,8 @@
 // 当前展示的图片索引
 @property (nonatomic, assign) NSUInteger currentPhotoIndex;
 
+@property (nonatomic,retain)UIViewController *testViewController;
+
 @property(nonatomic,assign)BOOL cancelSingleTap;//取消单击
 
 // 显示

@@ -66,9 +66,11 @@
     [super viewWillAppear:animated];
     [_input_view addKeyBordNotification];
     
-    self.navigationController.navigationBarHidden = NO;
     
     [[UIApplication sharedApplication]setStatusBarHidden:NO];
+
+    self.navigationController.navigationBarHidden = NO;
+    
     
     if (needRefreshZan) {
         
@@ -84,6 +86,13 @@
     [_input_view deleteKeyBordNotification];
     
     [self.navigationController setNavigationBarHidden:YES animated:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_TPLATDETAIL_HIDDEN object:nil];
 }
 
 - (void)dealloc
@@ -623,29 +632,6 @@
     [send_button addCornerRadius:5.f];
     
     [view addSubview:send_button];
-    
-//    //喜欢
-//    zan_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(35, 0, 29, 50) normalTitle:nil image:[UIImage imageNamed:@"xq_love_up"] backgroudImage:nil superView:nil target:self action:@selector(clickToZan:)];
-//    [view addSubview:zan_btn];
-//    
-//    [zan_btn setImage:[UIImage imageNamed:@"xq_love_down"] forState:UIControlStateSelected];
-//    
-//    zan_num_label = [LTools createLabelFrame:CGRectMake(zan_btn.right + 5, 0, 50, 50) title:@"0" font:13 align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
-//    [view addSubview:zan_num_label];
-//    
-//    //评论
-//    UIButton *comment_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(DEVICE_WIDTH/2.f - 20, 0, 26, 50) normalTitle:nil image:[UIImage imageNamed:@"xq_pinglun"] backgroudImage:nil superView:nil target:self action:@selector(clickToComment:)];
-//    [view addSubview:comment_btn];
-//    
-//    comment_num_label = [LTools createLabelFrame:CGRectMake(comment_btn.right + 5, 0, 50, 50) title:@"0" font:13 align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
-//    [view addSubview:comment_num_label];
-//    
-//    //转发
-//    UIButton *zhuan_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(DEVICE_WIDTH - 85, 0, 26, 50) normalTitle:nil image:[UIImage imageNamed:@"fenxiangb"] backgroudImage:nil superView:nil target:self action:@selector(clickToZhuanFa:)];
-//    [view addSubview:zhuan_btn];
-//    
-//    zhuan_num_label = [LTools createLabelFrame:CGRectMake(zhuan_btn.right + 5, 0, 50, 50) title:@"0" font:13 align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
-//    [view addSubview:zhuan_num_label];
     
     __weak typeof(self)weakSelf = self;
     

@@ -12,6 +12,11 @@
 #import "TTaiDetailController.h"
 #import "TPlatCell.h"
 
+#import "PropertyImageView.h"
+
+#import "MJPhoto.h"
+#import "LPhotoBrowser.h"
+
 @interface GmyTtaiViewController ()<TMQuiltViewDataSource,WaterFlowDelegate>
 {
     UIView *_backView_water;
@@ -134,7 +139,72 @@
     
 }
 
+#pragma mark - 事件处理
 
+/**
+ *  赞 取消赞 收藏 取消收藏
+ */
+
+- (void)clickToZan:(UIButton *)sender
+{
+    if (![LTools isLogin:self]) {
+        
+        return;
+    }
+    //直接变状态
+    //更新数据
+    
+    [LTools animationToBigger:sender duration:0.2 scacle:1.5];
+    
+    TPlatCell *cell = (TPlatCell *)[_waterFlow.quitView cellAtIndexPath:[NSIndexPath indexPathForRow:sender.tag - 100 inSection:0]];
+    
+    __weak typeof(self)weakSelf = self;
+    
+    __block BOOL isZan = !sender.selected;
+    
+    NSString *api = sender.selected ? TTAI_ZAN_CANCEL : TTAI_ZAN;
+    
+    TPlatModel *detail_model = _waterFlow.dataArray[sender.tag - 100];
+    NSString *t_id = detail_model.tt_id;
+    NSString *post = [NSString stringWithFormat:@"tt_id=%@&authcode=%@",t_id,[GMAPI getAuthkey]];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    
+    NSString *url = api;
+    
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"result %@",result);
+        sender.selected = isZan;
+        detail_model.is_like = isZan ? 1 : 0;
+        detail_model.tt_like_num = NSStringFromInt([detail_model.tt_like_num intValue] + (isZan ? 1 : -1));
+        cell.like_label.text = detail_model.tt_like_num;
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+        [GMAPI showAutoHiddenMBProgressWithText:failDic[RESULT_INFO] addToView:weakSelf.view];
+        if ([failDic[RESULT_CODE] intValue] == -11) {
+            
+            [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:weakSelf.view];
+        }
+        detail_model.tt_like_num = NSStringFromInt([detail_model.tt_like_num intValue]);
+        cell.like_label.text = detail_model.tt_like_num;
+    }];
+}
+
+/**
+ *  显示t台详情
+ *
+ *  @param cell 
+ */
+- (void)tapCell:(TPlatCell *)cell
+{
+    
+    PropertyImageView *aImageView = (PropertyImageView *)((TPlatCell *)cell).photoView;
+    
+    [MiddleTools showTPlatDetailFromPropertyImageView:aImageView withController:self.tabBarController cancelSingleTap:YES];
+}
 
 
 #pragma mark - _waterFlowDelegate
@@ -175,13 +245,10 @@
 //点击方法
 - (void)waterDidSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TPlatModel *model = (TPlatModel *)_waterFlow.dataArray[indexPath.row];
-    
-    TTaiDetailController *t_detail = [[TTaiDetailController alloc]init];
-    t_detail.tt_id = model.tt_id;
-    
-    t_detail.lastPageNavigationHidden = YES;
-    [self.navigationController pushViewController:t_detail animated:YES];
+
+    TPlatCell *cell = (TPlatCell *)[_waterFlow.quitView cellAtIndexPath:indexPath];
+
+    [self tapCell:cell];
     
 }
 
@@ -196,7 +263,7 @@
     }
     float rate = image_height/image_width;
     
-    return (DEVICE_WIDTH-30)/2.0*rate + 55 + 36;
+    return (DEVICE_WIDTH-30)/2.0*rate + 36;
 }
 - (CGFloat)waterViewNumberOfColumns
 {
@@ -220,9 +287,14 @@
     
     cell.layer.cornerRadius = 3.f;
     
+    cell.needIconImage = NO;
     
     TPlatModel *aMode = _waterFlow.dataArray[indexPath.row];
     [cell setCellWithModel:aMode];
+    
+    NSString *imageUrl = aMode.image[@"url"];
+    
+    [cell.photoView setImageUrls:@[imageUrl] infoId:aMode.tt_id aModel:aMode];
     
     cell.like_btn.tag = 100 + indexPath.row;
     

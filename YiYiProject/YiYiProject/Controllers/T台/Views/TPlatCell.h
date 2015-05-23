@@ -8,6 +8,7 @@
 
 #import "TMQuiltViewCell.h"
 #import "TPlatModel.h"
+#import "PropertyImageView.h"
 /**
  *  T 台cell
  */
@@ -22,7 +23,7 @@
 @property (nonatomic, retain) UILabel *timeLabel;//时间
 
 //图片部分
-@property (nonatomic, retain) UIImageView *photoView;//大图
+@property (nonatomic, retain) PropertyImageView *photoView;//大图
 
 //评论喜欢 背景view
 @property(nonatomic,retain)UIView *infoView;//评论 和 喜欢按钮

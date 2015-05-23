@@ -17,4 +17,15 @@
 
 @property (nonatomic,strong)id aModel;//传递一个对象
 
+/**
+ *  设置三个属性值
+ *
+ *  @param imageUrls 图片url数组
+ *  @param infoId    信息id
+ *  @param aModel    传递model
+ */
+-(void)setImageUrls:(NSArray *)imageUrls
+             infoId:(NSString *)infoId
+             aModel:(id)aModel;
+
 @end

@@ -62,6 +62,19 @@
     self.delegate = self;
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    NSLog(@"BigPhotoTTaiViewController viewWillAppear");
+//    
+//    [self.navigationController setNavigationBarHidden:NO animated:animated];
+//    [[UIApplication sharedApplication]setStatusBarHidden:YES];
+    
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"hidden" object:nil];
+
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

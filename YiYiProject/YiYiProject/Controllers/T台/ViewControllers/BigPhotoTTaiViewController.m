@@ -45,19 +45,18 @@
 
 @implementation BigPhotoTTaiViewController
 
-//-(void)viewWillAppear:(BOOL)animated
-//{
-//    self.navigationController.navigationBarHidden = NO;
-//    
-//    [super viewWillAppear:animated];
-//    
-//    if ([UIApplication sharedApplication].isStatusBarHidden) {
-//
-//        [[UIApplication sharedApplication]setStatusBarHidden:YES];
-//
-//    }
-//    
-//}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    NSLog(@"BigPhotoTTaiViewController viewWillAppear");
+    
+    [[UIApplication sharedApplication]setStatusBarHidden:NO];
+    
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    
+}
+
 
 -(void)viewDidLoad
 {
@@ -84,24 +83,32 @@
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateTTai:) name:NOTIFICATION_TTAI_PUBLISE_SUCCESS object:nil];
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(uu) name:@"aa" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receiverNotify:) name:NOTIFICATION_TPLATDETAIL_HIDDEN object:nil];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receiverNotify2:) name:NOTIFICATION_TPLATDETAIL_SHOW object:nil];
     
 }
 
-- (void)uu
+- (void)receiverNotify:(NSNotification *)notify
 {
+    NSLog(@"隐藏");
     
-//    UIViewController
-//    self.tabBarController.selectedIndex = 1;
-    
+    [[UIApplication sharedApplication]setStatusBarHidden:YES];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
+
+- (void)receiverNotify2:(NSNotification *)notify
+{
+    NSLog(@"显示");
+
+    [[UIApplication sharedApplication]setStatusBarHidden:NO];
+    [self.navigationController setNavigationBarHidden:NO];
+}
+
 
 - (void)loadData
 {
     [_table showRefreshHeader:YES];
-    
-//    [self loadNewData];
-    
 }
 
 - (void)createNavigationbarTools
@@ -258,50 +265,12 @@
 
 #pragma mark 事件处理
 
-- (void)tapToPhotoBrowserFromImageView:(PropertyImageView *)aImageView
-{
-    
-    NSInteger count = aImageView.imageUrls.count;
-    // 1.封装图片数据
-    NSMutableArray *photos = [NSMutableArray arrayWithCapacity:count];
-    for (int i = 0; i < count; i++) {
-        // 替换为中等尺寸图片
-        NSString *url = aImageView.imageUrls[i];
-        MJPhoto *photo = [[MJPhoto alloc] init];
-        photo.url = [NSURL URLWithString:url]; // 图片路径
-        photo.srcImageView = aImageView; // 来源于哪个UIImageView
-        [photos addObject:photo];
-    }
-    
-    NSArray *anchorArr = [NSArray arrayWithArray:[aImageView subviews]];
-    
-    
-    // 2.显示相册
-    browser = [[LPhotoBrowser alloc] init];
-    browser.currentPhotoIndex = 0; // 弹出相册时显示的第一张图片是？
-    browser.photos = photos; // 设置所有的图片
-    browser.showImageView = aImageView;
-    browser.tt_id = aImageView.infoId;//详情id
-    
-    browser.t_model = aImageView.aModel;//传递一个model
-    
-    browser.anchorViews = anchorArr;
-    
-    browser.cancelSingleTap = YES;
-    browser.lastViewController = self;
-    [browser showWithController:self.tabBarController];
-    
-//    browser.isPresent = YES;
-//    
-//    [self presentViewController:browser animated:NO completion:nil];
-}
-
 - (void)tapImage:(UITapGestureRecognizer *)tap
 {
     
     PropertyImageView *aImageView = (PropertyImageView *)tap.view;
-
-    [self tapToPhotoBrowserFromImageView:aImageView];
+    
+    [MiddleTools showTPlatDetailFromPropertyImageView:aImageView withController:self.tabBarController cancelSingleTap:YES];
 }
 
 
@@ -310,8 +279,7 @@
     
     PropertyImageView *aImageView = ((TTaiBigPhotoCell2 *)cell).bigImageView;
     
-    [self tapToPhotoBrowserFromImageView:aImageView];
-
+    [MiddleTools showTPlatDetailFromPropertyImageView:aImageView withController:self.tabBarController cancelSingleTap:YES];
 }
 
 
@@ -541,7 +509,6 @@
 //    
 //    [self addMaoDian:aModel imageView:((TTaiBigPhotoCell2 *)cell).bigImageView];
     
-    NSLog(@"willDisPlay");
     
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{

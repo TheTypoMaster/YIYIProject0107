@@ -51,7 +51,7 @@
        
         //图片部分
         
-        self.photoView = [[UIImageView alloc]initWithFrame:CGRectMake(0, _headBgView.bottom, self.width, 0)];
+        self.photoView = [[PropertyImageView alloc]initWithFrame:CGRectMake(0, _headBgView.bottom, self.width, 0)];
         [self addSubview:_photoView];
         
         //评论喜欢 背景view

@@ -64,22 +64,22 @@ typedef enum {
 //用于修改赞的状态
 
 //从我的店铺页面跳转过来的时候这两个属性会有  取消赞之后返回上级页面更新界面数据
-@property(nonatomic,assign)TMPhotoQuiltViewCell *theLastViewClickedCell;//上一个界面需要更改点赞状态的自定义cell
-@property(nonatomic,assign)ProductModel *theLastViewProductModel;//上一个界面的数据源
+@property(nonatomic,retain)TMPhotoQuiltViewCell *theLastViewClickedCell;//上一个界面需要更改点赞状态的自定义cell
+@property(nonatomic,retain)ProductModel *theLastViewProductModel;//上一个界面的数据源
 
 //从首页单品标签跳转过来的
-@property(nonatomic,assign)TMPhotoQuiltViewCell *theHomeBuyVcProductCell;//首页单品跳转
-@property(nonatomic,assign)ProductModel *theHomeBuyVcModel;//首页单品标签中的单品数据model
+@property(nonatomic,retain)TMPhotoQuiltViewCell *theHomeBuyVcProductCell;//首页单品跳转
+@property(nonatomic,retain)ProductModel *theHomeBuyVcModel;//首页单品标签中的单品数据model
 
 
 //从我的收藏跳转过来的
-@property(nonatomic,assign)TMPhotoQuiltViewCell *theMyshoucangProductCell;//收藏单品跳转
-@property(nonatomic,assign)ProductModel *theMyshoucangProductModel;//收藏单品界面数据model
+@property(nonatomic,retain)TMPhotoQuiltViewCell *theMyshoucangProductCell;//收藏单品跳转
+@property(nonatomic,retain)ProductModel *theMyshoucangProductModel;//收藏单品界面数据model
 
 
 //从店铺详情页跳转过来
-@property(nonatomic,assign)TMPhotoQuiltViewCell *theStorePinpaiProductCell;//店铺详情单品跳转
-@property(nonatomic,assign)ProductModel *theStorePinpaiProductModel;//店铺详情页跳转
+@property(nonatomic,retain)TMPhotoQuiltViewCell *theStorePinpaiProductCell;//店铺详情单品跳转
+@property(nonatomic,retain)ProductModel *theStorePinpaiProductModel;//店铺详情页跳转
 
 
 

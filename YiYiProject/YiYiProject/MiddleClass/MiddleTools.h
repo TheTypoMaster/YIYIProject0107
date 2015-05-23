@@ -11,6 +11,8 @@
 #import "YIYIChatViewController.h"//聊天
 #import "ZanListViewController.h" //赞列表
 
+@class PropertyImageView;
+
 /**
  *  中间层工具 (连接)
  */
@@ -94,4 +96,15 @@
               lastNavigationHidden:(BOOL)hidden
                       hiddenBottom:(BOOL)hiddenBottom
                   updateParmsBlock:(UpdateParamsBlock)aBlock;
+
+/**
+ *  显示t台详情
+ *
+ *  @param aImageView      PropertyImageView
+ *  @param withController  from视图
+ *  @param cancelSingleTap 是否取消单击
+ */
++ (void)showTPlatDetailFromPropertyImageView:(PropertyImageView *)aImageView
+                              withController:(UIViewController *)withController
+                             cancelSingleTap:(BOOL)cancelSingleTap;
 @end

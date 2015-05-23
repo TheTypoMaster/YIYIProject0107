@@ -18,9 +18,9 @@
 
 @property(nonatomic,assign)UIImageView *showImageView;
 
-@property(nonatomic,retain)NSArray *anchorViews;//锚点
+//@property(nonatomic,retain)NSArray *anchorViews;//锚点
 
-@property(nonatomic,assign)UIViewController *lastViewController;
+//@property(nonatomic,assign)UIViewController *lastViewController;
 
 @property(nonatomic,strong)UIView *clearView;//透明view,上面放锚点
 

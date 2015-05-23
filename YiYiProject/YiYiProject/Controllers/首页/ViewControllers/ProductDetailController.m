@@ -247,17 +247,21 @@
             //更改上一个界面的状态  从首页单品跳转
             if (self.theHomeBuyVcProductCell) {
                 
-                //赞的红心状态
-                self.theHomeBuyVcProductCell.like_btn.selected = YES;
-                int zanNum = [self.theHomeBuyVcProductCell.like_label.text intValue];
-                zanNum++;
-                self.theHomeBuyVcProductCell.like_label.text = [NSString stringWithFormat:@"%d",zanNum];
+                if (self.theHomeBuyVcModel) {
+                    
+                    //赞的红心状态
+                    self.theHomeBuyVcProductCell.like_btn.selected = YES;
+                    int zanNum = [self.theHomeBuyVcProductCell.like_label.text intValue];
+                    zanNum++;
+                    self.theHomeBuyVcProductCell.like_label.text = [NSString stringWithFormat:@"%d",zanNum];
+                    
+                    //赞后面的数字
+                    self.theHomeBuyVcModel.is_like = 1;
+                    int like_num = [self.theHomeBuyVcModel.product_like_num intValue];
+                    like_num++;
+                    self.theHomeBuyVcModel.product_like_num = [NSString stringWithFormat:@"%d",like_num];
+                }
                 
-                //赞后面的数字
-                self.theHomeBuyVcModel.is_like = 1;
-                int like_num = [self.theHomeBuyVcModel.product_like_num intValue];
-                like_num++;
-                self.theHomeBuyVcModel.product_like_num = [NSString stringWithFormat:@"%d",like_num];
             }
             
             //更改上一个界面的状态  从收藏界面跳转
@@ -320,16 +324,20 @@
             
             //更改上一个界面的状态 从首页单品标签跳转
             if (self.theHomeBuyVcProductCell) {
-                //赞的红心状态
-                self.theHomeBuyVcProductCell.like_btn.selected = NO;
-                int zanNum = [self.theHomeBuyVcProductCell.like_label.text intValue];
-                zanNum--;
-                self.theHomeBuyVcProductCell.like_label.text = [NSString stringWithFormat:@"%d",zanNum];
-                //赞后面的数字
-                self.theHomeBuyVcModel.is_like = 0;
-                int like_num = [self.theHomeBuyVcModel.product_like_num intValue];
-                like_num--;
-                self.theHomeBuyVcModel.product_like_num = [NSString stringWithFormat:@"%d",like_num];
+                
+                if (self.theHomeBuyVcModel) {
+                    //赞的红心状态
+                    self.theHomeBuyVcProductCell.like_btn.selected = NO;
+                    int zanNum = [self.theHomeBuyVcProductCell.like_label.text intValue];
+                    zanNum--;
+                    self.theHomeBuyVcProductCell.like_label.text = [NSString stringWithFormat:@"%d",zanNum];
+                    //赞后面的数字
+                    self.theHomeBuyVcModel.is_like = 0;
+                    int like_num = [self.theHomeBuyVcModel.product_like_num intValue];
+                    like_num--;
+                    self.theHomeBuyVcModel.product_like_num = [NSString stringWithFormat:@"%d",like_num];
+                }
+                
             }
             
             //更改上一个界面的状态  从收藏界面跳转

@@ -10,6 +10,16 @@
 
 @implementation PropertyImageView
 
+-(void)setImageUrls:(NSArray *)imageUrls
+             infoId:(NSString *)infoId
+             aModel:(id)aModel
+{
+    self.imageUrls = imageUrls;//imageView对应的图集url
+    self.aModel = aModel;
+    self.infoId = infoId;
+}
+
+
 ///nib文件加载
 -(void)awakeFromNib
 {
