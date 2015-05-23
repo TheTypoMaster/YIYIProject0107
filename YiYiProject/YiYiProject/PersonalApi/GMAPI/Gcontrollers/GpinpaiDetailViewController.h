@@ -17,7 +17,7 @@
 
 @property(nonatomic,strong)NSDictionary *locationDic;//位置信息
 
-@property(nonatomic,strong)NSString *guanzhu;//0未关注  1已关注
+@property(nonatomic,strong)NSString *guanzhu;//0未收藏  1已收藏
 
 @end
 

@@ -16,8 +16,6 @@
 @property(nonatomic,assign)UIViewController *rootViewController;
 
 
-//跳转到品牌详细界面
--(void)pushToPinpaiDetailVCWithIdStr:(NSString *)theID pinpaiName:(NSString *)theName;
 
 
 //跳转到附近的商场界面   type 2 精品店   type 1商场店

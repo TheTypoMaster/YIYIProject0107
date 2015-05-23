@@ -238,7 +238,7 @@ typedef enum {
 //获取附近品牌
 #define HOME_CLOTH_NEARBYPINPAI @"http://www.alayy.com/index.php?d=api&c=brand&m=get_nearby_brands"
 //获取附近商铺
-#define HOME_CLOTH_NEARBYSTORE @"http://www.alayy.com/?d=api&c=mall&m=gerNearMalls"
+#define HOME_CLOTH_NEARBYSTORE @"http://www.alayy.com/index.php?d=api&c=mall&m=getNearMalls"
 //获取我关注的店铺
 #define HOME_CLOTH_GUANZHUSTORE_MINE @"http://www.alayy.com/?d=api&c=friendship&m=listMall"
 //获取我关注的品牌

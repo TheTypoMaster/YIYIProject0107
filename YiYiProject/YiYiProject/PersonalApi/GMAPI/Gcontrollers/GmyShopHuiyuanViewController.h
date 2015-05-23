@@ -8,7 +8,7 @@
 
 
 
-//店铺会员 关注我的店铺的人
+//店铺会员 收藏我的店铺的人
 
 #import <UIKit/UIKit.h>
 #import "MailInfoModel.h"

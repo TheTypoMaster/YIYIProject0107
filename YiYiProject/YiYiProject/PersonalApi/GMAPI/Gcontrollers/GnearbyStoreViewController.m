@@ -151,7 +151,7 @@
 -(void)rightButtonTap:(UIButton *)sender
 {
     
-    NSLog(@"在这里添加关注");
+    NSLog(@"在这里添加收藏");
     
     
     //判断是否登录
@@ -175,11 +175,11 @@
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
              NSLog(@"%@",result);
             self.guanzhu = [result stringValueForKey:@"following"];
-            if ([self.guanzhu intValue]==0) {//未关注
-                [_my_right_button setTitle:@"关注" forState:UIControlStateNormal];
+            if ([self.guanzhu intValue]==0) {//未收藏
+                [_my_right_button setTitle:@"收藏" forState:UIControlStateNormal];
                 self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
-            }else if ([self.guanzhu intValue] == 1){//已关注
-                [_my_right_button setTitle:@"已关注" forState:UIControlStateNormal];
+            }else if ([self.guanzhu intValue] == 1){//已收藏
+                [_my_right_button setTitle:@"已收藏" forState:UIControlStateNormal];
                 self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
             }
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
@@ -187,7 +187,7 @@
         }];
     }
     
-    if ([self.guanzhu intValue] == 0) {//未关注
+    if ([self.guanzhu intValue] == 0) {//未收藏
         NSString *post = [NSString stringWithFormat:@"&mall_id=%@&authcode=%@",self.mall_id,[GMAPI getAuthkey]];
         NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
         NSString *url = [NSString stringWithFormat:GUANZHUSHANGCHANG];
@@ -196,14 +196,14 @@
         GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [GMAPI showAutoHiddenMBProgressWithText:@"关注成功" addToView:self.view];
+            [GMAPI showAutoHiddenMBProgressWithText:@"收藏成功" addToView:self.view];
             [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_STORE object:nil];
-            [_my_right_button setTitle:@"已关注" forState:UIControlStateNormal];
+            [_my_right_button setTitle:@"已收藏" forState:UIControlStateNormal];
             self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
             self.guanzhu = @"1";
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [GMAPI showAutoHiddenMBProgressWithText:@"关注失败" addToView:self.view];
+            [GMAPI showAutoHiddenMBProgressWithText:@"收藏失败" addToView:self.view];
         }];
     }else if ([self.guanzhu intValue] == 1){
         NSString *post = [NSString stringWithFormat:@"&mall_id=%@&authcode=%@",self.mall_id,[GMAPI getAuthkey]];
@@ -214,14 +214,14 @@
         GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [GMAPI showAutoHiddenMBProgressWithText:@"取消关注成功" addToView:self.view];
+            [GMAPI showAutoHiddenMBProgressWithText:@"取消收藏成功" addToView:self.view];
             [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_STORE_QUXIAO object:nil];
-            [_my_right_button setTitle:@"关注" forState:UIControlStateNormal];
+            [_my_right_button setTitle:@"收藏" forState:UIControlStateNormal];
             self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
             self.guanzhu = @"0";
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [GMAPI showAutoHiddenMBProgressWithText:@"取消关注失败" addToView:self.view];
+            [GMAPI showAutoHiddenMBProgressWithText:@"取消收藏失败" addToView:self.view];
         }];
     }
     
@@ -496,11 +496,11 @@
         self.guanzhu = [result stringValueForKey:@"following"];
         _my_right_button.userInteractionEnabled = YES;
         
-        if ([self.guanzhu intValue]==0) {//未关注
-            [_my_right_button setTitle:@"关注" forState:UIControlStateNormal];
+        if ([self.guanzhu intValue]==0) {//未收藏
+            [_my_right_button setTitle:@"收藏" forState:UIControlStateNormal];
             self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
-        }else if ([self.guanzhu intValue] == 1){//已关注
-            [_my_right_button setTitle:@"已关注" forState:UIControlStateNormal];
+        }else if ([self.guanzhu intValue] == 1){//已收藏
+            [_my_right_button setTitle:@"已收藏" forState:UIControlStateNormal];
             self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
         }
         

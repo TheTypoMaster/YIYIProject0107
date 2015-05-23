@@ -19,8 +19,8 @@
 @property(nonatomic,assign)CLLocationCoordinate2D coordinate_store;//经纬度
 
 
-@property(nonatomic,strong)NSString *guanzhu;//0未关注  1已关注
-@property(nonatomic,strong)NSString *mall_id;//需要关注的商场id
+@property(nonatomic,strong)NSString *guanzhu;//0未收藏  1已收藏
+@property(nonatomic,strong)NSString *mall_id;//需要收藏的商场id
 
 
 @property(nonatomic,strong)NSString *activityId;//活动id

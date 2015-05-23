@@ -32,9 +32,9 @@
 @property(nonatomic,strong)NSString *pinpaiId;//品牌id
 @property(nonatomic,strong)NSString *shopId;//店铺id
 
-@property(nonatomic,strong)NSString *guanzhu;//0未关注  1已关注
+@property(nonatomic,strong)NSString *guanzhu;//0未收藏  1已收藏
 
-@property(nonatomic,strong)NSString *guanzhuleixing;//关注类型  品牌店 精品店  品牌
+@property(nonatomic,strong)NSString *guanzhuleixing;//收藏类型  品牌店 精品店  品牌
 
 
 @property(nonatomic,strong)NSString *activityId;//活动id

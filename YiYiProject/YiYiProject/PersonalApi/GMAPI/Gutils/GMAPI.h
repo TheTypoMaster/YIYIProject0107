@@ -67,6 +67,9 @@
 + (AppDelegate *)appDeledate;
 
 
++(NSString *)changeDistanceWithStr:(NSString *)distance;
+
+
 //写数据=========================
 
 //保存用户banner到本地

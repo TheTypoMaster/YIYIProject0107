@@ -89,6 +89,20 @@
 }
 
 
+//距离转化 大于1000m 显示1km
++(NSString *)changeDistanceWithStr:(NSString *)distance{
+    NSString *newDistance;
+    CGFloat distance_f = [distance floatValue];
+    
+    if (distance_f >= 1000) {
+        newDistance = [NSString stringWithFormat:@"%.1fkm",distance_f*0.001];
+    }else{
+        newDistance = [NSString stringWithFormat:@"%.1fkm",distance_f];
+    }
+    
+    return newDistance;
+    
+}
 
 //把用户bannerImage写到本地
 +(BOOL)setUserBannerImageWithData:(NSData *)data{

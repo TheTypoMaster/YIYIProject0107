@@ -80,9 +80,7 @@ typedef enum{
     
     UIButton *_editBtn;//编辑按钮
     
-    UIButton *_chilunBtn;//小齿轮
-    
-    
+
     UIView *_qiandaoSuccessViewBgView;//签到成功的黑色背景图
     UIImageView *_qiandaoSuccessView_imvbgimage;//背景图上面的图片背景
     UIButton *_qiandaoSuccessView_closeBtn;//签到成功关闭按钮
@@ -103,7 +101,6 @@ typedef enum{
     
     NSData *data = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
     
-    UserInfo *userInfo = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     
     
     
@@ -161,18 +158,20 @@ typedef enum{
     //初始化相关
     _changeImageType = USERIMAGENULL;
 
-    _logoImageArray = @[@[[UIImage imageNamed:@"my_zhuye.png"]]
-                        ,@[[UIImage imageNamed:@"my_shoucang.png"],[UIImage imageNamed:@"my_guanzhu.png"]]
-                        ,@[[UIImage imageNamed:@"my_shenqing.png"]]
-                        ,@[[UIImage imageNamed:@"my_haoyou.png"]]
-                        ,@[[UIImage imageNamed:@"saoyisao.png"]]
-                        ];
+    _logoImageArray = @[[UIImage imageNamed:@"my_shoucang.png"],
+                        [UIImage imageNamed:@"my_message.png"],
+                        [UIImage imageNamed:@"my_store.png"],
+                        [UIImage imageNamed:@"my_friends.png"],
+                        [UIImage imageNamed:@"my_saoma.png"],
+                        [UIImage imageNamed:@"my_setting.png"]];
     
-    _tabelViewCellTitleArray = @[@[@"我的主页"]
-                                 ,@[@"我的收藏",@"我的关注"]
-                                 ,@[@"我是店主，申请衣+衣店铺"]
-                                 ,@[@"邀请好友"]
-                                 ,@[@"扫一扫"]
+    
+    _tabelViewCellTitleArray = @[@"我的收藏",
+                                 @"消息中心",
+                                 @"我是店主，申请衣+衣店铺",
+                                 @"邀请好友",
+                                 @"扫一扫",
+                                 @"设置"
                                  ];
 
     
@@ -180,7 +179,7 @@ typedef enum{
                                   @"titleArray":_tabelViewCellTitleArray
                                   };
     
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT-49) style:UITableViewStyleGrouped];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT-49) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.tableHeaderView = [self creatTableViewHeaderView];
@@ -224,19 +223,21 @@ typedef enum{
 
 //请求到userinfo之后根据shopman参数判断是否拥有店铺 调整 标题和图标二维数组
 -(void)changeTheTitleAndPicArray_dianzhu{//已经是店主
-    _logoImageArray = @[@[[UIImage imageNamed:@"my_zhuye.png"],[UIImage imageNamed:@"my_shenqing.png"]]
-                        ,@[[UIImage imageNamed:@"my_shoucang.png"],[UIImage imageNamed:@"my_guanzhu.png"]]
-                        ,@[[UIImage imageNamed:@"my_haoyou.png"]]
-                        ,@[[UIImage imageNamed:@"saoyisao.png"]]
-                        ];
+    _logoImageArray = @[[UIImage imageNamed:@"my_shoucang.png"],
+                        [UIImage imageNamed:@"my_message.png"],
+                        [UIImage imageNamed:@"my_store.png"],
+                        [UIImage imageNamed:@"my_friends.png"],
+                        [UIImage imageNamed:@"my_saoma.png"],
+                        [UIImage imageNamed:@"my_setting.png"]];
     
-    _tabelViewCellTitleArray = @[@[@"我的主页",@"我的店铺"]
-                                 ,@[@"我的收藏",@"我的关注"]
-                                 ,@[@"邀请好友"]
-                                 ,@[@"扫一扫"]
+    
+    _tabelViewCellTitleArray = @[@"我的收藏",
+                                 @"消息中心",
+                                 @"我的店铺",
+                                 @"邀请好友",
+                                 @"扫一扫",
+                                 @"设置"
                                  ];
-    
-    
     
     
     _customInfo_tabelViewCell = @{@"titleLogo":_logoImageArray,
@@ -247,18 +248,20 @@ typedef enum{
 }
 
 -(void)changeTheTitleAndPicArray_shenhe{//正在审核
-    _logoImageArray = @[@[[UIImage imageNamed:@"my_zhuye.png"]]
-                        ,@[[UIImage imageNamed:@"my_shoucang.png"],[UIImage imageNamed:@"my_guanzhu.png"]]
-                        ,@[[UIImage imageNamed:@"my_shenqing.png"]]
-                        ,@[[UIImage imageNamed:@"my_haoyou.png"]]
-                        ,@[[UIImage imageNamed:@"saoyisao.png"]]
-                        ];
+    _logoImageArray = @[[UIImage imageNamed:@"my_shoucang.png"],
+                        [UIImage imageNamed:@"my_message.png"],
+                        [UIImage imageNamed:@"my_store.png"],
+                        [UIImage imageNamed:@"my_friends.png"],
+                        [UIImage imageNamed:@"my_saoma.png"],
+                        [UIImage imageNamed:@"my_setting.png"]];
     
-    _tabelViewCellTitleArray = @[@[@"我的主页"]
-                                 ,@[@"我的收藏",@"我的关注"]
-                                 ,@[@"店铺审核中"]
-                                 ,@[@"邀请好友"]
-                                 ,@[@"扫一扫"]
+    
+    _tabelViewCellTitleArray = @[@"我的收藏",
+                                 @"消息中心",
+                                 @"店铺审核中",
+                                 @"邀请好友",
+                                 @"扫一扫",
+                                 @"设置"
                                  ];
     
     
@@ -369,14 +372,14 @@ typedef enum{
     [_backView addSubview:titleLabel];
     
     //小齿轮设置按钮
-    _chilunBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_chilunBtn setFrame:CGRectMake(15, 30, 40, 40)];
-    [_chilunBtn setImage:[UIImage imageNamed:@"my_shezhi.png"] forState:UIControlStateNormal];
-    [_chilunBtn addTarget:self action:@selector(xiaochilun) forControlEvents:UIControlEventTouchUpInside];
-    _chilunBtn.layer.masksToBounds = NO;
-    _chilunBtn.layer.shadowColor = [UIColor blackColor].CGColor;
-    _chilunBtn.layer.shadowOffset = CGSizeMake(0.0f, 5.0f);
-    _chilunBtn.layer.shadowOpacity = 0.5f;
+//    _chilunBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [_chilunBtn setFrame:CGRectMake(15, 30, 40, 40)];
+//    [_chilunBtn setImage:[UIImage imageNamed:@"my_shezhi.png"] forState:UIControlStateNormal];
+//    [_chilunBtn addTarget:self action:@selector(xiaochilun) forControlEvents:UIControlEventTouchUpInside];
+//    _chilunBtn.layer.masksToBounds = NO;
+//    _chilunBtn.layer.shadowColor = [UIColor blackColor].CGColor;
+//    _chilunBtn.layer.shadowOffset = CGSizeMake(0.0f, 5.0f);
+//    _chilunBtn.layer.shadowOpacity = 0.5f;
     
     
     //头像
@@ -402,22 +405,22 @@ typedef enum{
     
     
     
-    //编辑按钮
-    _editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_editBtn setFrame:CGRectMake(DEVICE_WIDTH-60, _chilunBtn.frame.origin.y-7, 55, 44)];
-    _editBtn.titleLabel.font = [UIFont systemFontOfSize:16*GscreenRatio_320];
-    [_editBtn addTarget:self action:@selector(goToEdit) forControlEvents:UIControlEventTouchUpInside];
-    [_editBtn setTitle:@"编辑" forState:UIControlStateNormal];
-    _editBtn.layer.masksToBounds = NO;
-    _editBtn.layer.shadowColor = [UIColor blackColor].CGColor;
-    _editBtn.layer.shadowOffset = CGSizeMake(0.0f, 5.0f);
-    _editBtn.layer.shadowOpacity = 0.5f;
+//    //编辑按钮
+//    _editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [_editBtn setFrame:CGRectMake(DEVICE_WIDTH-60, _chilunBtn.frame.origin.y-7, 55, 44)];
+//    _editBtn.titleLabel.font = [UIFont systemFontOfSize:16*GscreenRatio_320];
+//    [_editBtn addTarget:self action:@selector(goToEdit) forControlEvents:UIControlEventTouchUpInside];
+//    [_editBtn setTitle:@"编辑" forState:UIControlStateNormal];
+//    _editBtn.layer.masksToBounds = NO;
+//    _editBtn.layer.shadowColor = [UIColor blackColor].CGColor;
+//    _editBtn.layer.shadowOffset = CGSizeMake(0.0f, 5.0f);
+//    _editBtn.layer.shadowOpacity = 0.5f;
     
     
     
     //签到
     _qiandaoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_qiandaoBtn setFrame:CGRectMake(_editBtn.frame.origin.x, CGRectGetMaxY(_backView.frame)-50, 50, 40)];
+    [_qiandaoBtn setFrame:CGRectMake(DEVICE_WIDTH-60, CGRectGetMaxY(_backView.frame)-50, 50, 40)];
     [_qiandaoBtn addTarget:self action:@selector(gQiandao:) forControlEvents:UIControlEventTouchUpInside];
     _qiandaoBtn.userInteractionEnabled = YES;
     [_backView addSubview:_qiandaoBtn];
@@ -444,16 +447,16 @@ typedef enum{
     [_backView addSubview:self.userFaceImv];
     [_backView addSubview:self.userNameLabel];
     [_backView addSubview:self.userScoreLabel];
-    [_backView addSubview:_editBtn];
-    [_backView addSubview:_chilunBtn];
+//    [_backView addSubview:_editBtn];
+//    [_backView addSubview:_chilunBtn];
     
     //判断是否登录
     if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
         self.userNameLabel.hidden = YES;
         self.userScoreLabel.hidden = YES;
         self.userFaceImv.hidden = YES;
-        _editBtn.hidden = YES;
-        _chilunBtn.hidden = YES;
+//        _editBtn.hidden = YES;
+//        _chilunBtn.hidden = YES;
         _qiandaoBtn.hidden = YES;
         
     }
@@ -493,7 +496,7 @@ typedef enum{
         self.userScoreLabel.hidden = NO;
         self.userFaceImv.hidden = NO;
         _editBtn.hidden = NO;
-        _chilunBtn.hidden = NO;
+        
         _loginBtn.hidden = YES;
         _qiandaoBtn.hidden = NO;
     }else{//未登录
@@ -501,7 +504,7 @@ typedef enum{
         self.userScoreLabel.hidden = YES;
         self.userFaceImv.hidden = YES;
         _editBtn.hidden = YES;
-        _chilunBtn.hidden = YES;
+        
         _qiandaoBtn.hidden = YES;
         _loginBtn.hidden = NO;
         
@@ -755,13 +758,11 @@ typedef enum{
 
 
 #pragma mark - UITableViewDelegate && UITableViewDataSource
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return _tabelViewCellTitleArray.count;
-}
+
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return [[_tabelViewCellTitleArray objectAtIndex:section] count];
+    return _tabelViewCellTitleArray.count;
     
     
     //return num;
@@ -776,9 +777,6 @@ typedef enum{
     return 0.01;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 10;
-}
 
 
 -(UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
@@ -797,8 +795,10 @@ typedef enum{
         [view removeFromSuperview];
     }
     
-    NSLog(@"indexpath.section:%ld row:%ld",(long)indexPath.section,(long)indexPath.row);
-    NSLog(@"%@",_tabelViewCellTitleArray[indexPath.section][indexPath.row]);
+    
+//    cell.separatorInset = UIEdgeInsetsMake(0,0,0,0);//上左下右
+    
+    NSLog(@"%@",_tabelViewCellTitleArray[indexPath.row]);
     
     [cell creatCustomViewWithGcellType:GPERSON indexPath:indexPath customObject:_customInfo_tabelViewCell];
     
@@ -830,106 +830,56 @@ typedef enum{
     
     
     
-    switch (indexPath.section) {
-        case 0:
+    switch (indexPath.row) {
+        case 0://我的收藏
         {
-            if (indexPath.row == 0) {//我的主页
-                GmyMainViewController *dd = [[GmyMainViewController alloc]init];
-                dd.userType = G_Default;
-                dd.bannerUrl = user_bannerUrl;
-                dd.headImageUrl = headImageUrl;
-                dd.lastPageNavigationHidden = YES;
-                dd.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:dd animated:YES];
-            }else if (indexPath.row == 1){//已经为店主时候的我的店铺
-                int shopMan = [_userInfo.shopman intValue];
-                if (shopMan == 2) {
-                    NSLog(@"店主");
-                    MyShopViewController *shop = [[MyShopViewController alloc]init];
-                    shop.userInfo = _userInfo;
-                    shop.lastPageNavigationHidden = YES;
-                    shop.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:shop animated:YES];
-                }
-                
-            }
+            MyConcernController *concern = [[MyConcernController alloc]init];
+            concern.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:concern animated:YES];
+        }
+            break;
+        case 1://消息中心
+        {
             
             
         }
             break;
-            
-        case 1:
-        {
-            
-            if (indexPath.row == 0) {//我的收藏
-                
-                MyCollectionController *myMatchVC = [[MyCollectionController alloc] init];
-                myMatchVC.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:myMatchVC animated:YES];
-                
-            }else if (indexPath.row == 1){//我的关注
-                
-                MyConcernController *concern = [[MyConcernController alloc]init];
-                concern.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:concern animated:YES];
-                
-            }
-        }
-            break;
-            
-        case 2://我是店主，申请衣加衣店铺  或 邀请好友
-        {
-            if (indexPath.row==0) {
-                
-                int shopMan = [_userInfo.shopman intValue];
-                if (shopMan == 1){
-                    NSLog(@"店铺申请");
-                    [LTools showMBProgressWithText:@"您已申请店铺,正在审核中..." addToView:self.view];
-                }else if (shopMan == 0){
-                    NSLog(@"普通");
-                    ShenQingDianPuViewController *_shenqingVC = [[ShenQingDianPuViewController alloc]init];
-                    _shenqingVC.hidesBottomBarWhenPushed = YES;
-                    _shenqingVC.lastPageNavigationHidden = YES;
-                    [self.navigationController pushViewController:_shenqingVC animated:YES];
-                }else if (shopMan == 2){//已经是店主
-                    //邀请好友
-                    [self clickToShare:nil];
-                }
-                
-            }
-            
-            
-            
-            
-        }
-            break;
-            
-        case 3://邀请好友 或没有
+        case 2://申请店铺/我的店铺
         {
             int shopMan = [_userInfo.shopman intValue];
-            if (shopMan == 2) {//已是店主  扫一扫
-                if (indexPath.row == 0) {
-                    [self saoyisaoClicked];
-                }
-                
-            }else{//不是店主
-                if (indexPath.row == 0){
-                    [self clickToShare:nil];
-                }
+            
+            if (shopMan == 2) {
+                NSLog(@"店主");
+                MyShopViewController *shop = [[MyShopViewController alloc]init];
+                shop.userInfo = _userInfo;
+                shop.lastPageNavigationHidden = YES;
+                shop.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:shop animated:YES];
+            }else if (shopMan == 1){
+                NSLog(@"店铺申请");
+                [LTools showMBProgressWithText:@"您已申请店铺,正在审核中..." addToView:self.view];
+            }else if (shopMan == 0){
+                NSLog(@"普通");
+                ShenQingDianPuViewController *_shenqingVC = [[ShenQingDianPuViewController alloc]init];
+                _shenqingVC.hidesBottomBarWhenPushed = YES;
+                _shenqingVC.lastPageNavigationHidden = YES;
+                [self.navigationController pushViewController:_shenqingVC animated:YES];
             }
-            
-            
-            
-            
         }
             break;
-            
-        case 4:
+        case 3://邀请好友
         {
-            //扫一扫
-            if (indexPath.row == 0) {
-                [self saoyisaoClicked];
-            }
+            [self clickToShare:nil];
+        }
+            break;
+        case 4://扫一扫
+        {
+            [self saoyisaoClicked];
+        }
+            break;
+        case 5://设置
+        {
+            [self xiaochilun];
         }
             break;
         default:
@@ -938,9 +888,15 @@ typedef enum{
     
     
     
-    NSLog(@"xxxx==%zi=row=%zi=",indexPath.section,indexPath.row);
+    //跳转我的主页
+//    GmyMainViewController *dd = [[GmyMainViewController alloc]init];
+//    dd.userType = G_Default;
+//    dd.bannerUrl = user_bannerUrl;
+//    dd.headImageUrl = headImageUrl;
+//    dd.lastPageNavigationHidden = YES;
+//    dd.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:dd animated:YES];
     
-    NSLog(@"在这里进行跳转");
 }
 
 
@@ -1018,18 +974,22 @@ typedef enum{
     if (!_getUserinfoSuccess) {
         return;
     }
-    _changeImageType = USERFACE;
-    GcustomActionSheet *aaa = [[GcustomActionSheet alloc]initWithTitle:nil
-                                                          buttonTitles:@[@"更换头像"]
-                                                     buttonTitlesColor:[UIColor blackColor]
-                                                           buttonColor:[UIColor whiteColor]
-                                                           CancelTitle:@"取消"
-                                                      cancelTitelColor:[UIColor whiteColor]
-                                                           CancelColor:RGBCOLOR(253, 144, 39)
-                                                       actionBackColor:RGBCOLOR(236, 236, 236)];
-    aaa.tag = 91;
-    aaa.delegate = self;
-    [aaa showInView:self.view.window WithAnimation:YES];
+    
+    
+    [self goToEdit];
+    
+//    _changeImageType = USERFACE;
+//    GcustomActionSheet *aaa = [[GcustomActionSheet alloc]initWithTitle:nil
+//                                                          buttonTitles:@[@"更换头像"]
+//                                                     buttonTitlesColor:[UIColor blackColor]
+//                                                           buttonColor:[UIColor whiteColor]
+//                                                           CancelTitle:@"取消"
+//                                                      cancelTitelColor:[UIColor whiteColor]
+//                                                           CancelColor:RGBCOLOR(253, 144, 39)
+//                                                       actionBackColor:RGBCOLOR(236, 236, 236)];
+//    aaa.tag = 91;
+//    aaa.delegate = self;
+//    [aaa showInView:self.view.window WithAnimation:YES];
 }
 
 

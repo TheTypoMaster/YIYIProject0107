@@ -297,8 +297,8 @@
         
         [alert show];
         
-    }else if ([aaa[0]intValue]==2){//关注精品店
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"是否关注该店铺" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    }else if ([aaa[0]intValue]==2){//收藏精品店
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"是否收藏该店铺" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         
         if (aaa.count>2) {
             _urlStr = aaa[1];
@@ -306,8 +306,8 @@
         
         alert.tag = 31;
         [alert show];
-    }else if ([aaa[0]intValue]==3){//关注品牌店
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"是否关注该店铺" message:nil delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil,nil];
+    }else if ([aaa[0]intValue]==3){//收藏品牌店
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"是否收藏该店铺" message:nil delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil,nil];
         if (aaa.count>2) {
             _urlStr = aaa[1];
         }
@@ -347,7 +347,7 @@
         [self dismissViewControllerAnimated:YES completion:^{
             
         }];
-    }else if (alertView.tag == 31){//是否关注该店铺 精品店
+    }else if (alertView.tag == 31){//是否收藏该店铺 精品店
         if (buttonIndex == 0) {//取消
             [self dismissViewControllerAnimated:YES completion:^{
             }];
@@ -366,7 +366,7 @@
 
 
 
-//关注精品店
+//收藏精品店
 -(void)guanzhuShopWithShopId:(NSString *)shopId{
     NSString *post = [NSString stringWithFormat:@"&mall_id=%@&authcode=%@",shopId,[GMAPI getAuthkey]];
     NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
@@ -377,7 +377,7 @@
     [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if ([[result stringValueForKey:@"errorcode"]intValue] == 0) {
-            [GMAPI showAutoHiddenMBProgressWithText:@"关注成功" addToView:self.view];
+            [GMAPI showAutoHiddenMBProgressWithText:@"收藏成功" addToView:self.view];
             [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_STORE object:nil];
             
             [self performSelector:@selector(gdismiss) withObject:[NSNumber numberWithBool:YES] afterDelay:2];
@@ -389,12 +389,12 @@
         }
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        [GMAPI showAutoHiddenMBProgressWithText:@"关注失败" addToView:self.view];
+        [GMAPI showAutoHiddenMBProgressWithText:@"收藏失败" addToView:self.view];
         [self performSelector:@selector(gdismiss) withObject:[NSNumber numberWithBool:YES] afterDelay:2];
     }];
 }
 
-//关注品牌店
+//收藏品牌店
 -(void)guanzhuPinpaidianWithShopId:(NSString *)shopId{
     NSString *post = [NSString stringWithFormat:@"&shop_id=%@&authcode=%@",shopId,[GMAPI getAuthkey]];
     NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
@@ -405,7 +405,7 @@
     [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if ([[result stringValueForKey:@"errorcode"]intValue] == 0) {
-            [GMAPI showAutoHiddenMBProgressWithText:@"关注成功" addToView:self.view];
+            [GMAPI showAutoHiddenMBProgressWithText:@"收藏成功" addToView:self.view];
             [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_STORE object:nil];
             
             [self performSelector:@selector(gdismiss) withObject:[NSNumber numberWithBool:YES] afterDelay:2];
@@ -417,7 +417,7 @@
         }
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        [GMAPI showAutoHiddenMBProgressWithText:@"关注失败" addToView:self.view];
+        [GMAPI showAutoHiddenMBProgressWithText:@"收藏失败" addToView:self.view];
         [self performSelector:@selector(gdismiss) withObject:[NSNumber numberWithBool:YES] afterDelay:2];
     }];
 }

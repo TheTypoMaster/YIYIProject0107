@@ -196,7 +196,7 @@
             else
             {
                 cloth_viewcontroller = [[HomeClothController alloc]init];
-                cloth_viewcontroller.view.frame = CGRectMake(0, aFrameY, self.view.frame.size.width, self.view.frame.size.height-35);
+                cloth_viewcontroller.view.frame = CGRectMake(0, aFrameY, self.view.frame.size.width, self.view.frame.size.height);
                 cloth_viewcontroller.rootViewController = self;
                 [self.view addSubview:cloth_viewcontroller.view];
             }

@@ -79,7 +79,7 @@
     
     GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:NO postData:nil];
     [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
-        NSLog(@"关注我的店铺的人:%@",result);
+        NSLog(@"收藏我的店铺的人:%@",result);
         NSArray *arr = [result arrayValueForKey:@"list"];
         
         if (arr.count < _pageCapacity) {

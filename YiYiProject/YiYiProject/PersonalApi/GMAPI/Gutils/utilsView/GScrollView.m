@@ -134,7 +134,7 @@
 -(void)goNearbyStore:(UIGestureRecognizer *)sender{
     GCustomNearByView *view = (GCustomNearByView*)sender.view;
     NSString *ssidStr = [NSString stringWithFormat:@"%ld",sender.view.tag-10];
-    [self.delegate1 pushToNearbyStoreVCWithIdStr:ssidStr theStoreName:view.titleLabel.text theType:view.shopType];
+//    [self.delegate1 pushToNearbyStoreVCWithIdStr:ssidStr theStoreName:view.titleLabel.text theType:view.shopType];
 }
 
 
@@ -147,7 +147,7 @@
     
     NSString *ssidstr = [NSString stringWithFormat:@"%ld",sender.view.tag-10];
     NSString *pinpaiName = sender.view.gString;
-    [self.delegate1 pushToPinpaiDetailVCWithIdStr:ssidstr pinpaiName:pinpaiName];
+//    [self.delegate1 pushToPinpaiDetailVCWithIdStr:ssidstr pinpaiName:pinpaiName];
     
     
 }

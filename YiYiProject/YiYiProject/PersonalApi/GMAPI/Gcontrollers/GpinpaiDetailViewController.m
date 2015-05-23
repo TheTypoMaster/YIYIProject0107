@@ -29,7 +29,7 @@
     
     GcustomStoreTableViewCell *_tmpCell;//用户获取自定义单元格高度
     
-    //关注相关
+    //收藏相关
     UIButton *_my_right_button;
     
 }
@@ -83,7 +83,7 @@
     
     
     
-    [self getGuanzhuYesOrNoForPinpai];//获取是否关注了该品牌
+    [self getGuanzhuYesOrNoForPinpai];//获取是否收藏了该品牌
     
     
     
@@ -273,12 +273,12 @@
 
 
 
-//关注品牌
+//收藏品牌
 -(void)guanzhupinpai{
-    //判断是否关注品牌
+    //判断是否收藏品牌
     NSLog(@"self.guanzhu:%@",self.guanzhu);
     
-    if ([self.guanzhu intValue] == 0) {//未关注
+    if ([self.guanzhu intValue] == 0) {//未收藏
         NSString *post = [NSString stringWithFormat:@"&brand_id=%@&authcode=%@",self.pinpaiIdStr,[GMAPI getAuthkey]];
         NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
         NSString *url = [NSString stringWithFormat:GUANZHUPINPAI];
@@ -289,14 +289,14 @@
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             if ([[result stringValueForKey:@"errorcode"]intValue] == 0) {
-                [GMAPI showAutoHiddenMBProgressWithText:@"关注成功" addToView:self.view];
+                [GMAPI showAutoHiddenMBProgressWithText:@"收藏成功" addToView:self.view];
                 [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_PINPAI object:nil];
-                [_my_right_button setTitle:@"已关注" forState:UIControlStateNormal];
+                [_my_right_button setTitle:@"已收藏" forState:UIControlStateNormal];
                 self.guanzhu = @"1";
             }
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [GMAPI showAutoHiddenMBProgressWithText:@"关注失败" addToView:self.view];
+            [GMAPI showAutoHiddenMBProgressWithText:@"收藏失败" addToView:self.view];
         }];
     }else if ([self.guanzhu intValue] == 1){
         NSString *post = [NSString stringWithFormat:@"&brand_id=%@&authcode=%@",self.pinpaiIdStr,[GMAPI getAuthkey]];
@@ -309,22 +309,22 @@
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             
             if ([[result stringValueForKey:@"errorcode"]intValue]==0) {
-                [GMAPI showAutoHiddenMBProgressWithText:@"取消关注成功" addToView:self.view];
+                [GMAPI showAutoHiddenMBProgressWithText:@"取消收藏成功" addToView:self.view];
                 [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_PINPAI_QUXIAO object:nil];
-                [_my_right_button setTitle:@"关注" forState:UIControlStateNormal];
+                [_my_right_button setTitle:@"收藏" forState:UIControlStateNormal];
                 self.guanzhu = @"0";
             }
             
             
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [GMAPI showAutoHiddenMBProgressWithText:@"取消关注失败" addToView:self.view];
+            [GMAPI showAutoHiddenMBProgressWithText:@"取消收藏失败" addToView:self.view];
         }];
     }
 }
 
 
-//获取是否关注 品牌
+//获取是否收藏 品牌
 -(void)getGuanzhuYesOrNoForPinpai{
     
     NSString *api = [NSString stringWithFormat:@"%@&brand_id=%@&authcode=%@",GUANZHUPINPAI_ISORNO,self.pinpaiIdStr,[GMAPI getAuthkey]];
@@ -337,10 +337,10 @@
             self.guanzhu = [result stringValueForKey:@"relation"];
         }
         
-        if ([self.guanzhu intValue]==0) {//未关注
-            [_my_right_button setTitle:@"关注" forState:UIControlStateNormal];
-        }else if ([self.guanzhu intValue] == 1){//已关注
-            [_my_right_button setTitle:@"已关注" forState:UIControlStateNormal];
+        if ([self.guanzhu intValue]==0) {//未收藏
+            [_my_right_button setTitle:@"收藏" forState:UIControlStateNormal];
+        }else if ([self.guanzhu intValue] == 1){//已收藏
+            [_my_right_button setTitle:@"已收藏" forState:UIControlStateNormal];
         }
         
         [self prepareNetData];//获取品牌附近的商场
@@ -354,7 +354,7 @@
 -(void)rightButtonTap:(UIButton *)sender
 {
     
-    NSLog(@"在这里添加关注");
+    NSLog(@"在这里添加收藏");
     
     
     //判断是否登录

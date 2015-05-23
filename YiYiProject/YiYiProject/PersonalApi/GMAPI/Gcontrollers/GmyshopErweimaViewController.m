@@ -193,7 +193,7 @@
         tt.font = [UIFont systemFontOfSize:14];
         tt.textAlignment = NSTextAlignmentCenter;
         tt.textColor = RGBCOLOR(79, 80, 81);
-        tt.text = @"扫一扫上面的二维码关注店铺";
+        tt.text = @"扫一扫上面的二维码收藏店铺";
         [cell.contentView addSubview:tt];
         
         
@@ -237,7 +237,7 @@
     tishiLable.font = [UIFont systemFontOfSize:15];
     tishiLable.textColor = [UIColor grayColor];
     tishiLable.textAlignment = NSTextAlignmentCenter;
-    tishiLable.text = @"扫描二维码关注我的店铺";
+    tishiLable.text = @"扫描二维码收藏我的店铺";
     [self.view addSubview:tishiLable];
     
     //店铺信息

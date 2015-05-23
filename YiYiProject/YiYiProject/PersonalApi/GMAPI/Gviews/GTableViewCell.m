@@ -24,14 +24,14 @@
     if (theType == GPERSON) {//个人中心
         
         //logo图
-        UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(16, (56-34)*0.5, 34, 34)];
-        [imv setImage:[theInfo objectForKey:@"titleLogo"][theIndexPath.section][theIndexPath.row]];
+        UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(16, (56-20)*0.5, 20, 20)];
+        [imv setImage:[theInfo objectForKey:@"titleLogo"][theIndexPath.row]];
         imv.layer.cornerRadius = 17;
         [self.contentView addSubview:imv];
         
         //文字描述
         UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(imv.frame)+19, (56-24)*0.5, 200*GscreenRatio_320, 24)];
-        titleLabel.text = [theInfo objectForKey:@"titleArray"][theIndexPath.section][theIndexPath.row];
+        titleLabel.text = [theInfo objectForKey:@"titleArray"][theIndexPath.row];
         [self.contentView addSubview:titleLabel];
         
         //箭头
