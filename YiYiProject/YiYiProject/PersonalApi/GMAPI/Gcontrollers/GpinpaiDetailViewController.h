@@ -19,6 +19,9 @@
 
 @property(nonatomic,strong)NSString *guanzhu;//0未收藏  1已收藏
 
+
+@property(nonatomic,assign)BOOL isChooseProductLink;//是否为添加T台链接
+
 @end
 
 

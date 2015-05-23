@@ -94,7 +94,7 @@
     if (self.contentTV.text.length == 0) {
         content = @" ";
     }
-//    NSString *brand = [NSString stringWithFormat:@"%@,%@,%@",self.brandTF.text,self.modelTF.text,self.priceTF.text];
+
     
     NSDictionary *theDic;
     if (self.maodianDic) {
@@ -201,6 +201,8 @@
                                            
                                            
                                            [self performSelector:@selector(leftButtonTap:) withObject:nil afterDelay:0.5];
+                                       }else{
+                                           self.my_right_button.userInteractionEnabled = YES;
                                        }
                                        
                                        

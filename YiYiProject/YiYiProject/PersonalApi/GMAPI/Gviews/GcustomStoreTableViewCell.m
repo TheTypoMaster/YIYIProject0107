@@ -54,22 +54,12 @@
     
     [self.contentView addSubview:jiantouImv];
     
+    cellHeight = 52;
     
-    //活动
-    UILabel *activeLabel = [[UILabel alloc]initWithFrame:CGRectMake(nameLabel.frame.origin.x, CGRectGetMaxY(nameLabel.frame)+10, DEVICE_WIDTH - 30 , 15)];
-    activeLabel.font = [UIFont systemFontOfSize:14];
-    activeLabel.textColor = RGBCOLOR(114, 114, 114);
-    activeLabel.text = [dic stringValueForKey:@"activity_info"];
-    activeLabel.numberOfLines = 4;
-    [activeLabel sizeToFit];
     
-    cellHeight += distanceLabel.frame.size.height+activeLabel.frame.size.height;
-    
-    cellHeight += 20;
     
     [self.contentView addSubview:nameLabel];
     [self.contentView addSubview:distanceLabel];
-    [self.contentView addSubview:activeLabel];
     
     
     [jiantouImv setFrame:CGRectMake(DEVICE_WIDTH - 20, cellHeight*0.5-6, 7, 12)];

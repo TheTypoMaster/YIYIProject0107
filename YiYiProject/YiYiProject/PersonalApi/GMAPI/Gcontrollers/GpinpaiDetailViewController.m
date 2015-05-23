@@ -14,21 +14,14 @@
 #import "GcustomStoreTableViewCell.h"
 #import "EGORefreshTableHeaderView.h"
 #import "NSDictionary+GJson.h"
+#import "RefreshTableView.h"
 
-@interface GpinpaiDetailViewController ()<UITableViewDataSource,UITableViewDelegate,EGORefreshTableDelegate>
+@interface GpinpaiDetailViewController ()<UITableViewDataSource,RefreshDelegate>
 {
-    UITableView *_tableView;
-    NSArray *_dataArray;
-    
-    
-    //下拉刷新
-    EGORefreshTableHeaderView *_refreshHeaderView;
-    BOOL _reloading;
-    
-    
+    RefreshTableView *_tableView;
     
     GcustomStoreTableViewCell *_tmpCell;//用户获取自定义单元格高度
-    
+
     //收藏相关
     UIButton *_my_right_button;
     
@@ -56,8 +49,8 @@
     
     
     
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT-44) style:UITableViewStylePlain];
-    _tableView.delegate = self;
+    _tableView = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT-44)];
+    _tableView.refreshDelegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_tableView];
@@ -65,10 +58,7 @@
     
     
     
-    //下拉刷新
-    _refreshHeaderView = [[EGORefreshTableHeaderView alloc]initWithFrame:CGRectMake(0, 0-_tableView.bounds.size.height, DEVICE_WIDTH, _tableView.bounds.size.height)];
-    _refreshHeaderView.delegate = self;
-    [_tableView addSubview:_refreshHeaderView];
+    
     
     
     
@@ -86,14 +76,6 @@
     [self getGuanzhuYesOrNoForPinpai];//获取是否收藏了该品牌
     
     
-    
-    
-    
-    
-    
-    
-    
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -104,14 +86,12 @@
 
 -(void)prepareNetData{
     
-    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     NSString *api = nil;
     if (self.locationDic) {
-        api = [NSString stringWithFormat:@"%@&brand_id=%@&page=1&per_page=100&long=%@&lat=%@",HOME_CLOTH_PINPAI_STORELIST,self.pinpaiIdStr,[self.locationDic stringValueForKey:@"long"],[self.locationDic stringValueForKey:@"lat"]];
+        api = [NSString stringWithFormat:@"%@&brand_id=%@&page=%d&per_page=%d&long=%@&lat=%@",HOME_CLOTH_PINPAI_STORELIST,self.pinpaiIdStr,_tableView.pageNum,L_PAGE_SIZE,[self.locationDic stringValueForKey:@"long"],[self.locationDic stringValueForKey:@"lat"]];
     }else{
         GMAPI *aa = [GMAPI sharedManager];
-        api = [NSString stringWithFormat:@"%@&brand_id=%@&page=1&per_page=100&long=%@&lat=%@",HOME_CLOTH_PINPAI_STORELIST,self.pinpaiIdStr,[aa.theLocationDic stringValueForKey:@"long"],[aa.theLocationDic stringValueForKey:@"lat"]];
+        api = [NSString stringWithFormat:@"%@&brand_id=%@&page=%d&per_page=%d&long=%@&lat=%@",HOME_CLOTH_PINPAI_STORELIST,self.pinpaiIdStr,_tableView.pageNum,L_PAGE_SIZE,[aa.theLocationDic stringValueForKey:@"long"],[aa.theLocationDic stringValueForKey:@"lat"]];
     }
     
     
@@ -120,16 +100,14 @@
     GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
     
     [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        
         NSLog(@"%@",result);
-        _dataArray = [result objectForKey:@"mall_list"];
+        NSArray *arr = [result objectForKey:@"mall_list"];
+        [_tableView reloadData:arr pageSize:L_PAGE_SIZE];
         
-        [_tableView reloadData];
-        
-        [self doneLoadingTableViewData];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        
         [GMAPI showAutoHiddenMBProgressWithText:@"加载数据失败，请下拉列表重新加载" addToView:self.view];
         NSLog(@"失败");
     }];
@@ -139,7 +117,7 @@
 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return _dataArray.count;
+    return _tableView.dataArray.count;
 }
 
 
@@ -157,7 +135,7 @@
     }
     
     //数据源
-    NSDictionary *dic = _dataArray[indexPath.row];
+    NSDictionary *dic = _tableView.dataArray[indexPath.row];
     
     
     
@@ -168,92 +146,6 @@
     
     return cell;
 }
-
-
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    CGFloat cellHeight = 0.0f;
-    
-    if (_tmpCell) {
-        cellHeight = [_tmpCell loadCustomCellWithDic:_dataArray[indexPath.row]];
-    }else{
-        _tmpCell = [[GcustomStoreTableViewCell alloc]init];
-        cellHeight = [_tmpCell loadCustomCellWithDic:_dataArray[indexPath.row]];
-    }
-    
-    return cellHeight;
-    
-    
-}
-
-
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    NSDictionary *dic = _dataArray[indexPath.row];
-    
-    GStorePinpaiViewController *cc = [[GStorePinpaiViewController alloc]init];
-    cc.storeIdStr = [dic stringValueForKey:@"mb_id"];
-    cc.pinpaiId = self.pinpaiIdStr;
-    cc.pinpaiNameStr = self.pinpaiName;
-    cc.storeNameStr = [dic stringValueForKey:@"mall_name"];
-    cc.guanzhuleixing = @"品牌店";
-    [self.navigationController pushViewController:cc animated:YES];
-    
-    
-}
-
-
-
-
-#pragma mark -  下拉刷新代理
--(void)reloadTableViewDataSource{
-    
-    _reloading = YES;
-}
-
--(void)doneLoadingTableViewData{
-    _reloading = NO;
-    [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:_tableView];
-    
-}
-
--(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-    if (scrollView == _tableView) {
-        [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
-    }
-    
-}
-
-
-#pragma mark - EGORefreshTableDelegate
-
-- (void)egoRefreshTableDidTriggerRefresh:(EGORefreshPos)aRefreshPos{
-    
-    
-    _dataArray = nil;
-    
-    //网络请求
-    [self prepareNetData];
-    
-    
-    
-}
-
-- (BOOL)egoRefreshTableDataSourceIsLoading:(UIView*)view;{
-    return _reloading;
-}
-
-- (NSDate*)egoRefreshTableDataSourceLastUpdated:(UIView*)view{
-    return [NSDate date];
-}
-
-
-
-
 
 
 
@@ -377,9 +269,71 @@
         
     }
     
+}
+
+
+#pragma mark - RefreshDelegate
+
+- (void)loadNewData
+{
+    [self prepareNetData];
+}
+- (void)loadMoreData
+{
+    [self prepareNetData];
+}
+
+//点击跳转
+- (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
+{
+    NSLog(@"%s",__FUNCTION__);
+    NSLog(@"%ld",(long)indexPath.row);
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    NSDictionary *dic = _tableView.dataArray[indexPath.row];
+    
+    GStorePinpaiViewController *cc = [[GStorePinpaiViewController alloc]init];
+    if (self.isChooseProductLink) {
+        cc.isChooseProductLink = YES;
+    }
+    cc.storeIdStr = [dic stringValueForKey:@"mb_id"];
+    cc.pinpaiId = self.pinpaiIdStr;
+    cc.pinpaiNameStr = self.pinpaiName;
+    cc.storeNameStr = [dic stringValueForKey:@"mall_name"];
+//    if ([[dic stringValueForKey:@"mall_type"]intValue]== 1) {//大商场
+//        cc.guanzhuleixing = @"商场";
+//    }else if ([[dic stringValueForKey:@"mall_type"]intValue]== 2){
+//        cc.guanzhuleixing = @"精品店";
+//    }else if ([[dic stringValueForKey:@"mall_type"]intValue]== 3){
+//        cc.guanzhuleixing = @"品牌店";
+//    }
+    
+    cc.guanzhuleixing = @"品牌店";
+    
+    [self.navigationController pushViewController:cc animated:YES];
+    
+    
     
     
     
 }
+- (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
+{
+//    CGFloat cellHeight = 0.0f;
+//    
+//    if (_tmpCell) {
+//        cellHeight = [_tmpCell loadCustomCellWithDic:_tableView.dataArray[indexPath.row]];
+//    }else{
+//        _tmpCell = [[GcustomStoreTableViewCell alloc]init];
+//        cellHeight = [_tmpCell loadCustomCellWithDic:_tableView.dataArray[indexPath.row]];
+//    }
+//    
+//    
+//    return cellHeight;
+    
+    return 52;
+}
+
 
 @end

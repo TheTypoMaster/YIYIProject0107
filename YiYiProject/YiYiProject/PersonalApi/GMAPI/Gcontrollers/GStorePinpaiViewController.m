@@ -106,7 +106,6 @@
     
     
     _my_right_button = [UIButton buttonWithType:UIButtonTypeCustom];
-//    _my_right_button.backgroundColor = [UIColor orangeColor];
     _my_right_button.frame = CGRectMake(0,0,60,44);
     _my_right_button.titleLabel.textAlignment = NSTextAlignmentRight;
     _my_right_button.titleLabel.font = [UIFont systemFontOfSize:15];
@@ -401,12 +400,12 @@
             [_upStoreInfoView addSubview:_huodongLabel];
             _huodongLabel.numberOfLines = 1;
             UIView *downLine = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_huodongLabel.frame)+15, DEVICE_WIDTH, 0.5)];
-            downLine.backgroundColor = RGBCOLOR(255, 72, 135);
+            downLine.backgroundColor = RGBCOLOR(255, 100, 154);
             
             UILabel *huodongFlag = [[UILabel alloc]initWithFrame:CGRectMake(DEVICE_WIDTH-80, CGRectGetMaxY(_huodongLabel.frame), 70, 15)];
             huodongFlag.font = [UIFont systemFontOfSize:11];
             huodongFlag.text = @"活动";
-            huodongFlag.textColor = RGBCOLOR(252, 74, 139);
+            huodongFlag.textColor = RGBCOLOR(255, 100, 154);
             huodongFlag.textAlignment = NSTextAlignmentRight;
             
             [_upStoreInfoView addSubview:huodongFlag];
@@ -859,7 +858,7 @@
     
     //瀑布流相关
     _backView_water = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_menu_view.frame)+5, ALL_FRAME_WIDTH, ALL_FRAME_HEIGHT - _menu_view.frame.size.height -64-_upStoreInfoView.frame.size.height-25)];
-    _backView_water.backgroundColor = RGBCOLOR(240, 230, 235);
+//    _backView_water.backgroundColor = RGBCOLOR(240, 230, 235);
     [_mainScrollview addSubview:_backView_water];
     _waterFlow = [[LWaterflowView alloc]initWithFrame:_backView_water.bounds waterDelegate:self waterDataSource:self];
     _waterFlow.backgroundColor = RGBCOLOR(235, 235, 235);

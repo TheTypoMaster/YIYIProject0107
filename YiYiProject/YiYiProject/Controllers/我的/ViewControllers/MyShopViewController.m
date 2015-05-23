@@ -94,9 +94,9 @@
 //创建上方infoView
 -(void)creatShopInfoView{
     //底层view
-    _backView = [[UIView alloc ]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 150*GscreenRatio_320)];
+    _backView = [[UIView alloc ]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_WIDTH*420/748.0)];
     
-    UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 150*GscreenRatio_320)];
+    UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_WIDTH*420/748.0)];
     imv.userInteractionEnabled = YES;
     [imv setImage:[GMAPI getUserBannerImage]];
     [_backView addSubview:imv];
@@ -145,9 +145,9 @@
     
     
     //今日访客 店铺会员
-    UIView *theBlackBackView = [[UIView alloc]initWithFrame:CGRectMake(0, _backView.frame.size.height-45, DEVICE_WIDTH, 45)];
-    theBlackBackView.backgroundColor = [UIColor blackColor];
-    theBlackBackView.alpha = 0.65;
+    UIImageView *theBlackBackView = [[UIImageView alloc]initWithFrame:CGRectMake(0, _backView.frame.size.height-50, DEVICE_WIDTH, 50)];
+    [theBlackBackView setImage:[UIImage imageNamed:@"shouye_bg.png"]];
+    theBlackBackView.userInteractionEnabled = YES;
     [_backView addSubview:theBlackBackView];
     
     //分割线

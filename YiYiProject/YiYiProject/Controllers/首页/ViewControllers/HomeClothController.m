@@ -74,8 +74,8 @@
 
 - (void)dealloc
 {
-    _tableView.delegate = nil;
-    _tableView.dataArray = nil;
+    _tableView.refreshDelegate = nil;
+    _tableView.dataSource = nil;
     _tableView = nil;
 }
 
@@ -93,13 +93,11 @@
     _tableView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:_tableView];
     
-    //退出登录通知
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(notificationOfLogOut) name:NOTIFICATION_LOGOUT object:nil];
     
     //先走缓存
-//    [self cacheData];
+    [self cacheData];
     
-    [self performSelector:@selector(prepareNetData) withObject:[NSNumber numberWithBool:YES] afterDelay:1];
+    [self performSelector:@selector(prepareNetData) withObject:[NSNumber numberWithBool:YES] afterDelay:0.5];
     
     
 }
@@ -160,7 +158,9 @@
 
 #pragma mark - 走缓存数据
 -(void)cacheData{
-    
+    NSDictionary *dic = [GMAPI getHomeClothCacheOfNearStore];
+    NSArray *arr = [dic arrayValueForKey:@"list"];
+    [_tableView reloadData:arr pageSize:19];
     
 }
 
@@ -216,6 +216,9 @@
     NSDictionary *dic = _tableView.dataArray[indexPath.row];
     [cell loadCustomViewWithModel:dic];
     
+    cell.backgroundColor = RGBCOLOR(235, 235, 235);
+    
+    
     return cell;
     
 }
@@ -239,6 +242,9 @@
         NSLog(@"%@",result);
         if ([[result stringValueForKey:@"errorcode"]intValue] == 0) {
             NSArray *arr = [result objectForKey:@"list"];
+            if (_tableView.pageNum == 1) {
+                [GMAPI setHomeClothCacheOfNearStoreWithDic:result];
+            }
             [_tableView reloadData:arr pageSize:L_PAGE_SIZE];
         }else{
             [GMAPI showAutoHiddenMBProgressWithText:@"请检查网络" addToView:self.view];
@@ -282,6 +288,7 @@
     }
     
 }
+
 
 
 

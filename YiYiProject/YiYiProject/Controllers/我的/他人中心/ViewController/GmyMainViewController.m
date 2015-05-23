@@ -517,10 +517,10 @@
     [_fansLabel addTaget:self action:@selector(clickToFansList) tag:0];
     
     
-    //编辑T台
-    UILabel *editTtai = [LTools createLabelFrame:CGRectMake(concernBackView.frame.size.width - 50, 0, 40, concernBackView.frame.size.height) title:@"编辑" font:14 align:NSTextAlignmentCenter textColor:[UIColor whiteColor]];
-    [concernBackView addSubview:editTtai];
-    [editTtai addTaget:self action:@selector(editMyTtai) tag:0];
+//    //编辑T台
+//    UILabel *editTtai = [LTools createLabelFrame:CGRectMake(concernBackView.frame.size.width - 50, 0, 40, concernBackView.frame.size.height) title:@"编辑" font:14 align:NSTextAlignmentCenter textColor:[UIColor whiteColor]];
+//    [concernBackView addSubview:editTtai];
+//    [editTtai addTaget:self action:@selector(editMyTtai) tag:0];
     
     
     //整个view
@@ -544,14 +544,14 @@
     
 }
 
-//编辑T台
--(void)editMyTtai{
-    GEditMyTtaiViewController *ccc = [[GEditMyTtaiViewController alloc]init];
-    ccc.lastPageNavigationHidden = YES;
-    [self.navigationController pushViewController:ccc animated:YES];
-    
-    
-}
+////编辑T台
+//-(void)editMyTtai{
+//    GEditMyTtaiViewController *ccc = [[GEditMyTtaiViewController alloc]init];
+//    ccc.lastPageNavigationHidden = YES;
+//    [self.navigationController pushViewController:ccc animated:YES];
+//    
+//    
+//}
 
 //初始化瀑布流
 -(void)creatWaterFlowView{
