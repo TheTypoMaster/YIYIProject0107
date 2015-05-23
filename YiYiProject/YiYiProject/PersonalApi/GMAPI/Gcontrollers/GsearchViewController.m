@@ -110,7 +110,7 @@
 //创建搜索框
 -(void)creatSearchHeaderView{
     _searchHeaderView=[[UIView alloc]initWithFrame:CGRectMake(0,0, DEVICE_WIDTH,82)];
-    _searchHeaderView.backgroundColor=RGBCOLOR(247, 247, 247);
+    _searchHeaderView.backgroundColor=[UIColor whiteColor];
     [self.view addSubview:_searchHeaderView];
     
     //搜索条图片

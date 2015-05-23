@@ -478,7 +478,7 @@
     
     if ([self.phoneNumber intValue] == 0) {
         phoneBtn.hidden = YES;
-        [adressLabel setFrame:CGRectMake(CGRectGetMaxX(daohangBtn.frame)+8, 0, DEVICE_WIDTH-CGRectGetMaxX(daohangBtn.frame)-14, downDanghangView.frame.size.height)];
+        [adressLabel setFrame:CGRectMake(CGRectGetMaxX(daohangBtn.frame)+8, 0, DEVICE_WIDTH-CGRectGetMaxX(daohangBtn.frame)-8, downDanghangView.frame.size.height)];
     }
     
     
