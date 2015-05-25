@@ -532,6 +532,14 @@
     bgScroll.bounces = NO;
     bgScroll.contentSize = CGSizeMake(DEVICE_WIDTH * 3, bgScroll.height);
     
+    //scrollView 和 系统手势冲突问题
+    [bgScroll.panGestureRecognizer requireGestureRecognizerToFail:self.navigationController.interactivePopGestureRecognizer];
+    
+//    UIView *leftMask = [[UIView alloc]initWithFrame:CGRectMake(0, 46, 80, bgScroll.height)];
+//    leftMask.backgroundColor = [UIColor orangeColor];
+//    leftMask.userInteractionEnabled = NO;
+//    [self.view addSubview:leftMask];
+    
     //单品
     waterFlow = [[LWaterflowView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, bgScroll.height) waterDelegate:self waterDataSource:self];
     waterFlow.backgroundColor = RGBCOLOR(235, 235, 235);
