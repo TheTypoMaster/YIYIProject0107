@@ -34,6 +34,8 @@
     
     GcustomSearchTableViewCell *_tmpCell;//用于获取高度的临时cell
     
+    LTools *_netTool;
+    
     
 }
 @end
@@ -229,7 +231,16 @@
 //请求网络数据
 -(void)prepareNetData{
     
+//    if (_tableView.pageNum == 1) {
+//        [_tableView.dataArray removeAllObjects];
+//    }
+    
     NSString *theWord = _searchTextField.text;
+    
+    
+    if (!_locationDic) {
+        return;
+    }
     
     NSString *url = [NSString stringWithFormat:@"%@&keywords=%@&page=%d&per_page=%d&long=%@&lat=%@",GSEARCH,theWord,_tableView.pageNum,L_PAGE_SIZE,[_locationDic stringValueForKey:@"long"],[_locationDic stringValueForKey:@"lat"]];
     
@@ -244,9 +255,15 @@
     //接口url:
     NSLog(@"请求用户通知接口:%@",url);
     
+    if (_netTool) {
+        
+        [_netTool cancelRequest];
+        _netTool = nil;
+    }
     
-    LTools *cc = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
-    [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
+    _netTool= [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    
+    [_netTool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSArray *arr = [result arrayValueForKey:@"list"];
         
