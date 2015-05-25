@@ -74,15 +74,12 @@
 -(void)creatWaterFlowView{
     
     //瀑布流相关
-    _waterFlow = [[LWaterflowView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT) waterDelegate:self waterDataSource:self noHeadeRefresh:NO noFooterRefresh:NO];
+    _waterFlow = [[LWaterflowView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT - 64) waterDelegate:self waterDataSource:self noHeadeRefresh:NO noFooterRefresh:NO];
     _waterFlow.backgroundColor = RGBCOLOR(235, 235, 235);
     [self.view addSubview:_waterFlow];
     _waterFlow.pageNum = 1;
     [_waterFlow.dataArray removeAllObjects];
     [self waterLoadNewData];
-
-    
-    
 }
 
 
@@ -92,6 +89,56 @@
     [self.navigationController pushViewController:ccc animated:YES];
 }
 
+//T台赞 或 取消
+
+- (void)zanTTaiDetail:(UIButton *)zan_btn
+{
+    if (![LTools isLogin:self]) {
+        return;
+    }
+    
+    [LTools animationToBigger:zan_btn duration:0.2 scacle:1.5];
+    
+    
+    NSString *authkey = [GMAPI getAuthkey];
+    
+    TPlatModel *detail_model = _waterFlow.dataArray[zan_btn.tag - 100];
+    NSString *t_id = detail_model.tt_id;
+    NSString *post = [NSString stringWithFormat:@"tt_id=%@&authcode=%@",t_id,authkey];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    
+    NSString *url;
+    
+    BOOL zan = zan_btn.selected ? NO : YES;
+    
+    
+    if (zan) {
+        url = TTAI_ZAN;
+    }else
+    {
+        url = TTAI_ZAN_CANCEL;
+    }
+
+    
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"-->%@",result);
+        
+        zan_btn.selected = !zan_btn.selected;
+        
+        int like_num = [detail_model.tt_like_num intValue];
+        detail_model.tt_like_num = [NSString stringWithFormat:@"%d",zan ? like_num + 1 : like_num - 1];
+        detail_model.is_like = zan ? 1 : 0;
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        if ([failDic[RESULT_CODE] intValue] == -11 || [failDic[RESULT_CODE] intValue] == 2003) {
+            [LTools showMBProgressWithText:failDic[@"msg"] addToView:self.view];
+        }
+        
+    }];
+}
 
 
 /**
@@ -291,6 +338,8 @@
     
     TPlatModel *aMode = _waterFlow.dataArray[indexPath.row];
     [cell setCellWithModel:aMode];
+    
+    [cell.like_btn addTarget:self action:@selector(zanTTaiDetail:) forControlEvents:UIControlEventTouchUpInside];
     
     NSString *imageUrl = aMode.image[@"url"];
     
