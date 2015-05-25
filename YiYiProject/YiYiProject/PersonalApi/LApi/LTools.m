@@ -381,7 +381,7 @@
         {
             NSLog(@"-----------解析数据为空");
             
-            NSDictionary *failDic = @{RESULT_INFO:@"获取数据异常"};
+            NSDictionary *failDic = @{RESULT_INFO:@"获取数据异常",RESULT_CODE:@"999"};
             failBlock(failDic,0);
         }
         
@@ -390,7 +390,8 @@
         
         NSLog(@"-----------请求数据为空");
         
-        NSDictionary *failDic = @{RESULT_INFO:@"获取数据异常"};
+        NSDictionary *failDic = @{RESULT_INFO:@"获取数据异常",RESULT_CODE:@"999"};
+
         failBlock(failDic,0);
     }
     

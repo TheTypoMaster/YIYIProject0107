@@ -247,11 +247,18 @@
             }
             [_tableView reloadData:arr pageSize:L_PAGE_SIZE];
         }else{
-            [GMAPI showAutoHiddenMBProgressWithText:@"请检查网络" addToView:self.view];
         }
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        [GMAPI showAutoHiddenMBProgressWithText:@"请检查网络" addToView:self.view];
+//        [GMAPI showAutoHiddenMBProgressWithText:@"请检查网络" addToView:self.view];
+        
+        int errcode = [failDic[RESULT_CODE] intValue];
+        
+        if (errcode != 999) {
+            [GMAPI showAutoHiddenMBProgressWithText:[failDic stringValueForKey:@"msg"] addToView:self.view];
+
+        }
+        
         [_tableView loadFail];
     }];
     

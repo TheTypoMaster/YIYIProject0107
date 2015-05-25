@@ -186,6 +186,16 @@
 
 - (void)GbtnClicked:(UIButton *)sender
 {
+
+    
+    if (_netTool) {
+        [_tableView loadFail];
+        [_tableView.dataArray removeAllObjects];
+        [_netTool cancelRequest];
+        _netTool = nil;
+        
+    }
+    
     int tag = (int)sender.tag;
     //改变点击颜色
     for (UIButton *btn in _btnArray) {
@@ -239,6 +249,8 @@
     
     
     if (!_locationDic) {
+        NSLog(@"没有位置信息 return了");
+        [_tableView loadFail];
         return;
     }
     
@@ -255,11 +267,6 @@
     //接口url:
     NSLog(@"请求用户通知接口:%@",url);
     
-    if (_netTool) {
-        
-        [_netTool cancelRequest];
-        _netTool = nil;
-    }
     
     _netTool= [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     

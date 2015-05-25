@@ -260,6 +260,10 @@
 {
     if (self.isLoadMoreData) {
         self.pageNum --;
+        
+        if (self.pageNum < 1) {
+            self.pageNum = 1;
+        }
     }
     [self performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
 
