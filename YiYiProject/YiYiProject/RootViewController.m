@@ -56,6 +56,8 @@
     
     //更新未读消息数字
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateRemoteMessage:) name:NOTIFICATION_REMOTE_MESSAGE object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateRemoteMessage:) name:NOTIFICATION_LOGIN object:self];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(cancelHotpoint:) name:NOTIFICATION_LOGOUT object:self];
     
     [self getMyMessage];
     
@@ -79,6 +81,14 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+//取消红点
+- (void)cancelHotpoint:(NSNotification *)notify
+{
+    [self updateTabbarNumber:0];
+}
+
+//更新未读消息条数
 
 - (void)updateRemoteMessage:(NSNotification *)notification
 {
