@@ -324,14 +324,18 @@
 
 - (void)clickToShop:(UIButton *)sender
 {
-    NSString *shopId = @"";
-    NSString *shopName = @"";
     int mallType = [_currentUser.mall_type intValue];
     
+    NSString *shopName = mallType == 3 ? _currentUser.brand_name : _currentUser.mall_name;
+
     if (mallType == 3 ) {//品牌店
-        [self pushToNearbyStoreVCWithIdStr:shopId theStoreName:shopName mailType:mallType];
+        
+        [self pushToNearbyStoreVCWithIdStr:_currentUser.shop_id theStoreName:shopName mailType:mallType];
+        
     }else if (mallType == 1 || mallType == 2){//大商场 精品店
-        [self pushToNearbyStoreVCWithIdStr:shopId theStoreName:shopName mailType:mallType];
+        
+        [self pushToNearbyStoreVCWithIdStr:_currentUser.mall_id theStoreName:shopName mailType:mallType];
+        
     }
 }
 
@@ -347,6 +351,7 @@
         cc.storeNameStr = nameStr;
         cc.guanzhuleixing = @"精品店";
         cc.hidesBottomBarWhenPushed = YES;
+        cc.lastPageNavigationHidden = YES;
         [self.navigationController pushViewController:cc animated:YES];
         
     }else if (mailType == 1){//大商场
@@ -354,12 +359,14 @@
         dd.storeIdStr = theID;
         dd.storeNameStr = nameStr;
         dd.hidesBottomBarWhenPushed = YES;
+        dd.lastPageNavigationHidden = YES;
         [self.navigationController pushViewController:dd animated:YES];
     }else if (mailType == 3){//品牌店
         GStorePinpaiViewController *cc = [[GStorePinpaiViewController alloc]init];
         cc.storeIdStr = theID;
         cc.guanzhuleixing = @"品牌店";
         cc.hidesBottomBarWhenPushed = YES;
+        cc.lastPageNavigationHidden = YES;
         [self.navigationController pushViewController:cc animated:YES];
     }
 }
@@ -371,6 +378,7 @@
 {
     MyConcernController *collect = [[MyConcernController alloc]init];
     collect.lastPageNavigationHidden = NO;
+    collect.uid = self.userId;
     [self.navigationController pushViewController:collect animated:YES];
 }
 

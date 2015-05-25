@@ -361,7 +361,7 @@
 
 - (void)clickToZhuanFa:(UIButton *)sender
 {
-    NSString *productString = [NSString stringWithFormat:SHARE_PRODUCT_DETAIL,self.t_model.tt_id];
+    NSString *productString = [NSString stringWithFormat:SHARE_TPLAT_DETAIL,self.t_model.tt_id];
     
     [[LShareSheetView shareInstance] showShareContent:detail_model.tt_content title:@"衣加衣" shareUrl:productString shareImage:self.showImageView.image targetViewController:self];
     [[LShareSheetView shareInstance]actionBlock:^(NSInteger buttonIndex, Share_Type shareType) {

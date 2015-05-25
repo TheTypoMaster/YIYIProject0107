@@ -16,6 +16,10 @@
 @property (strong, nonatomic) IBOutlet UILabel *addressLabel;
 @property (strong, nonatomic) IBOutlet UIButton *cancelButton;
 @property (strong, nonatomic) IBOutlet UIView *bottomLine;
+@property (strong, nonatomic) IBOutlet UIImageView *shopImageView;
+@property (strong, nonatomic) IBOutlet UIView *distanceView;
+@property (strong, nonatomic) IBOutlet UILabel *distanceLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *locationImageView;
 
 - (void)setCellWithModel:(MailModel *)aModel;
 

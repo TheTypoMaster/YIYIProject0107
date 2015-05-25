@@ -17,4 +17,6 @@
 
 @property(nonatomic,assign)BOOL isRePrepareNetData_pinpai;//是否重新请求关注品牌信息
 
+@property(nonatomic,retain)NSString *uid;
+
 @end

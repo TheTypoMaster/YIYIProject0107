@@ -50,7 +50,11 @@
 @property(nonatomic,retain)NSString *mall_type;//店铺类型 2 精品店 3 品牌店  1 商场
 @property(nonatomic,retain)NSString *mall_name;//店铺名称
 
-@property(nonatomic,retain)NSString *shop_id;//店铺id
+@property(nonatomic,retain)NSString *brand_name;//品牌name
+
+@property(nonatomic,retain)NSString *shop_id;//店铺id 可能会没有
+@property(nonatomic,retain)NSString *mall_id;//id 一定有
+
 
 @property(nonatomic,strong)NSString *is_sign;//是否签到
 

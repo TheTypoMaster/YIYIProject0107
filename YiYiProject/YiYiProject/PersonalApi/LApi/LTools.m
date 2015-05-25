@@ -779,6 +779,29 @@
 
 #pragma - mark 小工具
 
+/**
+ *  返回距离 大于1000 为km,小于m
+ *
+ *  @param distance 距离
+ *
+ *  @return
+ */
++ (NSString *)distanceString:(NSString *)distance
+{
+    NSString *distanceStr;
+    
+    double dis = [distance doubleValue];
+    
+    if (dis > 1000) {
+        
+        distanceStr = [NSString stringWithFormat:@"%.1fkm",dis/1000];
+    }else
+    {
+        distanceStr = [NSString stringWithFormat:@"%@m",distance];
+    }
+    return distanceStr;
+}
+
 + (NSString *)safeString:(NSString *)string
 {
     if (string == nil) {
