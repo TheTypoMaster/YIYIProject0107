@@ -66,8 +66,9 @@
     [super viewWillAppear:animated];
     [_input_view addKeyBordNotification];
     
+    
     self.navigationController.navigationBarHidden = YES;
-
+    
     [[UIApplication sharedApplication]setStatusBarHidden:NO];
 
     self.navigationController.navigationBarHidden = NO;
@@ -89,11 +90,6 @@
     [self.navigationController setNavigationBarHidden:self.lastPageNavigationHidden animated:animated];
 }
 
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    
-}
 
 - (void)dealloc
 {

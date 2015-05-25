@@ -278,6 +278,8 @@
     
     comment.t_model = self.t_model;
     
+    comment.lastPageNavigationHidden = YES;
+    
     __weak typeof(self)weakSelf = self;
     
     comment.updateParamsBlock = ^(NSDictionary *params){
