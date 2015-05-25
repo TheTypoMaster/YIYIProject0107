@@ -134,6 +134,9 @@
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeTheRefreshTypeOfShop) name:NOTIFICATION_GUANZHU_STORE_QUXIAO object:nil];
         
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeTheRefreshTypeOfPinpai) name:NOTIFICATION_GUANZHU_PINPAI object:nil];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeTheRefreshTypeOfPinpai) name:NOTIFICATION_GUANZHU_PINPAI_QUXIAO object:nil];
+        
+        
     }else{
         self.myTitleLabel.text = @"收藏";
     }
