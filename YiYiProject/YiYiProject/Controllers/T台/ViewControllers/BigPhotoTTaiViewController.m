@@ -83,7 +83,7 @@
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateTTai:) name:NOTIFICATION_TTAI_PUBLISE_SUCCESS object:nil];
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receiverNotify:) name:NOTIFICATION_TPLATDETAIL_HIDDEN object:nil];
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receiverNotify:) name:NOTIFICATION_TPLATDETAIL_HIDDEN object:nil];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receiverNotify2:) name:NOTIFICATION_TPLATDETAIL_SHOW object:nil];
     

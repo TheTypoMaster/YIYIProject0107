@@ -68,6 +68,8 @@
  */
 - (void)createToolbar
 {
+    
+    NSLog(@"LPhotoBrowser %s",__FUNCTION__);
     topView = [[UIView alloc]initWithFrame:CGRectMake(0, 10, DEVICE_WIDTH, 49)];
     topView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:topView];

@@ -45,8 +45,6 @@
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    
-    [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_TPLATDETAIL_HIDDEN object:nil];
 }
 
 - (void)viewDidLoad {
@@ -349,7 +347,7 @@
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
-        NSLog(@"获取赞列表:%@",result);
+//        NSLog(@"获取赞列表:%@",result);
         NSArray *list = [result objectForKey:@"list"];
         NSMutableArray *temp = [NSMutableArray arrayWithCapacity:list.count];
         for (NSDictionary *aDic in list) {

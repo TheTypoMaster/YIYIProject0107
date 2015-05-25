@@ -489,7 +489,7 @@ typedef enum {
 
 
 #pragma mark-----设置
-#define	APP_RATING_URL	 @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=951259287"
+#define	APP_RATING_URL	 @"itms-apps://itunes.apple.com/app/id951259287"
 
 #pragma mark-------------编辑个人资料
 

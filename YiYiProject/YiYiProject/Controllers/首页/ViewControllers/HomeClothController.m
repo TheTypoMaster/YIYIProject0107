@@ -239,7 +239,7 @@
     
     LTools *dd = [[LTools alloc]initWithUrl:api isPost:YES postData:nil];
     [dd requestCompletion:^(NSDictionary *result, NSError *erro) {
-        NSLog(@"%@",result);
+
         if ([[result stringValueForKey:@"errorcode"]intValue] == 0) {
             NSArray *arr = [result objectForKey:@"list"];
             if (_tableView.pageNum == 1) {

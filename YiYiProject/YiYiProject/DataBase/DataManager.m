@@ -110,7 +110,7 @@
             const unsigned char *type = sqlite3_column_text(stmt, 0);
             const unsigned char *content = sqlite3_column_text(stmt, 1);
             
-            NSLog(@"type=%@ content=%@",[NSString stringWithUTF8String:(const char *)type],[NSString stringWithUTF8String:(const char *)content]);
+//            NSLog(@"type=%@ content=%@",[NSString stringWithUTF8String:(const char *)type],[NSString stringWithUTF8String:(const char *)content]);
             
             NSString *jsonStr = [NSString stringWithUTF8String:(const char *)content];
             

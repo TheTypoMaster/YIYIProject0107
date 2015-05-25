@@ -66,7 +66,7 @@
 {
     [super viewWillAppear:animated];
     
-    NSLog(@"BigPhotoTTaiViewController viewWillAppear");
+    NSLog(@"RootViewController viewWillAppear");
 //    
 //    [self.navigationController setNavigationBarHidden:NO animated:animated];
 //    [[UIApplication sharedApplication]setStatusBarHidden:YES];
