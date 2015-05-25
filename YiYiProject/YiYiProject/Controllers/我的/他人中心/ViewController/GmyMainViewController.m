@@ -73,6 +73,8 @@
     UIView *_headView;//waterView头部view
     
     MBProgressHUD *loading;
+    
+    UILabel *_hintLabel;//提示label
 
 }
 
@@ -104,13 +106,6 @@
     }
 }
 
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    
-    [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_TPLATDETAIL_HIDDEN object:nil];
-}
-
 - (void)dealloc
 {
     _waterFlow.waterDelegate = nil;
@@ -132,6 +127,23 @@
 
     [self creatWaterFlowView];
     
+    
+    //返回按钮
+    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backBtn setImage:BACK_DEFAULT_IMAGE forState:UIControlStateNormal];
+    [backBtn setImageEdgeInsets:UIEdgeInsetsMake(30, 15, 30, 50)];
+    [backBtn setFrame:CGRectMake(0, 0, 80, 80)];
+    [backBtn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    [backBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 12, 0, 12)];
+    [backBtn addTarget:self action:@selector(clickToBack:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:backBtn];
+    self.backButton = backBtn;
+    
+    _hintLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, self.view.height/2.f, DEVICE_WIDTH, 50)];
+    _hintLabel.backgroundColor = [UIColor clearColor];
+    _hintLabel.font = [UIFont systemFontOfSize:14.f];
+    _hintLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:_hintLabel];
     
     loading = [LTools MBProgressWithText:@"加载中..." addToView:self.view];
     
@@ -169,15 +181,15 @@
     
     __weak typeof(self)weakSelf = self;
     
+    __weak typeof(LWaterflowView *)weakWaterFlow = _waterFlow;
+    
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         UserInfo *user = [[UserInfo alloc]initWithDictionary:result];
         
-//        [_waterFlow reloadData];
-        
-        _waterFlow.headerView = [self headViewWithUserInfo:user];
+        weakWaterFlow.headerView = [self headViewWithUserInfo:user];
         
         [weakSelf setViewsWithUserInfo:user];
         
@@ -185,12 +197,17 @@
         
         [weakSelf getUserTPlat];
         
+        
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"获取个人信息失败--->%@",failDic);
         [_refreshLoading stopAnimating];
         
         [loading hide:YES];
+        
+        [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
+        
+        _hintLabel.text = @"获取个人信息失败";
     }];
 }
 
@@ -302,19 +319,23 @@
 {
     PropertyImageView *aImageView = (PropertyImageView *)((TPlatCell *)cell).photoView;
     
-    [MiddleTools showTPlatDetailFromPropertyImageView:aImageView withController:self.tabBarController cancelSingleTap:YES];
+    [MiddleTools showTPlatDetailFromPropertyImageView:aImageView withController:self cancelSingleTap:YES];
 }
 
 - (void)clickToShop:(UIButton *)sender
 {
-    NSString *shopId = @"";
-    NSString *shopName = @"";
     int mallType = [_currentUser.mall_type intValue];
     
+    NSString *shopName = mallType == 3 ? _currentUser.brand_name : _currentUser.mall_name;
+
     if (mallType == 3 ) {//品牌店
-        [self pushToNearbyStoreVCWithIdStr:shopId theStoreName:shopName mailType:mallType];
+        
+        [self pushToNearbyStoreVCWithIdStr:_currentUser.shop_id theStoreName:shopName mailType:mallType];
+        
     }else if (mallType == 1 || mallType == 2){//大商场 精品店
-        [self pushToNearbyStoreVCWithIdStr:shopId theStoreName:shopName mailType:mallType];
+        
+        [self pushToNearbyStoreVCWithIdStr:_currentUser.mall_id theStoreName:shopName mailType:mallType];
+        
     }
 }
 
@@ -330,6 +351,7 @@
         cc.storeNameStr = nameStr;
         cc.guanzhuleixing = @"精品店";
         cc.hidesBottomBarWhenPushed = YES;
+        cc.lastPageNavigationHidden = YES;
         [self.navigationController pushViewController:cc animated:YES];
         
     }else if (mailType == 1){//大商场
@@ -337,12 +359,14 @@
         dd.storeIdStr = theID;
         dd.storeNameStr = nameStr;
         dd.hidesBottomBarWhenPushed = YES;
+        dd.lastPageNavigationHidden = YES;
         [self.navigationController pushViewController:dd animated:YES];
     }else if (mailType == 3){//品牌店
         GStorePinpaiViewController *cc = [[GStorePinpaiViewController alloc]init];
         cc.storeIdStr = theID;
         cc.guanzhuleixing = @"品牌店";
         cc.hidesBottomBarWhenPushed = YES;
+        cc.lastPageNavigationHidden = YES;
         [self.navigationController pushViewController:cc animated:YES];
     }
 }
@@ -354,6 +378,7 @@
 {
     MyConcernController *collect = [[MyConcernController alloc]init];
     collect.lastPageNavigationHidden = NO;
+    collect.uid = self.userId;
     [self.navigationController pushViewController:collect animated:YES];
 }
 
@@ -653,16 +678,6 @@
         aView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.3];
         [_upUserInfoView.imageView addSubview:aView];
     }
-    
-    //返回按钮
-    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backBtn setImage:BACK_DEFAULT_IMAGE forState:UIControlStateNormal];
-    [backBtn setImageEdgeInsets:UIEdgeInsetsMake(30, 15, 30, 50)];
-    [backBtn setFrame:CGRectMake(0, 0, 80, 80)];
-    [backBtn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
-    [backBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 12, 0, 12)];
-        [backBtn addTarget:self action:@selector(clickToBack:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:backBtn];
     
     //刷新loading
     

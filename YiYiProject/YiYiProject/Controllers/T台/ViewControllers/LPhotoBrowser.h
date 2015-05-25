@@ -14,7 +14,7 @@
 
 @property(nonatomic,retain)NSString *tt_id;//t台信息id
 
-@property(nonatomic,assign)TPlatModel *t_model;
+@property(nonatomic,retain)TPlatModel *t_model;
 
 @property(nonatomic,assign)UIImageView *showImageView;
 

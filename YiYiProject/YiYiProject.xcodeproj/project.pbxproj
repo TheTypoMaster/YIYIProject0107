@@ -164,6 +164,8 @@
 		13A82BB61B04955C00B3AC56 /* YIYIChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A82BB51B04955C00B3AC56 /* YIYIChatViewController.m */; };
 		13A82BB91B04956600B3AC56 /* FBMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A82BB81B04956600B3AC56 /* FBMapViewController.m */; };
 		13A82BBB1B049A1300B3AC56 /* black.png in Resources */ = {isa = PBXBuildFile; fileRef = 13A82BBA1B049A1300B3AC56 /* black.png */; };
+		13A854531B130FEF00781CDE /* collections_location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13A854521B130FEF00781CDE /* collections_location@2x.png */; };
+		13A854551B13160F00781CDE /* default_yijiayi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13A854541B13160F00781CDE /* default_yijiayi@2x.png */; };
 		13A8A38E1A655879008D3D44 /* MessageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A8A38C1A655879008D3D44 /* MessageViewCell.m */; };
 		13A8A38F1A655879008D3D44 /* MessageViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13A8A38D1A655879008D3D44 /* MessageViewCell.xib */; };
 		13ABB0701B01ADCD002DC700 /* UMSocialLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 13ABB0471B01ADCD002DC700 /* UMSocialLocalizable.strings */; };
@@ -775,6 +777,8 @@
 		13A82BB71B04956600B3AC56 /* FBMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBMapViewController.h; sourceTree = "<group>"; };
 		13A82BB81B04956600B3AC56 /* FBMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBMapViewController.m; sourceTree = "<group>"; };
 		13A82BBA1B049A1300B3AC56 /* black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = black.png; sourceTree = "<group>"; };
+		13A854521B130FEF00781CDE /* collections_location@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "collections_location@2x.png"; sourceTree = "<group>"; };
+		13A854541B13160F00781CDE /* default_yijiayi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default_yijiayi@2x.png"; sourceTree = "<group>"; };
 		13A8A38B1A655879008D3D44 /* MessageViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageViewCell.h; sourceTree = "<group>"; };
 		13A8A38C1A655879008D3D44 /* MessageViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageViewCell.m; sourceTree = "<group>"; };
 		13A8A38D1A655879008D3D44 /* MessageViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageViewCell.xib; sourceTree = "<group>"; };
@@ -1532,7 +1536,9 @@
 		13681C6F1A4527A200671D07 /* AllImages */ = {
 			isa = PBXGroup;
 			children = (
+
 				E3E4BF471B12FDBD0045D96F /* my_shenqing@2x.png */,
+				13A854541B13160F00781CDE /* default_yijiayi@2x.png */,
 				13CC03881B10A0A300A42BC1 /* 我的收藏 */,
 				E37F84441B1080890086CBB7 /* shouye_bg@2x.png */,
 				13A7A0321AF8A95A0045C75F /* navigationBarBackground_1@2x.png */,
@@ -2431,6 +2437,7 @@
 		13CC03881B10A0A300A42BC1 /* 我的收藏 */ = {
 			isa = PBXGroup;
 			children = (
+				13A854521B130FEF00781CDE /* collections_location@2x.png */,
 				13CC03891B10A0A300A42BC1 /* collection_jiantou@2x.png */,
 				13CC038A1B10A0A300A42BC1 /* my collections_bg_bottom@2x.png */,
 				13CC038B1B10A0A300A42BC1 /* my collections_bg_top@2x.png */,
@@ -3476,6 +3483,7 @@
 				E36B2B761AC26D73004A87B3 /* xuanze_down_44_44@2x.png in Resources */,
 				137B08551A4E993C00DE7DCC /* love_down@2x.png in Resources */,
 				56A8A8361A45BB1300E85F6B /* MatchTopicCell.xib in Resources */,
+				13A854531B130FEF00781CDE /* collections_location@2x.png in Resources */,
 				13ABB07E1B01ADCD002DC700 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				565821DC1A66AA2A004C8F7D /* xq_love_down@2x.png in Resources */,
 				13ABB0781B01ADCD002DC700 /* UMSnsAccountViewController.xib in Resources */,
@@ -3552,6 +3560,7 @@
 				13681C8A1A453DE600671D07 /* login_suo@2x.png in Resources */,
 				13681C821A453B3200671D07 /* share_sina@2x.png in Resources */,
 				56A8A82D1A458FF200E85F6B /* clock_image@2x.png in Resources */,
+				13A854551B13160F00781CDE /* default_yijiayi@2x.png in Resources */,
 				E3C49A911AFA0187003D30B4 /* gqiandao_zhu@2x.png in Resources */,
 				564387C41A5ABD3A00499AD3 /* match_segment_selected_image@2x.png in Resources */,
 				13D03D471AEDD60F0078AA9E /* MyseetingTableViewCell.xib in Resources */,

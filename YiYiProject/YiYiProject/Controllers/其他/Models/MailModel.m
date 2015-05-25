@@ -10,4 +10,24 @@
 
 @implementation MailModel
 
+-(id)initWithDictionary:(NSDictionary *)dic
+{
+    self = [super init];
+    if (self) {
+        
+        if ([dic isKindOfClass:[NSDictionary class]]) {
+            [self setValuesForKeysWithDictionary:dic];
+            
+            // 对应的活动
+            NSDictionary *activityDic = self.activity;
+            
+            if ([activityDic isKindOfClass:[NSDictionary class]]) {
+                
+                self.activityModel = [[ActivityModel alloc]initWithDictionary:activityDic];
+            }
+        }
+    }
+    return self;
+}
+
 @end

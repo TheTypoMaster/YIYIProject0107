@@ -24,6 +24,8 @@
 @property(nonatomic,retain)NSString *imagesize;
 @property(nonatomic,retain)NSDictionary *uinfo;//用户信息
 
+@property(nonatomic,retain)NSString *status;
+
 @property(nonatomic,assign)int is_like;
 
 @end

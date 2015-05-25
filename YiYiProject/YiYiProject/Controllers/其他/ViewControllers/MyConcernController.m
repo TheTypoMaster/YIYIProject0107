@@ -125,11 +125,14 @@
     [self getBrand];
     [self getShop];
     
+    //是自己的话需要编辑按钮
+    if ([self.uid isKindOfClass:[NSString class]] && [self.uid isEqualToString:[GMAPI getUid]])
+    {
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeTheRefreshTypeOfShop) name:NOTIFICATION_GUANZHU_STORE_QUXIAO object:nil];
+        
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeTheRefreshTypeOfPinpai) name:NOTIFICATION_GUANZHU_PINPAI object:nil];
+    }
     
-    
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeTheRefreshTypeOfShop) name:NOTIFICATION_GUANZHU_STORE_QUXIAO object:nil];
-    
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeTheRefreshTypeOfShop) name:NOTIFICATION_GUANZHU_PINPAI object:nil];
 }
 
 
@@ -264,8 +267,9 @@
         
         [tool_brand cancelRequest];
     }
-    
-    NSString *url = [NSString stringWithFormat:MY_CONCERN_BRAND,[GMAPI getAuthkey],brandTable.pageNum];
+    NSString *userId = self.uid.length > 0 ? self.uid : [GMAPI getUid];
+
+    NSString *url = [NSString stringWithFormat:MY_CONCERN_BRAND,[GMAPI getAuthkey],brandTable.pageNum,userId];
     tool_brand = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool_brand requestCompletion:^(NSDictionary *result, NSError *erro) {
         
@@ -307,7 +311,12 @@
         [tool_shop cancelRequest];
     }
     
-    NSString *url = [NSString stringWithFormat:MY_CONCERN_SHOP,[GMAPI getAuthkey],shopTable.pageNum,L_PAGE_SIZE];
+    NSString *longtitud = _longtitud ? _longtitud : @"116.42111721";
+    NSString *latitude = _latitude ? _latitude : @"39.90304099";
+    
+    NSString *userId = self.uid.length > 0 ? self.uid : [GMAPI getUid];
+    
+    NSString *url = [NSString stringWithFormat:MY_CONCERN_SHOP,[GMAPI getAuthkey],shopTable.pageNum,L_PAGE_SIZE,userId,latitude,longtitud];
     
     tool_shop = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool_shop requestCompletion:^(NSDictionary *result, NSError *erro) {
@@ -348,6 +357,110 @@
     }];
 }
 
+/**
+ *  我的收藏
+ */
+- (void)getMyCollection
+{
+    if (tool_collection_list) {
+        [tool_collection_list cancelRequest];
+    }
+    
+    NSString *longtitud = _longtitud ? _longtitud : @"116.42111721";
+    NSString *latitude = _latitude ? _latitude : @"39.90304099";
+    
+    NSString *userId = self.uid.length > 0 ? self.uid : [GMAPI getUid];
+    
+    NSString *url = [NSString stringWithFormat:GET_MY_CILLECTION,longtitud,latitude,waterFlow.pageNum,L_PAGE_SIZE,[GMAPI getAuthkey],userId];
+    tool_collection_list = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool_collection_list requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSMutableArray *arr;
+        if ([result isKindOfClass:[NSDictionary class]]) {
+            
+            NSArray *list = result[@"list"];
+            arr = [NSMutableArray arrayWithCapacity:list.count];
+            if ([list isKindOfClass:[NSArray class]]) {
+                
+                for (NSDictionary *aDic in list) {
+                    
+                    ProductModel *aModel = [[ProductModel alloc]initWithDictionary:aDic];
+                    
+                    [arr addObject:aModel];
+                }
+                
+            }
+            
+            [waterFlow reloadData:arr pageSize:L_PAGE_SIZE];
+            
+        }
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+        
+        [GMAPI showAutoHiddenMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
+        
+        [waterFlow loadFail];
+        
+    }];
+}
+/**
+ *  赞 取消赞 收藏 取消收藏
+ */
+
+- (void)zanProduct:(UIButton *)sender
+{
+    if (![LTools isLogin:self]) {
+        
+        return;
+    }
+    //直接变状态
+    //更新数据
+    
+    [LTools animationToBigger:sender duration:0.2 scacle:1.5];
+    
+    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[waterFlow.quitView cellAtIndexPath:[NSIndexPath indexPathForRow:sender.tag - 100 inSection:0]];
+    //    cell.like_label.text = @"";
+    
+    ProductModel *aMode = waterFlow.dataArray[sender.tag - 100];
+    
+    NSString *productId = aMode.product_id;
+    
+    __weak typeof(self)weakSelf = self;
+    
+    __block BOOL isZan = !sender.selected;
+    
+    NSString *api = sender.selected ? HOME_PRODUCT_ZAN_Cancel : HOME_PRODUCT_ZAN_ADD;
+    
+    NSString *post = [NSString stringWithFormat:@"product_id=%@&authcode=%@",productId,[GMAPI getAuthkey]];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    
+    NSString *url = api;
+    
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"result %@",result);
+        sender.selected = isZan;
+        aMode.is_like = isZan ? 1 : 0;
+        aMode.product_like_num = NSStringFromInt([aMode.product_like_num intValue] + (isZan ? 1 : -1));
+        cell.like_label.text = aMode.product_like_num;
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+        [GMAPI showAutoHiddenMBProgressWithText:failDic[RESULT_INFO] addToView:weakSelf.view];
+        if ([failDic[RESULT_CODE] intValue] == -11) {
+            
+            [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:weakSelf.view];
+        }
+        aMode.product_like_num = NSStringFromInt([aMode.product_like_num intValue]);
+        cell.like_label.text = aMode.product_like_num;
+    }];
+}
+
+
 #pragma mark - 创建视图
 
 - (void)createNavigationbarTools
@@ -355,24 +468,30 @@
     UIButton *rightView=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 44, 44)];
     rightView.backgroundColor=[UIColor clearColor];
     
-    heartButton=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 44, 44)];
-    [heartButton addTarget:self action:@selector(clickToEdit:) forControlEvents:UIControlEventTouchUpInside];
-    [heartButton setTitleColor:RGBCOLOR(252, 76, 139) forState:UIControlStateNormal];
-    [heartButton setTitle:@"编辑" forState:UIControlStateNormal];
-    [heartButton  setTitle:@"完成" forState:UIControlStateSelected];
-    heartButton.titleLabel.font = [UIFont systemFontOfSize:15];
-    [heartButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
-    [rightView addSubview:heartButton];
+    //是自己的话需要编辑按钮
+    if ([self.uid isKindOfClass:[NSString class]] && [self.uid isEqualToString:[GMAPI getUid]]) {
+        
+        heartButton=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 44, 44)];
+        [heartButton addTarget:self action:@selector(clickToEdit:) forControlEvents:UIControlEventTouchUpInside];
+        [heartButton setTitleColor:RGBCOLOR(252, 76, 139) forState:UIControlStateNormal];
+        [heartButton setTitle:@"编辑" forState:UIControlStateNormal];
+        [heartButton  setTitle:@"完成" forState:UIControlStateSelected];
+        heartButton.titleLabel.font = [UIFont systemFontOfSize:15];
+        [heartButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
+        [rightView addSubview:heartButton];
+        
+        heartButton.hidden = YES;
+        
+        UIBarButtonItem *comment_item=[[UIBarButtonItem alloc]initWithCustomView:rightView];
+        self.navigationItem.rightBarButtonItem = comment_item;
+
+    }
     
-    heartButton.hidden = YES;
-    
-    UIBarButtonItem *comment_item=[[UIBarButtonItem alloc]initWithCustomView:rightView];
-    self.navigationItem.rightBarButtonItem = comment_item;
 }
 
 - (void)createSegButton
 {
-    UIView *segView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 58)];
+    UIView *segView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 45)];
     segView.backgroundColor = [UIColor colorWithHexString:@"f2f2f2"];
     [self.view addSubview:segView];
     
@@ -402,7 +521,7 @@
 
 - (void)createViews
 {
-    bgScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 58, DEVICE_WIDTH, DEVICE_HEIGHT - 58 - 20 - 44)];
+    bgScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 45, DEVICE_WIDTH, DEVICE_HEIGHT - 46 - 20 - 44)];
     bgScroll.delegate = self;
     [self.view addSubview:bgScroll];
     bgScroll.pagingEnabled = YES;
@@ -589,12 +708,21 @@
 {
     if (tableView == shopTable) {
         
-        return 60;
+        return 76;
     }
     return 90;
 }
 
 #pragma - mark UItableViewDataSource
+
+- (UIView *)viewForHeaderInSection:(NSInteger)section tableView:(UITableView *)tableView
+{
+    return [UIView new];
+}
+- (CGFloat)heightForHeaderInSection:(NSInteger)section tableView:(UITableView *)tableView
+{
+    return 5.f;
+}
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -613,6 +741,9 @@
         [cell.cancelButton addTarget:self action:@selector(cancelConcernMail:) forControlEvents:UIControlEventTouchUpInside];
         
         cell.cancelButton.hidden = !isEditing;
+        
+        cell.distanceView.hidden = isEditing;
+        
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         return cell;
@@ -707,111 +838,6 @@
     
 }
 
-#pragma mark 事件处理
-
-/**
- *  赞 取消赞 收藏 取消收藏
- */
-
-- (void)clickToZan:(UIButton *)sender
-{
-    if (![LTools isLogin:self]) {
-        
-        return;
-    }
-    //直接变状态
-    //更新数据
-    
-    [LTools animationToBigger:sender duration:0.2 scacle:1.5];
-    
-    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[waterFlow.quitView cellAtIndexPath:[NSIndexPath indexPathForRow:sender.tag - 100 inSection:0]];
-    //    cell.like_label.text = @"";
-    
-    ProductModel *aMode = waterFlow.dataArray[sender.tag - 100];
-    
-    NSString *productId = aMode.product_id;
-    
-    __weak typeof(self)weakSelf = self;
-    
-    __block BOOL isZan = !sender.selected;
-    
-    NSString *api = sender.selected ? HOME_PRODUCT_ZAN_Cancel : HOME_PRODUCT_ZAN_ADD;
-    
-    NSString *post = [NSString stringWithFormat:@"product_id=%@&authcode=%@",productId,[GMAPI getAuthkey]];
-    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-    
-    NSString *url = api;
-    
-    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
-    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
-        
-        NSLog(@"result %@",result);
-        sender.selected = isZan;
-        aMode.is_like = isZan ? 1 : 0;
-        aMode.product_like_num = NSStringFromInt([aMode.product_like_num intValue] + (isZan ? 1 : -1));
-        cell.like_label.text = aMode.product_like_num;
-        
-    } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        
-        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-        [GMAPI showAutoHiddenMBProgressWithText:failDic[RESULT_INFO] addToView:weakSelf.view];
-        if ([failDic[RESULT_CODE] intValue] == -11) {
-            
-            [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:weakSelf.view];
-        }
-        aMode.product_like_num = NSStringFromInt([aMode.product_like_num intValue]);
-        cell.like_label.text = aMode.product_like_num;
-    }];
-}
-
-
-/**
- *  我的收藏
- */
-- (void)getMyCollection
-{
-    if (tool_collection_list) {
-        [tool_collection_list cancelRequest];
-    }
-    
-    NSString *longtitud = _longtitud ? _longtitud : @"116.42111721";
-    NSString *latitude = _latitude ? _latitude : @"39.90304099";
-    
-    NSString *url = [NSString stringWithFormat:GET_MY_CILLECTION,longtitud,latitude,waterFlow.pageNum,L_PAGE_SIZE,[GMAPI getAuthkey]];
-    tool_collection_list = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
-    [tool_collection_list requestCompletion:^(NSDictionary *result, NSError *erro) {
-        
-        NSMutableArray *arr;
-        if ([result isKindOfClass:[NSDictionary class]]) {
-            
-            NSArray *list = result[@"list"];
-            arr = [NSMutableArray arrayWithCapacity:list.count];
-            if ([list isKindOfClass:[NSArray class]]) {
-                
-                for (NSDictionary *aDic in list) {
-                    
-                    ProductModel *aModel = [[ProductModel alloc]initWithDictionary:aDic];
-                    
-                    [arr addObject:aModel];
-                }
-                
-            }
-            
-            [waterFlow reloadData:arr pageSize:L_PAGE_SIZE];
-            
-        }
-        
-    } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        
-        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-        
-        [GMAPI showAutoHiddenMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
-        
-        [waterFlow loadFail];
-        
-    }];
-}
-
 
 #pragma mark - WaterFlowDelegate
 
@@ -883,7 +909,7 @@
     [cell setCellWithModel:aMode];
     
     cell.like_btn.tag = 100 + indexPath.row;
-    [cell.like_btn addTarget:self action:@selector(clickToZan:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.like_btn addTarget:self action:@selector(zanProduct:) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
 }

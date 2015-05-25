@@ -381,7 +381,7 @@
         {
             NSLog(@"-----------解析数据为空");
             
-            NSDictionary *failDic = @{RESULT_INFO:@"解析数据为空",RESULT_CODE:[NSString stringWithFormat:@"%d",1000000]};
+            NSDictionary *failDic = @{RESULT_INFO:@"获取数据异常"};
             failBlock(failDic,0);
         }
         
@@ -390,7 +390,7 @@
         
         NSLog(@"-----------请求数据为空");
         
-        NSDictionary *failDic = @{RESULT_INFO:@"请求数据为空",RESULT_CODE:[NSString stringWithFormat:@"%d",1000000]};
+        NSDictionary *failDic = @{RESULT_INFO:@"获取数据异常"};
         failBlock(failDic,0);
     }
     
@@ -778,6 +778,29 @@
 }
 
 #pragma - mark 小工具
+
+/**
+ *  返回距离 大于1000 为km,小于m
+ *
+ *  @param distance 距离
+ *
+ *  @return
+ */
++ (NSString *)distanceString:(NSString *)distance
+{
+    NSString *distanceStr;
+    
+    double dis = [distance doubleValue];
+    
+    if (dis > 1000) {
+        
+        distanceStr = [NSString stringWithFormat:@"%.1fkm",dis/1000];
+    }else
+    {
+        distanceStr = [NSString stringWithFormat:@"%@m",distance];
+    }
+    return distanceStr;
+}
 
 + (NSString *)safeString:(NSString *)string
 {

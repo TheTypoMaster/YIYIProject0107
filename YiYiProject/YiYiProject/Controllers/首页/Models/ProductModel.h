@@ -59,5 +59,10 @@
 
 @property(nonatomic,strong)NSString *original_price;//原价
 
+@property(nonatomic,retain)NSString *favor_id;
+@property(nonatomic,retain)NSString *product_state;
+@property(nonatomic,retain)NSString *fav_time;//收藏时间
+@property(nonatomic,retain)NSString *uid;//收藏的人
+@property(nonatomic,retain)NSString *product_view_num;//浏览数
 
 @end

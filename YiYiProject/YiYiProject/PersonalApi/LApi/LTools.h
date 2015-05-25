@@ -153,6 +153,15 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
 
 #pragma mark - 小工具
 
+/**
+ *  返回距离 大于1000 为km,小于m
+ *
+ *  @param distance 距离
+ *
+ *  @return
+ */
++ (NSString *)distanceString:(NSString *)distance;
+
 + (NSString *)safeString:(NSString *)string;
 
 + (NSString *)stringHeadNoSpace:(NSString *)string;

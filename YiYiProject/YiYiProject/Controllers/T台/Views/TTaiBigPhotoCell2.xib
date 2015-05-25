@@ -14,14 +14,14 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="465"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_yijiayi.png" id="KwF-RW-oYW">
+                        <rect key="frame" x="126" y="169" width="68" height="68"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                    </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="d2U-Za-rn5" customClass="PropertyImageView">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="472"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     </imageView>
-                    <view contentMode="scaleToFill" id="sC1-vV-xHR">
-                        <rect key="frame" x="0.0" y="194" width="320" height="75"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                    </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Ttai_yuanjiao_right_up.png" id="Kyo-ZQ-TCj">
                         <rect key="frame" x="109" y="0.0" width="213.5" height="197.5"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
@@ -46,10 +46,10 @@
                         <color key="backgroundColor" red="0.99215692281723022" green="0.97254908084869385" blue="0.97647064924240112" alpha="0.5" colorSpace="deviceRGB"/>
                     </view>
                 </subviews>
+                <color key="backgroundColor" red="0.89411764709999997" green="0.89411764709999997" blue="0.89411764709999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             </tableViewCellContentView>
             <connections>
                 <outlet property="bigImageView" destination="d2U-Za-rn5" id="2HU-kN-cXf"/>
-                <outlet property="toolView" destination="sC1-vV-xHR" id="Zao-jA-XZa"/>
                 <outlet property="zanBackView" destination="qyO-dK-uaw" id="8dv-bg-Vhs"/>
                 <outlet property="zanBtn" destination="b2q-o4-1jI" id="fLV-ig-cGV"/>
             </connections>
@@ -61,6 +61,7 @@
         <image name="Ttai_yuanjiao_right_up.png" width="213" height="197"/>
         <image name="Ttai_zan_normal.png" width="21" height="18"/>
         <image name="Ttai_zan_selected.png" width="21" height="18"/>
+        <image name="default_yijiayi.png" width="34" height="34"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

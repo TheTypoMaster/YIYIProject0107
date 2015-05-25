@@ -433,7 +433,7 @@ typedef enum {
 
 #pragma mark--我的衣橱接口
 
-#define GET_MY_CILLECTION @"http://www.alayy.com/?d=api&c=products&m=listFavors&long=%@&lat=%@&page=%d&count=%d&authcode=%@"//我的收藏（只有单品）
+#define GET_MY_CILLECTION @"http://www.alayy.com/?d=api&c=products&m=listFavors&long=%@&lat=%@&page=%d&count=%d&authcode=%@&uid=%@"//我的收藏（只有单品）
 
 
 #pragma mark--我的衣橱接口
@@ -457,10 +457,10 @@ typedef enum {
 //获取某个分类下的衣服
 #define GET_CLASSICATIONCLOTHES_URL @"http://www.alayy.com/index.php?d=api&c=wardrobe&m=get_clothes&sort_id=%@&authcode=%@"
 
-#define MY_CONCERN_BRAND @"http://www.alayy.com/index.php?d=api&c=brand&m=get_attend_brands&authcode=%@&page=%d"//我关注品牌
+#define MY_CONCERN_BRAND @"http://www.alayy.com/index.php?d=api&c=brand&m=get_attend_brands&authcode=%@&page=%d&uid=%@"//我关注品牌
 #define MY_CONCERN_BRAND_CANCEL @"http://www.alayy.com/index.php?d=api&c=brand&m=cancel_attend_brand"//取消品牌关注
 
-#define MY_CONCERN_SHOP @"http://www.alayy.com/?d=api&c=friendship&m=listMall&authcode=%@&page=%d&count=%d"//我关注商家
+#define MY_CONCERN_SHOP @"http://www.alayy.com/?d=api&c=friendship&m=listMall&authcode=%@&page=%d&count=%d&uid=%@&lat=%@&long=%@"//我关注商家
 
 #define MY_CONCERN_MAIL_CANCEL @"http://www.alayy.com/?d=api&c=friendship&m=mallDestory"//取消关注商家
 
@@ -489,7 +489,7 @@ typedef enum {
 
 
 #pragma mark-----设置
-#define	APP_RATING_URL	 @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=951259287"
+#define	APP_RATING_URL	 @"itms-apps://itunes.apple.com/app/id951259287"
 
 #pragma mark-------------编辑个人资料
 
