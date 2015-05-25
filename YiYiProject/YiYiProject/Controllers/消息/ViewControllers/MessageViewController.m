@@ -41,7 +41,7 @@
     
     [self updateTabbarNumber:[self unreadMessgeNum]];
     
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
 
 }
@@ -62,6 +62,12 @@
         
         [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:MY_MACRO_NAME?IOS7DAOHANGLANBEIJING_PUSH:IOS6DAOHANGLANBEIJING] forBarMetrics: UIBarMetricsDefault];
     }
+    
+    //暂时解决避免手势冲突
+    UIView *leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 60, DEVICE_HEIGHT)];
+    leftView.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:leftView];
+    
     
     self.portraitStyle = RCUserAvatarCycle;
     
