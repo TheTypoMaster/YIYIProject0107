@@ -109,11 +109,9 @@
     
     self.view.backgroundColor = RGBCOLOR(242, 242, 242);
     
-    self.myTitleLabel.text = @"我的收藏";
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     
-    [self createNavigationbarTools];
     [self createSegButton];
     [self createViews];
     
@@ -126,11 +124,18 @@
     [self getShop];
     
     //是自己的话需要编辑按钮
-    if ([self.uid isKindOfClass:[NSString class]] && [self.uid isEqualToString:[GMAPI getUid]])
+    if (([self.uid isKindOfClass:[NSString class]] && [self.uid isEqualToString:[GMAPI getUid]]) || self.uid.length == 0)
     {
+        
+        self.myTitleLabel.text = @"我的收藏";
+        
+        [self createNavigationbarTools];
+        
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeTheRefreshTypeOfShop) name:NOTIFICATION_GUANZHU_STORE_QUXIAO object:nil];
         
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeTheRefreshTypeOfPinpai) name:NOTIFICATION_GUANZHU_PINPAI object:nil];
+    }else{
+        self.myTitleLabel.text = @"收藏";
     }
     
 }
@@ -468,8 +473,6 @@
     UIButton *rightView=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 44, 44)];
     rightView.backgroundColor=[UIColor clearColor];
     
-    //是自己的话需要编辑按钮
-    if ([self.uid isKindOfClass:[NSString class]] && [self.uid isEqualToString:[GMAPI getUid]]) {
         
         heartButton=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 44, 44)];
         [heartButton addTarget:self action:@selector(clickToEdit:) forControlEvents:UIControlEventTouchUpInside];
@@ -484,8 +487,6 @@
         
         UIBarButtonItem *comment_item=[[UIBarButtonItem alloc]initWithCustomView:rightView];
         self.navigationItem.rightBarButtonItem = comment_item;
-
-    }
     
 }
 
