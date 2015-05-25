@@ -103,6 +103,7 @@
         NSString *shop_ids = [self.maodianDic stringValueForKey:@"shopIds"];
         NSString *product_ids = [self.maodianDic stringValueForKey:@"productid"];
         if (self.theTtaiModel) {
+            
             theDic = @{
                        @"authcode":[GMAPI getAuthkey],
                        @"tt_content":content,
@@ -211,6 +212,8 @@
                                        
                                        
                                        [loading hide:YES];
+                                       
+                                       
                                        
                                        if (self.theTtaiModel) {
                                            [LTools showMBProgressWithText:@"修改失败" addToView:self.view];
@@ -568,6 +571,8 @@
     [btn setFrame:CGRectMake(0, CGRectGetMaxY(_addPicView.frame)+10, DEVICE_WIDTH, 40)];
     [btn addTarget:self action:@selector(addProductLink) forControlEvents:UIControlEventTouchUpInside];
     [self.mainScrollview addSubview:btn];
+    
+    loading = [LTools MBProgressWithText:@"发布中..." addToView:self.view];
     
 }
 

@@ -351,6 +351,9 @@
     
     
     self.delegate.maodianDic = self.maodianDic;
+    if (!self.maodianArray.count) {
+        self.delegate.maodianDic = nil;
+    }
     self.delegate.GimvArray = self.maodianArray;
     
     [self dismissViewControllerAnimated:YES completion:^{

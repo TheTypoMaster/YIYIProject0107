@@ -152,7 +152,7 @@
     NSDictionary *images = [dic dictionaryValueForKey:@"images"];
     NSDictionary *middle = [images dictionaryValueForKey:@"540Middle"];
     NSString *imageUrl = [middle stringValueForKey:@"src"];
-    [picImv sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
+    [picImv sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"searchproductdefaulpic.png"]];
     
     //标题
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(picImv.frame)+5, picImv.frame.origin.y, DEVICE_WIDTH-10-60-10, picImv.frame.size.height*0.5)];

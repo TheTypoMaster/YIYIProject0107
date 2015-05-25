@@ -298,13 +298,9 @@
         [self.navigationController pushViewController:ccc animated:YES];
         
         
-        
-        
-        
-        
     }else if (_selectIndex == 101){//搜索的是商铺
         NSDictionary *dic = _tableView.dataArray[indexPath.row];
-        if ([[dic stringValueForKey:@"mall_type"]intValue] == 1) {//商场店
+        if ([[dic stringValueForKey:@"mall_type"]intValue] == 1) {//大商场
             GnearbyStoreViewController *ccc = [[GnearbyStoreViewController alloc]init];
             ccc.storeIdStr = [dic stringValueForKey:@"mall_id"];
             ccc.storeNameStr = [dic stringValueForKey:@"mall_name"];

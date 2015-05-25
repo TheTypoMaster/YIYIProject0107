@@ -415,7 +415,6 @@ typedef enum{
     _qiandaoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_qiandaoBtn setFrame:CGRectMake(DEVICE_WIDTH-60, CGRectGetMaxY(_backView.frame)-120, 50, 40)];
     [_qiandaoBtn addTarget:self action:@selector(gQiandao:) forControlEvents:UIControlEventTouchUpInside];
-    _qiandaoBtn.userInteractionEnabled = YES;
     [_backView addSubview:_qiandaoBtn];
     
     
@@ -507,17 +506,6 @@ typedef enum{
     [_backView addSubview:self.userFaceImv];
     [_backView addSubview:self.userNameLabel];
     [_backView addSubview:self.userScoreLabel];
-
-    
-//    //判断是否登录
-//    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
-//        self.userNameLabel.hidden = YES;
-//        self.userScoreLabel.hidden = YES;
-//        self.userFaceImv.hidden = YES;
-//        _qiandaoBtn.hidden = YES;
-//        
-//        
-//    }
     
     
     
@@ -612,7 +600,7 @@ typedef enum{
 //签到
 -(void)gQiandao:(UIButton *)sender{
     
-    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
+    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO || !_getUserinfoSuccess) {
         return;
     }
     
