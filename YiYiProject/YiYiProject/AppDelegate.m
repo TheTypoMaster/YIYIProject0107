@@ -553,6 +553,8 @@
             
             [LTools cacheBool:YES ForKey:LOGIN_RONGCLOUD_STATE];
             
+            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_LOGIN object:nil];
+            
         } error:^(RCConnectErrorCode status) {
            
             NSLog(@"------> rongCloud 登陆失败 %d",(int)status);

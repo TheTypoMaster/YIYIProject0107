@@ -56,8 +56,8 @@
     
     //更新未读消息数字
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateRemoteMessage:) name:NOTIFICATION_REMOTE_MESSAGE object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateRemoteMessage:) name:NOTIFICATION_LOGIN object:self];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(cancelHotpoint:) name:NOTIFICATION_LOGOUT object:self];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateRemoteMessage:) name:NOTIFICATION_LOGIN object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(cancelHotpoint:) name:NOTIFICATION_LOGOUT object:nil];
     
     [self getMyMessage];
     
