@@ -72,23 +72,24 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="w7d-hn-2dY">
-                                <rect key="frame" x="50" y="7" width="58" height="20"/>
+                                <rect key="frame" x="40" y="7" width="76" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <state key="normal" title="私信">
+                                <inset key="contentEdgeInsets" minX="2" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" title=" 私信" image="personal homepage_chat.png">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="7Vo-dE-xyK">
-                                <rect key="frame" x="210" y="7" width="58" height="20"/>
+                                <rect key="frame" x="210" y="7" width="59" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <state key="normal" title="+ 关注">
+                                <state key="normal" title=" 关注" image="personal homepage_+.png">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <state key="selected" title="已关注"/>
+                                <state key="selected" title="已关注" image="personal homepage_-.png"/>
                             </button>
                             <view contentMode="scaleToFill" id="sSc-4H-vju">
                                 <rect key="frame" x="159" y="0.0" width="0.5" height="36"/>
@@ -158,11 +159,14 @@
                 <outlet property="tPlatButton" destination="oph-E6-5P9" id="CLe-tD-cFv"/>
                 <outlet property="toolsView" destination="JWH-LZ-iZI" id="vTd-m3-Vfl"/>
             </connections>
-            <point key="canvasLocation" x="-1108" y="213.5"/>
+            <point key="canvasLocation" x="-1239" y="130.5"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="collection_jiantou.png" width="17" height="9"/>
+        <image name="personal homepage_+.png" width="17" height="17"/>
+        <image name="personal homepage_-.png" width="1" height="1"/>
+        <image name="personal homepage_chat.png" width="17" height="17"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

@@ -197,6 +197,8 @@
         
         [weakSelf getUserTPlat];
         
+        _hintLabel.text = @"";
+
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
