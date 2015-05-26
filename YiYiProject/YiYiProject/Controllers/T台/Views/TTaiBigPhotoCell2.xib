@@ -27,7 +27,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Ttai_yuanjiao_left_down.png" id="RNm-5T-cbI">
-                        <rect key="frame" x="0.0" y="268" width="213.5" height="197.5"/>
+                        <rect key="frame" x="0.0" y="269" width="213.5" height="197.5"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     </imageView>
                     <view clipsSubviews="YES" contentMode="scaleToFill" id="qyO-dK-uaw">
@@ -57,8 +57,8 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="Ttai_yuanjiao_left_down.png" width="213" height="197"/>
-        <image name="Ttai_yuanjiao_right_up.png" width="213" height="197"/>
+        <image name="Ttai_yuanjiao_left_down.png" width="201" height="201"/>
+        <image name="Ttai_yuanjiao_right_up.png" width="201" height="201"/>
         <image name="Ttai_zan_normal.png" width="21" height="18"/>
         <image name="Ttai_zan_selected.png" width="21" height="18"/>
         <image name="default_yijiayi.png" width="34" height="34"/>

@@ -49,9 +49,11 @@
 {
     [super viewWillAppear:animated];
     
-    self.navigationController.navigationBarHidden = NO;
+    self.navigationController.navigationBarHidden = YES;
     
     [[UIApplication sharedApplication]setStatusBarHidden:NO];
+    
+    self.navigationController.navigationBarHidden = NO;
     
 }
 

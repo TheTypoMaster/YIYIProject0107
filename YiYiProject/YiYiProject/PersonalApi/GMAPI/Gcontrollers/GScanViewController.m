@@ -305,7 +305,7 @@
         alert.tag = 31;
         [alert show];
     }else if ([aaa[0]intValue]==3){//收藏品牌店
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"是否收藏该店铺" message:nil delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil,nil];
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"是否收藏该店铺" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
         if (aaa.count>2) {
             _urlStr = aaa[1];
         }
@@ -387,7 +387,7 @@
         }
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        [GMAPI showAutoHiddenMBProgressWithText:@"收藏失败" addToView:self.view];
+        [GMAPI showAutoHiddenMBProgressWithText:[failDic stringValueForKey:@"msg"] addToView:self.view];
         [self performSelector:@selector(gdismiss) withObject:[NSNumber numberWithBool:YES] afterDelay:2];
     }];
 }
@@ -415,7 +415,7 @@
         }
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        [GMAPI showAutoHiddenMBProgressWithText:@"收藏失败" addToView:self.view];
+        [GMAPI showAutoHiddenMBProgressWithText:[failDic stringValueForKey:@"msg"] addToView:self.view];
         [self performSelector:@selector(gdismiss) withObject:[NSNumber numberWithBool:YES] afterDelay:2];
     }];
 }

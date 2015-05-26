@@ -66,11 +66,12 @@
     [super viewWillAppear:animated];
     [_input_view addKeyBordNotification];
     
+
     
     self.navigationController.navigationBarHidden = YES;
     
     [[UIApplication sharedApplication]setStatusBarHidden:NO];
-
+    
     self.navigationController.navigationBarHidden = NO;
     
     

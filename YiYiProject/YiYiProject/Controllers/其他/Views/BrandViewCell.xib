@@ -29,7 +29,7 @@
                         <rect key="frame" x="250" y="30" width="60" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <state key="normal" title="取消关注">
+                        <state key="normal" title="取消收藏">
                             <color key="titleColor" red="0.92156862750000001" green="0.30196078430000001" blue="0.40784313729999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
