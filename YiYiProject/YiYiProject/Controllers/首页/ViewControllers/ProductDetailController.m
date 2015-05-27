@@ -65,13 +65,13 @@
     
     //判断是否登录
     NSString *url = @" ";
-    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == YES) {
+    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE]) {
         url = [NSString stringWithFormat:@"%@&product_id=%@&authcode=%@",LIULAN_NUM_PRODUCT,self.product_id,[GMAPI getAuthkey]];
         
     }else{
         url = [NSString stringWithFormat:@"%@&product_id=%@",LIULAN_NUM_SHOP,self.product_id];
     }
-    GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:NO postData:nil];
+    LTools *ccc = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
