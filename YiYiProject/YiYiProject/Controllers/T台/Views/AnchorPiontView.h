@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "PulsingHaloLayer.h"
 
-typedef void(^AnchorClickBlock)(NSString *infoId,NSString *infoName);
+typedef void(^AnchorClickBlock)(NSString *infoId,NSString *infoName,ShopType shopType);
 
 /**
  *  锚点view
@@ -28,6 +28,7 @@ typedef void(^AnchorClickBlock)(NSString *infoId,NSString *infoName);
 @property (nonatomic,weak)AnchorClickBlock anchorBlock;//锚点点击block
 @property (nonatomic,strong)NSString *infoId;
 @property (nonatomic,strong)NSString *infoName;
+@property (nonatomic,assign)ShopType shopType;
 
 - (void)setAnchorBlock:(AnchorClickBlock)anchorBlock;
 

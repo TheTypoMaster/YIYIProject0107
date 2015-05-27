@@ -67,13 +67,11 @@
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
     
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+    self.navigationController.navigationBarHidden = YES;
+    
+    [[UIApplication sharedApplication]setStatusBarHidden:NO];
     
     self.navigationController.navigationBarHidden = NO;
-    
-    
-    
 }
 
 

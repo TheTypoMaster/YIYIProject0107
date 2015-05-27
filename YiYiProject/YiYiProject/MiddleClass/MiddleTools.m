@@ -12,6 +12,7 @@
 #import "LPhotoBrowser.h"
 #import "GStorePinpaiViewController.h"
 #import "GnearbyStoreViewController.h"
+#import "AnchorPiontView.h"
 
 @implementation MiddleTools
 
@@ -173,9 +174,8 @@
             lastNavigationHidden:(BOOL)hidden
                     hiddenBottom:(BOOL)hiddenBottom{
     
-    
+    //商场首页
     if (theLeixing == ShopType_mall) {
-        //商场首页
         GnearbyStoreViewController *ccc = [[GnearbyStoreViewController alloc]init];
         ccc.storeIdStr = theStoreId;
         ccc.storeNameStr = theName;
@@ -197,12 +197,6 @@
         ccc.guanzhuleixing = @"品牌店";
     }
     [viewController.navigationController pushViewController:ccc animated:YES];
-    
-    
-    
-    
-    
-    
 }
 
 
@@ -260,6 +254,74 @@
 //    }];
 //}
 
+//等到加载完图片之后再加载图片上的三个button
+
+//-(void)createbuttonWithModel:(NSDictionary*)maodian_detail
+//                   imageView:(UIView *)imageView
+//          fromViewController:(UIViewController *)viewController{
+//    
+//    NSString *productId = maodian_detail[@"product_id"];
+//    
+//    NSInteger product_id = [productId integerValue];
+//    
+//    float dx=[maodian_detail[@"img_x"] floatValue];
+//    float dy=[maodian_detail[@"img_y"] floatValue];
+//    
+//    
+//    __weak typeof(self)weakSelf = self;
+//    __weak typeof(viewController)weakVC = viewController;
+//
+//    if (product_id>0) {
+//        //说明是单品
+//        
+//        NSString *title = maodian_detail[@"product_name"];
+//        CGPoint point = CGPointMake(dx * imageView.width, dy * imageView.height);
+//        AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title];
+//        [imageView addSubview:pointView];
+//        pointView.infoId = productId;
+//        pointView.infoName = title;
+//        
+//        
+//        [pointView setAnchorBlock:^(NSString *infoId,NSString *infoName,ShopType shopType){
+//            
+////            [weakSelf turnToDanPinInfoId:infoId infoName:infoName];
+//        }];
+//        
+//        //        NSLog(@"单品--title %@",title);
+//        
+//    }else{
+//        
+//        //说明是品牌店面
+//        
+//        NSString *title = maodian_detail[@"shop_name"];
+//        int mall_type = [maodian_detail[@"mall_type"] intValue];
+//        NSString *storeId;
+//        
+//        if (mall_type == ShopType_pinpaiDian) {
+//            
+//            storeId = maodian_detail[@"shop_id"];
+//            
+//        }else if (mall_type == ShopType_jingpinDian){
+//            
+//            storeId = maodian_detail[@"mall_id"];
+//        }
+//        
+//        CGPoint point = CGPointMake(dx * imageView.width, dy * imageView.height);
+//        AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title];
+//        [imageView addSubview:pointView];
+//        
+//        pointView.infoId = storeId;
+//        pointView.infoName = title;
+//        pointView.shopType = mall_type;
+//        
+//        [pointView setAnchorBlock:^(NSString *infoId,NSString *infoName,ShopType shopType){
+//            
+//            [MiddleTools pushToStoreDetailVcWithId:infoId guanzhuleixing:shopType name:infoName fromViewController:weakVC lastNavigationHidden:<#(BOOL)#> hiddenBottom:<#(BOOL)#>]
+//        }];
+//        
+//    }
+//    
+//}
 
 
 @end

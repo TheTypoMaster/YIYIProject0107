@@ -291,7 +291,7 @@
 
     if (_anchorClickBlock) {
         
-        _anchorClickBlock(_infoId,_infoName);
+        _anchorClickBlock(_infoId,_infoName,_shopType);
     }
 }
 

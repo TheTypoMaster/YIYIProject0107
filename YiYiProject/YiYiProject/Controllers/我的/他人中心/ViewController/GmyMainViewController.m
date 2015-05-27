@@ -12,7 +12,7 @@
 #import "LWaterflowView.h"
 #import "TPlatModel.h"
 #import "UserInfo.h"
-#import "TTaiDetailController.h"
+
 #import "YIYIChatViewController.h"//聊天
 #import "ParallaxHeaderView.h"
 
@@ -663,18 +663,18 @@
         initTop = 255.f;
     }
 
-    
-    UIView *headBackView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, initTop + 10)];
-    headBackView.backgroundColor = [UIColor clearColor];
-    
-    _headView = headBackView;
+    if (!_headView) {
+        _headView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, initTop + 10)];
+        _headView.backgroundColor = [UIColor clearColor];
+        
+    }
     
     //整个view
     
     if (_upUserInfoView == nil) {
         
         _upUserInfoView = [ParallaxHeaderView parallaxHeaderViewWithCGSize:CGSizeMake(DEVICE_WIDTH, initTop)];
-        [headBackView addSubview:_upUserInfoView];
+        [_headView addSubview:_upUserInfoView];
         
         UIView *aView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT)];
         aView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.3];
@@ -728,7 +728,7 @@
     [_headCell.shopButton addTarget:self action:@selector(clickToShop:) forControlEvents:UIControlEventTouchUpInside];
 
     
-    return headBackView;
+    return _headView;
     
 }
 

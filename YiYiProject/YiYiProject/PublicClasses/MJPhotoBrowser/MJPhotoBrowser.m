@@ -39,7 +39,7 @@
     // 隐藏状态栏
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     self.view = [[UIView alloc] init];
-//    self.view.frame = [UIScreen mainScreen].bounds;
+    self.navigationController.navigationBarHidden = YES;//test
     
     self.view.frame = [UIScreen mainScreen].bounds;
 

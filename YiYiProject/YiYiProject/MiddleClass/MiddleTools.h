@@ -10,6 +10,7 @@
 #import "GmyMainViewController.h"//个人主页
 #import "YIYIChatViewController.h"//聊天
 #import "ZanListViewController.h" //赞列表
+#import "ApiHeader.h"
 
 @class PropertyImageView;
 
@@ -115,8 +116,9 @@
  *
  */
 +(void)pushToStoreDetailVcWithId:(NSString *)theStoreId
-                  shopType:(NSString *)theType
+                  guanzhuleixing:(ShopType)theLeixing
                             name:(NSString *)theName
+              fromViewController:(UIViewController *)viewController
             lastNavigationHidden:(BOOL)hidden
                     hiddenBottom:(BOOL)hiddenBottom;
 

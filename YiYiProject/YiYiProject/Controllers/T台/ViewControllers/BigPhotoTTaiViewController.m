@@ -23,8 +23,6 @@
 #import "LPhotoBrowser.h"
 #import "MJPhoto.h"
 
-#import "TTaiDetailController.h"//t台详情
-
 #import "TDetailModel.h"
 #import "AnchorPiontView.h"//锚点view
 
@@ -53,7 +51,7 @@
     
     [[UIApplication sharedApplication]setStatusBarHidden:NO];
     
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
     
 }
 
@@ -366,10 +364,6 @@
     
     NSInteger product_id = [productId integerValue];
     
-    NSString *shopId = maodian_detail[@"shop_id"];
-    
-    NSInteger shop_id = [shopId integerValue];
-    
     float dx=[maodian_detail[@"img_x"] floatValue];
     float dy=[maodian_detail[@"img_y"] floatValue];
     
@@ -385,8 +379,7 @@
         pointView.infoId = productId;
         pointView.infoName = title;
         
-        
-        [pointView setAnchorBlock:^(NSString *infoId,NSString *infoName){
+        [pointView setAnchorBlock:^(NSString *infoId,NSString *infoName,ShopType shopType){
             
             [weakSelf turnToDanPinInfoId:infoId infoName:infoName];
         }];
@@ -398,20 +391,31 @@
         //说明是品牌店面
         
         NSString *title = maodian_detail[@"shop_name"];
+        int mall_type = [maodian_detail[@"mall_type"] intValue];
+        NSString *storeId;
+        
+        if (mall_type == ShopType_pinpaiDian) {
+            
+            storeId = maodian_detail[@"shop_id"];
+            
+        }else if (mall_type == ShopType_jingpinDian){
+            
+            storeId = maodian_detail[@"mall_id"];
+        }
+        
         CGPoint point = CGPointMake(dx * imageView.width, dy * imageView.height);
         AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title];
         [imageView addSubview:pointView];
         
-        pointView.infoId = NSStringFromInt((int)shop_id);
+        pointView.infoId = storeId;
         pointView.infoName = title;
+        pointView.shopType = mall_type;
         
-        [pointView setAnchorBlock:^(NSString *infoId,NSString *infoName){
+        [pointView setAnchorBlock:^(NSString *infoId,NSString *infoName,ShopType shopType){
             
-            [weakSelf turnToShangChangInfoId:infoId infoName:infoName];
+            [weakSelf turnToShangChangInfoId:infoId infoName:infoName shopType:shopType];
         }];
         
-//        NSLog(@"品牌--title %@",title);
-
     }
     
 }
@@ -434,13 +438,10 @@
 //到商场的
 -(void)turnToShangChangInfoId:(NSString *)infoId
                      infoName:(NSString *)infoName
+                     shopType:(ShopType)shopType
 {
     
-    GStorePinpaiViewController *detail = [[GStorePinpaiViewController alloc]init];
-    detail.storeIdStr = infoId;
-    detail.storeNameStr = infoName;
-    detail.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:detail animated:YES];
+    [MiddleTools pushToStoreDetailVcWithId:infoId guanzhuleixing:shopType name:infoName fromViewController:self lastNavigationHidden:NO hiddenBottom:YES];
     
 }
 //到单品的
@@ -479,12 +480,6 @@
     //调转至老版本 详情页
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-//    TPlatModel *aModel = _table.dataArray[indexPath.row];
-//    TTaiDetailController *t_detail = [[TTaiDetailController alloc]init];
-//    t_detail.tt_id = aModel.tt_id;
-//    t_detail.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:t_detail animated:YES];
     
     [self tapCell:[tableView cellForRowAtIndexPath:indexPath]];
 }

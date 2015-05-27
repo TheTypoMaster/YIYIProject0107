@@ -9,7 +9,6 @@
 #import "GmyTtaiViewController.h"
 #import "GEditMyTtaiViewController.h"
 #import "LWaterflowView.h"
-#import "TTaiDetailController.h"
 #import "TPlatCell.h"
 
 #import "PropertyImageView.h"
