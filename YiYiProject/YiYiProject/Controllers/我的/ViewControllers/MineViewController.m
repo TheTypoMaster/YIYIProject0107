@@ -301,15 +301,14 @@ typedef enum{
     NSString *URLstr = [NSString stringWithFormat:@"%@&authcode=%@&extra=%@",PERSON_GETUSERINFO,[GMAPI getAuthkey],@"tt_num"];
     
     
-    GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:URLstr isPost:NO postData:nil];
+    LTools *cc = [[LTools alloc]initWithUrl:URLstr isPost:NO postData:nil];
     [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"请求的个人信息：%@",result);
         
-        [self setUpuserInfoViewWithLoginState:[LTools cacheBoolForKey:LOGIN_SERVER_STATE]];
-        
-
         _getUserinfoSuccess = YES;
+        
+        [self setUpuserInfoViewWithLoginState:[LTools cacheBoolForKey:LOGIN_SERVER_STATE]];
         
         [_hud stopAnimating];
         
@@ -578,7 +577,7 @@ typedef enum{
         self.userFaceImv.hidden = NO;
         _editBtn.hidden = NO;
         _loginBtn.hidden = YES;
-        _qiandaoBtn.hidden = NO;
+        _qiandaoBtn.hidden = !_getUserinfoSuccess;
         _fensiView.hidden = NO;
         _guanzhuView.hidden = NO;
         _ttaiView.hidden = NO;

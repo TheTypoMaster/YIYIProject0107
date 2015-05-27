@@ -83,7 +83,7 @@
 
 - (void)setViewWithModel:(MailInfoModel *)aModel
 {
-    [self.userFaceImv sd_setImageWithURL:[NSURL URLWithString:aModel.logo] placeholderImage:nil];
+    [self.userFaceImv sd_setImageWithURL:[NSURL URLWithString:aModel.logo] placeholderImage:[UIImage imageNamed:@"grzx150_150.png"]];
     _titleLabel.text = aModel.shop_name;
     _fangkeLabel.text = aModel.shop_view_num;
     _huiyuanLabel.text = aModel.attend_num;
