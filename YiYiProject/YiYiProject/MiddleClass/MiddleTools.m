@@ -10,6 +10,8 @@
 #import "PropertyImageView.h"
 #import "MJPhoto.h"
 #import "LPhotoBrowser.h"
+#import "GStorePinpaiViewController.h"
+#import "GnearbyStoreViewController.h"
 
 @implementation MiddleTools
 
@@ -163,6 +165,48 @@
     [browser showWithController:withController];
 
 }
+
++(void)pushToStoreDetailVcWithId:(NSString *)theStoreId
+                  guanzhuleixing:(ShopType)theLeixing
+                            name:(NSString *)theName
+              fromViewController:(UIViewController *)viewController
+            lastNavigationHidden:(BOOL)hidden
+                    hiddenBottom:(BOOL)hiddenBottom{
+    
+    
+    if (theLeixing == ShopType_mall) {
+        //商场首页
+        GnearbyStoreViewController *ccc = [[GnearbyStoreViewController alloc]init];
+        ccc.storeIdStr = theStoreId;
+        ccc.storeNameStr = theName;
+        ccc.lastPageNavigationHidden = hidden;
+        ccc.hidesBottomBarWhenPushed = hiddenBottom;
+        [viewController.navigationController pushViewController:ccc animated:YES];
+        return;
+    }
+    
+    //店铺首页
+    GStorePinpaiViewController *ccc = [[GStorePinpaiViewController alloc]init];
+    ccc.storeIdStr = theStoreId;
+    ccc.storeNameStr = theName;
+    ccc.lastPageNavigationHidden = hidden;
+    ccc.hidesBottomBarWhenPushed = hiddenBottom;
+    if (theLeixing == ShopType_jingpinDian) {
+        ccc.guanzhuleixing = @"精品店";
+    }else if (theLeixing == ShopType_pinpaiDian){
+        ccc.guanzhuleixing = @"品牌店";
+    }
+    [viewController.navigationController pushViewController:ccc animated:YES];
+    
+    
+    
+    
+    
+    
+}
+
+
+
 
 ///**
 // *  赞 取消赞 收藏 取消收藏

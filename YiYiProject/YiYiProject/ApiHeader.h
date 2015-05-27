@@ -221,6 +221,18 @@ typedef enum {
     
 }RelationConcernType;//关注关系
 
+
+
+typedef enum {
+    ShopType_null = 0,
+    ShopType_jingpinDian,//精品店
+    ShopType_pinpaiDian,//品牌店
+    ShopType_mall//大商场
+    
+}ShopType;//关注关系
+
+
+
 //接口地址
 
 //融云 token

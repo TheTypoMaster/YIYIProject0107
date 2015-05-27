@@ -107,4 +107,18 @@
 + (void)showTPlatDetailFromPropertyImageView:(PropertyImageView *)aImageView
                               withController:(UIViewController *)withController
                              cancelSingleTap:(BOOL)cancelSingleTap;
+
+
+/**
+ *  跳转店铺详情页
+ *  theLeixing 精品店 品牌店
+ *
+ */
++(void)pushToStoreDetailVcWithId:(NSString *)theStoreId
+                  shopType:(NSString *)theType
+                            name:(NSString *)theName
+            lastNavigationHidden:(BOOL)hidden
+                    hiddenBottom:(BOOL)hiddenBottom;
+
+
 @end
