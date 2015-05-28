@@ -7,7 +7,6 @@
 //
 
 #import "GsearchViewController.h"
-#import "GrefreshTableView.h"
 #import "GmPrepareNetData.h"
 #import "NSDictionary+GJson.h"
 #import "GcustomSearchTableViewCell.h"
@@ -25,7 +24,9 @@
     NSMutableArray *_btnArray;
     int _selectIndex;
     
-    RefreshTableView *_tableView;
+    RefreshTableView *_tableView_brand;//搜索品牌
+    RefreshTableView *_tableView_Shop;//搜索商铺
+    RefreshTableView *_tableView_product;//搜索单品
     
     
     //定位相关
@@ -34,7 +35,11 @@
     
     GcustomSearchTableViewCell *_tmpCell;//用于获取高度的临时cell
     
-    LTools *_netTool;
+    
+    
+    LTools *_tool_brand;
+    LTools *_tool_shop;
+    LTools *_tool_product;
     
     
 }
@@ -45,10 +50,20 @@
 
 - (void)dealloc
 {
-    _tableView.refreshDelegate = nil;
-    _tableView.dataSource = nil;
-    _tableView.delegate = nil;
-    _tableView = nil;
+    _tableView_brand.refreshDelegate = nil;
+    _tableView_brand.dataSource = nil;
+    _tableView_brand.delegate = nil;
+    _tableView_brand = nil;
+    
+    _tableView_Shop.refreshDelegate = nil;
+    _tableView_Shop.dataSource = nil;
+    _tableView_Shop.delegate = nil;
+    _tableView_Shop = nil;
+    
+    _tableView_product.refreshDelegate = nil;
+    _tableView_product.dataSource = nil;
+    _tableView_product.delegate = nil;
+    _tableView_product = nil;
 }
 
 
@@ -74,21 +89,52 @@
     
     _selectIndex = 100;
     
-    //创建tableview
-    _tableView = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_searchHeaderView.frame), DEVICE_WIDTH, DEVICE_HEIGHT - _searchHeaderView.frame.size.height-64)];
-    _tableView.refreshDelegate = self;
-    _tableView.dataSource =self;
-    _tableView.hidden = YES;
-    [self.view addSubview:_tableView];
+    
+    [self creatThreeTab];
+    
+}
+
+
+-(void)creatThreeTab{
     
     __weak typeof(self)weakSelf = self;
+    
+    //创建tableview
+    _tableView_brand = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_searchHeaderView.frame), DEVICE_WIDTH, DEVICE_HEIGHT - _searchHeaderView.frame.size.height-64)];
+    _tableView_brand.refreshDelegate = self;
+    _tableView_brand.dataSource =self;
+    _tableView_brand.hidden = YES;
+    [self.view addSubview:_tableView_brand];
+    
+    
+    
+    
+    _tableView_Shop = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_searchHeaderView.frame), DEVICE_WIDTH, DEVICE_HEIGHT - _searchHeaderView.frame.size.height-64)];
+    _tableView_Shop.refreshDelegate = self;
+    _tableView_Shop.dataSource =self;
+    _tableView_Shop.hidden = YES;
+    [self.view addSubview:_tableView_Shop];
+    
+    
+    
+    _tableView_product = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_searchHeaderView.frame), DEVICE_WIDTH, DEVICE_HEIGHT - _searchHeaderView.frame.size.height-64)];
+    _tableView_product.refreshDelegate = self;
+    _tableView_product.dataSource =self;
+    _tableView_product.hidden = YES;
+    [self.view addSubview:_tableView_product];
+    
+    
+    
     [[GMAPI appDeledate]startDingweiWithBlock:^(NSDictionary *dic) {
         
         [weakSelf theLocationDictionary:dic];
     }];
     
     
+    
 }
+
+
 
 
 - (void)theLocationDictionary:(NSDictionary *)dic{
@@ -188,14 +234,6 @@
 {
 
     
-    if (_netTool) {
-        [_tableView loadFail];
-        [_tableView.dataArray removeAllObjects];
-        [_netTool cancelRequest];
-        _netTool = nil;
-        
-    }
-    
     int tag = (int)sender.tag;
     //改变点击颜色
     for (UIButton *btn in _btnArray) {
@@ -207,29 +245,56 @@
     
     _selectIndex = tag;
     NSLog(@"selectIndex = %d",_selectIndex);
-//    if (_searchTextField.text.length==0) {
-//        return;
-//    }else{
-        _tableView.hidden = NO;
-        [self gshou];
-//    }
+    [self gshou];
+    
     if (_selectIndex == 100) {//品牌
-        [_tableView showRefreshHeader:YES];
+        _tableView_brand.hidden = NO;
+        _tableView_Shop.hidden = YES;
+        _tableView_product.hidden = YES;
+        if (_tableView_brand.dataArray.count>0) {
+            return;
+        }
+        [_tableView_brand showRefreshHeader:YES];
     }else if (_selectIndex == 101){//店铺
-        [_tableView showRefreshHeader:YES];
+        _tableView_brand.hidden = YES;
+        _tableView_Shop.hidden = NO;
+        _tableView_product.hidden = YES;
+        if (_tableView_Shop.dataArray.count>0) {
+            return;
+        }
+        [_tableView_Shop showRefreshHeader:YES];
     }else if (_selectIndex == 102){//单品
-        [_tableView showRefreshHeader:YES];
+        _tableView_brand.hidden = YES;
+        _tableView_Shop.hidden = YES;
+        _tableView_product.hidden = NO;
+        if (_tableView_product.dataArray.count>0) {
+            return;
+        }
+        [_tableView_product showRefreshHeader:YES];
     }
 }
 
 //点击搜索按钮
 -(void)searchBtnClicked{
-//    if (_searchTextField.text.length == 0) {
-//        return;
-//    }
+
     [self gshou];
-    _tableView.hidden = NO;
-    [_tableView showRefreshHeader:YES];
+    
+    if (_selectIndex == 100) {//品牌
+        _tableView_brand.hidden = NO;
+        _tableView_Shop.hidden = YES;
+        _tableView_product.hidden = YES;
+        [_tableView_brand showRefreshHeader:YES];
+    }else if (_selectIndex == 101){//店铺
+        _tableView_brand.hidden = YES;
+        _tableView_Shop.hidden = NO;
+        _tableView_product.hidden = YES;
+        [_tableView_Shop showRefreshHeader:YES];
+    }else if (_selectIndex == 102){//单品
+        _tableView_brand.hidden = YES;
+        _tableView_Shop.hidden = YES;
+        _tableView_product.hidden = NO;
+        [_tableView_product showRefreshHeader:YES];
+    }
 }
 
 //收键盘
@@ -239,65 +304,133 @@
 
 
 //请求网络数据
--(void)prepareNetData{
+-(void)prepareNetData_brand{
     
-//    if (_tableView.pageNum == 1) {
-//        [_tableView.dataArray removeAllObjects];
-//    }
-    
+    if (_tool_brand) {
+        [_tool_brand cancelRequest];
+    }
     NSString *theWord = _searchTextField.text;
-    
-    
-    if (!_locationDic) {
-        NSLog(@"没有位置信息 return了");
-        [_tableView loadFail];
-        return;
-    }
-    
-    NSString *url = [NSString stringWithFormat:@"%@&keywords=%@&page=%d&per_page=%d&long=%@&lat=%@",GSEARCH,theWord,_tableView.pageNum,L_PAGE_SIZE,[_locationDic stringValueForKey:@"long"],[_locationDic stringValueForKey:@"lat"]];
-    
-    if (_selectIndex == 100) {//搜索品牌
-        url = [url stringByAppendingString:@"&action=brand"];
-    }else if (_selectIndex == 101){//搜索商铺
-        url = [url stringByAppendingString:@"&type=mall"];
-    }else if (_selectIndex == 102){//搜索单品
-        url = [url stringByAppendingString:@"&type=product"];
-    }
+    NSString *url = [NSString stringWithFormat:@"%@&keywords=%@&page=%d&per_page=%d&long=%@&lat=%@&action=brand",GSEARCH,theWord,_tableView_brand.pageNum,L_PAGE_SIZE,[_locationDic stringValueForKey:@"long"],[_locationDic stringValueForKey:@"lat"]];
     
     //接口url:
     NSLog(@"请求用户通知接口:%@",url);
     
     
-    _netTool= [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    _tool_brand= [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     
-    [_netTool requestCompletion:^(NSDictionary *result, NSError *erro) {
+    [_tool_brand requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSArray *arr = [result arrayValueForKey:@"list"];
         
-        [_tableView reloadData:arr pageSize:L_PAGE_SIZE];
+        [_tableView_brand reloadData:arr pageSize:L_PAGE_SIZE];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        if (_tableView.isReloadData) {
-            
-            [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:0.1];
-        }
+        
+        [_tableView_brand loadFail];
+        
     }];
     
 }
+
+
+-(void)prepareNetData_shop{
+    
+    if (_tool_shop) {
+        [_tool_shop cancelRequest];
+    }
+    
+    NSString *theWord = _searchTextField.text;
+    NSString *url = [NSString stringWithFormat:@"%@&keywords=%@&page=%d&per_page=%d&long=%@&lat=%@&type=mall",GSEARCH,theWord,_tableView_Shop.pageNum,L_PAGE_SIZE,[_locationDic stringValueForKey:@"long"],[_locationDic stringValueForKey:@"lat"]];
+    //接口url:
+    NSLog(@"请求用户通知接口:%@",url);
+    
+    _tool_shop= [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    
+    [_tool_shop requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSArray *arr = [result arrayValueForKey:@"list"];
+        
+        [_tableView_Shop reloadData:arr pageSize:L_PAGE_SIZE];
+        
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        [_tableView_Shop loadFail];
+        
+        
+    }];
+}
+
+-(void)prepareNetData_product{
+    
+    
+    if (_tool_product) {
+        [_tool_product cancelRequest];
+    }
+    
+    NSString *theWord = _searchTextField.text;
+    NSString *url = [NSString stringWithFormat:@"%@&keywords=%@&page=%d&per_page=%d&long=%@&lat=%@&type=product",GSEARCH,theWord,_tableView_product.pageNum,L_PAGE_SIZE,[_locationDic stringValueForKey:@"long"],[_locationDic stringValueForKey:@"lat"]];
+    
+    
+    //接口url:
+    NSLog(@"请求用户通知接口:%@",url);
+    
+    
+    _tool_product= [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    
+    [_tool_product requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSArray *arr = [result arrayValueForKey:@"list"];
+        [_tableView_product reloadData:arr pageSize:L_PAGE_SIZE];
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        [_tableView_product loadFail];
+        
+    }];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #pragma - mark RefreshDelegate 
 
 - (void)loadNewData
 {
-    
-    [self prepareNetData];
+    if (_selectIndex == 100) {//品牌
+        [self prepareNetData_brand];
+    }else if (_selectIndex == 101){//店铺
+        [self prepareNetData_shop];
+    }else if (_selectIndex == 102){//单品
+        [self prepareNetData_product];
+    }
 }
 
 - (void)loadMoreData
 {
     
-    [self prepareNetData];
+    if (_selectIndex == 100) {//品牌
+        [self prepareNetData_brand];
+    }else if (_selectIndex == 101){//店铺
+        [self prepareNetData_shop];
+    }else if (_selectIndex == 102){//单品
+        [self prepareNetData_product];
+    }
 }
 
 
@@ -308,10 +441,9 @@
     
     [self gshou];
     
-    
     if (_selectIndex == 100) {//搜索的是品牌
         
-        NSDictionary *dic = _tableView.dataArray[indexPath.row];
+        NSDictionary *dic = _tableView_brand.dataArray[indexPath.row];
         GpinpaiDetailViewController *ccc = [[GpinpaiDetailViewController alloc]init];
         if (self.isChooseProductLink) {
             ccc.isChooseProductLink = YES;
@@ -323,7 +455,7 @@
         
         
     }else if (_selectIndex == 101){//搜索的是商铺
-        NSDictionary *dic = _tableView.dataArray[indexPath.row];
+        NSDictionary *dic = _tableView_Shop.dataArray[indexPath.row];
         if ([[dic stringValueForKey:@"mall_type"]intValue] == 1) {//大商场
             GnearbyStoreViewController *ccc = [[GnearbyStoreViewController alloc]init];
             ccc.storeIdStr = [dic stringValueForKey:@"mall_id"];
@@ -344,7 +476,7 @@
             
         }
     }else if (_selectIndex == 102){//搜索的是单品
-        NSDictionary *dic = _tableView.dataArray[indexPath.row];
+        NSDictionary *dic = _tableView_product.dataArray[indexPath.row];
         ProductDetailController *ccc = [[ProductDetailController alloc]init];
         ccc.product_id = [dic stringValueForKey:@"product_id"];
         if (self.isChooseProductLink) {
@@ -356,20 +488,20 @@
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
-    if (!_tmpCell) {
-        _tmpCell = [[GcustomSearchTableViewCell alloc]init];
+    CGFloat height = 0.0f;
+    if (tableView == _tableView_brand) {//品牌
+        height = 50;
+    }else if (tableView == _tableView_Shop){//商铺
+        NSDictionary *dic = _tableView_Shop.dataArray[indexPath.row];
+        NSString *activityStr = [dic stringValueForKey:@"activity_info"];
+        if (activityStr.length>0) {
+            height = 69;
+        }else{
+            height = 52;
+        }
+    }else if (tableView == _tableView_product){//单品
+        height = 90;
     }
-    
-    if (_selectIndex == 100) {
-        _tmpCell.theType = GSEARCHTYPE_PINPAI;
-    }else if (_selectIndex == 101){
-        _tmpCell.theType = GSEARCHTYPE_SHANGPU;
-    }else if (_selectIndex == 102){
-        _tmpCell.theType = GSEARCHTYPE_DANPIN;
-    }
-    
-    NSDictionary *dic = _tableView.dataArray[indexPath.row];
-    CGFloat height = [_tmpCell loadCustomViewWithData:dic indexPath:indexPath];
     
     return height;
 }
@@ -382,44 +514,81 @@
 
 #pragma mark -  UITableViewDataSource
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *identifier = @"identifier";
-    GcustomSearchTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (!cell) {
-        cell = [[GcustomSearchTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-    }
     
+    //重用相关
     
-    for (UIView *view in cell.contentView.subviews) {
-        [view removeFromSuperview];
-    }
+    GcustomSearchTableViewCell *cell;
     
-    if (_selectIndex == 100) {//品牌
+    if (tableView == _tableView_brand) {//品牌
+        static NSString *identi_brand = @"refresh_brand";
+        GcustomSearchTableViewCell *cell_brand = [tableView dequeueReusableCellWithIdentifier:identi_brand];
+        if (!cell_brand) {
+            cell_brand = [[GcustomSearchTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identi_brand];
+        }
+        cell = cell_brand;
+        for (UIView *view in cell.contentView.subviews) {
+            [view removeFromSuperview];
+        }
         cell.theType = GSEARCHTYPE_PINPAI;
         if (_searchTextField.text.length>0) {
             cell.isHaveKeyWord = YES;
         }else{
             cell.isHaveKeyWord = NO;
         }
-    }else if (_selectIndex == 101){//商铺
+        NSDictionary *data_dic = _tableView_brand.dataArray[indexPath.row];
+        [cell loadCustomViewWithData:data_dic indexPath:indexPath];
+        
+    }else if (tableView == _tableView_Shop){//商铺
+        static NSString *identi_shop = @"refresh_shop";
+        GcustomSearchTableViewCell *cell_shop = [tableView dequeueReusableCellWithIdentifier:identi_shop];
+        if (!cell_shop) {
+            cell_shop = [[GcustomSearchTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identi_shop];
+        }
+        cell = cell_shop;
+        for (UIView *view in cell.contentView.subviews) {
+            [view removeFromSuperview];
+        }
         cell.theType = GSEARCHTYPE_SHANGPU;
-    }else if (_selectIndex == 102){//单品
+        NSDictionary *data_dic = _tableView_Shop.dataArray[indexPath.row];
+        [cell loadCustomViewWithData:data_dic indexPath:indexPath];
+        
+    }else if (tableView == _tableView_product){//单品
+        static NSString *identi_product = @"refresh_product";
+        GcustomSearchTableViewCell *cell_product = [tableView dequeueReusableCellWithIdentifier:identi_product];
+        if (!cell_product) {
+            cell_product = [[GcustomSearchTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identi_product];
+        }
+        cell = cell_product;
+        for (UIView *view in cell.contentView.subviews) {
+            [view removeFromSuperview];
+        }
         cell.theType = GSEARCHTYPE_DANPIN;
+        NSDictionary *data_dic = _tableView_product.dataArray[indexPath.row];
+        [cell loadCustomViewWithData:data_dic indexPath:indexPath];
     }
-    
-    NSDictionary *data_dic = _tableView.dataArray[indexPath.row];
-    
-    [cell loadCustomViewWithData:data_dic indexPath:indexPath];
     
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
     
     
     return cell;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return _tableView.dataArray.count;
+    
+//    return _tableView.dataArray.count;
+    NSInteger num = 0;
+    if (tableView == _tableView_brand) {
+        num = _tableView_brand.dataArray.count;
+    }else if (tableView == _tableView_Shop){
+        _tmpCell.theType = GSEARCHTYPE_SHANGPU;
+        num = _tableView_Shop.dataArray.count;
+    }else if (tableView == _tableView_product){
+        _tmpCell.theType = GSEARCHTYPE_DANPIN;
+        num = _tableView_product.dataArray.count;
+    }
+    
+    return num;
 }
 
 
@@ -428,9 +597,10 @@
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
     NSLog(@"dddddddddddd %f",scrollView.contentOffset.y);
-    if (scrollView == _tableView) {
-        [self gshou];
-    }
+//    if (scrollView == _tableView_brand ) {
+//        [self gshou];
+//    }
+    [self gshou];
 }
 
 

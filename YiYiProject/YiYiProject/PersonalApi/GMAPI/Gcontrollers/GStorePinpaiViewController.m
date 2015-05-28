@@ -52,7 +52,29 @@
     UILabel *_huodongTime_content;
     
 }
+@property(nonatomic,assign)BOOL isPresent;//是否是模态出来
 
+
+
+
+
+
+@property(nonatomic,strong)NSString *shopId;//店铺id
+
+@property(nonatomic,strong)NSString *guanzhu;//0未收藏  1已收藏
+
+
+
+
+@property(nonatomic,strong)NSString *activityId;//活动id
+
+
+@property(nonatomic,assign)CLLocationCoordinate2D coordinate_store;//商家经纬度
+
+
+
+@property(nonatomic,strong)NSString *phoneNumber;//电话号码
+@property(nonatomic,strong)NSString *adressLabelStr;//地址
 
 
 @end
@@ -293,7 +315,7 @@
         
         [self createMemuView];
         [self getGuanzhuYesOrNoForPinpaiDianWithDic:result];
-//        [self getGuanzhuYesOrNoForPinpai];
+
         
         
         
