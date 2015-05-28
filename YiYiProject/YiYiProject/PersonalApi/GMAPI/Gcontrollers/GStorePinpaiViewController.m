@@ -51,7 +51,9 @@
     UILabel *_huodongTime_title;
     UILabel *_huodongTime_content;
     
-    LTools *_tools_productList;//网络请求类
+    
+    //网络请求类
+    LTools *_tools_productList;
     
     
 }

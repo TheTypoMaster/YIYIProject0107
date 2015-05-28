@@ -41,6 +41,9 @@
     
     NSMutableArray *_nearByStoreDataArray;//缓存数据
     
+    
+    //网络请求类
+    LTools *_dd;
 
 }
 @end
@@ -237,8 +240,11 @@
     NSString *lat = [_locationDic stringValueForKey:@"lat"];
     NSString *api = [NSString stringWithFormat:@"%@&long=%@&lat=%@&page=%d&count=%d",HOME_CLOTH_NEARBYSTORE,lon,lat,_tableView.pageNum,L_PAGE_SIZE];
     
-    LTools *dd = [[LTools alloc]initWithUrl:api isPost:YES postData:nil];
-    [dd requestCompletion:^(NSDictionary *result, NSError *erro) {
+    if (_dd) {
+        [_dd cancelRequest];
+    }
+    _dd = [[LTools alloc]initWithUrl:api isPost:YES postData:nil];
+    [_dd requestCompletion:^(NSDictionary *result, NSError *erro) {
 
         if ([[result stringValueForKey:@"errorcode"]intValue] == 0) {
             NSArray *arr = [result objectForKey:@"list"];
