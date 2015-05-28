@@ -513,7 +513,7 @@
         
 
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        
+        [GMAPI showAutoHiddenMBProgressWithText:@"加载失败请检查网络" addToView:self.view];
     }];
     
     

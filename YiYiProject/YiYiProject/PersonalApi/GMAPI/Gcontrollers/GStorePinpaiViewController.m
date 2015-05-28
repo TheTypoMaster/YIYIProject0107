@@ -51,8 +51,8 @@
     UILabel *_huodongTime_title;
     UILabel *_huodongTime_content;
     
+    LTools *_tools_productList;//网络请求类
     
-    LTools *_tools_productList;
     
 }
 @property(nonatomic,assign)BOOL isPresent;//是否是模态出来
@@ -78,7 +78,6 @@
 @property(nonatomic,assign)CGRect backView_water_frame;
 @property(nonatomic,assign)CGRect waterFlow_frame;
 @property(nonatomic,assign)CGPoint mainScrollView_contentOffSet;
-
 
 
 @end
@@ -284,7 +283,7 @@
             
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [GMAPI showAutoHiddenMBProgressWithText:@"加载失败" addToView:self.view];
+            [GMAPI showAutoHiddenMBProgressWithText:@"加载失败请检查网络" addToView:self.view];
             
         }];
         
@@ -334,7 +333,7 @@
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        [GMAPI showAutoHiddenMBProgressWithText:@"加载失败" addToView:self.view];
+        [GMAPI showAutoHiddenMBProgressWithText:@"加载失败请检查网络" addToView:self.view];
     }];
 }
 
@@ -963,8 +962,6 @@
     }
     
     NSLog(@"请求的接口%@",api);
-    
-    
     if (_tools_productList) {
         [_tools_productList cancelRequest];
     }
