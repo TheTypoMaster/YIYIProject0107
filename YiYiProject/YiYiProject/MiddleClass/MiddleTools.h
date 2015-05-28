@@ -110,16 +110,24 @@
                              cancelSingleTap:(BOOL)cancelSingleTap;
 
 
+
 /**
- *  跳转店铺详情页
- *  theLeixing 精品店 品牌店
+ *  跳转至精品店、品牌店和商场
  *
+ *  @param storeId              商场、精品店（mall_id） 品牌店（shop_id）
+ *  @param shopType             区分店铺类型
+ *  @param storeName            商场（mall_name）精品店（shop_name） 品牌店（brand_name mall_name)
+ *  @param brandName            品牌店时必须传 brandName 其他类型可不填
+ *  @param viewController
+ *  @param lastNavigationHidden 上个页面是否隐藏导航栏
+ *  @param hiddenBottom         是否隐藏底部tabbar
  */
-+(void)pushToStoreDetailVcWithId:(NSString *)theStoreId
-                  guanzhuleixing:(ShopType)theLeixing
-                            name:(NSString *)theName
++(void)pushToStoreDetailVcWithId:(NSString *)storeId
+                        shopType:(ShopType)shopType
+                       storeName:(NSString *)storeName
+                       brandName:(NSString *)brandName
               fromViewController:(UIViewController *)viewController
-            lastNavigationHidden:(BOOL)hidden
+            lastNavigationHidden:(BOOL)lastNavigationHidden
                     hiddenBottom:(BOOL)hiddenBottom;
 
 

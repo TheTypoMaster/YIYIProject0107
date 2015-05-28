@@ -54,6 +54,7 @@ typedef enum {
 @property(nonatomic,assign)BOOL isYYChatVcPush;//是否从聊天界面push过来的
 
 - (IBAction)clickToBuy:(id)sender;
+- (IBAction)clickToStore:(id)sender;
 
 
 @property (weak, nonatomic) IBOutlet UIButton *lianxiDianzhuBtn;

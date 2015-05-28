@@ -24,11 +24,12 @@
 
 - (void)setCellWithModel:(MessageModel *)aModel
 {
-    self.iconImageView.layer.cornerRadius = _iconImageView.width / 2.f;
-    _iconImageView.layer.masksToBounds = YES;
+    
+    [self.iconImageView addRoundCorner];
+    [self.iconImageView setBorderWidth:0.5 borderColor:[UIColor lightGrayColor]];
+    
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:aModel.photo] placeholderImage:nil];
     self.nameLabel.text = aModel.from_username;
-    self.contentLabel.text = aModel.content;
     
 //    MessageType_yiyiTeam = 1,//衣衣团队消息
 //    MessageType_concernUser = 2,//关注用户消息
@@ -43,13 +44,29 @@
 //    MessageType_applyShopFail = 10,//申请店铺失败
     
     MessageType aType = [aModel.type intValue];
-    if (aType == MessageType_applyShopSuccess || aType == MessageType_applyShopFail) {
-        //不需要查看全文
-        self.seeAllView.hidden = YES;//高度减45
+    
+    NSString *content;
+    //评论主题、评论T台
+    if (aType == MessageType_replyTopic || aType == MessageType_replyTPlat) {
+        
+        //评论
+        content = [NSString stringWithFormat:@"评论:%@",aModel.content];
+        
+    }else if (aType == MessageType_replyTopicReply || aType == MessageType_replyTPlatReply)
+    {
+        //回复
+        content = [NSString stringWithFormat:@"回复:%@",aModel.content];
+        
     }else
     {
-        self.seeAllView.hidden = NO;
+        content = aModel.content;
     }
+    
+    self.contentLabel.text = aModel.content;
+    
+    NSString *sendTime = [LTools showIntervalTimeWithTimestamp:aModel.send_time withFormat:@"HH:mm"];
+    self.timeLabel.text = sendTime;
+
 }
 
 + (CGFloat)heightForWithModel:(MessageModel *)aModel

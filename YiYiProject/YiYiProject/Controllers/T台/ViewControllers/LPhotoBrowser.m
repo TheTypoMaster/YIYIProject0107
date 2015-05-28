@@ -660,7 +660,7 @@
                      shopType:(ShopType)shopType
 {
     
-    [MiddleTools pushToStoreDetailVcWithId:infoId guanzhuleixing:shopType name:infoName fromViewController:self lastNavigationHidden:YES hiddenBottom:YES];
+    [MiddleTools pushToStoreDetailVcWithId:infoId shopType:shopType storeName:infoName brandName:@" " fromViewController:self lastNavigationHidden:YES hiddenBottom:YES];
     
 }
 //到单品的

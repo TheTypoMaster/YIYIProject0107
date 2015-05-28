@@ -192,6 +192,17 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
 
 +(NSString *)timechangeAll:(NSString *)placetime;//时间戳 显示全
 
+/**
+ *  显示间隔时间 一天内显示时分、几天前、几周前、大于一周 显示具体日期
+ *
+ *  @param myTime 时间线
+ *  @param format 时间格式 “HH:mm”
+ *
+ *  @return
+ */
++ (NSString*)showIntervalTimeWithTimestamp:(NSString*)myTime
+                                withFormat:(NSString *)format;
+
 +(NSString*)showTimeWithTimestamp:(NSString*)myTime;//不满一天显示时、分 大于一天显示时间间隔
 
 +(NSDate *)timeFromString:(NSString *)timeString;//时间戳转NSDate

@@ -18,6 +18,7 @@
 		133B17781A750988005B8B3F /* MJPhotoProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 133B176F1A750988005B8B3F /* MJPhotoProgressView.m */; };
 		133B17791A750988005B8B3F /* MJPhotoToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 133B17711A750988005B8B3F /* MJPhotoToolbar.m */; };
 		133B177D1A751C1C005B8B3F /* MJPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 133B177C1A751C1C005B8B3F /* MJPhotoView.m */; };
+		1359956C1B16F14400F2EB49 /* product_button_lianxi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1359956B1B16F14400F2EB49 /* product_button_lianxi@2x.png */; };
 		1366A4D51AE9DEFC004F83FD /* PulsingHaloLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1366A4D41AE9DEFC004F83FD /* PulsingHaloLayer.m */; };
 		1366A4D81AE9E197004F83FD /* AnchorPiontView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1366A4D71AE9E197004F83FD /* AnchorPiontView.m */; };
 		1366A4DA1AE9F875004F83FD /* arrow_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1366A4D91AE9F875004F83FD /* arrow_background@2x.png */; };
@@ -563,6 +564,7 @@
 		133B17711A750988005B8B3F /* MJPhotoToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoToolbar.m; sourceTree = "<group>"; };
 		133B177B1A751C1C005B8B3F /* MJPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoView.h; sourceTree = "<group>"; };
 		133B177C1A751C1C005B8B3F /* MJPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoView.m; sourceTree = "<group>"; };
+		1359956B1B16F14400F2EB49 /* product_button_lianxi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "product_button_lianxi@2x.png"; sourceTree = "<group>"; };
 		1366A4D31AE9DEFC004F83FD /* PulsingHaloLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PulsingHaloLayer.h; sourceTree = "<group>"; };
 		1366A4D41AE9DEFC004F83FD /* PulsingHaloLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PulsingHaloLayer.m; sourceTree = "<group>"; };
 		1366A4D61AE9E197004F83FD /* AnchorPiontView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnchorPiontView.h; sourceTree = "<group>"; };
@@ -1699,6 +1701,7 @@
 		137B08841A4EBAAB00DE7DCC /* 单品详情 */ = {
 			isa = PBXGroup;
 			children = (
+				1359956B1B16F14400F2EB49 /* product_button_lianxi@2x.png */,
 				E33737361AD7AF2800EAA23C /* shoucangb@2x.png */,
 				E33737321AD7A76A00EAA23C /* xihuanb@2x.png */,
 				137B08851A4EBAAB00DE7DCC /* fenxiangb@2x.png */,
@@ -3563,6 +3566,7 @@
 				DF6855821A592181004D924F /* ZYQAssetPicker.Bundle in Resources */,
 				1366A4DC1AEA0BA5004F83FD /* jiantou_anchor_right@2x.png in Resources */,
 				13681C891A453DE600671D07 /* login_phone@2x.png in Resources */,
+				1359956C1B16F14400F2EB49 /* product_button_lianxi@2x.png in Resources */,
 				13B690781A580291007FE152 /* BrandViewCell.xib in Resources */,
 				13CEC8A01A5D974900FE273F /* pinglun_icon@2x.png in Resources */,
 				13B6905C1A566A4A007FE152 /* love_up@2x.png in Resources */,
@@ -4088,7 +4092,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0c1b68b6-94ba-43b9-b1d3-dea4d4ca3175";
+				PROVISIONING_PROFILE = "402911b2-8d0e-44a7-bd6b-3693f7393e2b";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 				VALID_ARCHS = "arm64 armv7s armv7";
 			};
@@ -4122,7 +4126,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0c1b68b6-94ba-43b9-b1d3-dea4d4ca3175";
+				PROVISIONING_PROFILE = "402911b2-8d0e-44a7-bd6b-3693f7393e2b";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 				VALID_ARCHS = "arm64 armv7s armv7";
 			};

@@ -843,6 +843,59 @@
     return confromTimespStr;
 }
 
+/**
+ *  显示间隔时间 一天内显示时分、几天前、几周前、大于一周 显示具体日期
+ *
+ *  @param myTime 时间线
+ *  @param format 时间格式 “HH:mm”
+ *
+ *  @return
+ */
++ (NSString*)showIntervalTimeWithTimestamp:(NSString*)myTime
+                        withFormat:(NSString *)format{
+    
+    NSString *timestamp;
+    time_t now;
+    time(&now);
+    
+    int distance = (int)difftime(now,  [myTime integerValue]);
+    
+    //小于一天的显示时、分
+    
+    if (distance < 60 * 60 * 24) {
+        
+        static NSDateFormatter *dateFormatter = nil;
+        if (dateFormatter == nil) {
+            dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"HH:mm"];
+        }
+        NSDate *date = [NSDate dateWithTimeIntervalSince1970: [myTime integerValue]];
+        
+        timestamp = [dateFormatter stringFromDate:date];
+        
+    }
+    else if (distance < 60 * 60 * 24 * 7) {
+        distance = distance / 60 / 60 / 24;
+        timestamp = [NSString stringWithFormat:@"%d%@", distance,@"天前"];
+    }
+    else if (distance < 60 * 60 * 24 * 7 * 4) {
+        distance = distance / 60 / 60 / 24 / 7;
+        timestamp = [NSString stringWithFormat:@"%d%@", distance, @"周前"];
+    }else
+    {
+        static NSDateFormatter *dateFormatter = nil;
+        if (dateFormatter == nil) {
+            dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:format];
+        }
+        NSDate *date = [NSDate dateWithTimeIntervalSince1970: [myTime integerValue]];
+        
+        timestamp = [dateFormatter stringFromDate:date];
+    }
+    
+    return timestamp;
+}
+
 +(NSString*)showTimeWithTimestamp:(NSString*)myTime{
     
     NSString *timestamp;

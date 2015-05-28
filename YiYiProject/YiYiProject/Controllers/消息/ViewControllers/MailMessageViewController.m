@@ -135,23 +135,18 @@
         MessageType aType = [aModel.type intValue];
         
         // 2关注用户
-        if (aType == MessageType_concernUser) {
+        if (aType == MessageType_concernUser || aType == MessageType_concernShop) {
             //跳转至粉丝
             
-            [MiddleTools pushToUserListWithObjectId:aModel.to_uid listType:User_MyFansList forViewController:self lastNavigationHidden:NO updateParmsBlock:^(NSDictionary *params) {
-                
-            }];
+//            [MiddleTools pushToUserListWithObjectId:aModel.to_uid listType:User_MyFansList forViewController:self lastNavigationHidden:NO updateParmsBlock:^(NSDictionary *params) {
+//                
+//            }];
+            
+            [MiddleTools pushToPersonalId:aModel.from_uid forViewController:self lastNavigationHidden:NO updateParmsBlock:nil];
             
             return;
         }
         //12关注店铺
-        if (aType == MessageType_concernShop ) {
-            
-            [MiddleTools pushToUserListWithObjectId:aModel.to_uid listType:User_ShopMember forViewController:self lastNavigationHidden:NO updateParmsBlock:^(NSDictionary *params) {
-                
-            }];
-            return;
-        }
         
         //t台评论 和 评论的回复
         if (aType == MessageType_replyTPlat || aType == MessageType_replyTPlatReply) {
@@ -192,7 +187,7 @@
     
     if (self.aType == Message_List_Dynamic){
         
-        return [DynamicMessageCell heightForWithModel:aModel];
+        return 65;
     }
     
     return [MailMessageCell heightForModel:aModel cellType:icon_Yes seeAll:YES];

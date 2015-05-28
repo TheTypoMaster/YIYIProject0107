@@ -928,7 +928,9 @@
                      shopType:(ShopType)shopType
 {
     
-    [MiddleTools pushToStoreDetailVcWithId:infoId guanzhuleixing:shopType name:infoName fromViewController:self lastNavigationHidden:NO hiddenBottom:YES];
+//    [MiddleTools pushToStoreDetailVcWithId:infoId guanzhuleixing:shopType name:infoName fromViewController:self lastNavigationHidden:NO hiddenBottom:YES];
+    
+    [MiddleTools pushToStoreDetailVcWithId:infoId shopType:shopType storeName:infoName brandName:@" " fromViewController:self lastNavigationHidden:NO hiddenBottom:YES];
     
 }
 

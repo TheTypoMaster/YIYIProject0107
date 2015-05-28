@@ -605,14 +605,6 @@
     
     ll.theType = LEADYOUTYPE_STORE;
     
-//    ////商城相关
-//    @property(nonatomic,strong)NSString *storeName;
-//    @property(nonatomic,assign)CLLocationCoordinate2D coordinate_store;
-//    
-//    
-//    //产品相关
-//    @property(nonatomic,strong)NSString *chanpinName;
-//    @property(nonatomic,assign)CLLocationCoordinate2D coordinate_chanpin;
     if ([LTools isDictinary:aModel.mall_info]) {
         
         ll.storeName = aModel.mall_info[@"mall_name"];
@@ -624,6 +616,29 @@
     [self presentViewController:ll animated:YES completion:nil];
     
 //    [self.navigationController pushViewController:ll animated:YES];
+}
+
+- (IBAction)clickToStore:(id)sender {
+    
+    int mall_type = [aModel.mall_info[@"mall_type"] intValue];
+    NSString *storeId;
+    NSString *storeName;
+    
+    if (mall_type == ShopType_pinpaiDian) {
+        
+        storeId = aModel.product_shop_id;
+        storeName = aModel.product_brand_name;
+        NSString *brandName = aModel.product_brand_name;//品牌店需要brandName
+        
+        [MiddleTools pushToStoreDetailVcWithId:storeId shopType:mall_type storeName:storeName brandName:brandName fromViewController:self lastNavigationHidden:NO hiddenBottom:NO];
+        
+    }else if (mall_type == ShopType_jingpinDian || mall_type == ShopType_mall){
+        
+        storeId = aModel.mall_info[@"mall_id"];
+        storeName = aModel.mall_info[@"mall_name"];
+        
+        [MiddleTools pushToStoreDetailVcWithId:storeId shopType:mall_type storeName:storeName brandName:@" " fromViewController:self lastNavigationHidden:NO hiddenBottom:NO];
+    }
 }
 
 /*

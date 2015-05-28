@@ -197,17 +197,20 @@ typedef enum{
  */
 typedef enum {
     
-    MessageType_yiyiTeam = 1,//衣衣团队消息
-    MessageType_concernUser = 2,//关注用户消息
-    MessageType_concernShop = 12,//关注商家通知消息
-    MessageType_replyTopic = 3,//回复主题
-    MessageType_replyTopicReply = 4,//回复主题的回复
-    MessageType_replyTPlat = 5,//评论t台
-    MessageType_replyTPlatReply = 6,//回复t台评论
-    MessageType_promotionBrand = 7,//店铺促销
-    MessageType_promotionMarket = 8,//商场促销
-    MessageType_applyShopSuccess = 9,//申请店铺成功
-    MessageType_applyShopFail = 10,//申请店铺失败
+    MessageType_yiyiTeam = 1,//衣衣团队消息 (衣加衣团队消息)
+    
+    MessageType_concernUser = 2,//关注用户消息(动态消息)
+    MessageType_concernShop = 12,//关注商家通知消息(动态消息)
+    MessageType_replyTopic = 3,//回复主题(动态消息)
+    MessageType_replyTopicReply = 4,//回复主题的回复(动态消息)
+    MessageType_replyTPlat = 5,//评论t台(动态消息)
+    MessageType_replyTPlatReply = 6,//回复t台评论(动态消息)
+    
+    MessageType_promotionBrand = 7,//店铺促销(商家消息)
+    MessageType_promotionMarket = 8,//商场促销(商家消息)
+    
+    MessageType_applyShopSuccess = 9,//申请店铺成功(衣加衣团队消息)
+    MessageType_applyShopFail = 10,//申请店铺失败(衣加衣团队消息)
     
 }MessageType;
 
