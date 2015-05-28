@@ -234,10 +234,18 @@
 //请求附近的商店
 -(void)prepareNearbyStore{
     
+    if (!_locationDic) {
+        NSLog(@"默认经纬度");
+        _locationDic = @{
+                         @"lat":[NSString stringWithFormat:@"%f",40.041951],
+                         @"long":[NSString stringWithFormat:@"%f",116.33934]
+                        };
+    }
     
     
     NSString *lon = [_locationDic stringValueForKey:@"long"];
     NSString *lat = [_locationDic stringValueForKey:@"lat"];
+    
     NSString *api = [NSString stringWithFormat:@"%@&long=%@&lat=%@&page=%d&count=%d",HOME_CLOTH_NEARBYSTORE,lon,lat,_tableView.pageNum,L_PAGE_SIZE];
     
     if (_dd) {
@@ -249,10 +257,12 @@
         if ([[result stringValueForKey:@"errorcode"]intValue] == 0) {
             NSArray *arr = [result objectForKey:@"list"];
             if (_tableView.pageNum == 1) {
+                [GMAPI cleanHomeClothCacheOfNearStore];
                 [GMAPI setHomeClothCacheOfNearStoreWithDic:result];
             }
             [_tableView reloadData:arr pageSize:L_PAGE_SIZE];
         }else{
+            [_tableView loadFail];
         }
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {

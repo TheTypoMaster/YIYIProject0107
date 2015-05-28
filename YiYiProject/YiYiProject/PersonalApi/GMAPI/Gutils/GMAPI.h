@@ -196,7 +196,8 @@
 +(NSDictionary*)getHomeClothCacheOfNearStore;//商家
 +(NSDictionary*)getHomeClothCacheOfNearPinpai;//品牌
 +(NSDictionary*)getHomeClothCacheOfTopimage;//广告图
-
+//清理
++(void)cleanHomeClothCacheOfNearStore;//清理首页缓存
 
 //清除缓存
 +(void)cleanUserDefaulWithHomeCloth;

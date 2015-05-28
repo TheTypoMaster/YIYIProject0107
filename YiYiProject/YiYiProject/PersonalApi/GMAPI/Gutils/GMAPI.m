@@ -624,6 +624,7 @@
 //首页缓存
 +(void)setHomeClothCacheOfNearStoreWithDic:(NSDictionary *)data{
     [[NSUserDefaults standardUserDefaults]setObject:data forKey:GNEARSTORE];
+    [[NSUserDefaults standardUserDefaults]synchronize];
 }
 +(void)setHomeClothCacheOfNearPinpai:(NSDictionary *)data{
     [[NSUserDefaults standardUserDefaults]setObject:data forKey:GNEARPINPAI];
@@ -644,6 +645,12 @@
     NSDictionary *dic = [[NSUserDefaults standardUserDefaults]objectForKey:GTOPIMAGES];
     return dic;
 }
+
++(void)cleanHomeClothCacheOfNearStore{
+    [[NSUserDefaults standardUserDefaults]removeObjectForKey:GNEARSTORE];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+}
+
 
 //清除缓存 首页衣加衣部分
 +(void)cleanUserDefaulWithHomeCloth{
