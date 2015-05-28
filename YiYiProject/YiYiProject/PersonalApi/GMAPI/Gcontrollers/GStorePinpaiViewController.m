@@ -51,20 +51,15 @@
     UILabel *_huodongTime_title;
     UILabel *_huodongTime_content;
     
+    
+    LTools *_tools_productList;
+    
 }
 @property(nonatomic,assign)BOOL isPresent;//是否是模态出来
-
-
-
-
-
 
 @property(nonatomic,strong)NSString *shopId;//店铺id
 
 @property(nonatomic,strong)NSString *guanzhu;//0未收藏  1已收藏
-
-
-
 
 @property(nonatomic,strong)NSString *activityId;//活动id
 
@@ -75,6 +70,15 @@
 
 @property(nonatomic,strong)NSString *phoneNumber;//电话号码
 @property(nonatomic,strong)NSString *adressLabelStr;//地址
+
+
+//跳转单品返回时记录页面位置
+@property(nonatomic,assign)BOOL productDetaillVCpop;
+@property(nonatomic,assign)CGRect upStoreInfoView_frame;
+@property(nonatomic,assign)CGRect backView_water_frame;
+@property(nonatomic,assign)CGRect waterFlow_frame;
+@property(nonatomic,assign)CGPoint mainScrollView_contentOffSet;
+
 
 
 @end
@@ -94,6 +98,15 @@
     [[UIApplication sharedApplication]setStatusBarHidden:NO];
     
     self.navigationController.navigationBarHidden = NO;
+    
+    
+    if (self.productDetaillVCpop) {
+        
+        _upStoreInfoView.frame = self.upStoreInfoView_frame;
+        _backView_water.frame = self.backView_water_frame;
+        _waterFlow.frame = self.waterFlow_frame;
+        _mainScrollview.contentOffset = self.mainScrollView_contentOffSet;
+    }
 }
 
 
@@ -544,6 +557,7 @@
     detail.msg_id = self.activityId;
     detail.isActivity = YES;
     detail.hidesBottomBarWhenPushed = YES;
+    self.productDetaillVCpop = NO;
     [self.navigationController pushViewController:detail animated:YES];
     
 }
@@ -950,8 +964,13 @@
     
     NSLog(@"请求的接口%@",api);
     
-    GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
-    [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
+    
+    if (_tools_productList) {
+        [_tools_productList cancelRequest];
+    }
+    
+    _tools_productList = [[LTools alloc]initWithUrl:api isPost:NO postData:nil];
+    [_tools_productList requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"result : %@",result);
         
@@ -1009,9 +1028,11 @@
     }
     
     NSLog(@"请求的接口%@",api);
-    
-    GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
-    [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
+    if (_tools_productList) {
+        [_tools_productList cancelRequest];
+    }
+    _tools_productList = [[LTools alloc]initWithUrl:api isPost:NO postData:nil];
+    [_tools_productList requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"result : %@",result);
         
@@ -1063,6 +1084,12 @@
     if (self.isChooseProductLink) {
         detail.isChooseProductLink = YES;
     }
+    
+    self.productDetaillVCpop = YES;
+    self.upStoreInfoView_frame = _upStoreInfoView.frame;
+    self.backView_water_frame = _backView_water.frame;
+    self.waterFlow_frame = _waterFlow.frame;
+    self.mainScrollView_contentOffSet = _mainScrollview.contentOffset;
     [self.navigationController pushViewController:detail animated:YES];
     
 }
@@ -1192,54 +1219,7 @@
 }
 
 
-//- (void)clickToZan:(UIButton *)sender
-//{
-//    if (![LTools isLogin:self]) {
-//        
-//        return;
-//    }
-//    //直接变状态
-//    //更新数据
-//    
-//    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[_waterFlow.quitView cellAtIndexPath:[NSIndexPath indexPathForRow:sender.tag - 10000 inSection:0]];
-//    cell.like_label.text = @"";
-//    
-//    ProductModel *aMode = _waterFlow.dataArray[sender.tag - 10000];
-//    
-//    NSString *productId = aMode.product_id;
-//    
-//    //    __weak typeof(self)weakSelf = self;
-//    
-//    NSString *api = HOME_PRODUCT_ZAN_ADD;
-//    
-//    NSString *post = [NSString stringWithFormat:@"product_id=%@&authcode=%@",productId,[GMAPI getAuthkey]];
-//    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-//    
-//    NSString *url = api;
-//    
-//    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
-//    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
-//        
-//        NSLog(@"result %@",result);
-//        sender.selected = YES;
-//        aMode.is_like = 1;
-//        aMode.product_like_num = NSStringFromInt([aMode.product_like_num intValue] + 1);
-//        cell.like_label.text = aMode.product_like_num;
-//        
-//    } failBlock:^(NSDictionary *failDic, NSError *erro) {
-//        
-//        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-//        cell.like_label.text = aMode.product_like_num;
-//        
-//        [GMAPI showAutoHiddenMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
-//        
-//        if ([failDic[RESULT_CODE] intValue] == -11) {
-//            
-//            [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
-//        }
-//        
-//    }];
-//}
+
 
 
 #pragma mark - CustomSegmentViewDelegate
