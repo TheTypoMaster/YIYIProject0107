@@ -26,6 +26,8 @@
 
 #import "MyCollectionController.h"
 
+#import "LContactView.h"//联系view
+
 @interface ProductDetailController ()
 {
     ProductModel *aModel;
@@ -125,7 +127,7 @@
     
     
     if (self.isChooseProductLink) {
-        [self.lianxiDianzhuBtn setTitle:@"选择" forState:UIControlStateNormal];
+        [self.shopButton setTitle:@"选择" forState:UIControlStateNormal];
     }
     
     
@@ -520,17 +522,65 @@
  */
 - (IBAction)clickToContact:(id)sender {
     
+    __weak typeof(self)weakSelf = self;
     
-    if (self.isChooseProductLink) {
-        GAddTtaiImageLinkViewController *cc = self.navigationController.viewControllers[0];
+    [[LContactView shareInstance] show];
+    
+    [[LContactView shareInstance] setContactBlock:^ (CONTACTTYPE contactType,int extra){
         
-        [cc setGmoveImvProductId:self.product_id shopid:self.theModel.product_shop_id productName:self.titleLabel.text shopName:self.shangChangLabel.text price:self.theModel.product_price type:@"单品"];
-        [self.navigationController popToViewController:cc animated:YES];
-        return;
+        if (contactType == CONTACTTYPE_PHONE) {
+            
+            [weakSelf clickToPhone:nil];
+        
+        }else if (contactType == CONTACTTYPE_PRIVATECHAT){
+            
+            [weakSelf clickToPrivateChat:nil];
+        }
+        
+    }];
+}
+
+/**
+ *  私聊
+ *
+ *  @param sender
+ */
+- (void)clickToPhone:(UIButton *)sender
+{
+    NSString *phoneNum = aModel.mall_info[@"mobile"];
+    
+    if ([LTools isValidateMobile:phoneNum]) {
+        
+        UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"拨号" message:phoneNum delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [al show];
+    }else
+    {
+//        UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//        [al show];
+        
+        [LTools showMBProgressWithText:@"抱歉!该商家暂未填写有效联系方式" addToView:self.view];
     }
+}
+
+//打电话
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     
-    
-    
+    NSString *phoneNum = aModel.mall_info[@"mobile"];
+
+    //0取消    1确定
+    if (buttonIndex == 1) {
+        NSString *strPhone = [NSString stringWithFormat:@"tel://%@",phoneNum];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:strPhone]];
+    }
+}
+
+/**
+ *  私聊
+ *
+ *  @param sender
+ */
+- (void)clickToPrivateChat:(UIButton *)sender
+{
     BOOL rong_login = [LTools cacheBoolForKey:LOGIN_RONGCLOUD_STATE];
     
     //服务器登陆成功
@@ -619,6 +669,15 @@
 }
 
 - (IBAction)clickToStore:(id)sender {
+    
+    
+    if (self.isChooseProductLink) {
+        GAddTtaiImageLinkViewController *cc = self.navigationController.viewControllers[0];
+        
+        [cc setGmoveImvProductId:self.product_id shopid:self.theModel.product_shop_id productName:self.titleLabel.text shopName:self.shangChangLabel.text price:self.theModel.product_price type:@"单品"];
+        [self.navigationController popToViewController:cc animated:YES];
+        return;
+    }
     
     int mall_type = [aModel.mall_info[@"mall_type"] intValue];
     NSString *storeId;

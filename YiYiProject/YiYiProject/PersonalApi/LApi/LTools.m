@@ -1165,6 +1165,7 @@
     hud.labelText = text;
     hud.margin = 15.f;
     hud.yOffset = 150.f;
+    hud.opacity = 0.7f;
     hud.removeFromSuperViewOnHide = YES;
     [hud hide:YES afterDelay:1.5];
 }

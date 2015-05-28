@@ -19,6 +19,9 @@
 		133B17791A750988005B8B3F /* MJPhotoToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 133B17711A750988005B8B3F /* MJPhotoToolbar.m */; };
 		133B177D1A751C1C005B8B3F /* MJPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 133B177C1A751C1C005B8B3F /* MJPhotoView.m */; };
 		1359956C1B16F14400F2EB49 /* product_button_lianxi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1359956B1B16F14400F2EB49 /* product_button_lianxi@2x.png */; };
+		1359956F1B1710F400F2EB49 /* LContactView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1359956E1B1710F400F2EB49 /* LContactView.m */; };
+		135995721B1720E800F2EB49 /* productDetail_phone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 135995701B1720E800F2EB49 /* productDetail_phone@2x.png */; };
+		135995731B1720E800F2EB49 /* productDetail_sixin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 135995711B1720E800F2EB49 /* productDetail_sixin@2x.png */; };
 		1366A4D51AE9DEFC004F83FD /* PulsingHaloLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1366A4D41AE9DEFC004F83FD /* PulsingHaloLayer.m */; };
 		1366A4D81AE9E197004F83FD /* AnchorPiontView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1366A4D71AE9E197004F83FD /* AnchorPiontView.m */; };
 		1366A4DA1AE9F875004F83FD /* arrow_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1366A4D91AE9F875004F83FD /* arrow_background@2x.png */; };
@@ -565,6 +568,10 @@
 		133B177B1A751C1C005B8B3F /* MJPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoView.h; sourceTree = "<group>"; };
 		133B177C1A751C1C005B8B3F /* MJPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoView.m; sourceTree = "<group>"; };
 		1359956B1B16F14400F2EB49 /* product_button_lianxi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "product_button_lianxi@2x.png"; sourceTree = "<group>"; };
+		1359956D1B1710F400F2EB49 /* LContactView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LContactView.h; sourceTree = "<group>"; };
+		1359956E1B1710F400F2EB49 /* LContactView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LContactView.m; sourceTree = "<group>"; };
+		135995701B1720E800F2EB49 /* productDetail_phone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "productDetail_phone@2x.png"; sourceTree = "<group>"; };
+		135995711B1720E800F2EB49 /* productDetail_sixin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "productDetail_sixin@2x.png"; sourceTree = "<group>"; };
 		1366A4D31AE9DEFC004F83FD /* PulsingHaloLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PulsingHaloLayer.h; sourceTree = "<group>"; };
 		1366A4D41AE9DEFC004F83FD /* PulsingHaloLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PulsingHaloLayer.m; sourceTree = "<group>"; };
 		1366A4D61AE9E197004F83FD /* AnchorPiontView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnchorPiontView.h; sourceTree = "<group>"; };
@@ -1701,6 +1708,8 @@
 		137B08841A4EBAAB00DE7DCC /* 单品详情 */ = {
 			isa = PBXGroup;
 			children = (
+				135995701B1720E800F2EB49 /* productDetail_phone@2x.png */,
+				135995711B1720E800F2EB49 /* productDetail_sixin@2x.png */,
 				1359956B1B16F14400F2EB49 /* product_button_lianxi@2x.png */,
 				E33737361AD7AF2800EAA23C /* shoucangb@2x.png */,
 				E33737321AD7A76A00EAA23C /* xihuanb@2x.png */,
@@ -2198,6 +2207,8 @@
 				13A389AF1A38974F00ABBACB /* NSString+Emoji.m */,
 				13A389B01A38974F00ABBACB /* RefreshTableView.h */,
 				13A389B11A38974F00ABBACB /* RefreshTableView.m */,
+				1359956D1B1710F400F2EB49 /* LContactView.h */,
+				1359956E1B1710F400F2EB49 /* LContactView.m */,
 			);
 			path = LApi;
 			sourceTree = "<group>";
@@ -3492,6 +3503,7 @@
 				137B08571A4E993C00DE7DCC /* shaixuan@2x.png in Resources */,
 				13CC03821B10919100A42BC1 /* message_dynamic@2x.png in Resources */,
 				E334B82A1AFB943F00DC9209 /* dianzhu_06@2x.png in Resources */,
+				135995731B1720E800F2EB49 /* productDetail_sixin@2x.png in Resources */,
 				E36B2B761AC26D73004A87B3 /* xuanze_down_44_44@2x.png in Resources */,
 				137B08551A4E993C00DE7DCC /* love_down@2x.png in Resources */,
 				56A8A8361A45BB1300E85F6B /* MatchTopicCell.xib in Resources */,
@@ -3542,6 +3554,7 @@
 				13A389B81A38974F00ABBACB /* bluedown1@2x.png in Resources */,
 				E334B8251AFB943F00DC9209 /* dianzhu_01@2x.png in Resources */,
 				56A8A8251A4571CD00E85F6B /* stars_unselected_image@2x.png in Resources */,
+				135995721B1720E800F2EB49 /* productDetail_phone@2x.png in Resources */,
 				E37F84381B1072D70086CBB7 /* my_friends@2x.png in Resources */,
 				E37C330A1AA23F6900B646EC /* mapapi.bundle in Resources */,
 				56A8A82E1A458FF200E85F6B /* match_pinglun_image@2x.png in Resources */,
@@ -3746,6 +3759,7 @@
 				E3C923EA1AE108F2005C2BE1 /* GShopPhoneViewController.m in Sources */,
 				E3ECC7051A7E7EA00024A734 /* GBtn.m in Sources */,
 				E30893861AE0079400DA342C /* GmyshopErweimaViewController.m in Sources */,
+				1359956F1B1710F400F2EB49 /* LContactView.m in Sources */,
 				13FCFCE01B09E4B400BD8EE7 /* NSDate+Additons.m in Sources */,
 				13ADF83E1AFC877F001B0D29 /* UIView+Additions.m in Sources */,
 				5640317A1A4ED57100680E08 /* TopicDetailViewController.m in Sources */,

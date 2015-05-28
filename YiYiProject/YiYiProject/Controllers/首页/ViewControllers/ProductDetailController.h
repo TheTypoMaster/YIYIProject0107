@@ -49,6 +49,7 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UILabel *shangChangLabel;
 @property (strong, nonatomic) IBOutlet UILabel *addressLabel;
 @property (strong, nonatomic) IBOutlet UIButton *bugButton;
+@property (strong, nonatomic) IBOutlet UIButton *shopButton;
 
 
 @property(nonatomic,assign)BOOL isYYChatVcPush;//是否从聊天界面push过来的
