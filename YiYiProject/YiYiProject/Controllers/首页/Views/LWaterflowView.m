@@ -575,6 +575,11 @@
         aHeight = [_waterDelegate waterHeightForCellIndexPath:indexPath];
     }
     
+    if (_waterDelegate && [_waterDelegate respondsToSelector:@selector(waterHeightForCellIndexPath:waterView:)]) {
+        
+        aHeight = [_waterDelegate waterHeightForCellIndexPath:indexPath waterView:quiltView];
+    }
+    
     return aHeight;
 }
 

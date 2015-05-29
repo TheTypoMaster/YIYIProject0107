@@ -70,6 +70,10 @@
             
             id value = [coder decodeObjectForKey:key];
             
+            if (value == nil ||[value isKindOfClass:[NSNull class]]) {
+                value = @"";
+            }
+            
             [self setValue:value forKey:key];
         }
     }

@@ -38,7 +38,6 @@
 #define ORIGINAL_HEIGHT_IMAGE 540
 #define ORIGINAL_WIDTH_IMAGE 200.F
 
-#import "UIView+Frame.h"
 #import "LImageCell.h"
 #import "LTextViewCell.h"
 #import "LPropertyActionSheet.h"

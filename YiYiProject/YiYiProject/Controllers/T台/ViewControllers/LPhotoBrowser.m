@@ -34,6 +34,9 @@
     //红心
     UIButton *zan_btn;
     
+    //收藏按钮
+    UIButton *collectButton;
+    
     //评论button
     UIButton *commentButton;
     //喜欢button (显示数字)
@@ -81,8 +84,21 @@
     //转发
     UIButton *zhuan_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(DEVICE_WIDTH - 10 - 26, 0, 26, 50) normalTitle:nil image:[UIImage imageNamed:@"fenxiangb"] backgroudImage:nil superView:nil target:self action:@selector(clickToZhuanFa:)];
     [topView addSubview:zhuan_btn];
+    
+    //收藏的
+    
+    collectButton =[[UIButton alloc]initWithFrame:CGRectMake(zhuan_btn.left - 44 - 40,0, 49,49)];
+    [collectButton addTarget:self action:@selector(clickToCollect:) forControlEvents:UIControlEventTouchUpInside];
+    [collectButton setImage:[UIImage imageNamed:@"Ttai_collect_normal"] forState:UIControlStateNormal];
+    [collectButton setImage:[UIImage imageNamed:@"Ttai_collect_selected"] forState:UIControlStateSelected];
+    [collectButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [collectButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
+    [topView addSubview:collectButton];
 }
 
+/**
+ *  创建底部工具
+ */
 - (void)createBottomTools
 {
     //底部
@@ -205,6 +221,22 @@
 }
 
 #pragma - mark 事件处理
+
+/*
+ 是否收藏
+ */
+
+- (void)clickToCollect:(UIButton *)sender
+{
+    if (sender.selected) {
+        
+        [self collectTTaiDetail:NO];
+        
+    }else
+    {
+        [self collectTTaiDetail:YES];
+    }
+}
 
 /**
  *  跳转至个人页
@@ -699,6 +731,8 @@
     
     detail_model = (TDetailModel*)self.t_model;
     
+    collectButton.selected = detail_model.is_favor == 1 ? YES : NO;
+    
     [self createBottomTools];
     
 }
@@ -738,6 +772,38 @@
         self.t_model.is_like = zan ? 1 : 0;
         
         [weakSelf updateLikeNum];
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        [LTools showMBProgressWithText:failDic[@"msg"] addToView:self.view];
+    }];
+}
+
+//T台收藏于取消收藏
+
+- (void)collectTTaiDetail:(BOOL)collect
+{
+    NSString *authkey = [GMAPI getAuthkey];
+    NSString *post = [NSString stringWithFormat:@"tt_id=%@&authcode=%@",self.tt_id,authkey];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    
+    NSString *url;
+    
+    if (collect) {
+        url = [NSString stringWithFormat:TTAI_COLLECT_ADD,self.tt_id,[GMAPI getAuthkey]];
+    }else
+    {
+        url = [NSString stringWithFormat:TTAI_COLLECT_CANCEL,self.tt_id,[GMAPI getAuthkey]];
+    }
+    
+    __weak typeof(self)weakSelf = self;
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"-->%@",result);
+        
+        collectButton.selected = collect;
+        weakSelf.t_model.is_favor = collect ? 1 : 0;
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         

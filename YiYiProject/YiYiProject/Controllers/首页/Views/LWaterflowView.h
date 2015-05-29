@@ -13,6 +13,8 @@
 #import "TMQuiltView.h"
 #import "TMPhotoQuiltViewCell.h"
 
+@class LWaterflowView;
+
 @protocol WaterFlowDelegate <NSObject>
 
 @optional
@@ -20,6 +22,10 @@
 - (void)waterLoadMoreData;
 - (void)waterDidSelectRowAtIndexPath:(NSIndexPath *)indexPath;
 - (CGFloat)waterHeightForCellIndexPath:(NSIndexPath *)indexPath;
+
+- (CGFloat)waterHeightForCellIndexPath:(NSIndexPath *)indexPath waterView:(TMQuiltView *)waterView;
+
+
 - (CGFloat)waterViewNumberOfColumns;
 
 - (void)waterScrollViewDidScroll:(UIScrollView *)scrollView;

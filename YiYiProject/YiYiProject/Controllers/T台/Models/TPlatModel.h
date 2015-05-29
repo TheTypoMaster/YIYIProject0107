@@ -26,6 +26,7 @@
 
 @property(nonatomic,retain)NSString *status;
 
-@property(nonatomic,assign)int is_like;
+@property(nonatomic,assign)int is_like;//是否喜欢 赞
+@property(nonatomic,assign)int is_favor;//是否收藏
 
 @end

@@ -24,8 +24,8 @@
 #import "UIViewController+Addtions.h"
 #import "NSDate+Additons.h"
 
-#import "UIView+Frame.h"
 #import "UIColor+ConvertColor.h"
+#import "UIView+JKPicker.h"
 
 #import "ApiHeader.h" //存放接口
 

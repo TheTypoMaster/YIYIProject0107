@@ -26,6 +26,8 @@
 @property(nonatomic,retain)NSDictionary *uinfo;//用户信息
 @property(nonatomic,assign)int is_like;
 
+@property(nonatomic,assign)int is_favor;//是否收藏
+
 //史忠坤修改
 @property(nonatomic,assign)int have_detail;
 
