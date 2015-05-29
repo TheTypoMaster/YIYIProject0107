@@ -68,10 +68,12 @@
     [self.view addSubview:filterButton];
     [filterButton addTarget:self action:@selector(clickToFilter:) forControlEvents:UIControlEventTouchUpInside];
     
+    //添加滑动到顶部按钮
+    [self addScroll:waterFlow.quitView topButtonPoint:CGPointMake(DEVICE_WIDTH - 40 - 10, DEVICE_HEIGHT - 10 - 40 - 49 - 64)];
+    
+    //更新位置
     [self updateLocation];
     
-//    [waterFlow showRefreshHeader:YES];
-
     //10分钟更新一次位置
     [NSTimer scheduledTimerWithTimeInterval:10 * 60 target:self selector:@selector(updateLocation) userInfo:nil repeats:YES];
     
@@ -136,6 +138,7 @@
 
 #pragma mark 事件处理
 
+
 /**
  *  赞 取消赞 收藏 取消收藏
  */
@@ -191,6 +194,11 @@
     }];
 }
 
+/**
+ *  筛选
+ *
+ *  @param sender
+ */
 - (void)clickToFilter:(UIButton *)sender
 {
     __weak typeof(waterFlow)weakFlow = waterFlow;
@@ -279,6 +287,11 @@
 
 
 #pragma mark - WaterFlowDelegate
+
+- (void)waterScrollViewDidScroll:(UIScrollView *)scrollView
+{
+    
+}
 
 - (void)waterLoadNewData
 {

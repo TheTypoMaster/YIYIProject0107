@@ -96,6 +96,8 @@
     _tableView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:_tableView];
     
+    //添加滑动到顶部按钮
+    [self addScroll:_tableView topButtonPoint:CGPointMake(DEVICE_WIDTH - 40 - 10, DEVICE_HEIGHT - 10 - 40 - 49 - 64)];
     
     //先走缓存
     [self cacheData];

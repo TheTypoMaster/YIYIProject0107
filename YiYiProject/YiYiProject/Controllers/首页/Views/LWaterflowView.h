@@ -82,6 +82,11 @@
               noHeadeRefresh:(BOOL)noHeaderRefresh
              noFooterRefresh:(BOOL)noFooterRefresh;
 
+/**
+ *  滑动到顶部
+ */
+- (void)scrollToTop;
+
 - (void)reloadData;
 -(void)showRefreshHeader:(BOOL)animated;
 

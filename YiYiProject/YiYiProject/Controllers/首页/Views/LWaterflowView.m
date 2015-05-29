@@ -29,6 +29,14 @@
     [qtmquitView reloadData];
 }
 
+/**
+ *  滑动到顶部
+ */
+- (void)scrollToTop
+{
+    [qtmquitView setContentOffset:CGPointZero animated:YES];
+}
+
 -(instancetype)initWithFrame:(CGRect)frame
                waterDelegate:(id<WaterFlowDelegate>)waterDelegate
              waterDataSource:(id<TMQuiltViewDataSource>)waterDatasource

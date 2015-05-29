@@ -111,6 +111,9 @@ typedef enum{
     
     [self.navigationController setNavigationBarHidden:YES animated:animated];
 
+    UserInfo *info = [UserInfo cacheResultForKey:USERINFO_MODEL];
+    
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -316,6 +319,10 @@ typedef enum{
         
         _userInfo = [[UserInfo alloc]initWithDictionary:dic];
         
+        
+        //本地存储model
+        
+        [_userInfo cacheForKey:USERINFO_MODEL];
         
         if ([_userInfo.is_sign intValue] == 0) {//未签到
             _qiandaoBtn.userInteractionEnabled = YES;

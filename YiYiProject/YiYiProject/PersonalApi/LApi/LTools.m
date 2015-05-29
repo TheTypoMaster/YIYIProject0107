@@ -490,6 +490,27 @@
     return NO;
 }
 
+/**
+ *  归档的方式
+ *
+ *  @param aModel   <#aModel description#>
+ *  @param modelKey <#modelKey description#>
+ */
++ (void)cacheModel:(id)aModel forKey:(NSString *)modelKey
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:aModel];
+    [userDefaults setObject:data forKey:modelKey];
+    [userDefaults synchronize];
+}
+
++ (id)cacheModelForKey:(NSString *)modelKey
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSData *data = [userDefaults objectForKey:modelKey];
+    return [NSKeyedUnarchiver unarchiveObjectWithData:data];
+}
+
 //存
 + (void)cache:(id)dataInfo ForKey:(NSString *)key
 {

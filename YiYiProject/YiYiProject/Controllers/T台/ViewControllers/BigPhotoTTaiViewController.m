@@ -85,6 +85,9 @@
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receiverNotify2:) name:NOTIFICATION_TPLATDETAIL_SHOW object:nil];
     
+    
+    //添加滑动到顶部按钮
+    [self addScroll:_table topButtonPoint:CGPointMake(DEVICE_WIDTH - 40 - 10, DEVICE_HEIGHT - 10 - 40 - 49 - 64)];
 }
 
 - (void)receiverNotify:(NSNotification *)notify

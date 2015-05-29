@@ -11,11 +11,16 @@
 
 @implementation UserInfo
 
+/**
+ *  编码
+ *
+ *  @param coder
+ */
 - (void)encodeWithCoder:(NSCoder *)coder
 {
     //    [super encodeWithCoder:coder];
     unsigned int num = 0;
-    Ivar *ivars = class_copyIvarList([UserInfo class], &num);
+    Ivar *ivars = class_copyIvarList([self class], &num);
     
     for (int i = 0; i < num; i ++) {
         
@@ -39,12 +44,19 @@
     
 }
 
+/**
+ *  解码
+ *
+ *  @param coder
+ *
+ *  @return
+ */
 - (instancetype)initWithCoder:(NSCoder *)coder
 {
     self = [super init];
     if (self) {
         unsigned int num = 0;
-        Ivar *ivars = class_copyIvarList([UserInfo class], &num);
+        Ivar *ivars = class_copyIvarList([self class], &num);
         
         for (int i = 0; i < num; i ++) {
             
@@ -62,6 +74,34 @@
         }
     }
     return self;
+}
+
+/**
+ *  归档的方式存model对象 重写了编码解码方法
+ *
+ *  @param aModel
+ *  @param modelKey
+ */
+- (void)cacheForKey:(NSString *)modelKey
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self];
+    [userDefaults setObject:data forKey:modelKey];
+    [userDefaults synchronize];
+}
+
+/**
+ *  获取存在本地的model
+ *
+ *  @param modelKey key
+ *
+ *  @return
+ */
++ (id)cacheResultForKey:(NSString *)modelKey
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSData *data = [userDefaults objectForKey:modelKey];
+    return [NSKeyedUnarchiver unarchiveObjectWithData:data];
 }
 
 

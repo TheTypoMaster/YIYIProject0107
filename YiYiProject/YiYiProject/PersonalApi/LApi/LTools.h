@@ -103,6 +103,9 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
  */
 + (BOOL)rongCloudNeedRefreshUserId:(NSString *)userId;
 
+
+#pragma mark - NSUserDefault 缓存
+
 /**
  *  NSUserDefault 缓存
  */
