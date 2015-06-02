@@ -449,6 +449,7 @@
     
     [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_TPLATDETAIL_SHOW object:nil];
     
+    [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_TPLATDETAILCLOSE object:nil];
     NSLog(@"__func__%s",__FUNCTION__);
     
     [self.clearView removeFromSuperview];
@@ -804,6 +805,8 @@
         
         collectButton.selected = collect;
         weakSelf.t_model.is_favor = collect ? 1 : 0;
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_TTai object:nil];//t台关注通知
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         

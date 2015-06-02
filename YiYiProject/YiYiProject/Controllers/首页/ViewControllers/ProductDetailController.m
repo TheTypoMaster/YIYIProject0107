@@ -24,8 +24,6 @@
 
 #import "HomeBuyController.h"
 
-#import "MyCollectionController.h"
-
 #import "LContactView.h"//联系view
 
 @interface ProductDetailController ()
@@ -308,6 +306,9 @@
             
             collectButton.selected = YES;
             
+            //关注单品通知
+            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_PRODUCT object:nil userInfo:@{@"state":[NSNumber numberWithBool:YES]}];
+            
         }else if (action_type == Action_like_no){
             
             heartButton.selected = NO;
@@ -379,6 +380,10 @@
         }else if (action_type == Action_Collect_no){
             
             collectButton.selected = NO;
+            
+            //关注单品通知
+            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_PRODUCT object:nil userInfo:@{@"state":[NSNumber numberWithBool:NO]}];
+
         }
         
         

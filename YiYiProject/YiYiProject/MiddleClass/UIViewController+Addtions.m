@@ -85,7 +85,7 @@ char* const ASSOCIATION_TOPBUTTON = "ASSOCIATION_TOPBUTTON";
 
 -(void)setTopButton:(UIButton *)topButton
 {
-    objc_setAssociatedObject(self, ASSOCIATION_TOPBUTTON, topButton, OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, ASSOCIATION_TOPBUTTON, topButton, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 -(UIButton *)topButton

@@ -87,7 +87,11 @@
         
         self.quitView = qtmquitView;
         
+        qtmquitView.backgroundColor = [UIColor redColor];
+        
         [self addSubview:qtmquitView];
+        
+        self.backgroundColor = [UIColor orangeColor];
         
         _noloadView = noloadView;
 
@@ -114,7 +118,7 @@
         self.pageNum = 1;
         self.dataArray = [NSMutableArray array];
         
-        qtmquitView = [[TMQuiltView alloc] initWithFrame:frame];
+        qtmquitView = [[TMQuiltView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
         qtmquitView.delegate = self;
         qtmquitView.dataSource = waterDatasource;
         self.waterDelegate = waterDelegate;

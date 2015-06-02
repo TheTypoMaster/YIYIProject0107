@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 lcw. All rights reserved.
 //
 
-#import "MyCollectionController.h"
+#import "MyViewController.h"
 
 @interface ShenQingDianPuViewController : MyViewController<UITextFieldDelegate>
 

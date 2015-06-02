@@ -17,8 +17,6 @@
 
 #import "MessageViewController.h"
 
-#import "MyCollectionController.h"
-
 
 @interface MessageListController ()<UITableViewDataSource,UITableViewDelegate>
 {

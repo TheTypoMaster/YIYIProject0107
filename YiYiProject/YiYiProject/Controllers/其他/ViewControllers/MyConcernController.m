@@ -13,6 +13,7 @@
 
 #import "ShopViewCell.h"
 #import "BrandViewCell.h"
+#import "TPlatCell.h"
 
 #import "GpinpaiDetailViewController.h"
 #import "GnearbyStoreViewController.h"
@@ -23,6 +24,11 @@
 
 #import "ProductDetailController.h"//单品详情页
 
+#define TAGINCREM_PRODUCT 10000 //单品tag增量
+#define TAGINCREM_TTAI 20000 //t台
+#define TAGINCREM_STROE 30000 //商家
+#define TAGINCREM_BRAND 40000 //品牌
+
 @interface MyConcernController ()<RefreshDelegate,UITableViewDataSource,UIScrollViewDelegate,WaterFlowDelegate,TMQuiltViewDataSource>
 {
     UIButton *heartButton;
@@ -30,6 +36,7 @@
     UIScrollView *bgScroll;
     
     LWaterflowView *waterFlow;//单品
+    LWaterflowView *waterFlow_t;//T台
     RefreshTableView *shopTable;//店铺table
     RefreshTableView *brandTable;//品牌table
     
@@ -45,12 +52,22 @@
     SORT_SEX_TYPE sex_type;
     SORT_Discount_TYPE discount_type;
     
-    LTools *tool_collection_list;//收藏列表
+    LTools *tool_collection_list;//收藏列表单品
+    LTools *tool_Ttai_list;//收藏列表T台
+
     
     NSString *_latitude;//维度
     NSString *_longtitud;//经度
     
 }
+
+@property(nonatomic,assign)BOOL isReloadProduct;//是否刷新单品收藏
+
+@property(nonatomic,assign)BOOL isReloadTTai;//是否刷新T台收藏
+
+@property(nonatomic,assign)BOOL isRePrepareNetData_shop;//是否重新请求关注商家信息
+
+@property(nonatomic,assign)BOOL isRePrepareNetData_pinpai;//是否重新请求关注品牌信息
 
 @end
 
@@ -73,6 +90,18 @@
         [self getShop];
     }
     
+    if (self.isReloadProduct) {
+        
+        [waterFlow showRefreshHeader:YES];
+        _isReloadProduct = NO;
+    }
+    
+    //在此无效
+//    if (self.isReloadTTai) {
+//        
+//        [waterFlow_t showRefreshHeader:YES];
+//        _isReloadTTai = NO;
+//    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -91,6 +120,10 @@
     waterFlow.waterDelegate = nil;
     waterFlow = nil;
     [tool_collection_list cancelRequest];
+    
+    waterFlow_t.waterDelegate = nil;
+    waterFlow_t = nil;
+    [tool_Ttai_list cancelRequest];
     
     heartButton = nil;
     indicator = nil;
@@ -120,8 +153,10 @@
         
         [weakSelf theLocationDictionary:dic];
     }];
-    [self getBrand];
-    [self getShop];
+    
+    [self getTTaiCollect];//T台收藏
+    [self getBrand];//品牌
+    [self getShop];//商家
     
     //是自己的话需要编辑按钮
     if (([self.uid isKindOfClass:[NSString class]] && [self.uid isEqualToString:[GMAPI getUid]]) || self.uid.length == 0)
@@ -136,6 +171,11 @@
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeTheRefreshTypeOfPinpai) name:NOTIFICATION_GUANZHU_PINPAI object:nil];
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeTheRefreshTypeOfPinpai) name:NOTIFICATION_GUANZHU_PINPAI_QUXIAO object:nil];
         
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeRefreshProduct:) name:NOTIFICATION_GUANZHU_PRODUCT object:nil];
+        
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeRefreshTTai:) name:NOTIFICATION_GUANZHU_TTai object:nil];
+        
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshTTai:) name:NOTIFICATION_TPLATDETAILCLOSE object:nil];
         
     }else{
         self.myTitleLabel.text = @"收藏";
@@ -143,6 +183,7 @@
     
 }
 
+#pragma mark - 通知处理
 
 //是否刷新
 -(void)changeTheRefreshTypeOfShop{//关注的商家
@@ -150,6 +191,25 @@
 }
 -(void)changeTheRefreshTypeOfPinpai{//关注的品牌
     self.isRePrepareNetData_pinpai = YES;
+}
+
+- (void)changeRefreshProduct:(NSNotification *)notify
+{
+    self.isReloadProduct = YES;
+}
+
+- (void)refreshTTai:(NSNotification *)notify
+{
+    if (self.isReloadTTai) {
+        
+        [waterFlow_t showRefreshHeader:YES];
+        _isReloadTTai = NO;
+    }
+}
+
+- (void)changeRefreshTTai:(NSNotification *)notify
+{
+    self.isReloadTTai = YES;
 }
 
 
@@ -184,7 +244,7 @@
     
     cancel_brand_notification = YES;
     
-    int index = (int)sender.tag - 100000;
+    int index = (int)sender.tag - TAGINCREM_BRAND;
     BrandModel *aModel = brandTable.dataArray[index];
     
     __weak typeof(self)weakSelf = self;
@@ -217,7 +277,7 @@
 {
     cancel_mail_notification = YES;
     
-    int index = (int)sender.tag - 100;
+    int index = (int)sender.tag - TAGINCREM_STROE;
     MailModel *aModel = shopTable.dataArray[index];
     
     __weak typeof(self)weakSelf = self;
@@ -413,6 +473,114 @@
         
     }];
 }
+
+//获取T台收藏
+- (void)getTTaiCollect
+{
+    
+    if (tool_Ttai_list) {
+        
+        [tool_Ttai_list cancelRequest];
+        tool_Ttai_list = nil;
+    }
+    
+    NSString *userId = self.uid.length > 0 ? self.uid : [GMAPI getUid];
+//    http://www.alayy.com/index.php?d=api&c=tplat&m=get_favor_list&page=%d&per_page=%d&authcode=%@&uid=
+    //请求网络数据
+    NSString *api = [NSString stringWithFormat:TTAI_COLLECT_LIST,waterFlow_t.pageNum,L_PAGE_SIZE,[GMAPI getAuthkey],userId];
+    NSLog(@"请求我的收藏T台的接口%@",api);
+    
+    tool_Ttai_list = [[LTools alloc]initWithUrl:api isPost:NO postData:nil];
+    [tool_Ttai_list requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"result : %@",result);
+        NSMutableArray *arr;
+        if ([result isKindOfClass:[NSDictionary class]]) {
+            
+            NSArray *list = result[@"list"];
+            arr = [NSMutableArray arrayWithCapacity:list.count];
+            if ([list isKindOfClass:[NSArray class]]) {
+                
+                for (NSDictionary *aDic in list) {
+                    
+                    NSDictionary *ttinfo = aDic[@"tt_info"];
+                    
+                    if ([LTools isDictinary:ttinfo]) {
+                        
+                        TPlatModel *aModel = [[TPlatModel alloc]initWithDictionary:ttinfo];
+                        aModel.is_favor = 1;
+                        [arr addObject:aModel];
+                    }
+                }
+                
+            }
+        }
+        
+        [waterFlow_t reloadData:arr pageSize:L_PAGE_SIZE];
+        
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+        [waterFlow_t loadFail];
+    }];
+    
+}
+
+//T台赞 或 取消
+
+- (void)zanTTaiDetail:(UIButton *)zan_btn
+{
+    if (![LTools isLogin:self]) {
+        return;
+    }
+    
+    [LTools animationToBigger:zan_btn duration:0.2 scacle:1.5];
+    
+    
+    NSString *authkey = [GMAPI getAuthkey];
+    
+    
+    TPlatCell *cell = (TPlatCell *)[waterFlow_t.quitView cellAtIndexPath:[NSIndexPath indexPathForRow:zan_btn.tag - TAGINCREM_TTAI inSection:0]];
+    
+    TPlatModel *detail_model = waterFlow_t.dataArray[zan_btn.tag - TAGINCREM_TTAI];
+    NSString *t_id = detail_model.tt_id;
+    NSString *post = [NSString stringWithFormat:@"tt_id=%@&authcode=%@",t_id,authkey];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    
+    NSString *url;
+    
+    BOOL zan = zan_btn.selected ? NO : YES;
+    
+    
+    if (zan) {
+        url = TTAI_ZAN;
+    }else
+    {
+        url = TTAI_ZAN_CANCEL;
+    }
+    
+    
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"-->%@",result);
+        
+        zan_btn.selected = !zan_btn.selected;
+        
+        int like_num = [detail_model.tt_like_num intValue];
+        detail_model.tt_like_num = [NSString stringWithFormat:@"%d",zan ? like_num + 1 : like_num - 1];
+        detail_model.is_like = zan ? 1 : 0;
+        cell.like_label.text = detail_model.tt_like_num;
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        if ([failDic[RESULT_CODE] intValue] == -11 || [failDic[RESULT_CODE] intValue] == 2003) {
+            [LTools showMBProgressWithText:failDic[@"msg"] addToView:self.view];
+        }
+        
+    }];
+}
+
 /**
  *  赞 取消赞 收藏 取消收藏
  */
@@ -428,10 +596,10 @@
     
     [LTools animationToBigger:sender duration:0.2 scacle:1.5];
     
-    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[waterFlow.quitView cellAtIndexPath:[NSIndexPath indexPathForRow:sender.tag - 100 inSection:0]];
+    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[waterFlow.quitView cellAtIndexPath:[NSIndexPath indexPathForRow:sender.tag - TAGINCREM_PRODUCT inSection:0]];
     //    cell.like_label.text = @"";
     
-    ProductModel *aMode = waterFlow.dataArray[sender.tag - 100];
+    ProductModel *aMode = waterFlow.dataArray[sender.tag - TAGINCREM_PRODUCT];
     
     NSString *productId = aMode.product_id;
     
@@ -499,14 +667,14 @@
     segView.backgroundColor = [UIColor colorWithHexString:@"f2f2f2"];
     [self.view addSubview:segView];
     
-    NSArray *titles = @[@"单品",@"商家",@"品牌"];
+    NSArray *titles = @[@"单品",@"T台",@"商家",@"品牌"];
     for (int i = 0; i < titles.count; i ++) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn setTitle:titles[i] forState:UIControlStateNormal];
-        btn.tag = 10000 + i;
+        btn.tag = 100 + i;
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
-        btn.frame = CGRectMake(DEVICE_WIDTH/3.f * i, 0, DEVICE_WIDTH/3.f, 45);
+        btn.frame = CGRectMake(DEVICE_WIDTH/4.f * i, 0, DEVICE_WIDTH/4.f, 45);
         [btn setBackgroundColor:[UIColor whiteColor]];
         [btn.titleLabel setFont:[UIFont systemFontOfSize:14]];
         [segView addSubview:btn];
@@ -518,7 +686,7 @@
         }
     }
     
-    indicator = [[UIView alloc]initWithFrame:CGRectMake(0, 43, DEVICE_WIDTH/3.f, 2)];
+    indicator = [[UIView alloc]initWithFrame:CGRectMake(0, 43, DEVICE_WIDTH/4.f, 2)];
     indicator.backgroundColor = [UIColor colorWithHexString:@"ea5670"];
     [segView addSubview:indicator];
 }
@@ -530,15 +698,10 @@
     [self.view addSubview:bgScroll];
     bgScroll.pagingEnabled = YES;
     bgScroll.bounces = NO;
-    bgScroll.contentSize = CGSizeMake(DEVICE_WIDTH * 3, bgScroll.height);
+    bgScroll.contentSize = CGSizeMake(DEVICE_WIDTH * 4, bgScroll.height);
     
     //scrollView 和 系统手势冲突问题
     [bgScroll.panGestureRecognizer requireGestureRecognizerToFail:self.navigationController.interactivePopGestureRecognizer];
-    
-//    UIView *leftMask = [[UIView alloc]initWithFrame:CGRectMake(0, 46, 80, bgScroll.height)];
-//    leftMask.backgroundColor = [UIColor orangeColor];
-//    leftMask.userInteractionEnabled = NO;
-//    [self.view addSubview:leftMask];
     
     //单品
     waterFlow = [[LWaterflowView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, bgScroll.height) waterDelegate:self waterDataSource:self];
@@ -546,8 +709,15 @@
     
     [bgScroll addSubview:waterFlow];
     
+    
+    //收藏T台
+    
+    waterFlow_t = [[LWaterflowView alloc]initWithFrame:CGRectMake(DEVICE_WIDTH, 0, DEVICE_WIDTH, bgScroll.height) waterDelegate:self waterDataSource:self];
+    waterFlow_t.backgroundColor = RGBCOLOR(235, 235, 235);
+    [bgScroll addSubview:waterFlow_t];
+    
     //店铺
-    shopTable = [[RefreshTableView alloc]initWithFrame:CGRectMake(DEVICE_WIDTH, 0, DEVICE_WIDTH, bgScroll.height) showLoadMore:YES];
+    shopTable = [[RefreshTableView alloc]initWithFrame:CGRectMake(DEVICE_WIDTH * 2, 0, DEVICE_WIDTH, bgScroll.height) showLoadMore:YES];
     shopTable.refreshDelegate = self;
     shopTable.dataSource = self;
     [bgScroll addSubview:shopTable];
@@ -555,7 +725,7 @@
     shopTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     //品牌
-    brandTable = [[RefreshTableView alloc]initWithFrame:CGRectMake(DEVICE_WIDTH * 2, 0, DEVICE_WIDTH, bgScroll.height) showLoadMore:YES];
+    brandTable = [[RefreshTableView alloc]initWithFrame:CGRectMake(DEVICE_WIDTH * 3, 0, DEVICE_WIDTH, bgScroll.height) showLoadMore:YES];
     brandTable.refreshDelegate = self;
     brandTable.dataSource = self;
     [bgScroll addSubview:brandTable];
@@ -564,6 +734,74 @@
 }
 
 #pragma mark - 事件处理
+
+/**
+ *  控制button的选中状态和indicator显示
+ *
+ *  @param page 当前第几个
+ */
+- (void)controllButtonSelectAtIndex:(int)page
+{
+    UIButton *btn1 = (UIButton *)[self.view viewWithTag:100];
+    UIButton *btn2 = (UIButton *)[self.view viewWithTag:101];
+    UIButton *btn3 = (UIButton *)[self.view viewWithTag:102];
+    UIButton *btn4 = (UIButton *)[self.view viewWithTag:103];
+    
+    if (page == 0 || page == 1) {
+        
+        heartButton.hidden = YES;
+    }else
+    {
+        heartButton.hidden = NO;
+    }
+    
+    if (page == 0) {
+        
+        btn1.selected = YES;
+        btn2.selected = NO;
+        btn3.selected = NO;
+        btn4.selected = NO;
+        indicator.left = 0;
+    }else if (page == 1){
+        
+        btn1.selected = NO;
+        btn2.selected = YES;
+        btn3.selected = NO;
+        btn4.selected = NO;
+        indicator.left = DEVICE_WIDTH/4.f;
+        
+    }else if (page == 2){
+        
+        btn1.selected = NO;
+        btn2.selected = NO;
+        btn3.selected = YES;
+        btn4.selected = NO;
+        indicator.left = DEVICE_WIDTH/4.f * 2;
+        
+    }else
+    {
+        btn1.selected = NO;
+        btn2.selected = NO;
+        btn3.selected = NO;
+        btn4.selected = YES;
+        indicator.left = DEVICE_WIDTH/4.f * 3;
+    }
+    
+}
+
+/**
+ *  显示t台详情
+ *
+ *  @param cell
+ */
+- (void)tapCell:(TPlatCell *)cell
+{
+    
+    PropertyImageView *aImageView = (PropertyImageView *)((TPlatCell *)cell).photoView;
+    
+    [MiddleTools showTPlatDetailFromPropertyImageView:aImageView withController:self.tabBarController cancelSingleTap:YES];
+}
+
 //品牌
 -(void)pushToPinpaiDetailVCWithIdStr:(NSString *)theID pinpaiName:(NSString *)theName{
     
@@ -631,31 +869,10 @@
 
 - (void)clickToSwap:(UIButton *)sender
 {
-    UIButton *btn1 = (UIButton *)[self.view viewWithTag:10000];
-    UIButton *btn2 = (UIButton *)[self.view viewWithTag:10001];
-    UIButton *btn3 = (UIButton *)[self.view viewWithTag:10002];
+    int index = (int)sender.tag - 100;
     
-    if (sender.tag == 10000) {
-        btn1.selected = YES;
-        btn2.selected = NO;
-        btn3.selected = NO;
-        indicator.left = 0;
-        bgScroll.contentOffset = CGPointMake(0, 0);
-    }else if(sender.tag == 10001)
-    {
-        btn1.selected = NO;
-        btn2.selected = YES;
-        btn3.selected = NO;
-        indicator.left = indicator.width;
-        bgScroll.contentOffset = CGPointMake(DEVICE_WIDTH, 0);
-    }else
-    {
-        btn1.selected = NO;
-        btn2.selected = NO;
-        btn3.selected = YES;
-        indicator.left = indicator.width * 2;
-        bgScroll.contentOffset = CGPointMake(DEVICE_WIDTH * 2, 0);
-    }
+    [self controllButtonSelectAtIndex:index];
+    bgScroll.contentOffset = CGPointMake(DEVICE_WIDTH * index, 0);
 }
 
 - (void)clickToEdit:(UIButton *)sender
@@ -674,12 +891,12 @@
 
 - (void)loadNewData
 {
-    if ([self buttonForTag:10001].selected) {
+    if ([self buttonForTag:102].selected) {
         
         [self getShop];
     }
     
-    if ([self buttonForTag:10002].selected) {
+    if ([self buttonForTag:103].selected) {
         
         [self getBrand];
     }
@@ -687,12 +904,12 @@
 }
 - (void)loadMoreData
 {
-    if ([self buttonForTag:10001].selected) {
+    if ([self buttonForTag:102].selected) {
         
         [self getShop];
     }
     
-    if ([self buttonForTag:10002].selected) {
+    if ([self buttonForTag:103].selected) {
         
         [self getBrand];
     }
@@ -748,7 +965,7 @@
         
         [cell setCellWithModel:aModel];
         
-        cell.cancelButton.tag = 100 + indexPath.row;
+        cell.cancelButton.tag = TAGINCREM_STROE + indexPath.row;
         
         [cell.cancelButton addTarget:self action:@selector(cancelConcernMail:) forControlEvents:UIControlEventTouchUpInside];
         
@@ -768,7 +985,7 @@
 
     [cell setCellWithModel:aBrand];
     cell.cancelButton.hidden = !isEditing;
-    cell.cancelButton.tag = 100000 + indexPath.row;
+    cell.cancelButton.tag = TAGINCREM_BRAND + indexPath.row;
     
     [cell.cancelButton addTarget:self action:@selector(cancelConcernBrand:) forControlEvents:UIControlEventTouchUpInside];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -796,40 +1013,7 @@
         
         NSLog(@"page %d",page);
         
-        UIButton *btn1 = (UIButton *)[self.view viewWithTag:10000];
-        UIButton *btn2 = (UIButton *)[self.view viewWithTag:10001];
-        UIButton *btn3 = (UIButton *)[self.view viewWithTag:10002];
-        
-        if (page == 0) {
-            
-            heartButton.hidden = YES;
-        }else
-        {
-            heartButton.hidden = NO;
-        }
-        
-        if (page == 0) {
-            
-            btn1.selected = YES;
-            btn2.selected = NO;
-            btn3.selected = NO;
-            indicator.left = 0;
-        }else if (page == 1){
-            
-            btn1.selected = NO;
-            btn2.selected = YES;
-            btn3.selected = NO;
-            indicator.left = DEVICE_WIDTH/3.f;
-            
-        }else
-        {
-            btn1.selected = NO;
-            btn2.selected = NO;
-            btn3.selected = YES;
-            indicator.left = DEVICE_WIDTH/3.f * 2;
-        }
-        
-        NSLog(@"x = %f, y = %f",scrollView.contentOffset.x,scrollView.contentOffset.y);
+        [self controllButtonSelectAtIndex:page];
     }
     
 }
@@ -855,36 +1039,74 @@
 
 - (void)waterLoadNewData
 {
-    [self getMyCollection];
+    if ([self buttonForTag:100].selected) {
+        
+        [self getMyCollection];
+    }
+    
+    if ([self buttonForTag:101].selected) {
+        
+        [self getTTaiCollect];
+    }
+    
 }
 - (void)waterLoadMoreData
 {
-    [self getMyCollection];
+    [self waterLoadNewData];
 }
 
 - (void)waterDidSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ProductModel *aMode = waterFlow.dataArray[indexPath.row];
+    //单品
+    if ([self buttonForTag:100].selected) {
+        ProductModel *aMode = waterFlow.dataArray[indexPath.row];
+        
+        //    [LTools alertText:aMode.product_name];
+        
+        ProductDetailController *detail = [[ProductDetailController alloc]init];
+        detail.product_id = aMode.product_id;
+        detail.hidesBottomBarWhenPushed = YES;
+        
+        
+        TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell*)[waterFlow.quitView cellAtIndexPath:indexPath];
+        detail.theMyshoucangProductModel = aMode;
+        detail.theMyshoucangProductCell = cell;
+        
+        [self.navigationController pushViewController:detail animated:YES];
+    }
     
-    //    [LTools alertText:aMode.product_name];
+    //T台
+    if ([self buttonForTag:101].selected) {
+        
+        
+        TPlatCell *cell = (TPlatCell*)[waterFlow_t.quitView cellAtIndexPath:indexPath];
+        
+        PropertyImageView *aImageView = (PropertyImageView *)((TPlatCell *)cell).photoView;
+            
+        [MiddleTools showTPlatDetailFromPropertyImageView:aImageView withController:self.tabBarController cancelSingleTap:YES];
+        
+    }
     
-    ProductDetailController *detail = [[ProductDetailController alloc]init];
-    detail.product_id = aMode.product_id;
-    detail.hidesBottomBarWhenPushed = YES;
     
-    
-    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell*)[waterFlow.quitView cellAtIndexPath:indexPath];
-    detail.theMyshoucangProductModel = aMode;
-    detail.theMyshoucangProductCell = cell;
-    
-    
-    
-    [self.navigationController pushViewController:detail animated:YES];
     
 }
 
-- (CGFloat)waterHeightForCellIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)waterHeightForCellIndexPath:(NSIndexPath *)indexPath waterView:(TMQuiltView *)waterView
 {
+    if (waterFlow_t.quitView == waterView) {
+        
+        TPlatModel *aModel = waterFlow_t.dataArray[indexPath.row];
+        CGFloat image_height = [aModel.image[@"height"]floatValue];
+        CGFloat image_width = [aModel.image[@"width"]floatValue];
+        
+        if (image_width == 0.0) {
+            image_width = image_height;
+        }
+        float rate = image_height/image_width;
+        
+        return (DEVICE_WIDTH-30)/2.0*rate + 36;
+    }
+    
     CGFloat aHeight = 0.f;
     ProductModel *aMode = waterFlow.dataArray[indexPath.row];
     if (aMode.imagelist.count >= 1) {
@@ -897,6 +1119,7 @@
     
     return aHeight / 2.f + 33;
 }
+
 - (CGFloat)waterViewNumberOfColumns
 {
     
@@ -906,10 +1129,44 @@
 #pragma mark - TMQuiltViewDataSource
 
 - (NSInteger)quiltViewNumberOfCells:(TMQuiltView *)TMQuiltView {
+    
+    if (waterFlow_t.quitView == TMQuiltView) {
+        
+        return [waterFlow_t.dataArray count];
+    }
+    
     return [waterFlow.dataArray count];
 }
 
 - (TMQuiltViewCell *)quiltView:(TMQuiltView *)quiltView cellAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+    if (waterFlow_t.quitView == quiltView) {
+        
+        TPlatCell *cell = (TPlatCell *)[quiltView dequeueReusableCellWithReuseIdentifier:@"TPlatCell"];
+        if (!cell) {
+            cell = [[TPlatCell alloc] initWithReuseIdentifier:@"TPlatCell"];
+        }
+        
+        cell.layer.cornerRadius = 3.f;
+        
+        cell.needIconImage = NO;
+        
+        TPlatModel *aMode = waterFlow_t.dataArray[indexPath.row];
+        [cell setCellWithModel:aMode];
+        
+        [cell.like_btn addTarget:self action:@selector(zanTTaiDetail:) forControlEvents:UIControlEventTouchUpInside];
+        
+        NSString *imageUrl = aMode.image[@"url"];
+        
+        [cell.photoView setImageUrls:@[imageUrl] infoId:aMode.tt_id aModel:aMode];
+        
+        cell.like_btn.tag = 20000 + indexPath.row;
+        
+        return cell;
+    }
+    
+    
     TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[quiltView dequeueReusableCellWithReuseIdentifier:@"PhotoCell"];
     if (!cell) {
         cell = [[TMPhotoQuiltViewCell alloc] initWithReuseIdentifier:@"PhotoCell"];
@@ -920,7 +1177,7 @@
     ProductModel *aMode = waterFlow.dataArray[indexPath.row];
     [cell setCellWithModel:aMode];
     
-    cell.like_btn.tag = 100 + indexPath.row;
+    cell.like_btn.tag = 10000 + indexPath.row;
     [cell.like_btn addTarget:self action:@selector(zanProduct:) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;

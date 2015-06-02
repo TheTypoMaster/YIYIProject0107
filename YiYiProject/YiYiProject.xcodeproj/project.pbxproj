@@ -211,7 +211,6 @@
 		13B6905F1A566A7F007FE152 /* rizhi_xiangji@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13B6905E1A566A7F007FE152 /* rizhi_xiangji@2x.png */; };
 		13B690631A56784D007FE152 /* TPlatModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B690621A56784D007FE152 /* TPlatModel.m */; };
 		13B690671A56797E007FE152 /* TPlatCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B690661A56797E007FE152 /* TPlatCell.m */; };
-		13B6906A1A5694C5007FE152 /* MyCollectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B690691A5694C5007FE152 /* MyCollectionController.m */; };
 		13B690771A580291007FE152 /* BrandViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B690751A580291007FE152 /* BrandViewCell.m */; };
 		13B690781A580291007FE152 /* BrandViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B690761A580291007FE152 /* BrandViewCell.xib */; };
 		13B6907C1A580430007FE152 /* ShopViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B6907A1A580430007FE152 /* ShopViewCell.m */; };
@@ -858,8 +857,6 @@
 		13B690621A56784D007FE152 /* TPlatModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPlatModel.m; sourceTree = "<group>"; };
 		13B690651A56797E007FE152 /* TPlatCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPlatCell.h; sourceTree = "<group>"; };
 		13B690661A56797E007FE152 /* TPlatCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPlatCell.m; sourceTree = "<group>"; };
-		13B690681A5694C5007FE152 /* MyCollectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCollectionController.h; sourceTree = "<group>"; };
-		13B690691A5694C5007FE152 /* MyCollectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCollectionController.m; sourceTree = "<group>"; };
 		13B690741A580291007FE152 /* BrandViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrandViewCell.h; sourceTree = "<group>"; };
 		13B690751A580291007FE152 /* BrandViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrandViewCell.m; sourceTree = "<group>"; };
 		13B690761A580291007FE152 /* BrandViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrandViewCell.xib; sourceTree = "<group>"; };
@@ -1896,8 +1893,6 @@
 				13CD36351A3C51BE0068C12A /* ForgetPwdController.xib */,
 				139A78921B188E9800EFA10A /* MyConcernController.h */,
 				139A78931B188E9800EFA10A /* MyConcernController.m */,
-				13B690681A5694C5007FE152 /* MyCollectionController.h */,
-				13B690691A5694C5007FE152 /* MyCollectionController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -3834,7 +3829,6 @@
 				13EA3D1E1A3B2682002AF7D6 /* HomeBuyController.m in Sources */,
 				13CEC88F1A5D95F400FE273F /* TDetailModel.m in Sources */,
 				13963F431A4FC54D007BE68B /* LEditor.m in Sources */,
-				13B6906A1A5694C5007FE152 /* MyCollectionController.m in Sources */,
 				E38E2D9F1ACD49D0002C63EF /* GAddTtaiImageLinkViewController.m in Sources */,
 				E35EF1161A6A54A900B493A9 /* GChooseStoreViewController.m in Sources */,
 				1366A4D51AE9DEFC004F83FD /* PulsingHaloLayer.m in Sources */,
@@ -4021,8 +4015,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Zhong Kun Shi (HXFU9MZ8SD)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zhong Kun Shi (HXFU9MZ8SD)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -4042,7 +4036,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "93eccb9e-dc34-4dc5-9443-06a83c16f5de";
+				PROVISIONING_PROFILE = "05d9d4ad-cc8e-425d-8ada-31dfa4036f41";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -4064,8 +4058,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Zhong Kun Shi (HXFU9MZ8SD)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zhong Kun Shi (HXFU9MZ8SD)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -4078,7 +4072,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "93eccb9e-dc34-4dc5-9443-06a83c16f5de";
+				PROVISIONING_PROFILE = "05d9d4ad-cc8e-425d-8ada-31dfa4036f41";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -4090,8 +4084,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Zhong Kun Shi (HXFU9MZ8SD)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zhong Kun Shi (HXFU9MZ8SD)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YiYiProject/UMengShare/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
@@ -4112,7 +4106,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "93eccb9e-dc34-4dc5-9443-06a83c16f5de";
+				PROVISIONING_PROFILE = "05d9d4ad-cc8e-425d-8ada-31dfa4036f41";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 				VALID_ARCHS = "arm64 armv7s armv7";
 			};
@@ -4124,8 +4118,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Zhong Kun Shi (HXFU9MZ8SD)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zhong Kun Shi (HXFU9MZ8SD)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YiYiProject/UMengShare/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
@@ -4146,7 +4140,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "93eccb9e-dc34-4dc5-9443-06a83c16f5de";
+				PROVISIONING_PROFILE = "05d9d4ad-cc8e-425d-8ada-31dfa4036f41";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 				VALID_ARCHS = "arm64 armv7s armv7";
 			};

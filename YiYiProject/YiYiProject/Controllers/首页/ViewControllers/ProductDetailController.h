@@ -11,7 +11,6 @@
 @class TMPhotoQuiltViewCell;
 @class HomeBuyController;
 @class ProductModel;
-@class MyCollectionController;
 
 typedef void(^ViewDidDisappearBlock)(BOOL success);//消失block
 

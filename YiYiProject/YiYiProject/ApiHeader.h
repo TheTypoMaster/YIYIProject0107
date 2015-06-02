@@ -95,6 +95,15 @@ alpha:(a)]
 
 #define NOTIFICATION_EDIT_SHOP_PHONE_SUCCESS @" NOTIFICATION_EDIT_SHOP_PHONE_SUCCESS"//编辑店铺电话成功
 
+
+//单品关注相关操作
+#define NOTIFICATION_GUANZHU_PRODUCT @"guanzhu_product"
+//T台关注相关操作
+#define NOTIFICATION_GUANZHU_TTai @"guanzhu_ttai"
+
+//刷新t台
+#define NOTIFICATION_REFRESH_TTai @"refresh_ttai"
+
 //关注商场
 #define NOTIFICATION_GUANZHU_STORE @"guanzhu_store"
 //取消关注商场
@@ -131,7 +140,8 @@ alpha:(a)]
 //显示t台详情状态栏和导航栏
 #define NOTIFICATION_TPLATDETAIL_SHOW @"TPlatDetailShowAction"
 
-
+//T台详情页close通知
+#define NOTIFICATION_TPLATDETAILCLOSE @"TPlatDetailclose"
 
 
 //登录类型 normal为正常手机登陆，sweibo、qq、weixin分别代表新浪微博、qq、微信登陆
@@ -332,7 +342,7 @@ typedef enum {
 #define TTAI_ZHUANFA_ADD @"http://www119.alayy.com/?d=api&c=tplat&m=incrShare"
 
 
-//我的收藏
+//T台收藏
 
 #define TTAI_COLLECT_LIST @"http://www119.alayy.com/index.php?d=api&c=tplat&m=get_favor_list&page=%d&per_page=%d&authcode=%@&uid=%@"
 

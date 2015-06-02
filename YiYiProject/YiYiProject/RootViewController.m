@@ -17,8 +17,6 @@
 
 #import "CHTumblrMenuView.h"
 
-#import "MyCollectionController.h"
-
 #import "PublishHuatiController.h"
 
 #import "MyMatchViewController.h"//搭配
@@ -314,8 +312,8 @@
         case 4:
         {
             NSLog(@"收藏");
-            MyCollectionController *collection = [[MyCollectionController alloc]init];
-            [self pushToViewController:collection];
+//            MyCollectionController *collection = [[MyCollectionController alloc]init];
+//            [self pushToViewController:collection];
         }
             break;
         case 5:
