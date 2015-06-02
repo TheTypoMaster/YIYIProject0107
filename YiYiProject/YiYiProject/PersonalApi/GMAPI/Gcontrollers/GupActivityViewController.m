@@ -7,7 +7,7 @@
 //
 
 #import "GupActivityViewController.h"
-
+#import "PublishActivityController.h"
 @interface GupActivityViewController ()
 
 @end
@@ -56,7 +56,9 @@
 }
 
 -(void)gotoTheNextVc{
-    
+    PublishActivityController *ccc = [[PublishActivityController alloc]init];
+    ccc.lastPageNavigationHidden = NO;
+    [self.navigationController pushViewController:ccc animated:YES];
 }
 
 @end
