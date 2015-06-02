@@ -18,6 +18,8 @@
 		133B17781A750988005B8B3F /* MJPhotoProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 133B176F1A750988005B8B3F /* MJPhotoProgressView.m */; };
 		133B17791A750988005B8B3F /* MJPhotoToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 133B17711A750988005B8B3F /* MJPhotoToolbar.m */; };
 		133B177D1A751C1C005B8B3F /* MJPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 133B177C1A751C1C005B8B3F /* MJPhotoView.m */; };
+		1356EF1B1B1D850700F3B3B2 /* LRichTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1356EF1A1B1D850700F3B3B2 /* LRichTextView.m */; };
+		1356EF1E1B1D85FB00F3B3B2 /* PublishActivityController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1356EF1D1B1D85FB00F3B3B2 /* PublishActivityController.m */; };
 		1359956C1B16F14400F2EB49 /* product_button_lianxi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1359956B1B16F14400F2EB49 /* product_button_lianxi@2x.png */; };
 		1359956F1B1710F400F2EB49 /* LContactView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1359956E1B1710F400F2EB49 /* LContactView.m */; };
 		135995721B1720E800F2EB49 /* productDetail_phone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 135995701B1720E800F2EB49 /* productDetail_phone@2x.png */; };
@@ -568,6 +570,10 @@
 		133B17711A750988005B8B3F /* MJPhotoToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoToolbar.m; sourceTree = "<group>"; };
 		133B177B1A751C1C005B8B3F /* MJPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoView.h; sourceTree = "<group>"; };
 		133B177C1A751C1C005B8B3F /* MJPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoView.m; sourceTree = "<group>"; };
+		1356EF191B1D850700F3B3B2 /* LRichTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRichTextView.h; sourceTree = "<group>"; };
+		1356EF1A1B1D850700F3B3B2 /* LRichTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRichTextView.m; sourceTree = "<group>"; };
+		1356EF1C1B1D85FB00F3B3B2 /* PublishActivityController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishActivityController.h; sourceTree = "<group>"; };
+		1356EF1D1B1D85FB00F3B3B2 /* PublishActivityController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishActivityController.m; sourceTree = "<group>"; };
 		1359956B1B16F14400F2EB49 /* product_button_lianxi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "product_button_lianxi@2x.png"; sourceTree = "<group>"; };
 		1359956D1B1710F400F2EB49 /* LContactView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LContactView.h; sourceTree = "<group>"; };
 		1359956E1B1710F400F2EB49 /* LContactView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LContactView.m; sourceTree = "<group>"; };
@@ -1536,6 +1542,33 @@
 			path = MJPhotoBrowser;
 			sourceTree = "<group>";
 		};
+		1356EF161B1D84C800F3B3B2 /* 活动 */ = {
+			isa = PBXGroup;
+			children = (
+				1356EF171B1D84E800F3B3B2 /* viewController */,
+				1356EF181B1D84E800F3B3B2 /* views */,
+			);
+			path = "活动";
+			sourceTree = "<group>";
+		};
+		1356EF171B1D84E800F3B3B2 /* viewController */ = {
+			isa = PBXGroup;
+			children = (
+				1356EF1C1B1D85FB00F3B3B2 /* PublishActivityController.h */,
+				1356EF1D1B1D85FB00F3B3B2 /* PublishActivityController.m */,
+			);
+			path = viewController;
+			sourceTree = "<group>";
+		};
+		1356EF181B1D84E800F3B3B2 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				1356EF191B1D850700F3B3B2 /* LRichTextView.h */,
+				1356EF1A1B1D850700F3B3B2 /* LRichTextView.m */,
+			);
+			path = views;
+			sourceTree = "<group>";
+		};
 		1366A4D21AE9DEFC004F83FD /* LightAnimationLayer */ = {
 			isa = PBXGroup;
 			children = (
@@ -1975,6 +2008,7 @@
 		13A3894F1A38768400ABBACB /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				1356EF161B1D84C800F3B3B2 /* 活动 */,
 				13963F481A4FC57F007BE68B /* 发布 */,
 				139562B81A3BF3B8007BB183 /* 其他 */,
 				13A389771A3877C800ABBACB /* 首页 */,
@@ -3738,6 +3772,7 @@
 				138986301A6A5DDF00F187C9 /* MessageModel.m in Sources */,
 				133B17761A750988005B8B3F /* MJPhotoBrowser.m in Sources */,
 				565321471A59769300E43F80 /* RegexKitLite.m in Sources */,
+				1356EF1B1B1D850700F3B3B2 /* LRichTextView.m in Sources */,
 				13D03D481AEDD60F0078AA9E /* GmyMainViewController.m in Sources */,
 				13D03D4A1AEDD60F0078AA9E /* WaterF.m in Sources */,
 				13A4AC621AE4C0A400EA5F2C /* PropertyImageView.m in Sources */,
@@ -3848,6 +3883,7 @@
 				E3996EDA1A5E1DBA00673147 /* GcustomActionSheet.m in Sources */,
 				133B177D1A751C1C005B8B3F /* MJPhotoView.m in Sources */,
 				1382C5201A812A5A0079AF55 /* MJRefreshFooterView.m in Sources */,
+				1356EF1E1B1D85FB00F3B3B2 /* PublishActivityController.m in Sources */,
 				DFB196EB1A6D3D900006633F /* UIImageView+LBBlurredImage.m in Sources */,
 				56A8A8311A45946000E85F6B /* MatchTopicModel.m in Sources */,
 				13D03D4B1AEDD60F0078AA9E /* WaterFallFooter.m in Sources */,

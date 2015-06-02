@@ -1,21 +1,21 @@
 //
-//  PublishHuatiController.m
+//  PublishActivityController.m
 //  YiYiProject
 //
-//  Created by lichaowei on 14/12/28.
-//  Copyright (c) 2014年 lcw. All rights reserved.
+//  Created by lichaowei on 15/6/2.
+//  Copyright (c) 2015年 lcw. All rights reserved.
 //
 
-#import "PublishHuatiController.h"
-#import "LEditor.h"
+#import "PublishActivityController.h"
+#import "LRichTextView.h"
 #import "AFNetworking.h"
 #import "TopicImageModel.h"
 
 #import "JSONKit.h"
 
-@interface PublishHuatiController ()
+@interface PublishActivityController ()
 {
-    LEditor *editor;
+    LRichTextView *editor;
     
     NSMutableArray *temp_arr;//存放发布内容
     
@@ -24,8 +24,7 @@
 
 @end
 
-@implementation PublishHuatiController
-
+@implementation PublishActivityController
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -55,8 +54,8 @@
 {
     [super viewDidAppear:animated];
     
-//    [editor setFirstResponder];
-//    [editor performSelector:@selector(setFirstResponder) withObject:nil afterDelay:0.1];
+    //    [editor setFirstResponder];
+    //    [editor performSelector:@selector(setFirstResponder) withObject:nil afterDelay:0.1];
 }
 
 - (void)viewDidLoad {
@@ -70,7 +69,7 @@
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     [self createNavigationbarTools];
     
-    editor = [[LEditor alloc]initWithFrame:CGRectMake(0, 0, ALL_FRAME_WIDTH, ALL_FRAME_HEIGHT - 50 - 20) rootViewController:self];
+    editor = [[LRichTextView alloc]initWithFrame:CGRectMake(0, 0, ALL_FRAME_WIDTH, ALL_FRAME_HEIGHT - 50 - 20) rootViewController:self];
     [self.view addSubview:editor];
 }
 
@@ -78,7 +77,7 @@
 
 - (void)dealPostContentWithSuccessImages:(NSArray *)imageModels
 {
-//    NSMutableString *temp_content = [NSMutableString stringWithString:[temp_arr JSONString]];
+    //    NSMutableString *temp_content = [NSMutableString stringWithString:[temp_arr JSONString]];
     
     
     int imageIndex = 0;
@@ -108,7 +107,7 @@
             imageIndex ++;
             
         }
-
+        
     }
     
     NSLog(@"commit content %@",temp_arr);
@@ -254,15 +253,15 @@
     [insertButton addTarget:self action:@selector(clickToOpenAlbum:) forControlEvents:UIControlEventTouchUpInside];
     //    [heartButton setTitle:@"喜欢" forState:UIControlStateNormal];
     [insertButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//    [insertButton setImage:[UIImage imageNamed:@"fabu_pic"] forState:UIControlStateNormal];
+    //    [insertButton setImage:[UIImage imageNamed:@"fabu_pic"] forState:UIControlStateNormal];
     [insertButton setTitle:@"图片" forState:UIControlStateNormal];
-
+    
     [insertButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
     
     
     UIButton *fabuButton =[[UIButton alloc]initWithFrame:CGRectMake(rightView.width - 44,0, 44,42.5)];
     [fabuButton addTarget:self action:@selector(clickToPub:) forControlEvents:UIControlEventTouchUpInside];
-//    [fabuButton setImage:[UIImage imageNamed:@"shoucangb"] forState:UIControlStateNormal];
+    //    [fabuButton setImage:[UIImage imageNamed:@"shoucangb"] forState:UIControlStateNormal];
     [fabuButton setTitle:@"发布" forState:UIControlStateNormal];
     [fabuButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
     [fabuButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -272,7 +271,7 @@
     UIView *line = [[UIView alloc]initWithFrame:CGRectMake(44 + 8, 7 + 5, 0.5, 20)];
     line.backgroundColor = [UIColor whiteColor];
     [rightView addSubview:line];
-
+    
     
     
     [rightView addSubview:insertButton];
@@ -334,7 +333,7 @@
                                        for (int i = 0; i < aImage_arr.count; i ++) {
                                            
                                            UIImage *aImage = aImage_arr[i];
-        
+                                           
                                            NSData * data= UIImageJPEGRepresentation(aImage, 1);
                                            
                                            NSLog(@"---> 大小 %ld",(unsigned long)data.length);
@@ -380,7 +379,6 @@
     
     
 }
-
 
 
 @end
