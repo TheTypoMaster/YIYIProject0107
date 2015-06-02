@@ -230,10 +230,7 @@
     
     
     //判断信息完整性
-//    if (!self.mallInfo.mall_id || !self.userInfo.shop_id || !_gholderTextView.text.length>0 || !_startTime.text.length>0 || !_endTime.text.length) {
-//        [GMAPI showAutoHiddenMidleQuicklyMBProgressWithText:@"请完善信息" addToView:self.view];
-//        return;
-//    }
+
     
     if (!_gholderTextView.text.length>0) {
         [GMAPI showAutoHiddenMidleQuicklyMBProgressWithText:@"请填写活动内容" addToView:self.view];
@@ -636,9 +633,6 @@
         picker.navigationBar.hidden = YES;
         [picker pushViewController:imageCrop animated:YES];
         
-//        [picker dismissViewControllerAnimated:YES completion:^{
-//            
-//        }];
   
         
     }
@@ -654,8 +648,7 @@
 - (void)cropImage:(UIImage*)cropImage forOriginalImage:(UIImage*)originalImage
 {
     
-    
-//    UIImage *doneImage = [self scaleToSize:cropImage size:CGSizeMake(DEVICE_WIDTH, DEVICE_HEIGHT)];//按像素缩放
+
     _showImage = cropImage;
     _showImageData = UIImageJPEGRepresentation(_showImage, 1);
     

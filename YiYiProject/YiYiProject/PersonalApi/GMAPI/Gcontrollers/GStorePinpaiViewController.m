@@ -17,6 +17,7 @@
 #import "MessageDetailController.h"
 #import "GLeadBuyMapViewController.h"
 #import "GAddTtaiImageLinkViewController.h"
+#import "LContactView.h"
 
 @interface GStorePinpaiViewController ()<GCustomSegmentViewDelegate,TMQuiltViewDataSource,WaterFlowDelegate,UIScrollViewDelegate>
 {
@@ -54,6 +55,8 @@
     
     //网络请求类
     LTools *_tools_productList;
+    
+    NSDictionary *_result;//商家信息
     
     
 }
@@ -216,7 +219,7 @@
     //收藏精品店===========这里显示的是精品店
     if ([self.guanzhuleixing isEqualToString:@"精品店"]) {
         NSString *api = [NSString stringWithFormat:@"%@&mall_id=%@&authcode=%@",HOME_CLOTH_NEARBYSTORE_DETAIL,self.storeIdStr,[GMAPI getAuthkey]];
-        GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+        LTools *cc = [[LTools alloc]initWithUrl:api isPost:NO postData:nil];
         [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
             
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
@@ -226,6 +229,7 @@
             [self setJingpindianTitleName];//设置精品店标题名称
             
             NSLog(@"精品店信息%@",result);
+            _result = result;
             NSArray *brand = [result arrayValueForKey:@"brand"];
             NSArray *brand1 = nil;
             NSDictionary *brand2 = nil;
@@ -298,13 +302,13 @@
     
     //收藏的是品牌店==========这里显示品牌店
     NSString *api = [NSString stringWithFormat:@"%@&shop_id=%@&authcode=%@",GET_MAIL_DETAIL_INFO,self.storeIdStr,[GMAPI getAuthkey]];//品牌店
-    GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+    LTools *ccc = [[LTools alloc]initWithUrl:api isPost:NO postData:nil];
     [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
         [self creatDianpuInfoViewWithResult:result];
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         
         NSLog(@"品牌店信息 %@",result);
-        
+        _result = result;
         self.pinpaiNameStr =  [result stringValueForKey:@"shop_name"];
         self.storeNameStr = [result stringValueForKey:@"mall_name"];
         [self setPinpaidianTitleName];//设置品牌店标题
@@ -483,7 +487,7 @@
     [daohangBtn addTarget:self action:@selector(leadYouBuy) forControlEvents:UIControlEventTouchUpInside];
     
     //地址
-    UILabel *adressLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(daohangBtn.frame)+8, 0, DEVICE_WIDTH-CGRectGetMaxX(daohangBtn.frame)-58, downDanghangView.frame.size.height)];
+    UILabel *adressLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(daohangBtn.frame)+8, 0, DEVICE_WIDTH-CGRectGetMaxX(daohangBtn.frame)-75, downDanghangView.frame.size.height)];
     self.adressLabelStr = [result stringValueForKey:@"address"];
     adressLabel.text = [NSString stringWithFormat:@"地址：%@",[result stringValueForKey:@"address"]];
     adressLabel.font = [UIFont systemFontOfSize:13];
@@ -497,43 +501,142 @@
     self.phoneNumber = result[@"shop_phone"];
     
     
-    //电话
+    //联系店主
     UIButton *phoneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [phoneBtn setImage:[UIImage imageNamed:@"gphone_up.png"] forState:UIControlStateNormal];
-    [phoneBtn setImage:[UIImage imageNamed:@"gphone_down.png"] forState:UIControlStateHighlighted];
+    [phoneBtn setImage:[UIImage imageNamed:@"product_button_lianxi.png"] forState:UIControlStateNormal];
     phoneBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     phoneBtn.layer.cornerRadius = 5;
     phoneBtn.layer.masksToBounds = YES;
-    [phoneBtn setFrame:CGRectMake(CGRectGetMaxX(adressLabel.frame), adressLabel.frame.origin.y+2, 47, adressLabel.frame.size.height-2)];
+    [phoneBtn setFrame:CGRectMake(CGRectGetMaxX(adressLabel.frame), adressLabel.frame.origin.y+2, 60, adressLabel.frame.size.height-4)];
     phoneBtn.backgroundColor = RGBCOLOR(12, 62, 3);
-    [phoneBtn addTarget:self action:@selector(takeThePhone) forControlEvents:UIControlEventTouchUpInside];
+    [phoneBtn addTarget:self action:@selector(clickToContact:) forControlEvents:UIControlEventTouchUpInside];
     [downDanghangView addSubview:phoneBtn];
     
     
-    if ([self.phoneNumber intValue] == 0) {
-        phoneBtn.hidden = YES;
-        [adressLabel setFrame:CGRectMake(CGRectGetMaxX(daohangBtn.frame)+8, 0, DEVICE_WIDTH-CGRectGetMaxX(daohangBtn.frame)-8, downDanghangView.frame.size.height)];
-    }
-    
-    
 }
 
 
+- (void)clickToContact:(UIButton*)sender {
+    
+    __weak typeof(self)weakSelf = self;
+    
+    [[LContactView shareInstance] show];
+    
+    [[LContactView shareInstance] setContactBlock:^ (CONTACTTYPE contactType,int extra){
+        
+        if (contactType == CONTACTTYPE_PHONE) {
+            
+            [weakSelf clickToPhone:nil];
+            
+        }else if (contactType == CONTACTTYPE_PRIVATECHAT){
+            
+            [weakSelf clickToPrivateChat:nil];
+        }
+        
+    }];
+}
+
+/**
+ *  私聊
+ *
+ *  @param sender
+ */
+- (void)clickToPhone:(UIButton *)sender
+{
+    NSString *phoneNum = self.phoneNumber;
+    
+    if ([LTools isValidateMobile:phoneNum]) {
+        
+        UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"拨号" message:phoneNum delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [al show];
+    }else
+    {
+        
+        [LTools showMBProgressWithText:@"抱歉!该商家暂未填写有效联系方式" addToView:self.view];
+    }
+}
 
 //打电话
--(void)takeThePhone{
-    UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"拨号" message:self.phoneNumber delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-    [al show];
-}
-
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    NSString *phoneNum = self.phoneNumber;
     
     //0取消    1确定
     if (buttonIndex == 1) {
-        NSString *strPhone = [NSString stringWithFormat:@"tel://%@",self.phoneNumber];
+        NSString *strPhone = [NSString stringWithFormat:@"tel://%@",phoneNum];
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:strPhone]];
     }
 }
+
+/**
+ *  私聊
+ *
+ *  @param sender
+ */
+- (void)clickToPrivateChat:(UIButton *)sender
+{
+    BOOL rong_login = [LTools cacheBoolForKey:LOGIN_RONGCLOUD_STATE];
+    
+    //服务器登陆成功
+    if ([LTools isLogin:self]) {
+        
+        //融云登陆成功
+        if (rong_login) {
+            
+            NSString *useriId;
+            NSString *brand_name;
+            NSString *mall_name;
+            YIYIChatViewController *contact = [[YIYIChatViewController alloc]init];
+            
+            
+            NSLog(@"%@",self.guanzhuleixing);
+            NSLog(@"%@",_result);
+            
+            useriId = [_result stringValueForKey:@"uid"];
+            if ([self.guanzhuleixing isEqualToString:@"品牌店"]) {
+                brand_name = [_result stringValueForKey:@"shop_name"];
+                mall_name = [_result stringValueForKey:@"mall_name"];
+                NSString *aaa = [NSString stringWithFormat:@"%@.%@",brand_name,mall_name];
+                contact.currentTargetName = aaa;
+            }else if ([self.guanzhuleixing isEqualToString:@"精品店"]){
+                contact.currentTargetName = [_result stringValueForKey:@"mall_name"];
+            }
+            
+            contact.currentTarget = useriId;
+            contact.portraitStyle = RCUserAvatarCycle;
+            contact.conversationType = ConversationType_PRIVATE;
+            [self.navigationController pushViewController:contact animated:YES];
+            
+            
+        }else{
+            NSLog(@"服务器登陆成功了,融云未登陆");
+            
+            
+            AppDelegate * appdelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+            [appdelegate loginToRongCloud];
+            
+        }
+        
+    }
+}
+
+
+
+
+////打电话
+//-(void)takeThePhone{
+//    UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"拨号" message:self.phoneNumber delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+//    [al show];
+//}
+//
+//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+//    
+//    //0取消    1确定
+//    if (buttonIndex == 1) {
+//        NSString *strPhone = [NSString stringWithFormat:@"tel://%@",self.phoneNumber];
+//        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:strPhone]];
+//    }
+//}
 
 
 //跳转地图导航页面

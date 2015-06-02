@@ -479,6 +479,7 @@
 		E3996EE21A5E1DBA00673147 /* GLeadbuyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996EB71A5E1DBA00673147 /* GLeadbuyTableViewCell.m */; };
 		E3996EE31A5E1DBA00673147 /* GTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996EB91A5E1DBA00673147 /* GTableViewCell.m */; };
 		E3996EE61A5E1E0600673147 /* HomeClothController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996EE51A5E1E0600673147 /* HomeClothController.m */; };
+		E3AFFDC51B1D87A600A6FB42 /* GupActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3AFFDC41B1D87A600A6FB42 /* GupActivityViewController.m */; };
 		E3B7BE051AC9557D00FE8495 /* gfujin_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3B7BE031AC9557D00FE8495 /* gfujin_down@2x.png */; };
 		E3B7BE061AC9557D00FE8495 /* gfujin_up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3B7BE041AC9557D00FE8495 /* gfujin_up@2x.png */; };
 		E3B7BE0F1ACA578100FE8495 /* my_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3B7BE091ACA578100FE8495 /* my_down@2x.png */; };
@@ -1340,6 +1341,8 @@
 		E3996EB91A5E1DBA00673147 /* GTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTableViewCell.m; sourceTree = "<group>"; };
 		E3996EE41A5E1E0600673147 /* HomeClothController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeClothController.h; sourceTree = "<group>"; };
 		E3996EE51A5E1E0600673147 /* HomeClothController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeClothController.m; sourceTree = "<group>"; };
+		E3AFFDC31B1D87A600A6FB42 /* GupActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GupActivityViewController.h; sourceTree = "<group>"; };
+		E3AFFDC41B1D87A600A6FB42 /* GupActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GupActivityViewController.m; sourceTree = "<group>"; };
 		E3B7BE031AC9557D00FE8495 /* gfujin_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gfujin_down@2x.png"; sourceTree = "<group>"; };
 		E3B7BE041AC9557D00FE8495 /* gfujin_up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gfujin_up@2x.png"; sourceTree = "<group>"; };
 		E3B7BE091ACA578100FE8495 /* my_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "my_down@2x.png"; sourceTree = "<group>"; };
@@ -3083,6 +3086,8 @@
 				E35EF15E1A6B947800B493A9 /* GupClothesViewController.m */,
 				E30522281A6ECD3A007BEAFD /* GupHuoDongViewController.h */,
 				E30522291A6ECD3A007BEAFD /* GupHuoDongViewController.m */,
+				E3AFFDC31B1D87A600A6FB42 /* GupActivityViewController.h */,
+				E3AFFDC41B1D87A600A6FB42 /* GupActivityViewController.m */,
 				E37A2E2C1A7349C300145608 /* GchooseAdressViewController.h */,
 				E37A2E2D1A7349C300145608 /* GchooseAdressViewController.m */,
 				E308939B1AE0587700DA342C /* GChooseLocationMoveAnViewController.h */,
@@ -3858,6 +3863,7 @@
 				133B17741A750988005B8B3F /* MJPhoto.m in Sources */,
 				E3996EE01A5E1DBA00673147 /* GClothWaveCustomView.m in Sources */,
 				DF5E89B61A5E7E6C00535EBA /* MyMatchViewController.m in Sources */,
+				E3AFFDC51B1D87A600A6FB42 /* GupActivityViewController.m in Sources */,
 				E36BFC871A6939FC009DAF81 /* FBCity.m in Sources */,
 				13CD36401A3C69860068C12A /* TMQuiltView.m in Sources */,
 				13CD36411A3C69860068C12A /* TMQuiltViewCell.m in Sources */,

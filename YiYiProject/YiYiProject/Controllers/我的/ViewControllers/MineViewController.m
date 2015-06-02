@@ -110,8 +110,6 @@ typedef enum{
     [super viewWillAppear:animated];
     
     [self.navigationController setNavigationBarHidden:YES animated:animated];
-
-    UserInfo *info = [UserInfo cacheResultForKey:USERINFO_MODEL];
     
     
 }
@@ -156,6 +154,7 @@ typedef enum{
         [self presentViewController:unVc animated:YES completion:nil];
         
     }else{
+//        [self cacheUserInfo];
         [self GgetUserInfo];
     }
     
@@ -286,6 +285,57 @@ typedef enum{
     _userInfo.shopman = @"1";
     [_tableView reloadData];
 }
+
+
+
+
+-(void)cacheUserInfo{
+    UserInfo *uinfo = [UserInfo cacheResultForKey:USERINFO_MODEL];
+    _userInfo = uinfo;
+    if ([_userInfo.is_sign intValue] == 0) {//未签到
+        _qiandaoBtn.userInteractionEnabled = YES;
+        _qiandaoBtn.selected = NO;
+    }else if ([_userInfo.is_sign intValue] == 1){//已签到
+        _qiandaoBtn.userInteractionEnabled = NO;
+        _qiandaoBtn.selected = YES;
+    }
+    
+    
+    if ([_userInfo.shopman intValue] == 2) {//已经是店主
+        [self changeTheTitleAndPicArray_dianzhu];
+    }else if ([_userInfo.shopman intValue]==1){//正在审核
+        [self changeTheTitleAndPicArray_shenhe];
+    }
+    
+    NSString *name = _userInfo.user_name;
+    NSString *score = _userInfo.score;
+    self.userNameLabel.text = [NSString stringWithFormat:@"昵称:%@",name];
+    self.userScoreLabel.text = [NSString stringWithFormat:@"积分:%@",score];
+    
+    user_bannerUrl = _userInfo.user_banner;
+    [_backView.imageView sd_setImageWithURL:[NSURL URLWithString:user_bannerUrl] placeholderImage:[UIImage imageNamed:@"my_bg.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        [GMAPI setUserBannerImageWithData:UIImagePNGRepresentation(_backView.imageView.image)];
+    }];
+    
+    
+    NSString *userFaceUrl = [NSString stringWithFormat:@"%@",_userInfo.photo];
+    headImageUrl = userFaceUrl;
+    
+    
+    [self.userFaceImv sd_setImageWithURL:[NSURL URLWithString:userFaceUrl] placeholderImage:[UIImage imageNamed:@"grzx150_150.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        [GMAPI setUserFaceImageWithData:UIImagePNGRepresentation(self.userFaceImv.image)];
+    }];
+    
+    
+    _fensiNumLabel.text = _userInfo.fans_num;
+    _guanzhuNumLabel.text = _userInfo.attentions_num;
+    _ttaiNumLabel.text = _userInfo.tt_num;
+    
+    [_tableView reloadData];
+    
+}
+
+
 
 
 

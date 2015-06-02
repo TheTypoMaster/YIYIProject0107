@@ -17,6 +17,8 @@
 #import "GmyshopErweimaViewController.h"//二维码
 #import "GfangkeViewController.h"//访客
 
+#import "GupActivityViewController.h"//发布活动
+
 
 @interface MyShopViewController ()
 {
@@ -341,7 +343,7 @@
             break;
         case 101://发布活动
         {
-            GupHuoDongViewController *ccc = [[GupHuoDongViewController alloc]init];
+            GupActivityViewController *ccc = [[GupActivityViewController alloc]init];
             ccc.mallInfo = self.mallInfo;
             ccc.userInfo = self.userInfo;
             ccc.lastPageNavigationHidden = YES;

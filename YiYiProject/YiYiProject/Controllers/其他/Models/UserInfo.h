@@ -46,6 +46,7 @@
 @property(nonatomic,retain)NSString *recommend_uid;
 @property(nonatomic,retain)NSString *shopman;//shopman的值表示 1=》店主审核 2=》已是店主 0=》普通
 @property(nonatomic,retain)NSString *user_banner;
+@property(nonatomic,strong)NSString *tt_num;
 
 @property(nonatomic,retain)NSString *mall_type;//店铺类型 2 精品店 3 品牌店  1 商场
 @property(nonatomic,retain)NSString *mall_name;//店铺名称
