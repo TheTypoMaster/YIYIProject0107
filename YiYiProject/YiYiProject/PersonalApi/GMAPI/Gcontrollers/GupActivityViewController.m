@@ -60,6 +60,8 @@
     
     [self creatCustomView];
     [self creatDatePickerChooseView];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(leftButtonTap:) name:@"back" object:nil];
 
 }
 
@@ -228,6 +230,7 @@
     UITextField *tf = (UITextField*)[self.view viewWithTag:200];
     PublishActivityController *ccc = [[PublishActivityController alloc]init];
     [ccc setActivityTitle:tf.text coverImage:_showImage startTime:_startTime.text endTime:_endTime.text shopId:self.mallInfo.id];
+    ccc.shopViewController = self.shopViewController;
     ccc.lastPageNavigationHidden = NO;
     [self.navigationController pushViewController:ccc animated:YES];
 }

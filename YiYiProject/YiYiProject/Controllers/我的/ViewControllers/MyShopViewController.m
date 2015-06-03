@@ -36,6 +36,13 @@
 
 @implementation MyShopViewController
 
+-(void)viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBarHidden = YES;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -346,6 +353,7 @@
             ccc.mallInfo = self.mallInfo;
             ccc.userInfo = self.userInfo;
             ccc.lastPageNavigationHidden = YES;
+            ccc.shopViewController = self;
             [self.navigationController pushViewController:ccc animated:YES];
         }
             break;

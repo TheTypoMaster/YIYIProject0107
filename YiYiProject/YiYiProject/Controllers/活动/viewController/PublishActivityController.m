@@ -78,7 +78,7 @@
         
         [LTools showMBProgressWithText:@"请填写有效的活动信息" addToView:self.view];
         
-        [self performSelector:@selector(clickToBack:) withObject:nil afterDelay:0.5];
+        [self performSelector:@selector(clickToBack:) withObject:nil afterDelay:1.f];
         
         return;
     }
@@ -383,6 +383,15 @@
 - (void)clickToBack:(UIButton *)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
+
+}
+
+/**
+ *  发布成功返回店铺页面
+ */
+- (void)backToShopViewController
+{
+    [self.navigationController popToViewController:self.shopViewController animated:NO];
 }
 
 
@@ -420,6 +429,9 @@
                            @"authcode":[GMAPI getAuthkey],
                            };
     
+    
+    __weak typeof(self)weakSelf = self;
+    
     if ([type isEqualToString:@"2"]) {//type为2的时候是店铺发布活动
         
         //设置接收响应类型为标准HTTP类型(默认为响应类型为JSON)
@@ -453,7 +465,7 @@
                                        success:^(AFHTTPRequestOperation *operation, id responseObject)
                                        {
                                            
-                                           [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                           [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
 
                                            NSLog(@"%@",responseObject);
                                            
@@ -466,7 +478,13 @@
                                            NSString *erroInfo = mydic[@"msg"];
                                            if (errorCode > 2000) {
                                                
-                                               [LTools showMBProgressWithText:erroInfo addToView:self.view];
+                                               [LTools showMBProgressWithText:erroInfo addToView:weakSelf.view];
+                                           }
+                                           
+                                           //发布成功返回店铺页面
+                                           if (errorCode == 0) {
+                                               
+                                               [weakSelf performSelector:@selector(backToShopViewController) withObject:nil afterDelay:1.f];
                                            }
                                            
                                            
@@ -474,7 +492,7 @@
                                        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                            
                                             NSLog(@"%@",error);
-                                           [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                           [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
 
                                            NSDictionary *mydic=[NSJSONSerialization JSONObjectWithData:(NSData *)operation.responseObject options:NSJSONReadingAllowFragments error:nil];
                                            NSLog(@"%@",mydic);
@@ -483,7 +501,7 @@
                                            NSString *erroInfo = mydic[@"msg"];
                                            if (errorCode > 2000) {
                                                
-                                               [LTools showMBProgressWithText:erroInfo addToView:self.view];
+                                               [LTools showMBProgressWithText:erroInfo addToView:weakSelf.view];
                                            }
                                            
                                            

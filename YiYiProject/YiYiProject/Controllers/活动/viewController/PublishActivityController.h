@@ -27,4 +27,6 @@
                  endTime:(NSString *)endTime
                   shopId:(NSString *)shopId;
 
+@property(nonatomic,retain)UIViewController *shopViewController;//店铺页面
+
 @end

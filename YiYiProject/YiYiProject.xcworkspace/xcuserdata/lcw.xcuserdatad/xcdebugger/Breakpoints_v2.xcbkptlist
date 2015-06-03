@@ -20,11 +20,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/Controllers/&#x6d3b;&#x52a8;/viewController/PublishActivityController.m"
-            timestampString = "454991172.187639"
+            timestampString = "455020500.45534"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "575"
-            endingLineNumber = "575"
+            startingLineNumber = "593"
+            endingLineNumber = "593"
             landmarkName = "-upLoadImage:"
             landmarkType = "5">
          </BreakpointContent>

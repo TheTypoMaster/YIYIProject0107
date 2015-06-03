@@ -33,4 +33,7 @@ typedef enum{
 @property(nonatomic,strong)ActivityModel *theEditActivity;
 @property(nonatomic,strong)NSMutableArray *oldImageArray;
 
+@property(nonatomic,retain)UIViewController *shopViewController;//店铺页面
+
+
 @end
