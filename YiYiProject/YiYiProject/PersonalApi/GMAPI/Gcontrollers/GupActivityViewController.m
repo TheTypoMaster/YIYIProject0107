@@ -227,7 +227,9 @@
 
 //跳转下一步
 -(void)gotoTheNextVc{
+    UITextField *tf = (UITextField*)[self.view viewWithTag:200];
     PublishActivityController *ccc = [[PublishActivityController alloc]init];
+    [ccc setActivityTitle:tf.text coverImage:_showImage startTime:_startTime.text endTime:_endTime.text shopId:self.mallInfo.id];
     ccc.lastPageNavigationHidden = NO;
     [self.navigationController pushViewController:ccc animated:YES];
 }
