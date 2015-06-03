@@ -11,7 +11,6 @@
 
 @interface LRichTextView : UIView<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIGestureRecognizerDelegate,UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate>
 {
-    NSMutableArray *height_arr;//存储高度
     
     NSDictionary *firstResponder_dic;//第一响应textView 相关信息
     

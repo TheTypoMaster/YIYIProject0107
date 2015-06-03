@@ -478,7 +478,7 @@ typedef enum {
 
 #define GET_MYYICHU_LIST_URL @"http://www119.alayy.com/index.php?d=api&c=wardrobe&m=get_wardrobe&authcode=%@"
 
-#define UPLOAD_IMAGE_URL @"http://www119.alayy.com/index.php?d=api&c=upload&m=upload_pic"//action(等于topic_pic为上传话题图片，等于ttinfo为上传T台图片)
+#define UPLOAD_IMAGE_URL @"http://www119.alayy.com/index.php?d=api&c=upload&m=upload_pic"//action(等于topic_pic为上传话题图片，等于ttinfo为上传T台图片, action=activity上传活动图片)
 
 //添加分类
 #define GET_ADDCLASSICATION_URL @"http://www119.alayy.com/index.php?d=api&c=wardrobe&m=add_sort&sort_name=%@&authcode=%@"

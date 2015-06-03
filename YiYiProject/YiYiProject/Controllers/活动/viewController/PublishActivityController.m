@@ -13,6 +13,8 @@
 
 #import "JSONKit.h"
 
+#import "ActivityImageModel.h"
+
 @interface PublishActivityController ()
 {
     LRichTextView *editor;
@@ -20,11 +22,18 @@
     NSMutableArray *temp_arr;//存放发布内容
     
     int imageCount;//图片总数
+    
+    NSString *_actitityTitle;//标题
+    UIImage *_activityCoverImage;//活动封面
+    NSString *_activityStartTime;//开始时间
+    NSString *_activityEndTime;//结束时间
+    NSString *_shopId;//店铺id
 }
 
 @end
 
 @implementation PublishActivityController
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -50,13 +59,6 @@
     [self.navigationController setNavigationBarHidden:self.lastPageNavigationHidden animated:YES];
 }
 
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    //    [editor setFirstResponder];
-    //    [editor performSelector:@selector(setFirstResponder) withObject:nil afterDelay:0.1];
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -69,177 +71,45 @@
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     [self createNavigationbarTools];
     
-    editor = [[LRichTextView alloc]initWithFrame:CGRectMake(0, 0, ALL_FRAME_WIDTH, ALL_FRAME_HEIGHT - 50 - 20) rootViewController:self];
-    [self.view addSubview:editor];
-}
-
-#pragma mark - 事件处理
-
-- (void)dealPostContentWithSuccessImages:(NSArray *)imageModels
-{
-    //    NSMutableString *temp_content = [NSMutableString stringWithString:[temp_arr JSONString]];
     
+//    [self setActivityTitle:@"六一活动节！！！" coverImage:nil startTime:@"2015-6-1" endTime:@"2015-6-10" shopId:@"2638"];
     
-    int imageIndex = 0;
-    
-    int sum = (int)temp_arr.count;
-    
-    for (int i = 0; i < sum; i ++) {
+    if (![self isInfoValidate]) {
         
-        NSDictionary *aDic = temp_arr[i];
-        NSString *content = aDic[CELL_TEXT];
-        if ([content rangeOfString:@"image"].length > 0)
-        {
-            //需要替换
-            
-            TopicImageModel *aImageModel = (TopicImageModel*)[imageModels objectAtIndex:imageIndex];
-            
-            NSMutableDictionary *temp = [NSMutableDictionary dictionaryWithDictionary:aDic];
-            [temp setObject:aImageModel.image_resize_url forKey:CELL_TEXT];
-            [temp setObject:[NSNumber numberWithFloat:aImageModel.image_resize_height] forKey:CELL_NEW_HEIGHT];
-            [temp setObject:[NSNumber numberWithFloat:aImageModel.image_resize_width] forKey:CELL_NEW_WIDTH];
-            [temp setObject:aImageModel.image_url forKey:IMAGE_ORIGINAL_URL];
-            [temp setObject:[NSNumber numberWithFloat:aImageModel.image_height] forKey:IMAGE_HEIGHT_ORIGINAL];
-            [temp setObject:[NSNumber numberWithFloat:aImageModel.image_width] forKey:IMAGE_WIDTH_ORIGINAL];
-            
-            [temp_arr replaceObjectAtIndex:i withObject:temp];
-            
-            imageIndex ++;
-            
-        }
+        [LTools showMBProgressWithText:@"请填写有效的活动信息" addToView:self.view];
         
+        [self performSelector:@selector(clickToBack:) withObject:nil afterDelay:0.5];
+        
+        return;
     }
     
-    NSLog(@"commit content %@",temp_arr);
+    editor = [[LRichTextView alloc]initWithFrame:CGRectMake(0, 0, ALL_FRAME_WIDTH, ALL_FRAME_HEIGHT - 64) rootViewController:self];
+    [self.view addSubview:editor];
     
-    [self addTopicContent:[temp_arr JSONString] title:[editor editorTitle]];
 }
 
 /**
- *  解析上传成功图片数据
+ *  判断上一页信息是否有效
  *
- *  @param mydic 成功之后返回字典
+ *  @return
  */
-- (void)dealWithUploadImageSuccessDic:(NSDictionary *)mydic
+- (BOOL)isInfoValidate
 {
-    if ([mydic isKindOfClass:[NSDictionary class]]) {
+    if (!_actitityTitle.length>0) {
         
-        NSArray *pics = mydic[@"pics"];
-        
-        NSMutableArray *arr = [NSMutableArray arrayWithCapacity:pics.count];
-        
-        for (NSDictionary *aDic in pics) {
-            
-            TopicImageModel *aImageModel = [[TopicImageModel alloc]initWithDictionary:aDic];
-            [arr addObject:aImageModel];
-        }
-        
-        
-        [self dealPostContentWithSuccessImages:arr];
-        
-    }else
-    {
-        [LTools showMBProgressWithText:@"上传图片错误" addToView:self.view];
+//        [LTools showMBProgressWithText:@"未填写有效活动标题" addToView:self.view];
+        return NO;
     }
+    
+    if (!_activityStartTime.length > 0 || !_activityEndTime.length > 0) {
+        
+//        [LTools showMBProgressWithText:@"请填写有效的活动开始结束时间" addToView:self.view];
+        
+        return NO;
+    }
+    
+    return YES;
 }
-
-- (void)clickToPub:(UIButton *)sender
-{
-    NSLog(@"发布 %@",[editor content]);
-    
-    [editor hiddenKeyboard];
-    
-    if ([editor editorTitle].length == 0) {
-        [LTools showMBProgressWithText:@"话题标题不能为空" addToView:self.view];
-        return;
-    }
-    
-    NSArray *content_arr = [editor content];
-    
-    BOOL contentIsNull = YES;
-    
-    for (NSDictionary *aDic in content_arr) {
-        
-        id dd = [aDic objectForKey:CELL_TEXT];
-        if ([dd isKindOfClass:[UIImage class]]) {
-            contentIsNull = NO;
-        }else if (((NSString *)dd).length > 0){
-            
-            contentIsNull = NO;
-        }
-    }
-    
-    if (content_arr.count == 0 || contentIsNull) {
-        
-        [LTools showMBProgressWithText:@"话题内容不能为空" addToView:self.view];
-        return;
-    }
-    
-    NSArray *contentArr = [NSArray arrayWithArray:[editor content]];
-    
-    temp_arr = [NSMutableArray array];//存储新的内容
-    
-    NSMutableArray *image_arr = [NSMutableArray array];
-    
-    int imageIndex = 0;
-    
-    int i = 0;
-    
-    for (NSDictionary *aDic in contentArr) {
-        
-        NSString *content = aDic[CELL_TEXT];
-        if ([content isKindOfClass:[UIImage class]]) {
-            
-            //先把image 替换成image7 格式
-            [image_arr addObject:content];
-            
-            NSMutableDictionary *imageDic = [NSMutableDictionary dictionaryWithDictionary:aDic];
-            
-            NSString *imageName = [NSString stringWithFormat:@"image_%d",imageIndex];
-            
-            [imageDic setObject:imageName forKey:CELL_TEXT];
-            
-            
-            [temp_arr addObject:imageDic];
-            
-            imageIndex ++;
-            
-        }else
-        {
-            [temp_arr addObject:aDic];
-        }
-        
-        i ++;
-    }
-    
-    //上传 image_arr里面的image
-    
-    NSLog(@"allcontent ---> %@",temp_arr);
-    
-    //将上传之后imageurl
-    
-    if (image_arr.count > 0) {
-        
-        [self upLoadImage:image_arr];
-    }else
-    {
-        NSString *jsonString = [temp_arr JSONString];
-        
-        [self addTopicContent:jsonString title:[editor editorTitle]];
-    }
-}
-
-- (IBAction)clickToOpenAlbum:(id)sender {
-    
-    [editor clickToAddAlbum:sender];
-}
-
-//返回
-- (void)clickToBack:(UIButton *)sender
-{
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 
 #pragma mark - 创建视图
 
@@ -282,34 +152,353 @@
     self.navigationItem.rightBarButtonItem = comment_item;
 }
 
-#pragma mark 网络请求
+
+#pragma mark - 事件处理
+
 /**
- *  添加话题
+ *  发布活动上一级页面传参数
+ *
+ *  @param title     活动标题
+ *  @param aImage    活动封面
+ *  @param startTime 开始时间
+ *  @param endTime   结束时间
  */
-- (void)addTopicContent:(NSString *)content
-                  title:(NSString *)title
+- (void)setActivityTitle:(NSString *)title
+              coverImage:(UIImage *)aImage
+               startTime:(NSString *)startTime
+                 endTime:(NSString *)endTime
+                  shopId:(NSString *)shopId
 {
-    NSString *authkey = [GMAPI getAuthkey];
-    NSString *post = [NSString stringWithFormat:@"topic_title=%@&topic_content=%@&authcode=%@",title,content,authkey];
-    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-    
-    NSLog(@"---->话题 %@",post);
-    
-    NSString *url = [NSString stringWithFormat:TOPIC_ADD];
-    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
-    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
-        
-        NSLog(@"-->%@",result);
-        
-        [LTools showMBProgressWithText:result[@"msg"] addToView:self.view];
-        
-        [self performSelector:@selector(leftButtonTap:) withObject:nil afterDelay:0.2];
-        
-    } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        
-        [LTools showMBProgressWithText:failDic[@"msg"] addToView:self.view];
-    }];
+    _actitityTitle = title;
+    _activityCoverImage = aImage;
+    _activityStartTime = startTime;
+    _activityEndTime = endTime;
+    _shopId = shopId;
 }
+
+/**
+ *  处理活动content
+ *
+ *  @param imageModels 上传成功后图片model
+ */
+- (void)replaceContentWithSuccessImages:(NSArray *)imageModels
+{
+    //    NSMutableString *temp_content = [NSMutableString stringWithString:[temp_arr JSONString]];
+    
+    
+    int imageIndex = 0;
+    
+    int sum = (int)temp_arr.count;
+    
+    for (int i = 0; i < sum; i ++) {
+        
+        NSDictionary *aDic = temp_arr[i];
+        NSString *content = aDic[CELL_CONTENT];
+        if ([content rangeOfString:@"image"].length > 0)
+        {
+            //需要替换
+            
+            ActivityImageModel *aImageModel = (ActivityImageModel*)[imageModels objectAtIndex:imageIndex];
+            
+            NSMutableDictionary *temp = [NSMutableDictionary dictionaryWithDictionary:aDic];
+            
+            NSString *content = [NSString stringWithFormat:@"<img src=\"%@\" width=\"%@\" height=\"%@\">",aImageModel.image_resize_url,aImageModel.image_resize_width,aImageModel.image_resize_height];
+            [temp setObject:content forKey:CELL_CONTENT];
+
+            [temp_arr replaceObjectAtIndex:i withObject:temp];
+            
+            imageIndex ++;
+            
+        }
+        
+    }
+    
+    NSLog(@"commit content %@",temp_arr);
+    
+    //正式发布活动
+    
+    [self publishActivityContent:[self postContent:temp_arr]];
+    
+}
+
+/**
+ *  区分是文字还是图片
+ *
+ *  @param content
+ *
+ *  @return
+ */
+- (int)typeForContent:(NSString *)content
+{
+    if ([content rangeOfString:@"<img"].length > 0) {
+        
+        return 1;//图片
+    }else
+    {
+        return 2;//文字
+    }
+}
+
+/**
+ *  拼接成要发布的内容字符串
+ *
+ *  @param tempArr 内容数组
+ *
+ *  @return
+ */
+- (NSString *)postContent:(NSArray *)tempArr
+{
+//    //去除空行
+//    NSMutableArray *arr = [NSMutableArray array];
+//    for (NSDictionary *aDic in tempArr) {
+//        
+//        NSString *aContent = aDic[CELL_CONTENT];
+//        NSLog(@"aContent %@",aContent);
+//        if (aContent && aContent.length > 0 && ![aContent isEqualToString:@"(null)"]) {
+//            [arr addObject:aDic];
+//        }
+//    }
+    
+    
+    NSMutableString *contentString = [NSMutableString stringWithFormat:@""];
+    
+    for (int i = 0; i < tempArr.count - 1; i ++) {
+        
+        NSDictionary *aDic = tempArr[i];
+        NSDictionary *bDic = tempArr[i + 1];
+        NSString *aContent = aDic[CELL_CONTENT];
+        NSString *bContent = bDic[CELL_CONTENT];
+        
+        if (i == 0) {
+            
+            [contentString appendString:aContent];
+        }
+        //前后都是文字用换行符分割
+        if ([self typeForContent:aContent] == 1 && [self typeForContent:bContent] == 1) {
+            
+            [contentString appendFormat:@"\n%@",bContent];
+        }else
+        {
+            if (bContent.length > 0 && ![bContent isEqualToString:@"(null)"]) {
+                
+                [contentString appendFormat:@"%@",bContent];
+
+            }
+            
+        }
+    }
+    
+    return contentString;
+}
+
+- (void)clickToPub:(UIButton *)sender
+{
+    NSLog(@"发布 %@",[editor content]);
+    
+    [editor hiddenKeyboard];
+    
+    NSArray *content_arr = [editor content];
+    
+    BOOL contentIsNull = YES;
+    
+    for (NSDictionary *aDic in content_arr) {
+        
+        id dd = [aDic objectForKey:CELL_CONTENT];
+        if ([dd isKindOfClass:[UIImage class]]) {
+            contentIsNull = NO;
+        }else if (((NSString *)dd).length > 0){
+            
+            contentIsNull = NO;
+        }
+    }
+    
+    if (content_arr.count == 0 || contentIsNull) {
+        
+        [LTools showMBProgressWithText:@"活动内容不能为空" addToView:self.view];
+        return;
+    }
+    
+    NSArray *contentArr = [NSArray arrayWithArray:[editor content]];
+    
+    temp_arr = [NSMutableArray array];//存储新的内容
+    
+    NSMutableArray *image_arr = [NSMutableArray array];
+    
+    int imageIndex = 0;
+    
+    int i = 0;
+    
+    for (NSDictionary *aDic in contentArr) {
+        
+        NSString *content = aDic[CELL_CONTENT];
+        if ([content isKindOfClass:[UIImage class]]) {
+            
+            //先把image 替换成image7 格式
+            [image_arr addObject:content];
+            
+            NSMutableDictionary *imageDic = [NSMutableDictionary dictionaryWithDictionary:aDic];
+            
+            NSString *imageName = [NSString stringWithFormat:@"image_%d",imageIndex];
+            
+            [imageDic setObject:imageName forKey:CELL_CONTENT];
+            
+            
+            [temp_arr addObject:imageDic];
+            
+            imageIndex ++;
+            
+        }else
+        {
+            [temp_arr addObject:aDic];
+        }
+        
+        i ++;
+    }
+    
+    //上传 image_arr里面的image
+    
+    NSLog(@"allcontent ---> %@",temp_arr);
+    
+    //将上传之后imageurl
+    
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+
+    
+    if (image_arr.count > 0) {
+        
+        [self upLoadImage:image_arr];
+    }else
+    {
+        //直接发布活动
+        [self publishActivityContent:[self postContent:temp_arr]];
+    }
+}
+
+- (IBAction)clickToOpenAlbum:(id)sender {
+    
+    [editor clickToAddAlbum:sender];
+}
+
+//返回
+- (void)clickToBack:(UIButton *)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+#pragma mark 网络请求
+
+
+/**
+ *  发布活动
+ */
+-(void)publishActivityContent:(NSString *)activityContent{
+    
+    
+    //上传的url
+    NSString *uploadImageUrlStr = GFABUHUODONG;
+    
+    
+    NSString *type = nil;
+    type = @"2";
+    
+    
+    NSString *shop_id = _shopId;//店铺id
+    NSString *activity_info = activityContent;//活动内容
+    NSString *start_time = _activityStartTime;//活动开始时间
+    NSString *end_time = _activityEndTime;//活动结束时间
+    NSString *activity_title = _actitityTitle;//活动标题
+    
+    
+    NSDictionary *parameters_dic = @{
+                           @"type":type,
+                           @"shop_id":shop_id,
+                           @"activity_title":activity_title,
+                           @"activity_info":activity_info,
+                           @"start_time":start_time,
+                           @"end_time":end_time,
+                           @"authcode":[GMAPI getAuthkey],
+                           };
+    
+    if ([type isEqualToString:@"2"]) {//type为2的时候是店铺发布活动
+        
+        //设置接收响应类型为标准HTTP类型(默认为响应类型为JSON)
+        AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        AFHTTPRequestOperation  * o2= [manager
+                                       POST:uploadImageUrlStr
+                                       parameters:parameters_dic
+                                       constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
+                                       {
+                                           //开始拼接表单
+                                           //获取图片的二进制形式
+                                           
+                                           NSData * data= UIImageJPEGRepresentation(_activityCoverImage, 1.0);
+                                           if (data) {
+                                               NSLog(@"%ld",(unsigned long)data.length);
+                                               
+                                               //将得到的二进制图片拼接到表单中
+                                               /**
+                                                *  data,指定上传的二进制流
+                                                *  name,服务器端所需参数名
+                                                *  fileName,指定文件名
+                                                *  mimeType,指定文件格式
+                                                */
+                                               [formData appendPartWithFileData:data name:@"pic" fileName:@"icon.jpg" mimeType:@"image/jpg"];
+                                               //多用途互联网邮件扩展（MIME，Multipurpose Internet Mail Extensions）
+                                           }
+                                           
+                                           
+                                       }
+                                       success:^(AFHTTPRequestOperation *operation, id responseObject)
+                                       {
+                                           
+                                           [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+
+                                           NSLog(@"%@",responseObject);
+                                           
+                                           NSError * myerr;
+                                           
+                                           NSDictionary *mydic=[NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:NSJSONReadingAllowFragments error:&myerr];
+                                           NSLog(@"%@",mydic);
+                                           
+                                           int errorCode = [mydic[@"errorcode"] intValue];
+                                           NSString *erroInfo = mydic[@"msg"];
+                                           if (errorCode > 2000) {
+                                               
+                                               [LTools showMBProgressWithText:erroInfo addToView:self.view];
+                                           }
+                                           
+                                           
+                                       }
+                                       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                           
+                                            NSLog(@"%@",error);
+                                           [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+
+                                           NSDictionary *mydic=[NSJSONSerialization JSONObjectWithData:(NSData *)operation.responseObject options:NSJSONReadingAllowFragments error:nil];
+                                           NSLog(@"%@",mydic);
+                                           
+                                           int errorCode = [mydic[@"errorcode"] intValue];
+                                           NSString *erroInfo = mydic[@"msg"];
+                                           if (errorCode > 2000) {
+                                               
+                                               [LTools showMBProgressWithText:erroInfo addToView:self.view];
+                                           }
+                                           
+                                           
+                                       }];
+        
+        //设置上传操作的进度
+        [o2 setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+            
+        }];
+    }
+    
+    
+    
+}
+
 
 #pragma mark - 上传图片
 
@@ -319,13 +508,15 @@
     //上传的url
     NSString *uploadImageUrlStr = UPLOAD_IMAGE_URL;
     
+    __weak typeof(self)weakSelf = self;
+    
     //设置接收响应类型为标准HTTP类型(默认为响应类型为JSON)
     AFHTTPRequestOperationManager * manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     AFHTTPRequestOperation  * o2= [manager
                                    POST:uploadImageUrlStr
                                    parameters:@{
-                                                @"action":@"topic_pic"
+                                                @"action":@"activity"
                                                 }
                                    constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
                                    {
@@ -357,19 +548,33 @@
                                        
                                        NSDictionary *mydic=[NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:0 error:&myerr];
                                        
-                                       
                                        NSLog(@"mydic == %@ err0 = %@",mydic,myerr);
                                        
-                                       [self dealWithUploadImageSuccessDic:mydic];
+                                       if ([mydic isKindOfClass:[NSDictionary class]]) {
+                                           
+                                           NSArray *pics = mydic[@"pics"];
+                                           
+                                           NSMutableArray *tempArr = [NSMutableArray arrayWithCapacity:pics.count];
+                                           for (NSDictionary *aDic in pics) {
+                                               
+                                               ActivityImageModel *aModel = [[ActivityImageModel alloc]initWithDictionary:aDic];
+                                               [tempArr addObject:aModel];
+                                           }
+                                           
+                                           //上传完图片处理活动内容
+                                           [weakSelf replaceContentWithSuccessImages:tempArr];
+                                       }
+                                       
                                        
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        
                                        
-                                       
+//                                       [LTools showMBProgressWithText:@"" addToView:self.view];
                                        NSLog(@"失败 : %@",error);
-                                       
-                                       
+                                       [LTools showMBProgressWithText:@"上传图片失败" addToView:self.view];
+                                       [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+
                                    }];
     
     //设置上传操作的进度

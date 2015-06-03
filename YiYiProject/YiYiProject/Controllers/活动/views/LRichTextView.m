@@ -11,6 +11,10 @@
 
 
 @implementation LRichTextView
+{
+    NSMutableArray *content_arr;//存储高度、内容
+    CGFloat _constImageWidth;//固定图片显示宽度
+}
 
 -(instancetype)initWithFrame:(CGRect)frame rootViewController:(UIViewController *)rootVc
 {
@@ -18,9 +22,11 @@
     if (self) {
         
         rootViewController = rootVc;
-        originalHeight = frame.size.height - 40;
+        originalHeight = frame.size.height;
         
-        self.backgroundColor = [UIColor whiteColor];
+        _constImageWidth = DEVICE_WIDTH - 20;//图片显示宽度
+        
+//        self.backgroundColor = [UIColor redColor];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
@@ -30,29 +36,31 @@
         [self addGestureRecognizer:tap];
         //    tap.enabled = NO;
         
-        self.titleTextField = [[UITextField alloc]initWithFrame:CGRectMake(15, 0, DEVICE_WIDTH - 20, 40)];
-        _titleTextField.font = [UIFont systemFontOfSize:18];
-        _titleTextField.attributedPlaceholder = [LTools attributedString:@"标题" keyword:@"标题" color:[UIColor lightGrayColor]];
-        [self addSubview:_titleTextField];
+//        self.titleTextField = [[UITextField alloc]initWithFrame:CGRectMake(15, 0, DEVICE_WIDTH - 20, 40)];
+//        _titleTextField.font = [UIFont systemFontOfSize:18];
+//        _titleTextField.attributedPlaceholder = [LTools attributedString:@"标题" keyword:@"标题" color:[UIColor lightGrayColor]];
+//        [self addSubview:_titleTextField];
         
-        UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, _titleTextField.bottom - 0.5, DEVICE_WIDTH, 0.5)];
-        line.backgroundColor = RGBCOLOR(223, 222, 222);
-        [self addSubview:line];
+//        UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, _titleTextField.bottom - 0.5, DEVICE_WIDTH, 0.5)];
+//        line.backgroundColor = RGBCOLOR(223, 222, 222);
+//        [self addSubview:line];
         
-        self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, _titleTextField.bottom, frame.size.width, frame.size.height) style:UITableViewStylePlain];
+        self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height) style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.backgroundColor = [UIColor whiteColor];
         _tableView.separatorStyle =  UITableViewCellSeparatorStyleNone;
         [self addSubview:_tableView];
         
+        //存放每个cell的高度、内容
+        content_arr = [NSMutableArray array];
         
-        height_arr = [NSMutableArray array];
-        
+        //默认一个文字输入框,高度为100
         NSDictionary *params = @{CELL_NEW_HEIGHT:[NSNumber numberWithFloat:ORIGINAL_HEIGHT],CELL_NEW_WIDTH:[NSNumber numberWithFloat:100]};//宽度暂定
         
-        [height_arr addObject:params];
+        [content_arr addObject:params];
         
+        // 创建一个textView实例用于计算高度
         [self createCalcuteTextView];
         
         [self createTools];
@@ -63,11 +71,16 @@
 
 #pragma mark 创建视图
 
+/**
+ *  创建工具
+ */
 - (void)createTools
 {
     toolsView = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT, DEVICE_WIDTH, 40)];
     toolsView.backgroundColor = [UIColor clearColor];
     [self addSubview:toolsView];
+    
+    //收缩键盘按钮
     
     UIButton *keyboard_button = [UIButton buttonWithType:UIButtonTypeCustom];
     [keyboard_button setImage:[UIImage imageNamed:@"fabu_shous"] forState:UIControlStateNormal];
@@ -79,33 +92,25 @@
     [keyboard_button addTarget:self action:@selector(clickToHidden:) forControlEvents:UIControlEventTouchUpInside];
 }
 
-#pragma mark 事件处理
-
-/**
- *  隐藏键盘
- */
-- (void)hiddenKeyboard
+//创建一个textView用来计算需要的高度
+- (void)createCalcuteTextView
 {
-    [self clickToHidden:nil];
+    calculate_textView = [[UITextView alloc]init];
+    calculate_textView.font = [UIFont systemFontOfSize:18];
+    [self addSubview:calculate_textView];
 }
+
+#pragma mark 事件处理
 
 - (NSArray *)content
 {
-    return height_arr;
+    return content_arr;
 }
 
 - (NSString *)editorTitle
 {
     return self.titleTextField.text;
 }
-
-
-//第一个textView成为第一响应者
-- (void)setFirstResponder
-{
-    [firstTextView becomeFirstResponder];
-}
-
 
 /**
  *  自动加一行文本编辑区域,或者 下面有文本编辑区域的 让其变为第一响应者
@@ -133,13 +138,14 @@
     }
 }
 
-- (void)createCalcuteTextView
-{
-    calculate_textView = [[UITextView alloc]init];
-    calculate_textView.font = [UIFont systemFontOfSize:18];
-    [self addSubview:calculate_textView];
-}
 
+/**
+ *  计算文字高度
+ *
+ *  @param text 文字内容
+ *
+ *  @return 返回高度
+ */
 - (CGFloat)heightForText:(NSString *)text
 {
     calculate_textView.text = text;
@@ -155,17 +161,50 @@
 
 #pragma - mark 控制 image
 
+/**
+ *  计算图片显示时自适应高度
+ *
+ *  @param aImage 需要显示的image
+ *
+ *  @return
+ */
+- (CGFloat)heightForImage:(UIImage *)aImage
+{
+    //图片无效,返回 0
+    if (!aImage) {
+        
+        return 0.f;
+    }
+    
+    CGSize imageSize = aImage.size;
+    
+    //图片宽度和高度有效
+    if (imageSize.width && imageSize.height) {
+        
+        CGFloat height = (_constImageWidth * imageSize.height) / imageSize.width;
+        
+        NSLog(@"imageHeight %f",height);
+        
+        return height;
+    }
+    
+    return 0.f;
+}
+
+/**
+ *  插入图片
+ *
+ *  @param aImage 图片对象
+ */
 - (void)addNewImage:(UIImage *)aImage
 {
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     
-    //图片先固定 200
+    [dic setObject:[NSNumber numberWithFloat:[self heightForImage:aImage]] forKey:CELL_NEW_HEIGHT];
+    [dic setObject:[NSNumber numberWithFloat:_constImageWidth] forKey:CELL_NEW_WIDTH];
+    [dic setObject:aImage forKey:CELL_CONTENT];
     
-    [dic setObject:[NSNumber numberWithFloat:ORIGINAL_HEIGHT_IMAGE] forKey:CELL_NEW_HEIGHT];
-    [dic setObject:[NSNumber numberWithFloat:ORIGINAL_WIDTH_IMAGE] forKey:CELL_NEW_WIDTH];
-    [dic setObject:aImage forKey:CELL_TEXT];
-    
-    [height_arr addObject:dic];
+    [content_arr addObject:dic];
     
     [self.tableView reloadData];
     
@@ -197,7 +236,7 @@
         
         [self addNewTextCell];
         
-        NSIndexPath *imageIndexPath = [NSIndexPath indexPathForRow:height_arr.count - 1 - 1 inSection:0];
+        NSIndexPath *imageIndexPath = [NSIndexPath indexPathForRow:content_arr.count - 1 - 1 inSection:0];
         
         [self addNewTextCellForIndexPath:imageIndexPath];
         
@@ -213,32 +252,31 @@
     //插入图片
     
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    [dic setObject:[NSNumber numberWithFloat:ORIGINAL_HEIGHT_IMAGE] forKey:CELL_NEW_HEIGHT];
-    [dic setObject:[NSNumber numberWithFloat:ORIGINAL_WIDTH_IMAGE] forKey:CELL_NEW_WIDTH];
-    [dic setObject:aImage forKey:CELL_TEXT];
+    [dic setObject:[NSNumber numberWithFloat:[self heightForImage:aImage]] forKey:CELL_NEW_HEIGHT];
+    [dic setObject:[NSNumber numberWithFloat:_constImageWidth] forKey:CELL_NEW_WIDTH];
+    [dic setObject:aImage forKey:CELL_CONTENT];
     
-    if (height_arr.count == currentIndexPath.row + 1) {
-        [height_arr addObject:dic];
+    if (content_arr.count == currentIndexPath.row + 1) {
+        [content_arr addObject:dic];
     }else
     {
-        [height_arr insertObject:dic atIndex:currentIndexPath.row + 1];
+        [content_arr insertObject:dic atIndex:currentIndexPath.row + 1];
     }
     
     //插入后面截取text
-    
-    
+
     NSMutableDictionary *dic_text = [NSMutableDictionary dictionary];
     
     [dic_text setObject:[NSNumber numberWithFloat:[self heightForText:trailText]] forKey:CELL_NEW_HEIGHT];
-    [dic_text setObject:[NSNumber numberWithFloat:ORIGINAL_WIDTH_IMAGE] forKey:CELL_NEW_WIDTH];
+    [dic_text setObject:[NSNumber numberWithFloat:_constImageWidth] forKey:CELL_NEW_WIDTH];
     
-    [dic_text setObject:trailText forKey:CELL_TEXT];
+    [dic_text setObject:trailText forKey:CELL_CONTENT];
     
-    if (height_arr.count == currentIndexPath.row + 2) {
-        [height_arr addObject:dic_text];
+    if (content_arr.count == currentIndexPath.row + 2) {
+        [content_arr addObject:dic_text];
     }else
     {
-        [height_arr insertObject:dic_text atIndex:currentIndexPath.row + 2];
+        [content_arr insertObject:dic_text atIndex:currentIndexPath.row + 2];
     }
     
     [self.tableView reloadData];
@@ -251,6 +289,9 @@
 
 #pragma - mark 控制 text
 
+/**
+ *  插入一个文本cell
+ */
 - (void)addNewTextCell
 {
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
@@ -259,9 +300,114 @@
     
     [dic setObject:[NSNumber numberWithFloat:ORIGINAL_HEIGHT] forKey:CELL_NEW_HEIGHT];
     
-    [height_arr addObject:dic];
+    [content_arr addObject:dic];
     
     [self.tableView reloadData];
+}
+
+/**
+ *  根据indexPath获取cell高度
+ *
+ *  @param indexPath
+ *
+ *  @return
+ */
+- (CGFloat)getHeightForIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat aHeight = ORIGINAL_HEIGHT;
+    
+    if (indexPath.row >= content_arr.count) {
+        
+        return aHeight;
+    }
+    
+    NSDictionary *parms = [content_arr objectAtIndex:indexPath.row];
+    
+    if (parms) {
+        aHeight = [[parms objectForKey:CELL_NEW_HEIGHT]floatValue];
+    }
+    
+    return aHeight;
+}
+
+/**
+ *  根据indexPath来更新对应的高度
+ *
+ *  @param aHeight   新的高度
+ *  @param indexPath
+ */
+- (void)updateHeight:(CGFloat)aHeight forIndexPath:(NSIndexPath*)indexPath
+{
+    if (indexPath.row >= content_arr.count) {
+        return;
+    }
+    NSDictionary *parms = [content_arr objectAtIndex:indexPath.row];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:parms];
+    
+    [dic setObject:[NSNumber numberWithFloat:aHeight] forKey:CELL_NEW_HEIGHT];
+    
+    [content_arr replaceObjectAtIndex:indexPath.row withObject:dic];
+}
+
+
+/**
+ *  根据indexPath来获取对应的文本内容
+ *
+ *  @param indexPath
+ *
+ *  @return
+ */
+- (NSString *)getTextForIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *text = @"";
+    
+    if (indexPath.row >= content_arr.count) {
+        
+        return text;
+    }
+    
+    NSDictionary *parms = [content_arr objectAtIndex:indexPath.row];
+    
+    if (parms) {
+        text = [parms objectForKey:CELL_CONTENT];
+    }
+    
+    return text;
+}
+
+/**
+ *  根据indexPath来更新内容
+ *
+ *  @param text      新的文本内容
+ *  @param indexPath
+ */
+- (void)updateText:(NSString *)text forIndexPath:(NSIndexPath*)indexPath
+{
+    NSDictionary *parms = [content_arr objectAtIndex:indexPath.row];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:parms];
+    
+    if (text.length == 0) {
+        text = @"";
+    }
+    
+    [dic setObject:text forKey:CELL_CONTENT];
+    
+    [content_arr replaceObjectAtIndex:indexPath.row withObject:dic];
+}
+
+/**
+ *  保证文字不能nil
+ *
+ *  @param text
+ *
+ *  @return
+ */
+- (NSString *)StringNoNull:(NSString *)text
+{
+    if (text == nil) {
+        return @"";
+    }
+    return text;
 }
 
 //隐藏键盘
@@ -281,78 +427,17 @@
     [self setFirstResponder];
 }
 
-//获取高度
-- (CGFloat)getHeightForIndexPath:(NSIndexPath *)indexPath
+/**
+ *  隐藏键盘
+ */
+- (void)hiddenKeyboard
 {
-    CGFloat aHeight = ORIGINAL_HEIGHT;
-    
-    if (indexPath.row >= height_arr.count) {
-        
-        return aHeight;
-    }
-    
-    NSDictionary *parms = [height_arr objectAtIndex:indexPath.row];
-    
-    if (parms) {
-        aHeight = [[parms objectForKey:CELL_NEW_HEIGHT]floatValue];
-    }
-    
-    return aHeight;
+    [self clickToHidden:nil];
 }
-//更新高度
-- (void)updateHeight:(CGFloat)aHeight forIndexPath:(NSIndexPath*)indexPath
+//第一个textView成为第一响应者
+- (void)setFirstResponder
 {
-    if (indexPath.row >= height_arr.count) {
-        return;
-    }
-    NSDictionary *parms = [height_arr objectAtIndex:indexPath.row];
-    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:parms];
-    
-    [dic setObject:[NSNumber numberWithFloat:aHeight] forKey:CELL_NEW_HEIGHT];
-    
-    [height_arr replaceObjectAtIndex:indexPath.row withObject:dic];
-}
-
-- (NSString *)StringNoNull:(NSString *)text
-{
-    if (text == nil) {
-        return @"";
-    }
-    return text;
-}
-
-//更新内容
-- (void)updateText:(NSString *)text forIndexPath:(NSIndexPath*)indexPath
-{
-    NSDictionary *parms = [height_arr objectAtIndex:indexPath.row];
-    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:parms];
-    
-    if (text.length == 0) {
-        text = @"";
-    }
-    
-    [dic setObject:text forKey:CELL_TEXT];
-    
-    [height_arr replaceObjectAtIndex:indexPath.row withObject:dic];
-}
-
-//获取内容
-- (NSString *)getTextForIndexPath:(NSIndexPath *)indexPath
-{
-    NSString *text = @"";
-    
-    if (indexPath.row >= height_arr.count) {
-        
-        return text;
-    }
-    
-    NSDictionary *parms = [height_arr objectAtIndex:indexPath.row];
-    
-    if (parms) {
-        text = [parms objectForKey:CELL_TEXT];
-    }
-    
-    return text;
+    [firstTextView becomeFirstResponder];
 }
 
 
@@ -377,13 +462,9 @@
         
     }else if (buttonIndex == 1){
         
-        NSLog(@"添加注释");
-        
-    }else if (buttonIndex == 2){
-        
         NSLog(@"删除图片");
         
-        [height_arr removeObjectAtIndex:actionSheet.selectIndexPath.row];
+        [content_arr removeObjectAtIndex:actionSheet.selectIndexPath.row];
         
         [self.tableView reloadData];
     }
@@ -414,19 +495,20 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary *parms = [height_arr objectAtIndex:indexPath.row];
+    NSDictionary *parms = [content_arr objectAtIndex:indexPath.row];
     
-    id content  = [parms objectForKey:CELL_TEXT];
+    id content  = [parms objectForKey:CELL_CONTENT];
     
     //判断是否是图片
     if ([content isKindOfClass:[UIImage class]]) {
-        return ORIGINAL_HEIGHT_IMAGE;
+        
+        CGFloat height = [[parms objectForKey:CELL_NEW_HEIGHT] floatValue];
+        
+        return height;
     }
     
     CGFloat aHeight = [self getHeightForIndexPath:indexPath];
-    
-    NSLog(@"aHeight %f",aHeight);
-    
+        
     return aHeight;
 }
 
@@ -434,7 +516,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return height_arr.count;
+    return content_arr.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -446,9 +528,9 @@
     
     __weak typeof(tableView)weakTable = tableView;
     
-    NSDictionary *parms = [height_arr objectAtIndex:indexPath.row];
+    NSDictionary *parms = [content_arr objectAtIndex:indexPath.row];
     
-    id content  = [parms objectForKey:CELL_TEXT];
+    id content  = [parms objectForKey:CELL_CONTENT];
     
     //判断是否是图片
     if ([content isKindOfClass:[UIImage class]]) {
@@ -458,7 +540,13 @@
             cell = [[LImageCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identify2];
         }
         
+//        cell.backgroundColor = [UIColor redColor];
+        
         cell.aImageView.image = (UIImage *)content;
+        
+        CGFloat height = [[parms objectForKey:CELL_NEW_HEIGHT] floatValue];
+
+        cell.aImageView.frame = CGRectMake(10, 0, _constImageWidth, height);
         
         __weak typeof(cell)weakImageCell = cell;
         
@@ -468,7 +556,7 @@
                 
                 
                 //是最后一个
-                if (indexPath.row == height_arr.count - 1) {
+                if (indexPath.row == content_arr.count - 1) {
                     
                     [self addNewTextCell];
                     
@@ -498,7 +586,7 @@
                 
             }else if(imageGestureStyle == Image_longPress)
             {
-                LPropertyActionSheet *sheet = [[LPropertyActionSheet alloc]initWithTitle:@"操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"替换图片",@"添加注释",@"删除图片", nil];
+                LPropertyActionSheet *sheet = [[LPropertyActionSheet alloc]initWithTitle:@"操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"替换图片",@"删除图片", nil];
                 
                 sheet.selectImageView = weakImageCell.aImageView;
                 sheet.selectIndexPath = indexPath;
@@ -518,7 +606,7 @@
         cell = [[LTextViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identify];
     }
     
-    //    cell.backgroundColor = [UIColor greenColor];
+//        cell.backgroundColor = [UIColor greenColor];
     //    cell.contentView.backgroundColor = [UIColor grayColor];
     
     cell.textView.text = [self getTextForIndexPath:indexPath];
@@ -583,12 +671,12 @@
                 //如果是图片则删除图片
                 if ([lastCell isKindOfClass:[LImageCell class]]) {
                     
-                    [height_arr removeObjectAtIndex:lastIndexPath.row];
+                    [content_arr removeObjectAtIndex:lastIndexPath.row];
                     
                     if (textView.text.length == 0) { //删除文字,本cell为空的话 移除此cell
                         //此时可以去掉当前cell
                         
-                        [height_arr removeLastObject];
+                        [content_arr removeLastObject];
                         
                     }
                     
@@ -616,7 +704,7 @@
                         [self updateHeight:[self heightForText:lastText] forIndexPath:lastIndexPath];
                     }
                     
-                    [height_arr removeObjectAtIndex:indexPath.row];
+                    [content_arr removeObjectAtIndex:indexPath.row];
                     
                     [weakTable reloadData];
                 }
@@ -629,7 +717,6 @@
             
             tap.enabled = YES;//开始编辑 手势启动
             
-            weakTable.top = 0;
         }
         
     }];
@@ -668,19 +755,14 @@
     
     
     //根据键盘调整 table 高度
-    self.tableView.height = keyboardRect.origin.y - 20 - 64 - toolsView.height;
+    self.tableView.height = keyboardRect.origin.y - 64 - toolsView.height;
     self.height = self.tableView.height + toolsView.height;
     
     
     
     //滑动到最后
-    NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:height_arr.count - 1 inSection:0];
-    [self.tableView scrollToRowAtIndexPath:lastIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-    
-    if (![self.titleTextField isFirstResponder]) {
-        
-        self.tableView.top = 0;
-    }
+//    NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:content_arr.count - 1 inSection:0];
+//    [self.tableView scrollToRowAtIndexPath:lastIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     
 }
 
@@ -747,7 +829,9 @@
         //将二进制数据生成UIImage
         UIImage *image = [UIImage imageWithData:data];
         
-        image = [self scaleToSizeWithImage:image size:CGSizeMake(540, ORIGINAL_HEIGHT_IMAGE)];
+//        CGSize imageSize = image.size;
+//        
+//        image = [self scaleToSizeWithImage:image size:CGSizeMake(540, ORIGINAL_HEIGHT_IMAGE)];
         
         //        [self addNewImage:image];
         
