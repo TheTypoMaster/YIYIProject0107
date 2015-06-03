@@ -87,7 +87,7 @@
         UILabel *activeLabel = [[UILabel alloc]initWithFrame:CGRectMake(nameLabel.frame.origin.x, CGRectGetMaxY(nameLabel.frame)+10, DEVICE_WIDTH - 30 , 15)];
         activeLabel.font = [UIFont systemFontOfSize:14];
         activeLabel.textColor = RGBCOLOR(114, 114, 114);
-        activeLabel.text = [dic stringValueForKey:@"activity_info"];
+        activeLabel.text = [dic stringValueForKey:@"activity_title"];
         activeLabel.numberOfLines = 4;
         [activeLabel sizeToFit];
         
@@ -102,9 +102,9 @@
         
         [jiantouImv setFrame:CGRectMake(DEVICE_WIDTH - 20, cellHeight*0.5-6, 7, 12)];
         
-        UIView *downLine = [[UIView alloc]initWithFrame:CGRectMake(15, cellHeight-0.5, DEVICE_WIDTH-15, 0.5)];
-        downLine.backgroundColor = RGBCOLOR(226, 226, 228);
-        [self.contentView addSubview:downLine];
+//        UIView *downLine = [[UIView alloc]initWithFrame:CGRectMake(15, cellHeight-0.5, DEVICE_WIDTH-15, 0.5)];
+//        downLine.backgroundColor = RGBCOLOR(226, 226, 228);
+//        [self.contentView addSubview:downLine];
         
     }else if (theType == GSEARCHTYPE_PINPAI){
         

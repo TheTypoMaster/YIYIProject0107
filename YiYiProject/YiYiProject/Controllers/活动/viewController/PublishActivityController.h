@@ -7,12 +7,15 @@
 //
 
 #import "MyViewController.h"
+@class ActivityModel;
 
 /**
  *  发布活动下一步
  */
 @interface PublishActivityController : MyViewController
 
+@property(nonatomic,strong)ActivityModel *theEditActivityModel;//上个界面传过来的需要编辑的活动model
+@property(nonatomic,assign)BOOL isChangeCover;//是否更改了封面图
 /**
  *  发布活动上一级页面传参数
  *
@@ -26,5 +29,7 @@
                startTime:(NSString *)startTime
                  endTime:(NSString *)endTime
                   shopId:(NSString *)shopId;
+
+
 
 @end

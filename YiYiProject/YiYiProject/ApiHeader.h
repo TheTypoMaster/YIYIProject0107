@@ -252,7 +252,7 @@ typedef enum {
 
 //融云 token
 
-#define RONCLOUD_GET_TOKEN @"http://www119119.alayy.com/index.php?d=api&c=chat&m=get_token&user_id=%@&name=%@&portrait_uri=%@"//获取融云 token
+#define RONCLOUD_GET_TOKEN @"http://www119.alayy.com/index.php?d=api&c=chat&m=get_token&user_id=%@&name=%@&portrait_uri=%@"//获取融云 token
 
 //登录
 #define USER_LOGIN_ACTION @"http://www119.alayy.com/index.php?d=api&c=user_api&m=login&type=%@&password=%@&thirdid=%@&nickname=%@&third_photo=%@&gender=%d&devicetoken=%@&mobile=%@&login_source=%@"
@@ -544,7 +544,7 @@ typedef enum {
 
 
 
-#define GET_MAIL_ACTIVITY_LIST @"http://www119119.alayy.com/index.php?d=api&c=mall&m=get_activities&authcode=%@&page=%d&per_page=%d"
+#define GET_MAIL_ACTIVITY_LIST @"http://www119.alayy.com/index.php?d=api&c=mall&m=get_activities&authcode=%@&page=%d&per_page=%d"
 
 //店主单品列表
 #define GET_MAIL_PRODUCT_LIST @"http://www119.alayy.com/index.php?d=api&c=products&m=getProductList&mb_id=%@&page=%d&per_page=%d&authcode=%@"
