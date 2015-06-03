@@ -10,7 +10,6 @@
 #import "MailInfoModel.h"
 #import "GmyShopHuiyuanViewController.h"
 #import "GupClothesViewController.h"
-#import "GupHuoDongViewController.h"
 #import "GmyproductsListViewController.h"
 #import "GmyActivetiesViewController.h"
 #import "GShopPhoneViewController.h"

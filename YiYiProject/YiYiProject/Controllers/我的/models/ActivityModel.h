@@ -17,7 +17,7 @@
 @property(nonatomic,retain)NSString *shop_id;
 @property(nonatomic,retain)NSString *type;
 @property(nonatomic,retain)NSString *activity_title;
-@property(nonatomic,retain)NSString *activity_info;
+@property(nonatomic,retain)NSArray *activity_info;//活动详情
 @property(nonatomic,retain)NSString *pic;
 @property(nonatomic,retain)NSString *pic_size;
 @property(nonatomic,retain)NSString *add_time;
@@ -28,5 +28,8 @@
 @property(nonatomic,retain)NSString *pic_height;
 @property(nonatomic,retain)NSString *ori_pic;//活动原图
 @property(nonatomic,retain)NSNumber *ended;//活动是否结束 0未结束 1结束
+
+@property(nonatomic,retain)NSString *cover_pic;//活动封面
+@property(nonatomic,retain)NSString *address;//活动地址
 
 @end
