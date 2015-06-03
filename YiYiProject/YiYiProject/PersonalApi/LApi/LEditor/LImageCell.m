@@ -16,10 +16,10 @@
     if (self) {
         
         //初始高度 20
-        self.aImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 0, ALL_FRAME_WIDTH - 20, ORIGINAL_HEIGHT_IMAGE)];
+        self.aImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 0, ALL_FRAME_WIDTH - 20, 0)];
         _aImageView.backgroundColor = [UIColor whiteColor];
         
-        _aImageView.contentMode = UIViewContentModeScaleToFill;
+        _aImageView.contentMode = UIViewContentModeScaleAspectFit;
         
         _aImageView.userInteractionEnabled = YES;
         

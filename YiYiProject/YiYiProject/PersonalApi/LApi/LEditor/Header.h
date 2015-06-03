@@ -35,8 +35,12 @@
 
 #define ORIGINAL_HEIGHT 38.F
 
-#define ORIGINAL_HEIGHT_IMAGE 540
+#define ORIGINAL_HEIGHT_IMAGE 540 //图片初始大小
 #define ORIGINAL_WIDTH_IMAGE 200.F
+
+//新加
+
+#define CELL_CONTENT @"CELL_CONTENT" //内容(可能是文字 也可能是 图片地址)
 
 #import "LImageCell.h"
 #import "LTextViewCell.h"
