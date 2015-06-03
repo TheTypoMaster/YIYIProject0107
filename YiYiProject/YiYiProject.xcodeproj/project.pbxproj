@@ -109,9 +109,9 @@
 		1391DC621A870673006A2E15 /* t_title@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1391DC5B1A870673006A2E15 /* t_title@2x.png */; };
 		1391DC631A870673006A2E15 /* t_xiangce@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1391DC5C1A870673006A2E15 /* t_xiangce@2x.png */; };
 		1391DC641A870673006A2E15 /* t_yichu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1391DC5D1A870673006A2E15 /* t_yichu@2x.png */; };
-		13944CF81B1EA1C400993D27 /* ActivityDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13944CF71B1EA1C400993D27 /* ActivityDetailController.m */; };
 		13944CFC1B1EA9F400993D27 /* activity_location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13944CFA1B1EA9F400993D27 /* activity_location@2x.png */; };
 		13944CFD1B1EA9F400993D27 /* activity_time@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13944CFB1B1EA9F400993D27 /* activity_time@2x.png */; };
+		13944CFF1B1EF91700993D27 /* activity_defaultCover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13944CFE1B1EF91700993D27 /* activity_defaultCover@2x.png */; };
 		139562C71A3BF42E007BB183 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 139562C61A3BF42E007BB183 /* UserInfo.m */; };
 		139562CB1A3C11EC007BB183 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 139562C91A3C11EC007BB183 /* RegisterViewController.m */; };
 		139562CC1A3C11EC007BB183 /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 139562CA1A3C11EC007BB183 /* RegisterViewController.xib */; };
@@ -379,7 +379,6 @@
 		E304794B1A6109DE00709985 /* GStorePinpaiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E304794A1A6109DE00709985 /* GStorePinpaiViewController.m */; };
 		E30522261A6E9962007BEAFD /* gaddphoto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E30522241A6E9962007BEAFD /* gaddphoto@2x.png */; };
 		E30522271A6E9962007BEAFD /* gremovephoto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E30522251A6E9962007BEAFD /* gremovephoto@2x.png */; };
-		E305222A1A6ECD3A007BEAFD /* GupHuoDongViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E30522291A6ECD3A007BEAFD /* GupHuoDongViewController.m */; };
 		E305222D1A6ED1B5007BEAFD /* GHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E305222C1A6ED1B5007BEAFD /* GHolderTextView.m */; };
 		E30893861AE0079400DA342C /* GmyshopErweimaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E30893851AE0079400DA342C /* GmyshopErweimaViewController.m */; };
 		E30893891AE007F000DA342C /* GmyShopHuiyuanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E30893881AE007F000DA342C /* GmyShopHuiyuanViewController.m */; };
@@ -700,10 +699,9 @@
 		1391DC5B1A870673006A2E15 /* t_title@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "t_title@2x.png"; sourceTree = "<group>"; };
 		1391DC5C1A870673006A2E15 /* t_xiangce@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "t_xiangce@2x.png"; sourceTree = "<group>"; };
 		1391DC5D1A870673006A2E15 /* t_yichu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "t_yichu@2x.png"; sourceTree = "<group>"; };
-		13944CF61B1EA1C400993D27 /* ActivityDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityDetailController.h; sourceTree = "<group>"; };
-		13944CF71B1EA1C400993D27 /* ActivityDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailController.m; sourceTree = "<group>"; };
 		13944CFA1B1EA9F400993D27 /* activity_location@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "activity_location@2x.png"; sourceTree = "<group>"; };
 		13944CFB1B1EA9F400993D27 /* activity_time@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "activity_time@2x.png"; sourceTree = "<group>"; };
+		13944CFE1B1EF91700993D27 /* activity_defaultCover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "activity_defaultCover@2x.png"; sourceTree = "<group>"; };
 		139562C51A3BF42E007BB183 /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
 		139562C61A3BF42E007BB183 /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
 		139562C81A3C11EC007BB183 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
@@ -1128,8 +1126,6 @@
 		E304794A1A6109DE00709985 /* GStorePinpaiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GStorePinpaiViewController.m; sourceTree = "<group>"; };
 		E30522241A6E9962007BEAFD /* gaddphoto@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gaddphoto@2x.png"; sourceTree = "<group>"; };
 		E30522251A6E9962007BEAFD /* gremovephoto@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gremovephoto@2x.png"; sourceTree = "<group>"; };
-		E30522281A6ECD3A007BEAFD /* GupHuoDongViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GupHuoDongViewController.h; sourceTree = "<group>"; };
-		E30522291A6ECD3A007BEAFD /* GupHuoDongViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GupHuoDongViewController.m; sourceTree = "<group>"; };
 		E305222B1A6ED1B5007BEAFD /* GHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHolderTextView.h; sourceTree = "<group>"; };
 		E305222C1A6ED1B5007BEAFD /* GHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHolderTextView.m; sourceTree = "<group>"; };
 		E30893841AE0079400DA342C /* GmyshopErweimaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GmyshopErweimaViewController.h; sourceTree = "<group>"; };
@@ -1916,6 +1912,7 @@
 		13944CF91B1EA9F400993D27 /* 活动 */ = {
 			isa = PBXGroup;
 			children = (
+				13944CFE1B1EF91700993D27 /* activity_defaultCover@2x.png */,
 				13944CFA1B1EA9F400993D27 /* activity_location@2x.png */,
 				13944CFB1B1EA9F400993D27 /* activity_time@2x.png */,
 			);
@@ -2215,8 +2212,6 @@
 				139A051F1A66ADB100A8EB49 /* MailMessageViewController.m */,
 				137B6FE11A6B682E007035DE /* MessageDetailController.h */,
 				137B6FE21A6B682E007035DE /* MessageDetailController.m */,
-				13944CF61B1EA1C400993D27 /* ActivityDetailController.h */,
-				13944CF71B1EA1C400993D27 /* ActivityDetailController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -3116,8 +3111,6 @@
 				E35EF1221A6A756900B493A9 /* GchooseFloorPinpaiViewController.m */,
 				E35EF15D1A6B947800B493A9 /* GupClothesViewController.h */,
 				E35EF15E1A6B947800B493A9 /* GupClothesViewController.m */,
-				E30522281A6ECD3A007BEAFD /* GupHuoDongViewController.h */,
-				E30522291A6ECD3A007BEAFD /* GupHuoDongViewController.m */,
 				E3AFFDC31B1D87A600A6FB42 /* GupActivityViewController.h */,
 				E3AFFDC41B1D87A600A6FB42 /* GupActivityViewController.m */,
 				E37A2E2C1A7349C300145608 /* GchooseAdressViewController.h */,
@@ -3679,6 +3672,7 @@
 				E36DAF121AD40AD300C7FEA4 /* navigationBarBackground@2x.png in Resources */,
 				19F7B43B1A67FFA600087BCB /* messages_left_bubble@2x.png in Resources */,
 				1391DC631A870673006A2E15 /* t_xiangce@2x.png in Resources */,
+				13944CFF1B1EF91700993D27 /* activity_defaultCover@2x.png in Resources */,
 				13A389B91A38974F00ABBACB /* blueup1@2x.png in Resources */,
 				E3C923E71AE0F7F9005C2BE1 /* gttailink_have@2x.png in Resources */,
 				19F7B4361A67FFA600087BCB /* icon_rightArrow_selected@2x.png in Resources */,
@@ -3772,7 +3766,6 @@
 				56726C491A55A9A90085D77C /* TopicSubCommentsModel.m in Sources */,
 				DFC7812D1A615FF700776C62 /* MyMatchDivisionDetailViewController.m in Sources */,
 				E37EB56A1AC00BEC009F5797 /* GmPrepareNetData.m in Sources */,
-				13944CF81B1EA1C400993D27 /* ActivityDetailController.m in Sources */,
 				DFB196EA1A6D3D900006633F /* UIImage+ImageEffects.m in Sources */,
 				E37A2E2E1A7349C300145608 /* GchooseAdressViewController.m in Sources */,
 				137C39131A714ABA00CE3971 /* MailInfoModel.m in Sources */,
@@ -3988,7 +3981,6 @@
 				133B17791A750988005B8B3F /* MJPhotoToolbar.m in Sources */,
 				E3996EE31A5E1DBA00673147 /* GTableViewCell.m in Sources */,
 				19F7B44C1A67FFA600087BCB /* UMFeedbackTableViewCellRight.m in Sources */,
-				E305222A1A6ECD3A007BEAFD /* GupHuoDongViewController.m in Sources */,
 				13D03D461AEDD60F0078AA9E /* MyseetingTableViewCell.m in Sources */,
 				E38E2D351ACD2726002C63EF /* GTTPublishViewController.m in Sources */,
 				13A3897E1A3878FE00ABBACB /* MyViewController.m in Sources */,

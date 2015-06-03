@@ -7,14 +7,14 @@
 //
 
 #import "GmyActivetiesViewController.h"
-#import "GrefreshTableView.h"
+#import "RefreshTableView.h"
 #import "GEditActivityTableViewCell.h"
 #import "MessageDetailController.h"
-#import "GupHuoDongViewController.h"
+#import "GupActivityViewController.h"
 
-@interface GmyActivetiesViewController ()<GrefreshDelegate,UITableViewDataSource>
+@interface GmyActivetiesViewController ()<RefreshDelegate,UITableViewDataSource>
 {
-    GrefreshTableView *_tableView;
+    RefreshTableView *_tableView;
     int _page;//第几页
     NSArray *_dataArray;//数据源
 }
@@ -45,21 +45,19 @@
 }
 
 -(void)creatTableView{
-    _tableView = [[GrefreshTableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT-64)style:UITableViewStylePlain];
-    _tableView.GrefreshDelegate = self;
+    _tableView = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT-64)];
+    _tableView.refreshDelegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     [_tableView showRefreshHeader:YES];
 }
 
-
-
 //请求网络数据
 -(void)prepareNetData{
     NSString *key = [GMAPI getAuthkey];
-    NSString *url = [NSString stringWithFormat:GET_MAIL_ACTIVITY_LIST,key];
+    NSString *url = [NSString stringWithFormat:GET_MAIL_ACTIVITY_LIST,key,_tableView.pageNum,L_PAGE_SIZE];
     
-    GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:NO postData:nil];
+    LTools *ccc = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         if ([result isKindOfClass:[NSDictionary class]]) {
@@ -70,11 +68,12 @@
                 [arr addObject:aModel];
             }
             
-            [self reloadData:arr isReload:YES];
-            
+//            [self reloadData:arr isReload:YES];
+            [_tableView reloadData:arr pageSize:L_PAGE_SIZE];
         }
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
         if (_tableView.isReloadData) {
             _page --;
             [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
@@ -132,7 +131,7 @@
 {
     NSLog(@"%s",__FUNCTION__);
     //跳转活动详情页
-    ActivityModel *aModel = _dataArray[indexPath.row];
+    ActivityModel *aModel = _tableView.dataArray[indexPath.row];
     MessageDetailController *detail = [[MessageDetailController alloc]init];
     detail.msg_id = aModel.id;
     detail.isActivity = YES;
@@ -140,13 +139,11 @@
     detail.shopImageUrl = self.mallInfo.logo;
     [self.navigationController pushViewController:detail animated:YES];
     
-    
-    
 }
 
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
 {
-    return 90;
+    return 70;
 }
 
 
@@ -162,7 +159,7 @@
     for (UIView *view in cell.contentView.subviews) {
         [view removeFromSuperview];
     }
-    ActivityModel *amodel = _dataArray[indexPath.row];
+    ActivityModel *amodel = _tableView.dataArray[indexPath.row];
     
     [cell loadCustomViewWithData:amodel indexpath:indexPath];
     
@@ -172,7 +169,7 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return _dataArray.count;
+    return _tableView.dataArray.count;
 }
 
 
@@ -180,11 +177,11 @@
 
 -(void)editBtnClickedWithTag:(NSInteger)theTag{
     
-    ActivityModel *amodel = _dataArray[theTag-10];
-    GupHuoDongViewController *ccc = [[GupHuoDongViewController alloc]init];
+    ActivityModel *amodel = _tableView.dataArray[theTag-10];
+    GupActivityViewController *ccc = [[GupActivityViewController alloc]init];
     ccc.userInfo = self.userInfo;
     ccc.mallInfo = self.mallInfo;
-    ccc.thetype = GUPHUODONGTYPE_EDIT;
+    ccc.thetype = GUPACTIVITYTYPE_EDIT;
     ccc.theEditActivity = amodel;
     [self.navigationController pushViewController:ccc animated:YES];
 }

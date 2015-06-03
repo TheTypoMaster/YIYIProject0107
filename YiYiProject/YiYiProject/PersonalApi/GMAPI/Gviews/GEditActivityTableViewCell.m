@@ -28,21 +28,24 @@
 
 -(void)loadCustomViewWithData:(ActivityModel*)aModel indexpath:(NSIndexPath*)theIndexPath{
     //图片
-    UIImageView *picImv = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 50, 70)];
-    [picImv sd_setImageWithURL:[NSURL URLWithString:aModel.pic] placeholderImage:[UIImage imageNamed:@"gzanwupeitu.png"]];
+    UIImageView *picImv = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 80, 50)];
+    [picImv sd_setImageWithURL:[NSURL URLWithString:aModel.cover_pic] placeholderImage:[UIImage imageNamed:@"activity_defaultCover"]];
     [self.contentView addSubview:picImv];
     
     //标题
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(picImv.frame)+5, picImv.frame.origin.y, DEVICE_WIDTH-65-65, picImv.frame.size.height*0.5)];
+    CGFloat left = picImv.right + 5;
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(left, picImv.frame.origin.y, DEVICE_WIDTH - left - 65, picImv.frame.size.height*0.5)];
     titleLabel.font = [UIFont systemFontOfSize:14];
     titleLabel.text = aModel.activity_title;
     [self.contentView addSubview:titleLabel];
     
     //附加信息
     
+    NSString *timeString = [NSString stringWithFormat:@"活动时间:%@ - %@",[LTools timeString:aModel.start_time withFormat:@"YYYY.MM.dd"],[LTools timeString:aModel.end_time withFormat:@"YYYY.MM.dd"]];
+    
     UILabel *detailLabel = [[UILabel alloc]initWithFrame:CGRectMake(titleLabel.frame.origin.x, CGRectGetMaxY(titleLabel.frame), titleLabel.frame.size.width, titleLabel.frame.size.height)];
-    detailLabel.text = aModel.activity_info;
-    detailLabel.font = [UIFont systemFontOfSize:14];
+    detailLabel.text = timeString;
+    detailLabel.font = [UIFont systemFontOfSize:12];
     detailLabel.textColor = [UIColor grayColor];
     detailLabel.numberOfLines = 2;
     [self.contentView addSubview:detailLabel];
@@ -61,6 +64,8 @@
     [editBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     editBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [self.contentView addSubview:editBtn];
+    
+    editBtn.center = CGPointMake(editBtn.centerX, picImv.center.y);
 }
 
 

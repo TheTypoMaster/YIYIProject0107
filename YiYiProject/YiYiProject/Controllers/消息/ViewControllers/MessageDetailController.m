@@ -52,8 +52,11 @@
     _table.delegate = self;
     _table.dataSource = self;
     [self.view addSubview:_table];
-    _table.backgroundColor = [UIColor colorWithHexString:@"f2f2f2"];
+    _table.backgroundColor = [UIColor whiteColor];
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 20)];
+    _table.tableFooterView = footer;
     
     [self getMessageInfo];
 }
@@ -85,14 +88,15 @@
         
         imageHeight = (imageWidth * 10) / 16;
         
-        UIImageView *coverImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, imageWidth, imageHeight)];
+        UIImageView *coverImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 0, imageWidth, imageHeight)];
         [coverImageView sd_setImageWithURL:[NSURL URLWithString:aModel.cover_pic] placeholderImage:DEFAULT_BANNER_IMAGE];
         [head addSubview:coverImageView];
     }
-    CGFloat textHeight = [LTools heightForText:aModel.activity_title width:imageWidth font:15];
+    CGFloat textHeight = [LTools heightForText:aModel.activity_title width:imageWidth Boldfont:15];
     UILabel *titleLabel = [LTools createLabelFrame:CGRectMake(10, imageHeight + 10, imageWidth, textHeight) title:aModel.activity_title font:15 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"ef3c42"]];
     titleLabel.lineBreakMode = NSLineBreakByCharWrapping;
     titleLabel.numberOfLines = 0;
+    titleLabel.font = [UIFont boldSystemFontOfSize:15];
     [head addSubview:titleLabel];
     
     //时间
@@ -118,6 +122,10 @@
     
     head.frame = CGRectMake(0, 0, DEVICE_WIDTH, addressIcon.bottom + 10);
     
+    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, head.height - 0.5f, DEVICE_WIDTH, 0.5f)];
+    line.backgroundColor = [UIColor colorWithHexString:@"e4e4e4"];
+    [head addSubview:line];
+    
     return head;
 }
 
@@ -132,7 +140,7 @@
     
     if (self.isActivity) {
         
-        _msg_id = @"189";
+//        _msg_id = @"198";
         url = [NSString stringWithFormat:GET_MAIL_ACTIVITY_DETAIL,self.msg_id];
     }
     
@@ -251,11 +259,18 @@
                 cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifyText];
             }
             NSString *content = info[@"content"];
+            
+            NSMutableString *temp = [NSMutableString stringWithString:content];
+            
+            [temp replaceOccurrencesOfString:@"(null)" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, temp.length)];;
+            
+            content = temp;
+            
             cell.textLabel.text = content;
             cell.textLabel.lineBreakMode = NSLineBreakByCharWrapping;
             cell.textLabel.font = [UIFont systemFontOfSize:14];
             cell.textLabel.numberOfLines = 0;
-//            cell.backgroundColor = [UIColor orangeColor];
+            [cell.textLabel setTextColor:[UIColor colorWithHexString:@"5a5a5a"]];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
             

@@ -61,8 +61,6 @@
     [self creatCustomView];
     [self creatDatePickerChooseView];
 
-    
-    
 }
 
 

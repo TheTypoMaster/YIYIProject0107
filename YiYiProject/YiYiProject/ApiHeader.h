@@ -541,7 +541,7 @@ typedef enum {
 #define MESSAGE_GET_DETAIL @"http://www119.alayy.com/index.php?d=api&c=msg&m=get_msg_info&msg_id=%@&authcode=%@"
 
 //店主活动列表
-#define GET_MAIL_ACTIVITY_LIST @"http://www119.alayy.com/index.php?d=api&c=mall&m=get_activities&authcode=%@"
+#define GET_MAIL_ACTIVITY_LIST @"http://www119.alayy.com/index.php?d=api&c=mall&m=get_activities&authcode=%@&page=%d&per_page=%d"
 //店主单品列表
 #define GET_MAIL_PRODUCT_LIST @"http://www119.alayy.com/index.php?d=api&c=products&m=getProductList&mb_id=%@&page=%d&per_page=%d&authcode=%@"
 
