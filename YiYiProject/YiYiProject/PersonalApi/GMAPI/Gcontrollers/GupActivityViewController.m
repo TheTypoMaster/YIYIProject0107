@@ -248,7 +248,7 @@
 
 //删除图片
 -(void)removeSelf{
-    [_showPicBtn setBackgroundImage:[UIImage imageNamed:@"gremovephoto.png"] forState:UIControlStateNormal];
+    [_showPicBtn setBackgroundImage:nil forState:UIControlStateNormal];
     _showImage = nil;
     
 }
