@@ -120,9 +120,9 @@
     [head addSubview:addressLabel];
     
     
-    head.frame = CGRectMake(0, 0, DEVICE_WIDTH, addressIcon.bottom + 10);
+    head.frame = CGRectMake(0, 0, DEVICE_WIDTH, addressIcon.bottom + 10 + 10);
     
-    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, head.height - 0.5f, DEVICE_WIDTH, 0.5f)];
+    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, head.height - 0.5f - 10, DEVICE_WIDTH, 0.5f)];
     line.backgroundColor = [UIColor colorWithHexString:@"e4e4e4"];
     [head addSubview:line];
     
