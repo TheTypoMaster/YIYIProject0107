@@ -31,6 +31,8 @@
     UIDatePicker *_datePicker;//时间选择器
     
     
+    BOOL _isChangeImg;//是否更改封面图
+    
 }
 @end
 
@@ -60,9 +62,6 @@
     
     [self creatCustomView];
     [self creatDatePickerChooseView];
-    
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(leftButtonTap:) name:@"back" object:nil];
-
 }
 
 
@@ -126,6 +125,12 @@
         contentTf.tag = 200;
         contentTf.font = [UIFont systemFontOfSize:16];
         [backInView addSubview:contentTf];
+        
+        if (self.thetype == GUPACTIVITYTYPE_EDIT) {
+            contentTf.text = [GMAPI timechangeAll:self.theEditActivity.activity_title];
+        }
+        
+        
     }else if (indexPath.row == 1) {//封面图
         UIButton *jiahao = [UIButton buttonWithType:UIButtonTypeCustom];
         [jiahao setTitle:@"上传" forState:UIControlStateNormal];
@@ -142,6 +147,12 @@
         [_showPicBtn setFrame:CGRectMake(CGRectGetMaxX(jiahao.frame)+20, 0, 160, 100)];
         [_showPicBtn addTarget:self action:@selector(removeSelf) forControlEvents:UIControlEventTouchUpInside];
         [cell.contentView addSubview:_showPicBtn];
+        if (self.thetype == GUPACTIVITYTYPE_EDIT) {
+            UIImageView *imv = [[UIImageView alloc]init];
+            [imv sd_setImageWithURL:[NSURL URLWithString:self.theEditActivity.cover_pic] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                [_showPicBtn setImage:image forState:UIControlStateNormal];
+            }];
+        }
         
         
     }else if (indexPath.row == 2){
@@ -155,6 +166,11 @@
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(chooseStartTime:)];
         [_startTime addGestureRecognizer:tap];
         
+        if (self.thetype == GUPACTIVITYTYPE_EDIT) {
+            _startTime.text = [GMAPI timechangeAll:self.theEditActivity.start_time];
+        }
+        
+        
     }else if (indexPath.row == 3){
         //结束时间
         _endTime = [[UILabel alloc]initWithFrame:CGRectMake(20, CGRectGetMaxY(titleLabel.frame)+14, DEVICE_WIDTH-40, 32)];;
@@ -165,10 +181,16 @@
         [cell.contentView addSubview:_endTime];
         UITapGestureRecognizer *tapc = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(chooseEndTime:)];
         [_endTime addGestureRecognizer:tapc];
+        
+        if (self.thetype == GUPACTIVITYTYPE_EDIT) {
+            _endTime.text = [GMAPI timechangeAll:self.theEditActivity.end_time];
+        }
+        
     }
     
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     
     return cell;
     
@@ -222,6 +244,12 @@
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_tableView];
+    
+    
+    
+    if (self.thetype == GUPACTIVITYTYPE_EDIT) {
+        [self setActivityInfoWithModel:self.theEditActivity];
+    }
 }
 
 
@@ -231,6 +259,10 @@
     PublishActivityController *ccc = [[PublishActivityController alloc]init];
     [ccc setActivityTitle:tf.text coverImage:_showImage startTime:_startTime.text endTime:_endTime.text shopId:self.mallInfo.id];
     ccc.shopViewController = self.shopViewController;
+    ccc.isChangeCover = _isChangeImg;
+    if (self.thetype == GUPACTIVITYTYPE_EDIT) {
+        ccc.theEditActivityModel = self.theEditActivity;
+    }
     ccc.lastPageNavigationHidden = NO;
     [self.navigationController pushViewController:ccc animated:YES];
 }
@@ -329,6 +361,23 @@
 }
 
 
+//编辑活动填充数据
+-(void)setActivityInfoWithModel:(ActivityModel*)theModel{
+    
+    
+    //活动标题
+    UITextField *tf = (UITextField*)[self.view viewWithTag:200];
+    tf.text = theModel.activity_title;
+    //活动时间
+    _startTime.text = [GMAPI timechangeAll:theModel.start_time];
+    _endTime.text = [GMAPI timechangeAll:theModel.end_time];
+    UIImageView *imv = [[UIImageView alloc]init];
+    [imv sd_setImageWithURL:[NSURL URLWithString:theModel.cover_pic] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        [_showPicBtn setImage:image forState:UIControlStateNormal];
+    }];
+    
+    
+}
 
 
 #pragma mark- 缩放图片
@@ -399,10 +448,10 @@
     
     
     _showImage = cropImage;
+    if (self.thetype == GUPACTIVITYTYPE_EDIT) {
+        _isChangeImg = YES;
+    }
     _showImageData = UIImageJPEGRepresentation(_showImage, 1);
-    
-    
-    
     
     [_showPicBtn setBackgroundImage:cropImage forState:UIControlStateNormal];
     

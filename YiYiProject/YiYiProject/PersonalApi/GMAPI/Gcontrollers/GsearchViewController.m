@@ -493,7 +493,7 @@
         height = 50;
     }else if (tableView == _tableView_Shop){//商铺
         NSDictionary *dic = _tableView_Shop.dataArray[indexPath.row];
-        NSString *activityStr = [dic stringValueForKey:@"activity_info"];
+        NSString *activityStr = [dic stringValueForKey:@"activity_title"];
         if (activityStr.length>0) {
             height = 69;
         }else{
