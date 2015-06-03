@@ -6,6 +6,10 @@
 //  Copyright (c) 2015年 lcw. All rights reserved.
 //
 
+
+
+//发布活动第一步
+
 #import "MyViewController.h"
 #import "MailInfoModel.h"
 #import "UserInfo.h"
