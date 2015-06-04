@@ -52,7 +52,7 @@
     _table.delegate = self;
     _table.dataSource = self;
     [self.view addSubview:_table];
-    _table.backgroundColor = [UIColor whiteColor];
+    _table.backgroundColor = self.isActivity ? [UIColor whiteColor] : [UIColor colorWithHexString:@"f2f2f3"];
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 20)];
@@ -89,9 +89,13 @@
         imageHeight = (imageWidth * 10) / 16;
         
         UIImageView *coverImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 0, imageWidth, imageHeight)];
-        [coverImageView sd_setImageWithURL:[NSURL URLWithString:aModel.cover_pic] placeholderImage:DEFAULT_BANNER_IMAGE];
+        [coverImageView sd_setImageWithURL:[NSURL URLWithString:aModel.cover_pic] placeholderImage:nil];
         [head addSubview:coverImageView];
+        coverImageView.backgroundColor = [UIColor lightGrayColor];
+        
+        [coverImageView setImageWithURL:[NSURL URLWithString:aModel.cover_pic] placeHolderText:@"加载失败..." backgroundColor:[UIColor lightGrayColor] holderTextColor:[UIColor whiteColor]];
     }
+    
     CGFloat textHeight = [LTools heightForText:aModel.activity_title width:imageWidth Boldfont:15];
     UILabel *titleLabel = [LTools createLabelFrame:CGRectMake(10, imageHeight + 10, imageWidth, textHeight) title:aModel.activity_title font:15 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"ef3c42"]];
     titleLabel.lineBreakMode = NSLineBreakByCharWrapping;
@@ -146,29 +150,40 @@
     
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
-        NSLog(@"");
-        
         
         if ([LTools isDictinary:result]) {
             
             if (self.isActivity) {
                 
                 detail_model = [[ActivityModel alloc]initWithDictionary:result];
+                
+                _table.tableHeaderView = [self activityTableViewHeaderWithModel:detail_model];
+
             }else
             {
                 detail_model = [[MessageModel alloc]initWithDictionary:result];
 
             }
             
-            _table.tableHeaderView = [self activityTableViewHeaderWithModel:detail_model];
-            
             [_table reloadData];
         }
     
         
-    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+    } failBlock:^(NSDictionary *result, NSError *erro) {
         
-        NSLog(@"failDic %@",failDic);
+        NSLog(@"failDic %@",result);
+        
+        int errcode = [result[RESULT_CODE]intValue];
+        if (errcode == 2003) {
+            
+            //活动不存在
+            
+            [LTools showMBProgressWithText:result[RESULT_INFO] addToView:self.view];
+            
+            [self performSelector:@selector(leftButtonTap:) withObject:nil afterDelay:1.f];
+            
+            return ;
+        }
         
     }];
 }
@@ -195,7 +210,7 @@
         
         return 100.f;
     }
-    return [MailMessageCell heightForModel:detail_model cellType:icon_Yes seeAll:NO];
+    return [MailMessageCell heightForModel:detail_model seeAll:NO];
 }
 
 #pragma mark - UITableDelegate
@@ -226,7 +241,7 @@
 
     }
     
-    return [MailMessageCell heightForModel:detail_model cellType:icon_Yes seeAll:NO];
+    return [MailMessageCell heightForModel:detail_model seeAll:NO];
 }
 
 #pragma mark - UITableViewDataSource
@@ -295,9 +310,13 @@
             height = [LTools heightForImageHeight:height/2.f imageWidth:width/2.f originalWidth:DEVICE_WIDTH - 20];
 
             UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 0, DEVICE_WIDTH - 20, height)];
+            imageView.backgroundColor = [UIColor lightGrayColor];
             [cell.contentView addSubview:imageView];
             
-            [imageView sd_setImageWithURL:[NSURL URLWithString:content] placeholderImage:DEFAULT_BANNER_IMAGE];
+//            [imageView sd_setImageWithURL:[NSURL URLWithString:content] placeholderImage:[UIImage imageNamed:@"activity_defaultCover"]];
+            
+            [imageView setImageWithURL:[NSURL URLWithString:content] placeHolderText:@"加载失败..." backgroundColor:[UIColor lightGrayColor] holderTextColor:[UIColor whiteColor]];
+            
             return cell;
         }
     }
@@ -306,7 +325,7 @@
     static NSString *identify = @"MailMessageCell";
     MailMessageCell *cell = (MailMessageCell *)[LTools cellForIdentify:identify cellName:identify forTable:tableView];
     
-    [cell setCellWithModel:detail_model cellType:icon_Yes seeAll:NO timeType:Time_AddTime];
+    [cell setCellWithModel:detail_model seeAll:NO timeType:Time_AddTime];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;

@@ -563,20 +563,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    static NSString *identify = @"TTaiBigPhotoCell";
-//    
-//    TTaiBigPhotoCell *cell = (TTaiBigPhotoCell *)[LTools cellForIdentify:identify cellName:identify forTable:tableView];
-//    
-//    [cell setCellWithModel:[_table.dataArray objectAtIndex:indexPath.row]];
-//    cell.zanButton.tag = 100 + indexPath.row;
-//    [cell.zanButton addTarget:self action:@selector(zanTTaiDetail:) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    //是否开启 新版本 模式
-//    [cell.bigImageView.tapGesture addTarget:self action:@selector(tapImage:)];
-//
-////    cell.bigImageView.userInteractionEnabled = NO;
-//    
-//    return cell;
     
     static NSString *identify = @"TTaiBigPhotoCell2";
     

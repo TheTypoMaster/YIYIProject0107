@@ -97,6 +97,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                 </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <connections>
@@ -111,7 +112,7 @@
                 <outlet property="timeLabel" destination="8VJ-gK-qwV" id="QnR-iG-hWo"/>
                 <outlet property="userView" destination="HDe-aP-eJK" id="ixk-Fu-zdj"/>
             </connections>
-            <point key="canvasLocation" x="-2015" y="421.5"/>
+            <point key="canvasLocation" x="-2131" y="419.5"/>
         </tableViewCell>
     </objects>
     <resources>

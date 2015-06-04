@@ -31,4 +31,22 @@
  */
 - (void)addRoundCorner;
 
+/**
+ *  加默认文字
+ *
+ *  @param placeHolder 默认文字
+ */
+//- (void)addPlaceHolder:(NSString *)placeHolder
+//       holderTextColor:(UIColor *)holderTextColor;
+
+/**
+ *  加默认文字
+ *
+ *  @param placeHolder 默认文字
+ */
+- (void)setImageWithURL:(NSURL *)imageURL
+        placeHolderText:(NSString *)placeHolderText
+        backgroundColor:(UIColor *)backColor
+        holderTextColor:(UIColor *)holderTextColor;
+
 @end

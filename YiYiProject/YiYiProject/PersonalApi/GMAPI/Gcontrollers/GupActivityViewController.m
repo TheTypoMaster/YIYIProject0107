@@ -256,6 +256,13 @@
 //跳转下一步
 -(void)gotoTheNextVc{
     UITextField *tf = (UITextField*)[self.view viewWithTag:200];
+    
+    if (tf.text.length > 0 && tf.text.length < 5) {
+        
+        [LTools showMBProgressWithText:@"活动标题不少于5个字" addToView:self.view];
+        return;
+    }
+    
     PublishActivityController *ccc = [[PublishActivityController alloc]init];
     [ccc setActivityTitle:tf.text coverImage:_showImage startTime:_startTime.text endTime:_endTime.text shopId:self.mallInfo.id];
     ccc.shopViewController = self.shopViewController;

@@ -445,7 +445,7 @@
                                            //开始拼接表单
                                            //获取图片的二进制形式
                                            
-                                           NSData * data= UIImageJPEGRepresentation(_activityCoverImage, 1.0);
+                                           NSData * data= UIImageJPEGRepresentation(_activityCoverImage, 0.5);
                                            if (data) {
                                                NSLog(@"%ld",(unsigned long)data.length);
                                                
@@ -484,6 +484,7 @@
                                            //发布成功返回店铺页面
                                            if (errorCode == 0) {
                                                
+                                               [LTools showMBProgressWithText:erroInfo addToView:weakSelf.view];
                                                [weakSelf performSelector:@selector(backToShopViewController) withObject:nil afterDelay:1.f];
                                            }
                                            

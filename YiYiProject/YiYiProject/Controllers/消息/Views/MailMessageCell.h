@@ -46,12 +46,9 @@ typedef enum {
  *  @param timeType 显示时间类型 开始和结束 发布时间
  */
 - (void)setCellWithModel:(id)aModel
-                cellType:(Cell_Type)aType
                   seeAll:(BOOL)seeAll
                 timeType:(TimeType)timeType;
 
-//- (void)setCellWithModel:(id)aModel cellType:(Cell_Type)aType seeAll:(BOOL)seeAll;
-
-+ (CGFloat)heightForModel:(id)aModel cellType:(Cell_Type)aType seeAll:(BOOL)seeAll;
++ (CGFloat)heightForModel:(id)aModel seeAll:(BOOL)seeAll;
 
 @end

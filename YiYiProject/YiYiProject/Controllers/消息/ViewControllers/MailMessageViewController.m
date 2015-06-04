@@ -138,10 +138,6 @@
         if (aType == MessageType_concernUser || aType == MessageType_concernShop) {
             //跳转至粉丝
             
-//            [MiddleTools pushToUserListWithObjectId:aModel.to_uid listType:User_MyFansList forViewController:self lastNavigationHidden:NO updateParmsBlock:^(NSDictionary *params) {
-//                
-//            }];
-            
             [MiddleTools pushToPersonalId:aModel.from_uid forViewController:self lastNavigationHidden:NO updateParmsBlock:nil];
             
             return;
@@ -165,7 +161,11 @@
     if (self.aType == Message_List_Shop) {
         
         NSLog(@"amodel.type:%@",aModel.type);
-        if ([aModel.type intValue] == 11) {//修改活动
+        
+        int aType = [aModel.type intValue];
+        
+        if (aType == MessageType_promotionBrand
+             || aType == MessageType_promotionMarket || aType == MessageType_modifyActivity) { //活动
             NSString *activityId = aModel.theme_id;
             MessageDetailController *detail = [[MessageDetailController alloc]init];
             detail.isActivity = YES;
@@ -175,10 +175,14 @@
         }
     }
     
-    NSLog(@"详情");
-    MessageDetailController *detail = [[MessageDetailController alloc]init];
-    detail.msg_id = aModel.msg_id;
-    [self.navigationController pushViewController:detail animated:YES];
+    if (self.aType == Message_List_Yy) {
+        
+        NSLog(@"详情");
+        MessageDetailController *detail = [[MessageDetailController alloc]init];
+        detail.msg_id = aModel.msg_id;
+        [self.navigationController pushViewController:detail animated:YES];
+        
+    }
     
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
@@ -190,7 +194,7 @@
         return 65;
     }
     
-    return [MailMessageCell heightForModel:aModel cellType:icon_Yes seeAll:YES];
+    return [MailMessageCell heightForModel:aModel seeAll:YES];
 }
 
 #pragma mark - UITableViewDataSource
@@ -222,11 +226,13 @@
     
     if (self.aType == Message_List_Yy) {
         
-        [cell setCellWithModel:aModel cellType:icon_Yes seeAll:YES timeType:Time_AddTime];
+        [cell setCellWithModel:aModel seeAll:YES timeType:Time_AddTime];
 
     }else if (self.aType == Message_List_Shop){
         
-        [cell setCellWithModel:aModel cellType:icon_Yes seeAll:YES timeType:Time_StartAndEnd];
+        [cell setCellWithModel:aModel seeAll:YES timeType:Time_StartAndEnd];
+        
+//        cell.contentView.backgroundColor = indexPath.row % 2 ? [UIColor redColor] : [UIColor orangeColor];
     }
     
     

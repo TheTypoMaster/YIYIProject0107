@@ -213,6 +213,7 @@ typedef enum {
     
     MessageType_concernUser = 2,//关注用户消息(动态消息)
     MessageType_concernShop = 12,//关注商家通知消息(动态消息)
+    
     MessageType_replyTopic = 3,//回复主题(动态消息)
     MessageType_replyTopicReply = 4,//回复主题的回复(动态消息)
     MessageType_replyTPlat = 5,//评论t台(动态消息)
@@ -220,9 +221,11 @@ typedef enum {
     
     MessageType_promotionBrand = 7,//店铺促销(商家消息)
     MessageType_promotionMarket = 8,//商场促销(商家消息)
+    MessageType_modifyActivity = 11,//店铺活动修改(商家消息)
     
     MessageType_applyShopSuccess = 9,//申请店铺成功(衣加衣团队消息)
     MessageType_applyShopFail = 10,//申请店铺失败(衣加衣团队消息)
+    
     
 }MessageType;
 
