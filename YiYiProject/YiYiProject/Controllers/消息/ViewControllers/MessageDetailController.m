@@ -11,7 +11,11 @@
 
 #import "ActivityModel.h"
 
-@interface MessageDetailController ()<UITableViewDataSource,UITableViewDelegate>
+#import "OHAttributedLabel.h"
+#import "OHLableHelper.h"
+#import "GLeadBuyMapViewController.h"
+
+@interface MessageDetailController ()<UITableViewDataSource,UITableViewDelegate,OHAttributedLabelDelegate>
 {
     UITableView *_table;
     
@@ -120,9 +124,22 @@
     
     NSString *addressString = [NSString stringWithFormat:@"活动地点:%@",aModel.address];
     left = addressIcon.right + 5;
-    UILabel *addressLabel = [LTools createLabelFrame:CGRectMake(left, addressIcon.top, imageWidth - left, 13) title:addressString font:13 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"b9b9b9"]];
-    [head addSubview:addressLabel];
+//    UILabel *addressLabel = [LTools createLabelFrame:CGRectMake(left, addressIcon.top, imageWidth - left, 13) title:addressString font:13 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"b9b9b9"]];
+//    [head addSubview:addressLabel];
     
+    
+    OHAttributedLabel * label = [[OHAttributedLabel alloc] initWithFrame:CGRectMake(left, addressIcon.top, imageWidth - left, 13)];
+    label.userInteractionEnabled = YES;
+    label.font = [UIFont systemFontOfSize:12];
+    [head addSubview:label];
+    [OHLableHelper creatAttributedText:addressString Label:label OHDelegate:self WithWidht:14 WithHeight:14 WithLineBreak:NO];
+    NSRange range = [addressString rangeOfString:aModel.address];
+    label.underlineLinks = NO;
+    [label addCustomLink:[NSURL URLWithString:@"坐标"] inRange:range];
+    [label setLinkColor:RGBCOLOR(87,106,154)];
+    
+    label.textColor = [UIColor colorWithHexString:@"b9b9b9"];
+
     
     head.frame = CGRectMake(0, 0, DEVICE_WIDTH, addressIcon.bottom + 10 + 10);
     
@@ -186,6 +203,28 @@
         }
         
     }];
+}
+
+#pragma mark - 代理
+
+#pragma mark - OHAttributedLabelDelegate
+///点击用户名跳转到个人信息界面
+-(BOOL)attributedLabel:(OHAttributedLabel*)attributedLabel shouldFollowLink:(NSTextCheckingResult*)linkInfo
+{
+//    NSString * uid = [linkInfo.URL absoluteString];
+    
+    //跳转至地图
+    
+    GLeadBuyMapViewController *cc = [[GLeadBuyMapViewController alloc]init];
+    cc.theType = LEADYOUTYPE_STORE;
+    cc.storeName = [NSString stringWithFormat:@"%@",_activityModel.address];
+    cc.coordinate_store = CLLocationCoordinate2DMake([_activityModel.latitude doubleValue], [_activityModel.longitude doubleValue]);
+    
+    [self presentViewController:cc animated:YES completion:^{
+        
+    }];
+    
+    return YES;
 }
 
 #pragma mark - RefreshDelegate

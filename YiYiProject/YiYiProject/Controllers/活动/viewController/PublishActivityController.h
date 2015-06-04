@@ -7,7 +7,7 @@
 //
 
 #import "MyViewController.h"
-@class ActivityModel;
+#import "ActivityModel.h"
 
 /**
  *  发布活动下一步
@@ -16,6 +16,8 @@
 
 @property(nonatomic,strong)ActivityModel *theEditActivityModel;//上个界面传过来的需要编辑的活动model
 @property(nonatomic,assign)BOOL isChangeCover;//是否更改了封面图
+@property(nonatomic,assign)BOOL isEditActivity;//是否是编辑活动
+
 /**
  *  发布活动上一级页面传参数
  *

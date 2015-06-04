@@ -113,6 +113,64 @@
 }
 
 /**
+ *  编辑内容
+ *
+ *  @param contentArr 是个数组
+ */
+- (void)editContentArray:(NSArray *)contentArr
+{
+    //不是正确格式数据return,不做处理
+    if (![contentArr isKindOfClass:[NSArray class]] || contentArr.count == 0) {
+        return;
+    }
+    
+    //处理content_arr
+    
+    [content_arr removeAllObjects];
+    
+    for (NSDictionary *aDic in contentArr) {
+        
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+
+        int type = [aDic[@"type"]intValue];
+        
+        if (type == 1) {
+            
+            //文字
+            //文字处理
+            
+            NSString *content = aDic[@"content"];
+            
+            CGFloat height = [self heightForText:content];
+            
+            [dic setObject:[NSNumber numberWithFloat:height] forKey:CELL_NEW_HEIGHT];
+            [dic setObject:[NSNumber numberWithFloat:_constImageWidth] forKey:CELL_NEW_WIDTH];
+            [dic setObject:content forKey:CELL_CONTENT];
+            
+            [content_arr addObject:dic];
+
+            
+        }else if (type == 2){
+            
+            //图片
+            //图片处理
+            
+            CGFloat imageHeight = [aDic[@"height"]floatValue];
+            CGFloat imageWidth = [aDic[@"width"]floatValue];
+            NSString *image = aDic[@"src"];
+            
+            [dic setObject:[NSNumber numberWithFloat:[LTools heightForImageHeight:imageHeight imageWidth:imageWidth originalWidth:_constImageWidth]] forKey:CELL_NEW_HEIGHT];
+            [dic setObject:[NSNumber numberWithFloat:_constImageWidth] forKey:CELL_NEW_WIDTH];
+            [dic setObject:image forKey:CELL_CONTENT];
+        
+            [content_arr addObject:dic];
+        }
+    }
+    
+    [_tableView reloadData];
+}
+
+/**
  *  自动加一行文本编辑区域,或者 下面有文本编辑区域的 让其变为第一响应者
  */
 
@@ -533,7 +591,7 @@
     id content  = [parms objectForKey:CELL_CONTENT];
     
     //判断是否是图片
-    if ([content isKindOfClass:[UIImage class]]) {
+    if ([content isKindOfClass:[UIImage class]] || [content hasPrefix:@"http://"]) {
         
         LImageCell *cell = [tableView dequeueReusableCellWithIdentifier:identify2];
         if (!cell) {
@@ -542,7 +600,15 @@
         
 //        cell.backgroundColor = [UIColor redColor];
         
-        cell.aImageView.image = (UIImage *)content;
+        if ([content isKindOfClass:[UIImage class]]) {
+            
+            cell.aImageView.image = (UIImage *)content;
+
+        }else
+        {
+            [cell.aImageView setImageWithURL:[NSURL URLWithString:content] placeHolderText:@"加载失败" backgroundColor:[UIColor lightGrayColor] holderTextColor:[UIColor whiteColor]];
+        }
+        
         
         CGFloat height = [[parms objectForKey:CELL_NEW_HEIGHT] floatValue];
 
@@ -623,6 +689,11 @@
         firstTextView = cell.textView;
         cell.showPlaceholder = YES;
         cell.placeHolder = @"内容";
+        if (cell.textView.text.length) {
+            
+            cell.showPlaceholder = NO;
+        }
+        
     }else
     {
         cell.showPlaceholder = NO;

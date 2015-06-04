@@ -48,4 +48,11 @@
 
 - (void)hiddenKeyboard;//隐藏键盘
 
+/**
+ *  编辑内容
+ *
+ *  @param contentArr 是个数组
+ */
+- (void)editContentArray:(NSArray *)contentArr;
+
 @end

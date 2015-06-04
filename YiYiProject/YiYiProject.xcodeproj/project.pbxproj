@@ -112,6 +112,8 @@
 		13944CFC1B1EA9F400993D27 /* activity_location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13944CFA1B1EA9F400993D27 /* activity_location@2x.png */; };
 		13944CFD1B1EA9F400993D27 /* activity_time@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13944CFB1B1EA9F400993D27 /* activity_time@2x.png */; };
 		13944CFF1B1EF91700993D27 /* activity_defaultCover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13944CFE1B1EF91700993D27 /* activity_defaultCover@2x.png */; };
+		13944D021B203EBD00993D27 /* activity_image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13944D001B203EBD00993D27 /* activity_image@2x.png */; };
+		13944D031B203EBD00993D27 /* activity_publish@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13944D011B203EBD00993D27 /* activity_publish@2x.png */; };
 		139562C71A3BF42E007BB183 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 139562C61A3BF42E007BB183 /* UserInfo.m */; };
 		139562CB1A3C11EC007BB183 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 139562C91A3C11EC007BB183 /* RegisterViewController.m */; };
 		139562CC1A3C11EC007BB183 /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 139562CA1A3C11EC007BB183 /* RegisterViewController.xib */; };
@@ -702,6 +704,8 @@
 		13944CFA1B1EA9F400993D27 /* activity_location@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "activity_location@2x.png"; sourceTree = "<group>"; };
 		13944CFB1B1EA9F400993D27 /* activity_time@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "activity_time@2x.png"; sourceTree = "<group>"; };
 		13944CFE1B1EF91700993D27 /* activity_defaultCover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "activity_defaultCover@2x.png"; sourceTree = "<group>"; };
+		13944D001B203EBD00993D27 /* activity_image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "activity_image@2x.png"; sourceTree = "<group>"; };
+		13944D011B203EBD00993D27 /* activity_publish@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "activity_publish@2x.png"; sourceTree = "<group>"; };
 		139562C51A3BF42E007BB183 /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
 		139562C61A3BF42E007BB183 /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
 		139562C81A3C11EC007BB183 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
@@ -1912,6 +1916,8 @@
 		13944CF91B1EA9F400993D27 /* 活动 */ = {
 			isa = PBXGroup;
 			children = (
+				13944D001B203EBD00993D27 /* activity_image@2x.png */,
+				13944D011B203EBD00993D27 /* activity_publish@2x.png */,
 				13944CFE1B1EF91700993D27 /* activity_defaultCover@2x.png */,
 				13944CFA1B1EA9F400993D27 /* activity_location@2x.png */,
 				13944CFB1B1EA9F400993D27 /* activity_time@2x.png */,
@@ -3532,6 +3538,7 @@
 				19F7B4481A67FFA600087BCB /* umeng_logo1.png in Resources */,
 				E308939F1AE05D1900DA342C /* road_select@2x.png in Resources */,
 				139A788A1B183A4B00EFA10A /* home_button_top@2x.png in Resources */,
+				13944D031B203EBD00993D27 /* activity_publish@2x.png in Resources */,
 				19F7B4421A67FFA600087BCB /* nav_bg.png in Resources */,
 				13ABB0881B01F905002DC700 /* quan@2x.png in Resources */,
 				E3B9A9751ADE6E1200EE1415 /* gphone_down@2x.png in Resources */,
@@ -3671,6 +3678,7 @@
 				19F7B44E1A67FFA600087BCB /* UMFeedbackViewController.xib in Resources */,
 				E36DAF121AD40AD300C7FEA4 /* navigationBarBackground@2x.png in Resources */,
 				19F7B43B1A67FFA600087BCB /* messages_left_bubble@2x.png in Resources */,
+				13944D021B203EBD00993D27 /* activity_image@2x.png in Resources */,
 				1391DC631A870673006A2E15 /* t_xiangce@2x.png in Resources */,
 				13944CFF1B1EF91700993D27 /* activity_defaultCover@2x.png in Resources */,
 				13A389B91A38974F00ABBACB /* blueup1@2x.png in Resources */,

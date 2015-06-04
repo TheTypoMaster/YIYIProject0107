@@ -115,6 +115,7 @@
 {
     _page = 1;
     
+    _tableView.isReloadData = YES;
     [self prepareNetData];
 }
 
@@ -183,6 +184,7 @@
     ccc.mallInfo = self.mallInfo;
     ccc.thetype = GUPACTIVITYTYPE_EDIT;
     ccc.theEditActivity = amodel;
+    ccc.shopViewController = self;
     [self.navigationController pushViewController:ccc animated:YES];
 }
 

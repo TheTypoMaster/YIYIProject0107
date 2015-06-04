@@ -372,13 +372,13 @@
             ccc.userInfo = self.userInfo;
             ccc.mallInfo = self.mallInfo;
             ccc.lastPageNavigationHidden = YES;
+
             [self.navigationController pushViewController:ccc animated:YES];
         }
             break;
         case 104://联系电话
         {
             GShopPhoneViewController *ccc = [[GShopPhoneViewController alloc]init];
-            NSLog(@"大伟子%@",self.mallInfo.shop_phone);
             ccc.theShopPhone = self.mallInfo.shop_phone;
             ccc.shop_id = self.userInfo.shop_id;
             ccc.lastPageNavigationHidden = YES;

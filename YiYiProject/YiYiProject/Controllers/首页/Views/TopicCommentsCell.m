@@ -62,7 +62,6 @@
         //        label.backgroundColor = [UIColor clearColor];
         height += label.frame.size.height+3;
         
-        
         UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commentsTap:)];
         [label addGestureRecognizer:tap];
     }

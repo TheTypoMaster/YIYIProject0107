@@ -54,14 +54,14 @@
 -(void)viewWillAppear:(BOOL)animated {
     [_mapView viewWillAppear];
     
-    if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] )
-    {
-        //iOS 5 new UINavigationBar custom background
-        
-        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:IOS7DAOHANGLANBEIJING_PUSH] forBarMetrics: UIBarMetricsDefault];
-        
-        
-    }
+//    if([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] )
+//    {
+//        //iOS 5 new UINavigationBar custom background
+//        
+//        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:IOS7DAOHANGLANBEIJING_PUSH] forBarMetrics: UIBarMetricsDefault];
+//        
+//        
+//    }
     
 }
 
@@ -95,25 +95,27 @@
     //导航栏
     UIView *daohangView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 64)];
     UIImageView *imv = [[UIImageView alloc]initWithFrame:daohangView.bounds];
-    [imv setImage:[UIImage imageNamed:@"navigationBarBackground.png"]];
+    [imv setImage:[UIImage imageNamed:IOS7DAOHANGLANBEIJING_PUSH]];
     [daohangView addSubview:imv];
     [self.view addSubview:daohangView];
     
     //标题
-    UILabel *_myTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(DEVICE_WIDTH/2.0-100,20,200,44)];
+    UILabel *_myTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,20,DEVICE_WIDTH - 100,44)];
     _myTitleLabel.textAlignment = NSTextAlignmentCenter;
     _myTitleLabel.text = self.storeName;
     _myTitleLabel.textColor = RGBCOLOR(253, 106, 157);
     _myTitleLabel.font = [UIFont systemFontOfSize:17];
     [daohangView addSubview:_myTitleLabel];
 
+    _myTitleLabel.center = CGPointMake(DEVICE_WIDTH/2.f, _myTitleLabel.center.y);
     
     //返回按钮
-    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(16,20,40,44)];
+    UIButton *button_back=[[UIButton alloc]initWithFrame:CGRectMake(5,20,40,44)];
     [button_back addTarget:self action:@selector(leftButtonTap:) forControlEvents:UIControlEventTouchUpInside];
     [button_back setImage:BACK_DEFAULT_IMAGE forState:UIControlStateNormal];
     [button_back setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
     [daohangView addSubview:button_back];
+    
     
     //导航按钮
     _button_daohang=[[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_myTitleLabel.frame)+10,20,40,44)];

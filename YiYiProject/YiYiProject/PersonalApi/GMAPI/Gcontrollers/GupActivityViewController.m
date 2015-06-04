@@ -127,7 +127,7 @@
         [backInView addSubview:contentTf];
         
         if (self.thetype == GUPACTIVITYTYPE_EDIT) {
-            contentTf.text = [GMAPI timechangeAll:self.theEditActivity.activity_title];
+            contentTf.text = self.theEditActivity.activity_title;
         }
         
         
@@ -269,6 +269,7 @@
     ccc.isChangeCover = _isChangeImg;
     if (self.thetype == GUPACTIVITYTYPE_EDIT) {
         ccc.theEditActivityModel = self.theEditActivity;
+        ccc.isEditActivity = YES;
     }
     ccc.lastPageNavigationHidden = NO;
     [self.navigationController pushViewController:ccc animated:YES];
@@ -426,6 +427,7 @@
         
         _showImage = originImage;
         _showImageData = UIImageJPEGRepresentation(_showImage, 0.3);
+
         [_showPicBtn setBackgroundImage:_showImage forState:UIControlStateNormal];
         
         
@@ -460,7 +462,7 @@
     }
     _showImageData = UIImageJPEGRepresentation(_showImage, 1);
     
-    [_showPicBtn setBackgroundImage:cropImage forState:UIControlStateNormal];
+    [_showPicBtn setImage:cropImage forState:UIControlStateNormal];
     
 }
 

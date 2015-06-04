@@ -153,9 +153,8 @@
             
         }
         
-        [_table reloadData:arr total:L_PAGE_SIZE];
+        [_table reloadData:arr pageSize:L_PAGE_SIZE];
         
-//        [self animation];
     }
 }
 

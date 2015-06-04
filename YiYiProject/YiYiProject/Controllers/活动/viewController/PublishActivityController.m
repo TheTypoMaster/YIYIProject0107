@@ -86,6 +86,12 @@
     editor = [[LRichTextView alloc]initWithFrame:CGRectMake(0, 0, ALL_FRAME_WIDTH, ALL_FRAME_HEIGHT - 64) rootViewController:self];
     [self.view addSubview:editor];
     
+    //编辑活动
+    
+    if (self.theEditActivityModel || self.isEditActivity) {
+        
+        [editor editContentArray:self.theEditActivityModel.activity_info];
+    }
 }
 
 /**
@@ -123,16 +129,16 @@
     [insertButton addTarget:self action:@selector(clickToOpenAlbum:) forControlEvents:UIControlEventTouchUpInside];
     //    [heartButton setTitle:@"喜欢" forState:UIControlStateNormal];
     [insertButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    //    [insertButton setImage:[UIImage imageNamed:@"fabu_pic"] forState:UIControlStateNormal];
-    [insertButton setTitle:@"图片" forState:UIControlStateNormal];
+    [insertButton setImage:[UIImage imageNamed:@"activity_image"] forState:UIControlStateNormal];
+//    [insertButton setTitle:@"图片" forState:UIControlStateNormal];
     
     [insertButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
     
     
     UIButton *fabuButton =[[UIButton alloc]initWithFrame:CGRectMake(rightView.width - 44,0, 44,42.5)];
     [fabuButton addTarget:self action:@selector(clickToPub:) forControlEvents:UIControlEventTouchUpInside];
-    //    [fabuButton setImage:[UIImage imageNamed:@"shoucangb"] forState:UIControlStateNormal];
-    [fabuButton setTitle:@"发布" forState:UIControlStateNormal];
+        [fabuButton setImage:[UIImage imageNamed:@"activity_publish"] forState:UIControlStateNormal];
+//    [fabuButton setTitle:@"发布" forState:UIControlStateNormal];
     [fabuButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
     [fabuButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [fabuButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
@@ -208,10 +214,10 @@
             [temp_arr replaceObjectAtIndex:i withObject:temp];
             
             imageIndex ++;
-            
         }
         
     }
+    
     
     NSLog(@"commit content %@",temp_arr);
     
@@ -248,17 +254,32 @@
  */
 - (NSString *)postContent:(NSArray *)tempArr
 {
-//    //去除空行
-//    NSMutableArray *arr = [NSMutableArray array];
-//    for (NSDictionary *aDic in tempArr) {
-//        
-//        NSString *aContent = aDic[CELL_CONTENT];
-//        NSLog(@"aContent %@",aContent);
-//        if (aContent && aContent.length > 0 && ![aContent isEqualToString:@"(null)"]) {
-//            [arr addObject:aDic];
-//        }
-//    }
-    
+    //编辑活动
+    if (self.isEditActivity) {
+        
+        for (int i = 0; i < tempArr.count; i ++) {
+            
+            NSDictionary *aDic = tempArr[i];
+            
+            NSString *content = aDic[CELL_CONTENT];
+            //是图片地址
+            if ([content hasPrefix:@"http://"]) {
+                
+                //重新组装
+                
+                NSNumber *width = aDic[CELL_NEW_WIDTH];
+                NSNumber *height = aDic[CELL_NEW_HEIGHT];
+                
+                NSMutableDictionary *temp = [NSMutableDictionary dictionaryWithDictionary:aDic];
+                
+                content = [NSString stringWithFormat:@"<img src=\"%@\" width=\"%@\" height=\"%@\">",content,width,height];
+                [temp setObject:content forKey:CELL_CONTENT];
+                
+                [temp_arr replaceObjectAtIndex:i withObject:temp];
+                
+            }
+        }
+    }
     
     NSMutableString *contentString = [NSMutableString stringWithFormat:@""];
     
@@ -403,11 +424,6 @@
  */
 -(void)publishActivityContent:(NSString *)activityContent{
     
-    
-    //上传的url
-    NSString *uploadImageUrlStr = GFABUHUODONG;
-    
-    
     NSString *type = nil;
     type = @"2";
     
@@ -418,8 +434,30 @@
     NSString *end_time = _activityEndTime;//活动结束时间
     NSString *activity_title = _actitityTitle;//活动标题
     
+    //上传的url
+    NSString *uploadImageUrlStr = nil;
+    NSDictionary *parameters_dic = nil;
     
-    NSDictionary *parameters_dic = @{
+    //编辑活动
+    
+    if (self.isEditActivity) {
+        
+        uploadImageUrlStr = GEDITHUODONG;
+        parameters_dic = @{
+                           @"type":type,
+                           @"shop_id":shop_id,
+                           @"activity_title":activity_title,
+                           @"activity_info":activity_info,
+                           @"start_time":start_time,
+                           @"end_time":end_time,
+                           @"authcode":[GMAPI getAuthkey],
+                           @"activity_id":self.theEditActivityModel.id
+                           };
+        
+    }else
+    {
+        uploadImageUrlStr = GFABUDIANPIN;
+        parameters_dic = @{
                            @"type":type,
                            @"shop_id":shop_id,
                            @"activity_title":activity_title,
@@ -428,7 +466,7 @@
                            @"end_time":end_time,
                            @"authcode":[GMAPI getAuthkey],
                            };
-    
+    }
     
     __weak typeof(self)weakSelf = self;
     
@@ -442,24 +480,29 @@
                                        parameters:parameters_dic
                                        constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
                                        {
-                                           //开始拼接表单
-                                           //获取图片的二进制形式
-                                           
-                                           NSData * data= UIImageJPEGRepresentation(_activityCoverImage, 0.5);
-                                           if (data) {
-                                               NSLog(@"%ld",(unsigned long)data.length);
+                                           //发布活动或者封面修改时需要上传封面数据
+                                           if (!weakSelf.isEditActivity || weakSelf.isChangeCover) {
                                                
-                                               //将得到的二进制图片拼接到表单中
-                                               /**
-                                                *  data,指定上传的二进制流
-                                                *  name,服务器端所需参数名
-                                                *  fileName,指定文件名
-                                                *  mimeType,指定文件格式
-                                                */
-                                               [formData appendPartWithFileData:data name:@"pic" fileName:@"icon.jpg" mimeType:@"image/jpg"];
-                                               //多用途互联网邮件扩展（MIME，Multipurpose Internet Mail Extensions）
+                                               //开始拼接表单
+                                               //获取图片的二进制形式
+                                               
+                                               NSData * data= UIImageJPEGRepresentation(_activityCoverImage, 0.5);
+                                               if (data) {
+                                                   NSLog(@"%ld",(unsigned long)data.length);
+                                                   
+                                                   //将得到的二进制图片拼接到表单中
+                                                   /**
+                                                    *  data,指定上传的二进制流
+                                                    *  name,服务器端所需参数名
+                                                    *  fileName,指定文件名
+                                                    *  mimeType,指定文件格式
+                                                    */
+                                                   [formData appendPartWithFileData:data name:@"pic" fileName:@"icon.jpg" mimeType:@"image/jpg"];
+                                                   //多用途互联网邮件扩展（MIME，Multipurpose Internet Mail Extensions）
+                                               }
+                                               
+
                                            }
-                                           
                                            
                                        }
                                        success:^(AFHTTPRequestOperation *operation, id responseObject)
@@ -484,8 +527,21 @@
                                            //发布成功返回店铺页面
                                            if (errorCode == 0) {
                                                
+                                               if (weakSelf.isEditActivity) {
+                                                   
+                                                   erroInfo = @"修改成功";
+                                                   
+                                                   [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_FABUHUODONG_SUCCESS object:nil];
+                                                   
+                                               }else
+                                               {
+                                                   erroInfo = @"发布成功";
+                                                   
+                                               }
+                                               
                                                [LTools showMBProgressWithText:erroInfo addToView:weakSelf.view];
                                                [weakSelf performSelector:@selector(backToShopViewController) withObject:nil afterDelay:1.f];
+                                               
                                            }
                                            
                                            

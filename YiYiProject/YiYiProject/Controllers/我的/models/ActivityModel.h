@@ -32,4 +32,7 @@
 @property(nonatomic,retain)NSString *cover_pic;//活动封面
 @property(nonatomic,retain)NSString *address;//活动地址
 
+@property(nonatomic,retain)NSString *latitude;//维度
+@property(nonatomic,retain)NSString *longitude;//经度
+
 @end
