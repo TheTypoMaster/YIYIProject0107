@@ -4082,8 +4082,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "88"
             endingLineNumber = "88"
-            landmarkName = "-cancelHotpoint:"
-            landmarkType = "5">
+            landmarkName = "@implementation RootViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4290,8 +4290,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "363"
             endingLineNumber = "363"
-            landmarkName = "-setActivityInfoWithModel:"
-            landmarkType = "5">
+            landmarkName = "@implementation GupActivityViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

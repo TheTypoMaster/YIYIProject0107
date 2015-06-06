@@ -91,20 +91,22 @@
     CGFloat aWidth = (ALL_FRAME_WIDTH - 166)/ 3.f;
     menu_view = [[UIView alloc]initWithFrame:CGRectMake(0, 20, aWidth * 2, 30)];
     menu_view.clipsToBounds = YES;
-    menu_view.layer.cornerRadius = 15.f;
-    menu_view.layer.borderWidth = 1;
-    menu_view.layer.borderColor = [RGBCOLOR(253, 103, 154)CGColor];
+//    menu_view.layer.cornerRadius = 15.f;
+//    menu_view.layer.borderWidth = 1;
+//    menu_view.layer.borderColor = [RGBCOLOR(253, 103, 154)CGColor];
     
     self.navigationItem.titleView = menu_view;
     
-    NSArray *titles = @[@"商家",@"单品"];
+    NSArray *titles = @[@"精选",@"单品"];
     
     for (int i = 0; i < titles.count; i ++) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+//        btn.backgroundColor = [UIColor orangeColor];
         btn.frame = CGRectMake(aWidth * i + 0.5 * i, 0, aWidth, 30);
         [btn setTitle:titles[i] forState:UIControlStateNormal];
         [btn setHighlighted:NO];
-        [btn.titleLabel setFont:[UIFont systemFontOfSize:13]];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [btn.titleLabel setFont:[UIFont systemFontOfSize:17]];
         btn.tag = 100 + i;
         
         [menu_view addSubview:btn];
@@ -113,6 +115,17 @@
     
     UIButton *btn = (UIButton *)[menu_view viewWithTag:100];
     [self clickToSwap:btn];
+    
+    
+    UIView *fengeLine = [[UIView alloc]initWithFrame:CGRectMake(aWidth, 8, 0.5, 16)];
+    fengeLine.backgroundColor = RGBCOLOR(192, 193, 194);
+//    fengeLine.backgroundColor = [UIColor blackColor];
+    
+    
+//    fengeLine.center = menu_view.center;
+//    menu_view.backgroundColor = [UIColor blackColor];
+    [menu_view addSubview:fengeLine];
+    
     
 }
 
@@ -240,19 +253,24 @@
     cloth_viewcontroller.view.hidden = [vc isKindOfClass:[HomeClothController class]] ? NO : YES;//商家介绍
     match_viewcontroller.view.hidden = [vc isKindOfClass:[HomeMatchController class]] ? NO : YES;//商家服务
     
-//    ((UIButton *)[menu_view viewWithTag:100]).selected = [vc isKindOfClass:[HomeBuyController class]] ? NO : YES;//服务介绍;
-//    ((UIButton *)[menu_view viewWithTag:101]).selected = [vc isKindOfClass:[HomeClothController class]] ? NO : YES;//服务介绍;
-//    ((UIButton *)[menu_view viewWithTag:102]).selected = [vc isKindOfClass:[HomeMatchController class]] ? NO : YES;//服务介绍;
+
+    
+//    UIColor *normalColor_bgc = RGBCOLOR(253, 105, 155);
+//    UIColor *selectColor_bgc = [UIColor whiteColor];
+//    UIColor *normalColor_tt = RGBCOLOR(252, 104, 152);
+//    UIColor *selectColor_tt = [UIColor whiteColor];
+    
+    //改变背景色
+//    ((UIButton *)[menu_view viewWithTag:101]).backgroundColor = [vc isKindOfClass:[HomeBuyController class]] ? normalColor_bgc : selectColor_bgc;//服务介绍;
+//    ((UIButton *)[menu_view viewWithTag:100]).backgroundColor = [vc isKindOfClass:[HomeClothController class]] ? normalColor_bgc : selectColor_bgc;//服务介绍;
+//    ((UIButton *)[menu_view viewWithTag:102]).backgroundColor = [vc isKindOfClass:[HomeMatchController class]] ? normalColor_bgc : selectColor_bgc;//服务介绍;
+    
+    
     
     UIColor *normalColor_bgc = RGBCOLOR(253, 105, 155);
     UIColor *selectColor_bgc = [UIColor whiteColor];
-    UIColor *normalColor_tt = RGBCOLOR(252, 104, 152);
-    UIColor *selectColor_tt = [UIColor whiteColor];
-    
-    //改变背景色
-    ((UIButton *)[menu_view viewWithTag:101]).backgroundColor = [vc isKindOfClass:[HomeBuyController class]] ? normalColor_bgc : selectColor_bgc;//服务介绍;
-    ((UIButton *)[menu_view viewWithTag:100]).backgroundColor = [vc isKindOfClass:[HomeClothController class]] ? normalColor_bgc : selectColor_bgc;//服务介绍;
-    ((UIButton *)[menu_view viewWithTag:102]).backgroundColor = [vc isKindOfClass:[HomeMatchController class]] ? normalColor_bgc : selectColor_bgc;//服务介绍;
+    UIColor *normalColor_tt = [UIColor blackColor];
+    UIColor *selectColor_tt = RGBCOLOR(245, 75, 135);
     
     //改变文字颜色
     UIButton *btn = (UIButton*)[menu_view viewWithTag:101];
