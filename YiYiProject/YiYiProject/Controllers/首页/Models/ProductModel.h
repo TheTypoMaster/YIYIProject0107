@@ -65,4 +65,6 @@
 @property(nonatomic,retain)NSString *uid;//收藏的人
 @property(nonatomic,retain)NSString *product_view_num;//浏览数
 
+@property(nonatomic,strong)NSString *shop_type;//店铺类型
+
 @end

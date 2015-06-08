@@ -684,24 +684,25 @@
         return;
     }
     
-    int mall_type = [aModel.mall_info[@"mall_type"] intValue];
+//    int mall_type = [aModel.mall_info[@"mall_type"] intValue];
+    int shop_type = [aModel.shop_type intValue];
     NSString *storeId;
     NSString *storeName;
     
-    if (mall_type == ShopType_pinpaiDian) {
+    if (shop_type == ShopType_pinpaiDian) {
         
         storeId = aModel.product_shop_id;
         storeName = aModel.product_brand_name;
         NSString *brandName = aModel.product_brand_name;//品牌店需要brandName
         
-        [MiddleTools pushToStoreDetailVcWithId:storeId shopType:mall_type storeName:storeName brandName:brandName fromViewController:self lastNavigationHidden:NO hiddenBottom:NO];
+        [MiddleTools pushToStoreDetailVcWithId:storeId shopType:shop_type storeName:storeName brandName:brandName fromViewController:self lastNavigationHidden:NO hiddenBottom:NO];
         
-    }else if (mall_type == ShopType_jingpinDian || mall_type == ShopType_mall){
+    }else if (shop_type == ShopType_jingpinDian || shop_type == ShopType_mall){
         
         storeId = aModel.mall_info[@"mall_id"];
         storeName = aModel.mall_info[@"mall_name"];
         
-        [MiddleTools pushToStoreDetailVcWithId:storeId shopType:mall_type storeName:storeName brandName:@" " fromViewController:self lastNavigationHidden:NO hiddenBottom:NO];
+        [MiddleTools pushToStoreDetailVcWithId:storeId shopType:shop_type storeName:storeName brandName:@" " fromViewController:self lastNavigationHidden:NO hiddenBottom:NO];
     }
 }
 

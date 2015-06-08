@@ -301,7 +301,7 @@ typedef enum {
 
 //单品详情
 
-#define HOME_PRODUCT_DETAIL @"http://www119.alayy.com/api/products/getProductInfo?product_id=%@&authcode=%@"
+#define HOME_PRODUCT_DETAIL @"http://www119.alayy.com/index.php?d=api&c=products&m=getProductInfo&product_id=%@&authcode=%@"
 
 //单品 - 添加赞
 #define HOME_PRODUCT_ZAN_ADD @"http://www119.alayy.com/?d=api&c=products&m=like"
