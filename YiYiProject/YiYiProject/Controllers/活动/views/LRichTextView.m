@@ -525,6 +525,7 @@
         isReplaceImage = YES;
         
         replaceImageView = actionSheet.selectImageView;
+        replaceImageView.tag = 100 + actionSheet.selectIndexPath.row;
         
         [self clickToAddAlbum:nil];
         
@@ -910,10 +911,10 @@
         UIImage *originImage = [info objectForKey:UIImagePickerControllerOriginalImage];
         
         
-        UIImage * scaleImage = [self scaleToSizeWithImage:originImage size:CGSizeMake(originImage.size.width>1024?1024:originImage.size.width,originImage.size.width>1024?originImage.size.height*1024/originImage.size.width:originImage.size.height)];
+        UIImage * scaleImage = [self scaleToSizeWithImage:originImage size:CGSizeMake(originImage.size.width>750?750:originImage.size.width,originImage.size.width>750?originImage.size.height*750/originImage.size.width:originImage.size.height)];
         
         //以下这两步都是比较耗时的操作，最好开一个HUD提示用户，这样体验会好些，不至于阻塞界面
-        if (UIImagePNGRepresentation(scaleImage) == nil && scaleImage.size.width >= 1024) {
+        if (UIImagePNGRepresentation(scaleImage) == nil && scaleImage.size.width >= 750) {
             //将图片转换为JPG格式的二进制数据
             data = UIImageJPEGRepresentation(scaleImage, 0.5);
         } else {
@@ -924,17 +925,34 @@
         //将二进制数据生成UIImage
         UIImage *image = [UIImage imageWithData:data];
         
-//        CGSize imageSize = image.size;
-//        
-//        image = [self scaleToSizeWithImage:image size:CGSizeMake(540, ORIGINAL_HEIGHT_IMAGE)];
-        
-        //        [self addNewImage:image];
+        if (image == nil) {
+            
+            [LTools showMBProgressWithText:@"图片无效" addToView:self];
+            
+            return;
+        }
+
         
         if (isReplaceImage) {
+            
+            //显示图片修改
             
             replaceImageView.image = image;
             
             isReplaceImage = NO;
+            
+            NSInteger imageTag = replaceImageView.tag - 100;
+            
+            //数据源修改
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:imageTag inSection:0];
+            NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+            [dic setObject:[NSNumber numberWithFloat:[self heightForImage:image]] forKey:CELL_NEW_HEIGHT];
+            [dic setObject:[NSNumber numberWithFloat:_constImageWidth] forKey:CELL_NEW_WIDTH];
+            [dic setObject:image forKey:CELL_CONTENT];
+            
+            [content_arr replaceObjectAtIndex:imageTag withObject:dic];
+            
+            [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
             
         }else
         {
@@ -962,7 +980,7 @@
     // 并把它设置成为当前正在使用的context
     UIGraphicsBeginImageContext(size);
     // 绘制改变大小的图片
-    [img drawInRect:CGRectMake(10, 10, size.width - 20, size.height - 20)];
+    [img drawInRect:CGRectMake(10, 10, size.width, size.height)];
     // 从当前context中创建一个改变大小后的图片
     UIImage* scaledImage = UIGraphicsGetImageFromCurrentImageContext();
     // 使当前的context出堆栈

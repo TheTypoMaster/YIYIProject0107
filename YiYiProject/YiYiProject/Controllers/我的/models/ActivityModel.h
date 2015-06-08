@@ -17,7 +17,9 @@
 @property(nonatomic,retain)NSString *shop_id;
 @property(nonatomic,retain)NSString *type;
 @property(nonatomic,retain)NSString *activity_title;
-@property(nonatomic,retain)NSArray *activity_info;//活动详情
+@property(nonatomic,retain)NSString *activity_info;//活动摘要
+@property(nonatomic,retain)NSArray *activity_detail;//活动详情
+
 @property(nonatomic,retain)NSString *pic;
 @property(nonatomic,retain)NSString *pic_size;
 @property(nonatomic,retain)NSString *add_time;

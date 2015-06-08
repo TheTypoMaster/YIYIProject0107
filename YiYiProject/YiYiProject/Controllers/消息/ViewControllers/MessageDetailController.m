@@ -259,7 +259,13 @@
 {
     if (self.isActivity) {
         
-        NSDictionary *info = _activityModel.activity_info[indexPath.row];
+        NSDictionary *info = nil;
+        
+        if ([_activityModel.activity_detail isKindOfClass:[NSArray class]]) {
+            
+            info = _activityModel.activity_detail[indexPath.row];
+        }
+        
         int type = [info[@"type"] intValue];
         if (type == 1) { //文字
             
@@ -279,6 +285,7 @@
             return height;
         }
 
+        return 0;
     }
     
     return [MailMessageCell heightForModel:detail_model seeAll:NO];
@@ -290,7 +297,14 @@
 {
     if (_isActivity) {
         
-        return _activityModel.activity_info.count;
+        if ([_activityModel.activity_detail isKindOfClass:[NSArray class]]) {
+            
+            return _activityModel.activity_detail.count;
+        
+        }
+        
+        return 0;
+        
     }
     return 1;
 }
@@ -304,8 +318,12 @@
         static NSString *identifyText = @"activityText";
         static NSString *identifyImage = @"activityImage";
         
-        
-        NSDictionary *info = _activityModel.activity_info[indexPath.row];
+        NSDictionary *info = nil;
+        if ([_activityModel.activity_detail isKindOfClass:[NSArray class]]) {
+            
+            info = _activityModel.activity_detail[indexPath.row];
+        }
+    
         int type = [info[@"type"] intValue];
         if (type == 1) { //文字
             

@@ -656,11 +656,27 @@
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        
+                                       if (error) {
+                                           NSString *errInfo = @"网络有问题,请检查网络";
+                                           switch (error.code) {
+                                               case NSURLErrorNotConnectedToInternet:
+                                                   
+                                                   errInfo = @"无网络连接";
+                                                   break;
+                                               case NSURLErrorTimedOut:
+                                                   
+                                                   errInfo = @"网络连接超时";
+                                                   break;
+                                               default:
+                                                   break;
+                                           }
+                                           
+                                           
+                                           [LTools showMBProgressWithText:errInfo addToView:self.view];
+                                           [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                           
+                                       }
                                        
-//                                       [LTools showMBProgressWithText:@"" addToView:self.view];
-                                       NSLog(@"失败 : %@",error);
-                                       [LTools showMBProgressWithText:@"上传图片失败" addToView:self.view];
-                                       [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
 
                                    }];
     
