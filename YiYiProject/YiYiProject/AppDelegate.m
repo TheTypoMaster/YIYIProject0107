@@ -690,7 +690,7 @@
     NSLog(@"----->|%@|",userName);
     
     //没有保存用户名 或者 更新时间超过一个小时
-    if ([LTools isEmpty:userName] || [LTools rongCloudNeedRefreshUserId:userId]) {
+    if ([LTools isEmpty:userName] || [LTools isEmpty:userIcon]  || [LTools rongCloudNeedRefreshUserId:userId]) {
     
         NSString *url = [NSString stringWithFormat:GET_PERSONINFO_WITHID,userId];
         LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];

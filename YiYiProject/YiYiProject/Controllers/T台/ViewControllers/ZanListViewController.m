@@ -227,7 +227,7 @@
         return;
     }
     
-    __weak typeof(self)weakSelf = self;
+    __weak typeof(_table)weakTable = _table;
     
     NSInteger indexRow = sender.tag - 100;
     
@@ -248,7 +248,7 @@
         
         aModel.flag = sender.selected ? 0 : 1;
 
-        [_table reloadData];
+        [weakTable reloadData];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         

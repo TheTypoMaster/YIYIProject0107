@@ -91,12 +91,12 @@
     }
     
     
-    NSLog(@"-------x=%f,-------y=%f",scrollView.contentOffset.x,scrollView.contentOffset.y);
+//    NSLog(@"-------x=%f,-------y=%f",scrollView.contentOffset.x,scrollView.contentOffset.y);
     
     if (scrollView.contentOffset.y>0) {
         [self.nearbyStoreVC showTheUpDownViewFullView];
     }else if (scrollView.contentOffset.y<0){
-        NSLog(@"wuwuwuwuwuuwu");
+//        NSLog(@"wuwuwuwuwuuwu");
         [self.nearbyStoreVC showTheUpDownViewHalfView];
     }
     

@@ -107,7 +107,7 @@
         sqlite3_bind_text(stmt, 1, [type UTF8String], -1, NULL);
         
         while (sqlite3_step(stmt) == SQLITE_ROW) {
-            const unsigned char *type = sqlite3_column_text(stmt, 0);
+//            const unsigned char *type = sqlite3_column_text(stmt, 0);
             const unsigned char *content = sqlite3_column_text(stmt, 1);
             
 //            NSLog(@"type=%@ content=%@",[NSString stringWithUTF8String:(const char *)type],[NSString stringWithUTF8String:(const char *)content]);

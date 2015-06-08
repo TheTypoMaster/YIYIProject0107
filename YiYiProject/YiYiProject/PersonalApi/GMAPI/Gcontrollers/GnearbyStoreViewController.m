@@ -89,10 +89,10 @@
     NSString *url = @" ";
     if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == YES) {
         
-        url = [NSString stringWithFormat:@"%@&mall_id=%@&authcode=%@",LIULAN_NUM_STORE,self.mall_id,[GMAPI getAuthkey]];
+        url = [NSString stringWithFormat:@"%@&mall_id=%@&authcode=%@",LIULAN_NUM_STORE,self.storeIdStr,[GMAPI getAuthkey]];
         
     }else{
-        url = [NSString stringWithFormat:@"%@&mall_id=%@",LIULAN_NUM_STORE,self.mall_id];
+        url = [NSString stringWithFormat:@"%@&mall_id=%@",LIULAN_NUM_STORE,self.storeIdStr];
     }
     LTools *ccc = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
@@ -509,6 +509,8 @@
         
 
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        
     }];
     
     

@@ -222,6 +222,8 @@
                     NSDictionary *failDic = @{RESULT_INFO:erroInfo,RESULT_CODE:[NSString stringWithFormat:@"%d",erroCode]};
                     failBlock(failDic,0);
                     
+                    [self showErroInfo:erroInfo];
+
                     
                 }else
                 {
@@ -231,8 +233,6 @@
                     failBlock(failDic,0);
                 }
                 
-                [self showErroInfo:erroInfo];
-
                 
             }else
             {
@@ -245,7 +245,7 @@
             NSDictionary *failDic = @{RESULT_INFO:@"获取数据异常",RESULT_CODE:@"999"};
             failBlock(failDic,0);
             
-            [self showErroInfo:@"获取数据异常"];
+//            [self showErroInfo:@"获取数据异常"];
         }
         
     }else
@@ -256,7 +256,7 @@
         NSDictionary *failDic = @{RESULT_INFO:@"获取数据异常",RESULT_CODE:@"999"};
         
         failBlock(failDic,0);
-        [self showErroInfo:@"获取数据异常"];
+//        [self showErroInfo:@"获取数据异常"];
 
     }
     

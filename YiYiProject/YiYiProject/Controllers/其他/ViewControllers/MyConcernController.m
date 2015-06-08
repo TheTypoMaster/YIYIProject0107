@@ -595,7 +595,7 @@
     
     NSString *productId = aMode.product_id;
     
-    __weak typeof(self)weakSelf = self;
+//    __weak typeof(self)weakSelf = self;
     
     __block BOOL isZan = !sender.selected;
     

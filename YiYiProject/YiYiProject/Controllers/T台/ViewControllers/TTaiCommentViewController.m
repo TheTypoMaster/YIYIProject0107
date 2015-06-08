@@ -335,7 +335,7 @@
     
     __weak typeof(self)weakSelf = self;
     
-    __weak typeof(_table)weakTable = _table;
+//    __weak typeof(_table)weakTable = _table;
     
 //    __block int blockTotal = _zanTotalNum;
 //    
