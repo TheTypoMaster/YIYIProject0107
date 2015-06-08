@@ -142,7 +142,8 @@
     label.textColor = [UIColor blackColor];
 
     
-    head.frame = CGRectMake(0, 0, DEVICE_WIDTH, addressIcon.bottom + 10 + 10);
+    
+    head.frame = CGRectMake(0, 0, DEVICE_WIDTH, label.bottom + 10 + 10);
     
     UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, head.height - 0.5f - 10, DEVICE_WIDTH, 0.5f)];
     line.backgroundColor = [UIColor colorWithHexString:@"e4e4e4"];
@@ -273,7 +274,7 @@
             
             CGFloat height = [LTools heightForText:content width:DEVICE_WIDTH - 20 font:14];
             
-            return height;
+            return height + 10;
             
         }else if (type == 2){ //图片
             
