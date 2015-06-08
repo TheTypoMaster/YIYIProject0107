@@ -242,7 +242,7 @@
     _activeImv.backgroundColor = [UIColor whiteColor];
     NSString *imgNameStr = @" ";
     if ([result[@"activity"] isKindOfClass:[NSDictionary class]]) {
-        imgNameStr = result[@"activity"][@"activity_pic"];
+        imgNameStr = result[@"activity"][@"cover_pic"];
     }
     
     [_activeImv sd_setImageWithURL:[NSURL URLWithString:imgNameStr] placeholderImage:nil];
