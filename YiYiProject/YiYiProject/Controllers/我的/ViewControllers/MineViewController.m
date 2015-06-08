@@ -670,7 +670,7 @@ typedef enum{
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         
         NSString *url = [NSString stringWithFormat:@"%@&authcode=%@",GQIANDAO,[GMAPI getAuthkey]];
-        GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:NO postData:nil];
+        LTools *ccc = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             NSLog(@"%@",result);
@@ -678,7 +678,6 @@ typedef enum{
             NSString *errorcode = result[@"errorcode"];
             
             if ([errorcode intValue] == 0) {
-                [GMAPI showAutoHiddenMBProgressWithText:result[@"msg"] addToView:self.view];
                 sender.selected = YES;
                 
                 NSString *scroe = [NSString stringWithFormat:@"%d",[result intValueForKey:@"the_score"]];
@@ -687,7 +686,6 @@ typedef enum{
                 [self GgetUserInfo];
             }else{
                 sender.selected = NO;
-                [GMAPI showAutoHiddenMBProgressWithText:result[@"msg"] addToView:self.view];
             }
             
             
@@ -695,7 +693,6 @@ typedef enum{
             
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [GMAPI showAutoHiddenMidleQuicklyMBProgressWithText:@"签到失败,请检查网络" addToView:self.view];
             sender.selected = NO;
         }];
     }

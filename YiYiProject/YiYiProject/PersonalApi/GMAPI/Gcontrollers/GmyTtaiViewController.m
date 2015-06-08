@@ -132,9 +132,7 @@
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
-        if ([failDic[RESULT_CODE] intValue] == -11 || [failDic[RESULT_CODE] intValue] == 2003) {
-            [LTools showMBProgressWithText:failDic[@"msg"] addToView:self.view];
-        }
+        
         
     }];
 }
@@ -152,7 +150,7 @@
     NSString *api = [NSString stringWithFormat:@"%@&page=%d&count=%d&user_id=%@&authcode=%@",TTAi_LIST,_waterFlow.pageNum,L_PAGE_SIZE,userId,[GMAPI getAuthkey]];
     NSLog(@"请求的接口%@",api);
     
-    GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+    LTools *cc = [[LTools alloc]initWithUrl:api isPost:NO postData:nil];
     [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"result : %@",result);
@@ -229,11 +227,7 @@
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-        [GMAPI showAutoHiddenMBProgressWithText:failDic[RESULT_INFO] addToView:weakSelf.view];
-        if ([failDic[RESULT_CODE] intValue] == -11) {
-            
-            [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:weakSelf.view];
-        }
+        
         detail_model.tt_like_num = NSStringFromInt([detail_model.tt_like_num intValue]);
         cell.like_label.text = detail_model.tt_like_num;
     }];

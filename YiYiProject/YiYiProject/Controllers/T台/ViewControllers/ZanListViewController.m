@@ -253,11 +253,7 @@
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-        [GMAPI showAutoHiddenMBProgressWithText:failDic[RESULT_INFO] addToView:weakSelf.view];
-        if ([failDic[RESULT_CODE] intValue] == -11) {
-            
-            [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:weakSelf.view];
-        }
+        
     }];
 
 }
@@ -308,7 +304,6 @@
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
-        [LTools showMBProgressWithText:failDic[@"msg"] addToView:self.view];
     }];
 }
 

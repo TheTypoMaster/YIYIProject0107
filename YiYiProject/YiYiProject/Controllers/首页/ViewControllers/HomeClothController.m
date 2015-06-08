@@ -9,7 +9,6 @@
 #import "HomeClothController.h"
 #import "GCycleScrollView.h"
 #import "GnearbyStoreViewController.h"
-#import "GmPrepareNetData.h"
 #import "NSDictionary+GJson.h"
 #import "GScrollView.h"
 #import "GpinpaiDetailViewController.h"
@@ -271,14 +270,6 @@
         }
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
-//        [GMAPI showAutoHiddenMBProgressWithText:@"请检查网络" addToView:self.view];
-        
-        int errcode = [failDic[RESULT_CODE] intValue];
-        
-        if (errcode != 999 && errcode != -11) {
-            [GMAPI showAutoHiddenMBProgressWithText:[failDic stringValueForKey:@"msg"] addToView:self.view];
-
-        }
         
         [_tableView loadFail];
     }];

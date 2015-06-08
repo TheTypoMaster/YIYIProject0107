@@ -358,7 +358,7 @@
     NSString *post = [NSString stringWithFormat:@"&devicetoken=%@&authcode=%@",thetoken,[GMAPI getAuthkey]];
     NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     NSString *url = [NSString stringWithFormat:ZPOSTDEVICETOKEN];
-    GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
+    LTools *ccc = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
     [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"devicetoken给后台传过去 thedic==%@",result);
@@ -526,7 +526,6 @@
         
         NSLog(@"获取融云token失败 %@",result);
         
-        [LTools showMBProgressWithText:result[@"msg"] addToView:self.window];
         
     }];
 }

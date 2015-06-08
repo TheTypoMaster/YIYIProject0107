@@ -366,7 +366,7 @@
         url = [url stringByAppendingString:@"&status=2"];
     }
     
-    GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:NO postData:nil];
+    LTools *ccc = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSMutableArray *arr;
@@ -507,17 +507,15 @@
     NSString *api = [NSString stringWithFormat:@"%@&authcode=%@&product_ids=%@",GDELETPRODUCTS,[GMAPI getAuthkey],theStr];
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+    LTools *cc = [[LTools alloc]initWithUrl:api isPost:NO postData:nil];
     [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         NSLog(@"%@",result);
-        [GMAPI showAutoHiddenMBProgressWithText:[result objectForKey:@"msg"] addToView:self.view];
         if ([[result objectForKey:@"errorcode"]intValue]==0) {
             [self editFinishAndChangeView];
         }
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        [GMAPI showAutoHiddenMBProgressWithText:[failDic objectForKey:@"msg"] addToView:self.view];
     }];
 }
 
@@ -526,11 +524,10 @@
     NSString *api = [NSString stringWithFormat:@"%@&authcode=%@&product_ids=%@&action=%@",GUPDOWNPRODUCTS,[GMAPI getAuthkey],theId,type];
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+    LTools *cc = [[LTools alloc]initWithUrl:api isPost:NO postData:nil];
     [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         NSLog(@"%@",result);
-        [GMAPI showAutoHiddenMBProgressWithText:[result objectForKey:@"msg"] addToView:self.view];
         if ([[result objectForKey:@"errorcode"]intValue]==0) {
             [self editFinishAndChangeView];
         }
@@ -538,7 +535,6 @@
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        [GMAPI showAutoHiddenMBProgressWithText:[failDic objectForKey:@"msg"] addToView:self.view];
     }];
 }
 

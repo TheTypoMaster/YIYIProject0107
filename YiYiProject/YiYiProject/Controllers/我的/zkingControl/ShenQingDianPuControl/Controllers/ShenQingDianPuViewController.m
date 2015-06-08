@@ -446,22 +446,19 @@
     
     if ([LTools isValidateMobile:_phoneTf.text]) {
         NSString *api = [NSString stringWithFormat:USER_GET_SECURITY_CODE,_phoneTf.text,5,[LTools md5Phone:_phoneTf.text]];
-        GmPrepareNetData *ccc =[[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+        LTools *ccc =[[LTools alloc]initWithUrl:api isPost:NO postData:nil];
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
             
             NSLog(@"%@",result);
             
             if ([result[@"errorcode"]intValue]==0) {
-                [GMAPI showAutoHiddenMidleQuicklyMBProgressWithText:@"验证码已发送" addToView:self.view];
             }else {
-                [GMAPI showAutoHiddenMBProgressWithText:result[@"msg"] addToView:self.view];
             }
             
             
             
             
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
-            [GMAPI showAutoHiddenMBProgressWithText:@"获取验证码失败" addToView:self.view];
         }];
         
         
@@ -660,15 +657,12 @@
     if ([LTools isValidateMobile:tf.text]) {
         
         NSString *api = [NSString stringWithFormat:USER_GET_SECURITY_CODE,tf.text,5,[LTools md5Phone:tf.text]];
-        GmPrepareNetData *ccc =[[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+        LTools *ccc =[[LTools alloc]initWithUrl:api isPost:NO postData:nil];
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
             if ([result[@"errorcode"]intValue]==0) {
-                [GMAPI showAutoHiddenMidleQuicklyMBProgressWithText:@"验证码已发送" addToView:self.view];
             }else {
-                [GMAPI showAutoHiddenMBProgressWithText:result[@"msg"] addToView:self.view];
             }
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
-            [GMAPI showAutoHiddenMBProgressWithText:@"获取验证码失败" addToView:self.view];
         }];
         
         
@@ -801,17 +795,15 @@
         NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
         
         NSString *url = [NSString stringWithFormat:SHENQINGJINGPINDIAN];
-        GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
+        LTools *ccc = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             NSLog(@"申请精品店返回的dic:%@",result);
             NSLog(@"申请精品店:msg:%@",[result objectForKey:@"msg"]);
             if ([[result stringValueForKey:@"errorcode"]intValue]==0) {//成功
-                [GMAPI showAutoHiddenMBProgressWithText:[result objectForKey:@"msg"] addToView:self.view];
                 [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_SHENQINGDIANPU_SUCCESS object:nil];
                 [self performSelector:@selector(shenqingtijiao) withObject:[NSNumber numberWithBool:YES] afterDelay:2];
             }else{
-                [GMAPI showAutoHiddenMBProgressWithText:[result objectForKey:@"msg"] addToView:self.view];
             }
             
             NSLog(@"--------------------------%@",result);
@@ -822,7 +814,6 @@
             
             NSLog(@"申请精品店faildic==%@",failDic);
             
-            [LTools showMBProgressWithText:failDic[@"ERRO_INFO"] addToView:self.view];
         }];
         
         
@@ -864,17 +855,15 @@
         NSString *post = [NSString stringWithFormat:@"&mall_id=%@&floor_id=%@&brand_id=%@&door_num=%@&mobile=%@&code=%@&authcode=%@",mall_id,floor_id,brand_id,door_num,mobile,code,[GMAPI getAuthkey]];
         NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
         NSString *url = [NSString stringWithFormat:SHENQINGSHANGCHANGDIAN];
-        GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
+        LTools *ccc = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             NSLog(@"申请商场店:%@",result);
             NSLog(@"申请商场店:%@",[result stringValueForKey:@"msg"]);
             if ([[result stringValueForKey:@"errorcode"]intValue] == 0) {
-                [GMAPI showAutoHiddenMBProgressWithText:@"提交成功" addToView:self.view];
                 [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_SHENQINGDIANPU_SUCCESS object:nil];
                 [self performSelector:@selector(shenqingtijiao) withObject:[NSNumber numberWithBool:YES] afterDelay:2];
             }else{
-                [GMAPI showAutoHiddenMBProgressWithText:[result objectForKey:@"msg"] addToView:self.view];
             }
             
             
@@ -882,7 +871,6 @@
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             NSLog(@"申请商场店faildic==%@",failDic);
             
-            [GMAPI showMBProgressWithText:failDic[@"ERRO_INFO"] addToView:self.view];
         }];
         
     }
@@ -985,7 +973,7 @@
     
     NSString *api = [NSString stringWithFormat:STORELISTWITHPROVINCEANDCITY,NSStringFromInt((int)self.provinceIn),NSStringFromInt((int)self.cityIn)];
     
-    GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+    LTools *cc = [[LTools alloc]initWithUrl:api isPost:NO postData:nil];
     
     [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -1040,7 +1028,7 @@
         return;
     }
     
-    GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+    LTools *cc = [[LTools alloc]initWithUrl:api isPost:NO postData:nil];
     [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         

@@ -70,7 +70,7 @@
     
     NSString *url = [NSString stringWithFormat:@"%@&shop_id=%@&authcode=%@&page=%d&per_page=%d",FANGKE_MYSHOP,self.shop_id,[GMAPI getAuthkey],_page,_pageCapacity];
     
-    GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:NO postData:nil];
+    LTools *ccc = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"店铺访客:%@",result);
         NSArray *arr = [result arrayValueForKey:@"list"];

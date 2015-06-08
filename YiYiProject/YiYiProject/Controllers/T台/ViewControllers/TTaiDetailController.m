@@ -259,7 +259,6 @@
         
         NSLog(@"-->%@",result);
         
-        [LTools showMBProgressWithText:result[RESULT_INFO] addToView:bself.view];
         
         weakTable.pageNum = 1;
         weakTable.isReloadData = YES;
@@ -267,7 +266,6 @@
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
-        [LTools showMBProgressWithText:failDic[@"msg"] addToView:bself.view];
     }];
 }
 
@@ -342,7 +340,6 @@
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
-        [LTools showMBProgressWithText:failDic[@"msg"] addToView:self.view];
     }];
 }
 
@@ -372,7 +369,6 @@
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
-        [LTools showMBProgressWithText:failDic[@"msg"] addToView:self.view];
     }];
 }
 

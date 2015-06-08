@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import "GRefreshTableHeaderView.h"
-#import "GmPrepareNetData.h"
+
 @class SCGIFImageView;
 
 @interface GrefreshTableFooterView : UIView

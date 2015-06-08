@@ -30,7 +30,7 @@
 - (void)getNetData
 {
     NSString *api = [NSString stringWithFormat:GET_DIVISOINBYSTYLE_URL,[sourceDic objectForKey:@"style_id"],[GMAPI getAuthkey]];
-    GmPrepareNetData *gg = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+    LTools *gg = [[LTools alloc]initWithUrl:api isPost:NO postData:nil];
     [gg requestCompletion:^(NSDictionary *result, NSError *erro) {
         if(result && [[result objectForKey:@"errorcode"] integerValue] == 0)
         {

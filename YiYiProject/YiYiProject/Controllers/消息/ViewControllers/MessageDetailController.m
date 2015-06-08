@@ -204,7 +204,6 @@
             
             //活动不存在
             
-            [LTools showMBProgressWithText:result[RESULT_INFO] addToView:self.view];
             
             [self performSelector:@selector(leftButtonTap:) withObject:nil afterDelay:1.f];
             

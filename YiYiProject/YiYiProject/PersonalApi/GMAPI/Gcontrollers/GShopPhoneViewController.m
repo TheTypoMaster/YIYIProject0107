@@ -98,23 +98,20 @@
     NSLog(@"%@",url);
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:NO postData:nil];
+    LTools *ccc = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         NSLog(@"------%@",result);
         
         if ([result[@"errorcode"]intValue] == 0) {
-            [GMAPI showAutoHiddenMBProgressWithText:result[@"msg"] addToView:self.view];
             [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_EDIT_SHOP_PHONE_SUCCESS object:nil];
             [self performSelector:@selector(ggggoback) withObject:[NSNumber numberWithBool:YES] afterDelay:1.5];
         }else{
-            [GMAPI showAutoHiddenMBProgressWithText:result[@"msg"] addToView:self.view];
         }
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        [GMAPI showAutoHiddenMBProgressWithText:failDic[@"msg"] addToView:self.view];
     }];
 }
 
