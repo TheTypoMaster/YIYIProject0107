@@ -114,7 +114,8 @@
     
     
     if (_phoneTf.text.length==11) {
-        NSString *api = [NSString stringWithFormat:@"%@&mobile=%@&&type=5",GPHONECODE,_phoneTf.text];
+        
+        NSString *api = [NSString stringWithFormat:USER_GET_SECURITY_CODE,_phoneTf.text,5,[LTools md5Phone:_passWordTf.text]];
         GmPrepareNetData *ccc =[[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
             

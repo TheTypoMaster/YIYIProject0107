@@ -445,7 +445,7 @@
     
     
     if ([LTools isValidateMobile:_phoneTf.text]) {
-        NSString *api = [NSString stringWithFormat:PHONE_YANZHENGMA_SHENQINGSHANGCHANGDIAN,_phoneTf.text];
+        NSString *api = [NSString stringWithFormat:USER_GET_SECURITY_CODE,_phoneTf.text,5,[LTools md5Phone:_phoneTf.text]];
         GmPrepareNetData *ccc =[[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
             
@@ -659,7 +659,7 @@
     NSLog(@"%@",tf.text);
     if ([LTools isValidateMobile:tf.text]) {
         
-        NSString *api = [NSString stringWithFormat:PHONE_YANZHENGMA_SHENQINGSHANGCHANGDIAN,tf.text];
+        NSString *api = [NSString stringWithFormat:USER_GET_SECURITY_CODE,tf.text,5,[LTools md5Phone:tf.text]];
         GmPrepareNetData *ccc =[[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
             if ([result[@"errorcode"]intValue]==0) {

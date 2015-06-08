@@ -15,6 +15,8 @@
 
 #import "ActivityImageModel.h"
 
+#define IMAGE_TEMP_TAG @"<image_$$&_" //上传图片占位符
+
 @interface PublishActivityController ()
 {
     LRichTextView *editor;
@@ -64,7 +66,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor lightGrayColor];
     self.myTitleLabel.text = @"发布话题";
     self.myTitleLabel.textColor = [UIColor whiteColor];
     
@@ -83,14 +85,14 @@
         return;
     }
     
-    editor = [[LRichTextView alloc]initWithFrame:CGRectMake(0, 0, ALL_FRAME_WIDTH, ALL_FRAME_HEIGHT - 64) rootViewController:self];
+    editor = [[LRichTextView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT - 64) rootViewController:self];
     [self.view addSubview:editor];
     
     //编辑活动
     
     if (self.theEditActivityModel || self.isEditActivity) {
         
-        [editor editContentArray:self.theEditActivityModel.activity_info];
+        [editor editContentArray:self.theEditActivityModel.activity_detail];
     }
 }
 
@@ -200,20 +202,24 @@
         
         NSDictionary *aDic = temp_arr[i];
         NSString *content = aDic[CELL_CONTENT];
-        if ([content rangeOfString:@"image"].length > 0)
+        if ([content rangeOfString:IMAGE_TEMP_TAG].length > 0)
         {
             //需要替换
             
-            ActivityImageModel *aImageModel = (ActivityImageModel*)[imageModels objectAtIndex:imageIndex];
+            if (imageIndex < imageModels.count) {
+                
+                ActivityImageModel *aImageModel = (ActivityImageModel*)[imageModels objectAtIndex:imageIndex];
+                
+                NSMutableDictionary *temp = [NSMutableDictionary dictionaryWithDictionary:aDic];
+                
+                NSString *content = [NSString stringWithFormat:@"<img src=\"%@\" width=\"%@\" height=\"%@\">",aImageModel.image_resize_url,aImageModel.image_resize_width,aImageModel.image_resize_height];
+                [temp setObject:content forKey:CELL_CONTENT];
+                
+                [temp_arr replaceObjectAtIndex:i withObject:temp];
+                
+                imageIndex ++;
+            }
             
-            NSMutableDictionary *temp = [NSMutableDictionary dictionaryWithDictionary:aDic];
-            
-            NSString *content = [NSString stringWithFormat:@"<img src=\"%@\" width=\"%@\" height=\"%@\">",aImageModel.image_resize_url,aImageModel.image_resize_width,aImageModel.image_resize_height];
-            [temp setObject:content forKey:CELL_CONTENT];
-
-            [temp_arr replaceObjectAtIndex:i withObject:temp];
-            
-            imageIndex ++;
         }
         
     }
@@ -393,7 +399,7 @@
             
             NSMutableDictionary *imageDic = [NSMutableDictionary dictionaryWithDictionary:aDic];
             
-            NSString *imageName = [NSString stringWithFormat:@"image_%d",imageIndex];
+            NSString *imageName = [NSString stringWithFormat:@"%@%d",IMAGE_TEMP_TAG,imageIndex];
             
             [imageDic setObject:imageName forKey:CELL_CONTENT];
             
@@ -441,7 +447,7 @@
     
     
     NSString *shop_id = _shopId;//店铺id
-    NSString *activity_info = activityContent;//活动内容
+    NSString *activity_detail = activityContent;//活动内容
     NSString *start_time = _activityStartTime;//活动开始时间
     NSString *end_time = _activityEndTime;//活动结束时间
     NSString *activity_title = _actitityTitle;//活动标题
@@ -459,7 +465,7 @@
                            @"type":type,
                            @"shop_id":shop_id,
                            @"activity_title":activity_title,
-                           @"activity_info":activity_info,
+                           @"activity_info":activity_detail,
                            @"start_time":start_time,
                            @"end_time":end_time,
                            @"authcode":[GMAPI getAuthkey],
@@ -473,7 +479,7 @@
                            @"type":type,
                            @"shop_id":shop_id,
                            @"activity_title":activity_title,
-                           @"activity_info":activity_info,
+                           @"activity_info":activity_detail,
                            @"start_time":start_time,
                            @"end_time":end_time,
                            @"authcode":[GMAPI getAuthkey],

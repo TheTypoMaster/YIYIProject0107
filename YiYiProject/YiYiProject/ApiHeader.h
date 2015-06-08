@@ -267,7 +267,7 @@ typedef enum {
 //注册
 #define USER_REGISTER_ACTION @"http://www119.alayy.com/index.php?d=api&c=user_api&m=register&username=%@&password=%@&gender=%d&type=%d&code=%d&mobile=%@"
 //获取验证码
-#define USER_GET_SECURITY_CODE @"http://www119.alayy.com/index.php?d=api&c=user_api&m=get_code&mobile=%@&type=%d"
+#define USER_GET_SECURITY_CODE @"http://www119.alayy.com/index.php?d=api&c=user_api&m=get_code&mobile=%@&type=%d&encryptcode=%@"
 //找回密码
 #define USER_GETBACK_PASSWORD @"http://www119.alayy.com/index.php?d=api&c=user_api&m=get_back_password&mobile=%@&code=%d&new_password=%@&confirm_password=%@"
 
@@ -384,11 +384,6 @@ typedef enum {
 #define STORELISTWITHPROVINCEANDCITY @"http://www119.alayy.com/api/mall/listMall?province_id=%@&city_id=%@"
 //某商场所有楼层的品牌列表
 #define STOREALLFLOORPINPAI @"http://www119.alayy.com/?d=api&c=mall&m=listBrandFromMall&mall_id=%@"
-
-//获取手机验证码
-#define PHONE_YANZHENGMA_SHENQINGSHANGCHANGDIAN @"http://www119.alayy.com/index.php?d=api&c=user_api&m=get_code&mobile=%@&type=5"
-//获取手机验证码
-#define GPHONECODE @"http://www119.alayy.com/index.php?d=api&c=user_api&m=get_code"
 
 //申请店铺
 #define SHENQINGJINGPINDIAN @"http://www119.alayy.com/?d=api&c=mall&m=addMall"

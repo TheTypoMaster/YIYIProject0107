@@ -169,11 +169,23 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
 
 + (NSString *)stringHeadNoSpace:(NSString *)string;
 
-+ (NSString *) md5:(NSString *) text;
 
 + (void)alertText:(NSString *)text viewController:(UIViewController *)vc;
 
 + (void)alertText:(NSString *)text;
+
+#pragma mark - MD5
+
+/**
+ *  获取验证码的时候加此参数
+ *
+ *  @param phone 手机号
+ *
+ *  @return 手机号和特定字符串MD5之后的结果
+ */
++ (NSString *)md5Phone:(NSString *)phone;
+
++ (NSString *) md5:(NSString *) text;
 
 #pragma - mark 时间相关
 

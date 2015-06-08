@@ -39,6 +39,21 @@
 
 #pragma - mark MD5 加密
 
+/**
+ *  获取验证码的时候加此参数
+ *
+ *  @param phone 手机号
+ *
+ *  @return 手机号和特定字符串MD5之后的结果
+ */
++ (NSString *)md5Phone:(NSString *)phone
+{
+//    13718570646_ala-yy@_2015
+    NSString *mdPhone = [NSString stringWithFormat:@"%@_ala-yy@_2015",phone];
+    
+    return [self md5:mdPhone];
+}
+
 + (NSString *) md5:(NSString *) text
 {
     const char * bytes = [text UTF8String];
@@ -370,7 +385,10 @@
                     
                 }else
                 {
-                    NSLog(@"erroInfo:%@",erroInfo);
+                    NSLog(@"errcode:%d erroInfo:%@",erroCode,erroInfo);
+                    
+                    NSDictionary *failDic = @{RESULT_INFO:@"获取数据异常",RESULT_CODE:[NSString stringWithFormat:@"%d",erroCode]};
+                    failBlock(failDic,0);
                 }
                 
             }else

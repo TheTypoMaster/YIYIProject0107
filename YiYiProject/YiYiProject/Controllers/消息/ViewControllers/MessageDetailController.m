@@ -95,9 +95,8 @@
         UIImageView *coverImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 0, imageWidth, imageHeight)];
         [coverImageView sd_setImageWithURL:[NSURL URLWithString:aModel.cover_pic] placeholderImage:nil];
         [head addSubview:coverImageView];
-        coverImageView.backgroundColor = [UIColor lightGrayColor];
         
-        [coverImageView setImageWithURL:[NSURL URLWithString:aModel.cover_pic] placeHolderText:@"加载失败..." backgroundColor:[UIColor lightGrayColor] holderTextColor:[UIColor whiteColor]];
+        [coverImageView setImageWithURL:[NSURL URLWithString:aModel.cover_pic] placeHolderText:@"加载失败..." backgroundColor:RGBCOLOR(200, 200, 200) holderTextColor:[UIColor whiteColor]];
     }
     
     //活动标题
@@ -369,12 +368,11 @@
             height = [LTools heightForImageHeight:height/2.f imageWidth:width/2.f originalWidth:DEVICE_WIDTH - 20];
 
             UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 0, DEVICE_WIDTH - 20, height)];
-            imageView.backgroundColor = [UIColor lightGrayColor];
             [cell.contentView addSubview:imageView];
             
 //            [imageView sd_setImageWithURL:[NSURL URLWithString:content] placeholderImage:[UIImage imageNamed:@"activity_defaultCover"]];
             
-            [imageView setImageWithURL:[NSURL URLWithString:content] placeHolderText:@"加载失败..." backgroundColor:[UIColor lightGrayColor] holderTextColor:[UIColor whiteColor]];
+            [imageView setImageWithURL:[NSURL URLWithString:content] placeHolderText:@"加载失败..." backgroundColor:RGBCOLOR(200, 200, 200) holderTextColor:[UIColor whiteColor]];
             
             return cell;
         }

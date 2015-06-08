@@ -116,7 +116,7 @@ static int seconds = 60;//计时60s
     
     __weak typeof(self)weakSelf = self;
     
-    NSString *url = [NSString stringWithFormat:USER_GET_SECURITY_CODE,mobile,type];
+    NSString *url = [NSString stringWithFormat:USER_GET_SECURITY_CODE,mobile,type,[LTools md5Phone:mobile]];
     
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {

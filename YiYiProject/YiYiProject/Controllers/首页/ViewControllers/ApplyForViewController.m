@@ -377,7 +377,7 @@
         return;
     }
     
-    NSString * fullUrl = [NSString stringWithFormat:USER_GET_SECURITY_CODE,tel_textField.text,4];
+    NSString * fullUrl = [NSString stringWithFormat:USER_GET_SECURITY_CODE,tel_textField.text,4,[LTools md5Phone:tel_textField.text]];
     
     AFHTTPRequestOperation * request = [[AFHTTPRequestOperation alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:fullUrl]]];
     __weak typeof(self)bself = self;
