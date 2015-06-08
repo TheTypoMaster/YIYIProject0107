@@ -507,7 +507,7 @@
     phoneBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     phoneBtn.layer.cornerRadius = 5;
     phoneBtn.layer.masksToBounds = YES;
-    [phoneBtn setFrame:CGRectMake(CGRectGetMaxX(adressLabel.frame), adressLabel.frame.origin.y+2, 60, adressLabel.frame.size.height-4)];
+    [phoneBtn setFrame:CGRectMake(CGRectGetMaxX(adressLabel.frame), adressLabel.frame.origin.y+4, 60, adressLabel.frame.size.height-8)];
     phoneBtn.backgroundColor = RGBCOLOR(12, 62, 3);
     [phoneBtn addTarget:self action:@selector(clickToContact:) forControlEvents:UIControlEventTouchUpInside];
     [downDanghangView addSubview:phoneBtn];

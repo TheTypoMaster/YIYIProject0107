@@ -2470,11 +2470,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/Controllers/&#x9996;&#x9875;/ViewControllers/HomeClothController.m"
-            timestampString = "454507062.487078"
+            timestampString = "455425962.146705"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "407"
-            endingLineNumber = "407">
+            startingLineNumber = "410"
+            endingLineNumber = "410">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2484,11 +2484,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/Controllers/&#x9996;&#x9875;/ViewControllers/HomeClothController.m"
-            timestampString = "454507062.487078"
+            timestampString = "455425962.146705"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "358"
-            endingLineNumber = "358">
+            startingLineNumber = "361"
+            endingLineNumber = "361">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2802,11 +2802,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/Controllers/&#x9996;&#x9875;/ViewControllers/HomeClothController.m"
-            timestampString = "454507062.487078"
+            timestampString = "455425962.146705"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "415"
-            endingLineNumber = "415">
+            startingLineNumber = "418"
+            endingLineNumber = "418">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2816,11 +2816,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/Controllers/&#x9996;&#x9875;/ViewControllers/HomeClothController.m"
-            timestampString = "454507062.487078"
+            timestampString = "455425962.146705"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "430"
-            endingLineNumber = "430">
+            startingLineNumber = "433"
+            endingLineNumber = "433">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4189,11 +4189,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/Controllers/&#x9996;&#x9875;/ViewControllers/HomeClothController.m"
-            timestampString = "454507062.487078"
+            timestampString = "455425962.146705"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "270"
-            endingLineNumber = "270"
+            startingLineNumber = "273"
+            endingLineNumber = "273"
             landmarkName = "-prepareNearbyStore"
             landmarkType = "5">
             <Locations>

@@ -221,6 +221,9 @@
     NSDictionary *dic = _tableView.dataArray[indexPath.row];
     [cell loadCustomViewWithModel:dic];
     
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     cell.backgroundColor = RGBCOLOR(235, 235, 235);
     
     
