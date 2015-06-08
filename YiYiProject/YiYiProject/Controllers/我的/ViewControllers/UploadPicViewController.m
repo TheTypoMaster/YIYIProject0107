@@ -349,7 +349,7 @@
         return;
     }
     NSString *api = [NSString stringWithFormat:GET_ADDCLASSICATION_URL,_textField.text,[GMAPI getAuthkey]];
-    GmPrepareNetData *gg = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+    LTools *gg = [[LTools alloc]initWithUrl:api isPost:NO postData:nil];
     [gg requestCompletion:^(NSDictionary *result, NSError *erro) {
         if(result && [[result objectForKey:@"errorcode"] integerValue] == 0)
         {
@@ -471,7 +471,7 @@
     NSString *api = [NSString stringWithFormat:GET_MYYICHU_LIST_URL,[GMAPI getAuthkey]];
     
     NSLog(@"api===%@",api);
-    GmPrepareNetData *gg = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+    LTools *gg = [[LTools alloc]initWithUrl:api isPost:NO postData:nil];
     [gg requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         if(result && [[result objectForKey:@"errorcode"] integerValue] == 0)

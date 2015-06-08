@@ -7,7 +7,6 @@
 //
 
 #import "GpinpaiDetailViewController.h"
-#import "GmPrepareNetData.h"
 #import "NSDictionary+GJson.h"
 #import "GnearbyStoreViewController.h"
 #import "GStorePinpaiViewController.h"
@@ -97,7 +96,7 @@
     
     NSLog(@"%@",api);
     
-    GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+    LTools *cc = [[LTools alloc]initWithUrl:api isPost:NO postData:nil];
     
     [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
         
@@ -108,7 +107,6 @@
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
-        [GMAPI showAutoHiddenMBProgressWithText:@"加载数据失败，请下拉列表重新加载" addToView:self.view];
         NSLog(@"失败");
     }];
 }
@@ -177,18 +175,16 @@
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         
-        GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
+        LTools *ccc = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             if ([[result stringValueForKey:@"errorcode"]intValue] == 0) {
-                [GMAPI showAutoHiddenMBProgressWithText:@"收藏成功" addToView:self.view];
                 [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_PINPAI object:nil];
                 [_my_right_button setTitle:@"已收藏" forState:UIControlStateNormal];
                 self.guanzhu = @"1";
             }
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [GMAPI showAutoHiddenMBProgressWithText:@"收藏失败" addToView:self.view];
         }];
     }else if ([self.guanzhu intValue] == 1){
         NSString *post = [NSString stringWithFormat:@"&brand_id=%@&authcode=%@",self.pinpaiIdStr,[GMAPI getAuthkey]];
@@ -196,12 +192,11 @@
         NSString *url = [NSString stringWithFormat:QUXIAOGUANZHUPINPAI];
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
+        LTools *ccc = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             
             if ([[result stringValueForKey:@"errorcode"]intValue]==0) {
-                [GMAPI showAutoHiddenMBProgressWithText:@"取消收藏成功" addToView:self.view];
                 [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_PINPAI_QUXIAO object:nil];
                 [_my_right_button setTitle:@"收藏" forState:UIControlStateNormal];
                 self.guanzhu = @"0";
@@ -210,7 +205,6 @@
             
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [GMAPI showAutoHiddenMBProgressWithText:@"取消收藏失败" addToView:self.view];
         }];
     }
 }
@@ -220,7 +214,7 @@
 -(void)getGuanzhuYesOrNoForPinpai{
     
     NSString *api = [NSString stringWithFormat:@"%@&brand_id=%@&authcode=%@",GUANZHUPINPAI_ISORNO,self.pinpaiIdStr,[GMAPI getAuthkey]];
-    GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+    LTools *ccc = [[LTools alloc]initWithUrl:api isPost:NO postData:nil];
     [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         NSLog(@"%@",result);

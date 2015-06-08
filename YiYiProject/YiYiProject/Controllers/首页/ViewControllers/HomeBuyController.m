@@ -184,11 +184,7 @@
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-        [GMAPI showAutoHiddenMBProgressWithText:failDic[RESULT_INFO] addToView:weakSelf.view];
-        if ([failDic[RESULT_CODE] intValue] == -11) {
-            
-            [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:weakSelf.view];
-        }
+        
         aMode.product_like_num = NSStringFromInt([aMode.product_like_num intValue]);
         cell.like_label.text = aMode.product_like_num;
     }];

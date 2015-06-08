@@ -182,7 +182,6 @@
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
-        [LTools showMBProgressWithText:failDic[@"msg"] addToView:self.view];
     }];
 }
 #pragma mark--UIgestureDelegate
@@ -199,7 +198,7 @@
 {
     
     NSString *api = [NSString stringWithFormat:GET_GETMYSTYLE_URL,[GMAPI getAuthkey]];
-    GmPrepareNetData *gg = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+    LTools *gg = [[LTools alloc]initWithUrl:api isPost:NO postData:nil];
     [gg requestCompletion:^(NSDictionary *result, NSError *erro) {
         if(result && [[result objectForKey:@"errorcode"] integerValue] == 0)
         {

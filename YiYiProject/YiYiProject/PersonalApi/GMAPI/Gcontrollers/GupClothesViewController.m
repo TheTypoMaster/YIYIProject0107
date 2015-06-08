@@ -436,26 +436,22 @@
             
             NSData *postData = [postStr dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
             
-            GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:uploadImageUrlStr isPost:YES postData:postData];
+            LTools *ccc = [[LTools alloc]initWithUrl:uploadImageUrlStr isPost:YES postData:postData];
             [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
                 NSDictionary *mydic=result;
                 if (mydic == nil) {
-                    [GMAPI showAutoHiddenMBProgressWithText:@"上传失败" addToView:self.view];
                     return;
                 }
                 
                 if ([[mydic objectForKey:@"errorcode"]intValue]==0) {
-                    [GMAPI showAutoHiddenMBProgressWithText:@"修改成功" addToView:self.view];
                     [[NSNotificationCenter defaultCenter]postNotificationName:GEDITPRODUCT_SUCCESS object:nil];
                     [self performSelector:@selector(fabuyifuSuccessToGoBack) withObject:[NSNumber numberWithBool:YES] afterDelay:1.2];
                     
                 }else{
-                    [GMAPI showAutoHiddenMBProgressWithText:[mydic objectForKey:@"msg"] addToView:self.view];
                 }
             } failBlock:^(NSDictionary *failDic, NSError *erro) {
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
-                [GMAPI showAutoHiddenMBProgressWithText:@"修改失败请重新修改" addToView:self.view];
             }];
             return;
         }else if (self.assetsArray.count>0){//只有新图

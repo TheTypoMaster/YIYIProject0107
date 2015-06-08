@@ -124,7 +124,6 @@ static int seconds = 60;//计时60s
         NSLog(@"result %@ erro %@",result,erro);
         
         
-        [LTools showMBProgressWithText:result[RESULT_INFO] addToView:self.view];
         
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
@@ -133,7 +132,6 @@ static int seconds = 60;//计时60s
         
         [weakSelf renewTimer];
         
-        [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
     }];
 
 }
@@ -187,7 +185,6 @@ static int seconds = 60;//计时60s
         NSLog(@"result %@ erro %@",result,erro);
         
         
-        [LTools showMBProgressWithText:result[RESULT_INFO] addToView:self.view];
         
         [self performSelector:@selector(clickToClose:) withObject:nil afterDelay:0.2];
         
@@ -196,7 +193,6 @@ static int seconds = 60;//计时60s
         
         NSLog(@"failDic %@ erro %@",failDic,erro);
         
-        [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
     }];
 
 }

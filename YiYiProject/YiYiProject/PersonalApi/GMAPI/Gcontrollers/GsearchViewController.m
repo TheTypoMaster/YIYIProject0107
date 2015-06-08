@@ -7,7 +7,6 @@
 //
 
 #import "GsearchViewController.h"
-#import "GmPrepareNetData.h"
 #import "NSDictionary+GJson.h"
 #import "GcustomSearchTableViewCell.h"
 #import "GStorePinpaiViewController.h"//店铺主页

@@ -7,7 +7,7 @@
 //
 
 #import "GnearbyStoreViewController.h"
-#import "GmPrepareNetData.h"
+
 #import "NSDictionary+GJson.h"
 #import "GLeadBuyMapViewController.h"
 //#import "UIViewAdditions.h"
@@ -94,7 +94,7 @@
     }else{
         url = [NSString stringWithFormat:@"%@&mall_id=%@",LIULAN_NUM_STORE,self.mall_id];
     }
-    GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:NO postData:nil];
+    LTools *ccc = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
@@ -169,7 +169,7 @@
         NSString *api = [NSString stringWithFormat:@"%@&mall_id=%@&authcode=%@",HOME_CLOTH_NEARBYSTORE_DETAIL,self.storeIdStr,[GMAPI getAuthkey]];
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+        LTools *ccc = [[LTools alloc]initWithUrl:api isPost:NO postData:nil];
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
              NSLog(@"%@",result);
@@ -192,17 +192,15 @@
         NSString *url = [NSString stringWithFormat:GUANZHUSHANGCHANG];
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
+        LTools *ccc = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [GMAPI showAutoHiddenMBProgressWithText:@"收藏成功" addToView:self.view];
             [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_STORE object:nil];
             [_my_right_button setTitle:@"已收藏" forState:UIControlStateNormal];
             self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
             self.guanzhu = @"1";
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [GMAPI showAutoHiddenMBProgressWithText:@"收藏失败" addToView:self.view];
         }];
     }else if ([self.guanzhu intValue] == 1){
         NSString *post = [NSString stringWithFormat:@"&mall_id=%@&authcode=%@",self.mall_id,[GMAPI getAuthkey]];
@@ -210,17 +208,15 @@
         NSString *url = [NSString stringWithFormat:QUXIAOGUANZHU_SHANGCHANG];
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
+        LTools *ccc = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [GMAPI showAutoHiddenMBProgressWithText:@"取消收藏成功" addToView:self.view];
             [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_STORE_QUXIAO object:nil];
             [_my_right_button setTitle:@"收藏" forState:UIControlStateNormal];
             self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
             self.guanzhu = @"0";
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [GMAPI showAutoHiddenMBProgressWithText:@"取消收藏失败" addToView:self.view];
         }];
     }
     
@@ -475,7 +471,7 @@
     NSLog(@"请求的接口:%@",api);
 
     
-    GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+    LTools *cc = [[LTools alloc]initWithUrl:api isPost:NO postData:nil];
     [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"%@",result);
@@ -513,7 +509,6 @@
         
 
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        [GMAPI showAutoHiddenMBProgressWithText:@"加载失败请检查网络" addToView:self.view];
     }];
     
     

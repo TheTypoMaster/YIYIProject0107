@@ -297,7 +297,6 @@
         
         NSLog(@"failDic %@ erro %@",failDic,erro);
         
-        [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
         
         [weakSelf loginResultIsSuccess:NO];
 

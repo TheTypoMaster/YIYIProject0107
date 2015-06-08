@@ -431,7 +431,6 @@
 		E37EB4F81ABFC2BF009F5797 /* ios7_newssearchbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E37EB4F71ABFC2BF009F5797 /* ios7_newssearchbar@2x.png */; };
 		E37EB4FB1ABFC82F009F5797 /* GCustomSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = E37EB4FA1ABFC82F009F5797 /* GCustomSegmentView.m */; };
 		E37EB5691AC00BEC009F5797 /* GloadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = E37EB55E1AC00BEC009F5797 /* GloadingView.m */; };
-		E37EB56A1AC00BEC009F5797 /* GmPrepareNetData.m in Sources */ = {isa = PBXBuildFile; fileRef = E37EB5601AC00BEC009F5797 /* GmPrepareNetData.m */; };
 		E37EB56B1AC00BEC009F5797 /* GrefreshTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = E37EB5621AC00BEC009F5797 /* GrefreshTableFooterView.m */; };
 		E37EB56C1AC00BEC009F5797 /* GrefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = E37EB5641AC00BEC009F5797 /* GrefreshTableHeaderView.m */; };
 		E37EB56D1AC00BEC009F5797 /* GrefreshTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E37EB5661AC00BEC009F5797 /* GrefreshTableView.m */; };
@@ -1267,8 +1266,6 @@
 		E37EB4FA1ABFC82F009F5797 /* GCustomSegmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCustomSegmentView.m; sourceTree = "<group>"; };
 		E37EB55D1AC00BEC009F5797 /* GloadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GloadingView.h; sourceTree = "<group>"; };
 		E37EB55E1AC00BEC009F5797 /* GloadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GloadingView.m; sourceTree = "<group>"; };
-		E37EB55F1AC00BEC009F5797 /* GmPrepareNetData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GmPrepareNetData.h; sourceTree = "<group>"; };
-		E37EB5601AC00BEC009F5797 /* GmPrepareNetData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GmPrepareNetData.m; sourceTree = "<group>"; };
 		E37EB5611AC00BEC009F5797 /* GrefreshTableFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrefreshTableFooterView.h; sourceTree = "<group>"; };
 		E37EB5621AC00BEC009F5797 /* GrefreshTableFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrefreshTableFooterView.m; sourceTree = "<group>"; };
 		E37EB5631AC00BEC009F5797 /* GrefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrefreshTableHeaderView.h; sourceTree = "<group>"; };
@@ -3070,8 +3067,6 @@
 			children = (
 				E37EB55D1AC00BEC009F5797 /* GloadingView.h */,
 				E37EB55E1AC00BEC009F5797 /* GloadingView.m */,
-				E37EB55F1AC00BEC009F5797 /* GmPrepareNetData.h */,
-				E37EB5601AC00BEC009F5797 /* GmPrepareNetData.m */,
 				E37EB5611AC00BEC009F5797 /* GrefreshTableFooterView.h */,
 				E37EB5621AC00BEC009F5797 /* GrefreshTableFooterView.m */,
 				E37EB5631AC00BEC009F5797 /* GrefreshTableHeaderView.h */,
@@ -3773,7 +3768,6 @@
 				E37486CD1AC2AEAD004A722F /* GmyActivetiesViewController.m in Sources */,
 				56726C491A55A9A90085D77C /* TopicSubCommentsModel.m in Sources */,
 				DFC7812D1A615FF700776C62 /* MyMatchDivisionDetailViewController.m in Sources */,
-				E37EB56A1AC00BEC009F5797 /* GmPrepareNetData.m in Sources */,
 				DFB196EA1A6D3D900006633F /* UIImage+ImageEffects.m in Sources */,
 				E37A2E2E1A7349C300145608 /* GchooseAdressViewController.m in Sources */,
 				137C39131A714ABA00CE3971 /* MailInfoModel.m in Sources */,

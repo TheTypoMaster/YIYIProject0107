@@ -302,13 +302,11 @@
         
         NSLog(@"-->%@",result);
         
-        [LTools showMBProgressWithText:result[@"msg"] addToView:self.view];
         
         [self performSelector:@selector(leftButtonTap:) withObject:nil afterDelay:0.2];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
-        [LTools showMBProgressWithText:failDic[@"msg"] addToView:self.view];
     }];
 }
 

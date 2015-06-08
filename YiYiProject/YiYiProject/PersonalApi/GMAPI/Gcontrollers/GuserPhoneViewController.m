@@ -116,7 +116,7 @@
     if (_phoneTf.text.length==11) {
         
         NSString *api = [NSString stringWithFormat:USER_GET_SECURITY_CODE,_phoneTf.text,5,[LTools md5Phone:_passWordTf.text]];
-        GmPrepareNetData *ccc =[[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+        LTools *ccc =[[LTools alloc]initWithUrl:api isPost:NO postData:nil];
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
             
             NSLog(@"%@",result);
@@ -167,22 +167,19 @@
         
         NSData *postData = [postUrl dataUsingEncoding:NSUTF8StringEncoding];
         
-        GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:GBANGDINGPHONE isPost:YES postData:postData];
+        LTools *ccc = [[LTools alloc]initWithUrl:GBANGDINGPHONE isPost:YES postData:postData];
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             
             NSLog(@"%@",result);
             
-            [GMAPI showAutoHiddenMBProgressWithText:result[@"msg"] addToView:self.view];
             
             
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [GMAPI showAutoHiddenMBProgressWithText:failDic[@"msg"] addToView:self.view];
         }];
         
     }else{
-        [GMAPI showAutoHiddenMBProgressWithText:@"请完善信息" addToView:self.view];
     }
     
    

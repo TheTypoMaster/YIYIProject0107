@@ -71,7 +71,7 @@
 -(void)prepareNetData{
     NSString *url = [NSString stringWithFormat:@"%@&authcode=%@&shop_id=%@",GMYSHOPERWEIMA,[GMAPI getAuthkey],self.shop_id];
     
-    GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:NO postData:nil];
+    LTools *ccc = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"%@",result);
         _result = result;

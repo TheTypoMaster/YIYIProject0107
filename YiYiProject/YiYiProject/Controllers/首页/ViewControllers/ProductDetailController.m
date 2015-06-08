@@ -187,7 +187,6 @@
         
         [weakLoading hide:YES];
         
-        [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:weakSelf.view];
         
     }];
 }

@@ -201,7 +201,7 @@
     }else{
         url = [NSString stringWithFormat:@"%@&shop_id=%@",LIULAN_NUM_SHOP,self.shopId];
     }
-    GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:NO postData:nil];
+    LTools *ccc = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
@@ -289,7 +289,6 @@
             
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [GMAPI showAutoHiddenMBProgressWithText:@"加载失败请检查网络" addToView:self.view];
             
         }];
         
@@ -339,7 +338,6 @@
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        [GMAPI showAutoHiddenMBProgressWithText:@"加载失败请检查网络" addToView:self.view];
     }];
 }
 
@@ -671,7 +669,7 @@
 -(void)getGuanzhuYesOrNoForPinpai{
     
     NSString *api = [NSString stringWithFormat:@"%@&brand_id=%@&authcode=%@",GUANZHUPINPAI_ISORNO,self.pinpaiId,[GMAPI getAuthkey]];
-    GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+    LTools *ccc = [[LTools alloc]initWithUrl:api isPost:NO postData:nil];
     [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         NSLog(@"%@",result);
@@ -780,11 +778,10 @@
             NSString *url = [NSString stringWithFormat:GUANZHUSHANGCHANG];
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-            GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
+            LTools *ccc = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
             [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
                 [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                 if ([[result stringValueForKey:@"errorcode"]intValue] == 0) {
-                    [GMAPI showAutoHiddenMBProgressWithText:@"收藏成功" addToView:self.view];
                     [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_STORE object:nil];
                     [_my_right_button setTitle:@"已收藏" forState:UIControlStateNormal];
                     self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
@@ -792,14 +789,11 @@
                 }else{
                     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                     if ([[result stringValueForKey:@"errorcode"]intValue] > 2000) {
-                        [GMAPI showAutoHiddenMBProgressWithText:[result stringValueForKey:@"msg"] addToView:self.view];
                     }else{
-                        [GMAPI showAutoHiddenMBProgressWithText:@"收藏失败" addToView:self.view];
                     }
                 }
             } failBlock:^(NSDictionary *failDic, NSError *erro) {
                 [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                [GMAPI showAutoHiddenMBProgressWithText:@"收藏失败" addToView:self.view];
             }];
         }else if ([self.guanzhu intValue] == 1){
             NSString *post = [NSString stringWithFormat:@"&mall_id=%@&authcode=%@",self.storeIdStr,[GMAPI getAuthkey]];
@@ -807,12 +801,11 @@
             NSString *url = [NSString stringWithFormat:QUXIAOGUANZHU_SHANGCHANG];
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-            GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
+            LTools *ccc = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
             [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
                 [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                 
                 if ([[result stringValueForKey:@"errorcode"]intValue]==0) {
-                    [GMAPI showAutoHiddenMBProgressWithText:@"取消收藏成功" addToView:self.view];
                     [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_STORE_QUXIAO object:nil];
                     [_my_right_button setTitle:@"收藏" forState:UIControlStateNormal];
                     self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
@@ -820,16 +813,13 @@
                 }else{
                     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                     if ([[result stringValueForKey:@"errorcode"]intValue] > 2000) {
-                        [GMAPI showAutoHiddenMBProgressWithText:[result stringValueForKey:@"msg"] addToView:self.view];
                     }else{
-                        [GMAPI showAutoHiddenMBProgressWithText:@"取消收藏失败" addToView:self.view];
                     }
                 }
                 
                 
             } failBlock:^(NSDictionary *failDic, NSError *erro) {
                 [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                [GMAPI showAutoHiddenMBProgressWithText:@"取消收藏失败" addToView:self.view];
             }];
         }
         
@@ -845,13 +835,12 @@
             NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-            GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
+            LTools *ccc = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
             [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
                 [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                 
                 [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                 if ([[result stringValueForKey:@"errorcode"]intValue] == 0) {
-                    [GMAPI showAutoHiddenMBProgressWithText:@"收藏成功" addToView:self.view];
                     [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_STORE object:nil];
                     [_my_right_button setTitle:@"已收藏" forState:UIControlStateNormal];
                     self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
@@ -860,26 +849,22 @@
                     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                     
                     if ([[result stringValueForKey:@"errorcode"]intValue] > 2000) {
-                        [GMAPI showAutoHiddenMBProgressWithText:[result stringValueForKey:@"msg"] addToView:self.view];
                     }else{
-                        [GMAPI showAutoHiddenMBProgressWithText:@"收藏失败" addToView:self.view];
                     }
                     
                     
                 }
             } failBlock:^(NSDictionary *failDic, NSError *erro) {
                 [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                [GMAPI showAutoHiddenMBProgressWithText:@"收藏失败" addToView:self.view];
             }];
         }else if ([self.guanzhu intValue] == 1){//已收藏
             
             NSString *url = GQUXIAOGUANZHUPINPAIDIAN;
             NSString *post = [NSString stringWithFormat:@"&shop_id=%@&authcode=%@",self.shopId,[GMAPI getAuthkey]];
             NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-            GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
+            LTools *ccc = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
             [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
                 if ([[result stringValueForKey:@"errorcode"]intValue]==0) {
-                    [GMAPI showAutoHiddenMBProgressWithText:@"取消收藏成功" addToView:self.view];
                     [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_STORE_QUXIAO object:nil];
                     [_my_right_button setTitle:@"收藏" forState:UIControlStateNormal];
                     self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
@@ -887,15 +872,12 @@
                 }else{
                     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                     if ([[result stringValueForKey:@"errorcode"]intValue] > 2000) {
-                        [GMAPI showAutoHiddenMBProgressWithText:[result stringValueForKey:@"msg"] addToView:self.view];
                     }else{
-                        [GMAPI showAutoHiddenMBProgressWithText:@"取消收藏失败" addToView:self.view];
                     }
                     
                 }
             } failBlock:^(NSDictionary *failDic, NSError *erro) {
                 [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                [GMAPI showAutoHiddenMBProgressWithText:@"取消收藏失败" addToView:self.view];
             }];
             
         }
@@ -919,11 +901,10 @@
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         
-        GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
+        LTools *ccc = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             if ([[result stringValueForKey:@"errorcode"]intValue] == 0) {
-                [GMAPI showAutoHiddenMBProgressWithText:@"收藏成功" addToView:self.view];
                 [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_PINPAI object:nil];
                 [_my_right_button setTitle:@"已收藏" forState:UIControlStateNormal];
                 self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
@@ -931,7 +912,6 @@
             }
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [GMAPI showAutoHiddenMBProgressWithText:@"收藏失败" addToView:self.view];
         }];
     }else if ([self.guanzhu intValue] == 1){
         NSString *post = [NSString stringWithFormat:@"&brand_id=%@&authcode=%@",self.pinpaiId,[GMAPI getAuthkey]];
@@ -939,7 +919,7 @@
         NSString *url = [NSString stringWithFormat:QUXIAOGUANZHUPINPAI];
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        GmPrepareNetData *ccc = [[GmPrepareNetData alloc]initWithUrl:url isPost:YES postData:postData];
+        LTools *ccc = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             
@@ -954,7 +934,6 @@
             
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [GMAPI showAutoHiddenMBProgressWithText:@"取消收藏失败" addToView:self.view];
         }];
     }
 }
@@ -1086,7 +1065,6 @@
             
             if (list.count == 0) {
                 [_waterFlow loadFail];
-                [GMAPI showAutoHiddenQuicklyMBProgressWithText:@"暂无" addToView:_backView_water];
             }
             
             arr = [NSMutableArray arrayWithCapacity:list.count];
@@ -1310,7 +1288,6 @@
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-        [GMAPI showAutoHiddenMBProgressWithText:failDic[RESULT_INFO] addToView:weakSelf.view];
         if ([failDic[RESULT_CODE] intValue] == -11) {
             
             [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:weakSelf.view];

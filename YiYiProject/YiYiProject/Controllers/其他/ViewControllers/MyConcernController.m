@@ -265,7 +265,6 @@
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
-        [LTools showMBProgressWithText:failDic[@"msg"] addToView:self.view];
     }];
     
 }
@@ -309,18 +308,15 @@
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         
         if ([[result stringValueForKey:@"errorcode"]intValue]==0) {
-            [GMAPI showAutoHiddenMBProgressWithText:@"取消关注成功" addToView:self.view];
             [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_STORE_QUXIAO object:nil];
             //刷新数据
             [weakSelf refreshMailList:index];
         }else{
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [GMAPI showAutoHiddenMBProgressWithText:result[@"msg"] addToView:self.view];
         }
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        [LTools showMBProgressWithText:failDic[@"msg"] addToView:self.view];
     }];
     
 }
@@ -467,7 +463,6 @@
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
         
-        [GMAPI showAutoHiddenMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
         
         [waterFlow loadFail];
         
@@ -574,9 +569,7 @@
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
-        if ([failDic[RESULT_CODE] intValue] == -11 || [failDic[RESULT_CODE] intValue] == 2003) {
-            [LTools showMBProgressWithText:failDic[@"msg"] addToView:self.view];
-        }
+        
         
     }];
 }
@@ -626,11 +619,7 @@
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-        [GMAPI showAutoHiddenMBProgressWithText:failDic[RESULT_INFO] addToView:weakSelf.view];
-        if ([failDic[RESULT_CODE] intValue] == -11) {
-            
-            [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:weakSelf.view];
-        }
+        
         aMode.product_like_num = NSStringFromInt([aMode.product_like_num intValue]);
         cell.like_label.text = aMode.product_like_num;
     }];
