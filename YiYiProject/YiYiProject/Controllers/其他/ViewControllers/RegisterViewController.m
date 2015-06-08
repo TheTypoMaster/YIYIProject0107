@@ -125,9 +125,6 @@ static int seconds = 60;//计时60s
         
         [LTools showMBProgressWithText:result[RESULT_INFO] addToView:self.view];
 
-
-
-        
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
