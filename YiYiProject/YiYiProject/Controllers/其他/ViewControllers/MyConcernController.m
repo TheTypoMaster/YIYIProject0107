@@ -308,6 +308,7 @@
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         
         if ([[result stringValueForKey:@"errorcode"]intValue]==0) {
+            [GMAPI showAutoHiddenMBProgressWithText:@"取消关注成功" addToView:self.view];
             [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_STORE_QUXIAO object:nil];
             //刷新数据
             [weakSelf refreshMailList:index];
@@ -462,8 +463,7 @@
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-        
-        
+
         [waterFlow loadFail];
         
     }];
@@ -596,7 +596,7 @@
     
     NSString *productId = aMode.product_id;
     
-    __weak typeof(self)weakSelf = self;
+//    __weak typeof(self)weakSelf = self;
     
     __block BOOL isZan = !sender.selected;
     

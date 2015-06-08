@@ -418,7 +418,7 @@ typedef enum{
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         if (!_getUserinfoSuccess) {
             
-            [self performSelector:@selector(GgetUserInfo) withObject:[NSNumber numberWithBool:YES] afterDelay:2];
+//            [self performSelector:@selector(GgetUserInfo) withObject:[NSNumber numberWithBool:YES] afterDelay:2];
         }
     }];
     

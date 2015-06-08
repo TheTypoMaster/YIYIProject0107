@@ -226,7 +226,9 @@
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
-        
+        if ([failDic[RESULT_CODE] intValue] == -11 || [failDic[RESULT_CODE] intValue] == 2003) {
+            [LTools showMBProgressWithText:failDic[@"msg"] addToView:self.view];
+        }
         
     }];
 }
@@ -255,6 +257,7 @@
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+        
         [weakTable loadFail];
         
     }];

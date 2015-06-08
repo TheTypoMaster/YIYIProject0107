@@ -22,6 +22,7 @@
     id detail_model;
     ActivityModel *_activityModel;
 //    NSArray *_activityInfo;//活动详情
+    
 }
 
 @end
@@ -156,6 +157,9 @@
 //action= yy(衣加衣) shop（商家） dynamic（动态）
 - (void)getMessageInfo
 {
+    
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
     NSString *key = [GMAPI getAuthkey];
     
     NSString *url = [NSString stringWithFormat:MESSAGE_GET_DETAIL,self.msg_id,key];
@@ -185,12 +189,16 @@
             
             [_table reloadData];
         }
+        
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     
         
     } failBlock:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"failDic %@",result);
         
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+
         int errcode = [result[RESULT_CODE]intValue];
         if (errcode == 2003) {
             
@@ -201,6 +209,16 @@
             
             return ;
         }
+        
+        
+        if (errcode == -11) {
+            
+            [LTools showMBProgressWithText:result[RESULT_INFO] addToView:self.view];
+        }
+        
+        UIButton *btn = [LTools createButtonWithType:UIButtonTypeCustom frame:self.view.bounds normalTitle:@"点击屏幕,重新加载" image:nil backgroudImage:nil superView:nil target:self action:@selector(getMessageInfo)];
+        [self.view addSubview:btn];
+
         
     }];
 }

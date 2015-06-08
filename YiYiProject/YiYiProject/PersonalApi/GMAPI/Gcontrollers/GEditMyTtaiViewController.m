@@ -283,6 +283,7 @@
         
         NSLog(@"success %@",result);
         if ([[result stringValueForKey:@"errorcode"]intValue] == 0) {
+            [GMAPI showAutoHiddenMBProgressWithText:[result stringValueForKey:@"msg"] addToView:self.view];
             [self editFinishAndChangeView];
             [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_TTAI_EDIT_SUCCESS object:nil];
             

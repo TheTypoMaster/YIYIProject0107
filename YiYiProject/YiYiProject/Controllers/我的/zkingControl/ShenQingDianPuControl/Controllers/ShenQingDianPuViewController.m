@@ -451,11 +451,7 @@
             
             NSLog(@"%@",result);
             
-            if ([result[@"errorcode"]intValue]==0) {
-            }else {
-            }
-            
-            
+            [GMAPI showAutoHiddenMidleQuicklyMBProgressWithText:@"验证码已发送" addToView:self.view];
             
             
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
@@ -660,6 +656,7 @@
         LTools *ccc =[[LTools alloc]initWithUrl:api isPost:NO postData:nil];
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
             if ([result[@"errorcode"]intValue]==0) {
+                [GMAPI showAutoHiddenMidleQuicklyMBProgressWithText:@"验证码已发送" addToView:self.view];
             }else {
             }
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
@@ -801,6 +798,7 @@
             NSLog(@"申请精品店返回的dic:%@",result);
             NSLog(@"申请精品店:msg:%@",[result objectForKey:@"msg"]);
             if ([[result stringValueForKey:@"errorcode"]intValue]==0) {//成功
+                [GMAPI showAutoHiddenMBProgressWithText:[result objectForKey:@"msg"] addToView:self.view];
                 [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_SHENQINGDIANPU_SUCCESS object:nil];
                 [self performSelector:@selector(shenqingtijiao) withObject:[NSNumber numberWithBool:YES] afterDelay:2];
             }else{
@@ -861,6 +859,7 @@
             NSLog(@"申请商场店:%@",result);
             NSLog(@"申请商场店:%@",[result stringValueForKey:@"msg"]);
             if ([[result stringValueForKey:@"errorcode"]intValue] == 0) {
+                [GMAPI showAutoHiddenMBProgressWithText:@"提交成功" addToView:self.view];
                 [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_SHENQINGDIANPU_SUCCESS object:nil];
                 [self performSelector:@selector(shenqingtijiao) withObject:[NSNumber numberWithBool:YES] afterDelay:2];
             }else{

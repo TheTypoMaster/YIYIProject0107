@@ -89,10 +89,10 @@
     NSString *url = @" ";
     if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == YES) {
         
-        url = [NSString stringWithFormat:@"%@&mall_id=%@&authcode=%@",LIULAN_NUM_STORE,self.mall_id,[GMAPI getAuthkey]];
+        url = [NSString stringWithFormat:@"%@&mall_id=%@&authcode=%@",LIULAN_NUM_STORE,self.storeIdStr,[GMAPI getAuthkey]];
         
     }else{
-        url = [NSString stringWithFormat:@"%@&mall_id=%@",LIULAN_NUM_STORE,self.mall_id];
+        url = [NSString stringWithFormat:@"%@&mall_id=%@",LIULAN_NUM_STORE,self.storeIdStr];
     }
     LTools *ccc = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
@@ -195,6 +195,7 @@
         LTools *ccc = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [GMAPI showAutoHiddenMBProgressWithText:@"收藏成功" addToView:self.view];
             [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_STORE object:nil];
             [_my_right_button setTitle:@"已收藏" forState:UIControlStateNormal];
             self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
@@ -211,6 +212,7 @@
         LTools *ccc = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [GMAPI showAutoHiddenMBProgressWithText:@"取消收藏成功" addToView:self.view];
             [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_STORE_QUXIAO object:nil];
             [_my_right_button setTitle:@"收藏" forState:UIControlStateNormal];
             self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
@@ -509,6 +511,8 @@
         
 
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        
     }];
     
     

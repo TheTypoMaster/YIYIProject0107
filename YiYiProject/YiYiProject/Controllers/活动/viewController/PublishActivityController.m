@@ -37,6 +37,19 @@
 @implementation PublishActivityController
 
 
+- (void)dealloc
+{
+    NSLog(@"publish activity dealloc");
+    editor = nil;
+    temp_arr = nil;
+    _actitityTitle = nil;
+    _activityCoverImage = nil;
+    _activityStartTime = nil;
+    _activityEndTime = nil;
+    _shopId = nil;
+    
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -66,7 +79,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    self.view.backgroundColor = [UIColor lightGrayColor];
+    self.view.backgroundColor = [UIColor whiteColor];
     self.myTitleLabel.text = @"发布话题";
     self.myTitleLabel.textColor = [UIColor whiteColor];
     
@@ -324,7 +337,9 @@
     
     [editor hiddenKeyboard];
     
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"" delegate:self cancelButtonTitle:@"继续编辑" otherButtonTitles:@"准备发布", nil];
+    NSString *text = self.isEditActivity ? @"完成编辑" : @"发布";
+    
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"" delegate:self cancelButtonTitle:@"继续编辑" otherButtonTitles:text, nil];
     [alert show];
     
     

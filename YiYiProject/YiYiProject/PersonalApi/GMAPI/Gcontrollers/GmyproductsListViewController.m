@@ -511,6 +511,7 @@
     [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         NSLog(@"%@",result);
+        [GMAPI showAutoHiddenMBProgressWithText:[result objectForKey:@"msg"] addToView:self.view];
         if ([[result objectForKey:@"errorcode"]intValue]==0) {
             [self editFinishAndChangeView];
         }
@@ -528,6 +529,7 @@
     [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         NSLog(@"%@",result);
+        [GMAPI showAutoHiddenMBProgressWithText:[result objectForKey:@"msg"] addToView:self.view];
         if ([[result objectForKey:@"errorcode"]intValue]==0) {
             [self editFinishAndChangeView];
         }

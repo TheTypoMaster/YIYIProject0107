@@ -68,6 +68,11 @@
     label.textColor = holderTextColor;
     self.backgroundColor = backColor;
     
+    __block UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    [self addSubview:indicator];
+    indicator.center = CGPointMake(self.width/2.f, self.height/2.f);
+    [indicator startAnimating];
+    
     [self sd_setImageWithURL:imageURL completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         
         if (error) {
@@ -80,6 +85,7 @@
             [label removeFromSuperview];
             label = nil;
         }
+        [indicator stopAnimating];
     }];
     
 }

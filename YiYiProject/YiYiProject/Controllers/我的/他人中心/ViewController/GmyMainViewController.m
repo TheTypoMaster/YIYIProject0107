@@ -278,7 +278,7 @@
     
     TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[_waterFlow.quitView cellAtIndexPath:[NSIndexPath indexPathForRow:sender.tag - 100 inSection:0]];
     
-    __weak typeof(self)weakSelf = self;
+//    __weak typeof(self)weakSelf = self;
     
     __block BOOL isZan = !sender.selected;
     

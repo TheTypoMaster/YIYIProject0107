@@ -270,9 +270,6 @@
         }
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
-//        [GMAPI showAutoHiddenMBProgressWithText:@"请检查网络" addToView:self.view];
-        
-        
         
         [_tableView loadFail];
     }];

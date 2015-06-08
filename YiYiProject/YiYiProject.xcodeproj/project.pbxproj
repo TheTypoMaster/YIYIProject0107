@@ -93,7 +93,6 @@
 		138C2C121A39E45E00EA59F5 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 138C2C111A39E45E00EA59F5 /* libstdc++.dylib */; };
 		138C2C141A39E46B00EA59F5 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 138C2C131A39E46B00EA59F5 /* libz.dylib */; };
 		138C2C1D1A39E77300EA59F5 /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 138C2C1C1A39E77300EA59F5 /* BaseModel.m */; };
-		1391DC351A870316006A2E15 /* LTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 1391DC341A870316006A2E15 /* LTools.m */; };
 		1391DC3B1A87033A006A2E15 /* LNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1391DC391A87033A006A2E15 /* LNavigationController.m */; };
 		1391DC451A8703E3006A2E15 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1391DC431A8703E3006A2E15 /* LoginViewController.m */; };
 		1391DC461A8703E3006A2E15 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1391DC441A8703E3006A2E15 /* LoginViewController.xib */; };
@@ -422,6 +421,7 @@
 		E36DAF081AD3BDB200C7FEA4 /* GCustomNearByView.m in Sources */ = {isa = PBXBuildFile; fileRef = E36DAF071AD3BDB200C7FEA4 /* GCustomNearByView.m */; };
 		E36DAF101AD40A6900C7FEA4 /* navigationBarColor_black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E36DAF0F1AD40A6900C7FEA4 /* navigationBarColor_black@2x.png */; };
 		E36DAF121AD40AD300C7FEA4 /* navigationBarBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E36DAF111AD40AD300C7FEA4 /* navigationBarBackground@2x.png */; };
+		E3701A261B25B95A00380C8D /* LTools.m in Sources */ = {isa = PBXBuildFile; fileRef = E3701A251B25B95A00380C8D /* LTools.m */; };
 		E37374001AC4FE4B00935D2B /* GchatSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E37373FF1AC4FE4B00935D2B /* GchatSettingViewController.m */; };
 		E37486CD1AC2AEAD004A722F /* GmyActivetiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E37486CC1AC2AEAD004A722F /* GmyActivetiesViewController.m */; };
 		E37486D01AC2B08B004A722F /* GEditActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E37486CF1AC2B08B004A722F /* GEditActivityTableViewCell.m */; };
@@ -676,8 +676,6 @@
 		138C2C131A39E46B00EA59F5 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		138C2C1B1A39E77300EA59F5 /* BaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseModel.h; sourceTree = "<group>"; };
 		138C2C1C1A39E77300EA59F5 /* BaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseModel.m; sourceTree = "<group>"; };
-		1391DC331A870316006A2E15 /* LTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTools.h; sourceTree = "<group>"; };
-		1391DC341A870316006A2E15 /* LTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTools.m; sourceTree = "<group>"; };
 		1391DC381A87033A006A2E15 /* LNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNavigationController.h; sourceTree = "<group>"; };
 		1391DC391A87033A006A2E15 /* LNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNavigationController.m; sourceTree = "<group>"; };
 		1391DC421A8703E3006A2E15 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -1188,6 +1186,8 @@
 		E36DAF071AD3BDB200C7FEA4 /* GCustomNearByView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCustomNearByView.m; sourceTree = "<group>"; };
 		E36DAF0F1AD40A6900C7FEA4 /* navigationBarColor_black@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigationBarColor_black@2x.png"; sourceTree = "<group>"; };
 		E36DAF111AD40AD300C7FEA4 /* navigationBarBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigationBarBackground@2x.png"; sourceTree = "<group>"; };
+		E3701A241B25B95A00380C8D /* LTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTools.h; sourceTree = "<group>"; };
+		E3701A251B25B95A00380C8D /* LTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTools.m; sourceTree = "<group>"; };
 		E37373FE1AC4FE4B00935D2B /* GchatSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GchatSettingViewController.h; sourceTree = "<group>"; };
 		E37373FF1AC4FE4B00935D2B /* GchatSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GchatSettingViewController.m; sourceTree = "<group>"; };
 		E37486CB1AC2AEAD004A722F /* GmyActivetiesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GmyActivetiesViewController.h; sourceTree = "<group>"; };
@@ -2257,13 +2257,13 @@
 		13A389A51A38974F00ABBACB /* LApi */ = {
 			isa = PBXGroup;
 			children = (
+				E3701A241B25B95A00380C8D /* LTools.h */,
+				E3701A251B25B95A00380C8D /* LTools.m */,
 				13A82BAD1B048FCA00B3AC56 /* ZoomScrollView */,
 				13963F371A4FC54D007BE68B /* LEditor */,
 				13A389A61A38974F00ABBACB /* EGORefresh */,
 				138986311A6A6A5B00F187C9 /* LDataInstance.h */,
 				138986321A6A6A5B00F187C9 /* LDataInstance.m */,
-				1391DC331A870316006A2E15 /* LTools.h */,
-				1391DC341A870316006A2E15 /* LTools.m */,
 				13FBC40E1AEF3F6100DD8311 /* NSString+Additions.h */,
 				13FBC40F1AEF3F6100DD8311 /* NSString+Additions.m */,
 				13A389AD1A38974F00ABBACB /* LToolsHeader.h */,
@@ -3838,7 +3838,6 @@
 				13FBC4091AEF284800DD8311 /* ProductModel.m in Sources */,
 				139562CB1A3C11EC007BB183 /* RegisterViewController.m in Sources */,
 				E3E64A9D1AE0D971002F00A4 /* JKAssetsViewCell.m in Sources */,
-				1391DC351A870316006A2E15 /* LTools.m in Sources */,
 				E304794B1A6109DE00709985 /* GStorePinpaiViewController.m in Sources */,
 				E37486D01AC2B08B004A722F /* GEditActivityTableViewCell.m in Sources */,
 				133B17771A750988005B8B3F /* MJPhotoLoadingView.m in Sources */,
@@ -3976,6 +3975,7 @@
 				E3E64A9B1AE0D971002F00A4 /* JKAssetsGroupsView.m in Sources */,
 				13A7A0481AF9B58F0045C75F /* MiddleTools.m in Sources */,
 				13B690671A56797E007FE152 /* TPlatCell.m in Sources */,
+				E3701A261B25B95A00380C8D /* LTools.m in Sources */,
 				13684A6B1A37583E00A508FB /* main.m in Sources */,
 				13A7A0361AF8B0F10045C75F /* ZanListViewController.m in Sources */,
 				13CD36541A3C732D0068C12A /* LWaterflowView.m in Sources */,
@@ -4178,7 +4178,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "f7cfa394-d071-4c50-9472-3da49a9d7665";
+				PROVISIONING_PROFILE = "05d9d4ad-cc8e-425d-8ada-31dfa4036f41";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 				VALID_ARCHS = "arm64 armv7s armv7";
 			};
@@ -4212,7 +4212,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "f7cfa394-d071-4c50-9472-3da49a9d7665";
+				PROVISIONING_PROFILE = "05d9d4ad-cc8e-425d-8ada-31dfa4036f41";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 				VALID_ARCHS = "arm64 armv7s armv7";
 			};

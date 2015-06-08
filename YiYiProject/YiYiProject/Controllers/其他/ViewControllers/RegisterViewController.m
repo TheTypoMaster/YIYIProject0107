@@ -123,7 +123,10 @@ static int seconds = 60;//计时60s
         
         NSLog(@"result %@ erro %@",result,erro);
         
-        
+        [LTools showMBProgressWithText:result[RESULT_INFO] addToView:self.view];
+
+
+
         
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
@@ -184,7 +187,7 @@ static int seconds = 60;//计时60s
         
         NSLog(@"result %@ erro %@",result,erro);
         
-        
+        [LTools showMBProgressWithText:result[RESULT_INFO] addToView:self.view];
         
         [self performSelector:@selector(clickToClose:) withObject:nil afterDelay:0.2];
         

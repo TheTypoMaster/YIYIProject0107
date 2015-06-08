@@ -259,7 +259,7 @@
         
         NSLog(@"-->%@",result);
         
-        
+        [LTools showMBProgressWithText:result[RESULT_INFO] addToView:bself.view];
         weakTable.pageNum = 1;
         weakTable.isReloadData = YES;
         [bself getTTaiComments];

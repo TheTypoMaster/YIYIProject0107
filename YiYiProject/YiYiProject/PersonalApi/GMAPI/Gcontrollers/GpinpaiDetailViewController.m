@@ -179,6 +179,7 @@
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             if ([[result stringValueForKey:@"errorcode"]intValue] == 0) {
+                 [GMAPI showAutoHiddenMBProgressWithText:@"收藏成功" addToView:self.view];
                 [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_PINPAI object:nil];
                 [_my_right_button setTitle:@"已收藏" forState:UIControlStateNormal];
                 self.guanzhu = @"1";
@@ -197,6 +198,7 @@
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             
             if ([[result stringValueForKey:@"errorcode"]intValue]==0) {
+                [GMAPI showAutoHiddenMBProgressWithText:@"取消收藏成功" addToView:self.view];
                 [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_PINPAI_QUXIAO object:nil];
                 [_my_right_button setTitle:@"收藏" forState:UIControlStateNormal];
                 self.guanzhu = @"0";

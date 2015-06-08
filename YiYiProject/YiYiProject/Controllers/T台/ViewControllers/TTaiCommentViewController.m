@@ -335,7 +335,7 @@
     
     __weak typeof(self)weakSelf = self;
     
-    __weak typeof(_table)weakTable = _table;
+//    __weak typeof(_table)weakTable = _table;
     
 //    __block int blockTotal = _zanTotalNum;
 //    
@@ -446,6 +446,7 @@
         
         NSLog(@"-->%@",result);
         
+        [LTools showMBProgressWithText:result[RESULT_INFO] addToView:bself.view];
         
         weakTable.pageNum = 1;
         weakTable.isReloadData = YES;

@@ -267,8 +267,8 @@
     
     
     
-    UIColor *normalColor_bgc = RGBCOLOR(253, 105, 155);
-    UIColor *selectColor_bgc = [UIColor whiteColor];
+//    UIColor *normalColor_bgc = RGBCOLOR(253, 105, 155);
+//    UIColor *selectColor_bgc = [UIColor whiteColor];
     UIColor *normalColor_tt = [UIColor blackColor];
     UIColor *selectColor_tt = RGBCOLOR(245, 75, 135);
     

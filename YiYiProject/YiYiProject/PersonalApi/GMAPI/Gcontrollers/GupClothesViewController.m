@@ -441,10 +441,12 @@
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
                 NSDictionary *mydic=result;
                 if (mydic == nil) {
+                     [GMAPI showAutoHiddenMBProgressWithText:@"上传失败" addToView:self.view];
                     return;
                 }
                 
                 if ([[mydic objectForKey:@"errorcode"]intValue]==0) {
+                    [GMAPI showAutoHiddenMBProgressWithText:@"修改成功" addToView:self.view];
                     [[NSNotificationCenter defaultCenter]postNotificationName:GEDITPRODUCT_SUCCESS object:nil];
                     [self performSelector:@selector(fabuyifuSuccessToGoBack) withObject:[NSNumber numberWithBool:YES] afterDelay:1.2];
                     

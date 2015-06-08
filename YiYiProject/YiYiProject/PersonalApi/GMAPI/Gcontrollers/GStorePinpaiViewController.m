@@ -782,6 +782,7 @@
             [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
                 [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                 if ([[result stringValueForKey:@"errorcode"]intValue] == 0) {
+                     [GMAPI showAutoHiddenMBProgressWithText:@"收藏成功" addToView:self.view];
                     [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_STORE object:nil];
                     [_my_right_button setTitle:@"已收藏" forState:UIControlStateNormal];
                     self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
@@ -806,6 +807,7 @@
                 [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                 
                 if ([[result stringValueForKey:@"errorcode"]intValue]==0) {
+                    [GMAPI showAutoHiddenMBProgressWithText:@"取消收藏成功" addToView:self.view];
                     [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_STORE_QUXIAO object:nil];
                     [_my_right_button setTitle:@"收藏" forState:UIControlStateNormal];
                     self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
@@ -841,6 +843,7 @@
                 
                 [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                 if ([[result stringValueForKey:@"errorcode"]intValue] == 0) {
+                    [GMAPI showAutoHiddenMBProgressWithText:@"收藏成功" addToView:self.view];
                     [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_STORE object:nil];
                     [_my_right_button setTitle:@"已收藏" forState:UIControlStateNormal];
                     self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
@@ -865,6 +868,7 @@
             LTools *ccc = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
             [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
                 if ([[result stringValueForKey:@"errorcode"]intValue]==0) {
+                    [GMAPI showAutoHiddenMBProgressWithText:@"取消收藏成功" addToView:self.view];
                     [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_STORE_QUXIAO object:nil];
                     [_my_right_button setTitle:@"收藏" forState:UIControlStateNormal];
                     self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
@@ -1065,6 +1069,7 @@
             
             if (list.count == 0) {
                 [_waterFlow loadFail];
+                [GMAPI showAutoHiddenQuicklyMBProgressWithText:@"暂无" addToView:_backView_water];
             }
             
             arr = [NSMutableArray arrayWithCapacity:list.count];

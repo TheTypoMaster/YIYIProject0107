@@ -375,6 +375,7 @@
     [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if ([[result stringValueForKey:@"errorcode"]intValue] == 0) {
+            [GMAPI showAutoHiddenMBProgressWithText:@"收藏成功" addToView:self.view];
             [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_STORE object:nil];
             
             [self performSelector:@selector(gdismiss) withObject:[NSNumber numberWithBool:YES] afterDelay:2];
@@ -400,6 +401,7 @@
     [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if ([[result stringValueForKey:@"errorcode"]intValue] == 0) {
+            [GMAPI showAutoHiddenMBProgressWithText:@"收藏成功" addToView:self.view];
             [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_STORE object:nil];
             
             [self performSelector:@selector(gdismiss) withObject:[NSNumber numberWithBool:YES] afterDelay:2];

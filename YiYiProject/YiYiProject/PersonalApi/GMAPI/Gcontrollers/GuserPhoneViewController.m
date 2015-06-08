@@ -173,13 +173,14 @@
             
             NSLog(@"%@",result);
             
-            
+            [GMAPI showAutoHiddenMBProgressWithText:result[@"msg"] addToView:self.view];
             
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         }];
         
     }else{
+        [GMAPI showAutoHiddenMBProgressWithText:@"请完善信息" addToView:self.view];
     }
     
    
