@@ -100,6 +100,7 @@
         [coverImageView setImageWithURL:[NSURL URLWithString:aModel.cover_pic] placeHolderText:@"加载失败..." backgroundColor:[UIColor lightGrayColor] holderTextColor:[UIColor whiteColor]];
     }
     
+    //活动标题
     CGFloat textHeight = [LTools heightForText:aModel.activity_title width:imageWidth Boldfont:15];
     UILabel *titleLabel = [LTools createLabelFrame:CGRectMake(10, imageHeight + 10, imageWidth, textHeight) title:aModel.activity_title font:15 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"ef3c42"]];
     titleLabel.lineBreakMode = NSLineBreakByCharWrapping;
@@ -107,17 +108,17 @@
     titleLabel.font = [UIFont boldSystemFontOfSize:15];
     [head addSubview:titleLabel];
     
-    //时间
+    //活动时间
     UIImageView *timeIcon = [[UIImageView alloc]initWithFrame:CGRectMake(10, titleLabel.bottom + 8, 13, 13)];
     timeIcon.image = [UIImage imageNamed:@"activity_time"];
     [head addSubview:timeIcon];
     
     NSString *timeString = [NSString stringWithFormat:@"活动时间:%@ - %@",[LTools timeString:aModel.start_time withFormat:@"YYYY.MM.dd"],[LTools timeString:aModel.end_time withFormat:@"YYYY.MM.dd"]];
     CGFloat left = timeIcon.right + 5;
-    UILabel *timeLabel = [LTools createLabelFrame:CGRectMake(left, timeIcon.top, imageWidth - left, 13) title:timeString font:13 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"b9b9b9"]];
+    UILabel *timeLabel = [LTools createLabelFrame:CGRectMake(left, timeIcon.top, imageWidth - left, 13) title:timeString font:13 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
     [head addSubview:timeLabel];
     
-    //地点
+    //活动地点
     UIImageView *addressIcon = [[UIImageView alloc]initWithFrame:CGRectMake(10, timeIcon.bottom + 8, 13, 13)];
     addressIcon.image = [UIImage imageNamed:@"activity_location"];
     [head addSubview:addressIcon];
@@ -136,9 +137,9 @@
     NSRange range = [addressString rangeOfString:aModel.address];
     label.underlineLinks = NO;
     [label addCustomLink:[NSURL URLWithString:@"坐标"] inRange:range];
-    [label setLinkColor:RGBCOLOR(87,106,154)];
+    [label setLinkColor:[UIColor colorWithHexString:@"0f60d3"]];
     
-    label.textColor = [UIColor colorWithHexString:@"b9b9b9"];
+    label.textColor = [UIColor blackColor];
 
     
     head.frame = CGRectMake(0, 0, DEVICE_WIDTH, addressIcon.bottom + 10 + 10);

@@ -752,6 +752,8 @@
         
         if (isReplaceImage) {
             
+            //需要处理一下
+            
             replaceImageView.image = image;
             
             isReplaceImage = NO;

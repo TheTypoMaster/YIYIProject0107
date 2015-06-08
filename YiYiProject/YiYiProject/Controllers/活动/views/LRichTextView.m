@@ -256,6 +256,16 @@
  */
 - (void)addNewImage:(UIImage *)aImage
 {
+    //如果最后一个没有内容则干掉
+    
+    NSDictionary *lastDic = [content_arr lastObject];
+    id content = [lastDic objectForKey:CELL_CONTENT];
+    //内容为nil或者是空字符串,则remove掉
+    if (!content || ([content isKindOfClass:[NSString class]] && ((NSString *)content).length == 0)) {
+        
+        [content_arr removeLastObject];
+    }
+    
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     
     [dic setObject:[NSNumber numberWithFloat:[self heightForImage:aImage]] forKey:CELL_NEW_HEIGHT];
@@ -626,7 +636,7 @@
                     
                     [self addNewTextCell];
                     
-                }else //不是最后一个的时候  下一个如果是文本输入框 则 让其成为第一响应者
+                }else //不是最后一个的时候  下一个如果是文本输入框 则 让其成为第一响应者;如果是图片呢,插入一个文本输入框
                 {
                     
                     NSIndexPath *nextIndexPath = [NSIndexPath indexPathForRow:indexPath.row + 1 inSection:indexPath.section];
@@ -641,11 +651,27 @@
                         
                     }else
                     {
-                        [weakTable scrollToRowAtIndexPath:nextIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+                        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
                         
+                        [dic setObject:[NSNumber numberWithFloat:ORIGINAL_HEIGHT] forKey:CELL_NEW_HEIGHT];
+                        
+                        [content_arr insertObject:dic atIndex:nextIndexPath.row];
+                        
+                        [_tableView reloadData];
+                        
+                        //                        //是图片
+                        [weakTable scrollToRowAtIndexPath:nextIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+
                         UITableViewCell *nextCell = [tableView cellForRowAtIndexPath:nextIndexPath];
                         LTextViewCell *textCell = (LTextViewCell *)nextCell;
                         [textCell.textView becomeFirstResponder];
+                        
+//                        //是图片
+//                        [weakTable scrollToRowAtIndexPath:nextIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+//                        
+//                        UITableViewCell *nextCell = [tableView cellForRowAtIndexPath:nextIndexPath];
+//                        LTextViewCell *textCell = (LTextViewCell *)nextCell;
+//                        [textCell.textView becomeFirstResponder];
                     }
                 }
                 
@@ -725,29 +751,27 @@
             
             NSLog(@"Text_ShouldEndEditing");
             
-            //            tap.enabled = NO;
-            
             
         }else if (textChangeStyle == Text_Delete){
             
             //移除上一个
             
-            //如果是文字 整合上一个 第一响应
+            //如果是文字 整合上一个 第一响应,是图片的话只删除当前
             if (indexPath.row > 0) {
                 
                 
                 NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section];
                 UITableViewCell *lastCell = [tableView cellForRowAtIndexPath:lastIndexPath];
                 
-                //如果是图片则删除图片
+                //如果是图片则删除图片(修改为是图片不动图片,删除空格的这行)
                 if ([lastCell isKindOfClass:[LImageCell class]]) {
                     
-                    [content_arr removeObjectAtIndex:lastIndexPath.row];
+//                    [content_arr removeObjectAtIndex:lastIndexPath.row];
                     
                     if (textView.text.length == 0) { //删除文字,本cell为空的话 移除此cell
                         //此时可以去掉当前cell
                         
-                        [content_arr removeLastObject];
+                        [content_arr removeObjectAtIndex:indexPath.row];
                         
                     }
                     
@@ -916,8 +940,6 @@
         {
             [self insertImage:image];
         }
-        
-        //        [self upLoadImage:image];
         
         [picker dismissViewControllerAnimated:YES completion:nil];
     }

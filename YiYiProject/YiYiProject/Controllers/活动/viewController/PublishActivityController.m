@@ -295,7 +295,7 @@
             [contentString appendString:aContent];
         }
         //前后都是文字用换行符分割
-        if ([self typeForContent:aContent] == 1 && [self typeForContent:bContent] == 1) {
+        if ([self typeForContent:aContent] == 2 && [self typeForContent:bContent] == 2) {
             
             [contentString appendFormat:@"\n%@",bContent];
         }else
@@ -318,6 +318,40 @@
     
     [editor hiddenKeyboard];
     
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"" delegate:self cancelButtonTitle:@"继续编辑" otherButtonTitles:@"准备发布", nil];
+    [alert show];
+    
+    
+}
+
+- (IBAction)clickToOpenAlbum:(id)sender {
+    
+    [editor clickToAddAlbum:sender];
+}
+
+//返回
+- (void)clickToBack:(UIButton *)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+
+}
+
+/**
+ *  发布成功返回店铺页面
+ */
+- (void)backToShopViewController
+{
+    [self.navigationController popToViewController:self.shopViewController animated:NO];
+}
+
+
+#pragma mark 网络请求
+
+/**
+ *  编辑完成准备发送了
+ */
+- (void)readyToPublish
+{
     NSArray *content_arr = [editor content];
     
     BOOL contentIsNull = YES;
@@ -383,7 +417,7 @@
     //将上传之后imageurl
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-
+    
     
     if (image_arr.count > 0) {
         
@@ -393,30 +427,8 @@
         //直接发布活动
         [self publishActivityContent:[self postContent:temp_arr]];
     }
-}
-
-- (IBAction)clickToOpenAlbum:(id)sender {
-    
-    [editor clickToAddAlbum:sender];
-}
-
-//返回
-- (void)clickToBack:(UIButton *)sender
-{
-    [self.navigationController popViewControllerAnimated:YES];
 
 }
-
-/**
- *  发布成功返回店铺页面
- */
-- (void)backToShopViewController
-{
-    [self.navigationController popToViewController:self.shopViewController animated:NO];
-}
-
-
-#pragma mark 网络请求
 
 
 /**
@@ -442,7 +454,7 @@
     
     if (self.isEditActivity) {
         
-        uploadImageUrlStr = GEDITHUODONG;
+        uploadImageUrlStr = ACTIVITY_EDIT;
         parameters_dic = @{
                            @"type":type,
                            @"shop_id":shop_id,
@@ -456,7 +468,7 @@
         
     }else
     {
-        uploadImageUrlStr = GFABUDIANPIN;
+        uploadImageUrlStr = ACTIVITY_PUBLIST;
         parameters_dic = @{
                            @"type":type,
                            @"shop_id":shop_id,
@@ -660,5 +672,20 @@
     
 }
 
+#pragma - mark 代理
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        
+        //继续编辑
+        
+    }else if (buttonIndex == 1){
+        
+        //准备发布
+        
+        [self readyToPublish];
+    }
+}
 
 @end

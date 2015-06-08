@@ -1007,7 +1007,22 @@ typedef enum{
             unreadLabel.textColor = [UIColor whiteColor];
             unreadLabel.text = [NSString stringWithFormat:@"%d",_unreadNum];
             unreadLabel.textAlignment = NSTextAlignmentCenter;
+            unreadLabel.font = [UIFont systemFontOfSize:14];
             [cell.contentView addSubview:unreadLabel];
+            
+            CGFloat aWidth = [LTools widthForText:NSStringFromInt(_unreadNum) font:14];
+            
+            if (_unreadNum <= 9) {
+                
+                aWidth = 20;
+                
+            }else
+            {
+                aWidth = ((aWidth < 20) ? 20 : aWidth) + 10;
+            }
+            
+            unreadLabel.width = aWidth;
+            
         }
         
     }

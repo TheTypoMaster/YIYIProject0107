@@ -53,7 +53,7 @@
                 <outlet property="zanBackView" destination="qyO-dK-uaw" id="8dv-bg-Vhs"/>
                 <outlet property="zanBtn" destination="b2q-o4-1jI" id="fLV-ig-cGV"/>
             </connections>
-            <point key="canvasLocation" x="-390" y="245"/>
+            <point key="canvasLocation" x="-541" y="219"/>
         </tableViewCell>
     </objects>
     <resources>

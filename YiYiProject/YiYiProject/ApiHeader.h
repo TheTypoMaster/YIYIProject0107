@@ -402,9 +402,9 @@ typedef enum {
 #define GEDITPRODUCT_MANAGE @"http://www119.alayy.com/index.php?d=api&c=products&m=edit_product_v2"
 
 //我是店主 发布活动
-#define GFABUHUODONG @"http://www119.alayy.com/index.php?d=api&c=mall&m=publish_activity"
+#define ACTIVITY_PUBLIST @"http://www119.alayy.com/index.php?d=api&c=mall&m=publish_activity"
 //修改活动
-#define GEDITHUODONG @"http://www119.alayy.com/index.php?d=api&c=mall&m=edit_activity"
+#define ACTIVITY_EDIT @"http://www119.alayy.com/index.php?d=api&c=mall&m=edit_activity"
 
 
 
@@ -546,7 +546,6 @@ typedef enum {
 //店主活动列表
 
 
-
 #define GET_MAIL_ACTIVITY_LIST @"http://www119.alayy.com/index.php?d=api&c=mall&m=get_activities&authcode=%@&page=%d&per_page=%d"
 
 //店主单品列表
@@ -644,7 +643,7 @@ typedef enum {
 #define SHARE_TPLAT_DETAIL @"http://www119.alayy.com/index.php?d=wap&c=tplat&m=getttinfo&tt_id=%@"
 
 //单品产品详情
-#define SHARE_PRODUCT_DETAIL @"http://www119`.alayy.com/index.php?d=wap&c=products&m=getProductInfo&product_id=%@"
+#define SHARE_PRODUCT_DETAIL @"http://www119.alayy.com/index.php?d=wap&c=products&m=getProductInfo&product_id=%@"
 
 #endif
 
