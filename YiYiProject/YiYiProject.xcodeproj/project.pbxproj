@@ -4184,7 +4184,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "05d9d4ad-cc8e-425d-8ada-31dfa4036f41";
+				PROVISIONING_PROFILE = "24ef308c-9850-4b6a-b41f-ebf483ecc314";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 				VALID_ARCHS = "arm64 armv7s armv7";
 			};
@@ -4218,7 +4218,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "05d9d4ad-cc8e-425d-8ada-31dfa4036f41";
+				PROVISIONING_PROFILE = "24ef308c-9850-4b6a-b41f-ebf483ecc314";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 				VALID_ARCHS = "arm64 armv7s armv7";
 			};

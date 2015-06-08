@@ -289,7 +289,8 @@
 
 //删除图片
 -(void)removeSelf{
-    [_showPicBtn setBackgroundImage:nil forState:UIControlStateNormal];
+    
+    [_showPicBtn setImage:nil forState:UIControlStateNormal];
     _showImage = nil;
     
 }
@@ -428,7 +429,7 @@
         _showImage = originImage;
         _showImageData = UIImageJPEGRepresentation(_showImage, 0.3);
 
-        [_showPicBtn setBackgroundImage:_showImage forState:UIControlStateNormal];
+        [_showPicBtn setImage:_showImage forState:UIControlStateNormal];
         
         
         //将图片传递给截取界面进行截取并设置回调方法（协议）
