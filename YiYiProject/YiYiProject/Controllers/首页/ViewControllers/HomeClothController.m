@@ -275,7 +275,7 @@
         
         int errcode = [failDic[RESULT_CODE] intValue];
         
-        if (errcode != 999) {
+        if (errcode != 999 && errcode != -11) {
             [GMAPI showAutoHiddenMBProgressWithText:[failDic stringValueForKey:@"msg"] addToView:self.view];
 
         }

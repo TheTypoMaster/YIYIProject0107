@@ -178,6 +178,132 @@
     [connection cancel];
 }
 
+
+#pragma mark - NSURLConnectionDataDelegate
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    
+    _data = [NSMutableData data];
+    
+    NSLog(@"response :%@",response);
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+    [_data appendData:data];
+}
+
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    
+    
+    //    NSString *str = [[NSString alloc]initWithData:_data encoding:NSUTF8StringEncoding];
+    
+    //    NSLog(@"response string %@",str);
+    
+    if (_data.length > 0) {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:_data options:0 error:nil];
+        
+        if ([dic isKindOfClass:[NSDictionary class]]) {
+            
+            int erroCode = [[dic objectForKey:RESULT_CODE]intValue];
+            NSString *erroInfo = [dic objectForKey:RESULT_INFO];
+            
+            if (erroCode != 0) { //0代表无错误,  && erroCode != 1 1代表无结果
+                
+                
+                //大于2000的可以正常提示错误,小于2000的为内部错误 参数错误等
+                if (erroCode > 2000) {
+                    
+                    NSDictionary *failDic = @{RESULT_INFO:erroInfo,RESULT_CODE:[NSString stringWithFormat:@"%d",erroCode]};
+                    failBlock(failDic,0);
+                    
+                    
+                }else
+                {
+                    NSLog(@"errcode:%d erroInfo:%@",erroCode,erroInfo);
+                    
+                    NSDictionary *failDic = @{RESULT_INFO:@"获取数据异常",RESULT_CODE:[NSString stringWithFormat:@"%d",erroCode]};
+                    failBlock(failDic,0);
+                }
+                
+                [self showErroInfo:erroInfo];
+
+                
+            }else
+            {
+                successBlock(dic,0);//传递的已经是没有错误的结果
+            }
+        }else
+        {
+            NSLog(@"-----------解析数据为空");
+            
+            NSDictionary *failDic = @{RESULT_INFO:@"获取数据异常",RESULT_CODE:@"999"};
+            failBlock(failDic,0);
+            
+            [self showErroInfo:@"获取数据异常"];
+        }
+        
+    }else
+    {
+        
+        NSLog(@"-----------请求数据为空");
+        
+        NSDictionary *failDic = @{RESULT_INFO:@"获取数据异常",RESULT_CODE:@"999"};
+        
+        failBlock(failDic,0);
+        [self showErroInfo:@"获取数据异常"];
+
+    }
+    
+    
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    
+    NSLog(@"data 为空 connectionError %@",error);
+    
+    NSString *errInfo = @"网络有问题,请检查网络";
+    switch (error.code) {
+        case NSURLErrorNotConnectedToInternet:
+            
+            errInfo = @"无网络连接";
+            break;
+        case NSURLErrorTimedOut:
+            
+            errInfo = @"网络连接超时";
+            break;
+        default:
+            break;
+    }
+    
+    //- 11 代表网络问题
+    NSDictionary *failDic = @{RESULT_INFO: errInfo,RESULT_CODE:NSStringFromInt(-11)};
+    failBlock(failDic,error);
+    
+    [self showErroInfo:errInfo];
+    
+}
+
+/**
+ *  显示错误提示
+ *
+ *  @param errInfo
+ */
+- (void)showErroInfo:(NSString *)errInfo
+{
+    [MBProgressHUD hideAllHUDsForView:[UIApplication sharedApplication].keyWindow animated:YES];
+    
+    [LTools showMBProgressWithText:errInfo addToView:[UIApplication sharedApplication].keyWindow];
+}
+
+
 #pragma mark - 版本更新信息
 
 - (void)versionForAppid:(NSString *)appid Block:(void(^)(BOOL isNewVersion,NSString *updateUrl,NSString *updateContent))version//是否有新版本、新版本更新下地址
@@ -189,77 +315,130 @@
     
     NSString *newStr = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
-    NSLog(@"requestUrl %@",newStr);
-    NSURL *urlS = [NSURL URLWithString:newStr];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:urlS cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:30];
+    requestUrl = newStr;
+    requestData = nil;
+    isPostRequest = NO;
     
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+    [self requestCompletion:^(NSDictionary *result, NSError *erro) {
         
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        NSArray *results = [result objectForKey:@"results"];
         
-        if (data.length > 0) {
+        if (results.count == 0) {
             
-            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:Nil];
-            
-            NSArray *results = [dic objectForKey:@"results"];
-            
-            if (results.count == 0) {
-                version(NO,@"no",@"没有更新");
-                return ;
-            }
-            
-            //appStore 版本
-            NSString *newVersion = [[results objectAtIndex:0]objectForKey:@"version"];
-            
-            NSString *updateContent = [[results objectAtIndex:0]objectForKey:@"releaseNotes"];
-            //本地版本
-            NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-            NSString *currentVersion = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
-            _downUrl = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/us/app/id%@?mt=8",appid];
-            
-            //            _downUrl = [NSString stringWithFormat:@"https://itunes.apple.com/cn/app/crash-drive-2/id765099329?mt=12"];
-            BOOL isNew = NO;
-            if (newVersion && ([newVersion compare:currentVersion] == 1)) {
-                isNew = YES;
-            }
-                        
-            version(isNew,_downUrl,updateContent);
-            
-            if (isNew) {
-                
-                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"版本更新" message:updateContent delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"立即更新", nil];
-                [alert show];
-            }
-            
-        }else
-        {
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-            
-            NSLog(@"data 为空 connectionError %@",connectionError);
-            
-            NSString *errInfo = @"网络有问题,请检查网络";
-            switch (connectionError.code) {
-                case NSURLErrorNotConnectedToInternet:
-                    
-                    errInfo = @"无网络连接";
-                    break;
-                case NSURLErrorTimedOut:
-                    
-                    errInfo = @"网络连接超时";
-                    break;
-                default:
-                    break;
-            }
-            
-            NSDictionary *failDic = @{RESULT_INFO: errInfo};
-            
-            NSLog(@"version erro %@",failDic);
-            
+            version(NO,@"no",@"没有更新");
+            return ;
         }
+        
+        //appStore 版本
+        NSString *newVersion = [[results objectAtIndex:0]objectForKey:@"version"];
+        
+        NSString *updateContent = [[results objectAtIndex:0]objectForKey:@"releaseNotes"];
+        //本地版本
+        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+        NSString *currentVersion = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+        _downUrl = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/us/app/id%@?mt=8",appid];
+
+        BOOL isNew = NO;
+        if (newVersion && ([newVersion compare:currentVersion] == 1)) {
+            isNew = YES;
+        }
+        
+        version(isNew,_downUrl,updateContent);
+        
+        if (isNew) {
+            
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"版本更新" message:updateContent delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"立即更新", nil];
+            [alert show];
+        }
+        
+        
+    } failBlock:^(NSDictionary *result, NSError *erro) {
+        
         
     }];
     
 }
+
+//- (void)versionForAppid:(NSString *)appid Block:(void(^)(BOOL isNewVersion,NSString *updateUrl,NSString *updateContent))version//是否有新版本、新版本更新下地址
+//{
+//    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+//    
+//    //test FBLife 605673005 fbauto 904576362
+//    NSString *url = [NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",appid];
+//    
+//    NSString *newStr = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//    
+//    NSLog(@"requestUrl %@",newStr);
+//    NSURL *urlS = [NSURL URLWithString:newStr];
+//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:urlS cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:30];
+//    
+//    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+//        
+//        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+//        
+//        if (data.length > 0) {
+//            
+//            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:Nil];
+//            
+//            NSArray *results = [dic objectForKey:@"results"];
+//            
+//            if (results.count == 0) {
+//                version(NO,@"no",@"没有更新");
+//                return ;
+//            }
+//            
+//            //appStore 版本
+//            NSString *newVersion = [[results objectAtIndex:0]objectForKey:@"version"];
+//            
+//            NSString *updateContent = [[results objectAtIndex:0]objectForKey:@"releaseNotes"];
+//            //本地版本
+//            NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+//            NSString *currentVersion = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+//            _downUrl = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/us/app/id%@?mt=8",appid];
+//            
+//            //            _downUrl = [NSString stringWithFormat:@"https://itunes.apple.com/cn/app/crash-drive-2/id765099329?mt=12"];
+//            BOOL isNew = NO;
+//            if (newVersion && ([newVersion compare:currentVersion] == 1)) {
+//                isNew = YES;
+//            }
+//                        
+//            version(isNew,_downUrl,updateContent);
+//            
+//            if (isNew) {
+//                
+//                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"版本更新" message:updateContent delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"立即更新", nil];
+//                [alert show];
+//            }
+//            
+//        }else
+//        {
+//            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+//            
+//            NSLog(@"data 为空 connectionError %@",connectionError);
+//            
+//            NSString *errInfo = @"网络有问题,请检查网络";
+//            switch (connectionError.code) {
+//                case NSURLErrorNotConnectedToInternet:
+//                    
+//                    errInfo = @"无网络连接";
+//                    break;
+//                case NSURLErrorTimedOut:
+//                    
+//                    errInfo = @"网络连接超时";
+//                    break;
+//                default:
+//                    break;
+//            }
+//            
+//            NSDictionary *failDic = @{RESULT_INFO: errInfo};
+//            
+//            NSLog(@"version erro %@",failDic);
+//            
+//        }
+//        
+//    }];
+//    
+//}
 
 #pragma mark UIAlertViewDelegate
 
@@ -338,108 +517,6 @@
         
     }];
 
-}
-
-#pragma mark - NSURLConnectionDataDelegate
-
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    
-    _data = [NSMutableData data];
-    
-    NSLog(@"response :%@",response);
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
-    [_data appendData:data];
-}
-
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    
-    
-//    NSString *str = [[NSString alloc]initWithData:_data encoding:NSUTF8StringEncoding];
-    
-//    NSLog(@"response string %@",str);
-    
-    if (_data.length > 0) {
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:_data options:0 error:nil];
-        
-        if ([dic isKindOfClass:[NSDictionary class]]) {
-            
-            int erroCode = [[dic objectForKey:RESULT_CODE]intValue];
-            NSString *erroInfo = [dic objectForKey:RESULT_INFO];
-            
-            if (erroCode != 0) { //0代表无错误,  && erroCode != 1 1代表无结果
-                
-                
-                //大于2000的可以正常提示错误,小于2000的为内部错误 参数错误等
-                if (erroCode > 2000) {
-                    
-                    NSDictionary *failDic = @{RESULT_INFO:erroInfo,RESULT_CODE:[NSString stringWithFormat:@"%d",erroCode]};
-                    failBlock(failDic,0);
-                    
-                }else
-                {
-                    NSLog(@"errcode:%d erroInfo:%@",erroCode,erroInfo);
-                    
-                    NSDictionary *failDic = @{RESULT_INFO:@"获取数据异常",RESULT_CODE:[NSString stringWithFormat:@"%d",erroCode]};
-                    failBlock(failDic,0);
-                }
-                
-            }else
-            {
-                successBlock(dic,0);//传递的已经是没有错误的结果
-            }
-        }else
-        {
-            NSLog(@"-----------解析数据为空");
-            
-            NSDictionary *failDic = @{RESULT_INFO:@"获取数据异常",RESULT_CODE:@"999"};
-            failBlock(failDic,0);
-        }
-        
-    }else
-    {
-        
-        NSLog(@"-----------请求数据为空");
-        
-        NSDictionary *failDic = @{RESULT_INFO:@"获取数据异常",RESULT_CODE:@"999"};
-
-        failBlock(failDic,0);
-    }
-    
-    
-}
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    
-    NSLog(@"data 为空 connectionError %@",error);
-    
-    NSString *errInfo = @"网络有问题,请检查网络";
-    switch (error.code) {
-        case NSURLErrorNotConnectedToInternet:
-            
-            errInfo = @"无网络连接";
-            break;
-        case NSURLErrorTimedOut:
-            
-            errInfo = @"网络连接超时";
-            break;
-        default:
-            break;
-    }
-    
-    //- 11 代表网络问题
-    NSDictionary *failDic = @{RESULT_INFO: errInfo,RESULT_CODE:NSStringFromInt(-11)};
-    failBlock(failDic,error);
-    
 }
 
 #pragma mark - NSUserDefault缓存

@@ -467,8 +467,6 @@
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
         
-        [GMAPI showAutoHiddenMBProgressWithText:failDic[RESULT_INFO] addToView:self.view];
-        
         [waterFlow loadFail];
         
     }];

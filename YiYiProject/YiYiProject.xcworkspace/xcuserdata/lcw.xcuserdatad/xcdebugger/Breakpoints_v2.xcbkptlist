@@ -32,16 +32,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "YiYiProject/Controllers/&#x6d3b;&#x52a8;/viewController/PublishActivityController.m"
-            timestampString = "455441263.061987"
+            filePath = "YiYiProject/Controllers/&#x9996;&#x9875;/ViewControllers/ProductDetailController.m"
+            timestampString = "455449086.877288"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "575"
-            endingLineNumber = "575"
-            landmarkName = "-publishActivityContent:"
+            startingLineNumber = "678"
+            endingLineNumber = "678"
+            landmarkName = "-clickToStore:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
