@@ -695,11 +695,12 @@
 }
 
 
-////手指滑动 手指停止时走 在DidEndDecelerating之前
-//-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-//    NSLog(@"%s",__FUNCTION__);
-//    _topScrollView.noChange = NO;
-//}
+//手指滑动 手指停止时走 在DidEndDecelerating之前
+-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    NSLog(@"%s",__FUNCTION__);
+    _topScrollView.noChange = NO;
+    _topScrollView.userInteractionEnabled = YES;
+}
 
 //代码控制setContentOffSet时候停止滚动
 -(void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView{
