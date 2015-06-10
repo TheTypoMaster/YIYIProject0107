@@ -496,15 +496,6 @@
     detail.product_id =[NSString stringWithFormat:@"%ld",sender.view.tag] ;
     detail.lastPageNavigationHidden = YES;
     
-//    detail.disappearBlock = ^(BOOL succss){
-//        
-//        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
-//        
-//    };
-    
-//    detail.isPresent = YES;
-    
-//    LNavigationController *unvc = [[LNavigationController alloc]initWithRootViewController:detail];
     
     [self.navigationController pushViewController:detail animated:YES];
     

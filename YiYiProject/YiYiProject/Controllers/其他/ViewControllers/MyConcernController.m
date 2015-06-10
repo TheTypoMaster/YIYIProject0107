@@ -878,30 +878,20 @@
 
 #pragma - mark RefreshDelegate
 
-- (void)loadNewData
+- (void)loadNewDataForTableView:(UITableView *)tableView
 {
-    if ([self buttonForTag:102].selected) {
+    if (shopTable == tableView) {
         
         [self getShop];
-    }
-    
-    if ([self buttonForTag:103].selected) {
-        
+    }else
+    {
         [self getBrand];
     }
     
 }
-- (void)loadMoreData
+- (void)loadMoreDataForTableView:(UITableView *)tableView
 {
-    if ([self buttonForTag:102].selected) {
-        
-        [self getShop];
-    }
-    
-    if ([self buttonForTag:103].selected) {
-        
-        [self getBrand];
-    }
+    [self loadNewDataForTableView:tableView];
 }
 
 //新加
@@ -1026,22 +1016,21 @@
 
 #pragma mark - WaterFlowDelegate
 
-- (void)waterLoadNewData
+
+- (void)waterLoadNewDataForWaterView:(TMQuiltView *)waterView
 {
-    if ([self buttonForTag:100].selected) {
-        
-        [self getMyCollection];
-    }
-    
-    if ([self buttonForTag:101].selected) {
+    if (waterFlow_t.quitView == waterView){
         
         [self getTTaiCollect];
+    }else
+    {
+        [self getMyCollection];
     }
-    
+
 }
-- (void)waterLoadMoreData
+- (void)waterLoadMoreDataForWaterView:(TMQuiltView *)waterView
 {
-    [self waterLoadNewData];
+    [self waterLoadNewDataForWaterView:waterView];
 }
 
 - (void)waterDidSelectRowAtIndexPath:(NSIndexPath *)indexPath

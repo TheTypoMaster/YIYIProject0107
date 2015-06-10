@@ -301,7 +301,7 @@
         _refreshFooterView = [[EGORefreshTableFooterView alloc] initWithFrame:
                               CGRectMake(0.0f, height,
                                          qtmquitView.frame.size.width, self.bounds.size.height)];
-        _refreshFooterView.delegate = self;
+//        _refreshFooterView.delegate = self;
         [qtmquitView addSubview:_refreshFooterView];
     }
     
@@ -348,7 +348,7 @@
         [qtmquitView scrollRectToVisible:CGRectMake(0, 0.0f, 1, 1) animated:NO];
     }
     
-    [_refreshHeaderView setState:EGOOPullRefreshLoading];
+    [_refreshHeaderView setState:L_EGOOPullRefreshLoading];
     [_refreshHeaderView egoRefreshScrollViewDidEndDragging:qtmquitView];
 }
 
@@ -387,6 +387,11 @@
         [_waterDelegate waterLoadNewData];
     }
     
+    if (_waterDelegate && [_waterDelegate respondsToSelector:@selector(waterLoadNewDataForWaterView:)]) {
+        
+        [_waterDelegate waterLoadNewDataForWaterView:qtmquitView];
+    }
+    
 //    NSLog(@"刷新完成");
 //    [self testFinishedLoadData];
     
@@ -397,6 +402,11 @@
     if (_waterDelegate && [_waterDelegate respondsToSelector:@selector(waterLoadMoreData)]) {
         [_waterDelegate waterLoadMoreData];
         
+    }
+    
+    if (_waterDelegate && [_waterDelegate respondsToSelector:@selector(waterLoadMoreDataForWaterView:)]) {
+        
+        [_waterDelegate waterLoadMoreDataForWaterView:qtmquitView];
     }
     
 //    [self testFinishedLoadData];
@@ -452,6 +462,16 @@
             self.pageNum ++;
             [_waterDelegate performSelector:@selector(waterLoadMoreData)];
         }
+        
+        if (_waterDelegate && [_waterDelegate respondsToSelector:@selector(waterLoadMoreDataForWaterView:)]) {
+            
+            [self startLoading];
+            
+            _isLoadMoreData = YES;
+            
+            self.pageNum ++;
+            [_waterDelegate waterLoadMoreDataForWaterView:qtmquitView];
+        }
     }
 }
 
@@ -505,14 +525,6 @@
 - (CGFloat)waterHeightForCellIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat aHeight = 0.f;
-//    ProductModel *aMode = waterFlow.dataArray[indexPath.row];
-//    if (aMode.imagelist.count >= 1) {
-//        
-//        NSDictionary *imageDic = aMode.imagelist[0];
-//        NSDictionary *middleImage = imageDic[@"540Middle"];
-//        //        CGFloat aWidth = [middleImage[@"width"]floatValue];
-//        aHeight = [middleImage[@"height"]floatValue];
-//    }
     
     return aHeight / 2.f + 33;
 }

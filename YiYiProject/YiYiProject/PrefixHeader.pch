@@ -23,6 +23,8 @@
 #import "UIView+Additions.h"
 #import "UIViewController+Addtions.h"
 #import "NSDate+Additons.h"
+#import "UIButton+Additions.h"
+#import "UILabel+Additions.h"
 
 #import "UIColor+ConvertColor.h"
 #import "UIView+JKPicker.h"

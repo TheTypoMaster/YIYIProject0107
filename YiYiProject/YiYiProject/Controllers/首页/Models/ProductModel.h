@@ -35,7 +35,7 @@
 
 @property(nonatomic,retain)NSString *product_share_num;
 
-@property(nonatomic,retain)NSString *product_sku;
+@property(nonatomic,retain)NSString *product_sku;//型号
 @property(nonatomic,retain)NSString *product_hostsale;
 
 @property(nonatomic,retain)NSString *product_add_time;

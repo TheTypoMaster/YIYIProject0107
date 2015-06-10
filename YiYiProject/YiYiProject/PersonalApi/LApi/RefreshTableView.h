@@ -16,6 +16,10 @@
 @optional
 - (void)loadNewData;
 - (void)loadMoreData;
+
+- (void)loadNewDataForTableView:(UITableView *)tableView;
+- (void)loadMoreDataForTableView:(UITableView *)tableView;
+
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath;
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath;
 

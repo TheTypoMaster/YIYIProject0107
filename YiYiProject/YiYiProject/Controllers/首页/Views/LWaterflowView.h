@@ -20,6 +20,10 @@
 @optional
 - (void)waterLoadNewData;
 - (void)waterLoadMoreData;
+
+- (void)waterLoadNewDataForWaterView:(TMQuiltView *)waterView;
+- (void)waterLoadMoreDataForWaterView:(TMQuiltView *)waterView;
+
 - (void)waterDidSelectRowAtIndexPath:(NSIndexPath *)indexPath;
 - (CGFloat)waterHeightForCellIndexPath:(NSIndexPath *)indexPath;
 

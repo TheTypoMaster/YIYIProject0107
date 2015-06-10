@@ -170,6 +170,12 @@
         self.pageNum = 1;
         [_refreshDelegate performSelector:@selector(loadNewData)];
     }
+    
+    if (_refreshDelegate && [_refreshDelegate respondsToSelector:@selector(loadNewDataForTableView:)]) {
+        
+        self.pageNum = 1;
+        [_refreshDelegate loadNewDataForTableView:self];
+    }
 }
 
 
@@ -192,6 +198,12 @@
             
             self.pageNum = 1;
             [_refreshDelegate performSelector:@selector(loadNewData)];
+        }
+        
+        if (_refreshDelegate && [_refreshDelegate respondsToSelector:@selector(loadNewDataForTableView:)]) {
+            
+            self.pageNum = 1;
+            [_refreshDelegate loadNewDataForTableView:self];
         }
     }
     
@@ -353,6 +365,17 @@
             
             self.pageNum ++;
             [_refreshDelegate performSelector:@selector(loadMoreData)];
+        }
+        
+        
+        if (_refreshDelegate && [_refreshDelegate respondsToSelector:@selector(loadMoreDataForTableView:)]) {
+            
+            [self startLoading];
+            
+            _isLoadMoreData = YES;
+            
+            self.pageNum ++;
+            [_refreshDelegate loadMoreDataForTableView:self];
         }
     }
 }

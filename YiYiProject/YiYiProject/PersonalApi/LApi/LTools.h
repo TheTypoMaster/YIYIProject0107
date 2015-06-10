@@ -165,11 +165,6 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
  */
 + (NSString *)distanceString:(NSString *)distance;
 
-+ (NSString *)safeString:(NSString *)string;
-
-+ (NSString *)stringHeadNoSpace:(NSString *)string;
-
-
 + (void)alertText:(NSString *)text viewController:(UIViewController *)vc;
 
 + (void)alertText:(NSString *)text;
@@ -240,6 +235,24 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
 
 +(NSString *)numberToString:(long)number;//千分位
 
++ (NSString *)safeString:(NSString *)string;
+
+/**
+ *  去掉开头空格
+ *
+ *  @param string
+ *
+ *  @return 
+ */
++ (NSString *)stringHeadNoSpace:(NSString *)string;
+
+/**
+ *  排除NSNull null 和 (null)
+ *
+ *  @param text
+ *
+ *  @return 空格
+ */
 + (NSString *)NSStringNotNull:(NSString *)text;
 
 + (NSString *)NSStringAddComma:(NSString *)string; //添加逗号

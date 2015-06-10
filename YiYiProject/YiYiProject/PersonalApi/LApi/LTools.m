@@ -919,24 +919,6 @@
     return distanceStr;
 }
 
-+ (NSString *)safeString:(NSString *)string
-{
-    if (string == nil) {
-        return @"";
-    }
-    return string;
-}
-
-/**
- *  去除开头的空格
- */
-+ (NSString *)stringHeadNoSpace:(NSString *)string
-{
-    string = string.length == 0 ? @"" : string;
-    NSMutableString *mu_str = [NSMutableString stringWithString:string];
-    [mu_str replaceOccurrencesOfString:@" " withString:@"" options:0 range:NSMakeRange(0, mu_str.length)];
-    return mu_str;
-}
 
 #pragma - mark 时间相关
 
@@ -1345,18 +1327,42 @@
     return numberString;
 }
 
-
+/**
+ *  排除NSNull null 和 (null)
+ *
+ *  @param text
+ *
+ *  @return 空格
+ */
 + (NSString *)NSStringNotNull:(NSString *)text
 {
     if (![text isKindOfClass:[NSString class]]) {
         return @"";
-    }else if ([text isEqualToString:@"(null)"]){
-        return @"";
-    }else if ([text isKindOfClass:[NSNull class]]){
+    }else if ([text isEqualToString:@"(null)"] || [text isEqualToString:@"null"] || [text isKindOfClass:[NSNull class]]){
         return @"";
     }
     return text;
 }
+
++ (NSString *)safeString:(NSString *)string
+{
+    if (string == nil) {
+        return @"";
+    }
+    return string;
+}
+
+/**
+ *  去除开头的空格
+ */
++ (NSString *)stringHeadNoSpace:(NSString *)string
+{
+    string = string.length == 0 ? @"" : string;
+    NSMutableString *mu_str = [NSMutableString stringWithString:string];
+    [mu_str replaceOccurrencesOfString:@" " withString:@"" options:0 range:NSMakeRange(0, mu_str.length)];
+    return mu_str;
+}
+
 /**
  *  给字符串加逗号
  *
