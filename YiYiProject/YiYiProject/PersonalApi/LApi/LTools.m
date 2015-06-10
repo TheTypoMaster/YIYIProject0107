@@ -1522,7 +1522,7 @@
 
 + (CGFloat)heightForImageHeight:(CGFloat)image_height
                   imageWidth:(CGFloat)image_width
-               originalWidth:(CGFloat)original_height
+               originalWidth:(CGFloat)original_width
 {
     float rate;
     
@@ -1533,7 +1533,7 @@
         rate = image_height/image_width;
     }
     
-    CGFloat imageHeight = original_height * rate;
+    CGFloat imageHeight = original_width * rate;
     
     return imageHeight;
 

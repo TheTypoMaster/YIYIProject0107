@@ -9,7 +9,6 @@
 #import "MyViewController.h"
 
 @class TMPhotoQuiltViewCell;
-@class HomeBuyController;
 @class ProductModel;
 
 typedef void(^ViewDidDisappearBlock)(BOOL success);//消失block

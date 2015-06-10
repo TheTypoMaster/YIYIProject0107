@@ -293,9 +293,18 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
 
 #pragma mark - 适配尺寸计算
 
+/**
+ *  计算等比例高度
+ *
+ *  @param image_height   图片的高度
+ *  @param image_width    图片的宽度
+ *  @param original_Width 实际显示宽度
+ *
+ *  @return 实际显示高度
+ */
 + (CGFloat)heightForImageHeight:(CGFloat)image_height
                      imageWidth:(CGFloat)image_width
-                  originalWidth:(CGFloat)original_height;
+                  originalWidth:(CGFloat)original_Width;
 
 #pragma mark - 分类论坛图片获取
 

@@ -389,7 +389,7 @@
             
 //            [imageView sd_setImageWithURL:[NSURL URLWithString:content] placeholderImage:[UIImage imageNamed:@"activity_defaultCover"]];
             
-            [imageView setImageWithURL:[NSURL URLWithString:content] placeHolderText:@"加载失败..." backgroundColor:RGBCOLOR(200, 200, 200) holderTextColor:[UIColor whiteColor]];
+            [imageView setImageWithURL:[NSURL URLWithString:content] placeHolderText:@"加载失败..." backgroundColor:RGBCOLOR(235, 235, 235) holderTextColor:[UIColor whiteColor]];
             
             return cell;
         }

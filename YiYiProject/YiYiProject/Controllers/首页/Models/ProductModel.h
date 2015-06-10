@@ -20,7 +20,9 @@
 @property(nonatomic,retain)NSString *mall_name;
 @property(nonatomic,retain)NSString *product_name;//品牌名
 
-@property(nonatomic,retain)NSString *product_price;
+@property(nonatomic,retain)NSString *product_price;//打折后价格
+@property(nonatomic,retain)NSString *original_price;//原价
+
 @property(nonatomic,assign)CGFloat discount_num;
 @property(nonatomic,retain)NSString *product_gender;
 
@@ -56,8 +58,6 @@
 
 @property(nonatomic,strong)NSString *product_new;
 
-
-@property(nonatomic,strong)NSString *original_price;//原价
 
 @property(nonatomic,retain)NSString *favor_id;
 @property(nonatomic,retain)NSString *product_state;

@@ -61,14 +61,15 @@
         holderTextColor:(UIColor *)holderTextColor
 {
     __block UILabel *label = [[UILabel alloc]initWithFrame:self.bounds];
-    label.text = @"努力加载中...";
+//    label.text = @"努力加载中...";
     [self addSubview:label];
     label.font = [UIFont systemFontOfSize:14.f];
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = holderTextColor;
     self.backgroundColor = backColor;
     
-    __block UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    __block UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    indicator.frame = self.bounds;
     [self addSubview:indicator];
     indicator.center = CGPointMake(self.width/2.f, self.height/2.f);
     [indicator startAnimating];

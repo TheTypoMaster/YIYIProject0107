@@ -12,6 +12,8 @@
 #import "HomeMatchController.h"
 #import "GsearchViewController.h"
 
+#import "BigProductViewController.h"//单品的大图模式
+
 @interface HomeViewController ()
 {
     UIView *menu_view;
@@ -19,6 +21,8 @@
     HomeBuyController   *buy_viewcontroller;
     HomeClothController *cloth_viewcontroller;
     HomeMatchController *match_viewcontroller;
+    
+    BigProductViewController *product_viewController;//单品大图
 }
 
 @end
@@ -182,21 +186,41 @@
     switch (tag) {
         case 101:
         {
-            if (buy_viewcontroller)
+            //单品的瀑布流模式
+            
+//            if (buy_viewcontroller)
+//            {
+//                buy_viewcontroller.view.hidden = NO;
+//            }
+//            else
+//            {
+//                buy_viewcontroller = [[HomeBuyController alloc]init];
+//                buy_viewcontroller.view.frame = CGRectMake(0, aFrameY, self.view.frame.size.width, self.view.frame.size.height);
+//                buy_viewcontroller.rootViewController = self;
+//                [self.view addSubview:buy_viewcontroller.view];
+//            }
+//            
+////            buy_viewcontroller.view.backgroundColor = [UIColor redColor];
+//            
+//            [self controlViewController:buy_viewcontroller];
+            
+            
+            //单品的大图模式
+            
+            if (product_viewController)
             {
-                buy_viewcontroller.view.hidden = NO;
+                product_viewController.view.hidden = NO;
             }
             else
             {
-                buy_viewcontroller = [[HomeBuyController alloc]init];
-                buy_viewcontroller.view.frame = CGRectMake(0, aFrameY, self.view.frame.size.width, self.view.frame.size.height);
-                buy_viewcontroller.rootViewController = self;
-                [self.view addSubview:buy_viewcontroller.view];
+                product_viewController = [[BigProductViewController alloc]init];
+                product_viewController.view.frame = CGRectMake(0, aFrameY, self.view.frame.size.width, self.view.frame.size.height);
+                product_viewController.rootViewController = self;
+                [self.view addSubview:product_viewController.view];
             }
             
-            buy_viewcontroller.view.backgroundColor = [UIColor redColor];
             
-            [self controlViewController:buy_viewcontroller];
+            [self controlViewController:product_viewController];
             
         }
             break;
@@ -249,7 +273,8 @@
 //改变字体和背景色
 - (void)controlViewController:(UIViewController *)vc
 {
-    buy_viewcontroller.view.hidden = [vc isKindOfClass:[HomeBuyController class]] ? NO : YES;//服务介绍
+    product_viewController.view.hidden = [vc isKindOfClass:[BigProductViewController class]] ? NO : YES;//大图单品模式
+//    buy_viewcontroller.view.hidden = [vc isKindOfClass:[HomeBuyController class]] ? NO : YES;//服务介绍
     cloth_viewcontroller.view.hidden = [vc isKindOfClass:[HomeClothController class]] ? NO : YES;//商家介绍
     match_viewcontroller.view.hidden = [vc isKindOfClass:[HomeMatchController class]] ? NO : YES;//商家服务
     
@@ -274,7 +299,7 @@
     
     //改变文字颜色
     UIButton *btn = (UIButton*)[menu_view viewWithTag:101];
-    if ([vc isKindOfClass:[HomeBuyController class]]) {
+    if ([vc isKindOfClass:[HomeBuyController class]] || [vc isKindOfClass:[BigProductViewController class]]) {
         [btn setTitleColor:selectColor_tt forState:UIControlStateNormal];
     }else{
         [btn setTitleColor:normalColor_tt forState:UIControlStateNormal];

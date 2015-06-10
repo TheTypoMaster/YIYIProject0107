@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 /**
- *  值得买
+ *  值得买 改 单品 改 大图
  */
 
 @interface HomeBuyController : UIViewController

@@ -22,8 +22,6 @@
 
 #import "TMPhotoQuiltViewCell.h"
 
-#import "HomeBuyController.h"
-
 #import "LContactView.h"//联系view
 
 @interface ProductDetailController ()

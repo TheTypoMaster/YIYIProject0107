@@ -1,34 +1,29 @@
 //
-//  HomeBuyController.m
+//  BigProductViewController.m
 //  YiYiProject
 //
-//  Created by lichaowei on 14/12/12.
-//  Copyright (c) 2014年 lcw. All rights reserved.
+//  Created by lichaowei on 15/6/9.
+//  Copyright (c) 2015年 lcw. All rights reserved.
 //
 
-#import "HomeBuyController.h"
-#import "TMQuiltView.h"
-#import "TMPhotoQuiltViewCell.h"
-
-#import "LWaterflowView.h"
-
+#import "BigProductViewController.h"
 #import "LoginViewController.h"
 #import "RegisterViewController.h"
 
 #import "ProductModel.h"
-
 #import "ProductDetailController.h"
 
-#import "FilterViewController.h"
-
 #import "FilterView.h"
-
 #import "DataManager.h"
 
-
-@interface HomeBuyController ()<TMQuiltViewDataSource,WaterFlowDelegate,GgetllocationDelegate>
+/**
+ *  修改成大图模式
+ */
+#import "RefreshTableView.h"
+#import "BigProductCell.h"
+@interface BigProductViewController ()<GgetllocationDelegate,RefreshDelegate,UITableViewDataSource>
 {
-    LWaterflowView *waterFlow;
+    //    LWaterflowView *waterFlow;
     
     SORT_SEX_TYPE sex_type;
     SORT_Discount_TYPE discount_type;
@@ -37,11 +32,13 @@
     
     NSString *_longtitud;//经度
     NSString *_latitude;//维度
+    
+    RefreshTableView *_tableView;
 }
 
 @end
 
-@implementation HomeBuyController
+@implementation BigProductViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -49,10 +46,14 @@
     
     self.view.backgroundColor = RGBCOLOR(235, 235, 235);
     
-    waterFlow = [[LWaterflowView alloc]initWithFrame:CGRectMake(0, 0, ALL_FRAME_WIDTH, ALL_FRAME_HEIGHT - 49 - 44) waterDelegate:self waterDataSource:self];
-    waterFlow.backgroundColor = RGBCOLOR(235, 235, 235);
-    [self.view addSubview:waterFlow];
+    //创建tableView
+    _tableView = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH,DEVICE_HEIGHT - 64)];
+    _tableView.refreshDelegate = self;
+    _tableView.dataSource = self;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.view addSubview:_tableView];
     
+    //读取本地缓存数据
     NSDictionary *result = [DataManager getCacheDataForType:Cache_DeserveBuy];
     if (result) {
         
@@ -69,7 +70,7 @@
     [filterButton addTarget:self action:@selector(clickToFilter:) forControlEvents:UIControlEventTouchUpInside];
     
     //添加滑动到顶部按钮
-    [self addScroll:waterFlow.quitView topButtonPoint:CGPointMake(DEVICE_WIDTH - 40 - 10, DEVICE_HEIGHT - 10 - 40 - 49 - 64)];
+    [self addScroll:_tableView topButtonPoint:CGPointMake(DEVICE_WIDTH - 40 - 10, DEVICE_HEIGHT - 10 - 40 - 49 - 64)];
     
     //更新位置
     [self updateLocation];
@@ -77,31 +78,6 @@
     //10分钟更新一次位置
     [NSTimer scheduledTimerWithTimeInterval:10 * 60 target:self selector:@selector(updateLocation) userInfo:nil repeats:YES];
     
-}
-
-- (void)updateLocation
-{
-    NSLog(@"updateLocation-----");
-    
-//    CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
-//    if (kCLAuthorizationStatusDenied == status || kCLAuthorizationStatusRestricted == status) {
-//        
-//        NSLog(@"请打开您的位置服务!");
-//        
-//    }else
-//    {
-//        mapApi = [GMAPI sharedManager];
-//        mapApi.delegate = self;
-//        [mapApi startDingwei];
-        
-//        [GMAPI startDingwei];
-        
-        __weak typeof(self)weakSelf = self;
-        [[GMAPI appDeledate]startDingweiWithBlock:^(NSDictionary *dic) {
-           
-            [weakSelf theLocationDictionary:dic];
-        }];
-//    }
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -132,18 +108,29 @@
     _latitude = NSStringFromFloat(lat);
     _longtitud = NSStringFromFloat(lon);
     
-    [waterFlow showRefreshHeader:YES];
-
+    [_tableView showRefreshHeader:YES];
+    
 }
 
 #pragma mark 事件处理
+
+- (void)updateLocation
+{
+    NSLog(@"updateLocation-----");
+    
+    __weak typeof(self)weakSelf = self;
+    [[GMAPI appDeledate]startDingweiWithBlock:^(NSDictionary *dic) {
+        
+        [weakSelf theLocationDictionary:dic];
+    }];
+}
 
 
 /**
  *  赞 取消赞 收藏 取消收藏
  */
 
-- (void)clickToZan:(UIButton *)sender
+- (void)clickToZan:(UIButton *)zan
 {
     if (![LTools isLogin:self.rootViewController]) {
         
@@ -152,41 +139,42 @@
     //直接变状态
     //更新数据
     
-    [LTools animationToBigger:sender duration:0.2 scacle:1.5];
-    
-    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[waterFlow.quitView cellAtIndexPath:[NSIndexPath indexPathForRow:sender.tag - 100 inSection:0]];
-//    cell.like_label.text = @"";
-    
-    ProductModel *aMode = waterFlow.dataArray[sender.tag - 100];
+    BigProductCell *cell = (BigProductCell *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:zan.tag - 100 inSection:0]];
+
+    ProductModel *aMode = _tableView.dataArray[zan.tag - 100];
     
     NSString *productId = aMode.product_id;
 
+    [LTools animationToBigger:cell.xinButton duration:0.2 scacle:1.5];
+
+    UIButton *sender = cell.xinButton;
+    
 //    __weak typeof(self)weakSelf = self;
-    
+
     __block BOOL isZan = !sender.selected;
-    
+
     NSString *api = sender.selected ? HOME_PRODUCT_ZAN_Cancel : HOME_PRODUCT_ZAN_ADD;
-    
+
     NSString *post = [NSString stringWithFormat:@"product_id=%@&authcode=%@",productId,[GMAPI getAuthkey]];
     NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-    
+
     NSString *url = api;
-    
+
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
-        
+
         NSLog(@"result %@",result);
         sender.selected = isZan;
         aMode.is_like = isZan ? 1 : 0;
         aMode.product_like_num = NSStringFromInt([aMode.product_like_num intValue] + (isZan ? 1 : -1));
-        cell.like_label.text = aMode.product_like_num;
-        
+        cell.zanNumLable.text = aMode.product_like_num;
+
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        
+
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-        
+
         aMode.product_like_num = NSStringFromInt([aMode.product_like_num intValue]);
-        cell.like_label.text = aMode.product_like_num;
+        cell.zanNumLable.text = aMode.product_like_num;
     }];
 }
 
@@ -197,12 +185,12 @@
  */
 - (void)clickToFilter:(UIButton *)sender
 {
-    __weak typeof(waterFlow)weakFlow = waterFlow;
+    __weak typeof(_tableView)weakTable = _tableView;
     [[FilterView shareInstance] showFilterBlock:^(SORT_SEX_TYPE sextType1, SORT_Discount_TYPE discountType1) {
         sex_type = sextType1;
         discount_type = discountType1;
         
-        [weakFlow showRefreshHeader:NO];
+        [weakTable showRefreshHeader:NO];
         
     }];
     
@@ -225,8 +213,8 @@
                 [arr addObject:aModel];
             }
             
-                        
-            [waterFlow reloadData:arr pageSize:L_PAGE_SIZE];
+            
+            [_tableView reloadData:arr pageSize:L_PAGE_SIZE];
         }
         
     }
@@ -246,8 +234,8 @@
                 discount:(SORT_Discount_TYPE)discountType
                     page:(int)pageNum
 {
-//    NSString *longtitud = @"116.42111721";
-//    NSString *latitude = @"39.90304099";
+    //    NSString *longtitud = @"116.42111721";
+    //    NSString *latitude = @"39.90304099";
     
     
     //金领时代 40.041951,116.33934
@@ -258,6 +246,8 @@
     NSString *url = [NSString stringWithFormat:HOME_DESERVE_BUY,longtitud,latitude,sortType,discountType,pageNum,L_PAGE_SIZE,[GMAPI getAuthkey]];
     
     __weak typeof(self)weakSelf = self;
+    __weak typeof(RefreshTableView *)weakTable = _tableView;
+    
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
@@ -267,7 +257,7 @@
             
             //本地存储
             
-//            [LTools cache:result ForKey:CACHE_DESERVE_BUY];
+            //            [LTools cache:result ForKey:CACHE_DESERVE_BUY];
             
             [DataManager cacheDataType:Cache_DeserveBuy content:result];
         }
@@ -276,95 +266,107 @@
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-        [waterFlow loadFail];
+        [weakTable loadFail];
         
     }];
 }
 
+#pragma mark - 代理
 
-#pragma mark - WaterFlowDelegate
+#pragma - mark RefreshDelegate
 
-- (void)waterScrollViewDidScroll:(UIScrollView *)scrollView
+-(void)loadNewData
+{
+    [self deserveBuyForSex:sex_type discount:discount_type page:_tableView.pageNum];
+}
+
+-(void)loadMoreData
+{
+    [self deserveBuyForSex:sex_type discount:discount_type page:_tableView.pageNum];
+}
+
+- (void)refreshScrollViewDidScroll:(UIScrollView *)scrollView
 {
     
 }
 
-- (void)waterLoadNewData
+- (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
-    [self deserveBuyForSex:sex_type discount:discount_type page:waterFlow.pageNum];
-}
-- (void)waterLoadMoreData
-{
-    [self deserveBuyForSex:sex_type discount:discount_type page:waterFlow.pageNum];
-}
+    //调转至老版本 详情页
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    ProductModel *aMode = _tableView.dataArray[indexPath.row];
 
-- (void)waterDidSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    ProductModel *aMode = waterFlow.dataArray[indexPath.row];
-    
-//    [LTools alertText:aMode.product_name];
-    
+    //    [LTools alertText:aMode.product_name];
+
     ProductDetailController *detail = [[ProductDetailController alloc]init];
     detail.product_id = aMode.product_id;
     detail.hidesBottomBarWhenPushed = YES;
-    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell*)[waterFlow.quitView cellAtIndexPath:indexPath];
-    detail.theHomeBuyVcModel = aMode;
-    detail.theHomeBuyVcProductCell = cell;
-    
+//    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell*)[waterFlow.quitView cellAtIndexPath:indexPath];
+//    detail.theHomeBuyVcModel = aMode;
+//    detail.theHomeBuyVcProductCell = cell;
+
     [self.rootViewController.navigationController pushViewController:detail animated:YES];
     
 }
 
-- (CGFloat)waterHeightForCellIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
     CGFloat imageH = 0.f;
-    ProductModel *aMode = waterFlow.dataArray[indexPath.row];
+    ProductModel *aMode = _tableView.dataArray[indexPath.row];
     if (aMode.imagelist.count >= 1) {
-
         
         NSDictionary *imageDic = aMode.imagelist[0];
         NSDictionary *middleImage = imageDic[@"540Middle"];
         float image_width = [middleImage[@"width"]floatValue];
         float image_height = [middleImage[@"height"]floatValue];
         
-        if (image_width == 0.0) {
-            image_width = image_height;
-        }
-        float rate = image_height/image_width;
-        
-        imageH = (DEVICE_WIDTH-30)/2.0*rate+33;
-        
+        imageH = [LTools heightForImageHeight:image_height imageWidth:image_width originalWidth:DEVICE_WIDTH];
     }
     
     return imageH;
 }
-- (CGFloat)waterViewNumberOfColumns
+
+#pragma - UITableViewDataSource
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    
-    return 2;
+    return _tableView.dataArray.count;
 }
 
-#pragma mark - TMQuiltViewDataSource
-
-- (NSInteger)quiltViewNumberOfCells:(TMQuiltView *)TMQuiltView {
-    return [waterFlow.dataArray count];
-}
-
-- (TMQuiltViewCell *)quiltView:(TMQuiltView *)quiltView cellAtIndexPath:(NSIndexPath *)indexPath {
-    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[quiltView dequeueReusableCellWithReuseIdentifier:@"PhotoCell"];
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *identify = @"BigProductCell";
+    BigProductCell *cell = [tableView dequeueReusableCellWithIdentifier:identify];
     if (!cell) {
-        cell = [[TMPhotoQuiltViewCell alloc] initWithReuseIdentifier:@"PhotoCell"];
+        
+        cell = [[BigProductCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identify];
     }
     
-    cell.layer.cornerRadius = 3.f;
+    ProductModel *aModel = [_tableView.dataArray objectAtIndex:indexPath.row];
     
-    ProductModel *aMode = waterFlow.dataArray[indexPath.row];
-    [cell setCellWithModel:aMode];
+    [cell setCellWithModel:aModel];
     
-    cell.like_btn.tag = 100 + indexPath.row;
-    [cell.like_btn addTarget:self action:@selector(clickToZan:) forControlEvents:UIControlEventTouchUpInside];
+    cell.zanButton.tag = 100 + indexPath.row;
+    [cell.zanButton addTarget:self action:@selector(clickToZan:) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
 }
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    return [UIView new];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.5;
+}
+
 
 @end
