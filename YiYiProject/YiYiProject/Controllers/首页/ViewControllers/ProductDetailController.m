@@ -810,28 +810,35 @@
     [bottomView addSubview:titleLabel];
     titleLabel.font = [UIFont boldSystemFontOfSize:15];
     
+
+//    CGFloat top = titleLabel.bottom + 11 + (11 + 15) * i
+    aDis = 11 + 15;
+    CGFloat top = titleLabel.bottom + 11;
     for (int i = 0; i < 6; i++) {
         
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(20, titleLabel.bottom + 11 + (11 + 15) * i, DEVICE_WIDTH - 20 * 2, 15) title:nil font:12 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"323232"]];
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(20, top, DEVICE_WIDTH - 20 * 2, 15) title:nil font:12 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"323232"]];
         [bottomView addSubview:label];
         
+        NSString *content = nil;
+        NSString *tag = nil;
         if (i == 0) {
-            
-            //品牌
             
             //精品店商品 和 商场店商品 的品牌名字
             
-            NSString *brandName = [LTools NSStringNotNull:aProductModel.product_brand_name];
-            
-            label.text = [NSString stringWithFormat:@"品牌: %@ ",brandName];
+            content = [LTools NSStringNotNull:aProductModel.product_brand_name];
+            tag = @"品牌";
             
         }else if (i == 1){
             
             //型号
-            NSString *sku = [LTools NSStringNotNull:aProductModel.product_sku];
-            label.text = [NSString stringWithFormat:@"型号: %@",sku];
+            content = [LTools NSStringNotNull:aProductModel.product_sku];
+            tag = @"型号";
+            
             
         }else if (i == 2){
+            
+            content = [NSString stringWithFormat:@"%@",aProductModel.product_price];
+            tag = @"价格";
             
             if (aProductModel.discount_num == 1) {
                 
@@ -863,32 +870,46 @@
                 
             }
             
+            
         }else if (i == 3){
             
             //折扣
-            NSString *discount = nil;
             if (aProductModel.discount_num == 1) {
-                discount = [NSString stringWithFormat:@"折扣: 暂无折扣"];
+                
+                content = nil;
+                
             }else
             {
-                discount = [NSString stringWithFormat:@"折扣: %.1f折",aProductModel.discount_num * 10];
-                
+                content = [NSString stringWithFormat:@"%.1f折",aProductModel.discount_num * 10];
+                tag = @"折扣";
             }
-            label.text = discount;
+            
             
         }else if (i == 4){
             
             //标签
-            NSString *tag = [NSString stringWithFormat:@"标签: %@",aProductModel.product_tag];
-            label.text = tag;
+            content = [NSString stringWithFormat:@"%@",aProductModel.product_tag];
+            tag = @"标签";
             
             
         }else if (i == 5){
             
             //商场
-            NSString *mallName = aProductModel.mall_info[@"mall_name"];
-            label.text = [NSString stringWithFormat:@"商场: %@",mallName];
+            content = aProductModel.mall_info[@"mall_name"];
+            tag = @"商场";
         }
+        
+        //当内容为空的时候,不显示此label
+        
+        if ([self isValidateForText:content withLabel:label]) {
+            
+            //当i==2此时显示的是价格,不用text赋值,而是用attributeText
+            if (i != 2) {
+                label.text = [NSString stringWithFormat:@"%@: %@ ",tag,content];
+            }
+            top += aDis;
+        }
+        
     }
     
     //是否是选择单品链接
@@ -949,6 +970,26 @@
         chatBtn.userInteractionEnabled = NO;
         
     }
+}
+
+/**
+ *  判断内容是否为空,内容为空时label移除
+ *
+ *  @param text  内容
+ *  @param label 对应label
+ *
+ *  @return
+ */
+- (BOOL)isValidateForText:(NSString *)text
+                withLabel:(UILabel *)label
+{
+    if ([LTools isEmpty:text]) {
+        
+        [label removeFromSuperview];
+        label = nil;
+        return NO;
+    }
+    return YES;
 }
 
 
