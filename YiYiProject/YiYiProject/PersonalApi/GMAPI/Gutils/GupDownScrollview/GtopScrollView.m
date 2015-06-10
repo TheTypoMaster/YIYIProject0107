@@ -8,6 +8,7 @@
 
 #import "GtopScrollView.h"
 #import "GRootScrollView.h"
+#import "GRTabView.h"
 
 
 
@@ -15,15 +16,13 @@
 //#define CONTENTSIZEX 320
 
 //按钮空隙
-#define BUTTONGAP 1
+#define BUTTONGAP 13
 
 //按钮id
 #define BUTTONID (sender.tag-100)
 //滑动id
-#define BUTTONSELECTEDID (self.scrollViewSelectedChannelID - 100)
+#define BUTTONSELECTEDID (self.userSelectedChannelID - 100)
 
-//高度
-#define GtopScrollViewHeight 28
 
 
 
@@ -52,7 +51,7 @@
         _userSelectedChannelID = 100;
         _scrollViewSelectedChannelID = 100;
         
-        self.buttonOriginXArray = [NSMutableArray array];
+        self.buttonOriginYArray = [NSMutableArray array];
         self.buttonWithArray = [NSMutableArray array];
     }
     return self;
@@ -64,28 +63,14 @@
 - (void)initWithNameButtons
 {
     
-    int titleBtnWidth = 0.0;
-    int titleBtnHeight = 0.0;
+    int titleBtnWidth = 40;
+    int titleBtnHeight = 40;
     
     
-    if (self.theTopType == GTOPPINPAI) {//品牌
-        titleBtnWidth = 70;
-        titleBtnHeight = 28;
-    }
     
-    if (self.theTopType == GTOPSHENQINGDIANPU) {//申请店铺
-        NSLog(@"申请店铺");
-        titleBtnWidth = DEVICE_WIDTH*0.5;
-        titleBtnHeight = 48;
-    }
+    self.buttonWithAll = [NSMutableArray arrayWithCapacity:1];
     
-    if (self.theTopType == GTOPFLOOR) {
-        titleBtnWidth = 70;
-        titleBtnHeight = 28;
-    }
-    
-    
-    float xPos = 0;
+    float yPos = 0;
     for (int i = 0; i < [self.nameArray count]; i++) {
         
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -102,21 +87,22 @@
         button.titleLabel.font = [UIFont systemFontOfSize:12];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [button addTarget:self action:@selector(selectNameButton:) forControlEvents:UIControlEventTouchUpInside];
+        button.frame = CGRectMake(15, yPos, titleBtnWidth, titleBtnHeight);
+        button.layer.cornerRadius = 20;
+        button.layer.masksToBounds = YES;
+        button.backgroundColor = [UIColor whiteColor];
+        [self.buttonWithAll addObject:button];
         
-
+        [_buttonOriginYArray addObject:@(yPos)];
         
-        button.frame = CGRectMake(xPos, 0, titleBtnWidth, titleBtnHeight);
+        yPos += button.frame.size.height+BUTTONGAP;
         
-        [_buttonOriginXArray addObject:@(xPos)];
-        
-        xPos += button.frame.size.width+BUTTONGAP;
-        
-        [_buttonWithArray addObject:@(button.frame.size.width)];
+        [_buttonWithArray addObject:@(button.frame.size.height)];
         
         [self addSubview:button];
     }
     
-    self.contentSize = CGSizeMake(xPos, GtopScrollViewHeight);
+    self.contentSize = CGSizeMake(70, yPos);
     
 }
 
@@ -124,39 +110,27 @@
 //点击顶部条滚动标签
 - (void)selectNameButton:(UIButton *)sender
 {
-    [self adjustScrollViewContentX:sender];
     
+    [self adjustScrollViewContentY:sender];
+    [self setButtonUnSelect];
+    sender.selected = YES;
     
-    //如果更换按钮
-    if (sender.tag != self.userSelectedChannelID) {
-        //取之前的按钮
-        UIButton *lastButton = (UIButton *)[self viewWithTag:self.userSelectedChannelID];
-        lastButton.selected = NO;
-        //赋值按钮ID
-        self.userSelectedChannelID = sender.tag;
+    if (BUTTONID >0) {
+        int count = 0;
+        for (int i = 0; i<BUTTONID; i++) {
+            NSArray *sectionArray = self.myRootScrollView.dataArray[i];
+            int cc = (int)sectionArray.count;
+            count+=cc;
+        }
+        self.noChange = YES;
+        [self.myRootScrollView setContentOffset:CGPointMake(0, count * 90 +20*BUTTONID) animated:YES];
+
+    }else{
+        self.noChange = YES;
+        [self.myRootScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+
     }
-    
-    //按钮选中状态
-    if (!sender.selected) {
-        sender.selected = YES;
-        
-        [UIView animateWithDuration:0.25 animations:^{
-            
-            
-        } completion:^(BOOL finished) {
-            if (finished) {
-                //设置新闻页出现
-                [self.myRootScrollView setContentOffset:CGPointMake(BUTTONID*self.myRootScrollView.frame.size.width, 0) animated:YES];
-                //赋值滑动列表选择频道ID
-                self.scrollViewSelectedChannelID = sender.tag;
-            }
-        }];
-        
-    }
-    //重复点击选中按钮
-    else {
-        
-    }
+
 }
 
 
@@ -165,61 +139,55 @@
 
 
 
-//滚动内容页顶部滚动
+
 - (void)setButtonUnSelect
 {
-    //滑动撤销选中按钮
-    UIButton *lastButton = (UIButton *)[self viewWithTag:self.scrollViewSelectedChannelID];
-    lastButton.selected = NO;
+    
+    for (UIButton *btn in self.buttonWithAll) {
+        btn.selected = NO;
+    }
+    
 }
 
 - (void)setButtonSelect
 {
     //滑动选中按钮
-    UIButton *button = (UIButton *)[self viewWithTag:self.scrollViewSelectedChannelID];
+    UIButton *button = (UIButton *)[self viewWithTag:self.userSelectedChannelID];
+    button.selected = YES;
     
-    [UIView animateWithDuration:0.25 animations:^{
-        
-        
-    } completion:^(BOOL finished) {
-        if (finished) {
-            if (!button.selected) {
-                button.selected = YES;
-                self.userSelectedChannelID = button.tag;
-            }
-        }
-    }];
     
 }
 
 //点击titleButton时候 顶部标签大于屏幕宽度往后滑动显示出来
-- (void)adjustScrollViewContentX:(UIButton *)sender
+- (void)adjustScrollViewContentY:(UIButton *)sender
 {
-    float originX = [[_buttonOriginXArray objectAtIndex:BUTTONID] floatValue];
-    float width = [[_buttonWithArray objectAtIndex:BUTTONID] floatValue];
     
-    if (sender.frame.origin.x - self.contentOffset.x > self.frame.size.width-(BUTTONGAP+width)) {
-        [self setContentOffset:CGPointMake(originX - 30, 0)  animated:YES];
+    
+    float originY = [[_buttonOriginYArray objectAtIndex:BUTTONID] floatValue];
+    float height = [[_buttonWithArray objectAtIndex:BUTTONID] floatValue];
+    
+    if (sender.frame.origin.y - self.contentOffset.y > self.frame.size.height-(BUTTONGAP+height)) {
+        [self setContentOffset:CGPointMake(originY - 30, 0)  animated:YES];
     }
     
-    if (sender.frame.origin.x - self.contentOffset.x < 5) {
-        [self setContentOffset:CGPointMake(originX,0)  animated:YES];
+    if (sender.frame.origin.y - self.contentOffset.y < 5) {
+        [self setContentOffset:CGPointMake(0,originY)  animated:YES];
     }
 }
 
 
-//rootScrollView滑动的时候 改变titleButton位置 大于屏幕宽度向右滑动
+//rootScrollView滑动的时候 改变titleButton位置 大于屏幕高度向下滑动
 -(void)setScrollViewContentOffset
 {
-    float originX = [[self.buttonOriginXArray objectAtIndex:BUTTONSELECTEDID] floatValue];
-    float width = [[self.buttonWithArray objectAtIndex:BUTTONSELECTEDID] floatValue];
+    float originY = [[self.buttonOriginYArray objectAtIndex:BUTTONSELECTEDID] floatValue];
+    float height = [[self.buttonWithArray objectAtIndex:BUTTONSELECTEDID] floatValue];
 
-    if (originX - self.contentOffset.x > self.frame.size.width-(BUTTONGAP+width)) {
-        [self setContentOffset:CGPointMake(originX - 30, 0)  animated:YES];
+    if (originY - self.contentOffset.y > self.frame.size.height-(BUTTONGAP+height)) {
+        [self setContentOffset:CGPointMake(originY - 30, 0)  animated:YES];
     }
 
-    if (originX - self.contentOffset.x < 5) {
-        [self setContentOffset:CGPointMake(originX,0)  animated:YES];
+    if (originY - self.contentOffset.y < 5) {
+        [self setContentOffset:CGPointMake(originY,0)  animated:YES];
     }
 }
 

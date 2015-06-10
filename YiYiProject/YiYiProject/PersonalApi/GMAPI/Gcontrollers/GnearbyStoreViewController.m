@@ -21,8 +21,11 @@
 #import "MessageDetailController.h"
 #import "LTools.h"
 
+#import "GrootScrollViewFloorTableViewCell.h"
+#import "GRTabView.h"
 
-@interface GnearbyStoreViewController ()<UIScrollViewDelegate>
+
+@interface GnearbyStoreViewController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
 {
     UIView *_upStoreInfoView;//顶部信息view
     UIScrollView *_mainScrollView;//底部scrollview
@@ -33,7 +36,7 @@
     
     UIScrollView *_downScrollView;
     
-    UITableView *_tabelView;
+    
     
     
     UIButton *_my_right_button;
@@ -48,7 +51,9 @@
     
     
     UIView *_floorView;//楼层信息view
-    GRootScrollView *_rootScrollView;//品牌楼层view
+//    GRootScrollView *_rootScrollView;//品牌楼层view
+    GRTabView *_tabelView;//品牌楼层view
+    NSMutableArray *_data_2Array;//数据源
     GtopScrollView *_topScrollView;//楼层选择view
     
     UIImageView *_activeImv;//活动图片
@@ -146,6 +151,8 @@
     
 }
 
+
+#pragma mark - MyMethod
 
 -(void)rightButtonTap:(UIButton *)sender
 {
@@ -329,18 +336,18 @@
     
     
     //导航 地址
-    UIView *downDanghangView = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT-35-64, DEVICE_WIDTH, 35)];
+    UIView *downDanghangView = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT-50-64, DEVICE_WIDTH, 50)];
     NSLog(@"%@",NSStringFromCGRect(downDanghangView.frame));
     downDanghangView.backgroundColor = RGBCOLOR(74, 74, 74);
     [self.view addSubview:downDanghangView];
     
     UIButton *daohangBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [daohangBtn setFrame:CGRectMake(6, 4, 62, 28)];
-    [daohangBtn setImage:[UIImage imageNamed:@"gdaohang_product.png"] forState:UIControlStateNormal];
+    [daohangBtn setFrame:CGRectMake(0, 0, 50, 50)];
+    [daohangBtn setImage:[UIImage imageNamed:@"dpxq_nav.png"] forState:UIControlStateNormal];
     [downDanghangView addSubview:daohangBtn];
     [daohangBtn addTarget:self action:@selector(leadYouBuy) forControlEvents:UIControlEventTouchUpInside];
     
-    UILabel *adressLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(daohangBtn.frame)+8, 0, DEVICE_WIDTH-CGRectGetMaxX(daohangBtn.frame)-8, downDanghangView.frame.size.height)];
+    UILabel *adressLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(daohangBtn.frame), 0, DEVICE_WIDTH-CGRectGetMaxX(daohangBtn.frame)-8, downDanghangView.frame.size.height)];
     adressLabel.text = [NSString stringWithFormat:@"地址：%@",[result stringValueForKey:@"address"]];
     adressLabel.font = [UIFont systemFontOfSize:13];
     adressLabel.numberOfLines = 2;
@@ -369,9 +376,13 @@
         return;
     }
     NSMutableArray *floorArray_new = [NSMutableArray array];
-    for (NSArray *arr in floorArray) {
+    self.height_oneSection = [NSMutableArray arrayWithCapacity:1];
+    for (int i = 0;i<floorArray.count;i++) {
+        NSArray *arr = floorArray[i];
         if (arr.count!=0) {
             [floorArray_new addObject:arr];
+            NSString *height = [NSString stringWithFormat:@"%lu",arr.count*90+20];
+            [self.height_oneSection addObject:height];
         }
     }
     
@@ -386,42 +397,40 @@
     }
     
     //每层的数据的二维数组
-    NSMutableArray *data_2Array = [NSMutableArray arrayWithCapacity:1];
-    data_2Array = [NSMutableArray arrayWithArray:floorArray_new];
-    
-    _floorView = [[UIView alloc]initWithFrame:CGRectMake(12, CGRectGetMaxY(_upStoreInfoView.frame)+12, DEVICE_WIDTH-24, DEVICE_HEIGHT-_upStoreInfoView.frame.size.height-12-35-64)];
-    
-    _topScrollView = [[GtopScrollView alloc]initWithFrame:CGRectMake(0, 0, _floorView.frame.size.width, 28)];
-    _rootScrollView = [[GRootScrollView alloc]initWithFrame:CGRectMake(0, 28, _topScrollView.frame.size.width, _floorView.frame.size.height-_topScrollView.frame.size.height)];
-    _rootScrollView.nearbyStoreVC = self;
-    _rootScrollView.backgroundColor = [UIColor whiteColor];
-    _topScrollView.myRootScrollView = _rootScrollView;
-    _rootScrollView.myTopScrollView = _topScrollView;
-    
-    _topScrollView.nameArray = (NSArray*)floorsNameArray;
-    _rootScrollView.viewNameArray =_topScrollView.nameArray;
-    
-    //数据源二维数组
-    _rootScrollView.dataArray = data_2Array;
-
-    //初始化视图
-    [_topScrollView initWithNameButtons];
-    [_rootScrollView initWithViews];
+    _data_2Array = [NSMutableArray arrayWithArray:floorArray_new];
     
     
-    //设置跳转block
-    __weak typeof (self)bself = self;
+    if (_data_2Array.count == 0) {
+        [GMAPI showAutoHiddenMBProgressWithText:@"该商场暂无楼层信息" addToView:self.view];
+        return;
+    }
     
-    [_rootScrollView setThePinpaiBlock:^(NSString *pinpaiId, NSString *pinpaiName) {
-        [bself rootScrollViewPushVcWithPinpaiId:pinpaiId pinpaiName:pinpaiName];
-    }];
-    
-    
-    
-    //添加视图
-    [_floorView addSubview:_topScrollView];
-    [_floorView addSubview:_rootScrollView];
+    //楼层信息view
+    _floorView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_upStoreInfoView.frame), DEVICE_WIDTH, DEVICE_HEIGHT-_upStoreInfoView.frame.size.height-50-64)];
+    _floorView.backgroundColor = RGBCOLOR(236, 237, 239);
     [self.view addSubview:_floorView];
+    
+    _tabelView = [[GRTabView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+    _tabelView.showsVerticalScrollIndicator = NO;
+    
+    //楼层按钮
+    _topScrollView = [[GtopScrollView alloc]initWithFrame:CGRectMake(0, 12, 70, _floorView.frame.size.height-12)];
+    _topScrollView.myRootScrollView = _tabelView;
+    _topScrollView.nameArray = (NSArray*)floorsNameArray;
+    [_topScrollView initWithNameButtons];
+    [_floorView addSubview:_topScrollView];
+    
+    //楼层详情
+    [_tabelView setFrame:CGRectMake(70, 12, DEVICE_WIDTH - 70 - 12, _topScrollView.frame.size.height)];
+    _tabelView.dataArray = _data_2Array;
+    _tabelView.delegate = self;
+    _tabelView.dataSource = self;
+    _tabelView.layer.cornerRadius = 10;
+    _tabelView.layer.masksToBounds = YES;
+    _tabelView.myTopScrollView = _topScrollView;
+    [_floorView addSubview:_tabelView];
+    
+    
     
 }
 
@@ -546,18 +555,14 @@
         [_downLine setFrame:CGRectZero];
         [_huodongTime_title setFrame:CGRectZero];
         [_huodongTime_content setFrame:CGRectZero];
-        [_floorView setFrame:CGRectMake(12, CGRectGetMaxY(_upStoreInfoView.frame)+12, DEVICE_WIDTH-24, DEVICE_HEIGHT-_upStoreInfoView.frame.size.height-12-35-64)];
-        [_rootScrollView setFrame:CGRectMake(0, 28, _topScrollView.frame.size.width, _floorView.frame.size.height-_topScrollView.frame.size.height)];
+        [_floorView setFrame:CGRectMake(0, CGRectGetMaxY(_upStoreInfoView.frame), DEVICE_WIDTH, DEVICE_HEIGHT-_upStoreInfoView.frame.size.height-50-64)];
+        [_topScrollView setFrame:CGRectMake(0, 12, 70, _floorView.frame.size.height-12)];
+        [_tabelView setFrame:CGRectMake(70, 12, DEVICE_WIDTH - 70 - 12, _topScrollView.frame.size.height)];
         
-        for (int i = 0;i<_rootScrollView.tabelViewArray.count;i++) {
-            UITableView *tab = _rootScrollView.tabelViewArray[i];
-            [tab setFrame:CGRectMake(0+_rootScrollView.frame.size.width*i, 0, _rootScrollView.frame.size.width, _rootScrollView.frame.size.height)];
-        }
+    
+        
     }];
-    
-    
-    
-    
+ 
 }
 
 //半屏显示楼层信息
@@ -572,12 +577,163 @@
         [_downLine setFrame:CGRectMake(0, CGRectGetMaxY(_huodongLabel.frame)+15, DEVICE_WIDTH, 0.5)];
         [_huodongTime_title setFrame:CGRectMake(12, _activeImv.frame.size.height-50, 60, 17)];
         [_huodongTime_content setFrame:CGRectMake(12, CGRectGetMaxY(_huodongTime_title.frame)+5, _activeImv.frame.size.width-24, 17)];
-        [_floorView setFrame:CGRectMake(12, CGRectGetMaxY(_upStoreInfoView.frame)+12, DEVICE_WIDTH-24, DEVICE_HEIGHT-_upStoreInfoView.frame.size.height-12-35-64)];
-        [_rootScrollView setFrame:CGRectMake(0, 28, _topScrollView.frame.size.width, _floorView.frame.size.height-_topScrollView.frame.size.height)];
+        [_floorView setFrame:CGRectMake(0, CGRectGetMaxY(_upStoreInfoView.frame), DEVICE_WIDTH, DEVICE_HEIGHT-_upStoreInfoView.frame.size.height-50-64)];
+        [_topScrollView setFrame:CGRectMake(0, 12, 70, _floorView.frame.size.height-12)];
+        [_tabelView setFrame:CGRectMake(70, 12, DEVICE_WIDTH - 70 - 12, _topScrollView.frame.size.height)];
     }];
     
 }
 
+
+
+#pragma mark - UITableViewDataSource && UITableViewDelegate && UIScrollViewDelegate
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return _data_2Array.count;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    NSArray *arr = _data_2Array[section];
+    return arr.count;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *identifier = @"nearbypinpai";
+    GrootScrollViewFloorTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if (!cell) {
+        cell = [[GrootScrollViewFloorTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        
+    }
+    for (UIView *view in cell.contentView.subviews) {
+        [view removeFromSuperview];
+    }
+    //数据源
+    NSArray *dataArray = _data_2Array[indexPath.section];
+    NSDictionary *dic = dataArray[indexPath.row];
+    //加载视图
+    [cell loadCustomViewWithDicData:dic];
+    
+    cell.separatorInset = UIEdgeInsetsMake(6,6,0,0);//上左下右
+    
+    return cell;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 90;
+}
+
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    [_tabelView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    NSArray *dataArray = _data_2Array[indexPath.section];
+    NSDictionary *dicInfo = dataArray[indexPath.row];
+    NSString *storeIdStr = [dicInfo stringValueForKey:@"shop_id"];
+    NSLog(@"商城id:%@",storeIdStr);
+    NSDictionary *dic = dataArray[indexPath.row];
+    NSString *pinpaiNameStr = [dic stringValueForKey:@"brand_name"];
+    GStorePinpaiViewController *cc = [[GStorePinpaiViewController alloc]init];
+    cc.guanzhuleixing = @"品牌店";
+    cc.storeIdStr = storeIdStr;
+    cc.storeNameStr = self.mallName;
+    cc.pinpaiNameStr = pinpaiNameStr;
+    if (self.isChooseProductLink) {
+        cc.isChooseProductLink = YES;
+    }
+    [self.navigationController pushViewController:cc animated:YES];
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 20;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return 0.01;
+}
+
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, _tabelView.frame.size.width, 20)];
+    UILabel *tlabel = [[UILabel alloc]initWithFrame:view.bounds];
+    NSString *aaa = _topScrollView.nameArray[section];
+    tlabel.text = [NSString stringWithFormat:@"--- %@ ---",aaa];
+    tlabel.font = [UIFont systemFontOfSize:15];
+    tlabel.textAlignment = NSTextAlignmentCenter;
+    [view addSubview:tlabel];
+    return view;
+}
+
+
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    
+    
+    _topScrollView.userInteractionEnabled = NO;
+    
+    
+    if (scrollView.contentOffset.y>0) {
+        [self showTheUpDownViewFullView];
+    }else if (scrollView.contentOffset.y<0){
+        //        NSLog(@"wuwuwuwuwuuwu");
+        [self showTheUpDownViewHalfView];
+    }
+    
+    
+    if (scrollView == _tabelView && !_topScrollView.noChange) {
+        //调整顶部滑条按钮状态
+        [self changeTopScrollViewButton:scrollView];
+    }
+}
+
+
+//scrollview手指滑动停止滚动时走
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    NSLog(@"%s",__FUNCTION__);
+    _topScrollView.noChange = NO;
+    _topScrollView.userInteractionEnabled = YES;
+}
+
+
+////手指滑动 手指停止时走 在DidEndDecelerating之前
+//-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+//    NSLog(@"%s",__FUNCTION__);
+//    _topScrollView.noChange = NO;
+//}
+
+//代码控制setContentOffSet时候停止滚动
+-(void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView{
+    NSLog(@"%s",__FUNCTION__);
+    _topScrollView.noChange = NO;
+    _topScrollView.userInteractionEnabled = YES;
+}
+
+
+
+//滚动后修改顶部滚动条
+- (void)changeTopScrollViewButton:(UIScrollView *)scrollView
+{
+    
+    int count = (int)_tabelView.dataArray.count;
+    CGFloat yyy = 0;
+    int position = 0;
+    for (int i = 0; i<count; i++) {
+        NSString *heightStr = self.height_oneSection[i];
+        CGFloat height = [heightStr floatValue];
+        yyy+=height;
+        if (yyy>=scrollView.contentOffset.y) {
+            position = i;
+            break;
+        }
+    }
+    int positionid = position;
+    _topScrollView.userSelectedChannelID = positionid+100;
+    [_topScrollView setButtonUnSelect];
+    [_topScrollView setButtonSelect];
+    [_topScrollView setScrollViewContentOffset];
+    
+    
+}
 
 
 @end

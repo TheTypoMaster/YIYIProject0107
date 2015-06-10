@@ -32,7 +32,7 @@
 
 @property(nonatomic,assign)CGFloat upinfoview_height;
 
-
+@property(nonatomic,strong)NSMutableArray *height_oneSection;//每个section高
 
 -(void)showTheUpDownViewFullView;
 

@@ -27,13 +27,12 @@
 
 -(void)loadCustomViewWithDicData:(NSDictionary *)dic{
     //logo
-    UIImageView *logoImv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 10, 70, 70)];
+    UIImageView *logoImv = [[UIImageView alloc]initWithFrame:CGRectMake(8, 10, 70, 70)];
     logoImv.layer.cornerRadius = 35;
     logoImv.layer.borderWidth = 1;
     logoImv.layer.masksToBounds = YES;
     logoImv.layer.borderColor = RGBCOLOR(210, 210, 210).CGColor;
     
-    NSLog(@"%@",[dic objectForKey:@"brand_logo"]);
     [logoImv sd_setImageWithURL:[NSURL URLWithString:[dic stringValueForKey:@"brand_logo"]] placeholderImage:nil];
     
     //name
@@ -45,7 +44,6 @@
     
     
     
-    NSLog(@"%@",dic);
     
     
     //门牌号

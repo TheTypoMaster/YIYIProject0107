@@ -100,8 +100,6 @@
 - (void)prepareItems
 {
     
-//    NSArray *classNames = @[@"HomeViewController",@"TTaiViewController",@"UIViewController",@"MessageListController",@"MineViewController"];
-//    NSArray *item_names = @[@"首页",@"T台",@"+",@"消息",@"我的"];
     
     NSArray *classNames = @[@"HomeViewController",@"BigPhotoTTaiViewController",@"MineViewController"];
     NSArray *item_names = @[@"附近",@"T台",@"我的"];

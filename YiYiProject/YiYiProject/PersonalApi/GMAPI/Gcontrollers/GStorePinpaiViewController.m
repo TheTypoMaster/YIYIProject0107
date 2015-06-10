@@ -473,19 +473,19 @@
     
     
     //导航
-    UIView *downDanghangView = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT-35-64, DEVICE_WIDTH, 35)];
+    UIView *downDanghangView = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT-50-64, DEVICE_WIDTH, 50)];
     NSLog(@"%@",NSStringFromCGRect(downDanghangView.frame));
     downDanghangView.backgroundColor = RGBCOLOR(74, 74, 74);
     [self.view addSubview:downDanghangView];
     
     UIButton *daohangBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [daohangBtn setFrame:CGRectMake(6, 4, 62, 28)];
-    [daohangBtn setImage:[UIImage imageNamed:@"gdaohang_product.png"] forState:UIControlStateNormal];
+    [daohangBtn setFrame:CGRectMake(0, 0, 50, 50)];
+    [daohangBtn setImage:[UIImage imageNamed:@"dpxq_nav.png"] forState:UIControlStateNormal];
     [downDanghangView addSubview:daohangBtn];
     [daohangBtn addTarget:self action:@selector(leadYouBuy) forControlEvents:UIControlEventTouchUpInside];
     
     //地址
-    UILabel *adressLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(daohangBtn.frame)+8, 0, DEVICE_WIDTH-CGRectGetMaxX(daohangBtn.frame)-75, downDanghangView.frame.size.height)];
+    UILabel *adressLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(daohangBtn.frame), 0, DEVICE_WIDTH-150, downDanghangView.frame.size.height)];
     self.adressLabelStr = [result stringValueForKey:@"address"];
     adressLabel.text = [NSString stringWithFormat:@"地址：%@",[result stringValueForKey:@"address"]];
     adressLabel.font = [UIFont systemFontOfSize:13];
@@ -500,16 +500,37 @@
     
     
     //联系店主
+//    UIButton *phoneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [phoneBtn setImage:[UIImage imageNamed:@"product_button_lianxi.png"] forState:UIControlStateNormal];
+//    phoneBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+//    phoneBtn.layer.cornerRadius = 5;
+//    phoneBtn.layer.masksToBounds = YES;
+//    [phoneBtn setFrame:CGRectMake(CGRectGetMaxX(adressLabel.frame), adressLabel.frame.origin.y+4, 60, adressLabel.frame.size.height-8)];
+//    phoneBtn.backgroundColor = RGBCOLOR(12, 62, 3);
+//    [phoneBtn addTarget:self action:@selector(clickToContact:) forControlEvents:UIControlEventTouchUpInside];
+//    [downDanghangView addSubview:phoneBtn];
+    
+    
     UIButton *phoneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [phoneBtn setImage:[UIImage imageNamed:@"product_button_lianxi.png"] forState:UIControlStateNormal];
+    [phoneBtn setImage:[UIImage imageNamed:@"dpxq_phone.png"] forState:UIControlStateNormal];
     phoneBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     phoneBtn.layer.cornerRadius = 5;
     phoneBtn.layer.masksToBounds = YES;
-    [phoneBtn setFrame:CGRectMake(CGRectGetMaxX(adressLabel.frame), adressLabel.frame.origin.y+4, 60, adressLabel.frame.size.height-8)];
-    phoneBtn.backgroundColor = RGBCOLOR(12, 62, 3);
-    [phoneBtn addTarget:self action:@selector(clickToContact:) forControlEvents:UIControlEventTouchUpInside];
+    [phoneBtn setFrame:CGRectMake(CGRectGetMaxX(adressLabel.frame), 0, 50, 50)];
+    
+    [phoneBtn addTarget:self action:@selector(clickToPhone:) forControlEvents:UIControlEventTouchUpInside];
     [downDanghangView addSubview:phoneBtn];
     
+    UIButton *chat = [UIButton buttonWithType:UIButtonTypeCustom];
+    [chat setImage:[UIImage imageNamed:@"dpxq_chat.png"] forState:UIControlStateNormal];
+    chat.titleLabel.font = [UIFont systemFontOfSize:13];
+    chat.layer.cornerRadius = 5;
+    chat.layer.masksToBounds = YES;
+    [chat setFrame:CGRectMake(CGRectGetMaxX(phoneBtn.frame), 0, 50, 50)];
+    
+    [chat addTarget:self action:@selector(clickToPrivateChat:) forControlEvents:UIControlEventTouchUpInside];
+    [downDanghangView addSubview:chat];
+
     
 }
 
@@ -1330,8 +1351,8 @@
         if (_mainScrollview.contentOffset.y<height) {
             
             [UIView animateWithDuration:0.3 animations:^{
-                [_backView_water setFrame:CGRectMake(0, CGRectGetMaxY(_menu_view.frame)+5, DEVICE_WIDTH, DEVICE_HEIGHT - _menu_view.frame.size.height -64 - 35)];
-                [_waterFlow setFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT - _menu_view.frame.size.height -64-15 - 35)];
+                [_backView_water setFrame:CGRectMake(0, CGRectGetMaxY(_menu_view.frame)+5, DEVICE_WIDTH, DEVICE_HEIGHT - _menu_view.frame.size.height -64 - 50)];
+                [_waterFlow setFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT - _menu_view.frame.size.height -64-15 - 50)];
                 [_waterFlow.quitView setFrame:_waterFlow.frame];
                 [_mainScrollview setContentOffset:CGPointMake(0, height)];
             }];

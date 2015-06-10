@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 @class GRootScrollView;
-
+@class GRTabView;
 
 typedef enum{
     GTOPFLOOR = 0,
@@ -24,13 +24,15 @@ typedef enum{
 @property(nonatomic,assign)NSInteger userSelectedChannelID;//点击按钮选择名字ID
 @property(nonatomic,assign)NSInteger scrollViewSelectedChannelID;  //滑动列表选择名字ID
 
-@property(nonatomic,retain)NSMutableArray *buttonOriginXArray;
-@property(nonatomic,retain)NSMutableArray *buttonWithArray;
+@property(nonatomic,retain)NSMutableArray *buttonOriginYArray;//里面装btn的原点Y坐标
+@property(nonatomic,retain)NSMutableArray *buttonWithArray;//里面装btn的高度
+@property(nonatomic,strong)NSMutableArray *buttonWithAll;//里面装所有的Btn
 
-@property(nonatomic,assign)GRootScrollView *myRootScrollView;
+@property(nonatomic,strong)UIButton *theLastSelectBtn;//上一个选择按钮
 
-@property(nonatomic,assign)GTOPTYPE theTopType;
+@property(nonatomic,assign)GRTabView *myRootScrollView;
 
+@property(nonatomic,assign)BOOL noChange;
 
 
 
