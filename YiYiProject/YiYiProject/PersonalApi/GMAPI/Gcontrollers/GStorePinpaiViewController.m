@@ -132,14 +132,14 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    self.view.backgroundColor = RGBCOLOR(235, 236, 238);
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeText];
     _spaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     
     
     _mainScrollview = [[UIScrollView alloc]initWithFrame:self.view.bounds];
-//    _mainScrollview = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, self.view.height - 35)];
-
+    _mainScrollview.backgroundColor = RGBCOLOR(235, 236, 238);
     [self.view addSubview:_mainScrollview];
     
     
@@ -171,9 +171,6 @@
     NSLog(@"商家id %@",self.storeIdStr);
     NSLog(@"品牌id %@",self.pinpaiId);
     NSLog(@"收藏类型 %@",self.guanzhuleixing);
-    
-    
-    
     
 
     [self prepareDianpuInfo];//获取店铺信息
@@ -304,7 +301,9 @@
     NSString *api = [NSString stringWithFormat:@"%@&shop_id=%@&authcode=%@",GET_MAIL_DETAIL_INFO,self.storeIdStr,[GMAPI getAuthkey]];//品牌店
     LTools *ccc = [[LTools alloc]initWithUrl:api isPost:NO postData:nil];
     [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
         [self creatDianpuInfoViewWithResult:result];
+        
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         
         NSLog(@"品牌店信息 %@",result);
@@ -376,7 +375,6 @@
     
     //活动图片
     UIImageView *activeImv = [[UIImageView alloc]initWithFrame:_upStoreInfoView.bounds];
-    activeImv.backgroundColor = [UIColor whiteColor];
     NSString *imgNameStr = @" ";
     if ([result[@"activity"] isKindOfClass:[NSDictionary class]]) {
         imgNameStr = result[@"activity"][@"cover_pic"];
@@ -389,7 +387,7 @@
     
     //活动
     _huodongLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 8, DEVICE_WIDTH-15-15, 32)];
-    _huodongLabel.textColor = [UIColor purpleColor];
+    _huodongLabel.textColor = RGBCOLOR(68, 99, 160);
     _huodongLabel.numberOfLines = 2;
     _huodongLabel.font = [UIFont systemFontOfSize:15];
     if ([result[@"activity"] isKindOfClass:[NSDictionary class]]) {
@@ -451,12 +449,15 @@
             [_upStoreInfoView setFrame:CGRectMake(0, 0, DEVICE_WIDTH, 60)];
         }else{
             [_upStoreInfoView setFrame:CGRectMake(0, 0, DEVICE_WIDTH, 0)];
+            [activeImv setFrame:CGRectZero];
+            [_huodongLabel setFrame:CGRectZero];
+            NSLog(@"%@",NSStringFromCGRect(_upStoreInfoView.frame));
         }
     }
     
     
     _huodongLabel.userInteractionEnabled = YES;
-    _huodongLabel.textColor = RGBCOLOR(68, 99, 160);
+    
     _huodongLabel.clipsToBounds = NO;
     
     
@@ -926,11 +927,14 @@
 - (void)createMemuView
 {
     
-    CGFloat aWidth = (ALL_FRAME_WIDTH - 24)/ 3.f;
+    CGFloat aWidth = (DEVICE_WIDTH - 24)/ 3.f;
+    NSLog(@"%@",NSStringFromCGRect(_upStoreInfoView.frame));
     _menu_view = [[UIView alloc]initWithFrame:CGRectMake(12, CGRectGetMaxY(_upStoreInfoView.frame)+5, aWidth * 3, 30)];
     _menu_view.clipsToBounds = YES;
-    _menu_view.layer.cornerRadius = 15.f;
-    _menu_view.backgroundColor = RGBCOLOR(212, 59, 85);
+    _menu_view.layer.cornerRadius = 5;
+    _menu_view.layer.borderColor = [RGBCOLOR(244, 76, 138)CGColor];
+    _menu_view.layer.borderWidth = 0.5f;
+    _menu_view.backgroundColor = RGBCOLOR(235, 236, 238);
     
     [_mainScrollview addSubview:_menu_view];
     NSLog(@"%@",NSStringFromCGRect(_menu_view.frame));
@@ -945,24 +949,37 @@
         [btn setHighlighted:NO];
         [btn.titleLabel setFont:[UIFont systemFontOfSize:13]];
         btn.tag = 100 + i;
-        [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [btn setTitleColor:[UIColor colorWithHexString:@"d7425c"] forState:UIControlStateSelected];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+        
         
         [_menu_view addSubview:btn];
         [_btnArray addObject:btn];
         [btn addTarget:self action:@selector(GbtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIView *fengeLine = [[UIView alloc]init];
+        fengeLine.backgroundColor = RGBCOLOR(244, 76, 138);
+        [_menu_view addSubview:fengeLine];
+        //分割线
+        if (i == 0) {
+            [fengeLine setFrame:CGRectMake(aWidth, 0, 0.5, 30)];
+        }else if (i ==1){
+            [fengeLine setFrame:CGRectMake(2*aWidth+0.5, 0, 0.5, 30)];
+        }
+        
+        
     }
     
     UIButton *btn = (UIButton *)[_menu_view viewWithTag:100];
-    btn.backgroundColor = RGBCOLOR(240, 122, 142);
+    btn.selected = YES;
+    [btn setBackgroundColor:RGBCOLOR(244, 76, 138)];
     
     
     //瀑布流相关
-    _backView_water = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_menu_view.frame)+5, ALL_FRAME_WIDTH, ALL_FRAME_HEIGHT - _menu_view.frame.size.height -64-_upStoreInfoView.frame.size.height-25)];
-//    _backView_water.backgroundColor = RGBCOLOR(240, 230, 235);
+    _backView_water = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_menu_view.frame)+5, DEVICE_WIDTH, DEVICE_HEIGHT - _menu_view.frame.size.height -64-_upStoreInfoView.frame.size.height-25)];
     [_mainScrollview addSubview:_backView_water];
     _waterFlow = [[LWaterflowView alloc]initWithFrame:_backView_water.bounds waterDelegate:self waterDataSource:self];
-    _waterFlow.backgroundColor = RGBCOLOR(235, 235, 235);
+    _waterFlow.backgroundColor = RGBCOLOR(235, 236, 238);
     [_backView_water addSubview:_waterFlow];
     [_waterFlow showRefreshHeader:YES];
     
@@ -978,9 +995,11 @@
     
     //改变点击颜色
     for (UIButton *btn in _btnArray) {
-        btn.backgroundColor = RGBCOLOR(212, 59, 85);
+        btn.backgroundColor = RGBCOLOR(235, 236, 238);
+        btn.selected = NO;
     }
-    sender.backgroundColor = RGBCOLOR(240, 122, 142);
+    sender.backgroundColor = RGBCOLOR(244, 76, 138);
+    sender.selected = YES;
     
     //请求数据  _paixuIndex 0新品 1
     _paixuIndex = tag - 100;

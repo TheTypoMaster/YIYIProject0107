@@ -474,6 +474,8 @@
 //请求网络数据
 -(void)prepareNetData{
     
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
     //请求地址
     NSString *api = nil;
     
@@ -489,6 +491,8 @@
     
     LTools *cc = [[LTools alloc]initWithUrl:api isPost:NO postData:nil];
     [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         
         NSLog(@"%@",result);
         
@@ -525,7 +529,7 @@
         
 
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         
     }];
     

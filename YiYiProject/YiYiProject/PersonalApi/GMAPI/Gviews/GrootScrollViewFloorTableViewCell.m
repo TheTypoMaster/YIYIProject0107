@@ -37,8 +37,8 @@
     
     //name
     UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(logoImv.frame)+10, logoImv.frame.origin.y+17, self.bounds.size.width-logoImv.frame.size.width -17, 18)];
-    nameLabel.textColor = [UIColor blackColor];
-    nameLabel.font = [UIFont systemFontOfSize:17];
+    nameLabel.textColor = RGBCOLOR(35, 36, 37);
+    nameLabel.font = [UIFont systemFontOfSize:18];
     nameLabel.textAlignment = NSTextAlignmentLeft;
     nameLabel.text = [dic stringValueForKey:@"brand_name"];
     
@@ -59,7 +59,18 @@
     
     //号码 活动
     UILabel *activeLabel = [[UILabel alloc]initWithFrame:CGRectMake(nameLabel.frame.origin.x, CGRectGetMaxY(nameLabel.frame)+7, nameLabel.frame.size.width, nameLabel.frame.size.height)];
-    activeLabel.text = [NSString stringWithFormat:@"%@   %@",menpaihao,huodong];
+    activeLabel.font = [UIFont systemFontOfSize:15];
+    
+    NSString *aaa = [NSString stringWithFormat:@"%@   %@",menpaihao,huodong];
+    NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:aaa];
+    NSInteger haomaLength = menpaihao.length;
+    NSInteger huodongLength = huodong.length;
+    [title addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(73, 74, 75) range:NSMakeRange(0,haomaLength)];
+    [title addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:NSMakeRange(0,haomaLength)];
+    
+    [title addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(235,203,77) range:NSMakeRange(haomaLength+3, huodongLength)];
+    [title addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:NSMakeRange(haomaLength+3, huodongLength)];
+    activeLabel.attributedText = title;
     
     
     [self.contentView addSubview:logoImv];
