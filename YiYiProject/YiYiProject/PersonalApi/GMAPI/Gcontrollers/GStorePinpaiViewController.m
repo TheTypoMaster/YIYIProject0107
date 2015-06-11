@@ -18,6 +18,7 @@
 #import "GLeadBuyMapViewController.h"
 #import "GAddTtaiImageLinkViewController.h"
 #import "LContactView.h"
+#import "BottomToolsView.h"
 
 @interface GStorePinpaiViewController ()<GCustomSegmentViewDelegate,TMQuiltViewDataSource,WaterFlowDelegate,UIScrollViewDelegate>
 {
@@ -456,80 +457,37 @@
     
     _huodongLabel.userInteractionEnabled = YES;
     _huodongLabel.textColor = RGBCOLOR(68, 99, 160);
-//    _huodongLabel.layer.shadowColor = [UIColor grayColor].CGColor;
-//    _huodongLabel.layer.shadowOpacity = 1.0;
-//    _huodongLabel.layer.shadowRadius = 3.0;
-//    _huodongLabel.layer.shadowOffset = CGSizeMake(0, 2);
     _huodongLabel.clipsToBounds = NO;
     
     
     
     UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(huodongLabelClicked)];
     [_huodongLabel addGestureRecognizer:tap];
-    
-    
-    
-    
-    
-    
-    //导航
-    UIView *downDanghangView = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT-50-64, DEVICE_WIDTH, 50)];
-    NSLog(@"%@",NSStringFromCGRect(downDanghangView.frame));
-    downDanghangView.backgroundColor = RGBCOLOR(74, 74, 74);
-    [self.view addSubview:downDanghangView];
-    
-    UIButton *daohangBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [daohangBtn setFrame:CGRectMake(0, 0, 50, 50)];
-    [daohangBtn setImage:[UIImage imageNamed:@"dpxq_nav.png"] forState:UIControlStateNormal];
-    [downDanghangView addSubview:daohangBtn];
-    [daohangBtn addTarget:self action:@selector(leadYouBuy) forControlEvents:UIControlEventTouchUpInside];
-    
-    //地址
-    UILabel *adressLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(daohangBtn.frame), 0, DEVICE_WIDTH-150, downDanghangView.frame.size.height)];
-    self.adressLabelStr = [result stringValueForKey:@"address"];
-    adressLabel.text = [NSString stringWithFormat:@"地址：%@",[result stringValueForKey:@"address"]];
-    adressLabel.font = [UIFont systemFontOfSize:13];
-    adressLabel.numberOfLines = 2;
-    adressLabel.textColor = RGBCOLOR(181, 181, 181);
-    [downDanghangView addSubview:adressLabel];
-    
-    
-    
-    
+
     self.phoneNumber = result[@"shop_phone"];
     
     
     //联系店主
-//    UIButton *phoneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [phoneBtn setImage:[UIImage imageNamed:@"product_button_lianxi.png"] forState:UIControlStateNormal];
-//    phoneBtn.titleLabel.font = [UIFont systemFontOfSize:13];
-//    phoneBtn.layer.cornerRadius = 5;
-//    phoneBtn.layer.masksToBounds = YES;
-//    [phoneBtn setFrame:CGRectMake(CGRectGetMaxX(adressLabel.frame), adressLabel.frame.origin.y+4, 60, adressLabel.frame.size.height-8)];
-//    phoneBtn.backgroundColor = RGBCOLOR(12, 62, 3);
-//    [phoneBtn addTarget:self action:@selector(clickToContact:) forControlEvents:UIControlEventTouchUpInside];
-//    [downDanghangView addSubview:phoneBtn];
+    __weak typeof(self)weakself = self;
+    UIView *bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT-46-64, DEVICE_WIDTH, 46)];
+    BottomToolsView *tools = [[BottomToolsView alloc]initWithSuperViewHeight:bottomView.height address:[result stringValueForKey:@"address"] isYYChatVcPush:NO actionBlock:^(ACTIONTYPE aType) {
+        if (aType == ACTIONTYPE_CHAT) { //聊天
+            
+            [weakself clickToPrivateChat:nil];
+            
+        }else if (aType == ACTIONTYPE_NAVIGATION){ //导航
+            
+            [weakself leadYouBuy];
+            
+        }else if (aType == ACTIONTYPE_PHONE){ //电话
+            
+            [weakself clickToPhone:nil];
+        }
+        
+    }];
     
-    
-    UIButton *phoneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [phoneBtn setImage:[UIImage imageNamed:@"dpxq_phone.png"] forState:UIControlStateNormal];
-    phoneBtn.titleLabel.font = [UIFont systemFontOfSize:13];
-    phoneBtn.layer.cornerRadius = 5;
-    phoneBtn.layer.masksToBounds = YES;
-    [phoneBtn setFrame:CGRectMake(CGRectGetMaxX(adressLabel.frame), 0, 50, 50)];
-    
-    [phoneBtn addTarget:self action:@selector(clickToPhone:) forControlEvents:UIControlEventTouchUpInside];
-    [downDanghangView addSubview:phoneBtn];
-    
-    UIButton *chat = [UIButton buttonWithType:UIButtonTypeCustom];
-    [chat setImage:[UIImage imageNamed:@"dpxq_chat.png"] forState:UIControlStateNormal];
-    chat.titleLabel.font = [UIFont systemFontOfSize:13];
-    chat.layer.cornerRadius = 5;
-    chat.layer.masksToBounds = YES;
-    [chat setFrame:CGRectMake(CGRectGetMaxX(phoneBtn.frame), 0, 50, 50)];
-    
-    [chat addTarget:self action:@selector(clickToPrivateChat:) forControlEvents:UIControlEventTouchUpInside];
-    [downDanghangView addSubview:chat];
+    [bottomView addSubview:tools];
+    [self.view addSubview:bottomView];
 
     
 }

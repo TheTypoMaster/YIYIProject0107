@@ -24,6 +24,8 @@
 #import "GrootScrollViewFloorTableViewCell.h"
 #import "GRTabView.h"
 
+#import "BottomToolsView.h"
+
 
 @interface GnearbyStoreViewController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
 {
@@ -336,23 +338,28 @@
     
     
     //导航 地址
-    UIView *downDanghangView = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT-50-64, DEVICE_WIDTH, 50)];
-    NSLog(@"%@",NSStringFromCGRect(downDanghangView.frame));
-    downDanghangView.backgroundColor = RGBCOLOR(74, 74, 74);
+    UIView *downDanghangView = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT-46-64, DEVICE_WIDTH, 46)];
+    downDanghangView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.7];
     [self.view addSubview:downDanghangView];
+    //导航按钮
+    UIButton *navigationBtn = [[UIButton alloc]initWithframe:CGRectMake(0, 0, 46, 46) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"productDetail_nav"] selectedImage:nil target:self action:@selector(leadYouBuy)];
+    [downDanghangView addSubview:navigationBtn];
     
-    UIButton *daohangBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [daohangBtn setFrame:CGRectMake(0, 0, 50, 50)];
-    [daohangBtn setImage:[UIImage imageNamed:@"dpxq_nav.png"] forState:UIControlStateNormal];
-    [downDanghangView addSubview:daohangBtn];
-    [daohangBtn addTarget:self action:@selector(leadYouBuy) forControlEvents:UIControlEventTouchUpInside];
+    UIImageView *line = [[UIImageView alloc]initWithFrame:CGRectMake(navigationBtn.right,11.5, 1, downDanghangView.frame.size.height/2.f)];
+    line.image = [UIImage imageNamed:@"productDetail_line"];
+    [downDanghangView addSubview:line];
     
-    UILabel *adressLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(daohangBtn.frame), 0, DEVICE_WIDTH-CGRectGetMaxX(daohangBtn.frame)-8, downDanghangView.frame.size.height)];
-    adressLabel.text = [NSString stringWithFormat:@"地址：%@",[result stringValueForKey:@"address"]];
-    adressLabel.font = [UIFont systemFontOfSize:13];
-    adressLabel.numberOfLines = 2;
-    adressLabel.textColor = RGBCOLOR(181, 181, 181);
-    [downDanghangView addSubview:adressLabel];
+    //地址
+    NSString *address = [NSString stringWithFormat:@"地址: %@",[result stringValueForKey:@"address"]];
+    
+    CGFloat left = line.right + 10;
+    UILabel *addressLabel = [[UILabel alloc]initWithFrame:CGRectMake(left, 0, DEVICE_WIDTH - left-12, downDanghangView.frame.size.height) title:address font:14 align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
+    [downDanghangView addSubview:addressLabel];
+    
+    
+
+    
+    
     
     
     
@@ -425,8 +432,6 @@
     _tabelView.dataArray = _data_2Array;
     _tabelView.delegate = self;
     _tabelView.dataSource = self;
-    _tabelView.layer.cornerRadius = 10;
-    _tabelView.layer.masksToBounds = YES;
     _tabelView.myTopScrollView = _topScrollView;
     [_floorView addSubview:_tabelView];
     
