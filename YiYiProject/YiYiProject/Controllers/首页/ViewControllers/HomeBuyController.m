@@ -150,20 +150,19 @@
     //直接变状态
     //更新数据
     
-    [LTools animationToBigger:sender duration:0.2 scacle:1.5];
-    
     TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[waterFlow.quitView cellAtIndexPath:[NSIndexPath indexPathForRow:sender.tag - 100 inSection:0]];
-//    cell.like_label.text = @"";
     
     ProductModel *aMode = waterFlow.dataArray[sender.tag - 100];
+    
+    [LTools animationToBigger:cell.like_btn duration:0.2 scacle:1.5];
     
     NSString *productId = aMode.product_id;
 
 //    __weak typeof(self)weakSelf = self;
     
-    __block BOOL isZan = !sender.selected;
+    __block BOOL isZan = !cell.like_btn.selected;
     
-    NSString *api = sender.selected ? HOME_PRODUCT_ZAN_Cancel : HOME_PRODUCT_ZAN_ADD;
+    NSString *api = cell.like_btn.selected ? HOME_PRODUCT_ZAN_Cancel : HOME_PRODUCT_ZAN_ADD;
     
     NSString *post = [NSString stringWithFormat:@"product_id=%@&authcode=%@",productId,[GMAPI getAuthkey]];
     NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
@@ -174,7 +173,7 @@
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"result %@",result);
-        sender.selected = isZan;
+        cell.like_btn.selected = isZan;
         aMode.is_like = isZan ? 1 : 0;
         aMode.product_like_num = NSStringFromInt([aMode.product_like_num intValue] + (isZan ? 1 : -1));
         cell.like_label.text = aMode.product_like_num;
@@ -330,7 +329,7 @@
         }
         float rate = image_height/image_width;
         
-        imageH = (DEVICE_WIDTH-30)/2.0*rate+33;
+        imageH = (DEVICE_WIDTH - 6)/2.0*rate + 45;
         
     }
     
@@ -359,8 +358,8 @@
     ProductModel *aMode = waterFlow.dataArray[indexPath.row];
     [cell setCellWithModel:aMode];
     
-    cell.like_btn.tag = 100 + indexPath.row;
-    [cell.like_btn addTarget:self action:@selector(clickToZan:) forControlEvents:UIControlEventTouchUpInside];
+    cell.likeBackBtn.tag = 100 + indexPath.row;
+    [cell.likeBackBtn addTarget:self action:@selector(clickToZan:) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
 }

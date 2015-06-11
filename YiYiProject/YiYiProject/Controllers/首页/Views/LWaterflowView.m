@@ -556,13 +556,11 @@
 {
     if (marginType == TMQuiltViewCellMarginTop || marginType == TMQuiltViewCellMarginBottom) {
         
-
-        
-        return self.headerView ? self.headerView.height : 5;
+        return self.headerView ? self.headerView.height : 2;
 
     }
     
-    return 5;
+    return 2;
 }
 
 //列数

@@ -53,78 +53,106 @@ const CGFloat kTMPhotoQuiltViewMargin = 0;
         _backGroudView.clipsToBounds = YES;
         [self addSubview:_backGroudView];
         
+        //大图 大图放置赞
         self.photoView = [[UIImageView alloc] init];
         _photoView.contentMode = UIViewContentModeScaleAspectFill;
         _photoView.clipsToBounds = YES;
+        _photoView.userInteractionEnabled =  YES;
         [_backGroudView addSubview:_photoView];
         
-        //存放 店铺名、距离
+        self.likeBackBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_likeBackBtn addCornerRadius:3.f];
+        _likeBackBtn.backgroundColor = [UIColor colorWithHexString:@"fdf8f9"];
+        [_photoView addSubview:_likeBackBtn];
         
-        self.titleView = [[UIView alloc]init];
-        _titleView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
-        [_backGroudView addSubview:_titleView];
+        _likeBackBtn.alpha = 0.8;
+
         
-        //店铺名
+        self.like_label = [[UILabel alloc]init];
+        _like_label.backgroundColor = [UIColor clearColor];
+        _like_label.font = [UIFont systemFontOfSize:10];
+        _like_label.textAlignment = NSTextAlignmentCenter;
+        _like_label.textColor = [UIColor colorWithHexString:@"df81a3"];
+        [_likeBackBtn addSubview:_like_label];
+
         
-        self.dianPuName_Label = [[UILabel alloc] init];
-        _dianPuName_Label.backgroundColor = [UIColor clearColor];
-        _dianPuName_Label.textColor = [UIColor whiteColor];
-        _dianPuName_Label.textAlignment = NSTextAlignmentLeft;
-        _dianPuName_Label.font = [UIFont systemFontOfSize:14.f];
-        [_titleView addSubview:_dianPuName_Label];
+        self.like_btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_like_btn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        [_like_btn setImage:[UIImage imageNamed:@"danpin_zan_normal"] forState:UIControlStateNormal];
+        [_like_btn setImage:[UIImage imageNamed:@"danpin_zan_selected"] forState:UIControlStateSelected];
+        [_likeBackBtn addSubview:_like_btn];
+        _like_btn.userInteractionEnabled = NO;
         
-        //距离
+//        //存放、距离
+//        
+//        self.titleView = [[UIView alloc]init];
+//        _titleView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
+//        [_backGroudView addSubview:_titleView];
         
-        self.distance_label = [[UILabel alloc] init];
-        _distance_label.backgroundColor = [UIColor clearColor];
-        _distance_label.font = [UIFont systemFontOfSize:12.f];
-        _distance_label.textColor = [UIColor whiteColor];
-        _distance_label.textAlignment = NSTextAlignmentRight;
-        [_titleView addSubview:_distance_label];
         
-        //存放 价格 打折 收藏
+        //infoView 存放 店铺名 价格 打折 距离
         
         self.infoView = [[UIView alloc]init];
         _infoView.backgroundColor = [UIColor whiteColor];
         [_backGroudView addSubview:_infoView];
+        [_infoView setBorderWidth:0.5 borderColor:DEFAULT_VIEW_BACKGROUNDCOLOR];
+        
+        //店铺名
+        
+        self.dianPuName_Label = [[UILabel alloc] init];
+        _dianPuName_Label.textColor = [UIColor colorWithHexString:@"323232"];
+        _dianPuName_Label.textAlignment = NSTextAlignmentLeft;
+        _dianPuName_Label.font = [UIFont systemFontOfSize:12];
+        [_infoView addSubview:_dianPuName_Label];
+
+//        _priceView = [[UIView alloc]init];
+//        [_infoView addSubview:_priceView];
+        
+        //价格图标
+        _priceImageView = [[UIImageView alloc]init];
+        _priceImageView.image = [UIImage imageNamed:@"danpin_price_b"];
+        [_infoView addSubview:_priceImageView];
         
         //价格
-        self.price_label = [UIButton buttonWithType:UIButtonTypeCustom];
-        _price_label.backgroundColor = [UIColor colorWithHexString:@"acacac"];
-        _price_label.titleLabel.font = [UIFont systemFontOfSize:12];
+        self.price_label = [[UILabel alloc] init];
+        _price_label.textColor = [UIColor colorWithHexString:@"bc2f42"];
+        _price_label.font = [UIFont systemFontOfSize:10];
         [_infoView addSubview:_price_label];
         
+        _discountView = [[UIView alloc]init];
+        [_infoView addSubview:_discountView];
+        
+        //折扣图标
+        _discountImageView = [[UIImageView alloc]init];
+        _discountImageView.image = [UIImage imageNamed:@"danpin_discount_b"];
+        [_discountView addSubview:_discountImageView];
+        
         //折扣
-        self.discount_label = [UIButton buttonWithType:UIButtonTypeCustom];
-        _discount_label.backgroundColor = [UIColor colorWithHexString:@"acacac"];;
-        _discount_label.titleLabel.font = [UIFont systemFontOfSize:12];
-        [_infoView addSubview:_discount_label];
+        self.discount_label = [[UILabel alloc] init];
+        _discount_label.textColor = [UIColor colorWithHexString:@"4e4e4e"];
+        _discount_label.font = [UIFont systemFontOfSize:10];
+        [_discountView addSubview:_discount_label];
         
-        self.like_label = [[UILabel alloc]init];
-        _like_label.backgroundColor = [UIColor clearColor];
-        _like_label.font = [UIFont systemFontOfSize:12];
-        _like_label.textAlignment = NSTextAlignmentRight;
-        [_infoView addSubview:_like_label];
+        //距离图标
+        _distanceImageView = [[UIImageView alloc]init];
+        _distanceImageView.image = [UIImage imageNamed:@"danpin_distance_b"];
+        [_infoView addSubview:_distanceImageView];
+        
+        //距离
+        self.distance_label = [[UILabel alloc] init];
+        _distance_label.font = [UIFont systemFontOfSize:10.f];
+        _distance_label.textColor = [UIColor colorWithHexString:@"4e4e4e"];
+        _distance_label.textAlignment = NSTextAlignmentLeft;
+        [_infoView addSubview:_distance_label];
+        
+//        _price_label.backgroundColor = [UIColor redColor];
+//        _distance_label.backgroundColor = [UIColor greenColor];
+//        _discount_label.backgroundColor = [UIColor blueColor];
         
         
-        self.like_btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_like_btn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-        [_like_btn setImage:[UIImage imageNamed:@"love_up"] forState:UIControlStateNormal];
-        [_like_btn setImage:[UIImage imageNamed:@"love_down"] forState:UIControlStateSelected];
-        [_infoView addSubview:_like_btn];
     }
     return self;
 }
-
-//- (UIImageView *)photoView {
-//    if (!_photoView) {
-//        _photoView = [[UIImageView alloc] init];
-//        _photoView.contentMode = UIViewContentModeScaleAspectFill;
-//        _photoView.clipsToBounds = YES;
-//        [self addSubview:_photoView];
-//    }
-//    return _photoView;
-//}
 
 - (UILabel *)titleLabel {
     if (!_titleLabel) {
@@ -141,26 +169,52 @@ const CGFloat kTMPhotoQuiltViewMargin = 0;
 - (void)layoutSubviews {
     
     _backGroudView.frame = CGRectMake(0, 0, self.width, self.height);
-    _backGroudView.layer.cornerRadius = 3.f;
+//    _backGroudView.layer.cornerRadius = 3.f;
     
     CGRect aBound = self.bounds;
-    aBound.size.height -= 33;
+    aBound.size.height -= 45;
     self.photoView.frame = CGRectInset(aBound, kTMPhotoQuiltViewMargin, kTMPhotoQuiltViewMargin);
     
-    self.titleView.frame = CGRectMake(0, _photoView.bottom - 20, _photoView.width, 20);
-    self.dianPuName_Label.frame = CGRectMake(5, 0, _titleView.width * 2/3.f, _titleView.height);
-    self.distance_label.frame = CGRectMake(_titleView.width - _distance_label.width - 5, 0, _distance_label.width, _titleView.height);
+//    self.titleView.frame = CGRectMake(0, _photoView.bottom - 20, _photoView.width, 20);
     
-    self.infoView.frame = CGRectMake(0, _photoView.bottom, _photoView.width, 33);
-    self.price_label.frame = CGRectMake(5, 0, 50, 20);
-    _price_label.center = CGPointMake(_price_label.center.x, _infoView.height / 2.f);
+    //infoView 存放 店铺名 价格 打折 距离
+
+    self.infoView.frame = CGRectMake(0, _photoView.bottom, _photoView.width, 45);
+
+    //店铺名
+    self.dianPuName_Label.frame = CGRectMake(5, 0, _infoView.width - 5 * 2, _infoView.height/2.f);
     
-    self.discount_label.frame = CGRectMake(_price_label.right + 5, _price_label.top, 40, 20);
+    CGFloat priceWidth = (_infoView.width - 5 - 5 - 5) / 3;
+    CGFloat imageWidth = 12;//图标宽度
+    CGFloat labelWidth = priceWidth - imageWidth;//价格、折扣、距离label宽度
     
-    self.like_label.frame = CGRectMake(_infoView.width - 5 - _like_label.width, _discount_label.top, _like_label.width, 20);
+    CGFloat imageTitleDis = 3.f;//图标和文字之间距离
+//============== 价格 ==========
+    _priceImageView.frame = CGRectMake(_dianPuName_Label.left, _dianPuName_Label.bottom + 4, imageWidth, imageWidth);
+    //价格
+    self.price_label.frame = CGRectMake(_priceImageView.right + imageTitleDis, _dianPuName_Label.bottom, labelWidth + 3, 20);
+//============== 折扣 ==========
+//这个比较特殊,label和imageView放在一个view上的;discount_label的宽度少6 distance_label\price_label 每个加3
     
-    self.like_btn.frame = CGRectMake(_like_label.left - 20 - 2, 0, 20, 20);
-    _like_btn.center = CGPointMake(_like_btn.center.x, _like_label.center.y);
+    _discountView.frame = CGRectMake(0, _dianPuName_Label.bottom, priceWidth - 6, 20);
+    _discountView.centerX = _infoView.width/2.f;
+    _discountImageView.frame = CGRectMake(0, 4, imageWidth, imageWidth);
+    //打折
+    self.discount_label.frame = CGRectMake(_discountImageView.right + imageTitleDis, 0, labelWidth - 6, 20);
+//============== 距离 ==========
+
+    _distanceImageView.frame = CGRectMake(_infoView.width - 5 - imageWidth - labelWidth - imageTitleDis, _priceImageView.top, imageWidth, imageWidth);
+    //距离
+    self.distance_label.frame = CGRectMake(_distanceImageView.right + imageTitleDis, _price_label.top, labelWidth + 3, 20);
+    
+    //赞view
+    CGFloat likeBackBtnWidth = 40;
+    self.likeBackBtn.frame = CGRectMake(_photoView.width - 5 - likeBackBtnWidth, _photoView.height - 3 - 17, likeBackBtnWidth, 17);
+    
+    self.like_btn.frame = CGRectMake(0, 0, 17, 17);
+
+    self.like_label.frame = CGRectMake(_like_btn.right, 0, likeBackBtnWidth - _like_btn.width, 17);
+    
 }
 
 - (void)setCellWithModel:(ProductModel *)aModel
@@ -194,30 +248,27 @@ const CGFloat kTMPhotoQuiltViewMargin = 0;
     _distance_label.width = [LTools widthForText:distanceStr font:12];
     
     NSString *price = [NSString stringWithFormat:@"%.1f",[aModel.product_price floatValue]];
-    [self.price_label setTitle:price forState:UIControlStateNormal];
-    self.price_label.layer.cornerRadius = 10;
+    self.price_label.text = price;
+//    self.price_label.layer.cornerRadius = 10;
     
     CGFloat disc = aModel.discount_num;
     
     if (disc == 0 || disc == 1) {
         
-        self.discount_label.hidden = YES;
+        _discountView.hidden = YES;
     }else
     {
-        self.discount_label.hidden = NO;
+        _discountView.hidden = NO;
     }
         
     NSString *discount = [NSString stringWithFormat:@"%.1f折",aModel.discount_num * 10];
-    [self.discount_label setTitle:discount forState:UIControlStateNormal];
-    self.discount_label.layer.cornerRadius = 10;
+    self.discount_label.text = discount;
+//    self.discount_label.layer.cornerRadius = 10;
     
     self.like_btn.selected = aModel.is_like == 1 ? YES : NO;
     
-    NSLog(@"like ---- > %d",(int)aModel.is_like);
-    
-    self.like_label.text = aModel.product_like_num;
-    
-    _like_label.width = [LTools widthForText:aModel.product_like_num font:12.f];
+    NSString *zanNum = [NSString stringWithFormat:@"%d",[aModel.product_like_num intValue]];
+    self.like_label.text = zanNum;
     
     [self layoutSubviews];
 }

@@ -188,39 +188,39 @@
         {
             //单品的瀑布流模式
             
-//            if (buy_viewcontroller)
-//            {
-//                buy_viewcontroller.view.hidden = NO;
-//            }
-//            else
-//            {
-//                buy_viewcontroller = [[HomeBuyController alloc]init];
-//                buy_viewcontroller.view.frame = CGRectMake(0, aFrameY, self.view.frame.size.width, self.view.frame.size.height);
-//                buy_viewcontroller.rootViewController = self;
-//                [self.view addSubview:buy_viewcontroller.view];
-//            }
-//            
-////            buy_viewcontroller.view.backgroundColor = [UIColor redColor];
-//            
-//            [self controlViewController:buy_viewcontroller];
+            if (buy_viewcontroller)
+            {
+                buy_viewcontroller.view.hidden = NO;
+            }
+            else
+            {
+                buy_viewcontroller = [[HomeBuyController alloc]init];
+                buy_viewcontroller.view.frame = CGRectMake(0, aFrameY, self.view.frame.size.width, self.view.frame.size.height);
+                buy_viewcontroller.rootViewController = self;
+                [self.view addSubview:buy_viewcontroller.view];
+            }
+            
+//            buy_viewcontroller.view.backgroundColor = [UIColor redColor];
+            
+            [self controlViewController:buy_viewcontroller];
             
             
             //单品的大图模式
             
-            if (product_viewController)
-            {
-                product_viewController.view.hidden = NO;
-            }
-            else
-            {
-                product_viewController = [[BigProductViewController alloc]init];
-                product_viewController.view.frame = CGRectMake(0, aFrameY, self.view.frame.size.width, self.view.frame.size.height);
-                product_viewController.rootViewController = self;
-                [self.view addSubview:product_viewController.view];
-            }
-            
-            
-            [self controlViewController:product_viewController];
+//            if (product_viewController)
+//            {
+//                product_viewController.view.hidden = NO;
+//            }
+//            else
+//            {
+//                product_viewController = [[BigProductViewController alloc]init];
+//                product_viewController.view.frame = CGRectMake(0, aFrameY, self.view.frame.size.width, self.view.frame.size.height);
+//                product_viewController.rootViewController = self;
+//                [self.view addSubview:product_viewController.view];
+//            }
+//            
+//            
+//            [self controlViewController:product_viewController];
             
         }
             break;
@@ -274,7 +274,7 @@
 - (void)controlViewController:(UIViewController *)vc
 {
     product_viewController.view.hidden = [vc isKindOfClass:[BigProductViewController class]] ? NO : YES;//大图单品模式
-//    buy_viewcontroller.view.hidden = [vc isKindOfClass:[HomeBuyController class]] ? NO : YES;//服务介绍
+    buy_viewcontroller.view.hidden = [vc isKindOfClass:[HomeBuyController class]] ? NO : YES;//服务介绍
     cloth_viewcontroller.view.hidden = [vc isKindOfClass:[HomeClothController class]] ? NO : YES;//商家介绍
     match_viewcontroller.view.hidden = [vc isKindOfClass:[HomeMatchController class]] ? NO : YES;//商家服务
     

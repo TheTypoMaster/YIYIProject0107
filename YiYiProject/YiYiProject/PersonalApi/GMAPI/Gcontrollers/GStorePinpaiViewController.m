@@ -1223,7 +1223,7 @@
     cell.layer.cornerRadius = 3.f;
     
     ProductModel *aMode = _waterFlow.dataArray[indexPath.row];
-    cell.titleView.hidden = YES;
+//    cell.titleView.hidden = YES;
     
     if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO){//没登陆
 //        [cell.like_btn addTarget:self action:@selector(zandenglu) forControlEvents:UIControlEventTouchUpInside];

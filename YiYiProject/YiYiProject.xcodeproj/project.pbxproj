@@ -21,6 +21,9 @@
 		134BBFBC1B2939270047E0D9 /* danpin_discount_b@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134BBFB91B2939270047E0D9 /* danpin_discount_b@2x.png */; };
 		134BBFBD1B2939270047E0D9 /* danpin_distance_b@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134BBFBA1B2939270047E0D9 /* danpin_distance_b@2x.png */; };
 		134BBFBE1B2939270047E0D9 /* danpin_price_b@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134BBFBB1B2939270047E0D9 /* danpin_price_b@2x.png */; };
+		134BBFC11B2962970047E0D9 /* ImageTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 134BBFC01B2962970047E0D9 /* ImageTitleView.m */; };
+		134BBFC41B2988560047E0D9 /* danpin_zan_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134BBFC21B2988560047E0D9 /* danpin_zan_normal@2x.png */; };
+		134BBFC51B2988560047E0D9 /* danpin_zan_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 134BBFC31B2988560047E0D9 /* danpin_zan_selected@2x.png */; };
 		1356EF1B1B1D850700F3B3B2 /* LRichTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1356EF1A1B1D850700F3B3B2 /* LRichTextView.m */; };
 		1356EF1E1B1D85FB00F3B3B2 /* PublishActivityController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1356EF1D1B1D85FB00F3B3B2 /* PublishActivityController.m */; };
 		1356EF221B1DB61D00F3B3B2 /* ActivityImageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1356EF211B1DB61D00F3B3B2 /* ActivityImageModel.m */; };
@@ -600,6 +603,10 @@
 		134BBFB91B2939270047E0D9 /* danpin_discount_b@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "danpin_discount_b@2x.png"; sourceTree = "<group>"; };
 		134BBFBA1B2939270047E0D9 /* danpin_distance_b@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "danpin_distance_b@2x.png"; sourceTree = "<group>"; };
 		134BBFBB1B2939270047E0D9 /* danpin_price_b@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "danpin_price_b@2x.png"; sourceTree = "<group>"; };
+		134BBFBF1B2962970047E0D9 /* ImageTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageTitleView.h; sourceTree = "<group>"; };
+		134BBFC01B2962970047E0D9 /* ImageTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageTitleView.m; sourceTree = "<group>"; };
+		134BBFC21B2988560047E0D9 /* danpin_zan_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "danpin_zan_normal@2x.png"; sourceTree = "<group>"; };
+		134BBFC31B2988560047E0D9 /* danpin_zan_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "danpin_zan_selected@2x.png"; sourceTree = "<group>"; };
 		1356EF191B1D850700F3B3B2 /* LRichTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRichTextView.h; sourceTree = "<group>"; };
 		1356EF1A1B1D850700F3B3B2 /* LRichTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRichTextView.m; sourceTree = "<group>"; };
 		1356EF1C1B1D85FB00F3B3B2 /* PublishActivityController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishActivityController.h; sourceTree = "<group>"; };
@@ -1982,6 +1989,8 @@
 		13934DBA1B26CDE800705B02 /* 单品 */ = {
 			isa = PBXGroup;
 			children = (
+				134BBFC21B2988560047E0D9 /* danpin_zan_normal@2x.png */,
+				134BBFC31B2988560047E0D9 /* danpin_zan_selected@2x.png */,
 				134BBFB91B2939270047E0D9 /* danpin_discount_b@2x.png */,
 				134BBFBA1B2939270047E0D9 /* danpin_distance_b@2x.png */,
 				134BBFBB1B2939270047E0D9 /* danpin_price_b@2x.png */,
@@ -2667,6 +2676,8 @@
 				566FE24E1A50264A00A96B5F /* TopicDetailBottomView.m */,
 				13934DB51B26CA8400705B02 /* BigProductCell.h */,
 				13934DB61B26CA8400705B02 /* BigProductCell.m */,
+				134BBFBF1B2962970047E0D9 /* ImageTitleView.h */,
+				134BBFC01B2962970047E0D9 /* ImageTitleView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3537,6 +3548,7 @@
 				19F7B4461A67FFA600087BCB /* send1sss@2x.png in Resources */,
 				1391DC5E1A870673006A2E15 /* t_dapei@2x.png in Resources */,
 				13D03D411AEDD60F0078AA9E /* about_icon@2x.png in Resources */,
+				134BBFC41B2988560047E0D9 /* danpin_zan_normal@2x.png in Resources */,
 				13A8A38F1A655879008D3D44 /* MessageViewCell.xib in Resources */,
 				E3039EF41B2825CE003A32FE /* dpxq_phone@2x.png in Resources */,
 				13681C8C1A453ECB00671D07 /* login_xinfeng@2x.png in Resources */,
@@ -3591,6 +3603,7 @@
 				13A389A31A38942D00ABBACB /* MineViewController.xib in Resources */,
 				E3B7BE141ACA578100FE8495 /* xiaoxi_up@2x.png in Resources */,
 				139A05251A66B9C500A8EB49 /* MailMessageCell.xib in Resources */,
+				134BBFC51B2988560047E0D9 /* danpin_zan_selected@2x.png in Resources */,
 				139A051D1A66AC3500A8EB49 /* yixx150_150@2x.png in Resources */,
 				E33737331AD7A76A00EAA23C /* xihuanb@2x.png in Resources */,
 				13681C811A453B3200671D07 /* share_QQ@2x.png in Resources */,
@@ -3967,6 +3980,7 @@
 				13A4AC541AE4989A00EA5F2C /* BigPhotoTTaiViewController.m in Sources */,
 				E37EB4FB1ABFC82F009F5797 /* GCustomSegmentView.m in Sources */,
 				565321521A59896600E43F80 /* TopicModel.m in Sources */,
+				134BBFC11B2962970047E0D9 /* ImageTitleView.m in Sources */,
 				E37EB5691AC00BEC009F5797 /* GloadingView.m in Sources */,
 				E3FFD97E1B26F63000A56770 /* GRTabView.m in Sources */,
 				E3937E261AC797CA00AA1A15 /* GcustomSearchTableViewCell.m in Sources */,
