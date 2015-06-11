@@ -836,7 +836,6 @@
             content = [LTools NSStringNotNull:aProductModel.product_sku];
             tag = @"型号";
             
-            
         }else if (i == 2){
             
             content = [NSString stringWithFormat:@"%@",aProductModel.product_price];
@@ -847,14 +846,14 @@
                 //无折扣
                 NSString *price_now = [NSString stringWithFormat:@"%@",aProductModel.product_price];
 
-                NSString *price = [NSString stringWithFormat:@"价格: ￥%@",aProductModel.product_price];
+                NSString *price = [NSString stringWithFormat:@"价格: ￥%@",[price_now stringByRemoveTrailZero]];
                 NSAttributedString *temp = [LTools attributedString:price keyword:price_now color:[UIColor colorWithHexString:@"df102e"]];
                 [label setAttributedText:temp];
                 
             }else
             {
-                NSString *price_now = [NSString stringWithFormat:@"%@",aProductModel.product_price];
-                NSString *price_discount = [NSString stringWithFormat:@"%@",aProductModel.original_price];
+                NSString *price_now = [[NSString stringWithFormat:@"%@",aProductModel.product_price] stringByRemoveTrailZero];
+                NSString *price_discount = [[NSString stringWithFormat:@"%@",aProductModel.original_price]stringByRemoveTrailZero];
                 //价格
                 NSString *price = [NSString stringWithFormat:@"价格: ￥%@ %@",price_now,price_discount];
                 
@@ -882,7 +881,9 @@
                 
             }else
             {
-                content = [NSString stringWithFormat:@"%.1f折",aProductModel.discount_num * 10];
+                NSString *discount = [NSString stringWithFormat:@"%.1f",aProductModel.discount_num * 10];
+
+                content = [NSString stringWithFormat:@"%@折",[discount stringByRemoveTrailZero]];
                 tag = @"折扣";
             }
             

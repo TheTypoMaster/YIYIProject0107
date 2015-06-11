@@ -1223,18 +1223,16 @@
     cell.layer.cornerRadius = 3.f;
     
     ProductModel *aMode = _waterFlow.dataArray[indexPath.row];
-//    cell.titleView.hidden = YES;
     
     if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO){//没登陆
-//        [cell.like_btn addTarget:self action:@selector(zandenglu) forControlEvents:UIControlEventTouchUpInside];
     }else{
         cell.like_btn.tag = 10000 + indexPath.row;
         [cell.like_btn addTarget:self action:@selector(clickToZan:) forControlEvents:UIControlEventTouchUpInside];
     }
     
+    cell.cellStyle = CELLSTYLE_DianPuList;
+    
     [cell setCellWithModel:aMode];
-    
-    
     
     
     return cell;

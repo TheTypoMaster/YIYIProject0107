@@ -20,6 +20,13 @@
 #import <UIKit/UIKit.h>
 #import "TMQuiltViewCell.h"
 #import "ProductModel.h"
+
+typedef enum {
+    CELLSTYLE_DanPinList = 0, //单品列表样式
+    CELLSTYLE_DianPuList = 1, //店铺列表样式 不显示距离
+    CELLSTYLE_CollectList = 2 //收藏
+}CELLSTYLE;
+
 @interface TMPhotoQuiltViewCell : TMQuiltViewCell
 {
     UIView *_priceView;
@@ -47,6 +54,8 @@
 @property(nonatomic,retain)UIButton *likeBackBtn;//喜欢的背景大button
 @property(nonatomic,retain)UIButton *like_btn;//喜欢标识
 @property(nonatomic,retain)UILabel *like_label;//喜欢数量
+
+@property(nonatomic,assign)CELLSTYLE cellStyle;//cell样式
 
 - (void)setCellWithModel:(ProductModel *)aModel;
 

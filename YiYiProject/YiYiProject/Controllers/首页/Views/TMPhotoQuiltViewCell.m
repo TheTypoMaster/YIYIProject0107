@@ -39,16 +39,6 @@ const CGFloat kTMPhotoQuiltViewMargin = 0;
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
         
-//        @property(nonatomic,retain)UIView *titleView;//存放 店铺名、距离
-//        @property(nonatomic,retain)UILabel *dianPuName_Label;//店铺名
-//        @property(nonatomic,retain)UILabel *distance_label;//距离
-//        
-//        @property(nonatomic,retain)UIView *infoView;//存放 价格 打折 收藏
-//        @property(nonatomic,retain)UILabel *price_label;//价格
-//        @property(nonatomic,retain)UILabel *discount_label;//打折
-//        @property(nonatomic,retain)UIButton *like_btn;//喜欢标识
-//        @property(nonatomic,retain)UILabel *like_label;//喜欢数量
-        
         self.backGroudView = [[UIView alloc]init];
         _backGroudView.clipsToBounds = YES;
         [self addSubview:_backGroudView];
@@ -82,12 +72,6 @@ const CGFloat kTMPhotoQuiltViewMargin = 0;
         [_like_btn setImage:[UIImage imageNamed:@"danpin_zan_selected"] forState:UIControlStateSelected];
         [_likeBackBtn addSubview:_like_btn];
         _like_btn.userInteractionEnabled = NO;
-        
-//        //存放、距离
-//        
-//        self.titleView = [[UIView alloc]init];
-//        _titleView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
-//        [_backGroudView addSubview:_titleView];
         
         
         //infoView 存放 店铺名 价格 打折 距离
@@ -171,18 +155,33 @@ const CGFloat kTMPhotoQuiltViewMargin = 0;
     _backGroudView.frame = CGRectMake(0, 0, self.width, self.height);
 //    _backGroudView.layer.cornerRadius = 3.f;
     
+    CGFloat infoHeight = 0.f;//infoView高度
+    if (self.cellStyle == CELLSTYLE_DanPinList) {
+        infoHeight = 45.f;
+    }else if (_cellStyle == CELLSTYLE_DianPuList || _cellStyle == CELLSTYLE_CollectList){
+        infoHeight = 25.f;
+    }
+
+    
     CGRect aBound = self.bounds;
-    aBound.size.height -= 45;
+    aBound.size.height -= infoHeight;
     self.photoView.frame = CGRectInset(aBound, kTMPhotoQuiltViewMargin, kTMPhotoQuiltViewMargin);
     
-//    self.titleView.frame = CGRectMake(0, _photoView.bottom - 20, _photoView.width, 20);
     
     //infoView 存放 店铺名 价格 打折 距离
-
-    self.infoView.frame = CGRectMake(0, _photoView.bottom, _photoView.width, 45);
+    
+    self.infoView.frame = CGRectMake(0, _photoView.bottom, _photoView.width, infoHeight);
 
     //店铺名
     self.dianPuName_Label.frame = CGRectMake(5, 0, _infoView.width - 5 * 2, _infoView.height/2.f);
+    
+    
+    CGFloat priceTop = 0.f;
+    if (self.cellStyle == CELLSTYLE_DanPinList) {
+        priceTop = _dianPuName_Label.bottom;
+    }else if (_cellStyle == CELLSTYLE_DianPuList || _cellStyle == CELLSTYLE_CollectList){
+        priceTop = 2.5f;
+    }
     
     CGFloat priceWidth = (_infoView.width - 5 - 5 - 5) / 3;
     CGFloat imageWidth = 12;//图标宽度
@@ -190,30 +189,45 @@ const CGFloat kTMPhotoQuiltViewMargin = 0;
     
     CGFloat imageTitleDis = 3.f;//图标和文字之间距离
 //============== 价格 ==========
-    _priceImageView.frame = CGRectMake(_dianPuName_Label.left, _dianPuName_Label.bottom + 4, imageWidth, imageWidth);
+    _priceImageView.frame = CGRectMake(_dianPuName_Label.left, priceTop + 4, imageWidth, imageWidth);
     //价格
-    self.price_label.frame = CGRectMake(_priceImageView.right + imageTitleDis, _dianPuName_Label.bottom, labelWidth + 3, 20);
+    self.price_label.frame = CGRectMake(_priceImageView.right + imageTitleDis, priceTop, labelWidth + 3, 20);
 //============== 折扣 ==========
 //这个比较特殊,label和imageView放在一个view上的;discount_label的宽度少6 distance_label\price_label 每个加3
     
-    _discountView.frame = CGRectMake(0, _dianPuName_Label.bottom, priceWidth - 6, 20);
+    _discountView.frame = CGRectMake(0, priceTop, priceWidth - 6, 20);
     _discountView.centerX = _infoView.width/2.f;
     _discountImageView.frame = CGRectMake(0, 4, imageWidth, imageWidth);
     //打折
     self.discount_label.frame = CGRectMake(_discountImageView.right + imageTitleDis, 0, labelWidth - 6, 20);
 //============== 距离 ==========
-
-    _distanceImageView.frame = CGRectMake(_infoView.width - 5 - imageWidth - labelWidth - imageTitleDis, _priceImageView.top, imageWidth, imageWidth);
-    //距离
-    self.distance_label.frame = CGRectMake(_distanceImageView.right + imageTitleDis, _price_label.top, labelWidth + 3, 20);
     
-    //赞view
-    CGFloat likeBackBtnWidth = 40;
-    self.likeBackBtn.frame = CGRectMake(_photoView.width - 5 - likeBackBtnWidth, _photoView.height - 3 - 17, likeBackBtnWidth, 17);
     
-    self.like_btn.frame = CGRectMake(0, 0, 17, 17);
-
-    self.like_label.frame = CGRectMake(_like_btn.right, 0, likeBackBtnWidth - _like_btn.width, 17);
+    //单品样式 店铺的时候没有距离
+    if (_cellStyle != CELLSTYLE_DianPuList) {
+        
+        _distanceImageView.frame = CGRectMake(_infoView.width - 5 - imageWidth - labelWidth - imageTitleDis, _priceImageView.top, imageWidth, imageWidth);
+        //距离
+        self.distance_label.frame = CGRectMake(_distanceImageView.right + imageTitleDis, _price_label.top, labelWidth + 3, 20);
+        
+        //赞view
+        CGFloat likeBackBtnWidth = 40;
+        self.likeBackBtn.frame = CGRectMake(_photoView.width - 5 - likeBackBtnWidth, _photoView.height - 3 - 17, likeBackBtnWidth, 17);
+        
+        self.like_btn.frame = CGRectMake(0, 0, 17, 17);
+        
+        self.like_label.frame = CGRectMake(_like_btn.right, 0, likeBackBtnWidth - _like_btn.width, 17);
+    }else
+    {
+        [_infoView addSubview:_like_btn];
+        [_infoView addSubview:_like_label];
+        
+        _like_btn.frame = CGRectMake(_infoView.width - 5 - imageWidth - labelWidth - imageTitleDis, _priceImageView.top, imageWidth, imageWidth);
+        _like_btn.userInteractionEnabled = YES;
+        //距离
+        _like_label.textAlignment = NSTextAlignmentLeft;
+        self.like_label.frame = CGRectMake(_like_btn.right + imageTitleDis, _price_label.top, labelWidth + 3, 20);
+    }
     
 }
 
@@ -248,8 +262,8 @@ const CGFloat kTMPhotoQuiltViewMargin = 0;
     _distance_label.width = [LTools widthForText:distanceStr font:12];
     
     NSString *price = [NSString stringWithFormat:@"%.1f",[aModel.product_price floatValue]];
-    self.price_label.text = price;
-//    self.price_label.layer.cornerRadius = 10;
+    
+    self.price_label.text = [price stringByRemoveTrailZero];
     
     CGFloat disc = aModel.discount_num;
     
@@ -261,9 +275,8 @@ const CGFloat kTMPhotoQuiltViewMargin = 0;
         _discountView.hidden = NO;
     }
         
-    NSString *discount = [NSString stringWithFormat:@"%.1f折",aModel.discount_num * 10];
-    self.discount_label.text = discount;
-//    self.discount_label.layer.cornerRadius = 10;
+    NSString *discount = [NSString stringWithFormat:@"%.1f",aModel.discount_num * 10];
+    self.discount_label.text = [NSString stringWithFormat:@"%@折",[discount stringByRemoveTrailZero]];
     
     self.like_btn.selected = aModel.is_like == 1 ? YES : NO;
     

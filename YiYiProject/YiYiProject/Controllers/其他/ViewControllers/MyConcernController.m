@@ -1085,17 +1085,26 @@
         return (DEVICE_WIDTH-30)/2.0*rate + 36;
     }
     
-    CGFloat aHeight = 0.f;
+    CGFloat imageH = 0.f;
     ProductModel *aMode = waterFlow.dataArray[indexPath.row];
     if (aMode.imagelist.count >= 1) {
         
+        
         NSDictionary *imageDic = aMode.imagelist[0];
         NSDictionary *middleImage = imageDic[@"540Middle"];
-        //        CGFloat aWidth = [middleImage[@"width"]floatValue];
-        aHeight = [middleImage[@"height"]floatValue];
-    }
+        float image_width = [middleImage[@"width"]floatValue];
+        float image_height = [middleImage[@"height"]floatValue];
+        
+        if (image_width == 0.0) {
+            image_width = image_height;
+        }
+        float rate = image_height/image_width;
+        
+        imageH = (DEVICE_WIDTH - 6)/2.0*rate + 25;
+        
+    };
     
-    return aHeight / 2.f + 33;
+    return imageH;
 }
 
 - (CGFloat)waterViewNumberOfColumns
@@ -1152,6 +1161,7 @@
     
     cell.layer.cornerRadius = 3.f;
     
+    cell.cellStyle = CELLSTYLE_CollectList;
     ProductModel *aMode = waterFlow.dataArray[indexPath.row];
     [cell setCellWithModel:aMode];
     
