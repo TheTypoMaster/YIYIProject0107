@@ -85,6 +85,7 @@
 		138125361B2819D8000310FF /* productDetail_phone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 138125321B2819D8000310FF /* productDetail_phone@2x.png */; };
 		138125391B281F06000310FF /* productDetail_dianpu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 138125371B281F06000310FF /* productDetail_dianpu@2x.png */; };
 		1381253A1B281F06000310FF /* productDetail_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 138125381B281F06000310FF /* productDetail_white@2x.png */; };
+		1381253D1B285609000310FF /* BottomToolsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1381253C1B285609000310FF /* BottomToolsView.m */; };
 		1382C51D1A812A5A0079AF55 /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1382C5131A812A5A0079AF55 /* MJRefresh.bundle */; };
 		1382C51E1A812A5A0079AF55 /* MJRefreshBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1382C5161A812A5A0079AF55 /* MJRefreshBaseView.m */; };
 		1382C51F1A812A5A0079AF55 /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 1382C5181A812A5A0079AF55 /* MJRefreshConst.m */; };
@@ -680,6 +681,8 @@
 		138125321B2819D8000310FF /* productDetail_phone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "productDetail_phone@2x.png"; sourceTree = "<group>"; };
 		138125371B281F06000310FF /* productDetail_dianpu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "productDetail_dianpu@2x.png"; sourceTree = "<group>"; };
 		138125381B281F06000310FF /* productDetail_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "productDetail_white@2x.png"; sourceTree = "<group>"; };
+		1381253B1B285609000310FF /* BottomToolsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BottomToolsView.h; sourceTree = "<group>"; };
+		1381253C1B285609000310FF /* BottomToolsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BottomToolsView.m; sourceTree = "<group>"; };
 		1382C5131A812A5A0079AF55 /* MJRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJRefresh.bundle; sourceTree = "<group>"; };
 		1382C5141A812A5A0079AF55 /* MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefresh.h; sourceTree = "<group>"; };
 		1382C5151A812A5A0079AF55 /* MJRefreshBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshBaseView.h; sourceTree = "<group>"; };
@@ -2146,6 +2149,8 @@
 				13A389831A387A8800ABBACB /* UIView+Frame */,
 				13A3897C1A3878FE00ABBACB /* MyViewController.h */,
 				13A3897D1A3878FE00ABBACB /* MyViewController.m */,
+				1381253B1B285609000310FF /* BottomToolsView.h */,
+				1381253C1B285609000310FF /* BottomToolsView.m */,
 			);
 			path = PublicClasses;
 			sourceTree = "<group>";
@@ -4041,6 +4046,7 @@
 				1356EF221B1DB61D00F3B3B2 /* ActivityImageModel.m in Sources */,
 				E3E64AAB1AE0D971002F00A4 /* PhotoCell.m in Sources */,
 				E3E64AA31AE0D971002F00A4 /* PhotoAlbumManager.m in Sources */,
+				1381253D1B285609000310FF /* BottomToolsView.m in Sources */,
 				13D03D3F1AEDD60F0078AA9E /* EditInfoView.m in Sources */,
 				DF6855861A592CD2004D924F /* UploadPicViewController.m in Sources */,
 				E3E64AA41AE0D971002F00A4 /* UIView+JKPicker.m in Sources */,

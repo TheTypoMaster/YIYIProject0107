@@ -24,6 +24,8 @@
 
 #import "LContactView.h"//联系view
 
+#import "BottomToolsView.h"//底部工具
+
 @interface ProductDetailController ()
 {
     ProductModel *aModel;
@@ -928,48 +930,66 @@
         [bottomView addSubview:shopButton];
     }
     
-    //底部工具条
-    
-    UIView *bottomTools = [[UIView alloc]initWithFrame:CGRectMake(0, bottomView.height - 46, DEVICE_WIDTH, 46)];
-    bottomTools.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.7];
-    [bottomView addSubview:bottomTools];
-    
-    //导航按钮
-    
-    UIButton *navigationBtn = [[UIButton alloc]initWithframe:CGRectMake(0, 0, 46, 46) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"productDetail_nav"] selectedImage:nil target:self action:@selector(clickToBuy:)];
-    [bottomTools addSubview:navigationBtn];
-    
-    UIImageView *line = [[UIImageView alloc]initWithFrame:CGRectMake(navigationBtn.right,11.5, 1, bottomTools.height/2.f)];
-    line.image = [UIImage imageNamed:@"productDetail_line"];
-    [bottomTools addSubview:line];
-    
-    //地址
-    NSString *address = [NSString stringWithFormat:@"地址: %@",aProductModel.mall_info[@"street"]];
-    
-    CGFloat left = line.right + 10;
-    UILabel *addressLabel = [[UILabel alloc]initWithFrame:CGRectMake(left, 0, DEVICE_WIDTH - left - 46 * 2 - 10, bottomTools.height) title:address font:14 align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
-    [bottomTools addSubview:addressLabel];
-    
-    //电话
-    UIButton *phoneBtn = [[UIButton alloc]initWithframe:CGRectMake(DEVICE_WIDTH - 46 * 2, 0, 46, bottomTools.height) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"productDetail_phone"] selectedImage:nil target:self action:@selector(clickToPhone:)];
-    [bottomTools addSubview:phoneBtn];
-    
-    UIImageView *line2 = [[UIImageView alloc]initWithFrame:CGRectMake(phoneBtn.right, 11.5, 1, bottomTools.height/2.f)];
-    line2.image = [UIImage imageNamed:@"productDetail_line"];
-    [bottomTools addSubview:line2];
-    
-    //聊天
-    UIButton *chatBtn = [[UIButton alloc]initWithframe:CGRectMake(phoneBtn.right, 0, 46, bottomTools.height) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"productDetail_chat"] selectedImage:nil target:self action:@selector(clickToPrivateChat:)];
-    [bottomTools addSubview:chatBtn];
-    
-    if (self.isYYChatVcPush) {//从聊天界面跳转过来的
+    __weak typeof(self)weakself = self;
+    BottomToolsView *tools = [[BottomToolsView alloc]initWithSuperViewHeight:bottomView.height address:aProductModel.mall_info[@"street"] isYYChatVcPush:self.isYYChatVcPush actionBlock:^(ACTIONTYPE aType) {
+        if (aType == ACTIONTYPE_CHAT) { //聊天
+            
+            [weakself clickToPrivateChat:nil];
+            
+        }else if (aType == ACTIONTYPE_NAVIGATION){ //导航
+            
+            [weakself clickToBuy:nil];
+            
+        }else if (aType == ACTIONTYPE_PHONE){ //电话
+            
+            [weakself clickToPhone:nil];
+        }
         
-        //聊天按钮为灰色,并不可点击
-        
-        chatBtn.alpha = 0.5f;
-        chatBtn.userInteractionEnabled = NO;
-        
-    }
+    }];
+    [bottomView addSubview:tools];
+    
+//    //底部工具条
+//    
+//    UIView *bottomTools = [[UIView alloc]initWithFrame:CGRectMake(0, bottomView.height - 46, DEVICE_WIDTH, 46)];
+//    bottomTools.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.7];
+//    [bottomView addSubview:bottomTools];
+//    
+//    //导航按钮
+//    
+//    UIButton *navigationBtn = [[UIButton alloc]initWithframe:CGRectMake(0, 0, 46, 46) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"productDetail_nav"] selectedImage:nil target:self action:@selector(clickToBuy:)];
+//    [bottomTools addSubview:navigationBtn];
+//    
+//    UIImageView *line = [[UIImageView alloc]initWithFrame:CGRectMake(navigationBtn.right,11.5, 1, bottomTools.height/2.f)];
+//    line.image = [UIImage imageNamed:@"productDetail_line"];
+//    [bottomTools addSubview:line];
+//    
+//    //地址
+//    NSString *address = [NSString stringWithFormat:@"地址: %@",aProductModel.mall_info[@"street"]];
+//    
+//    CGFloat left = line.right + 10;
+//    UILabel *addressLabel = [[UILabel alloc]initWithFrame:CGRectMake(left, 0, DEVICE_WIDTH - left - 46 * 2 - 10, bottomTools.height) title:address font:14 align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
+//    [bottomTools addSubview:addressLabel];
+//    
+//    //电话
+//    UIButton *phoneBtn = [[UIButton alloc]initWithframe:CGRectMake(DEVICE_WIDTH - 46 * 2, 0, 46, bottomTools.height) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"productDetail_phone"] selectedImage:nil target:self action:@selector(clickToPhone:)];
+//    [bottomTools addSubview:phoneBtn];
+//    
+//    UIImageView *line2 = [[UIImageView alloc]initWithFrame:CGRectMake(phoneBtn.right, 11.5, 1, bottomTools.height/2.f)];
+//    line2.image = [UIImage imageNamed:@"productDetail_line"];
+//    [bottomTools addSubview:line2];
+//    
+//    //聊天
+//    UIButton *chatBtn = [[UIButton alloc]initWithframe:CGRectMake(phoneBtn.right, 0, 46, bottomTools.height) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"productDetail_chat"] selectedImage:nil target:self action:@selector(clickToPrivateChat:)];
+//    [bottomTools addSubview:chatBtn];
+//    
+//    if (self.isYYChatVcPush) {//从聊天界面跳转过来的
+//        
+//        //聊天按钮为灰色,并不可点击
+//        
+//        chatBtn.alpha = 0.5f;
+//        chatBtn.userInteractionEnabled = NO;
+//        
+//    }
 }
 
 /**
