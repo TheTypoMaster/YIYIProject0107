@@ -193,7 +193,7 @@
     CGFloat aWidth = (ALL_FRAME_WIDTH - 24)/ 3.f;
     _menu_view = [[UIView alloc]initWithFrame:CGRectMake(12, CGRectGetMaxY(selectview.frame)+5, aWidth * 3, 30)];
     _menu_view.clipsToBounds = YES;
-    _menu_view.layer.cornerRadius = 15.f;
+    _menu_view.layer.cornerRadius = 5;
     _menu_view.backgroundColor = [UIColor whiteColor];
     _menu_view.layer.borderWidth = 0.5;
     _menu_view.layer.borderColor = [RGBCOLOR(253, 105, 155)CGColor];

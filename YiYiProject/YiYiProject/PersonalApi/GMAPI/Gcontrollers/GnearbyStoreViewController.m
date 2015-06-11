@@ -413,7 +413,7 @@
     }
     
     //楼层信息view
-    _floorView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_upStoreInfoView.frame), DEVICE_WIDTH, DEVICE_HEIGHT-_upStoreInfoView.frame.size.height-50-64)];
+    _floorView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_upStoreInfoView.frame), DEVICE_WIDTH, DEVICE_HEIGHT-_upStoreInfoView.frame.size.height-46-64)];
     _floorView.backgroundColor = RGBCOLOR(236, 237, 239);
     [self.view addSubview:_floorView];
     
@@ -564,7 +564,7 @@
         [_downLine setFrame:CGRectZero];
         [_huodongTime_title setFrame:CGRectZero];
         [_huodongTime_content setFrame:CGRectZero];
-        [_floorView setFrame:CGRectMake(0, CGRectGetMaxY(_upStoreInfoView.frame), DEVICE_WIDTH, DEVICE_HEIGHT-_upStoreInfoView.frame.size.height-50-64)];
+        [_floorView setFrame:CGRectMake(0, CGRectGetMaxY(_upStoreInfoView.frame), DEVICE_WIDTH, DEVICE_HEIGHT-_upStoreInfoView.frame.size.height-46-64)];
         [_topScrollView setFrame:CGRectMake(0, 12, 70, _floorView.frame.size.height-12)];
         [_tabelView setFrame:CGRectMake(70, 12, DEVICE_WIDTH - 70 - 12, _topScrollView.frame.size.height)];
         
@@ -586,7 +586,7 @@
         [_downLine setFrame:CGRectMake(0, CGRectGetMaxY(_huodongLabel.frame)+15, DEVICE_WIDTH, 0.5)];
         [_huodongTime_title setFrame:CGRectMake(12, _activeImv.frame.size.height-50, 60, 17)];
         [_huodongTime_content setFrame:CGRectMake(12, CGRectGetMaxY(_huodongTime_title.frame)+5, _activeImv.frame.size.width-24, 17)];
-        [_floorView setFrame:CGRectMake(0, CGRectGetMaxY(_upStoreInfoView.frame), DEVICE_WIDTH, DEVICE_HEIGHT-_upStoreInfoView.frame.size.height-50-64)];
+        [_floorView setFrame:CGRectMake(0, CGRectGetMaxY(_upStoreInfoView.frame), DEVICE_WIDTH, DEVICE_HEIGHT-_upStoreInfoView.frame.size.height-46-64)];
         [_topScrollView setFrame:CGRectMake(0, 12, 70, _floorView.frame.size.height-12)];
         [_tabelView setFrame:CGRectMake(70, 12, DEVICE_WIDTH - 70 - 12, _topScrollView.frame.size.height)];
     }];
