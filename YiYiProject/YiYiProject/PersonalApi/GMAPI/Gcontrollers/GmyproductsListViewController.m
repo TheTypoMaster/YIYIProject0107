@@ -279,8 +279,10 @@
     CGFloat aWidth = (ALL_FRAME_WIDTH - 24)/ 2.f;
     _menu_view = [[UIView alloc]initWithFrame:CGRectMake(12, 5, aWidth * 2, 30)];
     _menu_view.clipsToBounds = YES;
-    _menu_view.layer.cornerRadius = 15.f;
-    _menu_view.backgroundColor = RGBCOLOR(212, 59, 85);
+    _menu_view.layer.cornerRadius = 5;
+    _menu_view.layer.borderColor = [RGBCOLOR(244, 76, 138)CGColor];
+    _menu_view.layer.borderWidth = 0.5f;
+    _menu_view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_menu_view];
     NSLog(@"%@",NSStringFromCGRect(_menu_view.frame));
     
@@ -294,18 +296,20 @@
         [btn setHighlighted:NO];
         [btn.titleLabel setFont:[UIFont systemFontOfSize:13]];
         btn.tag = 100 + i;
-        [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [btn setTitleColor:[UIColor colorWithHexString:@"d7425c"] forState:UIControlStateSelected];
-        
+//        [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//        [btn setTitleColor:[UIColor colorWithHexString:@"d7425c"] forState:UIControlStateSelected];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
         [_menu_view addSubview:btn];
         [_btnArray addObject:btn];
         [btn addTarget:self action:@selector(GbtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        
+        
+        
     }
-    
-    
-    UIButton *btn = (UIButton *)[_menu_view viewWithTag:100];
-    _selectIndex = 100;
-    btn.backgroundColor = RGBCOLOR(240, 122, 142);
+    UIButton *bbb = (UIButton *)[_menu_view viewWithTag:100];
+    bbb.selected = YES;
+    [bbb setBackgroundColor:RGBCOLOR(244, 76, 138)];
 }
 
 
@@ -317,13 +321,18 @@
     if (self.piliangType != PILIANGTYPE_NONE) {
         return;
     }
-    
+   
     int tag = (int)sender.tag;
+    
     //改变点击颜色
     for (UIButton *btn in _btnArray) {
-        btn.backgroundColor = RGBCOLOR(212, 59, 85);
+        btn.backgroundColor = [UIColor whiteColor];
+        btn.selected = NO;
     }
-    sender.backgroundColor = RGBCOLOR(240, 122, 142);
+    sender.backgroundColor = RGBCOLOR(244, 76, 138);
+    sender.selected = YES;
+    
+    
     
     _selectIndex = tag;
     if (_selectIndex == 100) {//线上产品
@@ -377,7 +386,7 @@
             if ([list isKindOfClass:[NSArray class]]) {
                 
                 for (NSDictionary *aDic in list) {
-                    
+                    NSLog(@"我的单品dic%@",aDic);
                     ProductModel *aModel = [[ProductModel alloc]initWithDictionary:aDic];
                     
                     [arr addObject:aModel];
