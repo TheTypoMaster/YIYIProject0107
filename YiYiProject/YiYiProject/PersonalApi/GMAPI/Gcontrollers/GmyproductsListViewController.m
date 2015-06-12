@@ -12,11 +12,12 @@
 #import "GupClothesViewController.h"
 #import "ProductDetailController.h"
 #import "GEditProductTableViewCell.h"
-@interface GmyproductsListViewController ()<UITableViewDataSource,GrefreshDelegate,UITableViewDelegate,UIActionSheetDelegate>
+#import "RefreshTableView.h"
+@interface GmyproductsListViewController ()<UITableViewDataSource,RefreshDelegate,UITableViewDelegate,UIActionSheetDelegate>
 {
     int _page;//第几页
     NSArray *_dataArray;//数据源
-    GrefreshTableView *_tableView;//主tableview
+    RefreshTableView *_tableView;//主tableview
     
     UIView *_menu_view;
     NSMutableArray *_btnArray;
@@ -41,7 +42,7 @@
 -(void)dealloc{
     NSLog(@"%s",__FUNCTION__);
     _tableView.dataSource = nil;
-    _tableView.GrefreshDelegate = nil;
+    _tableView.refreshDelegate = nil;
     _tableView = nil;
 }
 
@@ -310,6 +311,7 @@
     UIButton *bbb = (UIButton *)[_menu_view viewWithTag:100];
     bbb.selected = YES;
     [bbb setBackgroundColor:RGBCOLOR(244, 76, 138)];
+    _selectIndex = 100;
 }
 
 
@@ -345,8 +347,8 @@
 
 
 -(void)creatTableView{
-    _tableView = [[GrefreshTableView alloc]initWithFrame:CGRectMake(0, 40, DEVICE_WIDTH, DEVICE_HEIGHT-64-40)style:UITableViewStylePlain];
-    _tableView.GrefreshDelegate = self;
+    _tableView = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 40, DEVICE_WIDTH, DEVICE_HEIGHT-64-40)];
+    _tableView.refreshDelegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     [_tableView showRefreshHeader:YES];
@@ -369,9 +371,9 @@
     NSString *url = @"";
     
     if (_selectIndex == 100) {//线上产品
-        url = [NSString stringWithFormat:GET_MAIL_PRODUCT_LIST,self.userInfo.shop_id,_page,L_PAGE_SIZE,[GMAPI getAuthkey]];
+        url = [NSString stringWithFormat:GET_MAIL_PRODUCT_LIST,self.userInfo.shop_id,_tableView.pageNum,L_PAGE_SIZE,[GMAPI getAuthkey]];
     }else if (_selectIndex == 101){//仓库产品
-        url = [NSString stringWithFormat:GET_MAIL_PRODUCT_LIST,self.userInfo.shop_id,_page,L_PAGE_SIZE,[GMAPI getAuthkey]];
+        url = [NSString stringWithFormat:GET_MAIL_PRODUCT_LIST,self.userInfo.shop_id,_tableView.pageNum,L_PAGE_SIZE,[GMAPI getAuthkey]];
         url = [url stringByAppendingString:@"&status=2"];
     }
     
@@ -394,15 +396,12 @@
                 
             }
             
-            [self reloadData:arr isReload:YES];
+            [_tableView reloadData:arr pageSize:L_PAGE_SIZE];
             
         }
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        if (_tableView.isReloadData) {
-            _page --;
-            [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:0.1];
-        }
+        [_tableView loadFail];
         
     }];
 }
@@ -410,28 +409,7 @@
 
 
 
-#pragma mark - 下拉刷新上提加载更多
-/**
- *  刷新数据列表
- *
- *  @param dataArr  新请求的数据
- *  @param isReload 判断在刷新或者加载更多
- */
-- (void)reloadData:(NSArray *)dataArr isReload:(BOOL)isReload
-{
-    if (isReload) {
-        
-        _dataArray = dataArr;
-        
-    }else
-    {
-        NSMutableArray *newArr = [NSMutableArray arrayWithArray:_dataArray];
-        [newArr addObjectsFromArray:dataArr];
-        _dataArray = newArr;
-    }
-    
-    [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:0.1];
-}
+
 
 
 
@@ -439,8 +417,6 @@
 
 - (void)loadNewData
 {
-    _page = 1;
-    
     [self prepareNetData];
 }
 
@@ -448,30 +424,29 @@
 {
     NSLog(@"loadMoreData");
     
-    _page ++;
     
     [self prepareNetData];
 }
 
-- (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+
+- (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
     NSLog(@"%s",__FUNCTION__);
     
     
-    ProductModel *aMode = _dataArray[indexPath.row];
+    ProductModel *aMode = _tableView.dataArray[indexPath.row];
     
     ProductDetailController *detail = [[ProductDetailController alloc]init];
     detail.product_id = aMode.product_id;
     detail.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:detail animated:YES];
     
-    
 }
-
-- (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
     return 90;
 }
+
 
 
 #pragma mark -  UITableViewDataSource
@@ -488,7 +463,7 @@
     }
     
     //数据源
-    ProductModel *aModel = _dataArray[indexPath.row];
+    ProductModel *aModel = _tableView.dataArray[indexPath.row];
     [cell loadCustomViewWithData:aModel indexpath:indexPath withType:self.piliangType];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
@@ -496,7 +471,7 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return _dataArray.count;
+    return _tableView.dataArray.count;
 }
 
 

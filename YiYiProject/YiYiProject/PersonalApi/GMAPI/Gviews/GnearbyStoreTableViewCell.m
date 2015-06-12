@@ -29,7 +29,6 @@
     
 //    [imv sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[theModel stringValueForKey:@"mall_pic"]]] placeholderImage:nil];
     UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, customheight-1)];
-    [imv sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[theModel stringValueForKey:@"mall_pic"]]] placeholderImage:nil];
     [self.contentView addSubview:imv];
     
     [imv l_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[theModel stringValueForKey:@"mall_pic"]]] placeholderImage:DEFAULT_YIJIAYI];

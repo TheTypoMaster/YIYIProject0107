@@ -66,7 +66,7 @@
         NSDictionary *imageDic = imageArray[0];
         NSDictionary *nameDic = imageDic[@"540Middle"];
         NSString *imageName = nameDic[@"src"];
-        [picImv sd_setImageWithURL:[NSURL URLWithString:imageName] placeholderImage:nil];
+        [picImv l_setImageWithURL:[NSURL URLWithString:imageName] placeholderImage:DEFAULT_YIJIAYI];
     }
     
     //标题
