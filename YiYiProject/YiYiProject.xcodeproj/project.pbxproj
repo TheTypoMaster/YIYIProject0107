@@ -446,6 +446,7 @@
 		E37374001AC4FE4B00935D2B /* GchatSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E37373FF1AC4FE4B00935D2B /* GchatSettingViewController.m */; };
 		E37486CD1AC2AEAD004A722F /* GmyActivetiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E37486CC1AC2AEAD004A722F /* GmyActivetiesViewController.m */; };
 		E37486D01AC2B08B004A722F /* GEditActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E37486CF1AC2B08B004A722F /* GEditActivityTableViewCell.m */; };
+		E3798F221B2ABF4700BAC9E3 /* shouye_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3798F211B2ABF4700BAC9E3 /* shouye_line@2x.png */; };
 		E37A2E2E1A7349C300145608 /* GchooseAdressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E37A2E2D1A7349C300145608 /* GchooseAdressViewController.m */; };
 		E37C330A1AA23F6900B646EC /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E37C33081AA23F6900B646EC /* mapapi.bundle */; };
 		E37EB4F61ABFB50E009F5797 /* GsearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E37EB4F51ABFB50E009F5797 /* GsearchViewController.m */; };
@@ -1243,6 +1244,7 @@
 		E37486CE1AC2B08B004A722F /* GEditActivityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GEditActivityTableViewCell.h; sourceTree = "<group>"; };
 		E37486CF1AC2B08B004A722F /* GEditActivityTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GEditActivityTableViewCell.m; sourceTree = "<group>"; };
 		E377E9241B111865009FCA93 /* ApiHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiHeader.h; sourceTree = "<group>"; };
+		E3798F211B2ABF4700BAC9E3 /* shouye_line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shouye_line@2x.png"; sourceTree = "<group>"; };
 		E37A2E2C1A7349C300145608 /* GchooseAdressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GchooseAdressViewController.h; sourceTree = "<group>"; };
 		E37A2E2D1A7349C300145608 /* GchooseAdressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GchooseAdressViewController.m; sourceTree = "<group>"; };
 		E37C32CA1AA23F6900B646EC /* BMapKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMapKit.h; sourceTree = "<group>"; };
@@ -1780,6 +1782,7 @@
 		137B08181A4E716700DE7DCC /* 首页 */ = {
 			isa = PBXGroup;
 			children = (
+				E3798F211B2ABF4700BAC9E3 /* shouye_line@2x.png */,
 				139A78891B183A4B00EFA10A /* home_button_top@2x.png */,
 				E399606F1ACFEDD000D2D4B7 /* gsearch_down@2x.png */,
 				E39960701ACFEDD000D2D4B7 /* gsearch_up@2x.png */,
@@ -3735,6 +3738,7 @@
 				13ABB0891B01F905002DC700 /* weibo@2x.png in Resources */,
 				1366A4DA1AE9F875004F83FD /* arrow_background@2x.png in Resources */,
 				E3601E821A61A75700CC41FE /* gcustomstore@2x.png in Resources */,
+				E3798F221B2ABF4700BAC9E3 /* shouye_line@2x.png in Resources */,
 				E3B7BE121ACA578100FE8495 /* ttai_up@2x.png in Resources */,
 				1381252B1B27F027000310FF /* product_shoucang@2x.png in Resources */,
 				13A4AC591AE49CB600EA5F2C /* TTaiBigPhotoCell.xib in Resources */,

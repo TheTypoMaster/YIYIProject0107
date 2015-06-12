@@ -27,14 +27,21 @@
     
     CGFloat customheight = DEVICE_WIDTH*375.0/621;
     
-    UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, customheight)];
+    UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, customheight-1)];
     [imv sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[theModel stringValueForKey:@"mall_pic"]]] placeholderImage:nil];
     [self.contentView addSubview:imv];
+    
+    
     
     
     UIImageView *backImv = [[UIImageView alloc]initWithFrame:CGRectMake(0, customheight-100, DEVICE_WIDTH, 100)];
     [backImv setImage:[UIImage imageNamed:@"shouye_bg@2x.png"]];
     [self.contentView addSubview:backImv];
+    
+    
+    UIImageView *lineImv = [[UIImageView alloc]initWithFrame:CGRectMake(0, customheight-1, DEVICE_WIDTH, 1)];
+    [lineImv setImage:[UIImage imageNamed:@"shouye_line.png"]];
+    [self.contentView addSubview:lineImv];
     
     
     //文字信息view
