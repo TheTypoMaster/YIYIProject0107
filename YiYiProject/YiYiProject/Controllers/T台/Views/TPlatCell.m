@@ -94,7 +94,7 @@
 - (void)layoutSubviews {
     
     _backGroudView.frame = CGRectMake(0, 0, self.width, self.height);
-    _backGroudView.layer.cornerRadius = 3.f;
+//    _backGroudView.layer.cornerRadius = 3.f;
     
     
     CGFloat photoTop = 0.f;
@@ -164,7 +164,8 @@
         self.timeLabel.text = [LTools timechange:aModel.add_time];
     }
     
-    [self.photoView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
+//    [self.photoView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
+    [_photoView l_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:DEFAULT_YIJIAYI];
     _photoView.height = (DEVICE_WIDTH-30)/2.0*rate;
     
     

@@ -121,6 +121,7 @@
  *  @param viewController
  *  @param lastNavigationHidden 上个页面是否隐藏导航栏
  *  @param hiddenBottom         是否隐藏底部tabbar
+ *  @param isTPlatPush         是否是T台push过来的,需要特殊处理
  */
 +(void)pushToStoreDetailVcWithId:(NSString *)storeId
                         shopType:(ShopType)shopType
@@ -128,7 +129,8 @@
                        brandName:(NSString *)brandName
               fromViewController:(UIViewController *)viewController
             lastNavigationHidden:(BOOL)lastNavigationHidden
-                    hiddenBottom:(BOOL)hiddenBottom;
+                    hiddenBottom:(BOOL)hiddenBottom
+                     isTPlatPush:(BOOL)isTPlatPush;
 
 
 @end

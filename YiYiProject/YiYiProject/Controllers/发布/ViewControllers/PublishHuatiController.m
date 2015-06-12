@@ -262,7 +262,6 @@
     
     UIButton *fabuButton =[[UIButton alloc]initWithFrame:CGRectMake(rightView.width - 44,0, 44,42.5)];
     [fabuButton addTarget:self action:@selector(clickToPub:) forControlEvents:UIControlEventTouchUpInside];
-//    [fabuButton setImage:[UIImage imageNamed:@"shoucangb"] forState:UIControlStateNormal];
     [fabuButton setTitle:@"发布" forState:UIControlStateNormal];
     [fabuButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
     [fabuButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];

@@ -36,6 +36,9 @@ typedef enum {
 
 @property(nonatomic,assign)BOOL isChooseProductLink;//是否为发布T台商品链接
 
+@property(nonatomic,assign)BOOL isTPlatPush;//是否是t台过来
+
+
 //用于修改赞的状态
 
 //从我的店铺页面跳转过来的时候这两个属性会有  取消赞之后返回上级页面更新界面数据

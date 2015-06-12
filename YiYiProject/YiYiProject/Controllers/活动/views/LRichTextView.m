@@ -627,7 +627,9 @@
 
         }else
         {
-            [cell.aImageView setImageWithURL:[NSURL URLWithString:content] placeHolderText:@"加载失败" backgroundColor:[UIColor lightGrayColor] holderTextColor:[UIColor whiteColor]];
+//            [cell.aImageView setImageWithURL:[NSURL URLWithString:content] placeHolderText:@"加载失败" backgroundColor:[UIColor lightGrayColor] holderTextColor:[UIColor whiteColor]];
+            
+            [cell.aImageView l_setImageWithURL:[NSURL URLWithString:content] placeholderImage:DEFAULT_YIJIAYI];
         }
         
         

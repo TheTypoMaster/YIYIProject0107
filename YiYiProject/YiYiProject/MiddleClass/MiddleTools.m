@@ -178,6 +178,7 @@
  *  @param viewController
  *  @param lastNavigationHidden 上个页面是否隐藏导航栏
  *  @param hiddenBottom         是否隐藏底部tabbar
+ *  @param isTPlatPush         是否是T台push过来的,需要特殊处理
  */
 +(void)pushToStoreDetailVcWithId:(NSString *)storeId
                         shopType:(ShopType)shopType
@@ -185,7 +186,8 @@
                        brandName:(NSString *)brandName
               fromViewController:(UIViewController *)viewController
             lastNavigationHidden:(BOOL)lastNavigationHidden
-                    hiddenBottom:(BOOL)hiddenBottom{
+                    hiddenBottom:(BOOL)hiddenBottom
+                     isTPlatPush:(BOOL)isTPlatPush{
     
     //商场首页
     if (shopType == ShopType_mall) {
@@ -204,6 +206,7 @@
     ccc.storeNameStr = storeName;
     ccc.lastPageNavigationHidden = lastNavigationHidden;
     ccc.hidesBottomBarWhenPushed = hiddenBottom;
+    ccc.isTPlatPush = isTPlatPush;
     if (shopType == ShopType_jingpinDian) {
         ccc.guanzhuleixing = @"精品店";
     }else if (shopType == ShopType_pinpaiDian){

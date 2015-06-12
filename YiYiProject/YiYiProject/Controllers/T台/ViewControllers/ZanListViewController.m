@@ -140,9 +140,9 @@
     
     
     //红心
-    zan_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(DEVICE_WIDTH - 10 - 50, 0, 50, 50) normalTitle:nil image:[UIImage imageNamed:@"xq_love_up_gray"] backgroudImage:nil superView:nil target:self action:@selector(clickToZan:)];
+    zan_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(DEVICE_WIDTH - 10 - 50, 0, 50, 50) normalTitle:nil image:[UIImage imageNamed:@"productDetail_zan_nornal_white"] backgroudImage:nil superView:nil target:self action:@selector(clickToZan:)];
     [bottomView addSubview:zan_btn];
-    [zan_btn setImage:[UIImage imageNamed:@"xq_love_down"] forState:UIControlStateSelected];
+    [zan_btn setImage:[UIImage imageNamed:@"productDetail_zan_selected"] forState:UIControlStateSelected];
     
     zan_btn.selected = self.t_model.is_like == 1 ? YES : NO;
     

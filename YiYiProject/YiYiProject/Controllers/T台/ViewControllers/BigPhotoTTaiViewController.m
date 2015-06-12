@@ -78,11 +78,11 @@
     
     [self performSelector:@selector(loadData) withObject:nil afterDelay:0.2];
     
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateTTai:) name:NOTIFICATION_LOGIN object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateTTai:) name:NOTIFICATION_LOGOUT object:nil];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateTTai:) name:NOTIFICATION_TTAI_PUBLISE_SUCCESS object:nil];
-    
-//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receiverNotify:) name:NOTIFICATION_TPLATDETAIL_HIDDEN object:nil];
-    
+        
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receiverNotify2:) name:NOTIFICATION_TPLATDETAIL_SHOW object:nil];
     
     
@@ -444,7 +444,7 @@
                      shopType:(ShopType)shopType
 {
         
-    [MiddleTools pushToStoreDetailVcWithId:infoId shopType:shopType storeName:infoName brandName:@" " fromViewController:self lastNavigationHidden:NO hiddenBottom:YES];
+    [MiddleTools pushToStoreDetailVcWithId:infoId shopType:shopType storeName:infoName brandName:@" " fromViewController:self lastNavigationHidden:NO hiddenBottom:YES isTPlatPush:NO];
     
 }
 //到单品的

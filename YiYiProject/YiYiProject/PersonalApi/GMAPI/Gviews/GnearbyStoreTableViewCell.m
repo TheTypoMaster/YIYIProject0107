@@ -28,8 +28,10 @@
     CGFloat customheight = DEVICE_WIDTH*375.0/621;
     
     UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, customheight)];
-    [imv sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[theModel stringValueForKey:@"mall_pic"]]] placeholderImage:nil];
+//    [imv sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[theModel stringValueForKey:@"mall_pic"]]] placeholderImage:nil];
     [self.contentView addSubview:imv];
+    
+    [imv l_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[theModel stringValueForKey:@"mall_pic"]]] placeholderImage:DEFAULT_YIJIAYI];
     
     
     UIImageView *backImv = [[UIImageView alloc]initWithFrame:CGRectMake(0, customheight-100, DEVICE_WIDTH, 100)];

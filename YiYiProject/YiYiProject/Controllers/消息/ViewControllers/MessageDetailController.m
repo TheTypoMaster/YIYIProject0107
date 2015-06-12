@@ -97,7 +97,9 @@
         [coverImageView sd_setImageWithURL:[NSURL URLWithString:aModel.cover_pic] placeholderImage:nil];
         [head addSubview:coverImageView];
         
-        [coverImageView setImageWithURL:[NSURL URLWithString:aModel.cover_pic] placeHolderText:@"加载失败..." backgroundColor:RGBCOLOR(200, 200, 200) holderTextColor:[UIColor whiteColor]];
+//        [coverImageView setImageWithURL:[NSURL URLWithString:aModel.cover_pic] placeHolderText:@"加载失败..." backgroundColor:RGBCOLOR(200, 200, 200) holderTextColor:[UIColor whiteColor]];
+        
+        [coverImageView l_setImageWithURL:[NSURL URLWithString:aModel.cover_pic] placeholderImage:DEFAULT_YIJIAYI];
     }
     
     //活动标题
@@ -387,9 +389,9 @@
             UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 0, DEVICE_WIDTH - 20, height)];
             [cell.contentView addSubview:imageView];
             
-//            [imageView sd_setImageWithURL:[NSURL URLWithString:content] placeholderImage:[UIImage imageNamed:@"activity_defaultCover"]];
+//            [imageView setImageWithURL:[NSURL URLWithString:content] placeHolderText:@"加载失败..." backgroundColor:RGBCOLOR(235, 235, 235) holderTextColor:[UIColor whiteColor]];
             
-            [imageView setImageWithURL:[NSURL URLWithString:content] placeHolderText:@"加载失败..." backgroundColor:RGBCOLOR(235, 235, 235) holderTextColor:[UIColor whiteColor]];
+            [imageView l_setImageWithURL:[NSURL URLWithString:content] placeholderImage:DEFAULT_YIJIAYI];
             
             return cell;
         }

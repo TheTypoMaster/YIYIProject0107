@@ -195,9 +195,9 @@
     [iconImageView addTaget:self action:@selector(clickToPersonal:) tag:(100 + [userId intValue])];
     
     //红心
-    zan_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(DEVICE_WIDTH - 10 - 50, textHeight + aDis, 50, 50) normalTitle:nil image:[UIImage imageNamed:@"xq_love_up"] backgroudImage:nil superView:nil target:self action:@selector(clickToZan:)];
+    zan_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(DEVICE_WIDTH - 10 - 50, textHeight + aDis, 50, 50) normalTitle:nil image:[UIImage imageNamed:@"productDetail_zan_normal"] backgroudImage:nil superView:nil target:self action:@selector(clickToZan:)];
     [bottomView addSubview:zan_btn];
-    [zan_btn setImage:[UIImage imageNamed:@"xq_love_down"] forState:UIControlStateSelected];
+    [zan_btn setImage:[UIImage imageNamed:@"productDetail_zan_selected"] forState:UIControlStateSelected];
     
     zan_btn.selected = detail_model.is_like == 1 ? YES : NO;
 
@@ -471,37 +471,28 @@
 
 #pragma mark---锚点的点击方法
 //到商场的
--(void)turntoshangchang:(UITapGestureRecognizer *)sender{
-    
-    NSLog(@"xxxshanchang==%ld",(long)sender.view.tag);
-    
-    UILabel *testlabel=(UILabel *)sender.view;
-    
-    GStorePinpaiViewController *detail = [[GStorePinpaiViewController alloc]init];
-    detail.storeIdStr =[NSString stringWithFormat:@"%ld",(long)sender.view.tag] ;
-    detail.storeNameStr=testlabel.text;
-    [self.navigationController pushViewController:detail animated:YES];
-    
-//    LNavigationController *unvc = [[LNavigationController alloc]initWithRootViewController:detail];
-    
-//    [self presentViewController:detail animated:YES completion:nil];
-    
-}
-//到单品的
--(void)turntodanpin:(UITapGestureRecognizer *)sender{
-    
-    NSLog(@"xxxsdanpin==%ld",sender.view.tag);
-    
-    ProductDetailController *detail = [[ProductDetailController alloc]init];
-    detail.product_id =[NSString stringWithFormat:@"%ld",sender.view.tag] ;
-    detail.lastPageNavigationHidden = YES;
-    
-    
-    [self.navigationController pushViewController:detail animated:YES];
-    
-//    [self presentViewController:unvc animated:YES completion:nil];
-    
-}
+//-(void)turntoshangchang:(UITapGestureRecognizer *)sender{
+//    
+//    NSLog(@"xxxshanchang==%ld",(long)sender.view.tag);
+//    
+//    UILabel *testlabel=(UILabel *)sender.view;
+//    
+//    GStorePinpaiViewController *detail = [[GStorePinpaiViewController alloc]init];
+//    detail.storeIdStr =[NSString stringWithFormat:@"%ld",(long)sender.view.tag] ;
+//    detail.storeNameStr=testlabel.text;
+//    [self.navigationController pushViewController:detail animated:YES];
+//}
+////到单品的
+//-(void)turntodanpin:(UITapGestureRecognizer *)sender{
+//    
+//    NSLog(@"xxxsdanpin==%ld",sender.view.tag);
+//    
+//    ProductDetailController *detail = [[ProductDetailController alloc]init];
+//    detail.product_id =[NSString stringWithFormat:@"%ld",sender.view.tag] ;
+//    detail.lastPageNavigationHidden = YES;
+//    detail.isTPlatPush = YES;
+//    [self.navigationController pushViewController:detail animated:YES];
+//}
 
 /**
  *  显示或隐藏tools
@@ -684,7 +675,7 @@
                      shopType:(ShopType)shopType
 {
     
-    [MiddleTools pushToStoreDetailVcWithId:infoId shopType:shopType storeName:infoName brandName:@" " fromViewController:self lastNavigationHidden:YES hiddenBottom:YES];
+    [MiddleTools pushToStoreDetailVcWithId:infoId shopType:shopType storeName:infoName brandName:@" " fromViewController:self lastNavigationHidden:YES hiddenBottom:YES isTPlatPush:YES];
     
 }
 //到单品的
@@ -695,6 +686,7 @@
     ProductDetailController *detail = [[ProductDetailController alloc]init];
     detail.product_id = infoId;
     detail.lastPageNavigationHidden = YES;
+    detail.isTPlatPush = YES;
     [self.navigationController pushViewController:detail animated:YES];
     
 }

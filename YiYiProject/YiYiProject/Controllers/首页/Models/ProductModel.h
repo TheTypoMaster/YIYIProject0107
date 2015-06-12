@@ -17,7 +17,10 @@
 @property(nonatomic,retain)NSString *mall_id;
 @property(nonatomic,retain)NSString *longitude;
 @property(nonatomic,retain)NSString *latitude;
-@property(nonatomic,retain)NSString *mall_name;
+@property(nonatomic,retain)NSString *mall_name;//店铺名或者商场名
+
+@property(nonatomic,retain)NSString *mall_type;//店铺类型 2//精品店 3//品牌店 1//大商场
+
 @property(nonatomic,retain)NSString *product_name;//品牌名
 
 @property(nonatomic,retain)NSString *product_price;//打折后价格

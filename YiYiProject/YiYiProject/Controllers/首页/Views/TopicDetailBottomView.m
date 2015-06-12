@@ -23,7 +23,7 @@
 {
     self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
     
-    NSArray * image_array = [NSArray arrayWithObjects:[UIImage imageNamed:@"xq_love_up"],[UIImage imageNamed:@"xq_pinglun"],[UIImage imageNamed:@"fenxiangb"], nil];
+    NSArray * image_array = [NSArray arrayWithObjects:[UIImage imageNamed:@"productDetail_zan_normal"],[UIImage imageNamed:@"xq_pinglun"],[UIImage imageNamed:@"fenxiangb"], nil];
     
     for (int i = 0;i < 3;i++)
     {
@@ -41,7 +41,7 @@
         
         if (i == 0)
         {
-            [button setImage:[UIImage imageNamed:@"xq_love_down"] forState:UIControlStateSelected];
+            [button setImage:[UIImage imageNamed:@"productDetail_zan_selected"] forState:UIControlStateSelected];
         }
     }
 }

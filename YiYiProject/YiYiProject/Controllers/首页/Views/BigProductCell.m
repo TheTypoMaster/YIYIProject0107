@@ -129,7 +129,9 @@
         
         imageH = [LTools heightForImageHeight:image_height imageWidth:image_width originalWidth:DEVICE_WIDTH];
     }
-    [self.bigImageView setImageWithURL:[NSURL URLWithString:imageurl] placeHolderText:@"加载失败..." backgroundColor:[UIColor whiteColor] holderTextColor:[UIColor lightGrayColor]];
+//    [self.bigImageView setImageWithURL:[NSURL URLWithString:imageurl] placeHolderText:@"加载失败..." backgroundColor:[UIColor whiteColor] holderTextColor:[UIColor lightGrayColor]];
+    
+    [self.bigImageView l_setImageWithURL:[NSURL URLWithString:imageurl] placeholderImage:DEFAULT_YIJIAYI];
     
     self.bigImageView.frame = CGRectMake(0, 0, DEVICE_WIDTH, imageH);
     

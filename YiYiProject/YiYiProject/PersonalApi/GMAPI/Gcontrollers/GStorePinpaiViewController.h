@@ -40,4 +40,6 @@
 
 @property(nonatomic,assign)BOOL isChooseProductLink;//是否为发布T台选择商品
 
+@property(nonatomic,assign)BOOL isTPlatPush;//是否是T台push过来
+
 @end

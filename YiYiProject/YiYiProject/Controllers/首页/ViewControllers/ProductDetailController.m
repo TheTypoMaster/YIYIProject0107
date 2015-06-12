@@ -66,9 +66,13 @@
 {
     [super viewWillAppear:animated];
     
-    self.navigationController.navigationBarHidden = YES;
     
-    [[UIApplication sharedApplication]setStatusBarHidden:NO];
+    if (self.isTPlatPush) {
+        
+        self.navigationController.navigationBarHidden = YES;
+        
+        [[UIApplication sharedApplication]setStatusBarHidden:NO];
+    }
     
     self.navigationController.navigationBarHidden = NO;
     
@@ -681,14 +685,14 @@
         storeName = aModel.product_brand_name;
         NSString *brandName = aModel.product_brand_name;//品牌店需要brandName
         
-        [MiddleTools pushToStoreDetailVcWithId:storeId shopType:shop_type storeName:storeName brandName:brandName fromViewController:self lastNavigationHidden:NO hiddenBottom:NO];
+        [MiddleTools pushToStoreDetailVcWithId:storeId shopType:shop_type storeName:storeName brandName:brandName fromViewController:self lastNavigationHidden:NO hiddenBottom:NO isTPlatPush:NO];
         
     }else if (shop_type == ShopType_jingpinDian || shop_type == ShopType_mall){
         
         storeId = aModel.mall_info[@"mall_id"];
         storeName = aModel.mall_info[@"mall_name"];
         
-        [MiddleTools pushToStoreDetailVcWithId:storeId shopType:shop_type storeName:storeName brandName:@" " fromViewController:self lastNavigationHidden:NO hiddenBottom:NO];
+        [MiddleTools pushToStoreDetailVcWithId:storeId shopType:shop_type storeName:storeName brandName:@" " fromViewController:self lastNavigationHidden:NO hiddenBottom:NO isTPlatPush:NO];
     }
 }
 
@@ -793,7 +797,10 @@
     //图片
     self.bigImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, aHeight)];
     [contentScroll addSubview:_bigImageView];
-    [self.bigImageView setImageWithURL:[NSURL URLWithString:[self thumbImageForArr:aProductModel.images]] placeHolderText:@"抱歉,图片加载失败" backgroundColor:RGBCOLOR(235, 235, 235) holderTextColor:[UIColor whiteColor]];
+//    [self.bigImageView setImageWithURL:[NSURL URLWithString:[self thumbImageForArr:aProductModel.images]] placeHolderText:@"抱歉,图片加载失败" backgroundColor:RGBCOLOR(235, 235, 235) holderTextColor:[UIColor whiteColor]];
+    
+    [_bigImageView l_setImageWithURL:[NSURL URLWithString:[self thumbImageForArr:aProductModel.images]] placeholderImage:DEFAULT_YIJIAYI];
+    
     //点击图片
     self.bigImageView.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapImage:)];
@@ -1021,13 +1028,13 @@
     rightView.backgroundColor=[UIColor clearColor];
     
     //是否赞
-    heartButton = [[UIButton alloc]initWithframe:CGRectMake(0, 0, 44, 44) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"xihuanb"] selectedImage:[UIImage imageNamed:@"xihuanb_down"] target:self action:@selector(clickToLike:)];
+    heartButton = [[UIButton alloc]initWithframe:CGRectMake(0, 0, 44, 44) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"productDetail_zan_normal"] selectedImage:[UIImage imageNamed:@"productDetail_zan_selected"] target:self action:@selector(clickToLike:)];
     [heartButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
 
     
     //收藏的
     
-    collectButton = [[UIButton alloc]initWithframe:CGRectMake(74, 0, 44, 44) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"shoucangb"] selectedImage:[UIImage imageNamed:@"shoucangb_down"] target:self action:@selector(clickToCollect:)];
+    collectButton = [[UIButton alloc]initWithframe:CGRectMake(74, 0, 44, 44) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"productDetail_collect_normal"] selectedImage:[UIImage imageNamed:@"productDetail_collect_selected"] target:self action:@selector(clickToCollect:)];
     collectButton.center = CGPointMake(rightView.width / 2.f, collectButton.center.y);
     [collectButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
     

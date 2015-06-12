@@ -85,9 +85,45 @@
             [label removeFromSuperview];
             label = nil;
         }
+
         [indicator stopAnimating];
+
     }];
     
+}
+
+/**
+ *  imageView赋值image 适用于imageView不定大小情况
+ *
+ *  @param url         图片地址
+ *  @param placeholder 默认图标
+ */
+-(void)l_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder
+{
+//    __block UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+//    indicator.frame = self.bounds;
+//    [self addSubview:indicator];
+//    indicator.center = CGPointMake(self.width/2.f, self.height/2.f);
+//    [indicator startAnimating];
+    
+    self.contentMode =  UIViewContentModeCenter;
+    self.backgroundColor = DEFAULT_VIEW_BACKGROUNDCOLOR;
+
+    [self sd_setImageWithURL:url placeholderImage:placeholder completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        
+        if (image) {
+            
+            self.contentMode = UIViewContentModeScaleToFill;//等比例拉伸填充
+        }else
+        {
+            //此模式小图标居中显示 不拉伸
+//            self.contentMode =  UIViewContentModeCenter;
+//            self.image = placeholder;
+        }
+        
+//        [indicator stopAnimating];
+
+    }];
 }
 
 

@@ -384,10 +384,10 @@
     [self.view addSubview:view];
     
     //喜欢
-    zan_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(35, 0, 29, 50) normalTitle:nil image:[UIImage imageNamed:@"xq_love_up"] backgroudImage:nil superView:nil target:self action:@selector(clickToZan:)];
+    zan_btn = [LTools createButtonWithType:UIButtonTypeCustom frame:CGRectMake(35, 0, 29, 50) normalTitle:nil image:[UIImage imageNamed:@"productDetail_zan_normal"] backgroudImage:nil superView:nil target:self action:@selector(clickToZan:)];
     [view addSubview:zan_btn];
     
-    [zan_btn setImage:[UIImage imageNamed:@"xq_love_down"] forState:UIControlStateSelected];
+    [zan_btn setImage:[UIImage imageNamed:@"productDetail_zan_selected"] forState:UIControlStateSelected];
     
     zan_num_label = [LTools createLabelFrame:CGRectMake(zan_btn.right + 5, 0, 50, 50) title:@"0" font:13 align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
     [view addSubview:zan_num_label];
@@ -926,7 +926,7 @@
     
 //    [MiddleTools pushToStoreDetailVcWithId:infoId guanzhuleixing:shopType name:infoName fromViewController:self lastNavigationHidden:NO hiddenBottom:YES];
     
-    [MiddleTools pushToStoreDetailVcWithId:infoId shopType:shopType storeName:infoName brandName:@" " fromViewController:self lastNavigationHidden:NO hiddenBottom:YES];
+    [MiddleTools pushToStoreDetailVcWithId:infoId shopType:shopType storeName:infoName brandName:@" " fromViewController:self lastNavigationHidden:NO hiddenBottom:YES isTPlatPush:NO];
     
 }
 

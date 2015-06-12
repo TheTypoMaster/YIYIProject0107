@@ -44,9 +44,17 @@
  *
  *  @param placeHolder 默认文字
  */
-- (void)setImageWithURL:(NSURL *)imageURL
-        placeHolderText:(NSString *)placeHolderText
-        backgroundColor:(UIColor *)backColor
-        holderTextColor:(UIColor *)holderTextColor;
+//- (void)setImageWithURL:(NSURL *)imageURL
+//        placeHolderText:(NSString *)placeHolderText
+//        backgroundColor:(UIColor *)backColor
+//        holderTextColor:(UIColor *)holderTextColor;
+
+/**
+ *  imageView赋值image 适用于imageView不定大小情况 placeHolder比较小
+ *
+ *  @param url         图片地址
+ *  @param placeholder 默认图标
+ */
+- (void)l_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder;
 
 @end

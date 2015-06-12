@@ -66,6 +66,12 @@
     [self.view addSubview:filterButton];
     [filterButton addTarget:self action:@selector(clickToFilter:) forControlEvents:UIControlEventTouchUpInside];
     
+    //注册监听登录 退出事件,刷新数据保证 赞状态失效
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocation) name:NOTIFICATION_LOGIN object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocation) name:NOTIFICATION_LOGOUT object:nil];
+
+    
     //添加滑动到顶部按钮
     [self addScroll:waterFlow.quitView topButtonPoint:CGPointMake(DEVICE_WIDTH - 40 - 10, DEVICE_HEIGHT - 10 - 40 - 49 - 64)];
     

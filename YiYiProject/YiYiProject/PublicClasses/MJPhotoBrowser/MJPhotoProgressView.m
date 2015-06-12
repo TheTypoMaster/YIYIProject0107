@@ -24,7 +24,7 @@
     CGPoint centerPoint = CGPointMake(rect.size.height / 2, rect.size.width / 2);
     CGFloat radius = MIN(rect.size.height, rect.size.width) / 2;
     
-    CGFloat pathWidth = radius * 0.3f;
+    CGFloat pathWidth = radius * 0.2f;
     
     CGFloat radians = kDegreeToRadian((_progress*359.9)-90);
     CGFloat xOffset = radius*(1 + 0.85*cosf(radians));

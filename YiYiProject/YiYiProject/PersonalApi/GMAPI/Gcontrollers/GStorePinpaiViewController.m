@@ -98,9 +98,10 @@
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
     
-    self.navigationController.navigationBarHidden = YES;
-    
-    [[UIApplication sharedApplication]setStatusBarHidden:NO];
+    if (self.isTPlatPush) {
+        self.navigationController.navigationBarHidden = YES;
+        [[UIApplication sharedApplication]setStatusBarHidden:NO];
+    }
     
     self.navigationController.navigationBarHidden = NO;
     

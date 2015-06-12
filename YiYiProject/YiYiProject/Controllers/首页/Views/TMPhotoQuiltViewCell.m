@@ -240,11 +240,24 @@ const CGFloat kTMPhotoQuiltViewMargin = 0;
         NSDictionary *middleImage = imageDic[@"540Middle"];
         imageurl = middleImage[@"src"];
     }
-
-    self.photoView.backgroundColor = [UIColor lightGrayColor];
     
-    [self.photoView sd_setImageWithURL:[NSURL URLWithString:imageurl] placeholderImage:nil];
-    self.dianPuName_Label.text = aModel.mall_name;
+    [self.photoView l_setImageWithURL:[NSURL URLWithString:imageurl] placeholderImage:DEFAULT_YIJIAYI];
+    self.photoView.backgroundColor = DEFAULT_VIEW_BACKGROUNDCOLOR;
+    
+    ShopType shopType = [aModel.mall_type intValue];
+    
+    NSString *brandName = [aModel.brand_info stringValueForKey:@"brand_name" defaultValue:@""];
+    
+    NSString *shopName = nil;
+    if (shopType == ShopType_pinpaiDian && ![LTools isEmpty:brandName]) {
+        
+        shopName = [NSString stringWithFormat:@"%@.%@",brandName,aModel.mall_name];
+    }else
+    {
+        shopName = aModel.mall_name;
+    }
+    
+    self.dianPuName_Label.text = shopName;
     
     NSString *distanceStr;
     

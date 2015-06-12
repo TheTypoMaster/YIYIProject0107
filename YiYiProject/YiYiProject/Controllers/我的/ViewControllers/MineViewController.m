@@ -111,7 +111,7 @@ typedef enum{
     
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     
-    
+    [self GgetUserInfo];//更新用户数据
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -341,6 +341,12 @@ typedef enum{
 
 //网络请求获取用户信息
 -(void)GgetUserInfo{
+    
+    
+    if ([GMAPI getAuthkey].length == 0) {
+        
+        return;
+    }
     
     if (!_hud) {
         _hud = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
@@ -1485,16 +1491,16 @@ typedef enum{
         [(ParallaxHeaderView *)_tableView.tableHeaderView layoutHeaderViewForScrollViewOffset:scrollView.contentOffset];
         
         //加载数据菊花 偏移量<-85 并且是下拉
-        if (scrollView.contentOffset.y < -80) {
+        if (scrollView.contentOffset.y < -90) {
             
-            [_hud startAnimating];
+            if ([GMAPI getAuthkey].length != 0) {
+                
+                [_hud startAnimating];
+
+            }
             _getUserinfoSuccess = NO;
             
         }
-        
-        
-        
-        
     }
 
     

@@ -125,8 +125,8 @@
         [_photoLoadingView showLoading];
         [self addSubview:_photoLoadingView];
         
-        __unsafe_unretained MJPhotoView *photoView = self;
-        __unsafe_unretained MJPhotoLoadingView *loading = _photoLoadingView;
+        __weak MJPhotoView *photoView = self;
+        __weak MJPhotoLoadingView *loading = _photoLoadingView;
         
         [_imageView sd_setImageWithURL:_photo.url placeholderImage:_photo.srcImageView.image options:SDWebImageRetryFailed|SDWebImageLowPriority  progress:^(NSInteger receivedSize, NSInteger expectedSize) {
             
@@ -258,9 +258,7 @@
     //_imageView从父视图上移除,加载在windows上,然后做动画
     [_imageView removeFromSuperview];
     [[UIApplication sharedApplication].keyWindow addSubview:_imageView];
-    
-//    [_clearView removeFromSuperview];
-//    [[UIApplication sharedApplication].keyWindow addSubview:_clearView];
+
     
     if ([self.photoViewDelegate respondsToSelector:@selector(photoViewDidEndZoom:)]) {
         [self.photoViewDelegate photoViewDidEndZoom:self];
@@ -270,9 +268,6 @@
         
         _imageView.frame = [_photo.srcImageView.superview convertRect:_photo.srcImageView.frame toView:[UIApplication sharedApplication].keyWindow];
         
-//        _clearView.frame = [_photo.srcImageView.superview convertRect:_photo.srcImageView.frame toView:[UIApplication sharedApplication].keyWindow];
-//
-//                _clearView.top -= 64;
         
         // gif图片仅显示第0张
         if (_imageView.image.images) {
@@ -362,6 +357,7 @@
 {
     // 取消请求
     [_imageView sd_setImageWithURL:[NSURL URLWithString:@"file:///abc"]];
+    _photoLoadingView = nil;
 }
 
 //- (void)setFrame:(CGRect)theFrame
