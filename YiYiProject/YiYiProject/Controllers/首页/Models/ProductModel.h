@@ -67,4 +67,6 @@
 
 @property(nonatomic,strong)NSString *shop_type;//店铺类型
 
+@property(nonatomic,strong)NSString *auto_down_time;//自动下架时间
+
 @end

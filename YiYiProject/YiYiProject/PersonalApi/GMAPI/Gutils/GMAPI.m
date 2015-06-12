@@ -592,7 +592,6 @@
 }
 
 +(NSString*)getTimeWithDate:(NSDate*)theDate{
-    //获取当前时间
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     NSString *theTime = [formatter stringFromDate:theDate];
@@ -618,6 +617,23 @@
     NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[placetime doubleValue]];
     NSString *confromTimespStr = [formatter stringFromDate:confromTimesp];
     return confromTimespStr;
+}
++(NSString *)timechangeAll2:(NSString *)placetime
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init] ;
+    [formatter setDateStyle:NSDateFormatterMediumStyle];
+    [formatter setTimeStyle:NSDateFormatterShortStyle];
+    [formatter setDateFormat:@"YYYY-MM-dd"];
+    NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[placetime doubleValue]];
+    NSString *confromTimespStr = [formatter stringFromDate:confromTimesp];
+    return confromTimespStr;
+}
+
++(NSString*)getTimeWithDate1:(NSDate*)theDate{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *theTime = [formatter stringFromDate:theDate];
+    return theTime;
 }
 
 

@@ -185,6 +185,8 @@
 +(NSString*)getTimeWithDate:(NSDate*)theDate;
 +(NSString *)timechangeAll:(NSString *)placetime;
 +(NSString *)timechangeAll1:(NSString *)placetime;
++(NSString*)getTimeWithDate1:(NSDate*)theDate;
++(NSString *)timechangeAll2:(NSString *)placetime;
 
 
 //首页缓存

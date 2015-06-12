@@ -42,6 +42,12 @@
     NSMutableArray *_oldImages_Ids_Array;//老图id数组
     
     
+    UIView *_dateChooseView;//时间选择view
+    UIDatePicker *_datePicker;//时间选择器
+    UILabel *_endTime;//结束时间
+    NSDate *_date_end;//结束时间
+    
+    
     
 }
 @end
@@ -112,6 +118,8 @@
     
     //提交按钮
     [self creatTijiaoBtn];
+    
+    [self creatDatePickerChooseView];
     
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(gShou) name:UIKeyboardWillHideNotification object:nil];
@@ -215,12 +223,14 @@
 -(void)gShou{
     NSLog(@"收键盘了");
     
-    if (_mainScrollView.contentOffset.y>=58) {
-        _mainScrollView.contentOffset = CGPointMake(0, 0);
-    }
+//    if (_mainScrollView.contentOffset.y>=58) {
+//        _mainScrollView.contentOffset = CGPointMake(0, 0);
+//    }
     for (UITextField *tf in _shurukuangArray) {
         [tf resignFirstResponder];
     }
+    
+    [self datePickerHideen];
     
     
     UITextField *tf2 = _shurukuangArray[2];
@@ -344,12 +354,8 @@
 //发布单品上传
 -(void)upLoadImage:(NSArray *)aImage_arr{
     
-    
     NSLog(@"老图id:%@",_oldImages_Ids_str);
     NSLog(@"老图 %@",_oldImages_Ids_Array);
-    
-    
-    
     NSLog(@"uploadImage and info");
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -363,13 +369,18 @@
     UITextField *tf3 = _shurukuangArray[3];//现价
     UITextField *tf4 = _shurukuangArray[4];//折扣
     UITextField *tf5 = _shurukuangArray[5];//标签
+    
+    //下架时间
+    NSString *down_timeStr = @"0";
+    if (_endTime.text.length>0) {
+        down_timeStr = _endTime.text;
+    }
+    
+    
 
-    
-    
     //类型
     NSString *product_hotsale = nil;//热销
     NSString *product_new = nil;//新品
-    
     
     NSString *gengder = nil;
     if ([_genderLabel.text isEqualToString:@"男"]) {
@@ -389,7 +400,6 @@
         product_hotsale = @"1";
     }
     
-    
     if ([tf4.text floatValue]<10.0f && [tf4.text floatValue]>100.0f) {
         [GMAPI showAutoHiddenMBProgressWithText:@"折扣输入错误" addToView:self.view];
         return;
@@ -404,7 +414,6 @@
     
     zhekou = zhekou*0.1;
     NSString *zhekouStr = [NSString stringWithFormat:@"%.2f",zhekou];
-    
     NSDictionary *dataDic = [NSDictionary dictionary];
     
     if (self.thetype == GEDITCLOTH) {
@@ -428,11 +437,12 @@
                         @"product_tag":tf5.text,//标签
                         @"authcode":[GMAPI getAuthkey],//用户标示
                         @"product_id":product_id,
-                        @"img_id":_oldImages_Ids_str
+                        @"img_id":_oldImages_Ids_str,
+                        @"down_time":down_timeStr
                         };
         }else if (self.oldImageArray.count>0){//只有老图
             
-            NSString *postStr = [NSString stringWithFormat:@"&product_name=%@&product_gender=%@&product_price=%@&original_price=%@&product_brand_id=%@&product_brand_name=%@&product_shop_id=%@&product_hotsale=%@&product_new=%@&discount_num=%@&product_tag=%@&authcode=%@&product_id=%@&img_id=%@",tf1.text,gengder,tf3.text,tf2.text,self.mallInfo.brand_id,tf.text,self.userInfo.shop_id,product_hotsale,product_new,zhekouStr,tf5.text,[GMAPI getAuthkey],product_id,_oldImages_Ids_str];
+            NSString *postStr = [NSString stringWithFormat:@"&product_name=%@&product_gender=%@&product_price=%@&original_price=%@&product_brand_id=%@&product_brand_name=%@&product_shop_id=%@&product_hotsale=%@&product_new=%@&discount_num=%@&product_tag=%@&authcode=%@&product_id=%@&img_id=%@&down_time=%@",tf1.text,gengder,tf3.text,tf2.text,self.mallInfo.brand_id,tf.text,self.userInfo.shop_id,product_hotsale,product_new,zhekouStr,tf5.text,[GMAPI getAuthkey],product_id,_oldImages_Ids_str,down_timeStr];
             
             NSData *postData = [postStr dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
             
@@ -470,7 +480,8 @@
                         @"discount_num":zhekouStr,//打折力度
                         @"product_tag":tf5.text,//标签
                         @"authcode":[GMAPI getAuthkey],//用户标示
-                        @"product_id":product_id
+                        @"product_id":product_id,
+                        @"down_time":down_timeStr
                         };
         }else{
             [GMAPI showAutoHiddenMidleQuicklyMBProgressWithText:@"请添加图片" addToView:self.view];
@@ -576,7 +587,8 @@
                                                 @"discount_num":zhekouStr,//打折力度
                                                 @"product_tag":tf5.text,//标签
                                                 @"original_price":tf2.text,//原价
-                                                @"authcode":[GMAPI getAuthkey]//用户标示
+                                                @"authcode":[GMAPI getAuthkey],//用户标示
+                                                @"down_time":down_timeStr
                                                 }
                                    constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
                                    {
@@ -663,7 +675,7 @@
     
     
     
-    _view1 = [[UIView alloc]initWithFrame:CGRectMake(0, 15, DEVICE_WIDTH, 403)];
+    _view1 = [[UIView alloc]initWithFrame:CGRectMake(0, 15, DEVICE_WIDTH, 453)];
     _view1.backgroundColor = [UIColor whiteColor];
     [_mainScrollView addSubview:_view1];
     
@@ -675,9 +687,9 @@
         pinpai = self.mallInfo.shop_name;//品牌
     }
     
-    NSArray *titleNameArray = @[@"品牌",@"品名",@"原价",@"现价",@"折扣",@"标签",@"类型",@"性别"];
+    NSArray *titleNameArray = @[@"品牌",@"品名",@"原价",@"现价",@"折扣",@"标签",@"类型",@"性别",@"下架"];
     
-    for (int i = 0; i<8; i++) {
+    for (int i = 0; i<9; i++) {
         UIView *backView = [[UIView alloc]initWithFrame:CGRectMake(0, 0+i*50.5, DEVICE_WIDTH, 50)];
         //收键盘
         UIControl *tapshou = [[UIControl alloc]initWithFrame:backView.bounds];
@@ -751,7 +763,6 @@
         
         
         
-        
         if (i == 3) {
             shuruTf.placeholder = @"单位:元";
             shuruTf.keyboardType = UIKeyboardTypeNumberPad;
@@ -765,9 +776,24 @@
         }else if (i == 2){
             shuruTf.placeholder = @"单位:元";
             shuruTf.keyboardType = UIKeyboardTypeNumberPad;
+        }else if (i == 8){
+            shuruTf.text = @"123";
+            shuruTf.hidden = YES;
+            //结束时间
+            _endTime = [[UILabel alloc]initWithFrame:shuruTf.frame];
+            _endTime.text = @"选择自动下架时间(选填)";
+            _endTime.textColor = RGBCOLOR(199, 199, 205);
+            _endTime.userInteractionEnabled = YES;
+            [backView addSubview:_endTime];
+            UITapGestureRecognizer *tapc = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(chooseEndTime:)];
+            [_endTime addGestureRecognizer:tapc];
+            
+            
+            if (self.thetype == GEDITCLOTH) {
+                _endTime.text = [GMAPI timechangeAll2:self.theEditProduct.auto_down_time];
+                _endTime.textColor = [UIColor blackColor];
+            }
         }
-        
-        
         
         [_view1 addSubview:backView];
         
@@ -1216,6 +1242,93 @@
         
     }];
 }
+
+
+//创建时间选择器view
+-(void)creatDatePickerChooseView{
+    _dateChooseView = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT, DEVICE_WIDTH, 300)];
+    _dateChooseView.backgroundColor = [UIColor whiteColor];
+    
+    _datePicker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, 40, DEVICE_WIDTH, 260)];
+    [_dateChooseView addSubview:_datePicker];
+    
+    //取消按钮
+    UIButton *quxiaoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    quxiaoBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    [quxiaoBtn setTitle:@"取消" forState:UIControlStateNormal];
+    [quxiaoBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    quxiaoBtn.frame = CGRectMake(10, 5, 60, 40);
+    quxiaoBtn.layer.borderColor = [[UIColor blackColor]CGColor];
+    quxiaoBtn.layer.borderWidth = 1;
+    quxiaoBtn.layer.cornerRadius = 5;
+    [quxiaoBtn addTarget:self action:@selector(datePickerQuxiao) forControlEvents:UIControlEventTouchUpInside];
+    [_dateChooseView addSubview:quxiaoBtn];
+    
+    //确定按钮
+    UIButton *quedingBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    quedingBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    [quedingBtn setTitle:@"确定" forState:UIControlStateNormal];
+    [quedingBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    quedingBtn.frame = CGRectMake(DEVICE_WIDTH-70, 5, 60, 40);
+    quedingBtn.layer.borderWidth = 1;
+    quedingBtn.layer.borderColor = [[UIColor blackColor]CGColor];
+    quedingBtn.layer.cornerRadius = 5;
+    [quedingBtn addTarget:self action:@selector(datePickerHideen) forControlEvents:UIControlEventTouchUpInside];
+    [_dateChooseView addSubview:quedingBtn];
+    
+    
+    
+    
+    [self.view addSubview:_dateChooseView];
+    
+    
+}
+
+//隐藏datepick
+-(void)datePickerHideen{
+    [UIView animateWithDuration:0.3 animations:^{
+        _dateChooseView.frame = CGRectMake(0, DEVICE_HEIGHT, DEVICE_WIDTH, _dateChooseView.frame.size.height);
+        if (_dateChooseView.tag == 1001){//结束时间
+            _date_end = _datePicker.date;
+            _endTime.text = [GMAPI getTimeWithDate1:_datePicker.date];
+            _endTime.textColor = [UIColor blackColor];
+        }
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+
+//取消选择日期
+-(void)datePickerQuxiao{
+    [UIView animateWithDuration:0.3 animations:^{
+        _dateChooseView.frame = CGRectMake(0, DEVICE_HEIGHT, DEVICE_WIDTH, _dateChooseView.frame.size.height);
+        if (_dateChooseView.tag == 1001){//结束时间
+            _date_end = nil;
+            _endTime.text = @"选择自动下架时间(选填)";
+            _endTime.textColor = RGBCOLOR(199, 199, 205);
+            
+        }
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+
+
+
+//选择结束时间
+-(void)chooseEndTime:(UITapGestureRecognizer*)sender{
+    for (UITextField *tf in _shurukuangArray) {
+        [tf resignFirstResponder];
+    }
+    [UIView animateWithDuration:0.3 animations:^{
+        _dateChooseView.frame = CGRectMake(0, DEVICE_HEIGHT-_dateChooseView.frame.size.height, DEVICE_WIDTH, _dateChooseView.frame.size.height);
+        _dateChooseView.tag = 1001;
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+
+
 
 
 
