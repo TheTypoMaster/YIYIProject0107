@@ -14,6 +14,8 @@
 
 #import "BigProductViewController.h"//单品的大图模式
 
+#import "GLeadBuyMapViewController.h"
+
 @interface HomeViewController ()
 {
     UIView *menu_view;
@@ -43,6 +45,7 @@
     // Do any additional setup after loading the view from its nib.
     [self createMemuView];
     
+//    [self creatLeftBarButton];
     [self creatSearchRightBarButton];
     
 }
@@ -57,13 +60,9 @@
 -(void)creatSearchRightBarButton{
     
     UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [searchBtn setTitle:@"搜索" forState:UIControlStateNormal];
-    
-//    searchBtn.backgroundColor = [UIColor orangeColor];
-    
+
     [searchBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [searchBtn setFrame:CGRectMake(0, 0, 60, 30)];
-//    searchBtn.backgroundColor = [UIColor orangeColor];
     searchBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     [searchBtn setImage:[UIImage imageNamed:@"gsearch_up.png"] forState:UIControlStateNormal];
     [searchBtn setImage:[UIImage imageNamed:@"gsearch_down.png"] forState:UIControlStateHighlighted];
@@ -79,12 +78,46 @@
     
 }
 
+-(void)creatLeftBarButton{
+    
+    UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    [searchBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [searchBtn setFrame:CGRectMake(0, 0, 60, 30)];
+    searchBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    [searchBtn setImage:[UIImage imageNamed:@"gsearch_up.png"] forState:UIControlStateNormal];
+    [searchBtn setImage:[UIImage imageNamed:@"gsearch_down.png"] forState:UIControlStateHighlighted];
+    [searchBtn addTarget:self action:@selector(pushToMapVc) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    UIBarButtonItem *btn_left = [[UIBarButtonItem alloc] initWithCustomView:searchBtn];
+    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
+                                       initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                       target:nil action:nil];
+    negativeSpacer.width = -18;
+    self.navigationItem.leftBarButtonItems = @[negativeSpacer,btn_left];
+    
+}
+
+
+
 -(void)pushToSearchVc{
     GsearchViewController *gsearchVc = [[GsearchViewController alloc]init];
     gsearchVc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:gsearchVc animated:YES];
 }
 
+
+-(void)pushToMapVc{
+    GLeadBuyMapViewController *cc = [[GLeadBuyMapViewController alloc]init];
+    cc.theType = LEADYOUTYPE_NEARBYSTORE;
+    cc.storeName = @"附近的商场";
+//    cc.coordinate_store = self.coordinate_store;
+    
+    [self presentViewController:cc animated:YES completion:^{
+        
+    }];
+}
 
 /**
  *  暂时去掉搭配师 创建选择首页选择view
