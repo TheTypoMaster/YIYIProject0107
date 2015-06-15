@@ -136,8 +136,7 @@ typedef enum{
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     
-    //加载视图
-    [self loadMineView];
+    [self chushihuaView];
     
     //获取未读消息条数
     
@@ -153,9 +152,12 @@ typedef enum{
         
         [self presentViewController:unVc animated:YES completion:nil];
         
+        //加载视图
+        [self loadMineView];
+        
     }else{
-//        [self cacheUserInfo];
-        [self GgetUserInfo];
+        [self cacheUserInfo];
+        [self performSelector:@selector(GgetUserInfo) withObject:nil afterDelay:0.5];
     }
     
 }
@@ -163,6 +165,35 @@ typedef enum{
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+//初始化view
+-(void)chushihuaView{
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT-49) style:UITableViewStylePlain];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.tableHeaderView = [self creatTableViewHeaderView];
+    _tableView.backgroundColor = RGBCOLOR(242, 242, 242);
+    [self.view addSubview:_tableView];
+    
+    
+    //通知相关=====
+    
+    //登录成功
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GgetUserInfo) name:NOTIFICATION_LOGIN object:nil];
+    
+    //退出登录
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GLogoutAction) name:NOTIFICATION_LOGOUT object:nil];
+    
+    //店铺提交申请 改变成审核中状态
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeTheTitleAndPicArray_shenhe) name:NOTIFICATION_SHENQINGDIANPU_SUCCESS object:nil];
+    
+    //接收审核结果
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GgetUserInfo) name:NOTIFICATION_SHENQINGDIANPU_STATE object:nil];
+    
+    //从后台转到前台更新用户数据
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GgetUserInfo) name:NOTIFICATION_APPENTERFOREGROUND object:nil];
 }
 
 
@@ -192,30 +223,11 @@ typedef enum{
                                   @"titleArray":_tabelViewCellTitleArray
                                   };
     
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT-49) style:UITableViewStylePlain];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    _tableView.tableHeaderView = [self creatTableViewHeaderView];
-    _tableView.backgroundColor = RGBCOLOR(242, 242, 242);
-    [self.view addSubview:_tableView];
-    
-    
-    //通知相关=====
-    
-    //登录成功
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GgetUserInfo) name:NOTIFICATION_LOGIN object:nil];
-    
-    //退出登录
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GLogoutAction) name:NOTIFICATION_LOGOUT object:nil];
-    
-    //店铺提交申请 改变成审核中状态
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeTheTitleAndPicArray_shenhe) name:NOTIFICATION_SHENQINGDIANPU_SUCCESS object:nil];
-    
-    //接收审核结果
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GgetUserInfo) name:NOTIFICATION_SHENQINGDIANPU_STATE object:nil];
-    
-    //从后台转到前台更新用户数据
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GgetUserInfo) name:NOTIFICATION_APPENTERFOREGROUND object:nil];
+    if (_tableView) {
+        [_tableView reloadData];
+    }else{
+        [self chushihuaView];
+    }
     
 }
 
@@ -290,8 +302,10 @@ typedef enum{
 
 
 -(void)cacheUserInfo{
-    UserInfo *uinfo = [UserInfo cacheResultForKey:USERINFO_MODEL];
-    _userInfo = uinfo;
+    //本地存储model
+    
+    [_userInfo cacheForKey:USERINFO_MODEL];
+    
     if ([_userInfo.is_sign intValue] == 0) {//未签到
         _qiandaoBtn.userInteractionEnabled = YES;
         _qiandaoBtn.selected = NO;
@@ -424,7 +438,6 @@ typedef enum{
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         if (!_getUserinfoSuccess) {
             
-//            [self performSelector:@selector(GgetUserInfo) withObject:[NSNumber numberWithBool:YES] afterDelay:2];
         }
     }];
     
