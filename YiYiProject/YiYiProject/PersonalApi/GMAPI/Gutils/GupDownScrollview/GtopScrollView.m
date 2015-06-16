@@ -166,11 +166,19 @@
     float originY = [[_buttonOriginYArray objectAtIndex:BUTTONID] floatValue];
     float height = [[_buttonWithArray objectAtIndex:BUTTONID] floatValue];
     
+    NSLog(@"%f",sender.frame.origin.y);
+    NSLog(@"%f",self.contentOffset.y);
+    NSLog(@"%f",self.frame.size.height);
+    NSLog(@"%d",BUTTONGAP);
+    NSLog(@"%f",height);
+    
     if (sender.frame.origin.y - self.contentOffset.y > self.frame.size.height-(BUTTONGAP+height)) {
-        [self setContentOffset:CGPointMake(originY - 30, 0)  animated:YES];
+        NSLog(@"走1:%f",originY);
+        [self setContentOffset:CGPointMake(0, height+BUTTONGAP)  animated:YES];
     }
     
     if (sender.frame.origin.y - self.contentOffset.y < 5) {
+        NSLog(@"走2");
         [self setContentOffset:CGPointMake(0,originY)  animated:YES];
     }
 }
@@ -183,12 +191,21 @@
     float height = [[self.buttonWithArray objectAtIndex:BUTTONSELECTEDID] floatValue];
 
     if (originY - self.contentOffset.y > self.frame.size.height-(BUTTONGAP+height)) {
-        [self setContentOffset:CGPointMake(originY - 30, 0)  animated:YES];
+        [self setContentOffset:CGPointMake(0, originY - 30)  animated:YES];
     }
 
     if (originY - self.contentOffset.y < 5) {
-        [self setContentOffset:CGPointMake(originY,0)  animated:YES];
+        [self setContentOffset:CGPointMake(0,originY)  animated:YES];
     }
+}
+
+
+
+
+
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    NSLog(@"contentoffset:%f",scrollView.contentOffset.y);
 }
 
 @end

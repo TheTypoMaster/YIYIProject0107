@@ -388,7 +388,7 @@
         NSArray *arr = floorArray[i];
         if (arr.count!=0) {
             [floorArray_new addObject:arr];
-            NSString *height = [NSString stringWithFormat:@"%lu",arr.count*90+20];
+            NSString *height = [NSString stringWithFormat:@"%u",arr.count*90+20];
             [self.height_oneSection addObject:height];
         }
     }
@@ -684,7 +684,6 @@
     if (scrollView.contentOffset.y>0) {
         [self showTheUpDownViewFullView];
     }else if (scrollView.contentOffset.y<0){
-        //        NSLog(@"wuwuwuwuwuuwu");
         [self showTheUpDownViewHalfView];
     }
     

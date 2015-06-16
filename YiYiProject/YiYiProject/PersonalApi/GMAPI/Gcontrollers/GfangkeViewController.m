@@ -7,11 +7,11 @@
 //
 
 #import "GfangkeViewController.h"
-#import "GrefreshTableView.h"
 #import "NSDictionary+GJson.h"
-@interface GfangkeViewController ()<GrefreshDelegate,UITableViewDataSource>
+#import "RefreshTableView.h"
+@interface GfangkeViewController ()<RefreshDelegate,UITableViewDataSource>
 {
-    GrefreshTableView *_tableView;//主tableview
+    RefreshTableView *_tableView;//主tableview
     
     int _page;//第几页
     int _pageCapacity;//每页几个
@@ -35,7 +35,7 @@
 -(void)dealloc{
     NSLog(@"%s",__FUNCTION__);
     _tableView.dataSource = nil;
-    _tableView.GrefreshDelegate = nil;
+    _tableView.refreshDelegate = nil;
     _tableView = nil;
 }
 
@@ -54,8 +54,8 @@
     self.myTitleLabel.textColor = RGBCOLOR(252, 76, 139);
     
     
-    _tableView = [[GrefreshTableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT-64)];
-    _tableView.GrefreshDelegate = self;
+    _tableView = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT-64)];
+    _tableView.refreshDelegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     
@@ -68,56 +68,26 @@
 //请求网络数据
 -(void)prepareNetData{
     
-    NSString *url = [NSString stringWithFormat:@"%@&shop_id=%@&authcode=%@&page=%d&per_page=%d",FANGKE_MYSHOP,self.shop_id,[GMAPI getAuthkey],_page,_pageCapacity];
+    NSString *url = [NSString stringWithFormat:@"%@&shop_id=%@&authcode=%@&page=%d&per_page=%d",FANGKE_MYSHOP,self.shop_id,[GMAPI getAuthkey],_tableView.pageNum,L_PAGE_SIZE];
     
     LTools *ccc = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"店铺访客:%@",result);
         NSArray *arr = [result arrayValueForKey:@"list"];
         
-        if (arr.count < _pageCapacity) {
-            
-            _tableView.isHaveMoreData = NO;
-        }else
-        {
-            _tableView.isHaveMoreData = YES;
-        }
+       
         
+        [_tableView reloadData:arr pageSize:L_PAGE_SIZE];
         
-        [self reloadData:arr isReload:_tableView.isReloadData];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        if (_tableView.isReloadData) {
-            _page --;
-            [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:0.1];
-        }
+        [_tableView loadFail];
     }];
     
     
 }
 
-#pragma mark - 下拉刷新上提加载更多
-/**
- *  刷新数据列表
- *
- *  @param dataArr  新请求的数据
- *  @param isReload 判断在刷新或者加载更多
- */
-- (void)reloadData:(NSArray *)dataArr isReload:(BOOL)isReload
-{
-    if (isReload) {
-        
-        _dataArray = dataArr;
-        
-    }else
-    {
-        NSMutableArray *newArr = [NSMutableArray arrayWithArray:_dataArray];
-        [newArr addObjectsFromArray:dataArr];
-        _dataArray = newArr;
-    }
-    
-    [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:0.1];
-}
+
 
 
 
@@ -125,16 +95,14 @@
 
 - (void)loadNewData
 {
-    _page = 1;
+    
     
     [self prepareNetData];
 }
 
 - (void)loadMoreData
 {
-    NSLog(@"loadMoreData");
     
-    _page ++;
     
     [self prepareNetData];
 }

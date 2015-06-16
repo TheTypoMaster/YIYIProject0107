@@ -9,7 +9,6 @@
 
 //管理产品
 #import <UIKit/UIKit.h>
-#import "GrefreshTableView.h"
 #import "UserInfo.h"
 #import "ProductModel.h"
 #import "MailInfoModel.h"

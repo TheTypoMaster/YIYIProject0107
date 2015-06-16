@@ -451,10 +451,6 @@
 		E37EB4F61ABFB50E009F5797 /* GsearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E37EB4F51ABFB50E009F5797 /* GsearchViewController.m */; };
 		E37EB4F81ABFC2BF009F5797 /* ios7_newssearchbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E37EB4F71ABFC2BF009F5797 /* ios7_newssearchbar@2x.png */; };
 		E37EB4FB1ABFC82F009F5797 /* GCustomSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = E37EB4FA1ABFC82F009F5797 /* GCustomSegmentView.m */; };
-		E37EB5691AC00BEC009F5797 /* GloadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = E37EB55E1AC00BEC009F5797 /* GloadingView.m */; };
-		E37EB56B1AC00BEC009F5797 /* GrefreshTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = E37EB5621AC00BEC009F5797 /* GrefreshTableFooterView.m */; };
-		E37EB56C1AC00BEC009F5797 /* GrefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = E37EB5641AC00BEC009F5797 /* GrefreshTableHeaderView.m */; };
-		E37EB56D1AC00BEC009F5797 /* GrefreshTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E37EB5661AC00BEC009F5797 /* GrefreshTableView.m */; };
 		E37EB5701AC035A6009F5797 /* GmyproductsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E37EB56F1AC035A6009F5797 /* GmyproductsListViewController.m */; };
 		E37F842F1B104E780086CBB7 /* GnearbyStoreTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E37F842E1B104E780086CBB7 /* GnearbyStoreTableViewCell.m */; };
 		E37F84381B1072D70086CBB7 /* my_friends@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E37F84301B1072D70086CBB7 /* my_friends@2x.png */; };
@@ -1312,14 +1308,6 @@
 		E37EB4F71ABFC2BF009F5797 /* ios7_newssearchbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ios7_newssearchbar@2x.png"; sourceTree = "<group>"; };
 		E37EB4F91ABFC82F009F5797 /* GCustomSegmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCustomSegmentView.h; sourceTree = "<group>"; };
 		E37EB4FA1ABFC82F009F5797 /* GCustomSegmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCustomSegmentView.m; sourceTree = "<group>"; };
-		E37EB55D1AC00BEC009F5797 /* GloadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GloadingView.h; sourceTree = "<group>"; };
-		E37EB55E1AC00BEC009F5797 /* GloadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GloadingView.m; sourceTree = "<group>"; };
-		E37EB5611AC00BEC009F5797 /* GrefreshTableFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrefreshTableFooterView.h; sourceTree = "<group>"; };
-		E37EB5621AC00BEC009F5797 /* GrefreshTableFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrefreshTableFooterView.m; sourceTree = "<group>"; };
-		E37EB5631AC00BEC009F5797 /* GrefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrefreshTableHeaderView.h; sourceTree = "<group>"; };
-		E37EB5641AC00BEC009F5797 /* GrefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrefreshTableHeaderView.m; sourceTree = "<group>"; };
-		E37EB5651AC00BEC009F5797 /* GrefreshTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrefreshTableView.h; sourceTree = "<group>"; };
-		E37EB5661AC00BEC009F5797 /* GrefreshTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrefreshTableView.m; sourceTree = "<group>"; };
 		E37EB56E1AC035A6009F5797 /* GmyproductsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GmyproductsListViewController.h; sourceTree = "<group>"; };
 		E37EB56F1AC035A6009F5797 /* GmyproductsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GmyproductsListViewController.m; sourceTree = "<group>"; };
 		E37F842D1B104E780086CBB7 /* GnearbyStoreTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GnearbyStoreTableViewCell.h; sourceTree = "<group>"; };
@@ -3135,21 +3123,6 @@
 			path = inc;
 			sourceTree = "<group>";
 		};
-		E37EB55A1AC00BEC009F5797 /* GMRefreshTableViewAndNetData */ = {
-			isa = PBXGroup;
-			children = (
-				E37EB55D1AC00BEC009F5797 /* GloadingView.h */,
-				E37EB55E1AC00BEC009F5797 /* GloadingView.m */,
-				E37EB5611AC00BEC009F5797 /* GrefreshTableFooterView.h */,
-				E37EB5621AC00BEC009F5797 /* GrefreshTableFooterView.m */,
-				E37EB5631AC00BEC009F5797 /* GrefreshTableHeaderView.h */,
-				E37EB5641AC00BEC009F5797 /* GrefreshTableHeaderView.m */,
-				E37EB5651AC00BEC009F5797 /* GrefreshTableView.h */,
-				E37EB5661AC00BEC009F5797 /* GrefreshTableView.m */,
-			);
-			path = GMRefreshTableViewAndNetData;
-			sourceTree = "<group>";
-		};
 		E3996E2C1A5E1DBA00673147 /* GMAPI */ = {
 			isa = PBXGroup;
 			children = (
@@ -3284,7 +3257,6 @@
 		E3996E491A5E1DBA00673147 /* Gutils */ = {
 			isa = PBXGroup;
 			children = (
-				E37EB55A1AC00BEC009F5797 /* GMRefreshTableViewAndNetData */,
 				E37C32C81AA23F6900B646EC /* BaiduMap_IOSSDK_v2.6.0_Lib */,
 				E36BFC851A6939FC009DAF81 /* FBCity.h */,
 				E36BFC861A6939FC009DAF81 /* FBCity.m */,
@@ -3955,7 +3927,6 @@
 				1391DC451A8703E3006A2E15 /* LoginViewController.m in Sources */,
 				13A82BB61B04955C00B3AC56 /* YIYIChatViewController.m in Sources */,
 				E36DAF081AD3BDB200C7FEA4 /* GCustomNearByView.m in Sources */,
-				E37EB56B1AC00BEC009F5797 /* GrefreshTableFooterView.m in Sources */,
 				E3EAA8C21A87806D008F3183 /* GwebViewController.m in Sources */,
 				E30479481A6109B800709985 /* UIImage+ImageEffects.m in Sources */,
 				56DAB20D1A46A35F00273140 /* ZSNApi.m in Sources */,
@@ -3969,7 +3940,6 @@
 				E37EB4FB1ABFC82F009F5797 /* GCustomSegmentView.m in Sources */,
 				565321521A59896600E43F80 /* TopicModel.m in Sources */,
 				134BBFC11B2962970047E0D9 /* ImageTitleView.m in Sources */,
-				E37EB5691AC00BEC009F5797 /* GloadingView.m in Sources */,
 				E3FFD97E1B26F63000A56770 /* GRTabView.m in Sources */,
 				E3937E261AC797CA00AA1A15 /* GcustomSearchTableViewCell.m in Sources */,
 				13C404D81A6FF42100C4B516 /* ActivityModel.m in Sources */,
@@ -4022,7 +3992,6 @@
 				56A8A8311A45946000E85F6B /* MatchTopicModel.m in Sources */,
 				13D03D4B1AEDD60F0078AA9E /* WaterFallFooter.m in Sources */,
 				566FE24B1A501C4E00A96B5F /* TopicCommentsCell.m in Sources */,
-				E37EB56C1AC00BEC009F5797 /* GrefreshTableHeaderView.m in Sources */,
 				1387B08D1A5EC2D0006365D8 /* TopicImageModel.m in Sources */,
 				E35EF15F1A6B947800B493A9 /* GupClothesViewController.m in Sources */,
 				133B17781A750988005B8B3F /* MJPhotoProgressView.m in Sources */,
@@ -4105,7 +4074,6 @@
 				E334B81E1AFB47DB00DC9209 /* MyShopViewController.m in Sources */,
 				13D560E31AA1B3F500C28927 /* DataManager.m in Sources */,
 				13D03D4C1AEDD60F0078AA9E /* WaterFallHeader.m in Sources */,
-				E37EB56D1AC00BEC009F5797 /* GrefreshTableView.m in Sources */,
 				1391DC491A87049A006A2E15 /* RootViewController.m in Sources */,
 				E3C923EF1AE13A3F005C2BE1 /* GuserPhoneViewController.m in Sources */,
 				138986331A6A6A5B00F187C9 /* LDataInstance.m in Sources */,
