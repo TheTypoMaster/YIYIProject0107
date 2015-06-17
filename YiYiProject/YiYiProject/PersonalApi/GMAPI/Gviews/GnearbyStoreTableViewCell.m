@@ -27,7 +27,6 @@
     
     CGFloat customheight = DEVICE_WIDTH*375.0/621;
     
-//    [imv sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[theModel stringValueForKey:@"mall_pic"]]] placeholderImage:nil];
     UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, customheight-1)];
     [self.contentView addSubview:imv];
     
