@@ -158,22 +158,17 @@
     
 }
 
-//点击titleButton时候 顶部标签大于屏幕宽度往后滑动显示出来
+//点击titleButton时候 顶部标签大于屏幕高度往后滑动显示出来
 - (void)adjustScrollViewContentY:(UIButton *)sender
 {
     
     
-    float originY = [[_buttonOriginYArray objectAtIndex:BUTTONID] floatValue];
-    float height = [[_buttonWithArray objectAtIndex:BUTTONID] floatValue];
+    float originY = [[_buttonOriginYArray objectAtIndex:BUTTONSELECTEDID] floatValue];
+    float height = [[_buttonWithArray objectAtIndex:BUTTONSELECTEDID] floatValue];
     
-    NSLog(@"%f",sender.frame.origin.y);
-    NSLog(@"%f",self.contentOffset.y);
-    NSLog(@"%f",self.frame.size.height);
-    NSLog(@"%d",BUTTONGAP);
-    NSLog(@"%f",height);
     
     if (sender.frame.origin.y - self.contentOffset.y > self.frame.size.height-(BUTTONGAP+height)) {
-        NSLog(@"走1:%f",originY);
+        NSLog(@"走1");
         [self setContentOffset:CGPointMake(0, height+BUTTONGAP)  animated:YES];
     }
     
@@ -191,10 +186,12 @@
     float height = [[self.buttonWithArray objectAtIndex:BUTTONSELECTEDID] floatValue];
 
     if (originY - self.contentOffset.y > self.frame.size.height-(BUTTONGAP+height)) {
+        NSLog(@"走3");
         [self setContentOffset:CGPointMake(0, originY - 30)  animated:YES];
     }
 
     if (originY - self.contentOffset.y < 5) {
+        NSLog(@"走4");
         [self setContentOffset:CGPointMake(0,originY)  animated:YES];
     }
 }
