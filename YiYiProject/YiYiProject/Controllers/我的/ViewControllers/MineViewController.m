@@ -323,6 +323,13 @@ typedef enum{
     
     NSString *name = _userInfo.user_name;
     NSString *score = _userInfo.score;
+    if ([name isEqualToString:@"(null)"] || name == nil ) {
+        name = @" ";
+    }
+    
+    if ([score isEqualToString:@"(null)"] || score == nil) {
+        score = @" ";
+    }
     self.userNameLabel.text = [NSString stringWithFormat:@"昵称:%@",name];
     self.userScoreLabel.text = [NSString stringWithFormat:@"积分:%@",score];
     
@@ -410,7 +417,13 @@ typedef enum{
         }
         
         NSString *name = [dic stringValueForKey:@"user_name"];
+        if ([name isEqualToString:@"(null)"] || name == nil) {
+            name = @" ";
+        }
         NSString *score = [dic stringValueForKey:@"score"];
+        if ([score isEqualToString:@"(null)"] || score == nil) {
+            score = @" ";
+        }
         self.userNameLabel.text = [NSString stringWithFormat:@"昵称:%@",name];
         self.userScoreLabel.text = [NSString stringWithFormat:@"积分:%@",score];
         
