@@ -163,7 +163,7 @@
 {
     
     
-    float originY = [[_buttonOriginYArray objectAtIndex:BUTTONSELECTEDID] floatValue];
+//    float originY = [[_buttonOriginYArray objectAtIndex:BUTTONSELECTEDID] floatValue];
     float height = [[_buttonWithArray objectAtIndex:BUTTONSELECTEDID] floatValue];
     
     
@@ -174,7 +174,7 @@
     
     if (sender.frame.origin.y - self.contentOffset.y < 5) {
         NSLog(@"走2");
-        [self setContentOffset:CGPointMake(0,originY)  animated:YES];
+//        [self setContentOffset:CGPointMake(0,originY)  animated:YES];
     }
 }
 
