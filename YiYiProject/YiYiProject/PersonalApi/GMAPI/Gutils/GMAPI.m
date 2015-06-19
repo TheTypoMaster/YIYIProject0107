@@ -97,7 +97,7 @@
     if (distance_f >= 1000) {
         newDistance = [NSString stringWithFormat:@"%.1fkm",distance_f*0.001];
     }else{
-        newDistance = [NSString stringWithFormat:@"%.1fm",distance_f];
+        newDistance = [NSString stringWithFormat:@"%.1fkm",distance_f];
     }
     
     return newDistance;
