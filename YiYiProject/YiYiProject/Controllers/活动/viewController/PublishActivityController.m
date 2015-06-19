@@ -302,6 +302,14 @@
     
     NSMutableString *contentString = [NSMutableString stringWithFormat:@""];
     
+    if (tempArr.count == 1) {
+        
+        NSDictionary *aDic = tempArr[0];
+        NSString *aContent = aDic[CELL_CONTENT];
+
+        return aContent;
+    }
+    
     for (int i = 0; i < tempArr.count - 1; i ++) {
         
         NSDictionary *aDic = tempArr[i];
