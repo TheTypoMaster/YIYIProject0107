@@ -423,6 +423,7 @@
 		E33737371AD7AF2800EAA23C /* productDetail_collect_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E33737361AD7AF2800EAA23C /* productDetail_collect_normal@2x.png */; };
 		E337373F1AD7D0A500EAA23C /* g_redline_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E337373E1AD7D0A500EAA23C /* g_redline_down@2x.png */; };
 		E33737411AD7D1FB00EAA23C /* gTtai_dianwo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E33737401AD7D1FB00EAA23C /* gTtai_dianwo@2x.png */; };
+		E35B9B961B394B86009BAC99 /* my_top_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E35B9B951B394B86009BAC99 /* my_top_bg@2x.png */; };
 		E35EF1161A6A54A900B493A9 /* GChooseStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E35EF1151A6A54A900B493A9 /* GChooseStoreViewController.m */; };
 		E35EF1231A6A756900B493A9 /* GchooseFloorPinpaiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E35EF1221A6A756900B493A9 /* GchooseFloorPinpaiViewController.m */; };
 		E35EF1581A6B6E0700B493A9 /* garea.plist in Resources */ = {isa = PBXBuildFile; fileRef = E35EF1561A6B6E0700B493A9 /* garea.plist */; };
@@ -1201,6 +1202,7 @@
 		E33737361AD7AF2800EAA23C /* productDetail_collect_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "productDetail_collect_normal@2x.png"; sourceTree = "<group>"; };
 		E337373E1AD7D0A500EAA23C /* g_redline_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "g_redline_down@2x.png"; sourceTree = "<group>"; };
 		E33737401AD7D1FB00EAA23C /* gTtai_dianwo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gTtai_dianwo@2x.png"; sourceTree = "<group>"; };
+		E35B9B951B394B86009BAC99 /* my_top_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "my_top_bg@2x.png"; sourceTree = "<group>"; };
 		E35EF1141A6A54A900B493A9 /* GChooseStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GChooseStoreViewController.h; sourceTree = "<group>"; };
 		E35EF1151A6A54A900B493A9 /* GChooseStoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GChooseStoreViewController.m; sourceTree = "<group>"; };
 		E35EF1211A6A756900B493A9 /* GchooseFloorPinpaiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GchooseFloorPinpaiViewController.h; sourceTree = "<group>"; };
@@ -3199,6 +3201,7 @@
 		E3996E3E1A5E1DBA00673147 /* Gmodels */ = {
 			isa = PBXGroup;
 			children = (
+				E35B9B951B394B86009BAC99 /* my_top_bg@2x.png */,
 				E3039EF11B2825CE003A32FE /* dpxq_chat@2x.png */,
 				E3039EF21B2825CE003A32FE /* dpxq_phone@2x.png */,
 				E3039EEF1B2823C4003A32FE /* dpxq_nav@2x.png */,
@@ -3602,6 +3605,7 @@
 				13D03D401AEDD60F0078AA9E /* EditInfoView.xib in Resources */,
 				E33737411AD7D1FB00EAA23C /* gTtai_dianwo@2x.png in Resources */,
 				E3B7BE061AC9557D00FE8495 /* gfujin_up@2x.png in Resources */,
+				E35B9B961B394B86009BAC99 /* my_top_bg@2x.png in Resources */,
 				E337373F1AD7D0A500EAA23C /* g_redline_down@2x.png in Resources */,
 				1391DC621A870673006A2E15 /* t_title@2x.png in Resources */,
 				13CC03801B10523800A42BC1 /* Ttai_yuanjiao_left_down@2x.png in Resources */,

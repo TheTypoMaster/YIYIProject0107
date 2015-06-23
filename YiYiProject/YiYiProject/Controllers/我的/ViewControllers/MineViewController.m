@@ -100,6 +100,11 @@ typedef enum{
     UIView *_fensiView;
     UIView *_guanzhuView;
     UIView *_ttaiView;
+    
+    
+    BOOL _isChangeBanner;//是否修改banner willappaer里判断是否请求个人信息
+    
+    UIImageView *_theBlackBackView;
 }
 @end
 
@@ -111,7 +116,14 @@ typedef enum{
     
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     
-    [self GgetUserInfo];//更新用户数据
+    if (_isChangeBanner) {
+        
+    }else{
+        [self GgetUserInfo];//更新用户数据
+    }
+    
+    _isChangeBanner = NO;
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -364,8 +376,8 @@ typedef enum{
 -(void)GgetUserInfo{
     
     
-    if ([GMAPI getAuthkey].length == 0) {
-        
+    if ([[GMAPI getAuthkey] isEqualToString:@"failtogetauthkey"]) {
+        [self chushihuaView];
         return;
     }
     
@@ -512,11 +524,15 @@ typedef enum{
     
     
     
-    UIImageView *theBlackBackView = [[UIImageView alloc]initWithFrame:CGRectMake(0, _backView.frame.size.height-50, DEVICE_WIDTH, 50)];
-    [theBlackBackView setImage:[UIImage imageNamed:@"shouye_bg.png"]];
-    theBlackBackView.userInteractionEnabled = YES;
-    [_backView addSubview:theBlackBackView];
+//    UIImageView *theBlackBackView = [[UIImageView alloc]initWithFrame:CGRectMake(0, _backView.frame.size.height-50, DEVICE_WIDTH, 50)];
+//    _theBlackBackView = [[UIImageView alloc]initWithFrame:_tableView.tableHeaderView.bounds];
+//    [_theBlackBackView setImage:[UIImage imageNamed:@"my_top_bg.png"]];
+//    _theBlackBackView.userInteractionEnabled = YES;
+//    [_tableView.tableHeaderView addSubview:_theBlackBackView];
     
+    _theBlackBackView = [[UIImageView alloc]initWithFrame:_backView.imageView.bounds];
+    [_theBlackBackView setImage:[UIImage imageNamed:@"my_top_bg.png"]];
+    [_backView.imageView addSubview:_theBlackBackView];
     
     CGFloat dddd = DEVICE_WIDTH/3;
     CGFloat yyyy = _backView.frame.size.height-50;
@@ -1290,6 +1306,8 @@ typedef enum{
 
 -(void)gActionSheet:(GcustomActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     
+    _isChangeBanner = YES;
+    
     NSLog(@"buttonIndex:%ld",(long)buttonIndex);
     
     //图片选择器
@@ -1515,7 +1533,7 @@ typedef enum{
     {
         // pass the current offset of the UITableView so that the ParallaxHeaderView layouts the subViews.
         [(ParallaxHeaderView *)_tableView.tableHeaderView layoutHeaderViewForScrollViewOffset:scrollView.contentOffset];
-        
+        [_theBlackBackView setFrame:_backView.imageView.bounds];
         //加载数据菊花 偏移量<-85 并且是下拉
         if (scrollView.contentOffset.y < -90) {
             

@@ -118,7 +118,10 @@
     
     [self.view addSubview:_backView];
     
-    
+    UIImageView *backView_black = [[UIImageView alloc]initWithFrame:_backView.bounds];
+    [backView_black setImage:[UIImage imageNamed:@"my_top_bg.png"]];
+    //    backView_black.userInteractionEnabled = YES;
+    [_backView addSubview:backView_black];
     
     //返回按钮
     
@@ -154,7 +157,7 @@
     
     //今日访客 店铺会员
     UIImageView *theBlackBackView = [[UIImageView alloc]initWithFrame:CGRectMake(0, _backView.frame.size.height-50, DEVICE_WIDTH, 50)];
-    [theBlackBackView setImage:[UIImage imageNamed:@"shouye_bg.png"]];
+//    [theBlackBackView setImage:[UIImage imageNamed:@"shouye_bg.png"]];
     theBlackBackView.userInteractionEnabled = YES;
     [_backView addSubview:theBlackBackView];
     
@@ -204,7 +207,7 @@
     [huiyuanView addSubview:dianpuhuiyuan];
     
     
-
+    
     
     
 }
