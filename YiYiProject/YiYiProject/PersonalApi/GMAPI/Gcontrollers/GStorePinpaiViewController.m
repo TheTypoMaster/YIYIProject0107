@@ -20,6 +20,8 @@
 #import "LContactView.h"
 #import "BottomToolsView.h"
 
+#import "ShopFilterView.h"//店铺单品筛选
+
 @interface GStorePinpaiViewController ()<GCustomSegmentViewDelegate,TMQuiltViewDataSource,WaterFlowDelegate,UIScrollViewDelegate>
 {
     
@@ -59,6 +61,7 @@
     
     NSDictionary *_result;//商家信息
     
+    int _product_type;//分类id
     
 }
 @property(nonatomic,assign)BOOL isPresent;//是否是模态出来
@@ -537,13 +540,35 @@
 
 //打电话
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+   
     
-    NSString *phoneNum = self.phoneNumber;
-    
-    //0取消    1确定
-    if (buttonIndex == 1) {
-        NSString *strPhone = [NSString stringWithFormat:@"tel://%@",phoneNum];
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:strPhone]];
+    if (alertView.tag == 99) {
+        
+        if (buttonIndex == 1) {
+            //        _fenleiLabel.text = @"上衣";
+        }else if (buttonIndex == 2){
+            //        _fenleiLabel.text = @"裤子";
+        }else if (buttonIndex == 3){
+            //        _fenleiLabel.text = @"裙子";
+        }else if (buttonIndex == 4){
+            //        _fenleiLabel.text = @"内衣";
+        }else if (buttonIndex == 5){
+            //        _fenleiLabel.text = @"配饰";
+        }else if (buttonIndex == 6){
+            //        _fenleiLabel.text = @"其他";
+        }else{
+            //        _fenleiLabel.textColor = RGBCOLOR(199, 199, 205);
+            //        _fenleiLabel.text = @"请选择分类";
+        }
+    }else
+    {
+        NSString *phoneNum = self.phoneNumber;
+        
+        //0取消    1确定
+        if (buttonIndex == 1) {
+            NSString *strPhone = [NSString stringWithFormat:@"tel://%@",phoneNum];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:strPhone]];
+        }
     }
 }
 
@@ -984,11 +1009,35 @@
     [_backView_water addSubview:_waterFlow];
     [_waterFlow showRefreshHeader:YES];
     
-    
+    UIButton *filterButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    filterButton.frame = CGRectMake(17, 17, 38, 38);
+    [filterButton setTitleColor:[UIColor yellowColor] forState:UIControlStateNormal];
+    [filterButton.titleLabel setFont:[UIFont systemFontOfSize:12]];
+    [filterButton setImage:[UIImage imageNamed:@"shaixuan"] forState:UIControlStateNormal];
+    [_backView_water addSubview:filterButton];
+    [filterButton addTarget:self action:@selector(clickToFilter:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 
 #pragma mark - 事件处理
+
+/**
+ *  过滤
+ *
+ *  @param sender
+ */
+- (void)clickToFilter:(UIButton *)sender
+{
+    
+    __weak typeof(LWaterflowView) *weakWaterview = _waterFlow;
+    [[ShopFilterView shareInstance]showFilterBlock:^(int filterIndex) {
+        
+        _product_type = filterIndex;
+        
+        [weakWaterview showRefreshHeader:YES];
+    }];
+}
+
 
 - (void)GbtnClicked:(UIButton *)sender
 {
@@ -1043,6 +1092,9 @@
         api = [NSString stringWithFormat:@"%@&action=%@&mb_id=%@&page=%d&per_page=%d",HOME_CLOTH_STORE_PINPAILIST,@"by_hot",self.shopId,_waterFlow.pageNum,_per_page];
     }
     
+    //添加单品分类筛选
+    
+    api = [NSString stringWithFormat:@"%@&product_type=%d",api,_product_type];
     
     if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == YES){//已经登录的情况下 传authecode 点赞
         api = [NSString stringWithFormat:@"%@&authcode=%@",api,[GMAPI getAuthkey]];
