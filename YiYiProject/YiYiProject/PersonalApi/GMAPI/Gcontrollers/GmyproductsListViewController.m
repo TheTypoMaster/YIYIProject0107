@@ -16,7 +16,6 @@
 @interface GmyproductsListViewController ()<UITableViewDataSource,RefreshDelegate,UITableViewDelegate,UIActionSheetDelegate>
 {
     int _page;//第几页
-    NSArray *_dataArray;//数据源
     RefreshTableView *_tableView;//主tableview
     
     UIView *_menu_view;
@@ -123,7 +122,7 @@
         NSLog(@"批量删除");
         NSMutableArray *productIdArray = [NSMutableArray arrayWithCapacity:1];
         for (NSIndexPath *ip in self.indexes) {
-            ProductModel *amodel = _dataArray[ip.row];
+            ProductModel *amodel = _tableView.dataArray[ip.row];
             [productIdArray addObject:amodel.product_id];
         }
         
@@ -143,7 +142,7 @@
             NSLog(@"%@",self.indexes);
             NSMutableArray *productIdArray = [NSMutableArray arrayWithCapacity:1];
             for (NSIndexPath *ip in self.indexes) {
-                ProductModel *amodel = _dataArray[ip.row];
+                ProductModel *amodel = _tableView.dataArray[ip.row];
                 [productIdArray addObject:amodel.product_id];
             }
             
@@ -159,7 +158,7 @@
             NSLog(@"%@",self.indexes);
             NSMutableArray *productIdArray = [NSMutableArray arrayWithCapacity:1];
             for (NSIndexPath *ip in self.indexes) {
-                ProductModel *amodel = _dataArray[ip.row];
+                ProductModel *amodel = _tableView.dataArray[ip.row];
                 [productIdArray addObject:amodel.product_id];
             }
             
@@ -355,9 +354,7 @@
 }
 
 
--(void)setDataArrayWithArray:(NSArray *)array{
-    _dataArray = [NSMutableArray arrayWithArray:array];
-}
+
 
 
 
@@ -478,7 +475,7 @@
 
 //跳转到修改单品界面
 -(void)editProductWithTag:(NSInteger)theTag{
-    ProductModel *amodel = _dataArray[theTag-10];
+    ProductModel *amodel = _tableView.dataArray[theTag-10];
     GupClothesViewController *ccc = [[GupClothesViewController alloc]initWithType:GEDITCLOTH editProduct:amodel];
     ccc.mallInfo = self.mallInfo;
     ccc.userInfo = self.userInfo;

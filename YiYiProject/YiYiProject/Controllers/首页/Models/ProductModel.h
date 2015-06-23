@@ -38,7 +38,7 @@
 
 @property(nonatomic,retain)NSString *product_share_num;
 
-@property(nonatomic,retain)NSString *product_sku;//型号
+@property(nonatomic,retain)NSString *product_sku;//货号
 @property(nonatomic,retain)NSString *product_hostsale;
 
 @property(nonatomic,retain)NSString *product_add_time;
@@ -71,5 +71,8 @@
 @property(nonatomic,strong)NSString *shop_type;//店铺类型
 
 @property(nonatomic,strong)NSString *auto_down_time;//自动下架时间
+
+@property(nonatomic,strong)NSString *product_type;//分类
+
 
 @end

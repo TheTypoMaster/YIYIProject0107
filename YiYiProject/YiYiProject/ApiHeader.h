@@ -250,6 +250,16 @@ typedef enum {
 }ShopType;//店铺类型
 
 
+typedef enum{
+    Product_qita = 0,//其他
+    Product_shangyi = 1,//上衣
+    Product_kuzi = 2,//裤子
+    Product_qunzi = 3,//裙子
+    Product_neiyi = 4,//内衣
+    Product_peishi = 5//配饰
+}ProductType;
+
+
 
 //接口地址
 
@@ -623,7 +633,7 @@ typedef enum {
 #define LIULAN_NUM_PRODUCT @"http://www119.alayy.com/index.php?d=api&c=statistic&m=add_product_view"
 
 //店铺访客
-#define FANGKE_MYSHOP @"http://www119.alayy.com/index.php?d=api&c=mall&m=get_track_to_shop&shop_id=2711"
+#define FANGKE_MYSHOP @"http://www119.alayy.com/index.php?d=api&c=mall&m=get_track_to_shop"
 
 //删除T台
 #define DELETE_TTAI @"http://www119.alayy.com/index.php?d=api&c=tplat&m=del_tt"
