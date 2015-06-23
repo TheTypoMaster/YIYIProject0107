@@ -33,6 +33,8 @@
 
 #import "MyShopViewController.h"//我的店铺
 
+#import "MyYiChuViewController.h"//我的衣橱
+
 #import "LShareSheetView.h"
 
 #import "ParallaxHeaderView.h"
@@ -261,6 +263,24 @@ typedef enum{
 
 //请求到userinfo之后根据shopman参数判断是否拥有店铺 调整 标题和图标二维数组
 -(void)changeTheTitleAndPicArray_dianzhu{//已经是店主
+//    _logoImageArray = @[[UIImage imageNamed:@"my_shoucang.png"],
+//                        [UIImage imageNamed:@"my_message.png"],
+//                        [UIImage imageNamed:@"my_store.png"],
+//                        [UIImage imageNamed:@"my_friends.png"],
+//                        [UIImage imageNamed:@"my_saoma.png"],
+//                        [UIImage imageNamed:@"my_setting.png"],
+//                        [UIImage imageNamed:@"my_setting.png"]];
+//    
+//    
+//    _tabelViewCellTitleArray = @[@"我的收藏",
+//                                 @"消息中心",
+//                                 @"我的店铺",
+//                                 @"邀请好友",
+//                                 @"扫一扫",
+//                                 @"设置",
+//                                 @"我的衣橱"
+//                                 ];
+    
     _logoImageArray = @[[UIImage imageNamed:@"my_shoucang.png"],
                         [UIImage imageNamed:@"my_message.png"],
                         [UIImage imageNamed:@"my_store.png"],
@@ -274,7 +294,7 @@ typedef enum{
                                  @"我的店铺",
                                  @"邀请好友",
                                  @"扫一扫",
-                                 @"设置"
+                                 @"设置",
                                  ];
     
     
@@ -1160,6 +1180,13 @@ typedef enum{
         {
             [self xiaochilun];
         }
+            break;
+//        case 6://我的衣橱
+//        {
+//            MyYiChuViewController *yichu = [[MyYiChuViewController alloc]init];
+//            yichu.hidesBottomBarWhenPushed = YES;
+//            [self.navigationController pushViewController:yichu animated:YES];
+//        }
             break;
         default:
             break;
