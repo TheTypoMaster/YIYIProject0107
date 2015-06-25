@@ -259,7 +259,8 @@ typedef enum{
     Product_peishi = 5//配饰
 }ProductType;
 
-
+//单品分类
+#define PRODUCT_FENLEI  @[@"全部",@"上衣",@"裤子",@"裙子",@"内衣",@"配饰",@"其他"]
 
 //接口地址
 

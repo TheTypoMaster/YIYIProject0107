@@ -20,7 +20,7 @@
 #import "LContactView.h"
 #import "BottomToolsView.h"
 
-#import "ShopFilterView.h"//店铺单品筛选
+#import "FilterView.h"
 
 @interface GStorePinpaiViewController ()<GCustomSegmentViewDelegate,TMQuiltViewDataSource,WaterFlowDelegate,UIScrollViewDelegate>
 {
@@ -60,8 +60,11 @@
     LTools *_tools_productList;
     
     NSDictionary *_result;//商家信息
-    
-    int _product_type;//分类id
+        
+
+    NSString *_lowPrice;//低位价格
+    NSString *_hightPrice;//高位价格
+    int _fenleiIndex;//分类index
     
 }
 @property(nonatomic,assign)BOOL isPresent;//是否是模态出来
@@ -88,6 +91,7 @@
 @property(nonatomic,assign)CGRect waterFlow_frame;
 @property(nonatomic,assign)CGPoint mainScrollView_contentOffSet;
 
+@property(nonatomic,retain)FilterView *filter;
 
 @end
 
@@ -126,10 +130,8 @@
     _waterFlow = nil;
     
     NSLog(@"%s",__FUNCTION__);
+    
 }
-
-
-
 
 
 - (void)viewDidLoad {
@@ -158,10 +160,6 @@
     self.view.backgroundColor = RGBCOLOR(242, 242, 242);
     
     
-
-    
-    
-    
     //初始化
     _btnArray = [NSMutableArray arrayWithCapacity:1];
     _per_page = 10;
@@ -176,12 +174,13 @@
     NSLog(@"品牌id %@",self.pinpaiId);
     NSLog(@"收藏类型 %@",self.guanzhuleixing);
     
+    _fenleiIndex = -1;//单品分类 默认-1代表全部
+    _lowPrice = @"";
+    _hightPrice = @"";
 
     [self prepareDianpuInfo];//获取店铺信息
     
-    
 }
-
 
 
 //店铺浏览量加1
@@ -211,6 +210,7 @@
     }];
 }
 
+#pragma - mark 网络请求
 
 //获取店铺详情
 -(void)prepareDianpuInfo{
@@ -218,79 +218,21 @@
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
+    
+    __weak typeof(self)weakSelf = self;
+    
     //收藏精品店===========这里显示的是精品店
     if ([self.guanzhuleixing isEqualToString:@"精品店"]) {
         NSString *api = [NSString stringWithFormat:@"%@&mall_id=%@&authcode=%@",HOME_CLOTH_NEARBYSTORE_DETAIL,self.storeIdStr,[GMAPI getAuthkey]];
         LTools *cc = [[LTools alloc]initWithUrl:api isPost:NO postData:nil];
         [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
             
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
             
-            
-            self.storeNameStr = [result stringValueForKey:@"mall_name"];
-            [self setJingpindianTitleName];//设置精品店标题名称
-            
-            NSLog(@"精品店信息%@",result);
-            _result = result;
-            NSArray *brand = [result arrayValueForKey:@"brand"];
-            NSArray *brand1 = nil;
-            NSDictionary *brand2 = nil;
-            if (brand && brand.count>0) {
-                brand1= brand[0];
-                if (brand1 && brand1.count>0) {
-                    brand2 = brand1[0];
-                }
-            }
-            
-            if ([brand2 isKindOfClass:[NSDictionary class]]) {
-                self.shopId = [brand2 stringValueForKey:@"shop_id"];
-            }
-            
-            self.guanzhu = [result stringValueForKey:@"following"];
-            
-            [self creatDianpuInfoViewWithResult:result];
-
-            
-            
-            [self createMemuView];
-            
-            
-            if ([[result stringValueForKey:@"following"]intValue]==1) {//已收藏
-                [_my_right_button setTitle:@"已收藏" forState:UIControlStateNormal];
-                self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
-            }else if ([[result stringValueForKey:@"following"]intValue]==0){//未收藏
-                [_my_right_button setTitle:@"收藏" forState:UIControlStateNormal];
-                self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
-            }
-            
-            if (self.isChooseProductLink) {
-                [_my_right_button setTitle:@"选择" forState:UIControlStateNormal];
-            }
-            
-            self.coordinate_store = CLLocationCoordinate2DMake([[result stringValueForKey:@"latitude"]floatValue], [[result stringValueForKey:@"longitude"]floatValue]);
-            
-            
-            //活动
-            NSDictionary *dic = [result dictionaryValueForKey:@"activity"];
-            NSString *huodongStr = nil;
-            if (dic) {
-                huodongStr = [dic stringValueForKey:@"activity_title"];
-                if (huodongStr.length==0) {
-                    huodongStr = @"";
-                }
-                self.activityId = [dic stringValueForKey:@"activity_id"];
-            }
-            
-            
-            
-            [self dianpuLiulan];
-            
-            
-            
-            
+            [weakSelf getShopDetailWithDictionary:result];
             
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
             
         }];
         
@@ -299,50 +241,212 @@
     }
     
     
-    
-    
     //收藏的是品牌店==========这里显示品牌店
     NSString *api = [NSString stringWithFormat:@"%@&shop_id=%@&authcode=%@",GET_MAIL_DETAIL_INFO,self.storeIdStr,[GMAPI getAuthkey]];//品牌店
     LTools *ccc = [[LTools alloc]initWithUrl:api isPost:NO postData:nil];
     [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
         
-        [self creatDianpuInfoViewWithResult:result];
+        [weakSelf creatDianpuInfoViewWithResult:result];
         
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
         
-        NSLog(@"品牌店信息 %@",result);
-        _result = result;
-        self.pinpaiNameStr =  [result stringValueForKey:@"shop_name"];
-        self.storeNameStr = [result stringValueForKey:@"mall_name"];
-        [self setPinpaidianTitleName];//设置品牌店标题
-        self.pinpaiId = [result stringValueForKey:@"brand_id"];
-        NSLog(@"self.pinpaiId %@",self.pinpaiId);
-        //活动
-        NSDictionary *dic = [result dictionaryValueForKey:@"activity"];
-        NSString *huodongStr = nil;
-        if (dic) {
-            huodongStr = [dic stringValueForKey:@"activity_title"];
-            if (huodongStr.length==0) {
-                huodongStr = @"";
-            }
-            self.activityId = [dic stringValueForKey:@"activity_id"];
-        }
-        
-        
-        _huodongLabel.text = huodongStr;
-        
-        self.coordinate_store = CLLocationCoordinate2DMake([[result stringValueForKey:@"latitude"]floatValue], [[result stringValueForKey:@"longitude"]floatValue]);
-        
-        
-        [self createMemuView];
-        [self getGuanzhuYesOrNoForPinpaiDianWithDic:result];
-
-        
+        [weakSelf getPinpaiShopWithResult:result];
         
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
     }];
+}
+
+
+/**
+ *  获取单品列表
+ */
+- (void)getProductList
+{
+    //请求网络数据
+    NSString *api = nil;
+    
+    NSLog(@"customSegmentIndex:%d",_paixuIndex);
+    
+    if (![self.guanzhuleixing isEqualToString:@"精品店"]) {
+        self.shopId = self.storeIdStr;
+    }
+    
+    if (_paixuIndex == 0) {//新品
+        api = [NSString stringWithFormat:@"%@&action=%@&mb_id=%@&page=%d&per_page=%d",HOME_CLOTH_STORE_PINPAILIST,@"by_time",self.shopId,_waterFlow.pageNum,_per_page];
+    }else if (_paixuIndex == 1){//折扣
+        api = [NSString stringWithFormat:@"%@&action=%@&mb_id=%@&page=%d&per_page=%d",HOME_CLOTH_STORE_PINPAILIST,@"by_discount",self.shopId,_waterFlow.pageNum,_per_page];
+    }else if (_paixuIndex == 2){//热销
+        api = [NSString stringWithFormat:@"%@&action=%@&mb_id=%@&page=%d&per_page=%d",HOME_CLOTH_STORE_PINPAILIST,@"by_hot",self.shopId,_waterFlow.pageNum,_per_page];
+    }
+    
+    //添加单品分类筛选
+    
+    api = [NSString stringWithFormat:@"%@&low_price=%@&high_price=%@&product_type=%d",api,_lowPrice,_hightPrice,_fenleiIndex];
+    
+    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == YES){//已经登录的情况下 传authecode 点赞
+        api = [NSString stringWithFormat:@"%@&authcode=%@",api,[GMAPI getAuthkey]];
+    }
+    
+    NSLog(@"请求的接口%@",api);
+    if (_tools_productList) {
+        [_tools_productList cancelRequest];
+    }
+    
+    __weak typeof(self)weakSelf = self;
+    __weak typeof(LWaterflowView *)weakFlow = _waterFlow;
+    
+    _tools_productList = [[LTools alloc]initWithUrl:api isPost:NO postData:nil];
+    [_tools_productList requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"result : %@",result);
+        
+        [weakSelf getPruductWithResult:result];
+        
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+        [weakFlow loadFail];
+    }];
+    
+}
+
+
+
+#pragma - mark 数据处理
+
+/**
+ *  解析单品列表数据
+ *
+ *  @param result
+ */
+- (void)getPruductWithResult:(NSDictionary *)result
+{
+    NSMutableArray *arr;
+    if ([result isKindOfClass:[NSDictionary class]]) {
+        
+        NSArray *list = result[@"list"];
+        
+        
+        if (list.count == 0) {
+            [_waterFlow loadFail];
+            [GMAPI showAutoHiddenQuicklyMBProgressWithText:@"暂无" addToView:_backView_water];
+        }
+        
+        arr = [NSMutableArray arrayWithCapacity:list.count];
+        if ([list isKindOfClass:[NSArray class]]) {
+            
+            for (NSDictionary *aDic in list) {
+                
+                ProductModel *aModel = [[ProductModel alloc]initWithDictionary:aDic];
+                
+                [arr addObject:aModel];
+            }
+            
+        }
+        
+    }
+    
+    [_waterFlow reloadData:arr pageSize:_per_page];
+
+}
+
+/**
+ *  获取品牌店信息
+ *
+ *  @param result
+ */
+- (void)getPinpaiShopWithResult:(NSDictionary *)result
+{
+    NSLog(@"品牌店信息 %@",result);
+    _result = result;
+    self.pinpaiNameStr =  [result stringValueForKey:@"shop_name"];
+    self.storeNameStr = [result stringValueForKey:@"mall_name"];
+    [self setPinpaidianTitleName];//设置品牌店标题
+    self.pinpaiId = [result stringValueForKey:@"brand_id"];
+    NSLog(@"self.pinpaiId %@",self.pinpaiId);
+    //活动
+    NSDictionary *dic = [result dictionaryValueForKey:@"activity"];
+    NSString *huodongStr = nil;
+    if (dic) {
+        huodongStr = [dic stringValueForKey:@"activity_title"];
+        if (huodongStr.length==0) {
+            huodongStr = @"";
+        }
+        self.activityId = [dic stringValueForKey:@"activity_id"];
+    }
+    
+    
+    _huodongLabel.text = huodongStr;
+    
+    self.coordinate_store = CLLocationCoordinate2DMake([[result stringValueForKey:@"latitude"]floatValue], [[result stringValueForKey:@"longitude"]floatValue]);
+    
+    
+    [self createMemuView];
+    [self getGuanzhuYesOrNoForPinpaiDianWithDic:result];
+}
+
+/**
+ *  处理获取到得店铺详情数据
+ *
+ *  @param result
+ */
+- (void)getShopDetailWithDictionary:(NSDictionary *)result
+{
+    self.storeNameStr = [result stringValueForKey:@"mall_name"];
+    [self setJingpindianTitleName];//设置精品店标题名称
+    
+    NSLog(@"精品店信息%@",result);
+    _result = result;
+    NSArray *brand = [result arrayValueForKey:@"brand"];
+    NSArray *brand1 = nil;
+    NSDictionary *brand2 = nil;
+    if (brand && brand.count>0) {
+        brand1= brand[0];
+        if (brand1 && brand1.count>0) {
+            brand2 = brand1[0];
+        }
+    }
+    
+    if ([brand2 isKindOfClass:[NSDictionary class]]) {
+        self.shopId = [brand2 stringValueForKey:@"shop_id"];
+    }
+    
+    self.guanzhu = [result stringValueForKey:@"following"];
+    
+    [self creatDianpuInfoViewWithResult:result];
+    
+    [self createMemuView];
+    
+    
+    if ([[result stringValueForKey:@"following"]intValue]==1) {//已收藏
+        [_my_right_button setTitle:@"已收藏" forState:UIControlStateNormal];
+        self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
+    }else if ([[result stringValueForKey:@"following"]intValue]==0){//未收藏
+        [_my_right_button setTitle:@"收藏" forState:UIControlStateNormal];
+        self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
+    }
+    
+    if (self.isChooseProductLink) {
+        [_my_right_button setTitle:@"选择" forState:UIControlStateNormal];
+    }
+    
+    self.coordinate_store = CLLocationCoordinate2DMake([[result stringValueForKey:@"latitude"]floatValue], [[result stringValueForKey:@"longitude"]floatValue]);
+    
+    
+    //活动
+    NSDictionary *dic = [result dictionaryValueForKey:@"activity"];
+    NSString *huodongStr = nil;
+    if (dic) {
+        huodongStr = [dic stringValueForKey:@"activity_title"];
+        if (huodongStr.length==0) {
+            huodongStr = @"";
+        }
+        self.activityId = [dic stringValueForKey:@"activity_id"];
+    }
+    
+    [self dianpuLiulan];
 }
 
 
@@ -369,7 +473,7 @@
 }
 
 
-
+#pragma - mark 创建视图
 
 //创建店铺信息view
 -(void)creatDianpuInfoViewWithResult:(NSDictionary*)result{
@@ -482,7 +586,7 @@
             
         }else if (aType == ACTIONTYPE_NAVIGATION){ //导航
             
-            [weakself leadYouBuy];
+            [weakself clickToBuy];
             
         }else if (aType == ACTIONTYPE_PHONE){ //电话
             
@@ -496,135 +600,6 @@
 
     
 }
-
-
-- (void)clickToContact:(UIButton*)sender {
-    
-    __weak typeof(self)weakSelf = self;
-    
-    [[LContactView shareInstance] show];
-    
-    [[LContactView shareInstance] setContactBlock:^ (CONTACTTYPE contactType,int extra){
-        
-        if (contactType == CONTACTTYPE_PHONE) {
-            
-            [weakSelf clickToPhone:nil];
-            
-        }else if (contactType == CONTACTTYPE_PRIVATECHAT){
-            
-            [weakSelf clickToPrivateChat:nil];
-        }
-        
-    }];
-}
-
-/**
- *  私聊
- *
- *  @param sender
- */
-- (void)clickToPhone:(UIButton *)sender
-{
-    NSString *phoneNum = self.phoneNumber;
-    
-    if ([LTools isValidateMobile:phoneNum]) {
-        
-        UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"拨号" message:phoneNum delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-        [al show];
-    }else
-    {
-        
-        [LTools showMBProgressWithText:@"抱歉!该商家暂未填写有效联系方式" addToView:self.view];
-    }
-}
-
-//打电话
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-   
-    
-    if (alertView.tag == 99) {
-        
-        if (buttonIndex == 1) {
-            //        _fenleiLabel.text = @"上衣";
-        }else if (buttonIndex == 2){
-            //        _fenleiLabel.text = @"裤子";
-        }else if (buttonIndex == 3){
-            //        _fenleiLabel.text = @"裙子";
-        }else if (buttonIndex == 4){
-            //        _fenleiLabel.text = @"内衣";
-        }else if (buttonIndex == 5){
-            //        _fenleiLabel.text = @"配饰";
-        }else if (buttonIndex == 6){
-            //        _fenleiLabel.text = @"其他";
-        }else{
-            //        _fenleiLabel.textColor = RGBCOLOR(199, 199, 205);
-            //        _fenleiLabel.text = @"请选择分类";
-        }
-    }else
-    {
-        NSString *phoneNum = self.phoneNumber;
-        
-        //0取消    1确定
-        if (buttonIndex == 1) {
-            NSString *strPhone = [NSString stringWithFormat:@"tel://%@",phoneNum];
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:strPhone]];
-        }
-    }
-}
-
-/**
- *  私聊
- *
- *  @param sender
- */
-- (void)clickToPrivateChat:(UIButton *)sender
-{
-    BOOL rong_login = [LTools cacheBoolForKey:LOGIN_RONGCLOUD_STATE];
-    
-    //服务器登陆成功
-    if ([LTools isLogin:self]) {
-        
-        //融云登陆成功
-        if (rong_login) {
-            
-            NSString *useriId;
-            NSString *brand_name;
-            NSString *mall_name;
-            YIYIChatViewController *contact = [[YIYIChatViewController alloc]init];
-            
-            
-            NSLog(@"%@",self.guanzhuleixing);
-            NSLog(@"%@",_result);
-            
-            useriId = [_result stringValueForKey:@"uid"];
-            if ([self.guanzhuleixing isEqualToString:@"品牌店"]) {
-                brand_name = [_result stringValueForKey:@"shop_name"];
-                mall_name = [_result stringValueForKey:@"mall_name"];
-                NSString *aaa = [NSString stringWithFormat:@"%@.%@",brand_name,mall_name];
-                contact.currentTargetName = aaa;
-            }else if ([self.guanzhuleixing isEqualToString:@"精品店"]){
-                contact.currentTargetName = [_result stringValueForKey:@"mall_name"];
-            }
-            
-            contact.currentTarget = useriId;
-            contact.portraitStyle = RCUserAvatarCycle;
-            contact.conversationType = ConversationType_PRIVATE;
-            [self.navigationController pushViewController:contact animated:YES];
-            
-            
-        }else{
-            NSLog(@"服务器登陆成功了,融云未登陆");
-            
-            
-            AppDelegate * appdelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-            [appdelegate loginToRongCloud];
-            
-        }
-        
-    }
-}
-
-
 
 
 ////打电话
@@ -643,18 +618,6 @@
 //}
 
 
-//跳转地图导航页面
--(void)leadYouBuy{
-    GLeadBuyMapViewController *cc = [[GLeadBuyMapViewController alloc]init];
-    cc.theType = LEADYOUTYPE_STORE;
-    cc.storeName = [NSString stringWithFormat:@"%@",self.storeNameStr];
-    cc.coordinate_store = self.coordinate_store;
-    
-    
-    [self presentViewController:cc animated:YES completion:^{
-        
-    }];
-}
 
 
 //点击跳转活动
@@ -716,12 +679,8 @@
             [_my_right_button setTitle:@"选择" forState:UIControlStateNormal];
         }
         
-        [_waterFlow showRefreshHeader:YES];
-        
-    
+//        [_waterFlow showRefreshHeader:YES];
 }
-
-
 
 
 -(void)leftButtonTap:(UIButton *)sender
@@ -1021,6 +980,13 @@
 
 #pragma mark - 事件处理
 
+-(FilterView *)filter
+{
+    if (!_filter) {
+        _filter = [[FilterView alloc]initWithStyle:FilterStyle_NoSexAndSort];
+    }
+    return _filter;
+}
 /**
  *  过滤
  *
@@ -1029,12 +995,16 @@
 - (void)clickToFilter:(UIButton *)sender
 {
     
-    __weak typeof(LWaterflowView) *weakWaterview = _waterFlow;
-    [[ShopFilterView shareInstance]showFilterBlock:^(int filterIndex) {
+    __weak typeof(_waterFlow)weakFlow = _waterFlow;
+    
+    [self.filter showFilterBlock:^(SORT_SEX_TYPE sextType, SORT_Discount_TYPE discountType, NSString *lowPrice, NSString *hightPrice, int fenleiIndex) {
         
-        _product_type = filterIndex;
+        _lowPrice = lowPrice;
+        _hightPrice = hightPrice;
+        _fenleiIndex = fenleiIndex;
         
-        [weakWaterview showRefreshHeader:YES];
+        [weakFlow showRefreshHeader:NO];
+        
     }];
 }
 
@@ -1064,144 +1034,193 @@
     }
 }
 
+- (void)clickToContact:(UIButton*)sender {
+    
+    __weak typeof(self)weakSelf = self;
+    
+    [[LContactView shareInstance] show];
+    
+    [[LContactView shareInstance] setContactBlock:^ (CONTACTTYPE contactType,int extra){
+        
+        if (contactType == CONTACTTYPE_PHONE) {
+            
+            [weakSelf clickToPhone:nil];
+            
+        }else if (contactType == CONTACTTYPE_PRIVATECHAT){
+            
+            [weakSelf clickToPrivateChat:nil];
+        }
+        
+    }];
+}
 
+/**
+ *  私聊
+ *
+ *  @param sender
+ */
+- (void)clickToPhone:(UIButton *)sender
+{
+    NSString *phoneNum = self.phoneNumber;
+    
+    if ([LTools isValidateMobile:phoneNum]) {
+        
+        UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"拨号" message:phoneNum delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [al show];
+    }else
+    {
+        
+        [LTools showMBProgressWithText:@"抱歉!该商家暂未填写有效联系方式" addToView:self.view];
+    }
+}
+
+//跳转地图导航页面
+-(void)clickToBuy{
+    GLeadBuyMapViewController *cc = [[GLeadBuyMapViewController alloc]init];
+    cc.theType = LEADYOUTYPE_STORE;
+    cc.storeName = [NSString stringWithFormat:@"%@",self.storeNameStr];
+    cc.coordinate_store = self.coordinate_store;
+    
+    [self presentViewController:cc animated:YES completion:^{
+        
+    }];
+}
+
+/**
+ *  私聊
+ *
+ *  @param sender
+ */
+- (void)clickToPrivateChat:(UIButton *)sender
+{
+    BOOL rong_login = [LTools cacheBoolForKey:LOGIN_RONGCLOUD_STATE];
+    
+    //服务器登陆成功
+    if ([LTools isLogin:self]) {
+        
+        //融云登陆成功
+        if (rong_login) {
+            
+            NSString *useriId;
+            NSString *brand_name;
+            NSString *mall_name;
+            YIYIChatViewController *contact = [[YIYIChatViewController alloc]init];
+            
+            
+            NSLog(@"%@",self.guanzhuleixing);
+            NSLog(@"%@",_result);
+            
+            useriId = [_result stringValueForKey:@"uid"];
+            if ([self.guanzhuleixing isEqualToString:@"品牌店"]) {
+                brand_name = [_result stringValueForKey:@"shop_name"];
+                mall_name = [_result stringValueForKey:@"mall_name"];
+                NSString *aaa = [NSString stringWithFormat:@"%@.%@",brand_name,mall_name];
+                contact.currentTargetName = aaa;
+            }else if ([self.guanzhuleixing isEqualToString:@"精品店"]){
+                contact.currentTargetName = [_result stringValueForKey:@"mall_name"];
+            }
+            
+            contact.currentTarget = useriId;
+            contact.portraitStyle = RCUserAvatarCycle;
+            contact.conversationType = ConversationType_PRIVATE;
+            [self.navigationController pushViewController:contact animated:YES];
+            
+            
+        }else{
+            NSLog(@"服务器登陆成功了,融云未登陆");
+            
+            
+            AppDelegate * appdelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+            [appdelegate loginToRongCloud];
+            
+        }
+        
+    }
+}
+
+
+
+/**
+ *  赞 取消赞 收藏 取消收藏
+ */
+
+- (void)clickToZan:(UIButton *)sender
+{
+    if (![LTools isLogin:self]) {
+        
+        return;
+    }
+    //直接变状态
+    //更新数据
+    
+    [LTools animationToBigger:sender duration:0.2 scacle:1.5];
+    
+    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[_waterFlow.quitView cellAtIndexPath:[NSIndexPath indexPathForRow:sender.tag - 10000 inSection:0]];
+    //    cell.like_label.text = @"";
+    
+    ProductModel *aMode = _waterFlow.dataArray[sender.tag - 10000];
+    NSString *productId = aMode.product_id;
+    
+    __weak typeof(self)weakSelf = self;
+    
+    __block BOOL isZan = !sender.selected;
+    
+    NSString *api = sender.selected ? HOME_PRODUCT_ZAN_Cancel : HOME_PRODUCT_ZAN_ADD;
+    
+    NSString *post = [NSString stringWithFormat:@"product_id=%@&authcode=%@",productId,[GMAPI getAuthkey]];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    
+    NSString *url = api;
+    
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"result %@",result);
+        sender.selected = isZan;
+        aMode.is_like = isZan ? 1 : 0;
+        aMode.product_like_num = NSStringFromInt([aMode.product_like_num intValue] + (isZan ? 1 : -1));
+        cell.like_label.text = aMode.product_like_num;
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+        if ([failDic[RESULT_CODE] intValue] == -11) {
+            
+            [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:weakSelf.view];
+        }
+        aMode.product_like_num = NSStringFromInt([aMode.product_like_num intValue]);
+        cell.like_label.text = aMode.product_like_num;
+    }];
+}
+
+
+#pragma - mark 代理
+
+#pragma - mark UIAlertViewDelegate
+//打电话
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    
+    
+    NSString *phoneNum = self.phoneNumber;
+    
+    //0取消    1确定
+    if (buttonIndex == 1) {
+        NSString *strPhone = [NSString stringWithFormat:@"tel://%@",phoneNum];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:strPhone]];
+    }
+}
 
 
 #pragma mark - _waterFlowDelegate
 
 - (void)waterLoadNewData
 {
-
-    
-    //请求网络数据
-    NSString *api = nil;
-    
-    
-    NSLog(@"customSegmentIndex:%d",_paixuIndex);
-    
-    
-    if (![self.guanzhuleixing isEqualToString:@"精品店"]) {
-        self.shopId = self.storeIdStr;
-    }
-    
-    if (_paixuIndex == 0) {//新品
-        api = [NSString stringWithFormat:@"%@&action=%@&mb_id=%@&page=%d&per_page=%d",HOME_CLOTH_STORE_PINPAILIST,@"by_time",self.shopId,_waterFlow.pageNum,_per_page];
-    }else if (_paixuIndex == 1){//折扣
-        api = [NSString stringWithFormat:@"%@&action=%@&mb_id=%@&page=%d&per_page=%d",HOME_CLOTH_STORE_PINPAILIST,@"by_discount",self.shopId,_waterFlow.pageNum,_per_page];
-    }else if (_paixuIndex == 2){//热销
-        api = [NSString stringWithFormat:@"%@&action=%@&mb_id=%@&page=%d&per_page=%d",HOME_CLOTH_STORE_PINPAILIST,@"by_hot",self.shopId,_waterFlow.pageNum,_per_page];
-    }
-    
-    //添加单品分类筛选
-    
-    api = [NSString stringWithFormat:@"%@&product_type=%d",api,_product_type];
-    
-    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == YES){//已经登录的情况下 传authecode 点赞
-        api = [NSString stringWithFormat:@"%@&authcode=%@",api,[GMAPI getAuthkey]];
-    }
-    
-    NSLog(@"请求的接口%@",api);
-    if (_tools_productList) {
-        [_tools_productList cancelRequest];
-    }
-    
-    _tools_productList = [[LTools alloc]initWithUrl:api isPost:NO postData:nil];
-    [_tools_productList requestCompletion:^(NSDictionary *result, NSError *erro) {
-        
-        NSLog(@"result : %@",result);
-        
-        
-        
-        NSMutableArray *arr;
-        if ([result isKindOfClass:[NSDictionary class]]) {
-            
-            NSArray *list = result[@"list"];
-            
-            
-            if (list.count == 0) {
-                [_waterFlow loadFail];
-                [GMAPI showAutoHiddenQuicklyMBProgressWithText:@"暂无" addToView:_backView_water];
-            }
-            
-            arr = [NSMutableArray arrayWithCapacity:list.count];
-            if ([list isKindOfClass:[NSArray class]]) {
-                
-                for (NSDictionary *aDic in list) {
-                    
-                    ProductModel *aModel = [[ProductModel alloc]initWithDictionary:aDic];
-                    
-                    [arr addObject:aModel];
-                }
-                
-            }
-            
-        }
-        
-        
-        [_waterFlow reloadData:arr pageSize:_per_page];
-        
-        
-    } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-        [_waterFlow loadFail];
-    }];
-    
+    [self getProductList];
 }
 - (void)waterLoadMoreData
 {
-    //加载更多
-    //请求网络数据
-    NSString *api = nil;
-    NSLog(@"customSegmentIndex:%d",_paixuIndex);
-    
-    
-    if (_paixuIndex == 0) {//新品
-        api = [NSString stringWithFormat:@"%@&action=%@&mb_id=%@&page=%d&per_page=%d",HOME_CLOTH_STORE_PINPAILIST,@"by_time",self.shopId,_waterFlow.pageNum,_per_page];
-    }else if (_paixuIndex == 1){//折扣
-        api = [NSString stringWithFormat:@"%@&action=%@&mb_id=%@&page=%d&per_page=%d",HOME_CLOTH_STORE_PINPAILIST,@"by_discount",self.shopId,_waterFlow.pageNum,_per_page];
-    }else if (_paixuIndex == 2){//热销
-        api = [NSString stringWithFormat:@"%@&action=%@&mb_id=%@&page=%d&per_page=%d",HOME_CLOTH_STORE_PINPAILIST,@"by_hot",self.shopId,_waterFlow.pageNum,_per_page];
-    }
-    
-    NSLog(@"请求的接口%@",api);
-    if (_tools_productList) {
-        [_tools_productList cancelRequest];
-    }
-    _tools_productList = [[LTools alloc]initWithUrl:api isPost:NO postData:nil];
-    [_tools_productList requestCompletion:^(NSDictionary *result, NSError *erro) {
-        
-        NSLog(@"result : %@",result);
-        
-        NSMutableArray *arr;
-        
-        if ([result isKindOfClass:[NSDictionary class]]) {
-            
-            NSArray *list = result[@"list"];
-            
-            arr = [NSMutableArray arrayWithCapacity:list.count];
-            if ([list isKindOfClass:[NSArray class]]) {
-                
-                for (NSDictionary *aDic in list) {
-                    
-                    ProductModel *aModel = [[ProductModel alloc]initWithDictionary:aDic];
-                    
-                    [arr addObject:aModel];
-                }
-                
-            }
-            
-        }
-        
-        
-        
-        //重载瀑布流
-        [_waterFlow reloadData:arr pageSize:_per_page];
-        
-        
-    } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-        [_waterFlow loadFail];
-    }];
+    [self getProductList];
 }
 
 //点击方法
@@ -1304,73 +1323,11 @@
 }
 
 
-
-
-
-/**
- *  赞 取消赞 收藏 取消收藏
- */
-
-- (void)clickToZan:(UIButton *)sender
-{
-    if (![LTools isLogin:self]) {
-        
-        return;
-    }
-    //直接变状态
-    //更新数据
-    
-    [LTools animationToBigger:sender duration:0.2 scacle:1.5];
-    
-     TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[_waterFlow.quitView cellAtIndexPath:[NSIndexPath indexPathForRow:sender.tag - 10000 inSection:0]];
-    //    cell.like_label.text = @"";
-    
-    ProductModel *aMode = _waterFlow.dataArray[sender.tag - 10000];
-    NSString *productId = aMode.product_id;
-    
-    __weak typeof(self)weakSelf = self;
-    
-    __block BOOL isZan = !sender.selected;
-    
-    NSString *api = sender.selected ? HOME_PRODUCT_ZAN_Cancel : HOME_PRODUCT_ZAN_ADD;
-    
-    NSString *post = [NSString stringWithFormat:@"product_id=%@&authcode=%@",productId,[GMAPI getAuthkey]];
-    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-    
-    NSString *url = api;
-    
-    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
-    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
-        
-        NSLog(@"result %@",result);
-        sender.selected = isZan;
-        aMode.is_like = isZan ? 1 : 0;
-        aMode.product_like_num = NSStringFromInt([aMode.product_like_num intValue] + (isZan ? 1 : -1));
-        cell.like_label.text = aMode.product_like_num;
-        
-    } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        
-        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-        if ([failDic[RESULT_CODE] intValue] == -11) {
-            
-            [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:weakSelf.view];
-        }
-        aMode.product_like_num = NSStringFromInt([aMode.product_like_num intValue]);
-        cell.like_label.text = aMode.product_like_num;
-    }];
-}
-
-
-
-
-
 #pragma mark - CustomSegmentViewDelegate
 -(void)buttonClick:(NSInteger)buttonSelected{
     NSLog(@"buttonSelect:%ld",(long)buttonSelected);
     
 }
-
-
 
 - (void)waterScrollViewDidScroll:(UIScrollView *)scrollView{
     

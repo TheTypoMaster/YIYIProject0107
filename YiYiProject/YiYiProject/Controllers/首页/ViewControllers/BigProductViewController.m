@@ -186,13 +186,13 @@
 - (void)clickToFilter:(UIButton *)sender
 {
     __weak typeof(_tableView)weakTable = _tableView;
-    [[FilterView shareInstance] showFilterBlock:^(SORT_SEX_TYPE sextType1, SORT_Discount_TYPE discountType1) {
-        sex_type = sextType1;
-        discount_type = discountType1;
-        
-        [weakTable showRefreshHeader:NO];
-        
-    }];
+//    [[FilterView shareInstance] showFilterBlock:^(SORT_SEX_TYPE sextType1, SORT_Discount_TYPE discountType1) {
+//        sex_type = sextType1;
+//        discount_type = discountType1;
+//        
+//        [weakTable showRefreshHeader:NO];
+//        
+//    }];
     
 }
 #pragma mark --解析数据

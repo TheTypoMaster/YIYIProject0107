@@ -28,14 +28,19 @@
 {
     LWaterflowView *waterFlow;
     
-    SORT_SEX_TYPE sex_type;
-    SORT_Discount_TYPE discount_type;
+    SORT_SEX_TYPE _sex_type;
+    SORT_Discount_TYPE _discount_type;
+    NSString *_lowPrice;//低位价格
+    NSString *_hightPrice;//高位价格
+    int _fenleiIndex;//分类index
     
     GMAPI *mapApi;
     
     NSString *_longtitud;//经度
     NSString *_latitude;//维度
 }
+
+@property(nonatomic,retain)FilterView *filter;
 
 @end
 
@@ -74,6 +79,12 @@
     
     //添加滑动到顶部按钮
     [self addScroll:waterFlow.quitView topButtonPoint:CGPointMake(DEVICE_WIDTH - 40 - 10, DEVICE_HEIGHT - 10 - 40 - 49 - 64)];
+    
+    _sex_type = 0;
+    _discount_type = 0;
+    _lowPrice = @"";//低位价格
+    _hightPrice = @"";//高位价格
+    _fenleiIndex = -1;//分类index -1代表全部
     
     //更新位置
     [self updateLocation];
@@ -193,6 +204,14 @@
     }];
 }
 
+-(FilterView *)filter
+{
+    if (!_filter) {
+        _filter = [[FilterView alloc]initWithStyle:FilterStyle_Default];
+    }
+    return _filter;
+}
+
 /**
  *  筛选
  *
@@ -201,9 +220,14 @@
 - (void)clickToFilter:(UIButton *)sender
 {
     __weak typeof(waterFlow)weakFlow = waterFlow;
-    [[FilterView shareInstance] showFilterBlock:^(SORT_SEX_TYPE sextType1, SORT_Discount_TYPE discountType1) {
-        sex_type = sextType1;
-        discount_type = discountType1;
+    
+    [self.filter showFilterBlock:^(SORT_SEX_TYPE sextType, SORT_Discount_TYPE discountType, NSString *lowPrice, NSString *hightPrice, int fenleiIndex) {
+        
+        _sex_type = sextType;
+        _discount_type = discountType;
+        _lowPrice = lowPrice;
+        _hightPrice = hightPrice;
+        _fenleiIndex = fenleiIndex;
         
         [weakFlow showRefreshHeader:NO];
         
@@ -260,6 +284,8 @@
     
     NSString *url = [NSString stringWithFormat:HOME_DESERVE_BUY,longtitud,latitude,sortType,discountType,pageNum,L_PAGE_SIZE,[GMAPI getAuthkey]];
     
+    url = [NSString stringWithFormat:@"%@&low_price=%@&high_price=%@&product_type=%d",url,_lowPrice,_hightPrice,_fenleiIndex];
+    
     __weak typeof(self)weakSelf = self;
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
@@ -294,11 +320,11 @@
 
 - (void)waterLoadNewData
 {
-    [self deserveBuyForSex:sex_type discount:discount_type page:waterFlow.pageNum];
+    [self deserveBuyForSex:_sex_type discount:_discount_type page:waterFlow.pageNum];
 }
 - (void)waterLoadMoreData
 {
-    [self deserveBuyForSex:sex_type discount:discount_type page:waterFlow.pageNum];
+    [self deserveBuyForSex:_sex_type discount:_discount_type page:waterFlow.pageNum];
 }
 
 - (void)waterDidSelectRowAtIndexPath:(NSIndexPath *)indexPath

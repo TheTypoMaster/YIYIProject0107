@@ -143,7 +143,6 @@
 		139562CB1A3C11EC007BB183 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 139562C91A3C11EC007BB183 /* RegisterViewController.m */; };
 		139562CC1A3C11EC007BB183 /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 139562CA1A3C11EC007BB183 /* RegisterViewController.xib */; };
 		139607C01A46DC4E00AACAC4 /* FilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 139607BF1A46DC4E00AACAC4 /* FilterView.m */; };
-		139607C21A46DC7900AACAC4 /* FilterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 139607C11A46DC7900AACAC4 /* FilterView.xib */; };
 		13963F431A4FC54D007BE68B /* LEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 13963F3A1A4FC54D007BE68B /* LEditor.m */; };
 		13963F441A4FC54D007BE68B /* LImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13963F3C1A4FC54D007BE68B /* LImageCell.m */; };
 		13963F451A4FC54D007BE68B /* LPropertyActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 13963F3E1A4FC54D007BE68B /* LPropertyActionSheet.m */; };
@@ -296,7 +295,6 @@
 		13D560DE1AA1B3C800C28927 /* LDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D560D91AA1B3C800C28927 /* LDataBase.m */; };
 		13D560E31AA1B3F500C28927 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D560E21AA1B3F500C28927 /* DataManager.m */; };
 		13D560E51AA1B40C00C28927 /* yiyiDB.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 13D560E41AA1B40C00C28927 /* yiyiDB.sqlite */; };
-		13E356761B397E6C00C5694F /* ShopFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13E356751B397E6C00C5694F /* ShopFilterView.m */; };
 		13E7F7A41B2AA2730029F4D5 /* productDetail_collect_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13E7F7A31B2AA2730029F4D5 /* productDetail_collect_selected@2x.png */; };
 		13E7F7A61B2AA2E90029F4D5 /* productDetail_zan_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13E7F7A51B2AA2E90029F4D5 /* productDetail_zan_selected@2x.png */; };
 		13E7F7AB1B2AE58B0029F4D5 /* productDetail_zan_nornal_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13E7F7AA1B2AE58B0029F4D5 /* productDetail_zan_nornal_white@2x.png */; };
@@ -764,7 +762,6 @@
 		139562CA1A3C11EC007BB183 /* RegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
 		139607BE1A46DC4E00AACAC4 /* FilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterView.h; sourceTree = "<group>"; };
 		139607BF1A46DC4E00AACAC4 /* FilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterView.m; sourceTree = "<group>"; };
-		139607C11A46DC7900AACAC4 /* FilterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterView.xib; sourceTree = "<group>"; };
 		13963F381A4FC54D007BE68B /* Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Header.h; sourceTree = "<group>"; };
 		13963F391A4FC54D007BE68B /* LEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LEditor.h; sourceTree = "<group>"; };
 		13963F3A1A4FC54D007BE68B /* LEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LEditor.m; sourceTree = "<group>"; };
@@ -1013,8 +1010,6 @@
 		13D560E11AA1B3F500C28927 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
 		13D560E21AA1B3F500C28927 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
 		13D560E41AA1B40C00C28927 /* yiyiDB.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = yiyiDB.sqlite; sourceTree = "<group>"; };
-		13E356741B397E6C00C5694F /* ShopFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopFilterView.h; sourceTree = "<group>"; };
-		13E356751B397E6C00C5694F /* ShopFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopFilterView.m; sourceTree = "<group>"; };
 		13E7F7A31B2AA2730029F4D5 /* productDetail_collect_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "productDetail_collect_selected@2x.png"; sourceTree = "<group>"; };
 		13E7F7A51B2AA2E90029F4D5 /* productDetail_zan_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "productDetail_zan_selected@2x.png"; sourceTree = "<group>"; };
 		13E7F7AA1B2AE58B0029F4D5 /* productDetail_zan_nornal_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "productDetail_zan_nornal_white@2x.png"; sourceTree = "<group>"; };
@@ -2650,11 +2645,8 @@
 				56DAB2141A46C86B00273140 /* MatchCaseCell.h */,
 				56DAB2151A46C86B00273140 /* MatchCaseCell.m */,
 				56DAB2161A46C86B00273140 /* MatchCaseCell.xib */,
-				13E356741B397E6C00C5694F /* ShopFilterView.h */,
-				13E356751B397E6C00C5694F /* ShopFilterView.m */,
 				139607BE1A46DC4E00AACAC4 /* FilterView.h */,
 				139607BF1A46DC4E00AACAC4 /* FilterView.m */,
-				139607C11A46DC7900AACAC4 /* FilterView.xib */,
 				5658C7981A4C486D00DC86F8 /* MatchWaterflowView.h */,
 				5658C7991A4C486E00DC86F8 /* MatchWaterflowView.m */,
 				566FE2481A501C4E00A96B5F /* TopicCommentsCell.h */,
@@ -3690,7 +3682,6 @@
 				E3B7BE111ACA578100FE8495 /* ttai_down@2x.png in Resources */,
 				133B17651A74EF3D005B8B3F /* yc_sc_tj@2x.png in Resources */,
 				138125361B2819D8000310FF /* productDetail_phone@2x.png in Resources */,
-				139607C21A46DC7900AACAC4 /* FilterView.xib in Resources */,
 				13B6905F1A566A7F007FE152 /* rizhi_xiangji@2x.png in Resources */,
 				13A389B81A38974F00ABBACB /* bluedown1@2x.png in Resources */,
 				E334B8251AFB943F00DC9209 /* dianzhu_01@2x.png in Resources */,
@@ -3847,7 +3838,6 @@
 				E37A2E2E1A7349C300145608 /* GchooseAdressViewController.m in Sources */,
 				137C39131A714ABA00CE3971 /* MailInfoModel.m in Sources */,
 				565321461A59769300E43F80 /* OHAttributedLabel.m in Sources */,
-				13E356761B397E6C00C5694F /* ShopFilterView.m in Sources */,
 				13CD364A1A3C6A870068C12A /* EGORefreshTableHeaderView.m in Sources */,
 				56DAB2131A46C66E00273140 /* MatchCaseModel.m in Sources */,
 				E3996ED51A5E1DBA00673147 /* GtopScrollView.m in Sources */,
