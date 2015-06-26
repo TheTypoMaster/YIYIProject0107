@@ -321,7 +321,7 @@ typedef enum{
 #define HOME_PRODUCT_ZAN_Cancel @"http://www119.alayy.com/?d=api&c=products&m=cancelLike"
 
 //单品 - 添加收藏
-#define HOME_PRODUCT_COLLECT_ADD @"http://www119.alayy.com/?d=api&c=products&m=favor&product_id=%@"
+#define HOME_PRODUCT_COLLECT_ADD @"http://www119.alayy.com/?d=api&c=products&m=favor"
 
 //单品 - 取消收藏
 #define HOME_PRODUCT_COLLECT_Cancel @"http://www119.alayy.com/?d=api&c=products&m=cancelFavor&product_id=%@"

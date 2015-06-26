@@ -14,6 +14,7 @@
 
 typedef enum {
     FilterStyle_Default = 0,//默认全部条件
+    FilterStyle_NoSort, //没有排序选择
     FilterStyle_NoSexAndSort //没有性别选择和排序选择
 }FilterStyle;
 

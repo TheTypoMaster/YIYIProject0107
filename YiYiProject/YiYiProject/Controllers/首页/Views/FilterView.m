@@ -35,8 +35,18 @@ static const int kFenleiKadding = 4000;//分类
         self.frame = CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT);
         self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
         
+        CGFloat bgView_dis = 0.f; //控制bgView高度
         
-        CGFloat bgViewHeight = 495 - (style == FilterStyle_NoSexAndSort ? 140 : 0);
+        if (style == FilterStyle_NoSexAndSort) {
+            
+            bgView_dis = 140;
+            
+        }else if (style == FilterStyle_NoSort){
+            
+            bgView_dis = 70;
+        }
+        
+        CGFloat bgViewHeight = 495 - bgView_dis;
         
         //适配 4s 和 5s 5
         
@@ -51,7 +61,7 @@ static const int kFenleiKadding = 4000;//分类
         [self addSubview:bgView];
         bgView.delegate = self;
         bgView.center = CGPointMake(bgView.center.x, DEVICE_HEIGHT/2.f);
-        bgView.contentSize = CGSizeMake(bgView.width, 495 - (style == FilterStyle_NoSexAndSort ? 140 : 0));
+        bgView.contentSize = CGSizeMake(bgView.width, 495 - bgView_dis);
         
         //-150
         
@@ -61,7 +71,7 @@ static const int kFenleiKadding = 4000;//分类
         CGFloat priceTop = 0.f;
         CGFloat sortHeight = 31.f;
         
-        if (style == FilterStyle_Default) {
+        if (style == FilterStyle_Default || style == FilterStyle_NoSort) {
             
             //性别选择
             
@@ -76,7 +86,8 @@ static const int kFenleiKadding = 4000;//分类
             sexView.clipsToBounds = YES;
             [bgView addSubview:sexView];
             
-            
+            priceTop = sexView.bottom;//
+
             NSArray *sex_titles = @[@"全部",@"  女",@"  男"];
             
             
@@ -84,13 +95,7 @@ static const int kFenleiKadding = 4000;//分类
             
             for (int i = 0; i < 3; i ++) {
                 
-                UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-                btn.frame = CGRectMake((sexWidth + 1) * i, 0, sexWidth, sexView.height);
-                [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-                [btn.titleLabel setFont:[UIFont systemFontOfSize:14]];
-                [btn setTitle:sex_titles[i] forState:UIControlStateNormal];
-                [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-                [btn setTitleColor:[UIColor colorWithHexString:@"dc4c63"] forState:UIControlStateSelected];
+                UIButton *btn = [self buttonWithFrame:CGRectMake((sexWidth + 1) * i, 0, sexWidth, sexView.height) title:sex_titles[i] normalColor:[UIColor blackColor] selectedColor:[UIColor colorWithHexString:@"dc4c63"] fontSize:14 selector:@selector(selectSex:) tag:kSexKadding + i];
                 [sexView addSubview:btn];
                 
                 if (i == 1) {
@@ -102,47 +107,34 @@ static const int kFenleiKadding = 4000;//分类
                     
                     [btn setImage:[UIImage imageNamed:@"shaixuan_boy"] forState:UIControlStateNormal];
                 }
-                
-                [btn addTarget:self action:@selector(selectSex:) forControlEvents:UIControlEventTouchUpInside];
-                
-                btn.tag = kSexKadding + i;
             }
             
             
-            //排序选择
-            
-            UILabel *sortLabel = [LTools createLabelFrame:CGRectMake(24, sexView.bottom + 15, 100, 13) title:@"排序选项" font:13 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"999999"]];
-            [bgView addSubview:sortLabel];
-            
-            UIView *sortView = [[UIView alloc]initWithFrame:CGRectMake(18, sortLabel.bottom + 10, bgView.width - 18 * 2, 31)];
-            sortView.backgroundColor = [UIColor colorWithHexString:@"e2e2e2"];
-            sortView.layer.cornerRadius = 5.f;
-            sortView.layer.borderWidth = 1.f;
-            sortView.layer.borderColor = [UIColor colorWithHexString:@"e2e2e2"].CGColor;
-            sortView.clipsToBounds = YES;
-            [bgView addSubview:sortView];
-            
-            priceTop = sortView.bottom;//
-            
-            NSArray *sort_titles = @[@"距离优先",@"折扣优先"];
-            CGFloat sortWidth = (sortView.width - 2) / 2.f;
-            
-            for (int i = 0; i < 2; i ++) {
+            if (style == FilterStyle_Default) {
                 
-                UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-                btn.frame = CGRectMake((sortWidth + 1) * i, 0, sortWidth, sortView.height);
-                [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-                [btn.titleLabel setFont:[UIFont systemFontOfSize:14]];
-                [btn setTitle:sort_titles[i] forState:UIControlStateNormal];
+                //排序选择
                 
-                [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-                [btn setTitleColor:[UIColor colorWithHexString:@"dc4c63"] forState:UIControlStateSelected];
+                UILabel *sortLabel = [LTools createLabelFrame:CGRectMake(24, sexView.bottom + 15, 100, 13) title:@"排序选项" font:13 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"999999"]];
+                [bgView addSubview:sortLabel];
                 
-                [sortView addSubview:btn];
+                UIView *sortView = [[UIView alloc]initWithFrame:CGRectMake(18, sortLabel.bottom + 10, bgView.width - 18 * 2, 31)];
+                sortView.backgroundColor = [UIColor colorWithHexString:@"e2e2e2"];
+                [sortView addCornerRadius:5.f];
+                [sortView setBorderWidth:1.f borderColor:[UIColor colorWithHexString:@"e2e2e2"]];
+                sortView.clipsToBounds = YES;
+                [bgView addSubview:sortView];
                 
-                [btn addTarget:self action:@selector(selectSort:) forControlEvents:UIControlEventTouchUpInside];
-                btn.tag = kSortKadding + i;
+                priceTop = sortView.bottom;//
                 
+                NSArray *sort_titles = @[@"距离优先",@"折扣优先"];
+                CGFloat sortWidth = (sortView.width - 2) / 2.f;
+                
+                for (int i = 0; i < 2; i ++) {
+                    
+                    UIButton *btn = [self buttonWithFrame:CGRectMake((sortWidth + 1) * i, 0, sortWidth, sortView.height) title:sort_titles[i] normalColor:[UIColor blackColor] selectedColor:[UIColor colorWithHexString:@"dc4c63"] fontSize:14 selector:@selector(selectSort:) tag:kSortKadding + i];
+                    [sortView addSubview:btn];
+                }
+
             }
             
         }
@@ -179,7 +171,7 @@ static const int kFenleiKadding = 4000;//分类
         
         //价格固定范围
         
-        NSArray *priceArray = @[@"100以下",@"100-199",@"200-299",@"300-399",@"400-499",@"500以上"];
+        NSArray *priceArray = @[@"100以下",@"100-199",@"200-299",@"300-399",@"400-499",@"500以上",@"不限"];
         
         CGFloat sortWidth = (bgView.width - 18 * 2 - 3 * 10) / 4.f;
         
@@ -187,25 +179,14 @@ static const int kFenleiKadding = 4000;//分类
         
         for (int i = 0; i < priceArray.count; i ++) {
             
-            UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-            btn.frame = CGRectMake(18 + (sortWidth + 10) * (i % 4), _highPrice.bottom + 10 + (i / 4) * (sortHeight + 10), sortWidth, sortHeight);
-            [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-            [btn.titleLabel setFont:[UIFont systemFontOfSize:12]];
-            [btn setTitle:priceArray[i] forState:UIControlStateNormal];
-            
-            [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-            [btn setTitleColor:[UIColor colorWithHexString:@"dc4c63"] forState:UIControlStateSelected];
+            UIButton *btn = [self buttonWithFrame:CGRectMake(18 + (sortWidth + 10) * (i % 4), _highPrice.bottom + 10 + (i / 4) * (sortHeight + 10), sortWidth, sortHeight) title:priceArray[i] normalColor:[UIColor blackColor] selectedColor:[UIColor colorWithHexString:@"dc4c63"] fontSize:12 selector:@selector(selectPrice:) tag:kPriceKadding + i];
             
             [btn setBorderWidth:1.f borderColor:[UIColor colorWithHexString:@"e2e2e2"]];
             [btn addCornerRadius:5.f];
             
             [bgView addSubview:btn];
             
-            [btn addTarget:self action:@selector(selectPrice:) forControlEvents:UIControlEventTouchUpInside];
-            btn.tag = kPriceKadding + i;
-            
             top = btn.bottom;
-            
         }
         
         
@@ -223,19 +204,10 @@ static const int kFenleiKadding = 4000;//分类
         
         for (int i = 0; i < fenleiArray.count; i ++) {
             
-            UIButton *btn = [[UIButton alloc]initWithframe:CGRectMake(18 + (sortWidth + 10) * (i % 5), fenleiLabel.bottom + 10 + (i / 5) * (sortHeight + 10), sortWidth, sortHeight) buttonType:UIButtonTypeCustom normalTitle:fenleiArray[i] selectedTitle:nil target:self action:@selector(selectFenlei:)];
-            [bgView addSubview:btn];
-            
-            [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-            [btn.titleLabel setFont:[UIFont systemFontOfSize:12]];
-            [btn setTitleColor:[UIColor colorWithHexString:@"dc4c63"] forState:UIControlStateSelected];
-            
+            UIButton *btn = [self buttonWithFrame:CGRectMake(18 + (sortWidth + 10) * (i % 5), fenleiLabel.bottom + 10 + (i / 5) * (sortHeight + 10), sortWidth, sortHeight) title:fenleiArray[i] normalColor:[UIColor blackColor] selectedColor:[UIColor colorWithHexString:@"dc4c63"] fontSize:12 selector:@selector(selectFenlei:) tag:kFenleiKadding + i];
             [btn setBorderWidth:1.f borderColor:[UIColor colorWithHexString:@"e2e2e2"]];
             [btn addCornerRadius:5.f];
-            
             [bgView addSubview:btn];
-            
-            btn.tag = kFenleiKadding + i;
             
             top = btn.bottom;
             
@@ -278,6 +250,28 @@ static const int kFenleiKadding = 4000;//分类
         
     }
     return self;
+}
+
+
+- (UIButton *)buttonWithFrame:(CGRect)aFrame
+                       title:(NSString *)title
+                 normalColor:(UIColor *)normalColor
+               selectedColor:(UIColor *)selectedColor
+                    fontSize:(CGFloat)fontSize
+                    selector:(SEL)selector
+                         tag:(int)tag
+{
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = aFrame;
+    [btn.titleLabel setFont:[UIFont systemFontOfSize:fontSize]];
+    [btn setTitle:title forState:UIControlStateNormal];
+    [btn setTitleColor:normalColor forState:UIControlStateNormal];
+    [btn setTitleColor:selectedColor forState:UIControlStateSelected];
+    
+    [btn addTarget:self action:selector forControlEvents:UIControlEventTouchUpInside];
+    btn.tag = tag;
+    return btn;
 }
 
 
@@ -790,6 +784,12 @@ static const int kFenleiKadding = 4000;//分类
         case 5:
         {
             _lowPrice.text = @"500";
+            _highPrice.text = @"不限";
+        }
+            break;
+        case 6:
+        {
+            _lowPrice.text = @"0";
             _highPrice.text = @"不限";
         }
             break;

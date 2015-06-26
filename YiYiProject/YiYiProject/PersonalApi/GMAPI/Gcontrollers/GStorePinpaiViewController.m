@@ -64,6 +64,7 @@
 
     NSString *_lowPrice;//低位价格
     NSString *_hightPrice;//高位价格
+    SORT_SEX_TYPE _sex_type;//性别
     int _fenleiIndex;//分类index
     
 }
@@ -177,6 +178,7 @@
     _fenleiIndex = -1;//单品分类 默认-1代表全部
     _lowPrice = @"";
     _hightPrice = @"";
+    _sex_type = 0;//默认全部
 
     [self prepareDianpuInfo];//获取店铺信息
     
@@ -283,7 +285,7 @@
     
     //添加单品分类筛选
     
-    api = [NSString stringWithFormat:@"%@&low_price=%@&high_price=%@&product_type=%d",api,_lowPrice,_hightPrice,_fenleiIndex];
+    api = [NSString stringWithFormat:@"%@&low_price=%@&high_price=%@&product_type=%d&product_gender=%d",api,_lowPrice,_hightPrice,_fenleiIndex,_sex_type];
     
     if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == YES){//已经登录的情况下 传authecode 点赞
         api = [NSString stringWithFormat:@"%@&authcode=%@",api,[GMAPI getAuthkey]];
@@ -983,7 +985,7 @@
 -(FilterView *)filter
 {
     if (!_filter) {
-        _filter = [[FilterView alloc]initWithStyle:FilterStyle_NoSexAndSort];
+        _filter = [[FilterView alloc]initWithStyle:FilterStyle_NoSort];
     }
     return _filter;
 }
@@ -1002,6 +1004,7 @@
         _lowPrice = lowPrice;
         _hightPrice = hightPrice;
         _fenleiIndex = fenleiIndex;
+        _sex_type = sextType;
         
         [weakFlow showRefreshHeader:NO];
         

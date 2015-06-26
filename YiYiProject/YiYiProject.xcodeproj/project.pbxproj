@@ -2145,7 +2145,6 @@
 				138C2C1B1A39E77300EA59F5 /* BaseModel.h */,
 				138C2C1C1A39E77300EA59F5 /* BaseModel.m */,
 				13A389801A387A8800ABBACB /* UIColor_ConvertColor */,
-				13A389831A387A8800ABBACB /* UIView+Frame */,
 				13A3897C1A3878FE00ABBACB /* MyViewController.h */,
 				13A3897D1A3878FE00ABBACB /* MyViewController.m */,
 				1381253B1B285609000310FF /* BottomToolsView.h */,
@@ -2230,13 +2229,6 @@
 				13A389821A387A8800ABBACB /* UIColor+ConvertColor.m */,
 			);
 			path = UIColor_ConvertColor;
-			sourceTree = "<group>";
-		};
-		13A389831A387A8800ABBACB /* UIView+Frame */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "UIView+Frame";
 			sourceTree = "<group>";
 		};
 		13A389921A3893C100ABBACB /* ViewControllers */ = {
