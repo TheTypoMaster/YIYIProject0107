@@ -16,15 +16,19 @@
 
 @implementation ClasscationClothesViewController
 
+
+-(void)viewWillAppear:(BOOL)animated{
+    self.navigationController.navigationBarHidden = NO;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationController.navigationBarHidden=NO;
     self.myTitle=[sourceDic objectForKey:@"sort_name"];
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
-    self.view.backgroundColor = [UIColor whiteColor];
     
     waterFlow = [[LWaterflowView alloc]initWithFrame:CGRectMake(0, 0, ALL_FRAME_WIDTH, ALL_FRAME_HEIGHT - 44) waterDelegate:self waterDataSource:self noloadView:YES];
-    waterFlow.backgroundColor = RGBCOLOR(235, 235, 235);
+    waterFlow.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:waterFlow];
     [self getNetData];
     // Do any additional setup after loading the view.

@@ -46,7 +46,7 @@
     // Do any additional setup after loading the view from its nib.
         
     self.myTitleLabel.text = @"登录";
-    self.myTitleLabel.textColor = [UIColor whiteColor];
+    self.myTitleLabel.textColor = RGBCOLOR(253, 106, 157);
     self.rightString = @"注册";
 
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeText];

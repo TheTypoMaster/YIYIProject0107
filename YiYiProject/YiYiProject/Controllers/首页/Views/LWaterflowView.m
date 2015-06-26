@@ -87,7 +87,7 @@
         
         self.quitView = qtmquitView;
         
-        qtmquitView.backgroundColor = [UIColor redColor];
+//        qtmquitView.backgroundColor = [UIColor redColor];
         
         [self addSubview:qtmquitView];
         
