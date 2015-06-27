@@ -37,6 +37,8 @@
 
 #import "GBuyClothesLogViewController.h"//买衣日志
 
+#import "GBuyClothesLogViewController.h"
+
 @interface RootViewController ()<UITabBarControllerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
     MessageViewController *messageVc;
@@ -275,6 +277,33 @@
     NSLog(@"--> %d  %@",(int)tabBarController.selectedIndex,viewController);
     
 }
+
+
+//- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
+//{
+//    BOOL haha = YES;
+//    if(tabBarController.selectedIndex == 3){
+//        //判断是否登录
+//        
+//        if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
+//            
+//            LoginViewController *login = [[LoginViewController alloc]init];
+//            
+//            UINavigationController *unVc = [[UINavigationController alloc]initWithRootViewController:login];
+//            
+//            [self presentViewController:unVc animated:YES completion:nil];
+//            
+//            haha = NO;
+// 
+//            
+//        }else{
+//            haha = YES;
+//            
+//        }
+//    }
+//    
+//    return haha;
+//}
 
 #pragma mark - 图片选择
 

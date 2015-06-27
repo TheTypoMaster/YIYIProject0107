@@ -23,6 +23,11 @@
 @implementation GBuyClothesLogViewController
 
 
+
+
+
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -31,6 +36,11 @@
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeText];
     self.myTitle = @"买衣日志";
     self.rightString = @"上传";
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    
+
+    
     
     
     self.view.backgroundColor = [UIColor whiteColor];
@@ -42,6 +52,12 @@
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateTheInfo) name:GUPBUYCLOTHES_SUCCESS object:nil];
   
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(cleanTheInfo) name:NOTIFICATION_LOGOUT object:nil];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateTheInfo) name:NOTIFICATION_LOGIN object:nil];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -165,9 +181,20 @@
 
 #pragma mark - MyMethod
 -(void)goToUpLogClothesVC{
-    GupLogClothesViewController *ccc = [[GupLogClothesViewController alloc]init];
-    ccc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:ccc animated:YES];
+    
+    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
+        LoginViewController *login = [[LoginViewController alloc]init];
+        UINavigationController *unVc = [[UINavigationController alloc]initWithRootViewController:login];
+        [self presentViewController:unVc animated:YES completion:nil];
+        return;
+    }else{
+        GupLogClothesViewController *ccc = [[GupLogClothesViewController alloc]init];
+        ccc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:ccc animated:YES];
+    }
+    
+    
+    
 }
 
 -(void)rightButtonTap:(UIButton *)sender
@@ -297,9 +324,22 @@
         
         
     } failBlock:^(NSDictionary *result, NSError *erro) {
-        _tableView.tableFooterView = nil;
-        _tableView.tableFooterView.hidden = NO;
-        [_tableView loadFail];
+        
+        
+        if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
+            
+            _tableView.tableFooterView.hidden = NO;
+            [_tableView loadFail];
+            
+        }else{
+            _tableView.tableFooterView = nil;
+            _tableView.tableFooterView.hidden = NO;
+            [_tableView loadFail];
+            
+        }
+        
+        
+        
         
     }];
 }
@@ -319,6 +359,14 @@
 
 -(void)updateTheInfo{
     [_tableView showRefreshHeader:YES];
+}
+
+-(void)cleanTheInfo{
+    [_tableView.dataArray removeAllObjects];
+    [_tableView reloadData1:nil pageSize:L_PAGE_SIZE];
+    _tableView.tableFooterView = _noClothesLogView;
+    _tableView.tableFooterView.hidden = NO;
+    [_tableView finishReloadigData];
 }
 
 @end

@@ -9,7 +9,7 @@
 #import "GupLogClothesViewController.h"
 #import "GTimeSwitch.h"
 
-@interface GupLogClothesViewController ()<UIScrollViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface GupLogClothesViewController ()<UIScrollViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate>
 {
     UIScrollView *_mainScrollView;
     
@@ -53,7 +53,7 @@
 
 
 -(void)creatCustomView{
-    _mainScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT)];
+    _mainScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 10, DEVICE_WIDTH, DEVICE_HEIGHT)];
     [_mainScrollView setContentSize:CGSizeMake(DEVICE_WIDTH, 500)];
     _mainScrollView.delegate = self;
     [self.view addSubview:_mainScrollView];
@@ -66,11 +66,19 @@
         
         UIView *theView = [[UIView alloc]initWithFrame:CGRectMake(0, i*70, DEVICE_WIDTH, 70)];
         [_mainScrollView addSubview:theView];
+        
+        //收键盘
+        UIControl *tapshou = [[UIControl alloc]initWithFrame:theView.bounds];
+        [tapshou addTarget:self action:@selector(gShou) forControlEvents:UIControlEventTouchDown];
+        [theView addSubview:tapshou];
+        
         UILabel *tLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 0, DEVICE_WIDTH, 15) title:titleArray[i] font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
         [theView addSubview:tLabel];
         
         
+        
         UITextField *tf = [[UITextField alloc]initWithFrame:CGRectMake(20, CGRectGetMaxY(tLabel.frame)+10, DEVICE_WIDTH-40, 35)];
+        tf.delegate = self;
         tf.layer.cornerRadius = 5;
         tf.layer.borderWidth = 0.5;
         tf.layer.borderColor = [RGBCOLOR(183, 184, 186)CGColor];
@@ -373,5 +381,24 @@
         
     }];
 }
+
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    
+    _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH, 1000);
+    
+}
+
+-(void)gShou{
+    NSLog(@"收键盘了");
+    
+    for (UITextField *tf in _contentTfArray) {
+        [tf resignFirstResponder];
+    }
+    
+    _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH, 500);
+    
+}
+
 
 @end
