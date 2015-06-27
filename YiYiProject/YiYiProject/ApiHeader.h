@@ -129,6 +129,9 @@ alpha:(a)]
 //修改单品完成
 #define GEDITPRODUCT_SUCCESS @"GeditProduct_success"
 
+//发布买衣日记完成
+#define GUPBUYCLOTHES_SUCCESS @"GUPBUYCLOTHES_SUCCESS"
+
 //更新赞数字
 #define NOTIFICATION_UPDATE_ZANNUM @"updateZanNum"
 //更新评论数字
@@ -650,6 +653,10 @@ typedef enum{
 
 //单品产品详情
 #define SHARE_PRODUCT_DETAIL @"http://www119.alayy.com/index.php?d=wap&c=products&m=getProductInfo&product_id=%@"
+
+//
+#define MYCLOTHESLOG_LIST @"http://www119.alayy.com/index.php?d=api&c=buylog&m=get_list"
+
 
 #endif
 

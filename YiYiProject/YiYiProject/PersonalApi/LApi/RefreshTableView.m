@@ -35,6 +35,25 @@
     return self;
 }
 
+- (id)initWithFrame:(CGRect)frame style:(UITableViewStyle)theStyle
+{
+    self = [super initWithFrame:frame style:theStyle];
+    if (self) {
+        // Initialization code
+        
+        self.pageNum = 1;
+        self.dataArray = [NSMutableArray array];
+        
+        [self createHeaderView];
+        self.backgroundColor = [UIColor clearColor];
+        self.delegate = self;
+        
+    }
+    return self;
+}
+
+
+
 - (void)dealloc
 {
     self.dataArray = nil;
@@ -266,6 +285,28 @@
     [self performSelector:@selector(finishReloadigData) withObject:nil afterDelay:0];
 }
 
+
+//成功加载
+- (void)reloadData1:(NSArray *)data1 pageSize:(int)pageSize
+{
+    if (data1.count < pageSize) {
+        
+        self.isHaveMoreData = NO;
+    }else
+    {
+        self.isHaveMoreData = YES;
+    }
+    
+    if (self.isReloadData) {
+        
+        [self.dataArray removeAllObjects];
+        
+    }
+    [self.dataArray addObjectsFromArray:data1];
+}
+
+
+
 //请求数据失败
 
 - (void)loadFail
@@ -456,11 +497,27 @@
 //    
 //    return line;
     
+    UIView *aView;
+    if (_refreshDelegate && [_refreshDelegate respondsToSelector:@selector(viewForFooterInSection:tableView:)]) {
+        aView = [_refreshDelegate viewForFooterInSection:section tableView:tableView];
+        return aView;
+    }else{
+        return [UIView new];
+    }
     return [UIView new];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
+    
+    CGFloat aHeight = 0.0;
+    if (_refreshDelegate && [_refreshDelegate respondsToSelector:@selector(heightForFooterInSection:tableView:)]) {
+        aHeight = [_refreshDelegate heightForFooterInSection:section tableView:tableView];
+        return aHeight;
+    }else{
+        return 0.5;
+    }
+    
     return 0.5;
 }
 

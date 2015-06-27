@@ -32,6 +32,10 @@
 
 - (void)refreshScrollViewDidScroll:(UIScrollView *)scrollView;
 
+//meng新加
+-(CGFloat)heightForFooterInSection:(NSInteger)section tableView:(UITableView *)tableView;
+-(UIView *)viewForFooterInSection:(NSInteger)section tableView:(UITableView *)tableView;
+
 //将要显示
 - (void)refreshTableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath;
 //显示完了
@@ -77,5 +81,9 @@
 -(id)initWithFrame:(CGRect)frame showLoadMore:(BOOL)show;
 
 -(id)initWithFrame:(CGRect)frame superView:(UIView *)superView;
+
+//买衣日志扩展
+- (id)initWithFrame:(CGRect)frame style:(UITableViewStyle)theStyle;
+- (void)reloadData1:(NSArray *)data1 pageSize:(int)pageSize;
 
 @end
