@@ -52,11 +52,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/RootViewController.m"
-            timestampString = "457006298.408685"
+            timestampString = "457236934.78514"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "96"
-            endingLineNumber = "96">
+            startingLineNumber = "89"
+            endingLineNumber = "89"
+            landmarkName = "-cancelHotpoint:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

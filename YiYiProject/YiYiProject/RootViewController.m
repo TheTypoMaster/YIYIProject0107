@@ -275,14 +275,17 @@
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {
-    NSLog(@"--> %d  %@",(int)tabBarController.selectedIndex,viewController);
+    NSLog(@"--> index%d  %@",(int)tabBarController.selectedIndex,viewController);
     
 }
-
 
 //- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
 //{
 //    BOOL haha = YES;
+//    
+//    NSLog(@"--> shouldSelectViewController%d  %@",(int)tabBarController.selectedIndex,viewController);
+//
+//    
 //    if(tabBarController.selectedIndex == 3){
 //        //判断是否登录
 //        
@@ -298,6 +301,7 @@
 // 
 //            
 //        }else{
+//            
 //            haha = YES;
 //            
 //        }

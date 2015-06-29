@@ -47,6 +47,8 @@ alpha:(a)]
 
 #define USERINFO_MODEL @"USERINFO_MODEL" //存储在本地用户model
 
+#define CHOUJIANG_MODEL @"CHOUJIANG_MODEL" //存储在本地抽奖model
+
 //两个登陆标识
 #define LOGIN_SERVER_STATE @"user_login_state" //登陆衣加衣服务器 no是未登陆  yes是已登陆
 #define LOGIN_RONGCLOUD_STATE @"rongcloudLoginState"//融云登陆状态
@@ -93,7 +95,9 @@ alpha:(a)]
 
 #define NOTIFICATION_APPENTERFOREGROUND @"notification_appEnterForeground" //应用从后台转向前台
 
-#define NOTIFICATION_EDIT_SHOP_PHONE_SUCCESS @" NOTIFICATION_EDIT_SHOP_PHONE_SUCCESS"//编辑店铺电话成功
+#define NOTIFICATION_EDIT_SHOP_PHONE_SUCCESS @"NOTIFICATION_EDIT_SHOP_PHONE_SUCCESS"//编辑店铺电话成功
+
+#define NOTIFICATION_GETCHOUJIANGSTATE @"NOTIFICATION_GETCHOUJIANGSTATE"//获取是否抽奖状态
 
 
 //单品关注相关操作
@@ -654,6 +658,11 @@ typedef enum{
 //
 #define MYCLOTHESLOG_LIST @"http://www119.alayy.com/index.php?d=api&c=buylog&m=get_list"
 
+//抽奖相关接口
+
+//获取是否显示取抽奖入口
+
+#define GET_CHOUJIANGSTATE @"http://www119.alayy.com/index.php?d=api&c=prize&m=get_curr&authcode=%@"
 
 #endif
 

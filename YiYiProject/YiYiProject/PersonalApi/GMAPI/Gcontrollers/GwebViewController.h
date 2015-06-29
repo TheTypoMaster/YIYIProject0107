@@ -20,7 +20,7 @@
     NSString *string_title;
 }
 @property(nonatomic,strong) NSString * urlstring;
-
+@property(nonatomic,retain)NSString *targetTitle;
 
 @property(nonatomic,assign)BOOL ismianzeshengming;//免责声明
 

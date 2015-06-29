@@ -41,7 +41,7 @@
     
     //附加信息
     
-    NSString *timeString = [NSString stringWithFormat:@"活动时间:%@ - %@",[LTools timeString:aModel.start_time withFormat:@"YYYY.MM.dd"],[LTools timeString:aModel.end_time withFormat:@"YYYY.MM.dd"]];
+    NSString *timeString = [NSString stringWithFormat:@"活动时间:%@ - %@",[LTools timeString:aModel.start_time withFormat:@"yyyy.MM.dd"],[LTools timeString:aModel.end_time withFormat:@"yyyy.MM.dd"]];
     
     UILabel *detailLabel = [[UILabel alloc]initWithFrame:CGRectMake(titleLabel.frame.origin.x, CGRectGetMaxY(titleLabel.frame), titleLabel.frame.size.width, titleLabel.frame.size.height)];
     detailLabel.text = timeString;

@@ -30,5 +30,15 @@
  */
 - (void)addScroll:(UIScrollView *)scroll topButtonPoint:(CGPoint)point;
 
+/**
+ *  点击屏幕重新加载
+ *
+ *  @param target   事件响应者
+ *  @param selector 方法选择器
+ */
+- (void)addReloadButtonWithTarget:(id)target
+                           action:(SEL)selector
+                             info:(NSString *)info;
+
 
 @end

@@ -33,7 +33,15 @@
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeText];
     
     NSURL *url =[NSURL URLWithString:self.urlstring];
-    self.myTitle = @"详情";
+    
+    if (self.targetTitle.length > 0) {
+        
+        self.myTitle = self.targetTitle;
+    }else
+    {
+        self.myTitle = @"详情";
+
+    }
     
     if (self.ismianzeshengming) {
         self.rightString = @"同意";
@@ -45,7 +53,7 @@
     awebview.delegate=self;
     [awebview loadRequest:request];
     awebview.scalesPageToFit = YES;
-    [self.view addSubview:awebview];;
+    [self.view addSubview:awebview];
     
     UIView *toolview=[[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT-65-40, DEVICE_WIDTH, 40)];
     toolview.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"ios7_webviewbar.png"]];
@@ -87,7 +95,15 @@
             [awebview goForward];
             break;
         case 101:
+        {
+            NSURL *url =[NSURL URLWithString:self.urlstring];
+            
+            NSURLRequest *request =[NSURLRequest requestWithURL:url];
+            
+            [awebview loadRequest:request];
+            
             [awebview reload];
+        }
             break;
             
             
@@ -103,8 +119,48 @@
     button_comment.userInteractionEnabled=YES;
 }
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
+    
+    NSLog(@"erro %@",error);
+    
+    NSLog(@"data 为空 connectionError %@",error);
+    
+    NSString *errInfo = @"网络有问题,请检查网络";
+//    switch (error.code) {
+//        case NSURLErrorNotConnectedToInternet:
+//            
+//            errInfo = @"无网络连接";
+//            break;
+//        case NSURLErrorTimedOut:
+//            
+//            errInfo = @"网络连接超时";
+//            break;
+//        default:
+//            break;
+//    }
+    
+//    [LTools showMBProgressWithText:errInfo addToView:webView];
+    
+    if (error.code == NSURLErrorNotConnectedToInternet || error.code == NSURLErrorTimedOut) {
+        
+        [self addReloadButtonWithTarget:self action:@selector(reloadData:) info:errInfo];
+
+    }
+
 }
 
+- (void)reloadData:(UIButton *)sender
+{
+    NSURL *url =[NSURL URLWithString:self.urlstring];
+    
+    NSURLRequest *request =[NSURLRequest requestWithURL:url];
+    
+    [awebview loadRequest:request];
+    
+    [awebview reload];
+    
+    [sender removeFromSuperview];
+    sender = nil;
+}
 
 
 -(void)rightButtonTap:(UIButton *)sender
@@ -128,9 +184,6 @@
     }
     
 }
-
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

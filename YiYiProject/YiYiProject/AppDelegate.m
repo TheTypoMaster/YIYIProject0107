@@ -103,21 +103,6 @@
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     }
     
-//#ifdef __IPHONE_8_0
-//    // 在 iOS 8 下注册苹果推送，申请推送权限。
-//    
-//    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
-//        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeAlert) categories:nil];
-//        [application registerUserNotificationSettings:settings];
-//    } else {
-//        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
-//        [application registerForRemoteNotificationTypes:myTypes];
-//    }
-//#else
-//    // 注册苹果推送，申请推送权限。
-//    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];
-//#endif
-    
     if ([[[UIDevice currentDevice] systemVersion] doubleValue] > 8.0)
     {
         if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
@@ -171,40 +156,20 @@
     
     [self umengShare];
     
+#pragma mark 根视图
+    
     RootViewController *root = [[RootViewController alloc]init];
     self.rootViewController = root;
     LNavigationController *unVc = [[LNavigationController alloc]initWithRootViewController:root];
     unVc.navigationBarHidden = YES;
     self.window.rootViewController = unVc;
-    
-//    [self createActivityView];
-    
     self.window.backgroundColor = [UIColor whiteColor];
+    
+    NSLog(@"didFinishLaunch 1111");
+
     
     return YES;
 }
-
-//- (void)createActivityView
-//{
-//    //    self.window.windowLevel = UIAlertViewStyleDefault;
-//    
-//    UIView *root = [UIApplication sharedApplication].keyWindow;
-//    
-//    UIView *_activityView = [[UIView alloc]initWithFrame:self.window.bounds];
-//    _activityView.backgroundColor = [UIColor orangeColor];
-//    [self.window addSubview:_activityView];
-//    [self.window bringSubviewToFront:_activityView];
-//    
-//    _activityView.window.windowLevel = UIAlertViewStyleDefault;
-//    
-//    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    btn.frame = CGRectMake(100, 100, 50, 30);
-//    [btn setTitle:@"关闭" forState:UIControlStateNormal];
-//    [_activityView addSubview:btn];
-//    [btn addTarget:self action:@selector(hiddenActivityView) forControlEvents:UIControlEventTouchUpInside];
-//    //广告页
-//    //    UIImageView *imageView = [UIImageView alloc]ini
-//}
 
 #pragma mark - 获取坐标
 
@@ -246,9 +211,6 @@
     }
 }
 
-
-
-
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
@@ -272,7 +234,8 @@
         [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_APPENTERFOREGROUND object:nil];
     }
     
-    
+    NSLog(@"applicationWillEnterForeground 1111");
+
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -293,6 +256,12 @@
  */
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    NSLog(@"applicationDidBecomeActive 1111");
+    
+    //通知获取抽奖状态
+    
+    [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GETCHOUJIANGSTATE object:nil];
+    
     [UMSocialSnsService  applicationDidBecomeActive];
 }
 
@@ -388,9 +357,6 @@
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"token发送失败 == %@",failDic);
-        
-//        UIAlertView *alertV=[[UIAlertView alloc]initWithTitle:[NSString stringWithFormat:@"%@",@"token发送失败"] message:nil delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
-//        [alertV show];
 
     }];
 
@@ -400,8 +366,6 @@
 {
     NSString *str = [NSString stringWithFormat: @"Error: %@", error];
     NSLog(@"远程注册 erro  %@",str);
-//    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"注册失败" message:str delegate:Nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
-//    [alert show];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo

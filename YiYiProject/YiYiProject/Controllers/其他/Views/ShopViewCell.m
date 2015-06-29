@@ -37,7 +37,7 @@
         NSString *endtime = aModel.activityModel.end_time;//活动结束时间
         NSString *nowTime = [LTools timechangeToDateline];//当前时间
         
-        NSLog(@"活动结束时间 %@",[LTools timeString:endtime withFormat:@"YYYY-MM-DD HH:mm:ss"]);
+        NSLog(@"活动结束时间 %@",[LTools timeString:endtime withFormat:@"yyyy-MM-DD HH:mm:ss"]);
         
         //活动未结束
         if ([nowTime compare:endtime] == NSOrderedAscending) {

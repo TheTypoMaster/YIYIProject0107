@@ -35,6 +35,37 @@ char* const ASSOCIATION_TOPBUTTON = "ASSOCIATION_TOPBUTTON";
 }
 
 /**
+ *  点击屏幕重新加载
+ *
+ *  @param target   事件响应者
+ *  @param selector 方法选择器
+ */
+- (void)addReloadButtonWithTarget:(id)target
+                           action:(SEL)selector
+                             info:(NSString *)info
+{
+    UIButton *button_back=[[UIButton alloc]initWithFrame:self.view.bounds];
+    button_back.backgroundColor = [UIColor clearColor];
+    [button_back addTarget:target action:selector forControlEvents:UIControlEventTouchUpInside];
+//    [button_back setImage:BACK_DEFAULT_IMAGE forState:UIControlStateNormal];
+    [button_back setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    [self.view addSubview:button_back];
+    
+    UIImageView *defautlImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 34, 34)];
+    [button_back addSubview:defautlImage];
+    defautlImage.image = DEFAULT_YIJIAYI;
+    defautlImage.centerY = self.view.height/2.f - 32;
+    defautlImage.centerX = self.view.width/2.f;
+    
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, defautlImage.bottom + 5, button_back.width, 20)];
+    label.text = info.length > 0 ? info : @"点击屏幕,重新加载";
+    label.textAlignment = NSTextAlignmentCenter;
+    label.font = [UIFont systemFontOfSize:12.f];
+    [button_back addSubview:label];
+    
+}
+
+/**
  *  添加滑动到顶部按钮
  *
  *  @param scroll 需要滑动的UIScrollView

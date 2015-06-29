@@ -15,7 +15,7 @@
     
     int _page;//第几页
     int _pageCapacity;//每页几个
-    NSArray *_dataArray;//数据源
+//    NSArray *_dataArray;//数据源_dataArray
 }
 @end
 
@@ -111,7 +111,7 @@
 {
     NSLog(@"%s",__FUNCTION__);
     
-    NSDictionary *dic = _dataArray[indexPath.row];
+    NSDictionary *dic = _tableView.dataArray[indexPath.row];
     
     NSString *uid = [dic stringValueForKey:@"uid"];
     

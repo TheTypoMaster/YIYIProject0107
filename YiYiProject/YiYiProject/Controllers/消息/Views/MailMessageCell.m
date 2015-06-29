@@ -119,12 +119,12 @@
     if (timeType == Time_AddTime) {
         
         //时间
-        self.timeLabel.text = [NSString stringWithFormat:@"发布时间:%@",[LTools timeString:sendTime withFormat:@"YYYY年MM月dd日 hh:mm"]];//开始时间
+        self.timeLabel.text = [NSString stringWithFormat:@"发布时间:%@",[LTools timeString:sendTime withFormat:@"yyyy年MM月dd日 hh:mm"]];//开始时间
         
     }else if(timeType == Time_StartAndEnd)
     {
         //时间
-        self.timeLabel.text = [NSString stringWithFormat:@"有效期:%@ ~ %@",[LTools timeString:starttime withFormat:@"YYYY年MM月dd日 hh:mm"],[LTools timeString:endtime withFormat:@"YYYY年MM月dd日 hh:mm"]];//起止时间
+        self.timeLabel.text = [NSString stringWithFormat:@"有效期:%@ ~ %@",[LTools timeString:starttime withFormat:@"yyyy年MM月dd日 hh:mm"],[LTools timeString:endtime withFormat:@"yyyy年MM月dd日 hh:mm"]];//起止时间
     }
     
     //图片
