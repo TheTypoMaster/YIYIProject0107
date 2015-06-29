@@ -169,7 +169,7 @@
     
     //数据填充
     
-    NSDictionary *dic = _dataArray[indexPath.row];
+    NSDictionary *dic = _tableView.dataArray[indexPath.row];
     [touxiangImv sd_setImageWithURL:[NSURL URLWithString:[dic stringValueForKey:@"photo"]] placeholderImage:nil];
     nameLable.text = [dic stringValueForKey:@"user_name"];
     NSString *timestr = [dic stringValueForKey:@"view_time"];
@@ -184,7 +184,7 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return _dataArray.count;
+    return _tableView.dataArray.count;
 }
 
 - (void)didReceiveMemoryWarning {

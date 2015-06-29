@@ -18,6 +18,11 @@
 
 #import "GupActivityViewController.h"//发布活动
 
+#import "MyMatchViewController.h"//我的搭配
+
+#import "MyYiChuViewController.h"//我的衣橱
+
+
 
 @interface MyShopViewController ()
 {
@@ -390,12 +395,25 @@
             break;
         case 105://店铺资料
         {
-            GmyshopErweimaViewController *ccc = [[GmyshopErweimaViewController alloc]init];
-            ccc.mallInfo = self.mallInfo;
-            ccc.shop_id = self.userInfo.shop_id;
+//            GmyshopErweimaViewController *ccc = [[GmyshopErweimaViewController alloc]init];
+//            ccc.mallInfo = self.mallInfo;
+//            ccc.shop_id = self.userInfo.shop_id;
+//            
+//            ccc.lastPageNavigationHidden = YES;
+//            [self.navigationController pushViewController:ccc animated:YES];
             
-            ccc.lastPageNavigationHidden = YES;
-            [self.navigationController pushViewController:ccc animated:YES];
+            
+            
+            
+//            MyMatchViewController *aaa = [[MyMatchViewController alloc]init];
+//            aaa.lastPageNavigationHidden = YES;
+//            [self.navigationController pushViewController:aaa animated:YES];
+            
+            MyYiChuViewController *aaa = [[MyYiChuViewController alloc]init];
+            aaa.lastPageNavigationHidden = YES;
+            [self.navigationController pushViewController:aaa animated:YES];
+            
+            
         }
             break;
         default:

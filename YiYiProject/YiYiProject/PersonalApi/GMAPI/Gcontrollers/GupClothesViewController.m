@@ -160,8 +160,8 @@
     tf2.text = theModel.original_price;
     tf3.text = theModel.product_price;
     CGFloat zhekou = theModel.discount_num;
-    int zhe = zhekou*100;
-    tf4.text = [NSString stringWithFormat:@"%d",zhe];
+    float zhe_f = zhekou*10;
+    tf4.text = [NSString stringWithFormat:@"%.1f",zhe_f];
     tf5.text = theModel.product_tag;
     
     //类型
@@ -290,10 +290,10 @@
         CGFloat tf3_num = [tf3.text floatValue];
         
         CGFloat zhekou = tf3_num/tf2_num;
-        int zhekou_int = zhekou *100;
-        tf4.text = [NSString stringWithFormat:@"%d",zhekou_int];
+        CGFloat zhekou_f = zhekou *10;
+        tf4.text = [NSString stringWithFormat:@"%.1f",zhekou_f];
         
-        if ([tf4.text intValue] == 100) {
+        if ([tf4.text intValue] == 10) {
             tf4.text = @"无折扣";
         }
         
@@ -472,13 +472,12 @@
     
     CGFloat zhekou = 0;
     if ([tf4.text isEqualToString:@"无折扣"]) {
-        zhekou = 100;
+        zhekou = 10;
     }else{
         zhekou = [tf4.text floatValue];
     }
     
-    zhekou = zhekou*0.1;
-    NSString *zhekouStr = [NSString stringWithFormat:@"%.2f",zhekou];
+    NSString *zhekouStr = [NSString stringWithFormat:@"%.1f",zhekou];
     NSDictionary *dataDic = [NSDictionary dictionary];
     
     if (self.thetype == GEDITCLOTH) {

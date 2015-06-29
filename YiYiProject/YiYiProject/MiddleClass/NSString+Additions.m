@@ -17,14 +17,27 @@
  */
 - (NSString *)stringByRemoveTrailZero
 {
-    if ([self hasSuffix:@".0"] || [self hasSuffix:@".00"]) {
-        
+//    if ([self hasSuffix:@".0"] || [self hasSuffix:@".00"]) {
+//        
+//        NSMutableString *temp = [NSMutableString stringWithString:self];
+//        [temp replaceOccurrencesOfString:@".0" withString:@"" options:0 range:NSMakeRange(0, temp.length)];
+//        [temp replaceOccurrencesOfString:@".00" withString:@"" options:0 range:NSMakeRange(0, temp.length)];
+//
+//        return temp;
+//    }
+    
+    
+    if ([self hasSuffix:@".00"]) {
+        NSMutableString *temp = [NSMutableString stringWithString:self];
+        [temp replaceOccurrencesOfString:@".00" withString:@"" options:0 range:NSMakeRange(0, temp.length)];
+        return temp;
+    }else if ([self hasSuffix:@".0"]){
         NSMutableString *temp = [NSMutableString stringWithString:self];
         [temp replaceOccurrencesOfString:@".0" withString:@"" options:0 range:NSMakeRange(0, temp.length)];
-        [temp replaceOccurrencesOfString:@".00" withString:@"" options:0 range:NSMakeRange(0, temp.length)];
-
         return temp;
     }
+    
+    
     return self;
 }
 

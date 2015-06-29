@@ -63,6 +63,7 @@
     [_my_right_button setTitleColor:RGBCOLOR(253, 106, 157) forState:UIControlStateNormal];
     [_my_right_button addTarget:self action:@selector(rightButtonTap:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItems = @[spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
+    _my_right_button.hidden = YES;
     
     self.myTitle=@"管理单品";
     
@@ -316,7 +317,7 @@
 
 - (void)GbtnClicked:(UIButton *)sender
 {
-    
+    _my_right_button.hidden = YES;
     
     NSLog(@"%d",self.piliangType);
     if (self.piliangType != PILIANGTYPE_NONE) {
@@ -394,7 +395,9 @@
             }
             
             [_tableView reloadData:arr pageSize:L_PAGE_SIZE];
-            
+            if (_tableView.dataArray.count>0) {
+                _my_right_button.hidden = NO;
+            }
         }
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
