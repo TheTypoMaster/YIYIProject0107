@@ -19,6 +19,8 @@
     UIView *_noClothesLogView;
     
     int _isOpen[2000];
+    
+    CGPoint _clickedPic_point;
 }
 @end
 
@@ -210,11 +212,20 @@
         }
     }
     
+
+    
+    
+    
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
 }
+
+-(void)removeSelf:(id)sender{
+    [sender removeFromSuperview];
+}
+
 
 
 

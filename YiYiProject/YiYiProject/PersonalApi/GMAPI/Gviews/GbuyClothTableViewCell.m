@@ -54,17 +54,30 @@
     picInfoView.layer.borderColor = [RGBCOLOR(220, 221, 223)CGColor];
     picInfoView.backgroundColor = [UIColor whiteColor];
     [self.contentView addSubview:picInfoView];
-    UIImageView *picImv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 150, 150)];
-    [picImv l_setImageWithURL:[NSURL URLWithString:theModel.pic] placeholderImage:DEFAULT_YIJIAYI];
-    [picInfoView addSubview:picImv];
     
-    UIView *sx = [[UIView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(picImv.frame),0 , 0.5, picImv.frame.size.height)];
-    sx.backgroundColor = RGBCOLOR(220, 221, 223);
-    [picInfoView addSubview:sx];
+    UIView *uderPicImv = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 150, 150)];
+    [picInfoView addSubview:uderPicImv];
+    
+    UIImageView *picImv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 150, 150)];
+    CGFloat p_width = [theModel.width floatValue];
+    CGFloat p_height = [theModel.height floatValue];
+    if (p_width>p_height) {
+        [picImv setFrame:CGRectMake(0, 0, 150, 150.0*p_height/p_width)];
+    }else{
+        [picImv setFrame:CGRectMake(0, 0, 150.0*p_width/p_height, 150)];
+    }
+    picImv.center = uderPicImv.center;
+    [picImv l_setImageWithURL:[NSURL URLWithString:theModel.pic] placeholderImage:DEFAULT_YIJIAYI];
+    [uderPicImv addSubview:picImv];
+    
+    //右边的竖线
+//    UIView *sx = [[UIView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(uderPicImv.frame),0 , 0.5, uderPicImv.frame.size.height)];
+//    sx.backgroundColor = RGBCOLOR(220, 221, 223);
+//    [picInfoView addSubview:sx];
     
     //文字信息
     //品牌
-    UILabel *pinpaiLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(picImv.frame), 9, picInfoView.frame.size.width-160, 33)];
+    UILabel *pinpaiLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(uderPicImv.frame), 9, picInfoView.frame.size.width-160, 33)];
 //    pinpaiLabel.backgroundColor = [UIColor orangeColor];
     pinpaiLabel.text = theModel.brand;
     pinpaiLabel.textAlignment = NSTextAlignmentRight;

@@ -21,6 +21,8 @@
 @property(nonatomic,strong)NSString *pic_size;
 @property(nonatomic,strong)NSString *add_time;
 @property(nonatomic,strong)NSString *status;
+@property(nonatomic,strong)NSString *width;
+@property(nonatomic,strong)NSString *height;
 @property(nonatomic,assign)BOOL time;//排序标志位
 @property(nonatomic,strong)NSString *timeStr;//标准时间 2014-05-25
 

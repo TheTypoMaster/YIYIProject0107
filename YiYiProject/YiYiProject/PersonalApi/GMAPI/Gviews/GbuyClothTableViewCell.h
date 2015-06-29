@@ -11,10 +11,14 @@
  */
 #import <UIKit/UIKit.h>
 #import "GBuyClothLogModel.h"
+@class GavatarView;
 @interface GbuyClothTableViewCell : UITableViewCell
 
 @property(nonatomic,strong)UILabel *timeLabel;
+@property(nonatomic,strong)GavatarView *picImv;
 
 -(void)loadCustomCellWithModel:(GBuyClothLogModel*)theModel;
+
+
 
 @end

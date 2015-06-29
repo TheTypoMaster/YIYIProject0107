@@ -225,12 +225,14 @@
     
     if (!_chooseImage) {
         [GMAPI showAutoHiddenMBProgressWithText:@"请添加图片" addToView:self.view];
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         return;
     }
     
     for (UITextField *tf in _contentTfArray) {
         if (tf.text.length == 0 || !tf.text) {
             [GMAPI showAutoHiddenMBProgressWithText:@"请完善信息" addToView:self.view];
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             return;
         }
     }
@@ -265,7 +267,7 @@
                                    constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
                                    {
                                        
-                                       UIImage *aImage = [self scaleImage:_chooseImage toScale:0.3];;
+                                       UIImage *aImage = [self scaleImage:_chooseImage toScale:0.5];;
                                        
                                        //按比例缩放
                                        
