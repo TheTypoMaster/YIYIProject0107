@@ -476,7 +476,6 @@
 		E380ADEC1AD5F5B6008219A0 /* gback_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E380ADEB1AD5F5B6008219A0 /* gback_white@2x.png */; };
 		E380ADF21AD5FD5F008219A0 /* GTtailj_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E380ADF11AD5FD5F008219A0 /* GTtailj_bg@2x.png */; };
 		E38487721AAA9B7A00BB4B3C /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E38487711AAA9B7A00BB4B3C /* libstdc++.6.0.9.dylib */; };
-		E386E8511AE4F4A1005A8725 /* gactivityback@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E386E8501AE4F4A1005A8725 /* gactivityback@2x.png */; };
 		E386E8531AE5147B005A8725 /* gbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E386E8521AE5147B005A8725 /* gbutton@2x.png */; };
 		E389D77A1B41A9F1005DE38F /* gprize_no@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E389D7791B41A9F1005DE38F /* gprize_no@2x.png */; };
 		E389D77C1B41AA08005DE38F /* gbuy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E389D77B1B41AA08005DE38F /* gbuy@2x.png */; };
@@ -1358,7 +1357,6 @@
 		E380ADEB1AD5F5B6008219A0 /* gback_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gback_white@2x.png"; sourceTree = "<group>"; };
 		E380ADF11AD5FD5F008219A0 /* GTtailj_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GTtailj_bg@2x.png"; sourceTree = "<group>"; };
 		E38487711AAA9B7A00BB4B3C /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
-		E386E8501AE4F4A1005A8725 /* gactivityback@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gactivityback@2x.png"; sourceTree = "<group>"; };
 		E386E8521AE5147B005A8725 /* gbutton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gbutton@2x.png"; sourceTree = "<group>"; };
 		E389D7791B41A9F1005DE38F /* gprize_no@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gprize_no@2x.png"; sourceTree = "<group>"; };
 		E389D77B1B41AA08005DE38F /* gbuy@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gbuy@2x.png"; sourceTree = "<group>"; };
@@ -3311,7 +3309,6 @@
 				E3DA29DF1AF9F50300FE9B75 /* gqiandaoguanbi@2x.png */,
 				E3D2EBFE1AF8DEAA00C09A49 /* gxiaozhu_bg@2x.png */,
 				E386E8521AE5147B005A8725 /* gbutton@2x.png */,
-				E386E8501AE4F4A1005A8725 /* gactivityback@2x.png */,
 				E3C923EB1AE12276005C2BE1 /* saoyisao@2x.png */,
 				E3C923E61AE0F7F9005C2BE1 /* gttailink_have@2x.png */,
 				E308939E1AE05D1900DA342C /* road_select@2x.png */,
@@ -3698,7 +3695,6 @@
 				E389D77C1B41AA08005DE38F /* gbuy@2x.png in Resources */,
 				13D03D491AEDD60F0078AA9E /* placeholder.png in Resources */,
 				E3D2EBFF1AF8DEAA00C09A49 /* gxiaozhu_bg@2x.png in Resources */,
-				E386E8511AE4F4A1005A8725 /* gactivityback@2x.png in Resources */,
 				13CC038D1B10A0A300A42BC1 /* my collections_bg_bottom@2x.png in Resources */,
 				13D03D401AEDD60F0078AA9E /* EditInfoView.xib in Resources */,
 				E33737411AD7D1FB00EAA23C /* gTtai_dianwo@2x.png in Resources */,

@@ -277,7 +277,7 @@
     if (imgNameStr.length>2) {//有图
         
         _activity_backImv = [[UIImageView alloc]initWithFrame:_activeImv.bounds];
-        [_activity_backImv setImage:[UIImage imageNamed:@"gactivityback.png"]];
+        [_activity_backImv setImage:[UIImage imageNamed:@"my_top_bg.png"]];
         [_activeImv addSubview:_activity_backImv];
         
         

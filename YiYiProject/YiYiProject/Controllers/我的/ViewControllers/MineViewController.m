@@ -168,8 +168,6 @@ typedef enum{
         
         [self presentViewController:unVc animated:YES completion:nil];
         
-        //加载视图
-        [self loadMineView];
         
     }else{
         [self cacheUserInfo];
@@ -187,16 +185,43 @@ typedef enum{
 //初始化view
 -(void)chushihuaView{
     
+    
+    //初始化相关
+    _changeImageType = USERIMAGENULL;
+    
+    _logoImageArray = @[[UIImage imageNamed:@"my_shoucang.png"],
+                        [UIImage imageNamed:@"my_wallet.png"],
+                        [UIImage imageNamed:@"my_store.png"],
+                        [UIImage imageNamed:@"my_message.png"],
+                        [UIImage imageNamed:@"my_friends.png"],
+                        [UIImage imageNamed:@"my_saoma.png"],
+                        [UIImage imageNamed:@"my_setting.png"]];
+    
+    
+    _tabelViewCellTitleArray = @[@"我的收藏",
+                                 @"我的钱包",
+                                 @"我是店主，申请衣+衣店铺",
+                                 @"消息中心",
+                                 @"邀请好友",
+                                 @"扫一扫",
+                                 @"设置"
+                                 ];
+    
+    
+    _customInfo_tabelViewCell = @{@"titleLogo":_logoImageArray,
+                                  @"titleArray":_tabelViewCellTitleArray
+                                  };
+    
     if (_tableView) {
         [_tableView reloadData];
-    }else{
-        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT-49) style:UITableViewStylePlain];
-        _tableView.delegate = self;
-        _tableView.dataSource = self;
-        _tableView.tableHeaderView = [self creatTableViewHeaderView];
-        _tableView.backgroundColor = RGBCOLOR(242, 242, 242);
-        [self.view addSubview:_tableView];
+        return;
     }
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT-49) style:UITableViewStylePlain];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.tableHeaderView = [self creatTableViewHeaderView];
+    _tableView.backgroundColor = RGBCOLOR(242, 242, 242);
+    [self.view addSubview:_tableView];
     
     
     
@@ -219,41 +244,6 @@ typedef enum{
 }
 
 
-//加载视图
--(void)loadMineView{
-    //初始化相关
-    _changeImageType = USERIMAGENULL;
-
-    _logoImageArray = @[[UIImage imageNamed:@"my_shoucang.png"],
-                        [UIImage imageNamed:@"my_wallet.png"],
-                        [UIImage imageNamed:@"my_store.png"],
-                        [UIImage imageNamed:@"my_message.png"],
-                        [UIImage imageNamed:@"my_friends.png"],
-                        [UIImage imageNamed:@"my_saoma.png"],
-                        [UIImage imageNamed:@"my_setting.png"]];
-    
-    
-    _tabelViewCellTitleArray = @[@"我的收藏",
-                                 @"我的钱包",
-                                 @"我是店主，申请衣+衣店铺",
-                                 @"消息中心",
-                                 @"邀请好友",
-                                 @"扫一扫",
-                                 @"设置"
-                                 ];
-
-    
-    _customInfo_tabelViewCell = @{@"titleLogo":_logoImageArray,
-                                  @"titleArray":_tabelViewCellTitleArray
-                                  };
-    
-    if (_tableView) {
-        [_tableView reloadData];
-    }else{
-        [self chushihuaView];
-    }
-    
-}
 
 
 
@@ -261,12 +251,8 @@ typedef enum{
 //退出登录成功后的页面调整
 
 -(void)GLogoutAction{
-
-    for (UIView *view in self.view.subviews) {
-        [view removeFromSuperview];
-    }
     
-    [self loadMineView];
+    [self chushihuaView];
 }
 
 
@@ -364,7 +350,7 @@ typedef enum{
     self.userScoreLabel.text = [NSString stringWithFormat:@"积分:%@",score];
     
     user_bannerUrl = _userInfo.user_banner;
-    [_backView.imageView sd_setImageWithURL:[NSURL URLWithString:user_bannerUrl] placeholderImage:[UIImage imageNamed:@"my_bg.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [_backView.imageView sd_setImageWithURL:[NSURL URLWithString:user_bannerUrl] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         [GMAPI setUserBannerImageWithData:UIImagePNGRepresentation(_backView.imageView.image)];
     }];
     
@@ -394,10 +380,13 @@ typedef enum{
 -(void)GgetUserInfo{
     
     
-    if ([[GMAPI getAuthkey] isEqualToString:@"failtogetauthkey"]) {
-        [self chushihuaView];
+    if ([GMAPI getAuthkey].length == 0) {
+//        [self chushihuaView];
         return;
     }
+    
+    
+    _getUserinfoSuccess = NO;
     
     if (!_hud) {
         _hud = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
@@ -458,7 +447,7 @@ typedef enum{
         self.userScoreLabel.text = [NSString stringWithFormat:@"积分:%@",score];
         
         user_bannerUrl = [dic stringValueForKey:@"user_banner"];
-        [_backView.imageView sd_setImageWithURL:[NSURL URLWithString:user_bannerUrl] placeholderImage:[UIImage imageNamed:@"my_bg.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        [_backView.imageView sd_setImageWithURL:[NSURL URLWithString:user_bannerUrl] placeholderImage:[GMAPI getUserBannerImage] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             [GMAPI setUserBannerImageWithData:UIImagePNGRepresentation(_backView.imageView.image)];
         }];
         
@@ -945,44 +934,44 @@ typedef enum{
  *
  *  @param userInfoDic 用户信息字典
  */
-- (void)setViewsWithDataInfo:(NSDictionary *)userInfoDic
-{
-    _userInfo = [[UserInfo alloc]initWithDictionary:userInfoDic];
-    
-    if ([_userInfo.is_sign intValue] == 0) {//未签到
-        _qiandaoBtn.userInteractionEnabled = YES;
-        _qiandaoBtn.selected = NO;
-    }else if ([_userInfo.is_sign intValue] == 1){//已签到
-        _qiandaoBtn.userInteractionEnabled = NO;
-        _qiandaoBtn.selected = YES;
-    }
-    
-    if ([_userInfo.shopman intValue] == 2) {//已经是店主
-        [self changeTheTitleAndPicArray_dianzhu];
-    }else if ([_userInfo.shopman intValue]==1){//正在审核
-        [self changeTheTitleAndPicArray_shenhe];
-    }
-    
-    NSString *name = [userInfoDic stringValueForKey:@"user_name"];
-    NSString *score = [userInfoDic stringValueForKey:@"score"];
-    self.userNameLabel.text = [NSString stringWithFormat:@"昵称:%@",name];
-    self.userScoreLabel.text = [NSString stringWithFormat:@"积分:%@",score];
-    
-    user_bannerUrl = [userInfoDic stringValueForKey:@"user_banner"];
-    [_backView.imageView sd_setImageWithURL:[NSURL URLWithString:user_bannerUrl] placeholderImage:[UIImage imageNamed:@"my_bg.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        [GMAPI setUserBannerImageWithData:UIImagePNGRepresentation(_backView.imageView.image)];
-    }];
-    
-    NSString *userFaceUrl = [NSString stringWithFormat:@"%@",[userInfoDic stringValueForKey:@"photo"]];
-    headImageUrl = userFaceUrl;
-    
-    
-    [self.userFaceImv sd_setImageWithURL:[NSURL URLWithString:userFaceUrl] placeholderImage:[UIImage imageNamed:@"grzx150_150.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        [GMAPI setUserFaceImageWithData:UIImagePNGRepresentation(self.userFaceImv.image)];
-    }];
-    
-    [_tableView reloadData];
-}
+//- (void)setViewsWithDataInfo:(NSDictionary *)userInfoDic
+//{
+//    _userInfo = [[UserInfo alloc]initWithDictionary:userInfoDic];
+//    
+//    if ([_userInfo.is_sign intValue] == 0) {//未签到
+//        _qiandaoBtn.userInteractionEnabled = YES;
+//        _qiandaoBtn.selected = NO;
+//    }else if ([_userInfo.is_sign intValue] == 1){//已签到
+//        _qiandaoBtn.userInteractionEnabled = NO;
+//        _qiandaoBtn.selected = YES;
+//    }
+//    
+//    if ([_userInfo.shopman intValue] == 2) {//已经是店主
+//        [self changeTheTitleAndPicArray_dianzhu];
+//    }else if ([_userInfo.shopman intValue]==1){//正在审核
+//        [self changeTheTitleAndPicArray_shenhe];
+//    }
+//    
+//    NSString *name = [userInfoDic stringValueForKey:@"user_name"];
+//    NSString *score = [userInfoDic stringValueForKey:@"score"];
+//    self.userNameLabel.text = [NSString stringWithFormat:@"昵称:%@",name];
+//    self.userScoreLabel.text = [NSString stringWithFormat:@"积分:%@",score];
+//    
+//    user_bannerUrl = [userInfoDic stringValueForKey:@"user_banner"];
+//    [_backView.imageView sd_setImageWithURL:[NSURL URLWithString:user_bannerUrl] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+//        [GMAPI setUserBannerImageWithData:UIImagePNGRepresentation(_backView.imageView.image)];
+//    }];
+//    
+//    NSString *userFaceUrl = [NSString stringWithFormat:@"%@",[userInfoDic stringValueForKey:@"photo"]];
+//    headImageUrl = userFaceUrl;
+//    
+//    
+//    [self.userFaceImv sd_setImageWithURL:[NSURL URLWithString:userFaceUrl] placeholderImage:[UIImage imageNamed:@"grzx150_150.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+//        [GMAPI setUserFaceImageWithData:UIImagePNGRepresentation(self.userFaceImv.image)];
+//    }];
+//    
+//    [_tableView reloadData];
+//}
 
 - (void)clickToShare:(UIButton *)sender
 {

@@ -135,7 +135,7 @@
 #pragma mark - MyMethod
 -(void)prepareNetData{
     
-    NSString *url = [NSString stringWithFormat:@"%@&authcode=%@",MYJIANGQUAN_ONE,[GMAPI getAuthkey]];
+    NSString *url = [NSString stringWithFormat:@"%@&authcode=%@&prize_id=%@",MYJIANGQUAN_ONE,[GMAPI getAuthkey],self.jiangQuanId];
     
 //    url = @"http://www119.alayy.com/index.php?d=api&c=prize&m=get_join_info&authcode=US5SK1ApBeNV7gabVuZci1L3V7UE8Qf2Ay5dbFcyBjEBMgAyBmMHMFFtBDNXOg19BTICOQ==&prize_id=1";
     
