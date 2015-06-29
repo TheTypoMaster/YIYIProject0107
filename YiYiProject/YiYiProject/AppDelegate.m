@@ -235,6 +235,10 @@
     }
     
     NSLog(@"applicationWillEnterForeground 1111");
+    
+    //通知获取抽奖状态
+    
+    [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GETCHOUJIANGSTATE object:nil];
 
 }
 
@@ -257,10 +261,6 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     NSLog(@"applicationDidBecomeActive 1111");
-    
-    //通知获取抽奖状态
-    
-    [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GETCHOUJIANGSTATE object:nil];
     
     [UMSocialSnsService  applicationDidBecomeActive];
 }

@@ -799,7 +799,7 @@
     [contentScroll addSubview:_bigImageView];
 //    [self.bigImageView setImageWithURL:[NSURL URLWithString:[self thumbImageForArr:aProductModel.images]] placeHolderText:@"抱歉,图片加载失败" backgroundColor:RGBCOLOR(235, 235, 235) holderTextColor:[UIColor whiteColor]];
     
-    [_bigImageView l_setImageWithURL:[NSURL URLWithString:[self thumbImageForArr:aProductModel.images]] placeholderImage:DEFAULT_YIJIAYI];
+    [_bigImageView l_setImageWithURL:[NSURL URLWithString:[self originalImageForArr:aProductModel.images]] placeholderImage:DEFAULT_YIJIAYI];
     
     //点击图片
     self.bigImageView.userInteractionEnabled = YES;

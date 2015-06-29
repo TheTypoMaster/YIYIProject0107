@@ -25,4 +25,8 @@ typedef void(^ChouJiangeActionBlock)(ActionStyle actionStyle);
 
 - (void)show;
 
+- (void)showWithView:(UIView *)aView;
+
+- (void)hidden;
+
 @end

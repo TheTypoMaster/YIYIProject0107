@@ -175,7 +175,6 @@
 		13A3899C1A3893FC00ABBACB /* MessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A3899A1A3893FC00ABBACB /* MessageViewController.m */; };
 		13A3899D1A3893FC00ABBACB /* MessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13A3899B1A3893FC00ABBACB /* MessageViewController.xib */; };
 		13A389A21A38942D00ABBACB /* MineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A389A01A38942D00ABBACB /* MineViewController.m */; };
-		13A389A31A38942D00ABBACB /* MineViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13A389A11A38942D00ABBACB /* MineViewController.xib */; };
 		13A389B81A38974F00ABBACB /* bluedown1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13A389A71A38974F00ABBACB /* bluedown1@2x.png */; };
 		13A389B91A38974F00ABBACB /* blueup1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13A389A81A38974F00ABBACB /* blueup1@2x.png */; };
 		13A389BA1A38974F00ABBACB /* LRefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A389AA1A38974F00ABBACB /* LRefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -832,7 +831,6 @@
 		13A3899B1A3893FC00ABBACB /* MessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageViewController.xib; sourceTree = "<group>"; };
 		13A3899F1A38942D00ABBACB /* MineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineViewController.h; sourceTree = "<group>"; };
 		13A389A01A38942D00ABBACB /* MineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineViewController.m; sourceTree = "<group>"; };
-		13A389A11A38942D00ABBACB /* MineViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MineViewController.xib; sourceTree = "<group>"; };
 		13A389A71A38974F00ABBACB /* bluedown1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bluedown1@2x.png"; sourceTree = "<group>"; };
 		13A389A81A38974F00ABBACB /* blueup1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueup1@2x.png"; sourceTree = "<group>"; };
 		13A389A91A38974F00ABBACB /* LRefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRefreshTableHeaderView.h; sourceTree = "<group>"; };
@@ -2369,7 +2367,6 @@
 				13A389A01A38942D00ABBACB /* MineViewController.m */,
 				19D0C0D01A4EDA6D00BEC10D /* MyYiChuViewController.h */,
 				19D0C0D11A4EDA6D00BEC10D /* MyYiChuViewController.m */,
-				13A389A11A38942D00ABBACB /* MineViewController.xib */,
 				DF6855841A592CD2004D924F /* UploadPicViewController.h */,
 				DF6855851A592CD2004D924F /* UploadPicViewController.m */,
 				DF5E89A51A5E115900535EBA /* MyBodyViewController.h */,
@@ -3656,7 +3653,6 @@
 				1391DC611A870673006A2E15 /* t_shoucang@2x.png in Resources */,
 				19F7B4371A67FFA600087BCB /* item_cancel@2x.png in Resources */,
 				E37F84451B1080890086CBB7 /* shouye_bg@2x.png in Resources */,
-				13A389A31A38942D00ABBACB /* MineViewController.xib in Resources */,
 				E3B7BE141ACA578100FE8495 /* xiaoxi_up@2x.png in Resources */,
 				139A05251A66B9C500A8EB49 /* MailMessageCell.xib in Resources */,
 				134BBFC51B2988560047E0D9 /* danpin_zan_selected@2x.png in Resources */,

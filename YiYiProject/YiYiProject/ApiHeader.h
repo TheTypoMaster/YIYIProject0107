@@ -67,6 +67,8 @@ alpha:(a)]
 
 #define RONGCLOUD_TOKEN @"rongCloudToken"//融云对应的token
 
+#define USER_CHOUJIANG_BIG @"chouJiang_big"//标识抽奖大图是否显示过
+
 //本地数据保存
 
 #define CACHE_DESERVE_BUY @"deserveBuy"//值得买

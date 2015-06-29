@@ -112,17 +112,23 @@
     }
 }
 - (void)webViewDidStartLoad:(UIWebView *)webView{
+    
+    [MBProgressHUD showHUDAddedTo:webView animated:YES];
 }
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     
     button_comment.userInteractionEnabled=YES;
+    
+    [MBProgressHUD hideAllHUDsForView:webView animated:YES];
 }
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
     
     NSLog(@"erro %@",error);
     
     NSLog(@"data 为空 connectionError %@",error);
+    
+    [MBProgressHUD hideAllHUDsForView:webView animated:YES];
     
     NSString *errInfo = @"网络有问题,请检查网络";
 //    switch (error.code) {

@@ -55,7 +55,11 @@
     
     [self creatSearchRightBarButton];
     
-    //获取抽奖状态    
+    
+    //获取抽奖状态
+    
+    [self getChouJiangState];
+    
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getChouJiangState) name:NOTIFICATION_GETCHOUJIANGSTATE object:nil];
     
     NSLog(@"HomeViewController 1111");
@@ -71,6 +75,8 @@
 {
     __weak typeof(self)weakSelf = self;
     NSString *url = [NSString stringWithFormat:GET_CHOUJIANGSTATE,[GMAPI getAuthkey]];
+    
+    NSLog(@"抽奖---%@",url);
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
@@ -96,13 +102,32 @@
         _chouJiangeView = nil;
     }
     
+//    //已显示过大图,
+//    
+//    if ([LTools cacheBoolForKey:USER_CHOUJIANG_BIG]) {
+//        
+//        [self createSmallChouJiangView];//大图点击消失过了
+//        
+//        return;
+//    }
+    
+    //是否显示过大图
+    
     if ([_chouJiangModel.pop intValue] == 1) {
+        
+        //先把小图移除,防止大小都显示
+        
+        if (_chouJiangSmallBtn) {
+            
+            [_chouJiangSmallBtn removeFromSuperview];
+            _chouJiangSmallBtn = nil;
+        }
         
         //显示抽奖入口
         
         _chouJiangeView = [[ChouJiangView alloc]initWithChouJiangModel:_chouJiangModel];
         
-        [_chouJiangeView show];
+        [_chouJiangeView showWithView:self.view];
         
         __weak typeof(self)weakSelf = self;
         
@@ -110,25 +135,32 @@
             
             [weakSelf chouJiangToDo:actionStyle];
         };
+    }else
+    {
+        [self createSmallChouJiangView];
     }
+    
+    
 }
 
 - (void)chouJiangToDo:(ActionStyle )actionStyle
 {
     if (actionStyle == ActionStyle_Close) {
         
+        [self createSmallChouJiangView];
         
     }else if (actionStyle == ActionStyle_ChouJiang){
         
         [self clickToChouJiang:nil];
     }
-    
+}
+
+/**
+ *  创建小图抽奖入口
+ */
+- (void)createSmallChouJiangView
+{
     //抽奖入口小按钮
-    if (_chouJiangSmallBtn) {
-        
-        [_chouJiangSmallBtn removeFromSuperview];
-        _chouJiangSmallBtn = nil;
-    }
     
     if ([_chouJiangModel.pop_small intValue] == 1) {
         
@@ -140,15 +172,35 @@
         CGFloat realWidth = 60 * DEVICE_WIDTH / 375;//显示宽度
         CGFloat realHeight = [LTools heightForImageHeight:imageHeight imageWidth:imageWidth originalWidth:realWidth];
         
-        _chouJiangSmallBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _chouJiangSmallBtn.frame = CGRectMake(10, 10, realWidth, realHeight);
-        [self.view addSubview:_chouJiangSmallBtn];
-        _chouJiangSmallBtn.backgroundColor = [UIColor redColor];
-        [_chouJiangSmallBtn addTarget:self action:@selector(clickToChouJiang:) forControlEvents:UIControlEventTouchUpInside];
+        UIImageView *imageView;
         
-        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, _chouJiangSmallBtn.width, realHeight)];
-        [imageView l_setImageWithURL:[NSURL URLWithString:_chouJiangModel.small_pic_url] placeholderImage:DEFAULT_YIJIAYI];
-        [_chouJiangSmallBtn addSubview:imageView];
+        
+        if (_chouJiangModel.small_pic_url) {
+            
+            if (!_chouJiangSmallBtn) {
+                _chouJiangSmallBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+                _chouJiangSmallBtn.frame = CGRectMake(10, 10, realWidth, realHeight);
+                [self.view addSubview:_chouJiangSmallBtn];
+                _chouJiangSmallBtn.backgroundColor = [UIColor redColor];
+                [_chouJiangSmallBtn addTarget:self action:@selector(clickToChouJiang:) forControlEvents:UIControlEventTouchUpInside];
+                
+                imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, _chouJiangSmallBtn.width, realHeight)];
+                [_chouJiangSmallBtn addSubview:imageView];
+            }
+            [imageView l_setImageWithURL:[NSURL URLWithString:_chouJiangModel.small_pic_url] placeholderImage:DEFAULT_YIJIAYI];
+        }else
+        {
+            NSLog(@"抽奖小图无效");
+        }
+        
+        
+    }else{ //不需要显示小按钮
+        
+        if (_chouJiangSmallBtn) {
+            
+            [_chouJiangSmallBtn removeFromSuperview];
+            _chouJiangSmallBtn = nil;
+        }
     }
 }
 
@@ -161,16 +213,14 @@
 {
     if ([LTools isLogin:self]) {
         
-//        AdvertisementController *advertise = [[AdvertisementController alloc]init];
-//        advertise.targetUrl = _chouJiangModel.url;
-//        advertise.targetTitle = _chouJiangModel.title;
-//        advertise.hidesBottomBarWhenPushed = YES;
-//        [self.navigationController pushViewController:advertise animated:YES];
+        [_chouJiangeView hidden];//隐藏大的抽奖图
         
+        [self createSmallChouJiangView];//创建小的
+
         //prize_id 和 authcode
-        NSString *url = [NSString stringWithFormat:@"%@&%@&%@",_chouJiangModel.url,[GMAPI getAuthkey],_chouJiangModel.prize_id];
+        NSString *url = [NSString stringWithFormat:@"%@&authcode=%@&prize_id=%@",_chouJiangModel.url,[GMAPI getAuthkey],_chouJiangModel.prize_id];
         
-        url = _chouJiangModel.url;
+//        url = _chouJiangModel.url;
         
         GwebViewController *web = [[GwebViewController alloc]init];
         web.urlstring = url;

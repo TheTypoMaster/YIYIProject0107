@@ -64,6 +64,9 @@
     
     [self getMyMessage];
     
+    //10秒更新消息
+    [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(getMyMessage) userInfo:nil repeats:YES];
+    
     self.delegate = self;
 }
 

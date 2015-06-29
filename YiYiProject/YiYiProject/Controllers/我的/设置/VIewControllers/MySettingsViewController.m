@@ -285,6 +285,10 @@
     
     [LTools cacheBool:NO ForKey:LOGIN_SERVER_STATE];
     
+    //抽奖入口
+    
+    [LTools cacheBool:NO ForKey:USER_CHOUJIANG_BIG];
+    
     //融云Token
     
     [LTools cache:@"" ForKey:RONGCLOUD_TOKEN];

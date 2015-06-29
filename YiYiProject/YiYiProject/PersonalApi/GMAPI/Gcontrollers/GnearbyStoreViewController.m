@@ -130,11 +130,9 @@
     _my_right_button.titleLabel.font = [UIFont systemFontOfSize:15];
     [_my_right_button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_my_right_button addTarget:self action:@selector(rightButtonTap:) forControlEvents:UIControlEventTouchUpInside];
+    _my_right_button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     self.navigationItem.rightBarButtonItems = @[_spaceButton,[[UIBarButtonItem alloc] initWithCustomView:_my_right_button]];
     _my_right_button.userInteractionEnabled = NO;
-    
-    
-    
     
     
     //请求网络数据

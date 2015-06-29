@@ -52,7 +52,7 @@
         clostBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
         
         bigImageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        bigImageBtn.frame = CGRectMake(10, clostBtn.bottom - 3, realWidth, 0);
+        bigImageBtn.frame = CGRectMake(10, clostBtn.bottom - 3, realWidth, _realHeight);
         [self addSubview:bigImageBtn];
         bigImageBtn.backgroundColor = [UIColor clearColor];
         [bigImageBtn addTarget:self action:@selector(clickToAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -61,7 +61,6 @@
         UIImageView *bigImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, bigImageBtn.width, _realHeight)];
         [bigImageView l_setImageWithURL:[NSURL URLWithString:aModel.big_pic_url] placeholderImage:DEFAULT_YIJIAYI];
         [bigImageBtn addSubview:bigImageView];
-        
         
     }
     return self;
@@ -82,12 +81,24 @@
 
 - (void)clickToAction:(UIButton *)sender
 {
-    [self hidden];
+//    [self hidden];
     
     if (self.actionBlock) {
         
         self.actionBlock(ActionStyle_ChouJiang);//抽奖
     }
+}
+
+- (void)showWithView:(UIView *)aView
+{
+//    UIView *root = [UIApplication sharedApplication].keyWindow;
+    [aView addSubview:self];
+    
+//    [UIView animateWithDuration:0.5 animations:^{
+//        
+//        bigImageBtn.height = _realHeight;
+//        self.alpha = 1.0;
+//    }];
 }
 
 - (void)show
