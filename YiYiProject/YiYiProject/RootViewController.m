@@ -35,6 +35,8 @@
 
 #import "GTTPublishViewController.h"//发布T台
 
+#import "AdvertisementController.h"
+
 @interface RootViewController ()<UITabBarControllerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
     MessageViewController *messageVc;
@@ -67,18 +69,15 @@
     [super viewWillAppear:animated];
     
     NSLog(@"RootViewController viewWillAppear");
-//    
-//    [self.navigationController setNavigationBarHidden:NO animated:animated];
-//    [[UIApplication sharedApplication]setStatusBarHidden:YES];
     
     [[NSNotificationCenter defaultCenter]postNotificationName:@"hidden" object:nil];
-
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 //取消红点
 - (void)cancelHotpoint:(NSNotification *)notify
@@ -90,6 +89,7 @@
 
 - (void)updateRemoteMessage:(NSNotification *)notification
 {
+    NSLog(@"updateRemoteMessage");
     __weak typeof(self)weakSelf = self;
     dispatch_async(dispatch_get_main_queue(), ^{
         

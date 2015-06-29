@@ -35,8 +35,10 @@
     
     [logoImv sd_setImageWithURL:[NSURL URLWithString:[dic stringValueForKey:@"brand_logo"]] placeholderImage:nil];
     
+    CGFloat tableWidth = DEVICE_WIDTH - 70 - 12;
+    
     //name
-    UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(logoImv.frame)+10, logoImv.frame.origin.y+17, self.bounds.size.width-logoImv.frame.size.width -17, 19)];
+    UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(logoImv.frame)+10, logoImv.frame.origin.y+17, tableWidth - logoImv.frame.size.width -17 - 10, 19)];
     nameLabel.textColor = RGBCOLOR(35, 36, 37);
     nameLabel.font = [UIFont systemFontOfSize:17];
     nameLabel.textAlignment = NSTextAlignmentLeft;
@@ -59,17 +61,17 @@
     
     //号码 活动
     UILabel *activeLabel = [[UILabel alloc]initWithFrame:CGRectMake(nameLabel.frame.origin.x, CGRectGetMaxY(nameLabel.frame)+7, nameLabel.frame.size.width, nameLabel.frame.size.height)];
-    activeLabel.font = [UIFont systemFontOfSize:15];
+    activeLabel.font = [UIFont systemFontOfSize:14];
     
     NSString *aaa = [NSString stringWithFormat:@"%@ %@",menpaihao,huodong];
     NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:aaa];
     NSInteger haomaLength = menpaihao.length;
     NSInteger huodongLength = huodong.length;
     [title addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(73, 74, 75) range:NSMakeRange(0,haomaLength)];
-    [title addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:NSMakeRange(0,haomaLength)];
+    [title addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSMakeRange(0,haomaLength)];
     
     [title addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(235,203,77) range:NSMakeRange(haomaLength+1, huodongLength)];
-    [title addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:NSMakeRange(haomaLength+1, huodongLength)];
+    [title addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSMakeRange(haomaLength+1, huodongLength)];
     activeLabel.attributedText = title;
     
     

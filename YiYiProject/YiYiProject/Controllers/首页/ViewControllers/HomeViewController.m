@@ -16,6 +16,8 @@
 
 #import "GLeadBuyMapViewController.h"
 
+#import "LShareSheetView.h"
+
 @interface HomeViewController ()
 {
     UIView *menu_view;
@@ -25,29 +27,86 @@
     HomeMatchController *match_viewcontroller;
     
     BigProductViewController *product_viewController;//单品大图
+    
+    UIView *_activityView;
 }
 
 @end
 
 @implementation HomeViewController
 
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    
-    if (IOS7_OR_LATER) {
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
-        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
-    }
-}
+//-(void)viewWillAppear:(BOOL)animated{
+//    [super viewWillAppear:animated];
+//    
+//    if (IOS7_OR_LATER) {
+//        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+//        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+//    }
+//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self createMemuView];
     
-//    [self creatLeftBarButton];
     [self creatSearchRightBarButton];
     
+    //广告
+    
+    [self createActivityView];
+    
+}
+
+#pragma - mark 广告页
+
+- (void)createActivityView
+{
+    UIView *root = [UIApplication sharedApplication].keyWindow;
+
+    _activityView = [[UIView alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    _activityView.backgroundColor = [UIColor whiteColor];
+//    _activityView.window.windowLevel = UIWindowLevelStatusBar + 1;
+    
+    [root addSubview:_activityView];
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = CGRectMake(100, 100, 50, 30);
+    [btn setTitle:@"关闭" forState:UIControlStateNormal];
+    [_activityView addSubview:btn];
+    [btn addTarget:self action:@selector(hiddenActivityView) forControlEvents:UIControlEventTouchUpInside];
+    
+    //广告图
+    
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:_activityView.bounds];
+    [_activityView addSubview:imageView];
+    imageView.image = [UIImage imageNamed:@"advertise"];
+    
+    //隐藏状态栏
+    [[UIApplication sharedApplication]setStatusBarHidden:YES];
+    
+    // 5s 之后自动隐藏广告
+    [NSTimer scheduledTimerWithTimeInterval:3.f target:self selector:@selector(hiddenActivityView) userInfo:nil repeats:NO];
+}
+
+/**
+ *  隐藏广告
+ */
+- (void)hiddenActivityView
+{
+    //显示状态栏
+    [self.navigationController setNavigationBarHidden:YES];
+    [[UIApplication sharedApplication]setStatusBarHidden:NO];
+    [self.navigationController setNavigationBarHidden:NO];
+
+    [UIView animateWithDuration:0.1 animations:^{
+        
+        _activityView.alpha = 0.f;
+        
+    } completion:^(BOOL finished) {
+        
+        [_activityView removeFromSuperview];
+        _activityView = nil;
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

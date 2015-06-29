@@ -173,17 +173,38 @@
     
     RootViewController *root = [[RootViewController alloc]init];
     self.rootViewController = root;
-    
     LNavigationController *unVc = [[LNavigationController alloc]initWithRootViewController:root];
     unVc.navigationBarHidden = YES;
     self.window.rootViewController = unVc;
     
-//    self.window.rootViewController = root;
+//    [self createActivityView];
     
     self.window.backgroundColor = [UIColor whiteColor];
     
     return YES;
 }
+
+//- (void)createActivityView
+//{
+//    //    self.window.windowLevel = UIAlertViewStyleDefault;
+//    
+//    UIView *root = [UIApplication sharedApplication].keyWindow;
+//    
+//    UIView *_activityView = [[UIView alloc]initWithFrame:self.window.bounds];
+//    _activityView.backgroundColor = [UIColor orangeColor];
+//    [self.window addSubview:_activityView];
+//    [self.window bringSubviewToFront:_activityView];
+//    
+//    _activityView.window.windowLevel = UIAlertViewStyleDefault;
+//    
+//    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    btn.frame = CGRectMake(100, 100, 50, 30);
+//    [btn setTitle:@"关闭" forState:UIControlStateNormal];
+//    [_activityView addSubview:btn];
+//    [btn addTarget:self action:@selector(hiddenActivityView) forControlEvents:UIControlEventTouchUpInside];
+//    //广告页
+//    //    UIImageView *imageView = [UIImageView alloc]ini
+//}
 
 #pragma mark - 获取坐标
 
