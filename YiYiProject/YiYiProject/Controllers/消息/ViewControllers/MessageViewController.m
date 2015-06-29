@@ -141,6 +141,11 @@
     
     NSString *key = [GMAPI getAuthkey];
     
+    if (key.length == 0) {
+        
+        return;
+    }
+    
     NSString *url = [NSString stringWithFormat:MESSAGE_GET_MINE,key];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {

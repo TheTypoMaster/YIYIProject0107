@@ -24,6 +24,15 @@
     
 }
 
+- (void)dealloc
+{
+    NSLog(@"--%s--",__FUNCTION__);
+    
+    [awebview stopLoading];
+    awebview.delegate = nil;
+    awebview = nil;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -54,6 +63,7 @@
     [awebview loadRequest:request];
     awebview.scalesPageToFit = YES;
     [self.view addSubview:awebview];
+    awebview.dataDetectorTypes = UIDataDetectorTypeNone;
     
     UIView *toolview=[[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT-65-40, DEVICE_WIDTH, 40)];
     toolview.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"ios7_webviewbar.png"]];

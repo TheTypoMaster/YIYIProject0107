@@ -889,7 +889,7 @@ typedef enum{
  */
 - (int)unreadMessageNum
 {
-    UINavigationController *unvc = [[LTools appDelegate].rootViewController.viewControllers objectAtIndex:3];
+    UINavigationController *unvc = [[LTools appDelegate].rootViewController.viewControllers objectAtIndex:2];
     int num = [unvc.tabBarItem.badgeValue intValue];
     
     return num > 0 ? num : 0;
@@ -900,7 +900,7 @@ typedef enum{
  */
 - (void)getUnreadMessageNum
 {
-    UINavigationController *unvc = [[LTools appDelegate].rootViewController.viewControllers objectAtIndex:3];
+    UINavigationController *unvc = [[LTools appDelegate].rootViewController.viewControllers objectAtIndex:2];
 //    int num = [unvc.tabBarItem.badgeValue intValue];
     
     [unvc.tabBarItem addObserver:self forKeyPath:@"badgeValue" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
@@ -1048,7 +1048,7 @@ typedef enum{
     }
 //    cell.separatorInset = UIEdgeInsetsMake(0,0,0,0);//上左下右
     
-    if (indexPath.row == 3) {
+    if (indexPath.row == 1) {
         
         //消息中心
         
