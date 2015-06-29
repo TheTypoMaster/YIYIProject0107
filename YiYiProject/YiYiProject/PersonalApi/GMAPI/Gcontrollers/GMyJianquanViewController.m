@@ -73,7 +73,7 @@
     UILabel *contentLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(titleLabel.frame)+10, 0, DEVICE_WIDTH-13-65-13, 50)];
     contentLabel.textColor = [UIColor darkGrayColor];
     contentLabel.font = [UIFont systemFontOfSize:14];
-    contentLabel.numberOfLines = 4;
+    contentLabel.numberOfLines = 3;
     [cell.contentView addSubview:contentLabel];
     
     
