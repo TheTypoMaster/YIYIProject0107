@@ -17,14 +17,12 @@
 {
     RefreshTableView *_tableView;//住tableview
     UIView *_noClothesLogView;
+    
+    int _isOpen[2000];
 }
 @end
 
 @implementation GBuyClothesLogViewController
-
-
-
-
 
 
 
@@ -40,8 +38,13 @@
     
     
 
+//    _sectionBtnArray = [NSMutableArray arrayWithCapacity:1];
     
     
+    for (int i=0; i<2000; i++) {
+        _isOpen[i]=0;
+    }
+    _isOpen[0]=1;
     
     self.view.backgroundColor = [UIColor whiteColor];
     
@@ -128,6 +131,24 @@
     downLine.backgroundColor = RGBCOLOR(220, 221, 223);
     [view addSubview:downLine];
     
+    
+    
+    
+    UIButton *jiantouBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [jiantouBtn setFrame:CGRectMake(DEVICE_WIDTH-65, 0, 65, 65)];
+    [jiantouBtn addTarget:self action:@selector(ggShouFang:) forControlEvents:UIControlEventTouchUpInside];
+    jiantouBtn.tag = 10+section;
+    [view addSubview:jiantouBtn];
+    
+    
+    if ( !_isOpen[jiantouBtn.tag-10]) {
+        [jiantouBtn setImage:[UIImage imageNamed:@"buy_jiantou_d.png"] forState:UIControlStateNormal];
+    }else{
+        [jiantouBtn setImage:[UIImage imageNamed:@"buy_jiantou_u.png"] forState:UIControlStateNormal];
+    }
+    
+    
+    
     return view;
 }
 
@@ -144,8 +165,20 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    NSArray *oneArray = _tableView.dataArray[section];
-    return oneArray.count;
+
+    NSInteger num = 0;
+    if (_tableView.dataArray.count>0) {
+        NSArray *arr = _tableView.dataArray[section];
+        if (!_isOpen[section]) {
+            num=0;
+        }else{
+            num = arr.count;
+        }
+    }
+    return num;
+    
+    
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -353,6 +386,10 @@
     _tableView.tableFooterView.hidden = YES;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_tableView];
+    
+    
+    
+    
     [_tableView showRefreshHeader:YES];
 }
 
@@ -369,4 +406,25 @@
     [_tableView finishReloadigData];
 }
 
+-(void)sectionBtnClicked:(UIButton*)sender{
+//    UIButton *btn = _sectionBtnArray[sender.tag-100];
+//    btn.selected = !btn.selected;
+    
+    sender.selected = !sender.selected;
+    
+    NSLog(@"%s",__FUNCTION__);
+    NSLog(@"------%d",sender.selected);
+    NSLog(@"-------%d",sender.tag);
+    [_tableView reloadData];
+}
+
+
+-(void)ggShouFang:(UIButton*)sender{
+    
+    
+    _isOpen[sender.tag-10]=!_isOpen[sender.tag-10];
+    [_tableView reloadData];
+    
+    
+}
 @end

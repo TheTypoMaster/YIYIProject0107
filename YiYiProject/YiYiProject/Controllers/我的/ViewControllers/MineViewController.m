@@ -49,6 +49,8 @@
 
 #import "GmyTtaiViewController.h"//我的T台
 
+#import "GMyWalletViewController.h"//我的钱包
+
 typedef enum{
     USERFACE = 0,//头像
     USERBANNER,//banner
@@ -217,16 +219,18 @@ typedef enum{
     _changeImageType = USERIMAGENULL;
 
     _logoImageArray = @[[UIImage imageNamed:@"my_shoucang.png"],
-                        [UIImage imageNamed:@"my_message.png"],
+                        [UIImage imageNamed:@"my_wallet.png"],
                         [UIImage imageNamed:@"my_store.png"],
+                        [UIImage imageNamed:@"my_message.png"],
                         [UIImage imageNamed:@"my_friends.png"],
                         [UIImage imageNamed:@"my_saoma.png"],
                         [UIImage imageNamed:@"my_setting.png"]];
     
     
     _tabelViewCellTitleArray = @[@"我的收藏",
-                                 @"消息中心",
+                                 @"我的钱包",
                                  @"我是店主，申请衣+衣店铺",
+                                 @"消息中心",
                                  @"邀请好友",
                                  @"扫一扫",
                                  @"设置"
@@ -263,35 +267,21 @@ typedef enum{
 
 //请求到userinfo之后根据shopman参数判断是否拥有店铺 调整 标题和图标二维数组
 -(void)changeTheTitleAndPicArray_dianzhu{//已经是店主
-//    _logoImageArray = @[[UIImage imageNamed:@"my_shoucang.png"],
-//                        [UIImage imageNamed:@"my_message.png"],
-//                        [UIImage imageNamed:@"my_store.png"],
-//                        [UIImage imageNamed:@"my_friends.png"],
-//                        [UIImage imageNamed:@"my_saoma.png"],
-//                        [UIImage imageNamed:@"my_setting.png"],
-//                        [UIImage imageNamed:@"my_setting.png"]];
-//    
-//    
-//    _tabelViewCellTitleArray = @[@"我的收藏",
-//                                 @"消息中心",
-//                                 @"我的店铺",
-//                                 @"邀请好友",
-//                                 @"扫一扫",
-//                                 @"设置",
-//                                 @"我的衣橱"
-//                                 ];
+
     
     _logoImageArray = @[[UIImage imageNamed:@"my_shoucang.png"],
-                        [UIImage imageNamed:@"my_message.png"],
+                        [UIImage imageNamed:@"my_wallet.png"],
                         [UIImage imageNamed:@"my_store.png"],
+                        [UIImage imageNamed:@"my_message.png"],
                         [UIImage imageNamed:@"my_friends.png"],
                         [UIImage imageNamed:@"my_saoma.png"],
                         [UIImage imageNamed:@"my_setting.png"]];
     
     
     _tabelViewCellTitleArray = @[@"我的收藏",
-                                 @"消息中心",
+                                 @"我的钱包",
                                  @"我的店铺",
+                                 @"消息中心",
                                  @"邀请好友",
                                  @"扫一扫",
                                  @"设置",
@@ -307,16 +297,18 @@ typedef enum{
 
 -(void)changeTheTitleAndPicArray_shenhe{//正在审核
     _logoImageArray = @[[UIImage imageNamed:@"my_shoucang.png"],
-                        [UIImage imageNamed:@"my_message.png"],
+                        [UIImage imageNamed:@"my_wallet.png"],
                         [UIImage imageNamed:@"my_store.png"],
+                        [UIImage imageNamed:@"my_message.png"],
                         [UIImage imageNamed:@"my_friends.png"],
                         [UIImage imageNamed:@"my_saoma.png"],
                         [UIImage imageNamed:@"my_setting.png"]];
     
     
     _tabelViewCellTitleArray = @[@"我的收藏",
-                                 @"消息中心",
+                                 @"我的钱包",
                                  @"店铺审核中",
+                                 @"消息中心",
                                  @"邀请好友",
                                  @"扫一扫",
                                  @"设置"
@@ -544,11 +536,7 @@ typedef enum{
     
     
     
-//    UIImageView *theBlackBackView = [[UIImageView alloc]initWithFrame:CGRectMake(0, _backView.frame.size.height-50, DEVICE_WIDTH, 50)];
-//    _theBlackBackView = [[UIImageView alloc]initWithFrame:_tableView.tableHeaderView.bounds];
-//    [_theBlackBackView setImage:[UIImage imageNamed:@"my_top_bg.png"]];
-//    _theBlackBackView.userInteractionEnabled = YES;
-//    [_tableView.tableHeaderView addSubview:_theBlackBackView];
+
     
     _theBlackBackView = [[UIImageView alloc]initWithFrame:_backView.imageView.bounds];
     [_theBlackBackView setImage:[UIImage imageNamed:@"my_top_bg.png"]];
@@ -1134,13 +1122,14 @@ typedef enum{
             [self.navigationController pushViewController:concern animated:YES];
         }
             break;
-        case 1://消息中心
+        case 1://我的钱包
         {
+            GMyWalletViewController *ccc = [[GMyWalletViewController alloc]init];
+            ccc.hidesBottomBarWhenPushed = YES;
+            ccc.lastPageNavigationHidden = YES;
+            ccc.jifen = self.userScoreLabel.text;
+            [self.navigationController pushViewController:ccc animated:YES];
             
-            MessageListController *messageList = [[MessageListController alloc]init];
-            messageList.hidesBottomBarWhenPushed = YES;
-            messageList.lastPageNavigationHidden = YES;
-            [self.navigationController pushViewController:messageList animated:YES];
         }
             break;
         case 2://申请店铺/我的店铺
@@ -1166,27 +1155,31 @@ typedef enum{
             }
         }
             break;
-        case 3://邀请好友
+        case 3://消息中心
+        {
+            MessageListController *messageList = [[MessageListController alloc]init];
+            messageList.hidesBottomBarWhenPushed = YES;
+            messageList.lastPageNavigationHidden = YES;
+            [self.navigationController pushViewController:messageList animated:YES];
+            
+        }
+            break;
+        case 4://邀请好友
         {
             [self clickToShare:nil];
+            
         }
             break;
-        case 4://扫一扫
+        case 5://扫一扫
         {
             [self saoyisaoClicked];
+            
         }
             break;
-        case 5://设置
+        case 6://设置
         {
             [self xiaochilun];
         }
-            break;
-//        case 6://我的衣橱
-//        {
-//            MyYiChuViewController *yichu = [[MyYiChuViewController alloc]init];
-//            yichu.hidesBottomBarWhenPushed = YES;
-//            [self.navigationController pushViewController:yichu animated:YES];
-//        }
             break;
         default:
             break;
@@ -1194,14 +1187,7 @@ typedef enum{
     
     
     
-    //跳转我的主页
-//    GmyMainViewController *dd = [[GmyMainViewController alloc]init];
-//    dd.userType = G_Default;
-//    dd.bannerUrl = user_bannerUrl;
-//    dd.headImageUrl = headImageUrl;
-//    dd.lastPageNavigationHidden = YES;
-//    dd.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:dd animated:YES];
+
     
 }
 

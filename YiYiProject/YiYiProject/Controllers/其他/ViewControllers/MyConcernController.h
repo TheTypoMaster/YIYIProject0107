@@ -8,7 +8,7 @@
 
 #import "MyViewController.h"
 /**
- *  我的关注
+ *  我的收藏
  */
 @interface MyConcernController : MyViewController
 

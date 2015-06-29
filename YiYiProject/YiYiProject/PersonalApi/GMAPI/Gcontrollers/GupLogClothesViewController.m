@@ -25,6 +25,8 @@
     
     UIView *_datePickerView;
     UIDatePicker *_datePick;
+    
+    UIButton *_finishBtn;
 }
 @end
 
@@ -86,8 +88,8 @@
         [_contentTfArray addObject:tf];
         
         
-        //添加图片
-        if (i == 5) {
+        
+        if (i == 5) {//添加图片
             [theView setFrame:CGRectMake(0, i*70, DEVICE_WIDTH, 100)];
             [tf removeFromSuperview];
             [_contentTfArray removeObject:tf];
@@ -102,20 +104,20 @@
             [_showPicBtn setImage:[UIImage imageNamed:@"gremovephoto.png"] forState:UIControlStateNormal];
             [theView addSubview:_showPicBtn];
             [_showPicBtn addTarget:self action:@selector(removeSelf) forControlEvents:UIControlEventTouchUpInside];
-        }else if (i==6){
+        }else if (i==6){//完成按钮
             [theView setFrame:CGRectMake(0, (i-1)*70+100, DEVICE_WIDTH, 70)];
             [tf removeFromSuperview];
             [_contentTfArray removeObject:tf];
             [tLabel removeFromSuperview];
-            UIButton *finishBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-            [finishBtn setFrame:CGRectMake(30, 10, DEVICE_WIDTH-60, 35)];
-            finishBtn.layer.cornerRadius = 4;
-            [finishBtn setTitle:titleArray[i] forState:UIControlStateNormal];
-            [finishBtn setBackgroundColor:RGBCOLOR(244, 76, 138)];
-            [finishBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            [finishBtn addTarget:self action:@selector(uploadBuyClothesLog) forControlEvents:UIControlEventTouchUpInside];
-            [theView addSubview:finishBtn];
-        }else if (i == 3){
+            _finishBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            [_finishBtn setFrame:CGRectMake(30, 10, DEVICE_WIDTH-60, 35)];
+            _finishBtn.layer.cornerRadius = 4;
+            [_finishBtn setTitle:titleArray[i] forState:UIControlStateNormal];
+            [_finishBtn setBackgroundColor:RGBCOLOR(244, 76, 138)];
+            [_finishBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [_finishBtn addTarget:self action:@selector(uploadBuyClothesLog) forControlEvents:UIControlEventTouchUpInside];
+            [theView addSubview:_finishBtn];
+        }else if (i == 3){//购买时间
             tf.text = @"123";
             tf.hidden = YES;
             _buyTimeLabel = [[UILabel alloc]initWithFrame:tf.frame];
@@ -126,6 +128,9 @@
             _buyTimeLabel.userInteractionEnabled = YES;
             UITapGestureRecognizer *ttt = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(chooseBuyTime)];
             [_buyTimeLabel addGestureRecognizer:ttt];
+        }else if (i == 2){//价格
+            tf.keyboardType = UIKeyboardTypeNumberPad;
+            
         }
         
         
@@ -188,7 +193,6 @@
     NSLog(@"%s",__FUNCTION__);
     [UIApplication sharedApplication].statusBarHidden = NO;
     NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
-    
     if ([mediaType isEqualToString:@"public.image"]) {
         UIImage *originImage = [info objectForKey:UIImagePickerControllerOriginalImage];
         _chooseImage = originImage;
@@ -201,6 +205,8 @@
     
 }
 
+
+
 -(void)removeSelf{
     [_showPicBtn setImage:[UIImage imageNamed:@"gremovephoto.png"] forState:UIControlStateNormal];
     _chooseImage = nil;
@@ -212,6 +218,10 @@
     NSLog(@"123");
     
     
+    _finishBtn.userInteractionEnabled = NO;
+    
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     if (!_chooseImage) {
         [GMAPI showAutoHiddenMBProgressWithText:@"请添加图片" addToView:self.view];
@@ -255,7 +265,9 @@
                                    constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
                                    {
                                        
-                                       UIImage *aImage = _chooseImage;
+                                       UIImage *aImage = [self scaleImage:_chooseImage toScale:0.3];;
+                                       
+                                       //按比例缩放
                                        
                                        NSData * data= UIImageJPEGRepresentation(aImage, 0.8);
                                        
@@ -273,7 +285,7 @@
                                    {
                                        
                                        
-                                       [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                       [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                                        
                                        NSLog(@"success %@",responseObject);
                                        
@@ -298,15 +310,19 @@
                                            [GMAPI showAutoHiddenMBProgressWithText:[mydic objectForKey:@"msg"] addToView:self.view];
                                        }
                                        
+                                       
+                                       _finishBtn.userInteractionEnabled = YES;
+                                       
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        
-                                       [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                       [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                                        
                                        [GMAPI showAutoHiddenMBProgressWithText:@"发布失败请重新发布" addToView:self.view];
                                        
                                        NSLog(@"失败 : %@",error);
                                        
+                                       _finishBtn.userInteractionEnabled = YES;
                                        
                                    }];
     
@@ -354,9 +370,17 @@
 
 
 -(void)chooseBuyTime{
+    
+    
+    
     [UIView animateWithDuration:0.3 animations:^{
+        [self gShou];
         [_datePickerView setFrame:CGRectMake(0, DEVICE_HEIGHT-300, DEVICE_WIDTH, 300)];
+    } completion:^(BOOL finished) {
+        
     }];
+    
+    
     
 }
 
@@ -370,6 +394,10 @@
         NSDate *confromTimesp = _datePick.date;
         NSString *confromTimespStr = [formatter stringFromDate:confromTimesp];
         _buyTimeLabel.text = confromTimespStr;
+        
+        [_mainScrollView setContentSize:CGSizeMake(DEVICE_WIDTH, 1000)];
+        
+        [self gShou];
     }];
     
 }
@@ -387,6 +415,8 @@
     
     _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH, 1000);
     
+    [self gmbb];
+    
 }
 
 -(void)gShou{
@@ -397,7 +427,19 @@
     }
     
     _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH, 500);
-    
+
+    [self gmbb];
+}
+
+
+//按比例缩放
+-(UIImage *)scaleImage:(UIImage *)image toScale:(float)scaleSize
+{
+    UIGraphicsBeginImageContext(CGSizeMake(image.size.width*scaleSize,image.size.height*scaleSize));
+    [image drawInRect:CGRectMake(0, 0, image.size.width * scaleSize, image.size.height *scaleSize)];
+    UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return scaledImage;
 }
 
 

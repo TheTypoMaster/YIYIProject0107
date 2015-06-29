@@ -395,12 +395,12 @@
             break;
         case 105://店铺资料
         {
-//            GmyshopErweimaViewController *ccc = [[GmyshopErweimaViewController alloc]init];
-//            ccc.mallInfo = self.mallInfo;
-//            ccc.shop_id = self.userInfo.shop_id;
-//            
-//            ccc.lastPageNavigationHidden = YES;
-//            [self.navigationController pushViewController:ccc animated:YES];
+            GmyshopErweimaViewController *ccc = [[GmyshopErweimaViewController alloc]init];
+            ccc.mallInfo = self.mallInfo;
+            ccc.shop_id = self.userInfo.shop_id;
+            
+            ccc.lastPageNavigationHidden = YES;
+            [self.navigationController pushViewController:ccc animated:YES];
             
             
             
@@ -409,9 +409,9 @@
 //            aaa.lastPageNavigationHidden = YES;
 //            [self.navigationController pushViewController:aaa animated:YES];
             
-            MyYiChuViewController *aaa = [[MyYiChuViewController alloc]init];
-            aaa.lastPageNavigationHidden = YES;
-            [self.navigationController pushViewController:aaa animated:YES];
+//            MyYiChuViewController *aaa = [[MyYiChuViewController alloc]init];
+//            aaa.lastPageNavigationHidden = YES;
+//            [self.navigationController pushViewController:aaa animated:YES];
             
             
         }

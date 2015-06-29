@@ -424,6 +424,12 @@
 		E33737371AD7AF2800EAA23C /* productDetail_collect_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E33737361AD7AF2800EAA23C /* productDetail_collect_normal@2x.png */; };
 		E337373F1AD7D0A500EAA23C /* g_redline_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E337373E1AD7D0A500EAA23C /* g_redline_down@2x.png */; };
 		E33737411AD7D1FB00EAA23C /* gTtai_dianwo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E33737401AD7D1FB00EAA23C /* gTtai_dianwo@2x.png */; };
+		E3554C7E1B411B0700FE9493 /* buy_jiantou_d@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3554C7C1B411B0700FE9493 /* buy_jiantou_d@2x.png */; };
+		E3554C7F1B411B0700FE9493 /* buy_jiantou_u@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3554C7D1B411B0700FE9493 /* buy_jiantou_u@2x.png */; };
+		E3554C811B411B0D00FE9493 /* buy_g@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3554C801B411B0D00FE9493 /* buy_g@2x.png */; };
+		E3554C831B411B1B00FE9493 /* buy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3554C821B411B1B00FE9493 /* buy@2x.png */; };
+		E3554C851B413E0600FE9493 /* my_wallet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3554C841B413E0600FE9493 /* my_wallet@2x.png */; };
+		E3554C881B41419500FE9493 /* GMyWalletViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3554C871B41419500FE9493 /* GMyWalletViewController.m */; };
 		E35B9B961B394B86009BAC99 /* my_top_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E35B9B951B394B86009BAC99 /* my_top_bg@2x.png */; };
 		E35EF1161A6A54A900B493A9 /* GChooseStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E35EF1151A6A54A900B493A9 /* GChooseStoreViewController.m */; };
 		E35EF1231A6A756900B493A9 /* GchooseFloorPinpaiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E35EF1221A6A756900B493A9 /* GchooseFloorPinpaiViewController.m */; };
@@ -1211,6 +1217,13 @@
 		E33737361AD7AF2800EAA23C /* productDetail_collect_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "productDetail_collect_normal@2x.png"; sourceTree = "<group>"; };
 		E337373E1AD7D0A500EAA23C /* g_redline_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "g_redline_down@2x.png"; sourceTree = "<group>"; };
 		E33737401AD7D1FB00EAA23C /* gTtai_dianwo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gTtai_dianwo@2x.png"; sourceTree = "<group>"; };
+		E3554C7C1B411B0700FE9493 /* buy_jiantou_d@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buy_jiantou_d@2x.png"; sourceTree = "<group>"; };
+		E3554C7D1B411B0700FE9493 /* buy_jiantou_u@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buy_jiantou_u@2x.png"; sourceTree = "<group>"; };
+		E3554C801B411B0D00FE9493 /* buy_g@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buy_g@2x.png"; sourceTree = "<group>"; };
+		E3554C821B411B1B00FE9493 /* buy@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buy@2x.png"; sourceTree = "<group>"; };
+		E3554C841B413E0600FE9493 /* my_wallet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "my_wallet@2x.png"; sourceTree = "<group>"; };
+		E3554C861B41419500FE9493 /* GMyWalletViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMyWalletViewController.h; sourceTree = "<group>"; };
+		E3554C871B41419500FE9493 /* GMyWalletViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMyWalletViewController.m; sourceTree = "<group>"; };
 		E35B9B951B394B86009BAC99 /* my_top_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "my_top_bg@2x.png"; sourceTree = "<group>"; };
 		E35EF1141A6A54A900B493A9 /* GChooseStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GChooseStoreViewController.h; sourceTree = "<group>"; };
 		E35EF1151A6A54A900B493A9 /* GChooseStoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GChooseStoreViewController.m; sourceTree = "<group>"; };
@@ -1937,6 +1950,7 @@
 		138986021A6A18C600F187C9 /* 我的 */ = {
 			isa = PBXGroup;
 			children = (
+				E3554C841B413E0600FE9493 /* my_wallet@2x.png */,
 				E37F84301B1072D70086CBB7 /* my_friends@2x.png */,
 				E37F84311B1072D70086CBB7 /* my_message@2x.png */,
 				E37F84321B1072D70086CBB7 /* my_nav_bg@2x.png */,
@@ -3220,6 +3234,8 @@
 				E3D080471B3E846200E4F87D /* GBuyClothesLogViewController.m */,
 				E3D080491B3E922E00E4F87D /* GupLogClothesViewController.h */,
 				E3D0804A1B3E922E00E4F87D /* GupLogClothesViewController.m */,
+				E3554C861B41419500FE9493 /* GMyWalletViewController.h */,
+				E3554C871B41419500FE9493 /* GMyWalletViewController.m */,
 			);
 			path = Gcontrollers;
 			sourceTree = "<group>";
@@ -3227,6 +3243,10 @@
 		E3996E3E1A5E1DBA00673147 /* Gmodels */ = {
 			isa = PBXGroup;
 			children = (
+				E3554C821B411B1B00FE9493 /* buy@2x.png */,
+				E3554C801B411B0D00FE9493 /* buy_g@2x.png */,
+				E3554C7C1B411B0700FE9493 /* buy_jiantou_d@2x.png */,
+				E3554C7D1B411B0700FE9493 /* buy_jiantou_u@2x.png */,
 				E3D0804C1B3E943A00E4F87D /* gclothes@2x.png */,
 				E35B9B951B394B86009BAC99 /* my_top_bg@2x.png */,
 				E3039EF11B2825CE003A32FE /* dpxq_chat@2x.png */,
@@ -3588,6 +3608,7 @@
 				E3B7BE0F1ACA578100FE8495 /* my_down@2x.png in Resources */,
 				13ABB0741B01ADCD002DC700 /* UMSCommentInputControlleriPad.xib in Resources */,
 				1387B08F1A5EDF51006365D8 /* apply_qq_image@2x.png in Resources */,
+				E3554C7E1B411B0700FE9493 /* buy_jiantou_d@2x.png in Resources */,
 				13CC038C1B10A0A300A42BC1 /* collection_jiantou@2x.png in Resources */,
 				13944CFC1B1EA9F400993D27 /* activity_location@2x.png in Resources */,
 				19F7B4341A67FFA600087BCB /* background@2x.png in Resources */,
@@ -3658,6 +3679,7 @@
 				13CEC8A51A5D974900FE273F /* zhixiangjiantou@2x.png in Resources */,
 				137B6FFA1A6B995D007035DE /* dz_jiantou@2x.png in Resources */,
 				139A788E1B186A0900EFA10A /* Ttai_collect_selected@2x.png in Resources */,
+				E3554C831B411B1B00FE9493 /* buy@2x.png in Resources */,
 				13963F591A4FE3B8007BE68B /* fabu_pic@2x.png in Resources */,
 				13B6907D1A580430007FE152 /* ShopViewCell.xib in Resources */,
 				13E7F7A41B2AA2730029F4D5 /* productDetail_collect_selected@2x.png in Resources */,
@@ -3703,6 +3725,7 @@
 				13934DC91B26CDE900705B02 /* danpin_zan@2x.png in Resources */,
 				E3FE67F81AD7D57100DC6612 /* g_linkdelete@2x.png in Resources */,
 				1381251B1B27CAE4000310FF /* ZYQAssetPicker.Bundle in Resources */,
+				E3554C7F1B411B0700FE9493 /* buy_jiantou_u@2x.png in Resources */,
 				13684A761A37583E00A508FB /* Images.xcassets in Resources */,
 				13A854581B1325EE00781CDE /* personal homepage_+@2x.png in Resources */,
 				564031891A4EFF6000680E08 /* apply_ver_image@2x.png in Resources */,
@@ -3713,6 +3736,7 @@
 				13ABB0721B01ADCD002DC700 /* UMSCommentDetailController.xib in Resources */,
 				13B690521A564BF6007FE152 /* tianjia_down@2x.png in Resources */,
 				E33737371AD7AF2800EAA23C /* productDetail_collect_normal@2x.png in Resources */,
+				E3554C851B413E0600FE9493 /* my_wallet@2x.png in Resources */,
 				E3B9A9701ADE581400EE1415 /* gdaohang_product@2x.png in Resources */,
 				E39960711ACFEDD000D2D4B7 /* gsearch_down@2x.png in Resources */,
 				13ABB0751B01ADCD002DC700 /* UMShareEditViewController.xib in Resources */,
@@ -3785,6 +3809,7 @@
 				E334B8261AFB943F00DC9209 /* dianzhu_02@2x.png in Resources */,
 				E36DAF101AD40A6900C7FEA4 /* navigationBarColor_black@2x.png in Resources */,
 				19F7B4401A67FFA600087BCB /* messages_toolbar_background@2x.png in Resources */,
+				E3554C811B411B0D00FE9493 /* buy_g@2x.png in Resources */,
 				19F7B4441A67FFA600087BCB /* nav_btn_bg@2x.png in Resources */,
 				138125291B27F027000310FF /* product_share@2x.png in Resources */,
 				56DAB2181A46C86B00273140 /* MatchCaseCell.xib in Resources */,
@@ -3886,6 +3911,7 @@
 				56DAB2171A46C86B00273140 /* MatchCaseCell.m in Sources */,
 				13A4AC651AE4C72500EA5F2C /* LPhotoBrowser.m in Sources */,
 				1382C5211A812A5A0079AF55 /* MJRefreshHeaderView.m in Sources */,
+				E3554C881B41419500FE9493 /* GMyWalletViewController.m in Sources */,
 				E3E64A9F1AE0D971002F00A4 /* JKPhotoBrowser.m in Sources */,
 				E3FB5C3D1B0B125300787D5A /* GEditTtaiTableViewCell.m in Sources */,
 				13B6907C1A580430007FE152 /* ShopViewCell.m in Sources */,
