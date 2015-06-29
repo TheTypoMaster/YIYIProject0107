@@ -25,9 +25,7 @@
 -(void)loadCustomCellWithModel:(GBuyClothLogModel*)theModel{
     self.timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(8, 0, 50, 20)];
     self.timeLabel.textAlignment = NSTextAlignmentLeft;
-//    timeLabel.backgroundColor = [UIColor orangeColor];
     self.timeLabel.attributedText = [GTimeSwitch timechangeWithDayAndMonth:theModel.buy_time];
-    NSLog(@"哈哈%@",self.timeLabel.text);
     [self.contentView addSubview:self.timeLabel];
     
     UIView *yuan = [[UIView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.timeLabel.frame)+2, 0, 14, 14)];
@@ -44,8 +42,6 @@
     [self.contentView addSubview:yuan2];
     
     UIView *shuxian = [[UIView alloc]initWithFrame:CGRectMake(yuan.center.x, CGRectGetMaxY(yuan.frame), 0.5, 146)];
-    NSLog(@"哈哈%f",shuxian.frame.size.height);
-    NSLog(@"哈哈%@",NSStringFromCGRect(shuxian.frame));
     shuxian.backgroundColor = RGBCOLOR(173, 174, 175);
     [self.contentView addSubview:shuxian];
     
@@ -59,7 +55,7 @@
     picInfoView.backgroundColor = [UIColor whiteColor];
     [self.contentView addSubview:picInfoView];
     UIImageView *picImv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 150, 150)];
-    [picImv sd_setImageWithURL:[NSURL URLWithString:theModel.pic] placeholderImage:nil];
+    [picImv l_setImageWithURL:[NSURL URLWithString:theModel.pic] placeholderImage:DEFAULT_YIJIAYI];
     [picInfoView addSubview:picImv];
     
     UIView *sx = [[UIView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(picImv.frame),0 , 0.5, picImv.frame.size.height)];

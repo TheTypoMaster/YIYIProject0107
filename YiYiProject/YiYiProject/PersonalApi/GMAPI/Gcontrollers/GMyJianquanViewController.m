@@ -65,12 +65,13 @@
         [view removeFromSuperview];
     }
     
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(13, 0, 65, 60)];
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(13, 0, 65, 50)];
     titleLabel.text = _titleArray[indexPath.row];
-    titleLabel.font = [UIFont systemFontOfSize:14];
+    titleLabel.font = [UIFont boldSystemFontOfSize:14];
     [cell.contentView addSubview:titleLabel];
     
-    UILabel *contentLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(titleLabel.frame), 0, DEVICE_WIDTH-13-65-13, 60)];
+    UILabel *contentLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(titleLabel.frame)+10, 0, DEVICE_WIDTH-13-65-13, 50)];
+    contentLabel.textColor = [UIColor darkGrayColor];
     contentLabel.font = [UIFont systemFontOfSize:14];
     contentLabel.numberOfLines = 4;
     [cell.contentView addSubview:contentLabel];
@@ -124,7 +125,7 @@
     if (indexPath.row == 6) {
         return 210;
     }
-    return 60;
+    return 50;
 }
 
 
@@ -169,6 +170,16 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    return [UIView new];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.01f;
 }
 
 

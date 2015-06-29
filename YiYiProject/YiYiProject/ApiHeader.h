@@ -672,6 +672,9 @@ typedef enum{
 //我的奖券
 #define MYJIANGQUAN_ONE @"http://www119.alayy.com/index.php?d=api&c=prize&m=get_join_info"
 
+//删除买衣日志
+#define DELETE_BUYCLOTHESLOG @"http://www119.alayy.com/index.php?d=api&c=buylog&m=del"
+
 //抽奖相关接口
 
 //获取是否显示取抽奖入口

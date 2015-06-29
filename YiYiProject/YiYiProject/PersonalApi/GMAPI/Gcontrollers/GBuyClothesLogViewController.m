@@ -146,8 +146,10 @@
     
     
     if ( !_isOpen[view.tag-10]) {
+        downLine.hidden = YES;
         [jiantouBtn setImage:[UIImage imageNamed:@"buy_jiantou_d.png"] forState:UIControlStateNormal];
     }else{
+        downLine.hidden = NO;
         [jiantouBtn setImage:[UIImage imageNamed:@"buy_jiantou_u.png"] forState:UIControlStateNormal];
     }
     
@@ -439,5 +441,66 @@
     [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
     
 }
+
+
+
+
+//滑动删除
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"点击了删除");
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        NSMutableArray *dataArray = _tableView.dataArray[indexPath.section];
+        
+        GBuyClothLogModel *model = dataArray[indexPath.row];
+        
+        NSString *url = [NSString stringWithFormat:@"%@&buylog_id=%@&authcode=%@",DELETE_BUYCLOTHESLOG,model.id,[GMAPI getAuthkey]];
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        LTools *ll = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+        [ll requestCompletion:^(NSDictionary *result, NSError *erro) {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            if (dataArray.count == 1) {
+                [_tableView.dataArray removeObject:dataArray];
+                [_tableView reloadData];
+            }else{
+                [dataArray removeObjectAtIndex:indexPath.row];
+                [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            }
+        } failBlock:^(NSDictionary *result, NSError *erro) {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        }];
+        
+        
+        
+        
+        
+    }
+    else if (editingStyle == UITableViewCellEditingStyleInsert) {
+        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+    }
+}
+-(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"手指撮动了");
+    return UITableViewCellEditingStyleDelete;
+}
+-(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return  @"删除";
+}
+
+-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+    
+}
+
+
+
 
 @end

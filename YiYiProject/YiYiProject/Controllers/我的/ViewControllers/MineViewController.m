@@ -252,6 +252,7 @@ typedef enum{
 
 -(void)GLogoutAction{
     
+    [self setUpuserInfoViewWithLoginState:[LTools cacheBoolForKey:LOGIN_SERVER_STATE]];
     [self chushihuaView];
 }
 
@@ -350,7 +351,15 @@ typedef enum{
     self.userScoreLabel.text = [NSString stringWithFormat:@"积分:%@",score];
     
     user_bannerUrl = _userInfo.user_banner;
-    [_backView.imageView sd_setImageWithURL:[NSURL URLWithString:user_bannerUrl] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    
+    UIImage *pim;
+    if ([GMAPI getUserBannerImage]) {
+        pim = [GMAPI getUserBannerImage];
+    }else{
+        pim = [UIImage imageNamed:@"my_bg.png"];
+    }
+    
+    [_backView.imageView sd_setImageWithURL:[NSURL URLWithString:user_bannerUrl] placeholderImage:pim completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         [GMAPI setUserBannerImageWithData:UIImagePNGRepresentation(_backView.imageView.image)];
     }];
     
@@ -447,7 +456,13 @@ typedef enum{
         self.userScoreLabel.text = [NSString stringWithFormat:@"积分:%@",score];
         
         user_bannerUrl = [dic stringValueForKey:@"user_banner"];
-        [_backView.imageView sd_setImageWithURL:[NSURL URLWithString:user_bannerUrl] placeholderImage:[GMAPI getUserBannerImage] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        UIImage *pim;
+        if ([GMAPI getUserBannerImage]) {
+            pim = [GMAPI getUserBannerImage];
+        }else{
+            pim = [UIImage imageNamed:@"my_bg.png"];
+        }
+        [_backView.imageView sd_setImageWithURL:[NSURL URLWithString:user_bannerUrl] placeholderImage:pim completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             [GMAPI setUserBannerImageWithData:UIImagePNGRepresentation(_backView.imageView.image)];
         }];
         
@@ -690,6 +705,9 @@ typedef enum{
         _guanzhuView.hidden = NO;
         _ttaiView.hidden = NO;
     }else{//未登录
+        
+        
+        [_backView.imageView setImage:[UIImage imageNamed:@"my_bg.png"]];
         self.userNameLabel.hidden = YES;
         self.userScoreLabel.hidden = YES;
         self.userFaceImv.hidden = YES;

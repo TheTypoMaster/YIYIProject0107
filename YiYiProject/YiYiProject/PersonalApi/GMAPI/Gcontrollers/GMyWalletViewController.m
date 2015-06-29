@@ -43,7 +43,7 @@
     _titleArray = @[@"积分",@"奖券"];
     
     _cellHeight = 274.0/750*DEVICE_WIDTH;
-    _jiangquanCGRECT = CGRectMake(51.0/750*DEVICE_WIDTH, 20.0/750*DEVICE_WIDTH, 650.0/750*DEVICE_WIDTH, 650.0/750*DEVICE_WIDTH*234/650);
+    _jiangquanCGRECT = CGRectMake(30.0/750*DEVICE_WIDTH, 20.0/750*DEVICE_WIDTH, 650.0/750*DEVICE_WIDTH, 650.0/750*DEVICE_WIDTH*234/650);
     
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -94,6 +94,12 @@
     UIImageView *imv = [[UIImageView alloc]initWithFrame:_jiangquanCGRECT];
     [imv setImage:[UIImage imageNamed:@"mywallet_01.png"]];
     [cell.contentView addSubview:imv];
+    
+    //箭头
+    UIImageView *jt = [[UIImageView alloc]initWithFrame:CGRectMake(DEVICE_WIDTH - 15, _cellHeight*0.5-6, 7, 12)];
+    [jt setImage:[UIImage imageNamed:@"my_jiantou.png"]];
+//    jt.backgroundColor = [UIColor orangeColor];
+    [cell.contentView addSubview:jt];
     
     UILabel *tishiLabel = [[UILabel alloc]initWithFrame:CGRectMake(35.0*imv.frame.size.width/650, 30.0/234*imv.frame.size.height+168.0/234*imv.frame.size.height *0.1, 480.0/650*imv.frame.size.width, 168.0/234*imv.frame.size.height *0.3)];
     
