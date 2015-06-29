@@ -186,12 +186,18 @@ typedef enum{
 
 //初始化view
 -(void)chushihuaView{
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT-49) style:UITableViewStylePlain];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    _tableView.tableHeaderView = [self creatTableViewHeaderView];
-    _tableView.backgroundColor = RGBCOLOR(242, 242, 242);
-    [self.view addSubview:_tableView];
+    
+    if (_tableView) {
+        [_tableView reloadData];
+    }else{
+        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT-49) style:UITableViewStylePlain];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        _tableView.tableHeaderView = [self creatTableViewHeaderView];
+        _tableView.backgroundColor = RGBCOLOR(242, 242, 242);
+        [self.view addSubview:_tableView];
+    }
+    
     
     
     //通知相关=====

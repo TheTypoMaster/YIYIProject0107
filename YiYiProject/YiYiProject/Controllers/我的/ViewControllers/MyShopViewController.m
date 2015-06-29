@@ -34,6 +34,8 @@
     NSMutableArray *_animationArray;//动画数组
     int _theTurn;//顺序标示
     CATransition *_transtion_upinfoview;//uPInfoView
+    BOOL _loadNetDataSuccess;//load数据成功
+    UIActivityIndicatorView *_hud;
 }
 @end
 
@@ -54,6 +56,8 @@
     
     
     _theTurn = 0;
+    _loadNetDataSuccess = NO;
+    
     
     
     [self creatShopInfoView];
@@ -76,6 +80,16 @@
 - (void)getMailDetailInfo
 {
     
+    
+    if (!_hud) {
+        _hud = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        _hud.frame = CGRectMake(DEVICE_WIDTH - 40, 38, 0, 0);
+    }
+    [self.view addSubview:_hud];
+    [_hud startAnimating];
+    
+    _loadNetDataSuccess = NO;
+    
     __weak typeof(self)weakSelf = self;
     
     NSString *url = [NSString stringWithFormat:@"%@&shop_id=%@",GET_MAIL_DETAIL_INFO,self.userInfo.shop_id];
@@ -85,11 +99,13 @@
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"获取店铺详情:%@",result);
+        _loadNetDataSuccess = YES;
+        [_hud stopAnimating];
         MailInfoModel *mail = [[MailInfoModel alloc]initWithDictionary:result];
         self.mallInfo = mail;
         [weakSelf setViewWithModel:mail];
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        
+        _loadNetDataSuccess = NO;
     }];
 }
 
@@ -226,6 +242,9 @@
 
 //跳转访客
 -(void)pushToFangkeVC{
+    if (!_loadNetDataSuccess) {
+        return;
+    }
     GfangkeViewController *ccc = [[GfangkeViewController alloc]init];
     ccc.shop_id = self.userInfo.shop_id;
     ccc.lastPageNavigationHidden = YES;
@@ -236,7 +255,9 @@
 
 //跳转店铺会员
 -(void)pushToHuiyuanVC{
-    
+    if (!_loadNetDataSuccess) {
+        return;
+    }
     [MiddleTools pushToUserListWithObjectId:self.mallInfo.id listType:User_ShopMember forViewController:self lastNavigationHidden:YES updateParmsBlock:^(NSDictionary *params) {
         
     }];
@@ -345,6 +366,9 @@
 
 
 -(void)editBtnClicked:(UIButton *)sender{
+    if (!_loadNetDataSuccess) {
+        return;
+    }
     switch (sender.tag) {
         case 100://发布单品
         {

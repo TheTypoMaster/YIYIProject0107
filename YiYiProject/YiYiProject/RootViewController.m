@@ -131,8 +131,8 @@
     self.viewControllers = [NSArray arrayWithArray:items];
     
     
-    NSArray *normalImages = @[@"gfujin_up",@"ttai_up",@"my_up",@"my_up"];
-    NSArray *selectedImages = @[@"gfujin_down",@"ttai_down",@"my_down",@"my_down"];
+    NSArray *normalImages = @[@"gfujin_up",@"ttai_up",@"gprize_no",@"my_up"];
+    NSArray *selectedImages = @[@"gfujin_down",@"ttai_down",@"gbuy",@"my_down"];
     
     for (int i = 0; i < normalImages.count; i ++) {
         

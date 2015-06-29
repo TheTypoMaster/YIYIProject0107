@@ -657,7 +657,7 @@ typedef enum{
 //单品产品详情
 #define SHARE_PRODUCT_DETAIL @"http://www119.alayy.com/index.php?d=wap&c=products&m=getProductInfo&product_id=%@"
 
-//
+//我的买衣日志列表
 #define MYCLOTHESLOG_LIST @"http://www119.alayy.com/index.php?d=api&c=buylog&m=get_list"
 
 //抽奖相关接口
@@ -665,6 +665,19 @@ typedef enum{
 //获取是否显示取抽奖入口
 
 #define GET_CHOUJIANGSTATE @"http://www119.alayy.com/index.php?d=api&c=prize&m=get_curr&authcode=%@"
+
+//我的奖券列表
+#define MYJIANGQUAN_LIST @"http://www119.alayy.com/index.php?d=api&c=prize&m=get_join_list"
+
+//我的奖券
+#define MYJIANGQUAN_ONE @"http://www119.alayy.com/index.php?d=api&c=prize&m=get_join_info"
+
+//抽奖相关接口
+
+//获取是否显示取抽奖入口
+
+#define GET_CHOUJIANGSTATE @"http://www119.alayy.com/index.php?d=api&c=prize&m=get_curr&authcode=%@"
+
 
 #endif
 

@@ -96,6 +96,11 @@
 
 - (UIView *)viewForHeaderInSection:(NSInteger)section tableView:(UITableView *)tableView{
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 65)];
+    view.userInteractionEnabled = YES;
+    view.tag = section +10;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(ggShouFang:)];
+    [view addGestureRecognizer:tap];
+    
     UILabel *yearLabel = [[UILabel alloc]initWithFrame:CGRectMake(8, 10, 100, 15)];
     yearLabel.font = [UIFont systemFontOfSize:15];
     yearLabel.textColor = [UIColor blackColor];
@@ -136,12 +141,11 @@
     
     UIButton *jiantouBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [jiantouBtn setFrame:CGRectMake(DEVICE_WIDTH-65, 0, 65, 65)];
-    [jiantouBtn addTarget:self action:@selector(ggShouFang:) forControlEvents:UIControlEventTouchUpInside];
-    jiantouBtn.tag = 10+section;
+    jiantouBtn.userInteractionEnabled = NO;
     [view addSubview:jiantouBtn];
     
     
-    if ( !_isOpen[jiantouBtn.tag-10]) {
+    if ( !_isOpen[view.tag-10]) {
         [jiantouBtn setImage:[UIImage imageNamed:@"buy_jiantou_d.png"] forState:UIControlStateNormal];
     }else{
         [jiantouBtn setImage:[UIImage imageNamed:@"buy_jiantou_u.png"] forState:UIControlStateNormal];
@@ -232,9 +236,16 @@
 
 -(void)rightButtonTap:(UIButton *)sender
 {
-    GupLogClothesViewController *ccc = [[GupLogClothesViewController alloc]init];
-    ccc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:ccc animated:YES];
+    if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
+        LoginViewController *login = [[LoginViewController alloc]init];
+        UINavigationController *unVc = [[UINavigationController alloc]initWithRootViewController:login];
+        [self presentViewController:unVc animated:YES completion:nil];
+        return;
+    }else{
+        GupLogClothesViewController *ccc = [[GupLogClothesViewController alloc]init];
+        ccc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:ccc animated:YES];
+    }
 }
 
 //创建没有日志时的提示页面
@@ -419,12 +430,14 @@
 }
 
 
--(void)ggShouFang:(UIButton*)sender{
+-(void)ggShouFang:(UIGestureRecognizer*)ges{
     
     
-    _isOpen[sender.tag-10]=!_isOpen[sender.tag-10];
-    [_tableView reloadData];
+    _isOpen[ges.view.tag-10]=!_isOpen[ges.view.tag-10];
     
+    NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:ges.view.tag-10];
+    [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
     
 }
+
 @end
