@@ -217,8 +217,6 @@
     }
     
     
-    
-    
     return view;
     
 }
