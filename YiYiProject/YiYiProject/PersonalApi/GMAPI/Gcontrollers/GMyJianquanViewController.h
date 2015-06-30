@@ -18,4 +18,9 @@
 
 @property(nonatomic,strong)NSDictionary *infoDic;//奖券详情dic
 
+@property(nonatomic,strong)NSString *shop_Name;//活动地点
+
+//经纬度
+@property(nonatomic,strong)NSString *latitude;
+@property(nonatomic,strong)NSString *longitude;
 @end

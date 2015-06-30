@@ -28,7 +28,7 @@
 @property(nonatomic,strong)NSData *userUploadImagedata;//需要上传的二进制图片
 
 
-
+@property(nonatomic,strong)NSString *jifen;//积分
 
 
 -(void)gScanvcPushWithString:(NSString *)string;

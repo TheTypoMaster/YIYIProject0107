@@ -459,7 +459,6 @@
 		E37A2E2E1A7349C300145608 /* GchooseAdressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E37A2E2D1A7349C300145608 /* GchooseAdressViewController.m */; };
 		E37C330A1AA23F6900B646EC /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E37C33081AA23F6900B646EC /* mapapi.bundle */; };
 		E37EB4F61ABFB50E009F5797 /* GsearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E37EB4F51ABFB50E009F5797 /* GsearchViewController.m */; };
-		E37EB4F81ABFC2BF009F5797 /* ios7_newssearchbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E37EB4F71ABFC2BF009F5797 /* ios7_newssearchbar@2x.png */; };
 		E37EB4FB1ABFC82F009F5797 /* GCustomSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = E37EB4FA1ABFC82F009F5797 /* GCustomSegmentView.m */; };
 		E37EB5701AC035A6009F5797 /* GmyproductsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E37EB56F1AC035A6009F5797 /* GmyproductsListViewController.m */; };
 		E37F842F1B104E780086CBB7 /* GnearbyStoreTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E37F842E1B104E780086CBB7 /* GnearbyStoreTableViewCell.m */; };
@@ -542,6 +541,7 @@
 		E3D0808B1B3EFAB700E4F87D /* GbuyClothTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3D0808A1B3EFAB700E4F87D /* GbuyClothTableViewCell.m */; };
 		E3D2EBFF1AF8DEAA00C09A49 /* gxiaozhu_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3D2EBFE1AF8DEAA00C09A49 /* gxiaozhu_bg@2x.png */; };
 		E3DA29E01AF9F50300FE9B75 /* gqiandaoguanbi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3DA29DF1AF9F50300FE9B75 /* gqiandaoguanbi@2x.png */; };
+		E3E1F4181B42ADD0009DAD25 /* search_fangdajing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3E1F4171B42ADD0009DAD25 /* search_fangdajing@2x.png */; };
 		E3E3E8481A3C6772001A1DD6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E3E8471A3C6772001A1DD6 /* CoreLocation.framework */; };
 		E3E3E84A1A3C6780001A1DD6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E3E8491A3C6780001A1DD6 /* QuartzCore.framework */; };
 		E3E3E84C1A3C678C001A1DD6 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E3E84B1A3C678C001A1DD6 /* OpenGLES.framework */; };
@@ -1337,7 +1337,6 @@
 		E37C33081AA23F6900B646EC /* mapapi.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = mapapi.bundle; sourceTree = "<group>"; };
 		E37EB4F41ABFB50E009F5797 /* GsearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GsearchViewController.h; sourceTree = "<group>"; };
 		E37EB4F51ABFB50E009F5797 /* GsearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GsearchViewController.m; sourceTree = "<group>"; };
-		E37EB4F71ABFC2BF009F5797 /* ios7_newssearchbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ios7_newssearchbar@2x.png"; sourceTree = "<group>"; };
 		E37EB4F91ABFC82F009F5797 /* GCustomSegmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCustomSegmentView.h; sourceTree = "<group>"; };
 		E37EB4FA1ABFC82F009F5797 /* GCustomSegmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCustomSegmentView.m; sourceTree = "<group>"; };
 		E37EB56E1AC035A6009F5797 /* GmyproductsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GmyproductsListViewController.h; sourceTree = "<group>"; };
@@ -1455,6 +1454,7 @@
 		E3D0808A1B3EFAB700E4F87D /* GbuyClothTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GbuyClothTableViewCell.m; sourceTree = "<group>"; };
 		E3D2EBFE1AF8DEAA00C09A49 /* gxiaozhu_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gxiaozhu_bg@2x.png"; sourceTree = "<group>"; };
 		E3DA29DF1AF9F50300FE9B75 /* gqiandaoguanbi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gqiandaoguanbi@2x.png"; sourceTree = "<group>"; };
+		E3E1F4171B42ADD0009DAD25 /* search_fangdajing@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search_fangdajing@2x.png"; sourceTree = "<group>"; };
 		E3E3E8471A3C6772001A1DD6 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		E3E3E8491A3C6780001A1DD6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E3E3E84B1A3C678C001A1DD6 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -3282,6 +3282,7 @@
 		E3996E3E1A5E1DBA00673147 /* Gmodels */ = {
 			isa = PBXGroup;
 			children = (
+				E3E1F4171B42ADD0009DAD25 /* search_fangdajing@2x.png */,
 				E389D77B1B41AA08005DE38F /* gbuy@2x.png */,
 				E389D7791B41A9F1005DE38F /* gprize_no@2x.png */,
 				E3554C8C1B417DB500FE9493 /* mywallet_01@2x.png */,
@@ -3325,7 +3326,6 @@
 				E380ADE51AD4E302008219A0 /* gcamera@2x.png */,
 				E36B2B741AC26D73004A87B3 /* xuanze_down_44_44@2x.png */,
 				E36B2B751AC26D73004A87B3 /* xuanze_up_44_44@2x.png */,
-				E37EB4F71ABFC2BF009F5797 /* ios7_newssearchbar@2x.png */,
 				E3EAA8C31A8782C7008F3183 /* ios7_goahead4032@2x.png */,
 				E3EAA8C41A8782C7008F3183 /* ios7_goback4032@2x.png */,
 				E3EAA8C51A8782C7008F3183 /* ios7_refresh4139@2x.png */,
@@ -3629,6 +3629,7 @@
 				E3B7BE131ACA578100FE8495 /* xiaoxi_down@2x.png in Resources */,
 				13ADF8481AFC9B03001B0D29 /* TPlatCommentCell.xib in Resources */,
 				E3C49A951AFA0A3B003D30B4 /* gqiandao_down@2x.png in Resources */,
+				E3E1F4181B42ADD0009DAD25 /* search_fangdajing@2x.png in Resources */,
 				E3BBA0C01B03476300711C83 /* stianjia@2x.png in Resources */,
 				56D187E41A5C274A006A606D /* dapeishi_bg@2x.png in Resources */,
 				19F7B43D1A67FFA600087BCB /* messages_tableview_background.png in Resources */,
@@ -3654,7 +3655,6 @@
 				564387C31A5ABD3A00499AD3 /* match_segment_unselected_image@2x.png in Resources */,
 				E3ECC7021A7E07D60024A734 /* grzx150_150@2x.png in Resources */,
 				E36B2B771AC26D73004A87B3 /* xuanze_up_44_44@2x.png in Resources */,
-				E37EB4F81ABFC2BF009F5797 /* ios7_newssearchbar@2x.png in Resources */,
 				1391DC611A870673006A2E15 /* t_shoucang@2x.png in Resources */,
 				19F7B4371A67FFA600087BCB /* item_cancel@2x.png in Resources */,
 				E37F84451B1080890086CBB7 /* shouye_bg@2x.png in Resources */,

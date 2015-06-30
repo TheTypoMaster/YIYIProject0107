@@ -8,6 +8,7 @@
 
 #import "GMyJianquanViewController.h"
 #import "GTimeSwitch.h"
+#import "GLeadBuyMapViewController.h"
 
 @interface GMyJianquanViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -73,7 +74,7 @@
     UILabel *contentLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(titleLabel.frame)+10, 0, DEVICE_WIDTH-13-65-13, 50)];
     contentLabel.textColor = [UIColor darkGrayColor];
     contentLabel.font = [UIFont systemFontOfSize:14];
-    contentLabel.numberOfLines = 3;
+    contentLabel.numberOfLines = 2;
     [cell.contentView addSubview:contentLabel];
     
     
@@ -93,8 +94,16 @@
         
     }else if (indexPath.row == 0){//活动名
         contentLabel.text = [prize_info stringValueForKey:@"title"];
+        
     }else if (indexPath.row == 1){//地点
         contentLabel.text = [prize_info stringValueForKey:@"mall_name"];
+        
+        [contentLabel setFrame:CGRectMake(CGRectGetMaxX(titleLabel.frame)+10, 0, DEVICE_WIDTH-13-65-40, 50)];
+        
+        UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(DEVICE_WIDTH-25, 16, 17, 17)];
+        [imv setImage:[UIImage imageNamed:@"gdpnav.png"]];
+        [cell.contentView addSubview:imv];
+        
     }else if (indexPath.row == 2){//奖项
         contentLabel.text = [category_info stringValueForKey:@"category_name"];
     }else if (indexPath.row == 3){//奖品
@@ -130,7 +139,18 @@
 
 
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row == 1) {
+        GLeadBuyMapViewController *ccc = [[GLeadBuyMapViewController alloc]init];
+        ccc.storeName = self.shop_Name;
+        ccc.theType = LEADYOUTYPE_STORE;
+        ccc.coordinate_store = CLLocationCoordinate2DMake([self.latitude floatValue], [self.longitude floatValue]);
+        [self presentViewController:ccc animated:YES completion:^{
+            
+        }];
 
+    }
+}
 
 
 #pragma mark - MyMethod
@@ -144,10 +164,16 @@
     
     __weak typeof(self)bself = self;
     
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
     [ll requestCompletion:^(NSDictionary *result, NSError *erro) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if ([[result stringValueForKey:@"errorcode"]intValue] == 0) {
             self.infoDic = [result dictionaryValueForKey:@"info"];
+            self.latitude = [self.infoDic stringValueForKey:@"latitude"];
+            self.longitude = [self.infoDic stringValueForKey:@"longitude"];
+            NSDictionary *prize_info = [self.infoDic dictionaryValueForKey:@"prize_info"];
+            self.shop_Name = [prize_info stringValueForKey:@"mall_name"];
             [bself creatMyTab];
         }else{
             if ([[result stringValueForKey:@"errorcode"]intValue]>2000) {
