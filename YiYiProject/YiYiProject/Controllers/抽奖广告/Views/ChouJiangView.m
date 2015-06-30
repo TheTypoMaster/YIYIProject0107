@@ -42,12 +42,24 @@
         
         CGFloat imageWidth = [aModel.big_pic_width floatValue];
         CGFloat imageHeight = [aModel.big_pic_height floatValue];
+        
+        //测试
+//        imageWidth = 300;
+//        imageHeight = 500;
+        
         CGFloat realWidth = DEVICE_WIDTH - 20;//显示宽度
         _realHeight = [LTools heightForImageHeight:imageHeight imageWidth:imageWidth originalWidth:realWidth];
         
+        CGFloat maxHeight = DEVICE_HEIGHT - 64 - 49 - 3 - 10 - 54;
+        if (_realHeight > maxHeight) {
+            
+            realWidth = (realWidth * maxHeight) / _realHeight;
+            _realHeight = maxHeight;
+        }
+        
         //右上角关闭按钮
         
-        UIButton *clostBtn = [[UIButton alloc]initWithframe:CGRectMake(DEVICE_WIDTH - 68 - 10, 20 + 3, 68, 54) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"chouJiange_close"] selectedImage:nil target:self action:@selector(clickToClose:)];
+        UIButton *clostBtn = [[UIButton alloc]initWithframe:CGRectMake(DEVICE_WIDTH - 68 - 10, 3, 68, 54) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"chouJiange_close"] selectedImage:nil target:self action:@selector(clickToClose:)];
         [self addSubview:clostBtn];
         clostBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
         
@@ -61,6 +73,11 @@
         UIImageView *bigImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, bigImageBtn.width, _realHeight)];
         [bigImageView l_setImageWithURL:[NSURL URLWithString:aModel.big_pic_url] placeholderImage:DEFAULT_YIJIAYI];
         [bigImageBtn addSubview:bigImageView];
+        
+        //调整位置
+        
+        bigImageBtn.centerX = DEVICE_WIDTH / 2.f;
+        clostBtn.right = bigImageBtn.right;
         
     }
     return self;
