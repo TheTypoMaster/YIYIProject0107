@@ -12,6 +12,8 @@
 #import "GBuyClothLogModel.h"
 #import "GTimeSwitch.h"
 #import "GbuyClothTableViewCell.h"
+#import "MJPhoto.h"
+#import "MJPhotoBrowser.h"
 
 @interface GBuyClothesLogViewController ()<RefreshDelegate,UITableViewDataSource>
 {
@@ -227,6 +229,13 @@
 }
 
 
+
+- (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView{
+    GbuyClothTableViewCell *cell = (GbuyClothTableViewCell*)[_tableView cellForRowAtIndexPath:indexPath];
+    NSArray *arr = _tableView.dataArray[indexPath.section];
+    GBuyClothLogModel *model = arr[indexPath.row];
+    [self tapImage:cell.theImv url:model.pic];
+}
 
 
 #pragma mark - MyMethod
@@ -511,6 +520,30 @@
     
 }
 
+
+- (void)tapImage:(UIImageView *)theImv url:(NSString *)imageUrl
+{
+
+    
+    UIImageView *aImageView = theImv;
+    
+    // 1.封装图片数据
+    NSMutableArray *photos = [NSMutableArray arrayWithCapacity:1];
+    
+    // 替换为中等尺寸图片
+    NSString *url = imageUrl;
+    MJPhoto *photo = [[MJPhoto alloc] init];
+    photo.url = [NSURL URLWithString:url]; // 图片路径
+    photo.srcImageView = aImageView; // 来源于哪个UIImageView
+    [photos addObject:photo];
+    
+    
+    // 2.显示相册
+    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
+    browser.currentPhotoIndex = 0; // 弹出相册时显示的第一张图片是？
+    browser.photos = photos; // 设置所有的图片
+    [browser show];
+}
 
 
 

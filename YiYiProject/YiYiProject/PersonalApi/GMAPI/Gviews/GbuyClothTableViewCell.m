@@ -69,6 +69,7 @@
     picImv.center = uderPicImv.center;
     [picImv l_setImageWithURL:[NSURL URLWithString:theModel.pic] placeholderImage:DEFAULT_YIJIAYI];
     [uderPicImv addSubview:picImv];
+    self.theImv = picImv;
     
     //右边的竖线
 //    UIView *sx = [[UIView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(uderPicImv.frame),0 , 0.5, uderPicImv.frame.size.height)];

@@ -15,7 +15,7 @@
 @interface GbuyClothTableViewCell : UITableViewCell
 
 @property(nonatomic,strong)UILabel *timeLabel;
-@property(nonatomic,strong)GavatarView *picImv;
+@property(nonatomic,strong)UIImageView *theImv;
 
 -(void)loadCustomCellWithModel:(GBuyClothLogModel*)theModel;
 

@@ -202,11 +202,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/ViewControllers/MineViewController.m"
-            timestampString = "457296716.446085"
+            timestampString = "457338765.675457"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "280"
-            endingLineNumber = "280"
+            startingLineNumber = "283"
+            endingLineNumber = "283"
             landmarkName = "-changeTheTitleAndPicArray_dianzhu"
             landmarkType = "5">
          </BreakpointContent>
@@ -489,22 +489,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "YiYiProject/Controllers/T&#x53f0;/Views/TPlatCell.m"
-            timestampString = "449468081.396455"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "170"
-            endingLineNumber = "170"
-            landmarkName = "-setCellWithModel:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "YiYiProject/Controllers/&#x6d88;&#x606f;/ViewControllers/MailMessageViewController.m"
             timestampString = "451301731.490838"
             startingColumnNumber = "9223372036854775807"
@@ -634,7 +618,7 @@
                   moduleName = "YiYiProject"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/gaomeng/Documents/%E5%B7%A5%E4%BD%9C/YIYIProject0107/YiYiProject/YiYiProject/PersonalApi/GMAPI/Gcontrollers/GStorePinpaiViewController.m"
-                  timestampString = "457309236.968485"
+                  timestampString = "457338852.458846"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "260"
@@ -649,7 +633,7 @@
                   moduleName = "YiYiProject"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/gaomeng/Documents/%E5%B7%A5%E4%BD%9C/YIYIProject0107/YiYiProject/YiYiProject/PersonalApi/GMAPI/Gcontrollers/GStorePinpaiViewController.m"
-                  timestampString = "457309236.96862"
+                  timestampString = "457338852.458989"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "260"
@@ -954,7 +938,7 @@
                   moduleName = "YiYiProject"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/gaomeng/Documents/%E5%B7%A5%E4%BD%9C/YIYIProject0107/YiYiProject/YiYiProject/PersonalApi/GMAPI/Gcontrollers/GStorePinpaiViewController.m"
-                  timestampString = "457309236.977886"
+                  timestampString = "457338852.488588"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "792"
@@ -969,7 +953,7 @@
                   moduleName = "YiYiProject"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/gaomeng/Documents/%E5%B7%A5%E4%BD%9C/YIYIProject0107/YiYiProject/YiYiProject/PersonalApi/GMAPI/Gcontrollers/GStorePinpaiViewController.m"
-                  timestampString = "457309236.978062"
+                  timestampString = "457338852.488776"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "792"
@@ -1206,11 +1190,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/ViewControllers/MineViewController.m"
-            timestampString = "457296716.446085"
+            timestampString = "457338765.675457"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "298"
-            endingLineNumber = "298"
+            startingLineNumber = "301"
+            endingLineNumber = "301"
             landmarkName = "-changeTheTitleAndPicArray_shenhe"
             landmarkType = "5">
          </BreakpointContent>
@@ -1302,7 +1286,7 @@
                   moduleName = "YiYiProject"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/gaomeng/Documents/%E5%B7%A5%E4%BD%9C/YIYIProject0107/YiYiProject/YiYiProject/PersonalApi/GMAPI/Gcontrollers/GScanViewController.m"
-                  timestampString = "457309236.990617"
+                  timestampString = "457338852.498006"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "350"
@@ -1317,7 +1301,7 @@
                   moduleName = "YiYiProject"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/gaomeng/Documents/%E5%B7%A5%E4%BD%9C/YIYIProject0107/YiYiProject/YiYiProject/PersonalApi/GMAPI/Gcontrollers/GScanViewController.m"
-                  timestampString = "457309236.990787"
+                  timestampString = "457338852.498318"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "351"
@@ -1638,7 +1622,7 @@
                   moduleName = "YiYiProject"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/gaomeng/Documents/%E5%B7%A5%E4%BD%9C/YIYIProject0107/YiYiProject/YiYiProject/PersonalApi/GMAPI/Gcontrollers/GuserPhoneViewController.m"
-                  timestampString = "457309237.002069"
+                  timestampString = "457338852.506045"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "178"
@@ -1653,7 +1637,7 @@
                   moduleName = "YiYiProject"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/gaomeng/Documents/%E5%B7%A5%E4%BD%9C/YIYIProject0107/YiYiProject/YiYiProject/PersonalApi/GMAPI/Gcontrollers/GuserPhoneViewController.m"
-                  timestampString = "457309237.002259"
+                  timestampString = "457338852.50619"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "178"
@@ -1675,22 +1659,6 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "530"
             endingLineNumber = "530"
-            landmarkName = "-createViewsWithModel:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "YiYiProject/Controllers/T&#x53f0;/ViewControllers/TTaiDetailController.m"
-            timestampString = "455450942.316805"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "646"
-            endingLineNumber = "646"
             landmarkName = "-createViewsWithModel:"
             landmarkType = "5">
          </BreakpointContent>
@@ -2230,7 +2198,7 @@
                   moduleName = "YiYiProject"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/gaomeng/Documents/%E5%B7%A5%E4%BD%9C/YIYIProject0107/YiYiProject/YiYiProject/PersonalApi/GMAPI/Gcontrollers/GStorePinpaiViewController.m"
-                  timestampString = "457309237.017707"
+                  timestampString = "457338852.517534"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "312"
@@ -2245,7 +2213,7 @@
                   moduleName = "YiYiProject"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/gaomeng/Documents/%E5%B7%A5%E4%BD%9C/YIYIProject0107/YiYiProject/YiYiProject/PersonalApi/GMAPI/Gcontrollers/GStorePinpaiViewController.m"
-                  timestampString = "457309237.017887"
+                  timestampString = "457338852.517683"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "312"
@@ -2466,7 +2434,7 @@
                   moduleName = "YiYiProject"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/gaomeng/Documents/%E5%B7%A5%E4%BD%9C/YIYIProject0107/YiYiProject/YiYiProject/PersonalApi/GMAPI/Gcontrollers/GStorePinpaiViewController.m"
-                  timestampString = "457309237.025006"
+                  timestampString = "457338852.522464"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "829"
@@ -2481,7 +2449,7 @@
                   moduleName = "YiYiProject"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/gaomeng/Documents/%E5%B7%A5%E4%BD%9C/YIYIProject0107/YiYiProject/YiYiProject/PersonalApi/GMAPI/Gcontrollers/GStorePinpaiViewController.m"
-                  timestampString = "457309237.025167"
+                  timestampString = "457338852.522644"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "829"
@@ -2766,11 +2734,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/ViewControllers/MineViewController.m"
-            timestampString = "457296898.584461"
+            timestampString = "457338765.675457"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "704"
-            endingLineNumber = "704"
+            startingLineNumber = "707"
+            endingLineNumber = "707"
             landmarkName = "-setUpuserInfoViewWithLoginState:"
             landmarkType = "5">
          </BreakpointContent>
@@ -2782,11 +2750,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/ViewControllers/MineViewController.m"
-            timestampString = "457296898.584461"
+            timestampString = "457338765.675457"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "726"
-            endingLineNumber = "726"
+            startingLineNumber = "729"
+            endingLineNumber = "729"
             landmarkName = "-gQiandao:"
             landmarkType = "5">
          </BreakpointContent>
@@ -2798,11 +2766,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/ViewControllers/MineViewController.m"
-            timestampString = "457296898.584461"
+            timestampString = "457338765.675457"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "373"
-            endingLineNumber = "373"
+            startingLineNumber = "376"
+            endingLineNumber = "376"
             landmarkName = "-cacheUserInfo"
             landmarkType = "5">
          </BreakpointContent>
@@ -2846,11 +2814,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/ViewControllers/MineViewController.m"
-            timestampString = "457296898.584461"
+            timestampString = "457338765.675457"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "737"
-            endingLineNumber = "737"
+            startingLineNumber = "740"
+            endingLineNumber = "740"
             landmarkName = "-gQiandao:"
             landmarkType = "5">
             <Locations>
@@ -2862,11 +2830,11 @@
                   moduleName = "YiYiProject"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/gaomeng/Documents/%E5%B7%A5%E4%BD%9C/YIYIProject0107/YiYiProject/YiYiProject/Controllers/%E6%88%91%E7%9A%84/ViewControllers/MineViewController.m"
-                  timestampString = "457309237.037944"
+                  timestampString = "457338852.531765"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "738"
-                  endingLineNumber = "738"
+                  startingLineNumber = "741"
+                  endingLineNumber = "741"
                   offsetFromSymbolStart = "161">
                </Location>
                <Location
@@ -2877,11 +2845,11 @@
                   moduleName = "YiYiProject"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/gaomeng/Documents/%E5%B7%A5%E4%BD%9C/YIYIProject0107/YiYiProject/YiYiProject/Controllers/%E6%88%91%E7%9A%84/ViewControllers/MineViewController.m"
-                  timestampString = "457309237.038169"
+                  timestampString = "457338852.53191"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "738"
-                  endingLineNumber = "738"
+                  startingLineNumber = "741"
+                  endingLineNumber = "741"
                   offsetFromSymbolStart = "166">
                </Location>
             </Locations>
@@ -3086,11 +3054,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/ViewControllers/MineViewController.m"
-            timestampString = "457296898.584461"
+            timestampString = "457338765.675457"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1357"
-            endingLineNumber = "1357"
+            startingLineNumber = "1360"
+            endingLineNumber = "1360"
             landmarkName = "-gActionSheet:clickedButtonAtIndex:"
             landmarkType = "5">
          </BreakpointContent>
@@ -3557,38 +3525,6 @@
             endingLineNumber = "295"
             landmarkName = "-gDeletTtaiWithIdStr:"
             landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__49-[GEditMyTtaiViewController gDeletTtaiWithIdStr:]_block_invoke"
-                  moduleName = "YiYiProject"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/gaomeng/Documents/%E5%B7%A5%E4%BD%9C/YIYIProject0107/YiYiProject/YiYiProject/PersonalApi/GMAPI/Gcontrollers/GEditMyTtaiViewController.m"
-                  timestampString = "457309237.061484"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "297"
-                  endingLineNumber = "297"
-                  offsetFromSymbolStart = "557">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__49-[GEditMyTtaiViewController gDeletTtaiWithIdStr:]_block_invoke257"
-                  moduleName = "YiYiProject"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/gaomeng/Documents/%E5%B7%A5%E4%BD%9C/YIYIProject0107/YiYiProject/YiYiProject/PersonalApi/GMAPI/Gcontrollers/GEditMyTtaiViewController.m"
-                  timestampString = "457309237.06161"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "297"
-                  endingLineNumber = "297"
-                  offsetFromSymbolStart = "67">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3821,28 +3757,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GmyTtaiViewController.m"
-            timestampString = "454087875.111855"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "70"
-            endingLineNumber = "70"
-            landmarkName = "@implementation GmyTtaiViewController"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/ViewControllers/MineViewController.m"
-            timestampString = "457296898.584461"
+            timestampString = "457338765.675457"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "613"
-            endingLineNumber = "613"
+            startingLineNumber = "616"
+            endingLineNumber = "616"
             landmarkName = "-creatTableViewHeaderView"
             landmarkType = "5">
          </BreakpointContent>
@@ -3854,11 +3774,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/ViewControllers/MineViewController.m"
-            timestampString = "457296898.584461"
+            timestampString = "457338765.675457"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "657"
-            endingLineNumber = "657"
+            startingLineNumber = "660"
+            endingLineNumber = "660"
             landmarkName = "-creatTableViewHeaderView"
             landmarkType = "5">
          </BreakpointContent>
@@ -3918,11 +3838,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/ViewControllers/MineViewController.m"
-            timestampString = "457296898.584461"
+            timestampString = "457338765.675457"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "691"
-            endingLineNumber = "691"
+            startingLineNumber = "694"
+            endingLineNumber = "694"
             landmarkName = "-ttaiClicked"
             landmarkType = "5">
          </BreakpointContent>
@@ -4062,7 +3982,7 @@
                   moduleName = "YiYiProject"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/gaomeng/Documents/%E5%B7%A5%E4%BD%9C/YIYIProject0107/YiYiProject/YiYiProject/Controllers/%E9%A6%96%E9%A1%B5/ViewControllers/HomeClothController.m"
-                  timestampString = "457309237.129399"
+                  timestampString = "457338852.556393"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "272"
@@ -4077,7 +3997,7 @@
                   moduleName = "YiYiProject"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/gaomeng/Documents/%E5%B7%A5%E4%BD%9C/YIYIProject0107/YiYiProject/YiYiProject/Controllers/%E9%A6%96%E9%A1%B5/ViewControllers/HomeClothController.m"
-                  timestampString = "457309237.129533"
+                  timestampString = "457338852.556537"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "272"
@@ -4126,11 +4046,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/ViewControllers/MineViewController.m"
-            timestampString = "457296716.446085"
+            timestampString = "457338765.675457"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "302"
-            endingLineNumber = "302"
+            startingLineNumber = "305"
+            endingLineNumber = "305"
             landmarkName = "-changeTheTitleAndPicArray_shenhe"
             landmarkType = "5">
          </BreakpointContent>
@@ -4158,7 +4078,7 @@
                   moduleName = "YiYiProject"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/gaomeng/Documents/%E5%B7%A5%E4%BD%9C/YIYIProject0107/YiYiProject/YiYiProject/PersonalApi/GMAPI/Gcontrollers/GupActivityViewController.m"
-                  timestampString = "457309237.133203"
+                  timestampString = "457338852.558416"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "364"
@@ -4173,7 +4093,7 @@
                   moduleName = "YiYiProject"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/gaomeng/Documents/%E5%B7%A5%E4%BD%9C/YIYIProject0107/YiYiProject/YiYiProject/PersonalApi/GMAPI/Gcontrollers/GupActivityViewController.m"
-                  timestampString = "457309237.133336"
+                  timestampString = "457338852.558566"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "364"
@@ -4382,22 +4302,6 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/ViewControllers/MineViewController.m"
-            timestampString = "457262659.832203"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "121"
-            endingLineNumber = "121"
-            landmarkName = "-viewWillAppear:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/ViewControllers/MineViewController.m"
             timestampString = "457293149.689114"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
@@ -4430,11 +4334,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/ViewControllers/MineViewController.m"
-            timestampString = "457296898.584461"
+            timestampString = "457338765.675457"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "426"
-            endingLineNumber = "426"
+            startingLineNumber = "429"
+            endingLineNumber = "429"
             landmarkName = "-GgetUserInfo"
             landmarkType = "5">
          </BreakpointContent>
@@ -4446,11 +4350,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/ViewControllers/MineViewController.m"
-            timestampString = "457296898.584461"
+            timestampString = "457338765.675457"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1307"
-            endingLineNumber = "1307"
+            startingLineNumber = "1310"
+            endingLineNumber = "1310"
             landmarkName = "-gHideTabBar:"
             landmarkType = "5">
             <Locations>
@@ -4462,11 +4366,11 @@
                   moduleName = "YiYiProject"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/gaomeng/Documents/%E5%B7%A5%E4%BD%9C/YIYIProject0107/YiYiProject/YiYiProject/Controllers/%E6%88%91%E7%9A%84/ViewControllers/MineViewController.m"
-                  timestampString = "457309237.183498"
+                  timestampString = "457338852.564876"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1313"
-                  endingLineNumber = "1313"
+                  startingLineNumber = "1316"
+                  endingLineNumber = "1316"
                   offsetFromSymbolStart = "48">
                </Location>
                <Location
@@ -4477,11 +4381,11 @@
                   moduleName = "YiYiProject"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/gaomeng/Documents/%E5%B7%A5%E4%BD%9C/YIYIProject0107/YiYiProject/YiYiProject/Controllers/%E6%88%91%E7%9A%84/ViewControllers/MineViewController.m"
-                  timestampString = "457309237.183718"
+                  timestampString = "457338852.56502"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1313"
-                  endingLineNumber = "1313"
+                  startingLineNumber = "1316"
+                  endingLineNumber = "1316"
                   offsetFromSymbolStart = "15">
                </Location>
             </Locations>
@@ -4494,11 +4398,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/ViewControllers/MineViewController.m"
-            timestampString = "457296898.584461"
+            timestampString = "457338765.675457"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "370"
-            endingLineNumber = "370"
+            startingLineNumber = "373"
+            endingLineNumber = "373"
             landmarkName = "-cacheUserInfo"
             landmarkType = "5">
             <Locations>
@@ -4510,26 +4414,26 @@
                   moduleName = "YiYiProject"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/gaomeng/Documents/%E5%B7%A5%E4%BD%9C/YIYIProject0107/YiYiProject/YiYiProject/Controllers/%E6%88%91%E7%9A%84/ViewControllers/MineViewController.m"
-                  timestampString = "457309237.185565"
+                  timestampString = "457338852.565736"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "371"
-                  endingLineNumber = "371"
+                  startingLineNumber = "374"
+                  endingLineNumber = "374"
                   offsetFromSymbolStart = "1903">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__35-[MineViewController cacheUserInfo]_block_invoke222"
+                  symbolName = "__35-[MineViewController cacheUserInfo]_block_invoke224"
                   moduleName = "YiYiProject"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/gaomeng/Documents/%E5%B7%A5%E4%BD%9C/YIYIProject0107/YiYiProject/YiYiProject/Controllers/%E6%88%91%E7%9A%84/ViewControllers/MineViewController.m"
-                  timestampString = "457309237.185718"
+                  timestampString = "457338852.565883"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "371"
-                  endingLineNumber = "371"
+                  startingLineNumber = "374"
+                  endingLineNumber = "374"
                   offsetFromSymbolStart = "113">
                </Location>
             </Locations>
@@ -4606,11 +4510,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/ViewControllers/MineViewController.m"
-            timestampString = "457296898.584461"
+            timestampString = "457338765.675457"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "408"
-            endingLineNumber = "408"
+            startingLineNumber = "411"
+            endingLineNumber = "411"
             landmarkName = "-GgetUserInfo"
             landmarkType = "5">
          </BreakpointContent>
@@ -4750,11 +4654,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GBuyClothesLogViewController.m"
-            timestampString = "457309435.248246"
+            timestampString = "457335132.162047"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "100"
-            endingLineNumber = "100"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
             landmarkName = "-viewForHeaderInSection:tableView:"
             landmarkType = "5">
          </BreakpointContent>
@@ -4766,11 +4670,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GBuyClothesLogViewController.m"
-            timestampString = "457309435.248246"
+            timestampString = "457335132.162047"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "122"
-            endingLineNumber = "122"
+            startingLineNumber = "124"
+            endingLineNumber = "124"
             landmarkName = "-viewForHeaderInSection:tableView:"
             landmarkType = "5">
          </BreakpointContent>
@@ -4798,11 +4702,11 @@
                   moduleName = "YiYiProject"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/gaomeng/Documents/%E5%B7%A5%E4%BD%9C/YIYIProject0107/YiYiProject/YiYiProject/PersonalApi/GMAPI/Gcontrollers/GupLogClothesViewController.m"
-                  timestampString = "457309237.200423"
+                  timestampString = "457338852.571961"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "378"
-                  endingLineNumber = "378"
+                  startingLineNumber = "381"
+                  endingLineNumber = "381"
                   offsetFromSymbolStart = "41">
                </Location>
                <Location
@@ -4813,11 +4717,11 @@
                   moduleName = "YiYiProject"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/gaomeng/Documents/%E5%B7%A5%E4%BD%9C/YIYIProject0107/YiYiProject/YiYiProject/PersonalApi/GMAPI/Gcontrollers/GupLogClothesViewController.m"
-                  timestampString = "457309237.200554"
+                  timestampString = "457338852.572081"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "378"
-                  endingLineNumber = "378"
+                  startingLineNumber = "381"
+                  endingLineNumber = "381"
                   offsetFromSymbolStart = "15">
                </Location>
             </Locations>
@@ -4830,11 +4734,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GBuyClothesLogViewController.m"
-            timestampString = "457309435.248246"
+            timestampString = "457335132.162047"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "426"
-            endingLineNumber = "426"
+            startingLineNumber = "435"
+            endingLineNumber = "435"
             landmarkName = "-cleanTheInfo"
             landmarkType = "5">
          </BreakpointContent>
@@ -4862,11 +4766,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GBuyClothesLogViewController.m"
-            timestampString = "457309435.248246"
+            timestampString = "457335132.162047"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
@@ -4878,11 +4782,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GBuyClothesLogViewController.m"
-            timestampString = "457309435.248246"
+            timestampString = "457335132.162047"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "143"
-            endingLineNumber = "143"
+            startingLineNumber = "145"
+            endingLineNumber = "145"
             landmarkName = "-viewForHeaderInSection:tableView:"
             landmarkType = "5">
          </BreakpointContent>
@@ -4990,11 +4894,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/Controllers/&#x6211;&#x7684;/ViewControllers/MineViewController.m"
-            timestampString = "457296898.584461"
+            timestampString = "457338765.675457"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "391"
-            endingLineNumber = "391"
+            startingLineNumber = "394"
+            endingLineNumber = "394"
             landmarkName = "-GgetUserInfo"
             landmarkType = "5">
          </BreakpointContent>
@@ -5022,12 +4926,124 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GBuyClothesLogViewController.m"
-            timestampString = "457309435.248246"
+            timestampString = "457335132.162047"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "226"
-            endingLineNumber = "226"
+            startingLineNumber = "228"
+            endingLineNumber = "228"
             landmarkName = "-removeSelf:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/Controllers/T&#x53f0;/ViewControllers/ZanListViewController.m"
+            timestampString = "457339198.004993"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "307"
+            endingLineNumber = "307"
+            landmarkName = "-zanTTaiDetail:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/Controllers/T&#x53f0;/ViewControllers/ZanListViewController.m"
+            timestampString = "457339198.004993"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "287"
+            endingLineNumber = "287"
+            landmarkName = "-zanTTaiDetail:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/Controllers/T&#x53f0;/ViewControllers/ZanListViewController.m"
+            timestampString = "457339042.197831"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "229"
+            endingLineNumber = "229"
+            landmarkName = "-clickToCencern:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/Controllers/T&#x53f0;/ViewControllers/ZanListViewController.m"
+            timestampString = "457339198.004993"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "257"
+            endingLineNumber = "257"
+            landmarkName = "-clickToCencern:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__40-[ZanListViewController clickToCencern:]_block_invoke"
+                  moduleName = "YiYiProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/gaomeng/Documents/%E5%B7%A5%E4%BD%9C/YIYIProject0107/YiYiProject/YiYiProject/Controllers/T%E5%8F%B0/ViewControllers/ZanListViewController.m"
+                  timestampString = "457339120.049248"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "253"
+                  endingLineNumber = "253"
+                  offsetFromSymbolStart = "229">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__40-[ZanListViewController clickToCencern:]_block_invoke208"
+                  moduleName = "YiYiProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/gaomeng/Documents/%E5%B7%A5%E4%BD%9C/YIYIProject0107/YiYiProject/YiYiProject/Controllers/T%E5%8F%B0/ViewControllers/ZanListViewController.m"
+                  timestampString = "457339120.049435"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "253"
+                  endingLineNumber = "253"
+                  offsetFromSymbolStart = "74">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YiYiProject/Controllers/T&#x53f0;/ViewControllers/ZanListViewController.m"
+            timestampString = "457339158.045492"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "244"
+            endingLineNumber = "244"
+            landmarkName = "-clickToCencern:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -243,12 +243,19 @@
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"result %@",result);
+        if (self.listType == User_MyConcernList || self.listType == User_MyFansList) {
+            
+            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_MINEVC_THREENUMLABEL object:nil];
+        }
         
 //        ZanUserModel *aModel = [_table.dataArray objectAtIndex:userId];
         
         aModel.flag = sender.selected ? 0 : 1;
 
         [weakTable reloadData];
+        
+        
+        
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
@@ -362,6 +369,9 @@
         }
         
         [weakTable reloadData:temp pageSize:L_PAGE_SIZE];
+        
+        
+        
         
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {

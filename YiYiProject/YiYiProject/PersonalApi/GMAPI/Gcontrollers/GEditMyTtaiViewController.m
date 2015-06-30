@@ -280,7 +280,7 @@
     LTools *cc = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        
+        [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_MINEVC_THREENUMLABEL object:nil];
         NSLog(@"success %@",result);
         if ([[result stringValueForKey:@"errorcode"]intValue] == 0) {
             [GMAPI showAutoHiddenMBProgressWithText:[result stringValueForKey:@"msg"] addToView:self.view];

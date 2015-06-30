@@ -270,7 +270,7 @@
                                    constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
                                    {
                                        
-                                       UIImage *aImage = [self scaleImage:_chooseImage toScale:0.5];;
+                                       UIImage *aImage = [self scaleImage:_chooseImage toScale:0];;
                                        
                                        //按比例缩放
                                        
@@ -440,6 +440,13 @@
 //按比例缩放
 -(UIImage *)scaleImage:(UIImage *)image toScale:(float)scaleSize
 {
+    
+    if (image.size.width>750) {
+        scaleSize = 750.0/image.size.width;
+    }else{
+        scaleSize = 1;
+    }
+    
     UIGraphicsBeginImageContext(CGSizeMake(image.size.width*scaleSize,image.size.height*scaleSize));
     [image drawInRect:CGRectMake(0, 0, image.size.width * scaleSize, image.size.height *scaleSize)];
     UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();

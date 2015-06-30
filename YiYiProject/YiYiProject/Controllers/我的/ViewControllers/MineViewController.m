@@ -123,7 +123,7 @@ typedef enum{
     if (_isChangeBanner) {
         
     }else{
-        [self GgetUserInfo];//更新用户数据
+//        [self GgetUserInfo];//更新用户数据
     }
     
     _isChangeBanner = NO;
@@ -241,6 +241,9 @@ typedef enum{
     
     //从后台转到前台更新用户数据
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GgetUserInfo) name:NOTIFICATION_APPENTERFOREGROUND object:nil];
+    
+    //粉丝 关注 T台 上面的三个数字发生变化的时候
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GgetUserInfo) name:NOTIFICATION_MINEVC_THREENUMLABEL object:nil];
 }
 
 
@@ -1361,6 +1364,12 @@ typedef enum{
 //按比例缩放
 -(UIImage *)scaleImage:(UIImage *)image toScale:(float)scaleSize
 {
+    if (image.size.width>750) {
+        scaleSize = 750.0/image.size.width;
+    }else{
+        scaleSize = 1;
+    }
+    
     UIGraphicsBeginImageContext(CGSizeMake(image.size.width*scaleSize,image.size.height*scaleSize));
     [image drawInRect:CGRectMake(0, 0, image.size.width * scaleSize, image.size.height *scaleSize)];
     UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
