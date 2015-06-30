@@ -58,23 +58,23 @@
     UIView *uderPicImv = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 150, 150)];
     [picInfoView addSubview:uderPicImv];
     
-    UIImageView *picImv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 150, 150)];
+    self.theImv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 150, 150)];
     CGFloat p_width = [theModel.width floatValue];
     CGFloat p_height = [theModel.height floatValue];
     if (p_width>p_height) {
-        [picImv setFrame:CGRectMake(0, 0, 150, 150.0*p_height/p_width)];
+        [self.theImv setFrame:CGRectMake(0, 0, 150, 150.0*p_height/p_width)];
     }else{
-        [picImv setFrame:CGRectMake(0, 0, 150.0*p_width/p_height, 150)];
+        [self.theImv setFrame:CGRectMake(0, 0, 150.0*p_width/p_height, 150)];
     }
-    picImv.center = uderPicImv.center;
-    [picImv l_setImageWithURL:[NSURL URLWithString:theModel.pic] placeholderImage:DEFAULT_YIJIAYI];
-    [uderPicImv addSubview:picImv];
-    self.theImv = picImv;
+    self.theImv.center = uderPicImv.center;
+    [self.theImv l_setImageWithURL:[NSURL URLWithString:theModel.pic] placeholderImage:DEFAULT_YIJIAYI];
+    [uderPicImv addSubview:self.theImv];
+    
     
     //右边的竖线
-//    UIView *sx = [[UIView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(uderPicImv.frame),0 , 0.5, uderPicImv.frame.size.height)];
-//    sx.backgroundColor = RGBCOLOR(220, 221, 223);
-//    [picInfoView addSubview:sx];
+    UIView *sx = [[UIView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(uderPicImv.frame),0 , 0.5, uderPicImv.frame.size.height)];
+    sx.backgroundColor = RGBCOLOR(220, 221, 223);
+    [picInfoView addSubview:sx];
     
     //文字信息
     //品牌
