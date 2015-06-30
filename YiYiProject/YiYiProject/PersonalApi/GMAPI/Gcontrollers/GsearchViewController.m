@@ -161,9 +161,17 @@
     [self.view addSubview:_searchHeaderView];
     
     //搜索条图片
-    UIImageView *imgbc=[[UIImageView alloc]initWithFrame:CGRectMake(6, 6, self.view.bounds.size.width-60, 56/2)];
-    imgbc.image=[UIImage imageNamed:@"ios7_newssearchbar.png"];
-    [_searchHeaderView addSubview:imgbc];
+    UIView *kuang=[[UIView alloc]initWithFrame:CGRectMake(6, 6, self.view.bounds.size.width-60, 56/2)];
+    kuang.layer.borderWidth = 0.5f;
+    kuang.layer.cornerRadius = 4;
+    kuang.layer.borderColor = [RGBCOLOR(182, 182, 182)CGColor];
+    [_searchHeaderView addSubview:kuang];
+    
+    //放大镜
+    UIImageView *fdj = [[UIImageView alloc]initWithFrame:CGRectMake(8, 8, 13, 13)];
+    [fdj setImage:[UIImage imageNamed:@"search_fangdajing.png"]];
+//    fdj.backgroundColor = [UIColor orangeColor];
+    [kuang addSubview:fdj];
     
     _searchTextField=[[UITextField alloc]initWithFrame:CGRectMake(30+6,MY_MACRO_NAME? 6:12,self.view.bounds.size.width-90,58/2)];
     _searchTextField.delegate=self;
@@ -185,7 +193,7 @@
     
     
     //分割线
-    UIView *selectview=[[UIView alloc]initWithFrame:CGRectMake(0,CGRectGetMaxY(imgbc.frame)+5, DEVICE_WIDTH, 1)];
+    UIView *selectview=[[UIView alloc]initWithFrame:CGRectMake(0,CGRectGetMaxY(kuang.frame)+5, DEVICE_WIDTH, 1)];
     selectview.backgroundColor=RGBCOLOR(235, 235, 235);
     [_searchHeaderView addSubview:selectview];
     

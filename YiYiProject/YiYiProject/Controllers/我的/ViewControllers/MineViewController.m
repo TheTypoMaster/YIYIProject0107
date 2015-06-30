@@ -457,6 +457,7 @@ typedef enum{
         }
         self.userNameLabel.text = [NSString stringWithFormat:@"昵称:%@",name];
         self.userScoreLabel.text = [NSString stringWithFormat:@"积分:%@",score];
+        self.jifen = score;
         
         user_bannerUrl = [dic stringValueForKey:@"user_banner"];
         UIImage *pim;
@@ -1143,7 +1144,7 @@ typedef enum{
             GMyWalletViewController *ccc = [[GMyWalletViewController alloc]init];
             ccc.hidesBottomBarWhenPushed = YES;
             ccc.lastPageNavigationHidden = YES;
-            ccc.jifen = self.userScoreLabel.text;
+            ccc.jifen = self.jifen;
             [self.navigationController pushViewController:ccc animated:YES];
             
         }
