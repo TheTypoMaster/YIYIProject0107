@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>B29A95ED-DEB5-4634-B629-947DDE037691</string>
+	<key>IDESourceControlProjectName</key>
+	<string>YiYiProject</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>B17D34269DFBBFFD1B28E5067E72F14F24527419</key>
+		<string>https://github.com/TeamOfFBAuto/YIYIProject0107.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>YiYiProject/YiYiProject.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>B17D34269DFBBFFD1B28E5067E72F14F24527419</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/TeamOfFBAuto/YIYIProject0107.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>B17D34269DFBBFFD1B28E5067E72F14F24527419</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>B17D34269DFBBFFD1B28E5067E72F14F24527419</string>
+			<key>IDESourceControlWCCName</key>
+			<string>YIYIProject0107</string>
+		</dict>
+	</array>
+</dict>
+</plist>

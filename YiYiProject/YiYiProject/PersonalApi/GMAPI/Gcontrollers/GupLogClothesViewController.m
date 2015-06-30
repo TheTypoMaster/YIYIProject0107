@@ -220,23 +220,26 @@
     
     _finishBtn.userInteractionEnabled = NO;
     
-    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
     
     if (!_chooseImage) {
         [GMAPI showAutoHiddenMBProgressWithText:@"请添加图片" addToView:self.view];
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        _finishBtn.userInteractionEnabled = YES;
         return;
     }
     
     for (UITextField *tf in _contentTfArray) {
         if (tf.text.length == 0 || !tf.text) {
             [GMAPI showAutoHiddenMBProgressWithText:@"请完善信息" addToView:self.view];
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            _finishBtn.userInteractionEnabled = YES;
             return;
         }
     }
     
+    
+    
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     UITextField *tf0 = _contentTfArray[0];
     UITextField *tf1 = _contentTfArray[1];
@@ -313,7 +316,7 @@
                                        }
                                        
                                        
-                                       _finishBtn.userInteractionEnabled = YES;
+                                       
                                        
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {

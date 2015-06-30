@@ -4702,11 +4702,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GupLogClothesViewController.m"
-            timestampString = "457301611.864941"
+            timestampString = "457331096.64519"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "288"
-            endingLineNumber = "288"
+            startingLineNumber = "291"
+            endingLineNumber = "291"
             landmarkName = "-uploadBuyClothesLog"
             landmarkType = "5">
          </BreakpointContent>
@@ -4718,11 +4718,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GupLogClothesViewController.m"
-            timestampString = "457301611.864941"
+            timestampString = "457331096.64519"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "260"
-            endingLineNumber = "260"
+            startingLineNumber = "263"
+            endingLineNumber = "263"
             landmarkName = "-uploadBuyClothesLog"
             landmarkType = "5">
          </BreakpointContent>
@@ -4734,11 +4734,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GupLogClothesViewController.m"
-            timestampString = "457301611.864941"
+            timestampString = "457331096.64519"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "320"
-            endingLineNumber = "320"
+            startingLineNumber = "323"
+            endingLineNumber = "323"
             landmarkName = "-uploadBuyClothesLog"
             landmarkType = "5">
          </BreakpointContent>
@@ -4782,11 +4782,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GupLogClothesViewController.m"
-            timestampString = "457301611.864941"
+            timestampString = "457331096.64519"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "375"
-            endingLineNumber = "375"
+            startingLineNumber = "378"
+            endingLineNumber = "378"
             landmarkName = "-chooseBuyTime"
             landmarkType = "5">
             <Locations>
