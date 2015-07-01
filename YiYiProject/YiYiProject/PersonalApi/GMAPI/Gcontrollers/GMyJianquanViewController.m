@@ -158,8 +158,6 @@
     
     NSString *url = [NSString stringWithFormat:@"%@&authcode=%@&prize_id=%@",MYJIANGQUAN_ONE,[GMAPI getAuthkey],self.jiangQuanId];
     
-//    url = @"http://www119.alayy.com/index.php?d=api&c=prize&m=get_join_info&authcode=US5SK1ApBeNV7gabVuZci1L3V7UE8Qf2Ay5dbFcyBjEBMgAyBmMHMFFtBDNXOg19BTICOQ==&prize_id=1";
-    
     LTools *ll = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     
     __weak typeof(self)bself = self;

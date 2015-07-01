@@ -260,7 +260,7 @@
     NSString *buy_time = _buyTimeLabel.text;
     NSString *buy_place = tf4.text;
     
-    NSString *url = @"http://www119.alayy.com/index.php?d=api&c=buylog&m=add";
+    NSString *url = MYCLOTHESLOG_UPLOAD;
     NSDictionary *dataDic = @{
                               @"authcode":[GMAPI getAuthkey],
                               @"brand":brand,
