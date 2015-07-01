@@ -1012,6 +1012,9 @@
     
     //提示
     UILabel *tishiLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, _view2.frame.size.height-50, DEVICE_WIDTH-24, 20)];
+    if (DEVICE_WIDTH == 320) {
+        [tishiLabel setFrame:CGRectMake(15, _view2.frame.size.height - 25, DEVICE_WIDTH-24, 20)];
+    }
     tishiLabel.font = [UIFont systemFontOfSize:13];
     tishiLabel.textColor = [UIColor grayColor];
     tishiLabel.text = @"提示：选择图片完成后点击图片进行删除操作。";

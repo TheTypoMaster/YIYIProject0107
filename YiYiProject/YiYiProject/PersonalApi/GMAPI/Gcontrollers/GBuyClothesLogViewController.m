@@ -129,7 +129,7 @@
         CGFloat onePrice = [model.price floatValue];
         tot += onePrice;
     }
-    NSMutableAttributedString *tt = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"消费总额 %.2f元",tot]];
+    NSMutableAttributedString *tt = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"消费总额 %.0f元",tot]];
     [tt addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0,5)];
     [tt addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:NSMakeRange(0,5)];
     [tt addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(5, tt.length-5)];
@@ -288,6 +288,7 @@
     tLabel.text = @"你还没有上传你的衣服哦";
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.layer.cornerRadius = 4;
     [btn setFrame:CGRectMake(35, CGRectGetMaxY(tLabel.frame)+20, DEVICE_WIDTH-70, 35)];
     [btn setTitle:@"马上上传" forState:UIControlStateNormal];
     [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

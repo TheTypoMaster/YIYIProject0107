@@ -27,6 +27,8 @@
     UIDatePicker *_datePick;
     
     UIButton *_finishBtn;
+    
+    CGSize _theSize;
 }
 @end
 
@@ -117,6 +119,13 @@
             [_finishBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [_finishBtn addTarget:self action:@selector(uploadBuyClothesLog) forControlEvents:UIControlEventTouchUpInside];
             [theView addSubview:_finishBtn];
+            
+            _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH, CGRectGetMaxY(theView.frame)+70);
+            
+            _theSize = _mainScrollView.contentSize;
+            
+            NSLog(@"哈哈%f",_mainScrollView.contentSize.height);
+            
         }else if (i == 3){//购买时间
             tf.text = @"123";
             tf.hidden = YES;
@@ -400,8 +409,9 @@
         NSString *confromTimespStr = [formatter stringFromDate:confromTimesp];
         _buyTimeLabel.text = confromTimespStr;
         
-        [_mainScrollView setContentSize:CGSizeMake(DEVICE_WIDTH, 1000)];
-        
+        CGSize size = _theSize;
+        size.height += 300;
+        [_mainScrollView setContentSize:size];
         [self gShou];
     }];
     
@@ -418,7 +428,9 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     
-    _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH, 1000);
+    CGSize size = _theSize;
+    size.height += 300;
+    [_mainScrollView setContentSize:size];
     
     [self gmbb];
     
@@ -431,7 +443,7 @@
         [tf resignFirstResponder];
     }
     
-    _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH, 500);
+    [_mainScrollView setContentSize:_theSize];
 
     [self gmbb];
 }
