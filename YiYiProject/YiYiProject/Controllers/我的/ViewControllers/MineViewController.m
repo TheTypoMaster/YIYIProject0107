@@ -362,9 +362,12 @@ typedef enum{
         pim = [UIImage imageNamed:@"my_bg.png"];
     }
     
-    [_backView.imageView sd_setImageWithURL:[NSURL URLWithString:user_bannerUrl] placeholderImage:pim completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        [GMAPI setUserBannerImageWithData:UIImagePNGRepresentation(_backView.imageView.image)];
-    }];
+    if (user_bannerUrl.length>0) {
+        [_backView.imageView sd_setImageWithURL:[NSURL URLWithString:user_bannerUrl] placeholderImage:pim completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            [GMAPI setUserBannerImageWithData:UIImagePNGRepresentation(_backView.imageView.image)];
+        }];
+    }
+    
     
     
     NSString *userFaceUrl = [NSString stringWithFormat:@"%@",_userInfo.photo];
@@ -466,9 +469,12 @@ typedef enum{
         }else{
             pim = [UIImage imageNamed:@"my_bg.png"];
         }
-        [_backView.imageView sd_setImageWithURL:[NSURL URLWithString:user_bannerUrl] placeholderImage:pim completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-            [GMAPI setUserBannerImageWithData:UIImagePNGRepresentation(_backView.imageView.image)];
-        }];
+        if (user_bannerUrl.length>0) {
+            [_backView.imageView sd_setImageWithURL:[NSURL URLWithString:user_bannerUrl] placeholderImage:pim completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                [GMAPI setUserBannerImageWithData:UIImagePNGRepresentation(_backView.imageView.image)];
+            }];
+        }
+        
         
         
         NSString *userFaceUrl = [NSString stringWithFormat:@"%@",[dic stringValueForKey:@"photo"]];
@@ -549,7 +555,7 @@ typedef enum{
     
     
     
-    
+    [_backView.imageView setImage:[UIImage imageNamed:@"my_bg.png"]];
 
     
     _theBlackBackView = [[UIImageView alloc]initWithFrame:_backView.imageView.bounds];

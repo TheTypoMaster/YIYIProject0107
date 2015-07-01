@@ -50,6 +50,8 @@
     UILabel *_endTime;//结束时间
     NSDate *_date_end;//结束时间
     
+    CGSize _theSize;
+    CGSize _theSize_haveKeyboard;
     
     
 }
@@ -107,7 +109,7 @@
     
     //主scrollview
     _mainScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT-15)];
-    _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH, DEVICE_HEIGHT+58+50+15+44+50+50);
+    
     
     _mainScrollView.backgroundColor = RGBCOLOR(242, 242, 242);
     [self.view addSubview:_mainScrollView];
@@ -305,45 +307,26 @@
     
     
     
-    _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH, DEVICE_HEIGHT+58+50+15+44+50+50);
+    _mainScrollView.contentSize = _theSize;
     
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     
     NSLog(@"%ld",(long)textField.tag);
-    _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH, DEVICE_HEIGHT+58+50+15+44+50+50);
+    _mainScrollView.contentSize = _theSize_haveKeyboard;
     _mainScrollView.userInteractionEnabled = YES;
     
-    if (textField.tag == 202) {//原价
-        if (_mainScrollView.contentOffset.y<58) {
-            _mainScrollView.contentOffset = CGPointMake(0, 58);
-        }
-        NSLog(@"------%@",textField.text);
+
+    
+    
+    NSInteger tt = textField.tag - 200;
+    if (_mainScrollView.contentOffset.y < tt * 51) {
+        [_mainScrollView setContentOffset:CGPointMake(0, tt*51) animated:YES];
     }
-    if (textField.tag == 203) {//现价
-        if (_mainScrollView.contentOffset.y<58) {
-            _mainScrollView.contentOffset = CGPointMake(0, 58);
-        }
-    }else if (textField.tag == 204){//折扣
-        if (_mainScrollView.contentOffset.y<108) {
-            _mainScrollView.contentOffset = CGPointMake(0, 108);
-        }
-        
-    }else if (textField.tag == 205){//标签
-        if (_mainScrollView.contentOffset.y<158) {
-            _mainScrollView.contentOffset = CGPointMake(0, 158);
-        }
-    }else if (textField.tag == 206){//类型
-        if (_mainScrollView.contentOffset.y<208) {
-            _mainScrollView.contentOffset = CGPointMake(0, 208);
-        }
-        
-    }else if (textField.tag == 207){//性别
-        if (_mainScrollView.contentOffset.y<258) {
-            _mainScrollView.contentOffset = CGPointMake(0, 258);
-        }
-    }
+    
+    
+    
 }
 
 //空白点击手键盘end======
@@ -363,6 +346,12 @@
     [tijiaoBtn addTarget:self action:@selector(tijiao) forControlEvents:UIControlEventTouchUpInside];
     
     [_mainScrollView addSubview:tijiaoBtn];
+    
+    
+    _theSize = CGSizeMake(DEVICE_WIDTH, CGRectGetMaxY(tijiaoBtn.frame)+60);
+    _theSize_haveKeyboard = CGSizeMake(DEVICE_WIDTH, CGRectGetMaxY(tijiaoBtn.frame)+60+300);
+    _mainScrollView.contentSize = _theSize;
+    
 }
 
 

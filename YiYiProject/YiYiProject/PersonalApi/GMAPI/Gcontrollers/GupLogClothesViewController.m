@@ -29,6 +29,7 @@
     UIButton *_finishBtn;
     
     CGSize _theSize;
+    CGSize _theSize_haveKeyBoard;
 }
 @end
 
@@ -82,6 +83,7 @@
         
         
         UITextField *tf = [[UITextField alloc]initWithFrame:CGRectMake(20, CGRectGetMaxY(tLabel.frame)+10, DEVICE_WIDTH-40, 35)];
+        tf.tag = 100+i;
         tf.delegate = self;
         tf.layer.cornerRadius = 5;
         tf.layer.borderWidth = 0.5;
@@ -120,9 +122,10 @@
             [_finishBtn addTarget:self action:@selector(uploadBuyClothesLog) forControlEvents:UIControlEventTouchUpInside];
             [theView addSubview:_finishBtn];
             
-            _mainScrollView.contentSize = CGSizeMake(DEVICE_WIDTH, CGRectGetMaxY(theView.frame)+70);
             
-            _theSize = _mainScrollView.contentSize;
+            _theSize = CGSizeMake(DEVICE_WIDTH, CGRectGetMaxY(theView.frame)+70);
+            _theSize_haveKeyBoard = CGSizeMake(DEVICE_WIDTH, CGRectGetMaxY(theView.frame)+70+300);
+            _mainScrollView.contentSize = _theSize;
             
             NSLog(@"哈哈%f",_mainScrollView.contentSize.height);
             
@@ -390,6 +393,13 @@
     [UIView animateWithDuration:0.3 animations:^{
         [self gShou];
         [_datePickerView setFrame:CGRectMake(0, DEVICE_HEIGHT-300, DEVICE_WIDTH, 300)];
+        _mainScrollView.contentSize = _theSize_haveKeyBoard;
+        
+        int tt = 3;
+        if (_mainScrollView.contentOffset.y<tt *70) {
+            [_mainScrollView setContentOffset:CGPointMake(0, tt*70) animated:YES];
+        }
+        
     } completion:^(BOOL finished) {
         
     }];
@@ -409,9 +419,6 @@
         NSString *confromTimespStr = [formatter stringFromDate:confromTimesp];
         _buyTimeLabel.text = confromTimespStr;
         
-        CGSize size = _theSize;
-        size.height += 300;
-        [_mainScrollView setContentSize:size];
         [self gShou];
     }];
     
@@ -428,11 +435,16 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     
-    CGSize size = _theSize;
-    size.height += 300;
-    [_mainScrollView setContentSize:size];
-    
+    _mainScrollView.contentSize = _theSize_haveKeyBoard;
     [self gmbb];
+    
+    NSInteger tt = textField.tag - 100;
+    if (_mainScrollView.contentOffset.y<tt *70) {
+        [_mainScrollView setContentOffset:CGPointMake(0, tt*70) animated:YES];
+    }
+    
+    
+    
     
 }
 
@@ -444,6 +456,7 @@
     }
     
     [_mainScrollView setContentSize:_theSize];
+    [_mainScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
 
     [self gmbb];
 }

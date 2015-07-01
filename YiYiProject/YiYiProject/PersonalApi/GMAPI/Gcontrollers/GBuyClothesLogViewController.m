@@ -334,13 +334,12 @@
         
         
         //排序开始
-        int count = _tableView.dataArray.count;
+        NSInteger count = _tableView.dataArray.count;
         for (GBuyClothLogModel *model in _tableView.dataArray) {
             model.time = NO;
             model.timeStr = [GTimeSwitch testtimeByYear:model.buy_time];
         }
         
-        NSLog(@"%d",count);
         
         NSMutableArray *newArray_2 = [NSMutableArray arrayWithCapacity:1];
         //找出同一天的文章 放到一个数组里
