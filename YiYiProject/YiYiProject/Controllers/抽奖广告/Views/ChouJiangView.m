@@ -12,6 +12,7 @@
 @implementation ChouJiangView
 {
     __block UIButton *bigImageBtn;
+    UIButton *_clostBtn;
     CGFloat _realHeight;//图片显示高度
 }
 
@@ -59,12 +60,12 @@
         
         //右上角关闭按钮
         
-        UIButton *clostBtn = [[UIButton alloc]initWithframe:CGRectMake(DEVICE_WIDTH - 68 - 10, 3, 68, 54) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"chouJiange_close"] selectedImage:nil target:self action:@selector(clickToClose:)];
-        [self addSubview:clostBtn];
-        clostBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+        _clostBtn = [[UIButton alloc]initWithframe:CGRectMake(DEVICE_WIDTH - 68 - 10, 3, 68, 54) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"chouJiange_close"] selectedImage:nil target:self action:@selector(clickToClose:)];
+        [self addSubview:_clostBtn];
+        _clostBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
         
         bigImageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        bigImageBtn.frame = CGRectMake(10, clostBtn.bottom - 3, realWidth, _realHeight);
+        bigImageBtn.frame = CGRectMake(10, _clostBtn.bottom - 3, realWidth, _realHeight);
         [self addSubview:bigImageBtn];
         bigImageBtn.backgroundColor = [UIColor clearColor];
         [bigImageBtn addTarget:self action:@selector(clickToAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -77,7 +78,7 @@
         //调整位置
         
         bigImageBtn.centerX = DEVICE_WIDTH / 2.f;
-        clostBtn.right = bigImageBtn.right;
+        _clostBtn.right = bigImageBtn.right;
         
     }
     return self;
@@ -132,6 +133,8 @@
 
 - (void)hidden
 {
+    [_clostBtn removeFromSuperview];
+    _clostBtn = nil;
     [UIView animateWithDuration:0.3 animations:^{
        
         bigImageBtn.height = 0.f;

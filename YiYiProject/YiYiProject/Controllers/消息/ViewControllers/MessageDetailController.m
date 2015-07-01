@@ -14,6 +14,10 @@
 #import "OHAttributedLabel.h"
 #import "OHLableHelper.h"
 #import "GLeadBuyMapViewController.h"
+#import "MJPhoto.h"
+#import "MJPhotoBrowser.h"
+
+#import "PropertyImageView.h"
 
 @interface MessageDetailController ()<UITableViewDataSource,UITableViewDelegate,OHAttributedLabelDelegate>
 {
@@ -22,7 +26,6 @@
     id detail_model;
     ActivityModel *_activityModel;
 //    NSArray *_activityInfo;//活动详情
-    
 }
 
 @end
@@ -93,11 +96,16 @@
         
         imageHeight = (imageWidth * 10) / 16;
         
-        UIImageView *coverImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 0, imageWidth, imageHeight)];
+        PropertyImageView *coverImageView = [[PropertyImageView alloc]initWithFrame:CGRectMake(10, 0, imageWidth, imageHeight)];
         [coverImageView sd_setImageWithURL:[NSURL URLWithString:aModel.cover_pic] placeholderImage:nil];
         [head addSubview:coverImageView];
         
-//        [coverImageView setImageWithURL:[NSURL URLWithString:aModel.cover_pic] placeHolderText:@"加载失败..." backgroundColor:RGBCOLOR(200, 200, 200) holderTextColor:[UIColor whiteColor]];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapImage:)];
+        [coverImageView addGestureRecognizer:tap];
+        
+        coverImageView.userInteractionEnabled = YES;
+        
+        coverImageView.imageUrls = @[aModel.cover_pic];
         
         [coverImageView l_setImageWithURL:[NSURL URLWithString:aModel.cover_pic] placeholderImage:DEFAULT_YIJIAYI];
     }
@@ -157,6 +165,37 @@
     [head addSubview:line];
     
     return head;
+}
+
+#pragma mark - 点击小图看大图
+
+- (void)tapImage:(UITapGestureRecognizer *)tap
+{
+    PropertyImageView *aImageView = (PropertyImageView *)tap.view;
+    
+    if (!aImageView.imageUrls) {
+        return;
+    }
+    
+    NSArray *image_urls = aImageView.imageUrls;
+    int count = (int)image_urls.count;
+
+    // 1.封装图片数据
+    NSMutableArray *photos = [NSMutableArray arrayWithCapacity:count];
+    for (int i = 0; i < count; i++) {
+        // 替换为中等尺寸图片
+        NSString *url = image_urls[i];
+        MJPhoto *photo = [[MJPhoto alloc] init];
+        photo.url = [NSURL URLWithString:url]; // 图片路径
+        photo.srcImageView = aImageView; // 来源于哪个UIImageView
+        [photos addObject:photo];
+    }
+    
+    // 2.显示相册
+    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
+    browser.currentPhotoIndex = 0; // 弹出相册时显示的第一张图片是？
+    browser.photos = photos; // 设置所有的图片
+    [browser show];
 }
 
 #pragma mark - 网络请求
@@ -380,8 +419,13 @@
             
             for (UIView *aView in cell.contentView.subviews) {
                 
+                for (UIGestureRecognizer *ges in aView.gestureRecognizers) {
+                    
+                    [ges removeTarget:self action:@selector(tapImage:)];
+                }
                 [aView removeFromSuperview];
             }
+            
             
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
@@ -391,10 +435,15 @@
             
             height = [LTools heightForImageHeight:height/2.f imageWidth:width/2.f originalWidth:DEVICE_WIDTH - 20];
 
-            UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 0, DEVICE_WIDTH - 20, height)];
+            PropertyImageView *imageView = [[PropertyImageView alloc]initWithFrame:CGRectMake(10, 0, DEVICE_WIDTH - 20, height)];
             [cell.contentView addSubview:imageView];
             
-//            [imageView setImageWithURL:[NSURL URLWithString:content] placeHolderText:@"加载失败..." backgroundColor:RGBCOLOR(235, 235, 235) holderTextColor:[UIColor whiteColor]];
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapImage:)];
+            [imageView addGestureRecognizer:tap];
+            
+            imageView.userInteractionEnabled = YES;
+            
+            imageView.imageUrls = @[content];//图片数组
             
             [imageView l_setImageWithURL:[NSURL URLWithString:content] placeholderImage:DEFAULT_YIJIAYI];
             

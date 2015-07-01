@@ -139,8 +139,6 @@
     {
         [self createSmallChouJiangView];
     }
-    
-    
 }
 
 - (void)chouJiangToDo:(ActionStyle )actionStyle
@@ -181,10 +179,11 @@
                 _chouJiangSmallBtn = [UIButton buttonWithType:UIButtonTypeCustom];
                 _chouJiangSmallBtn.frame = CGRectMake(10, 10, realWidth, realHeight);
                 [self.view addSubview:_chouJiangSmallBtn];
-                _chouJiangSmallBtn.backgroundColor = [UIColor redColor];
+                _chouJiangSmallBtn.backgroundColor = [UIColor clearColor];
                 [_chouJiangSmallBtn addTarget:self action:@selector(clickToChouJiang:) forControlEvents:UIControlEventTouchUpInside];
                 
                 imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, _chouJiangSmallBtn.width, realHeight)];
+                imageView.backgroundColor = [UIColor clearColor];
                 [_chouJiangSmallBtn addSubview:imageView];
             }
             [imageView l_setImageWithURL:[NSURL URLWithString:_chouJiangModel.small_pic_url] placeholderImage:DEFAULT_YIJIAYI];
@@ -219,8 +218,6 @@
 
         //prize_id 和 authcode
         NSString *url = [NSString stringWithFormat:@"%@&authcode=%@&prize_id=%@",_chouJiangModel.url,[GMAPI getAuthkey],_chouJiangModel.prize_id];
-        
-//        url = _chouJiangModel.url;
         
         GwebViewController *web = [[GwebViewController alloc]init];
         web.urlstring = url;
