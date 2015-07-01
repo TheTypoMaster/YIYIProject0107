@@ -54,6 +54,8 @@
     CGSize _theSize_haveKeyboard;
     
     
+    
+    
 }
 @end
 
@@ -139,11 +141,7 @@
 }
 
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    
-    return YES;
-}
+
 
 
 -(void)setDataWithModel:(ProductModel *)theModel{
@@ -311,6 +309,34 @@
     
 }
 
+
+
+-(void)jisuanZekou{
+    
+    
+    UITextField *tf2 = _shurukuangArray[2];
+    UITextField *tf3 = _shurukuangArray[3];
+    UITextField *tf4 = _shurukuangArray[4];
+    
+    if (tf2.text.length>0 && tf3.text.length>0) {
+        CGFloat tf2_num = [tf2.text floatValue];
+        CGFloat tf3_num = [tf3.text floatValue];
+        
+        CGFloat zhekou = tf3_num/tf2_num;
+        CGFloat zhekou_f = zhekou *10;
+        tf4.text = [NSString stringWithFormat:@"%.1f",zhekou_f];
+        
+        if ([tf4.text intValue] == 10) {
+            tf4.text = @"无折扣";
+        }
+        
+    }
+}
+
+
+
+
+
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     
     NSLog(@"%ld",(long)textField.tag);
@@ -325,9 +351,83 @@
         [_mainScrollView setContentOffset:CGPointMake(0, tt*51) animated:YES];
     }
     
-    
+    [self jisuanZekou];
     
 }
+
+
+
+
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    [self jisuanZekou];
+}
+
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    
+    
+    if (textField.tag == 202 || textField.tag == 203) {//原价 现价
+        
+        
+        
+        UITextField *tf2 = _shurukuangArray[2];//原价
+        UITextField *tf3 = _shurukuangArray[3];//现价
+        if (textField.tag == 202 && tf3.text.length>0) {
+            NSMutableString *yuanjia;
+            if (string.length == 0) {
+                yuanjia = [NSMutableString stringWithFormat:@"%@",textField.text];
+                yuanjia = (NSMutableString*)[yuanjia substringWithRange:NSMakeRange(0, yuanjia.length-1)];
+                if (yuanjia.length == 0) {
+                    UITextField *tf4 = _shurukuangArray[4];
+                    tf4.text = nil;
+                }
+            }else{
+                yuanjia = [NSMutableString stringWithFormat:@"%@%@",textField.text,string];
+            }
+            
+            NSString *xianjia = tf3.text;
+            [self dongtaijisuanWithYuanjia:yuanjia xianjia:xianjia];
+        }else if (textField.tag == 203 &&tf2.text.length>0){
+            NSString *yuanjia = tf2.text;
+            NSMutableString *xianjia;
+            if (string.length == 0) {
+                xianjia = [NSMutableString stringWithString:textField.text];
+                xianjia = (NSMutableString *)[xianjia substringWithRange:NSMakeRange(0, xianjia.length-1)];
+                if (xianjia.length == 0) {
+                    UITextField *tf4 = _shurukuangArray[4];
+                    tf4.text = nil;
+                }
+            }else{
+                xianjia = [NSMutableString stringWithFormat:@"%@%@",textField.text,string];
+            }
+            [self dongtaijisuanWithYuanjia:yuanjia xianjia:xianjia];
+        }
+    }
+    
+    return YES;
+}
+
+-(void)dongtaijisuanWithYuanjia:(NSString *)yuanj xianjia:(NSString *)xianj{
+    
+    UITextField *tf4 = _shurukuangArray[4];
+    
+    if (yuanj.length>0 && xianj.length>0) {
+        CGFloat tf2_num = [yuanj floatValue];
+        CGFloat tf3_num = [xianj floatValue];
+        
+        CGFloat zhekou = tf3_num/tf2_num;
+        CGFloat zhekou_f = zhekou *10;
+        tf4.text = [NSString stringWithFormat:@"%.1f",zhekou_f];
+        
+        if ([tf4.text intValue] == 10) {
+            tf4.text = @"无折扣";
+        }
+        
+    }
+}
+
+
 
 //空白点击手键盘end======
 
@@ -348,8 +448,8 @@
     [_mainScrollView addSubview:tijiaoBtn];
     
     
-    _theSize = CGSizeMake(DEVICE_WIDTH, CGRectGetMaxY(tijiaoBtn.frame)+60);
-    _theSize_haveKeyboard = CGSizeMake(DEVICE_WIDTH, CGRectGetMaxY(tijiaoBtn.frame)+60+300);
+    _theSize = CGSizeMake(DEVICE_WIDTH, CGRectGetMaxY(tijiaoBtn.frame)+100);
+    _theSize_haveKeyboard = CGSizeMake(DEVICE_WIDTH, CGRectGetMaxY(tijiaoBtn.frame)+100+300);
     _mainScrollView.contentSize = _theSize;
     
 }
@@ -366,6 +466,16 @@
             return;
         }
         
+    }
+    
+    
+    BOOL leixing = [_leixingLabel.text isEqualToString:@"请选择单品类型"];
+    BOOL fenlei = [_fenleiLabel.text isEqualToString:@"请选择分类"];
+    BOOL gender = [_genderLabel.text isEqualToString:@"请选择性别"];
+    
+    if (leixing || fenlei || gender) {
+        [GMAPI showAutoHiddenMBProgressWithText:@"请完善信息" addToView:self.view];
+        return;
     }
     
     
@@ -416,6 +526,7 @@
     
     //分类
     NSString *fenleiStr_int = nil;
+    
     if ([_fenleiLabel.text isEqualToString:@"上衣"]) {
         fenleiStr_int = @"1";
     }else if ([_fenleiLabel.text isEqualToString:@"裤子"]){
@@ -877,6 +988,9 @@
 
 //选择类型
 -(void)chooseLeixing{
+    
+    [self jisuanZekou];
+    
     UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"选择商品类型" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"折扣",@"新品",@"畅销", nil];
     al.tag = -5;
     
@@ -885,6 +999,9 @@
 
 //选择性别
 -(void)chooseGender{
+    
+    [self jisuanZekou];
+    
     UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"选择性别" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"男",@"女", nil];
     al.tag = -6;
     
@@ -893,6 +1010,9 @@
 
 //选择单品分类
 -(void)chooseFenlei{
+    
+    [self jisuanZekou];
+    
     UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"选择分类" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"上衣",@"裤子",@"裙子",@"内衣",@"配饰",@"其他", nil];
     al.tag = -7;
     [al show];
@@ -1423,6 +1543,14 @@
     for (UITextField *tf in _shurukuangArray) {
         [tf resignFirstResponder];
     }
+    
+    _mainScrollView.contentSize = _theSize_haveKeyboard;
+    
+    if (_mainScrollView.contentOffset.y < 8 *51) {
+        [_mainScrollView setContentOffset:CGPointMake(0, 8*51) animated:YES];
+    }
+    
+    
     [UIView animateWithDuration:0.3 animations:^{
         _dateChooseView.frame = CGRectMake(0, DEVICE_HEIGHT-_dateChooseView.frame.size.height, DEVICE_WIDTH, _dateChooseView.frame.size.height);
         _dateChooseView.tag = 1001;

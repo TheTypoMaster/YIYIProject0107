@@ -485,6 +485,7 @@
             }else{
                 [dataArray removeObjectAtIndex:indexPath.row];
                 [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                [_tableView reloadData];
             }
         } failBlock:^(NSDictionary *result, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
