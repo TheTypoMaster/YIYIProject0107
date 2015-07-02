@@ -164,10 +164,18 @@
         
         //显示小图标抽奖入口
         
-        CGFloat imageWidth = [_chouJiangModel.small_pic_width floatValue];
-        CGFloat imageHeight = [_chouJiangModel.small_pic_height floatValue];
+        CGFloat imageWidth = [_chouJiangModel.small_pic_width floatValue] / 2.f;
+        CGFloat imageHeight = [_chouJiangModel.small_pic_height floatValue] / 2.f;
         
-        CGFloat realWidth = 60 * DEVICE_WIDTH / 375;//显示宽度
+        CGFloat maxWidth = imageWidth;
+        
+        //限定最大 100
+        if (maxWidth > 100) {
+            
+            maxWidth = 100;
+        }
+        
+        CGFloat realWidth = maxWidth * DEVICE_WIDTH / 375;//显示宽度
         CGFloat realHeight = [LTools heightForImageHeight:imageHeight imageWidth:imageWidth originalWidth:realWidth];
         
         UIImageView *imageView;
@@ -182,11 +190,13 @@
                 _chouJiangSmallBtn.backgroundColor = [UIColor clearColor];
                 [_chouJiangSmallBtn addTarget:self action:@selector(clickToChouJiang:) forControlEvents:UIControlEventTouchUpInside];
                 
-                imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, _chouJiangSmallBtn.width, realHeight)];
-                imageView.backgroundColor = [UIColor clearColor];
+                imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, realWidth, realHeight)];
                 [_chouJiangSmallBtn addSubview:imageView];
             }
             [imageView l_setImageWithURL:[NSURL URLWithString:_chouJiangModel.small_pic_url] placeholderImage:DEFAULT_YIJIAYI];
+            
+            imageView.backgroundColor = [UIColor clearColor];
+
         }else
         {
             NSLog(@"抽奖小图无效");
