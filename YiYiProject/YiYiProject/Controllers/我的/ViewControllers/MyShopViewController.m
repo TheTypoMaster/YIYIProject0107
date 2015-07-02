@@ -127,7 +127,12 @@
     
     UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_WIDTH*420/748.0)];
     imv.userInteractionEnabled = YES;
-    [imv setImage:[GMAPI getUserBannerImage]];
+    
+    if ([GMAPI getUserBannerImage]) {
+        [imv setImage:[GMAPI getUserBannerImage]];
+    }else{
+        [imv setImage:[UIImage imageNamed:@"my_bg.png"]];
+    }
     [_backView addSubview:imv];
     _transtion_upinfoview = [CATransition animation];
     _transtion_upinfoview.duration = 0.2;
@@ -141,7 +146,6 @@
     
     UIImageView *backView_black = [[UIImageView alloc]initWithFrame:_backView.bounds];
     [backView_black setImage:[UIImage imageNamed:@"my_top_bg.png"]];
-    //    backView_black.userInteractionEnabled = YES;
     [_backView addSubview:backView_black];
     
     //返回按钮
