@@ -99,6 +99,18 @@
     
     RegisterViewController *regis = [[RegisterViewController alloc]init];
     [self.navigationController pushViewController:regis animated:YES];
+    
+    __weak typeof(self)weakSelf = self;
+    
+    regis.registerBlock = ^(NSString *phoneNum,NSString *password){
+        
+        NSLog(@"phone %@ password %@",phoneNum,password);
+        
+        weakSelf.phoneTF.text = phoneNum;
+        weakSelf.pwdTF.text = password;
+        
+        [weakSelf clickToNormalLogin:nil];
+    } ;
 }
 
 /**

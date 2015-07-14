@@ -345,23 +345,25 @@
 
 -(void)PostDevicetoken:(NSString*)thetoken{
 
-    NSString *post = [NSString stringWithFormat:@"&devicetoken=%@&authcode=%@",thetoken,[GMAPI getAuthkey]];
-    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-    NSString *url = [NSString stringWithFormat:ZPOSTDEVICETOKEN];
-    LTools *ccc = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
-    [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
+    if (thetoken && thetoken.length > 10) {
         
-        NSLog(@"devicetoken给后台传过去 thedic==%@",result);
-        
-//        UIAlertView *alertV=[[UIAlertView alloc]initWithTitle:[NSString stringWithFormat:@"%@",@"token发送成功"] message:nil delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
-//        [alertV show];
-   
-    } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        
-        NSLog(@"token发送失败 == %@",failDic);
+        NSString *post = [NSString stringWithFormat:@"&devicetoken=%@&authcode=%@",thetoken,[GMAPI getAuthkey]];
+        NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+        NSString *url = [NSString stringWithFormat:POST_UPDATEMYINFO_URL];
+        LTools *ccc = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
+        [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
+            
+            NSLog(@"devicetoken给后台传过去 thedic==%@",result);
 
-    }];
-
+            
+        } failBlock:^(NSDictionary *failDic, NSError *erro) {
+            
+            NSLog(@"token发送失败 == %@",failDic);
+            
+        }];
+    }
+    
+    
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error

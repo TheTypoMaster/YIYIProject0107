@@ -13,6 +13,8 @@
 
 #import "MyViewController.h"
 
+typedef void(^RegisterBlock)(NSString *phoneNum,NSString *passWord);//注册成功的block
+
 @interface RegisterViewController : MyViewController
 @property (strong, nonatomic) IBOutlet UITextField *phoneTF;
 @property (strong, nonatomic) IBOutlet UITextField *securityTF;
@@ -22,6 +24,8 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *codeButton;
 @property (strong, nonatomic) IBOutlet UILabel *codeLabel;
+
+@property(nonatomic,copy)RegisterBlock registerBlock;//注册block
 
 - (IBAction)clickToSecurityCode:(id)sender;
 - (IBAction)clickToRegister:(id)sender;

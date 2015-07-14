@@ -30,6 +30,7 @@ static int seconds = 60;//计时60s
 
 - (void)dealloc
 {
+    self.registerBlock = nil;
     [timer invalidate];
     timer = nil;
 }
@@ -82,8 +83,14 @@ static int seconds = 60;//计时60s
 
 - (IBAction)clickToClose:(id)sender {
     
+    
     [self.navigationController popViewControllerAnimated:YES];
     
+    //注册成功block
+    if (self.registerBlock) {
+        
+        self.registerBlock(self.phoneTF.text,self.passwordTF.text);
+    }
 }
 
 /**
@@ -190,7 +197,7 @@ static int seconds = 60;//计时60s
         
         [LTools showMBProgressWithText:result[RESULT_INFO] addToView:self.view];
         
-        [self performSelector:@selector(clickToClose:) withObject:nil afterDelay:0.2];
+        [self performSelector:@selector(clickToClose:) withObject:nil afterDelay:0.5];
         
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
