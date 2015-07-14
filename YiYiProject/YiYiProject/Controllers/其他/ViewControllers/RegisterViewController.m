@@ -110,8 +110,12 @@ static int seconds = 60;//计时60s
         
         [LTools alertText:ALERT_ERRO_PHONE viewController:self];
         return;
+    }else
+    {
+        NSLog(@"手机号:%@有效",mobile);
     }
     
+        
      [self startTimer];
     
     __weak typeof(self)weakSelf = self;
@@ -177,7 +181,7 @@ static int seconds = 60;//计时60s
     }
     
     
-    NSString *url = [NSString stringWithFormat:USER_REGISTER_ACTION,userName,password,sex,type,code,mobile];
+    NSString *url = [NSString stringWithFormat:USER_REGISTER_ACTION,userName,password,sex,type,code,mobile,@"iOS"];
     
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {

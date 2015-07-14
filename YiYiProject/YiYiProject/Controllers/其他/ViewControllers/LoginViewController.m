@@ -47,9 +47,14 @@
         
     self.myTitleLabel.text = @"登录";
     self.myTitleLabel.textColor = RGBCOLOR(253, 106, 157);
-    self.rightString = @"注册";
+//    self.rightString = @"注册";
 
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeText];
+    
+    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:@"去注册"];
+    NSRange strRange = {0,[str length]};
+    [str addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:strRange];
+    [self.registerButton setAttributedTitle:str forState:UIControlStateNormal];
     
 }
 
