@@ -27,6 +27,7 @@ typedef void(^LoginBlock)(BOOL success);
 @property (strong, nonatomic) IBOutlet UIView *thirdLoginView;
 @property (strong, nonatomic) IBOutlet UIView *thirdLoginView2;
 
+@property (strong, nonatomic) IBOutlet UIButton *registerButton;
 
 
 - (void)setLoginBlock:(LoginBlock)aBlock;

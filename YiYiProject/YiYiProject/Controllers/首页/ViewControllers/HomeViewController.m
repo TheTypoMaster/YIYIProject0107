@@ -167,6 +167,9 @@
         CGFloat imageWidth = [_chouJiangModel.small_pic_width floatValue] / 2.f;
         CGFloat imageHeight = [_chouJiangModel.small_pic_height floatValue] / 2.f;
         
+//        imageWidth = 100;
+//        imageHeight = 100;
+        
         CGFloat maxWidth = imageWidth;
         
         //限定最大 100
@@ -194,6 +197,8 @@
                 [_chouJiangSmallBtn addSubview:imageView];
             }
             [imageView l_setImageWithURL:[NSURL URLWithString:_chouJiangModel.small_pic_url] placeholderImage:DEFAULT_YIJIAYI];
+            
+//            imageView.image = [UIImage imageNamed:@"tuzi"];
             
             imageView.backgroundColor = [UIColor clearColor];
 

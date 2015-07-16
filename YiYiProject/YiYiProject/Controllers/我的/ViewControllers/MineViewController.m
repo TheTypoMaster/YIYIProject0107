@@ -1473,7 +1473,7 @@ typedef enum{
     if (_changeImageType == USERBANNER) {//banner
         uploadImageUrlStr = PERSON_CHANGEUSERBANNER;
     }else if (_changeImageType == USERFACE){//头像
-        uploadImageUrlStr = PERSON_CHANGEUSERFACE;
+        uploadImageUrlStr = POST_UPDATEMYINFO_URL;
     }
     
     //设置接收响应类型为标准HTTP类型(默认为响应类型为JSON)

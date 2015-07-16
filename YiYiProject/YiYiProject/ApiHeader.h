@@ -284,7 +284,9 @@ typedef enum{
 #define USER_LOGOUT_ACTION @"http://www119.alayy.com/index.php?d=api&c=user_api&m=login_out&authcode=%@"
 
 //注册
-#define USER_REGISTER_ACTION @"http://www119.alayy.com/index.php?d=api&c=user_api&m=register&username=%@&password=%@&gender=%d&type=%d&code=%d&mobile=%@"
+
+#define USER_REGISTER_ACTION @"http://www119.alayy.com/index.php?d=api&c=user_api&m=register&username=%@&password=%@&gender=%d&type=%d&code=%d&mobile=%@&reg_source=%@"
+
 //获取验证码
 #define USER_GET_SECURITY_CODE @"http://www119.alayy.com/index.php?d=api&c=user_api&m=get_code&mobile=%@&type=%d&encryptcode=%@"
 //找回密码
@@ -379,7 +381,9 @@ typedef enum{
 
 //加额外参数extra  extra=tt_num时代表需要返回t台总数
 #define PERSON_GETUSERINFO @"http://www119.alayy.com/index.php?d=api&c=user_api&m=get_user_info"
+
 #define PERSON_CHANGEUSERFACE @"http://www119.alayy.com/index.php?d=api&c=user_api&m=update_user_info"
+
 
 //根据id获取用户信息
 #define GET_PERSONINFO_WITHID @"http://www119.alayy.com/index.php?d=api&c=user_api&m=get_user_by_uid&uid=%@"
@@ -396,7 +400,9 @@ typedef enum{
 //查询品牌是否关注
 #define GUANZHUPINPAI_ISORNO @"http://www119.alayy.com/index.php?d=api&c=brand&m=isBrandFriend"
 
+
 #define ZPOSTDEVICETOKEN @"http://www119.alayy.com/index.php?d=api&c=user_api&m=update_user_info"
+
 
 //申请店铺界面 
 //根据省市区获取商城列表

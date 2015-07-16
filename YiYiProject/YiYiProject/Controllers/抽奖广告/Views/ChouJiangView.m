@@ -75,6 +75,8 @@
         [bigImageView l_setImageWithURL:[NSURL URLWithString:aModel.big_pic_url] placeholderImage:DEFAULT_YIJIAYI];
         [bigImageBtn addSubview:bigImageView];
         
+//        bigImageView.backgroundColor = [UIColor clearColor];//暂时不要了
+        
         //调整位置
         
         bigImageBtn.centerX = DEVICE_WIDTH / 2.f;
