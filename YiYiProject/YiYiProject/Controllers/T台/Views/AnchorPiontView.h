@@ -30,6 +30,13 @@ typedef void(^AnchorClickBlock)(NSString *infoId,NSString *infoName,ShopType sho
 @property (nonatomic,strong)NSString *infoName;
 @property (nonatomic,assign)ShopType shopType;
 
+
+//gm修改
+@property(nonatomic,strong)UIButton *deleteBtn;//删除按钮
+@property(nonatomic,assign)BOOL isRight;
+@property(nonatomic,assign)CGFloat location_x;
+@property(nonatomic,assign)CGFloat location_y;
+
 - (void)setAnchorBlock:(AnchorClickBlock)anchorBlock;
 
 /**
@@ -40,6 +47,7 @@ typedef void(^AnchorClickBlock)(NSString *infoId,NSString *infoName,ShopType sho
  */
 -(instancetype)initWithAnchorPoint:(CGPoint)anchorPoint
                              title:(NSString *)title;
+
 
 -(instancetype)initWithAnchorPoint:(CGPoint)anchorPoint
                              title:(NSString *)title

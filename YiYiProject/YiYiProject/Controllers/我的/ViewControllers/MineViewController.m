@@ -171,7 +171,7 @@ typedef enum{
         
     }else{
         [self cacheUserInfo];
-        [self performSelector:@selector(GgetUserInfo) withObject:nil afterDelay:0.5];
+//        [self performSelector:@selector(GgetUserInfo) withObject:nil afterDelay:0.5];
     }
     
 }
@@ -324,7 +324,14 @@ typedef enum{
 -(void)cacheUserInfo{
     //本地存储model
     
-    [_userInfo cacheForKey:USERINFO_MODEL];
+    NSDictionary *dic = [GMAPI getUserInfoCache];
+    _userInfo = [[UserInfo alloc]initWithDictionary:dic];
+    
+    _getUserinfoSuccess = YES;
+    [self setUpuserInfoViewWithLoginState:[LTools cacheBoolForKey:LOGIN_SERVER_STATE]];
+    
+    //本地存储model
+    [GMAPI setUserInfoCacheWithDic:dic];
     
     if ([_userInfo.is_sign intValue] == 0) {//未签到
         _qiandaoBtn.userInteractionEnabled = YES;
@@ -341,27 +348,25 @@ typedef enum{
         [self changeTheTitleAndPicArray_shenhe];
     }
     
-    NSString *name = _userInfo.user_name;
-    NSString *score = _userInfo.score;
-    if ([name isEqualToString:@"(null)"] || name == nil ) {
+    NSString *name = [dic stringValueForKey:@"user_name"];
+    if ([name isEqualToString:@"(null)"] || name == nil) {
         name = @" ";
     }
-    
+    NSString *score = [dic stringValueForKey:@"score"];
     if ([score isEqualToString:@"(null)"] || score == nil) {
         score = @" ";
     }
     self.userNameLabel.text = [NSString stringWithFormat:@"昵称:%@",name];
     self.userScoreLabel.text = [NSString stringWithFormat:@"积分:%@",score];
+    self.jifen = score;
     
-    user_bannerUrl = _userInfo.user_banner;
-    
+    user_bannerUrl = [dic stringValueForKey:@"user_banner"];
     UIImage *pim;
     if ([GMAPI getUserBannerImage]) {
         pim = [GMAPI getUserBannerImage];
     }else{
         pim = [UIImage imageNamed:@"my_bg.png"];
     }
-    
     if (user_bannerUrl.length>0) {
         [_backView.imageView sd_setImageWithURL:[NSURL URLWithString:user_bannerUrl] placeholderImage:pim completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             [GMAPI setUserBannerImageWithData:UIImagePNGRepresentation(_backView.imageView.image)];
@@ -370,7 +375,7 @@ typedef enum{
     
     
     
-    NSString *userFaceUrl = [NSString stringWithFormat:@"%@",_userInfo.photo];
+    NSString *userFaceUrl = [NSString stringWithFormat:@"%@",[dic stringValueForKey:@"photo"]];
     headImageUrl = userFaceUrl;
     
     
@@ -379,9 +384,9 @@ typedef enum{
     }];
     
     
-    _fensiNumLabel.text = _userInfo.fans_num;
+    _fensiNumLabel.text = [dic stringValueForKey:@"fans_num"];
     _guanzhuNumLabel.text = _userInfo.attentions_num;
-    _ttaiNumLabel.text = _userInfo.tt_num;
+    _ttaiNumLabel.text = [dic stringValueForKey:@"tt_num"];
     
     [_tableView reloadData];
     
@@ -396,7 +401,6 @@ typedef enum{
     
     
     if ([GMAPI getAuthkey].length == 0) {
-//        [self chushihuaView];
         return;
     }
     
@@ -432,8 +436,7 @@ typedef enum{
         
         
         //本地存储model
-        
-        [_userInfo cacheForKey:USERINFO_MODEL];
+        [GMAPI setUserInfoCacheWithDic:dic];
         
         if ([_userInfo.is_sign intValue] == 0) {//未签到
             _qiandaoBtn.userInteractionEnabled = YES;

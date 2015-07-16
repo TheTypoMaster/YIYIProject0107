@@ -82,6 +82,9 @@
             self.titleLabel = [LTools createLabelFrame:CGRectMake(10, 0, aWidth, ACHORVIEW_HEIGHT) title:title font:11.f align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
             [_imageView addSubview:_titleLabel];
             
+            
+            [self setTheRightLocationAndFrame];
+            
         }else
         {
             //文字宽度
@@ -120,24 +123,10 @@
             self.halo.backgroundColor = [UIColor blackColor].CGColor;
             [self.layer insertSublayer:self.halo below:self.annimationView.layer];
             
-            self.left = anchorPoint.x - _imageView.width - 5 - _annimationView.width;
+            [self setTheLeftLocationAndFrame];
 
         }
         
-        self.width = _imageView.width + 5 + _annimationView.width;
-        
-//        self.height += 50;
-        
-        
-        //判端右侧边界情况
-        
-        if (self.right > DEVICE_WIDTH - 10) {
-            
-            CGFloat dis = self.right - (DEVICE_WIDTH - 10);
-            self.width -= dis;
-            _titleLabel.width -= dis;
-            _imageView.width -= dis;
-        }
         
         
         UIButton *clickButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -149,6 +138,43 @@
     }
     return self;
 }
+
+
+//设置右边 在init方法里使用
+-(void)setTheRightLocationAndFrame{
+    
+    
+    
+    CGRect r = self.frame;
+    r.origin.x = self.frame.origin.x - 2;
+    r.origin.y = self.frame.origin.y - ACHORVIEW_HEIGHT*0.5;
+    r.size.width = self.annimationView.frame.size.width + 5 + self.imageView.frame.size.width;
+    self.frame = r;
+    
+    self.location_x = self.frame.origin.x;
+    self.location_y = self.frame.origin.y + ACHORVIEW_HEIGHT * 0.5;
+    NSLog(@"right 初始化的locationx = %f locationy = %f",self.location_x,self.location_y);
+    
+}
+
+
+//设置左边 在init方法里使用
+-(void)setTheLeftLocationAndFrame{
+    
+    
+    CGRect r = self.frame;
+    r.origin.x = self.frame.origin.x - self.imageView.frame.size.width - 5 - self.annimationView.frame.size.width;
+    r.origin.y = self.frame.origin.y - ACHORVIEW_HEIGHT * 0.5;
+    r.size.width = self.annimationView.frame.size.width + 5 + self.imageView.frame.size.width;
+    
+    self.location_x = r.origin.x + ACHORVIEW_HEIGHT *0.5 + r.size.width - 2;
+    self.location_y = r.origin.y + ACHORVIEW_HEIGHT*0.5;
+    
+    NSLog(@"left 初始化的locationx = %f locationy = %f",self.location_x,self.location_y);
+    
+    self.frame = r;
+}
+
 
 
 -(instancetype)initWithAnchorPoint:(CGPoint)anchorPoint

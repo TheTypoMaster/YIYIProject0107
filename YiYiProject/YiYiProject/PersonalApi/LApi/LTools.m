@@ -108,7 +108,7 @@
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        NSLog(@"---->response %@",operation.responseString);
+//        NSLog(@"---->response %@",operation.responseString);
         
         
         NSString *errInfo = @"网络有问题,请检查网络";
@@ -187,7 +187,7 @@
     
     _data = [NSMutableData data];
     
-    NSLog(@"response :%@",response);
+//    NSLog(@"response :%@",response);
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data

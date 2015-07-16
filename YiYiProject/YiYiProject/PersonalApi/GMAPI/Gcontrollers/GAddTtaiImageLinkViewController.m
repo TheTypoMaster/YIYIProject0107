@@ -14,6 +14,8 @@
 #import "NSDictionary+GJson.h"
 #import "GmaodianModel.h"
 
+#import "AnchorPiontView.h"
+
 @interface GAddTtaiImageLinkViewController ()
 {
     UIImageView *_showImv;
@@ -36,23 +38,29 @@
         NSMutableArray *arr = [NSMutableArray arrayWithCapacity:1];
         
         for (int i = 0;i<count;i++) {
-            GmoveImv *imv = [[GmoveImv alloc]initWithFrame:CGRectMake(0, 0, 60, 60)];
+            GmoveImv *imv;
             NSDictionary *dic = maodianArray[i];
             NSString *product_name = [dic stringValueForKey:@"product_name"];
             
             if (product_name.length > 0 && ![product_name isEqualToString:@" "]) {
+                imv = [[GmoveImv alloc]initWithAnchorPoint:CGPointZero title:product_name width:_showImv.frame.size.width tag:(_flagTag_gimv+=1)];
                 imv.type = @"单品";
                 imv.shop_id = [dic stringValueForKey:@"shop_id"];
                 imv.product_id = [dic stringValueForKey:@"product_id"];
                 imv.product_name = product_name;
                 imv.product_price = [dic stringValueForKey:@"product_price"];
                 imv.shop_name = [dic stringValueForKey:@"shop_name"];
+                
             }else{
+                imv = [[GmoveImv alloc]initWithAnchorPoint:CGPointZero title:[dic stringValueForKey:@"shop_name"] width:_showImv.frame.size.width tag:(_flagTag_gimv+=1)];
                 imv.type = @"店铺";
                 imv.shop_name = [dic stringValueForKey:@"shop_name"];
                 imv.shop_id = [dic stringValueForKey:@"shop_id"];
                 imv.product_price = [dic stringValueForKey:@"address"];
+                imv.titleLabel.text = imv.shop_name;
             }
+            
+            
             
             CGFloat img_x = [[dic stringValueForKey:@"img_x"] floatValue];
             CGFloat img_y = [[dic stringValueForKey:@"img_y"] floatValue];
@@ -68,9 +76,8 @@
             NSString *newwidth = arr_bili[1];
             width = [newwidth floatValue];
             height = [newheight floatValue];
-            imv.center = CGPointMake(width *img_x, height * img_y);
-            imv.location_x = imv.center.x;
-            imv.location_y = imv.center.y;
+            [imv setFrame:CGRectMake(width *img_x, height * img_y, 50, 16)];
+            
             
             [arr addObject:imv];
             
@@ -98,92 +105,53 @@
         NSLog(@"imv.shopName = %@  imv.pname = %@",imv.shop_name,imv.product_name);
         
         if (imv.shop_id == nil && !self.theTtaiModel) {
+            if (imv.frame.origin.x > _showImv.frame.size.width*0.5) {
+                imv.isRight = NO;
+            }else{
+                imv.isRight = YES;
+            }
             continue;
+            
         }
-        
-        for (UIView *view in imv.subviews) {
-            [view removeFromSuperview];
-        }
-        
-        
         
         if ([imv.type isEqualToString:@"单品"]) {
-            //背景图
-            [imv setImage:[UIImage imageNamed:@"gttailink_have.png"]];
             
-            //产品名称
-            UILabel *productName = [[UILabel alloc]initWithFrame:CGRectMake(17, 7, 85, 24)];
-            productName.text = imv.product_name;
-            productName.font = [UIFont systemFontOfSize:10];
-            productName.numberOfLines = 2;
-            productName.textColor = [UIColor whiteColor];
-            [imv addSubview:productName];
+            imv.titleLabel.text = imv.product_name;
             
-            //单价
-            UILabel *priceLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, CGRectGetMaxY(productName.frame), 90, 11)];
-            priceLabel.text = [NSString stringWithFormat:@"￥%@",imv.product_price];
-            priceLabel.font = [UIFont systemFontOfSize:10];
-            priceLabel.textColor = [UIColor whiteColor];
-            [imv addSubview:priceLabel];
-            
-            //地址：商场名
-            UILabel *adressLabel = [[UILabel alloc]initWithFrame:CGRectMake(7, CGRectGetMaxY(priceLabel.frame)+3, 97, 25)];
-            adressLabel.text = imv.shop_name;
-            adressLabel.font = [UIFont systemFontOfSize:10];
-            adressLabel.textAlignment = NSTextAlignmentLeft;
-            adressLabel.numberOfLines = 2;
-            adressLabel.textColor = [UIColor whiteColor];
-            [imv addSubview:adressLabel];
+            if (self.isAgainIn) {
+                [_showImv addSubview:imv];
+            }else{
+                [imv loadNewTitle:imv.product_name];
+            }
             
             
-            CGPoint center = imv.center;
-            CGRect r = imv.frame;
-            r.size.height = 70;
-            r.size.width = 105;
-            [imv setFrame:r];
-            imv.center = center;
         }else if ([imv.type isEqualToString:@"店铺"]){
-            //背景图
-            [imv setImage:[UIImage imageNamed:@"gttailink_have.png"]];
-            
-            //店铺名
-            UILabel *productName = [[UILabel alloc]initWithFrame:CGRectMake(17, 7, 85, 35)];
-            productName.text = imv.shop_name;
-            productName.font = [UIFont systemFontOfSize:10];
-            productName.numberOfLines = 3;
-            productName.textColor = [UIColor whiteColor];
-            [imv addSubview:productName];
             
             
-            //地址
-            UILabel *adressLabel = [[UILabel alloc]initWithFrame:CGRectMake(9, CGRectGetMaxY(productName.frame)+3, 97, 25)];
-            adressLabel.text = [NSString stringWithFormat:@"地址:%@",imv.product_price];
-            adressLabel.font = [UIFont systemFontOfSize:10];
-            adressLabel.textAlignment = NSTextAlignmentLeft;
-            adressLabel.numberOfLines = 2;
-            adressLabel.textColor = [UIColor whiteColor];
-            [imv addSubview:adressLabel];
+            imv.titleLabel.text = imv.shop_name;
+            if (self.isAgainIn) {
+                [_showImv addSubview:imv];
+            }else{
+                [imv loadNewTitle:imv.shop_name];
+            }
             
-            CGPoint center = imv.center;
-            CGRect r = imv.frame;
-            r.size.height = 70;
-            r.size.width = 105;
-            [imv setFrame:r];
-            imv.center = center;
+            
+            
         }
         
         
         
-        imv.tag = (_flagTag_gimv+=1);
+        
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(addProductLink:)];
         [imv addGestureRecognizer:tap];
         
-        UIButton *deletBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [deletBtn setFrame:CGRectMake(1, 1, 17, 17)];
-        [deletBtn setImage:[UIImage imageNamed:@"g_linkdelete.png"] forState:UIControlStateNormal];
-        [imv addSubview:deletBtn];
-        [deletBtn addTarget:self action:@selector(removeSelf:) forControlEvents:UIControlEventTouchUpInside];
-        deletBtn.tag = -imv.tag;
+        
+        __weak typeof (self)bself = self;
+        
+        [imv setDeleteBlock:^(NSInteger theTag) {
+            [bself removeSelf:theTag];
+        }];
+        
         
         [_showImv addSubview:imv];
         
@@ -316,9 +284,12 @@
     NSMutableArray *locationyArray = [NSMutableArray arrayWithCapacity:1];
     
     for (GmoveImv *imv in self.maodianArray) {
+        
         NSLog(@"shopName:%@ shopId:%@ productName:%@ productId:%@  x=%f y=%f",imv.shop_name,imv.shop_id,imv.product_name,imv.product_id,imv.location_x,imv.location_y);
-        CGFloat locationxbili = imv.location_x/_showImv.frame.size.width;
-        CGFloat locationybili = imv.location_y/_showImv.frame.size.height;
+        
+        CGFloat locationxbili = (imv.location_x)/_showImv.frame.size.width;
+        CGFloat locationybili = (imv.location_y)/_showImv.frame.size.height;
+        
         if (!imv.shop_id) {
             continue;
         }
@@ -368,29 +339,28 @@
     
     //保存触摸起始点位置
     CGPoint point = [[touches anyObject] locationInView:_showImv];
-    NSLog(@"x=%f y=%f",point.x,point.y);
     
-    GmoveImv *gimv = [[GmoveImv alloc]initWithFrame:CGRectMake(0, 0, 60, 60)];
+    NSString *title = @"点击或拖动添加标签";
+    GmoveImv *gimv = [[GmoveImv alloc]initWithAnchorPoint:CGPointMake(point.x, point.y) title:title width:_showImv.frame.size.width tag:(_flagTag_gimv+=1)];
     
-    gimv.tag = (_flagTag_gimv+=1);
-    [gimv setImage:[UIImage imageNamed:@"gTtai_dianwo.png"]];
-    gimv.center = point;
-    gimv.location_x = point.x;
-    gimv.location_y = point.y;
+    
+    __weak typeof (self)bself = self;
+    
+    [gimv setDeleteBlock:^(NSInteger theTag) {
+        [bself removeSelf:theTag];
+    }];
+    
+    
+    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(addProductLink:)];
     [gimv addGestureRecognizer:tap];
-    
-    UIButton *deletBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [deletBtn setFrame:CGRectMake(1, 1, 17, 17)];
-    [deletBtn setImage:[UIImage imageNamed:@"g_linkdelete.png"] forState:UIControlStateNormal];
-    [gimv addSubview:deletBtn];
-    [deletBtn addTarget:self action:@selector(removeSelf:) forControlEvents:UIControlEventTouchUpInside];
-    deletBtn.tag = -gimv.tag;
     
     
     if (self.maodianArray.count<5) {
         [_showImv addSubview:gimv];
         [self.maodianArray addObject:gimv];
+    }else{
+        [GMAPI showAutoHiddenMBProgressWithText:@"最多添加5个标签" addToView:self.view];
     }
     
     
@@ -401,7 +371,8 @@
     
     //判断是否在图片上
     if (gimv.frame.origin.x<0||CGRectGetMaxX(gimv.frame)>_showImv.frame.size.width||gimv.frame.origin.y<0||CGRectGetMaxY(gimv.frame)>_showImv.frame.size.height) {
-        [self removeSelf:deletBtn];
+        [self.maodianArray removeObject:gimv];
+        [gimv removeFromSuperview];
     }
 
     
@@ -410,9 +381,9 @@
 }
 
 
--(void)removeSelf:(UIButton *)sender{
+-(void)removeSelf:(NSInteger)theTag{
     
-    GmoveImv *imv = (GmoveImv*)[self.view viewWithTag:(-sender.tag)];
+    GmoveImv *imv = (GmoveImv*)[self.view viewWithTag:(-theTag)];
     [self.maodianArray removeObject:imv];
     [imv removeFromSuperview];
 }
@@ -439,7 +410,6 @@
     
     for (GmoveImv *imv in self.maodianArray) {
         if (imv.tag == _flagTag) {
-            [imv setImage:[UIImage imageNamed:@"GTtailj_bg.png"]];
             imv.shop_id = theShopId;
             imv.product_id = productId;
             imv.shop_name = theShopName;

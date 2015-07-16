@@ -84,12 +84,14 @@
         
         
         //活动
-        UILabel *activeLabel = [[UILabel alloc]initWithFrame:CGRectMake(nameLabel.frame.origin.x, CGRectGetMaxY(nameLabel.frame)+10, DEVICE_WIDTH - 30 , 15)];
+        UILabel *activeLabel = [[UILabel alloc]initWithFrame:CGRectMake(nameLabel.frame.origin.x, CGRectGetMaxY(nameLabel.frame)+10, DEVICE_WIDTH - 50 , 15)];
         activeLabel.font = [UIFont systemFontOfSize:14];
         activeLabel.textColor = RGBCOLOR(114, 114, 114);
         activeLabel.text = [dic stringValueForKey:@"activity_title"];
-        activeLabel.numberOfLines = 4;
-        [activeLabel sizeToFit];
+        activeLabel.numberOfLines = 1;
+        if (activeLabel.text.length == 0) {
+            activeLabel.frame = CGRectZero;
+        }
         
         cellHeight += distanceLabel.frame.size.height+activeLabel.frame.size.height;
         

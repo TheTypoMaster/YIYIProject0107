@@ -184,6 +184,7 @@
                                        
                                        NSLog(@"mydic == %@ err0 = %@",mydic,myerr);
                                        
+                                       
                                        [LTools showMBProgressWithText:mydic[@"msg"] addToView:self.view];
                                        
                                        
@@ -584,6 +585,7 @@
     
     
     if (self.maodianDic) {
+        ddd.isAgainIn = YES;
         ddd.maodianArray = self.GimvArray;
     }
     if (self.theTtaiModel) {

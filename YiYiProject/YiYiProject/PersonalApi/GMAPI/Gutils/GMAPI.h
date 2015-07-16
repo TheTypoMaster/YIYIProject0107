@@ -206,4 +206,14 @@
 
 
 
+//userInfo缓存
++(void)setUserInfoCacheWithDic:(NSDictionary *)data;
++(NSDictionary *)getUserInfoCache;
++(void)cleanUserInfo;
+
+
+
+
+
+
 @end

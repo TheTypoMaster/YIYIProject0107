@@ -270,7 +270,6 @@
 		13CD36541A3C732D0068C12A /* LWaterflowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CD36531A3C732D0068C12A /* LWaterflowView.m */; };
 		13CEC8891A5D956B00FE273F /* TTaiDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CEC8881A5D956B00FE273F /* TTaiDetailController.m */; };
 		13CEC88F1A5D95F400FE273F /* TDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CEC88E1A5D95F400FE273F /* TDetailModel.m */; };
-		13CEC8931A5D96CF00FE273F /* TTPublishViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CEC8911A5D96CF00FE273F /* TTPublishViewController.m */; };
 		13CEC89E1A5D974900FE273F /* dapei_jiantou@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13CEC8961A5D974900FE273F /* dapei_jiantou@2x.png */; };
 		13CEC8A01A5D974900FE273F /* pinglun_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13CEC8981A5D974900FE273F /* pinglun_icon@2x.png */; };
 		13CEC8A11A5D974900FE273F /* time_iocn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13CEC8991A5D974900FE273F /* time_iocn@2x.png */; };
@@ -989,8 +988,6 @@
 		13CEC8881A5D956B00FE273F /* TTaiDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTaiDetailController.m; sourceTree = "<group>"; };
 		13CEC88D1A5D95F400FE273F /* TDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDetailModel.h; sourceTree = "<group>"; };
 		13CEC88E1A5D95F400FE273F /* TDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDetailModel.m; sourceTree = "<group>"; };
-		13CEC8901A5D96CF00FE273F /* TTPublishViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTPublishViewController.h; sourceTree = "<group>"; };
-		13CEC8911A5D96CF00FE273F /* TTPublishViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTPublishViewController.m; sourceTree = "<group>"; };
 		13CEC8961A5D974900FE273F /* dapei_jiantou@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dapei_jiantou@2x.png"; sourceTree = "<group>"; };
 		13CEC8981A5D974900FE273F /* pinglun_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pinglun_icon@2x.png"; sourceTree = "<group>"; };
 		13CEC8991A5D974900FE273F /* time_iocn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "time_iocn@2x.png"; sourceTree = "<group>"; };
@@ -2319,8 +2316,6 @@
 		13A389921A3893C100ABBACB /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				13CEC8901A5D96CF00FE273F /* TTPublishViewController.h */,
-				13CEC8911A5D96CF00FE273F /* TTPublishViewController.m */,
 				13CEC8871A5D956B00FE273F /* TTaiDetailController.h */,
 				13CEC8881A5D956B00FE273F /* TTaiDetailController.m */,
 				13A389931A3893D000ABBACB /* TTaiViewController.h */,
@@ -3992,7 +3987,6 @@
 				13A389BD1A38974F00ABBACB /* RefreshTableView.m in Sources */,
 				13963F4C1A4FC5FB007BE68B /* PublishHuatiController.m in Sources */,
 				E37EB4F61ABFB50E009F5797 /* GsearchViewController.m in Sources */,
-				13CEC8931A5D96CF00FE273F /* TTPublishViewController.m in Sources */,
 				13D03D4E1AEDD60F0078AA9E /* WaterFLayout.m in Sources */,
 				13AD17B11A603E4300AB24F5 /* TopicParseModel.m in Sources */,
 				E36B2B731AC25C14004A87B3 /* GEditProductTableViewCell.m in Sources */,
@@ -4358,7 +4352,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "93eccb9e-dc34-4dc5-9443-06a83c16f5de";
+				PROVISIONING_PROFILE = "f7cfa394-d071-4c50-9472-3da49a9d7665";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 				VALID_ARCHS = "arm64 armv7s armv7";
 			};
@@ -4392,7 +4386,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "93eccb9e-dc34-4dc5-9443-06a83c16f5de";
+				PROVISIONING_PROFILE = "f7cfa394-d071-4c50-9472-3da49a9d7665";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 				VALID_ARCHS = "arm64 armv7s armv7";
 			};

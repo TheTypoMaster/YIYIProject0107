@@ -674,4 +674,18 @@
 }
 
 
+//userInfo部分
++(void)setUserInfoCacheWithDic:(NSDictionary *)data{
+    [[NSUserDefaults standardUserDefaults]setObject:data forKey:USERINFO_DIC];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+}
++(NSDictionary *)getUserInfoCache{
+    NSDictionary *dic = [[NSUserDefaults standardUserDefaults]objectForKey:USERINFO_DIC];
+    return dic;
+}
++(void)cleanUserInfo{
+    [[NSUserDefaults standardUserDefaults]removeObjectForKey:USERINFO_DIC];
+}
+
+
 @end

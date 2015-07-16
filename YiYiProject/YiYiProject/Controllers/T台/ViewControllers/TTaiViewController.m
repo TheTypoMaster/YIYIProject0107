@@ -10,7 +10,6 @@
 #import "LoginViewController.h"
 #import "PublishHuatiController.h"
 
-#import "TTPublishViewController.h"
 #import "TTaiDetailController.h"
 
 #import "LWaterflowView.h"

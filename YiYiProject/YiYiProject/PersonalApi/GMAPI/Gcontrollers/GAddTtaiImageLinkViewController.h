@@ -30,6 +30,10 @@
 @property(nonatomic,assign)BOOL isFirst;//是编辑T台进来先把锚点加上
 
 
+//判断是否添加完锚点后再次进入
+@property(nonatomic,assign)BOOL isAgainIn;
+
+
 
 
 //设置锚点的商品id和shopid
