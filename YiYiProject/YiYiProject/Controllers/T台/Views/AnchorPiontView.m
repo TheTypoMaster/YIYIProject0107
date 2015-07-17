@@ -127,13 +127,25 @@
 
         }
         
+        //判端右侧边界情况
         
+        if (self.right > DEVICE_WIDTH - 10) {
+            
+            CGFloat dis = self.right - (DEVICE_WIDTH - 10);
+            self.width -= dis;
+            _titleLabel.width -= dis;
+            _imageView.width -= dis;
+        }
         
         UIButton *clickButton = [UIButton buttonWithType:UIButtonTypeCustom];
         clickButton.frame = self.bounds;
         clickButton.backgroundColor = [UIColor clearColor];
         [clickButton addTarget:self action:@selector(clickToDo:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:clickButton];
+        
+        
+        
+        
         
     }
     return self;

@@ -105,7 +105,7 @@
         NSLog(@"imv.shopName = %@  imv.pname = %@",imv.shop_name,imv.product_name);
         
         if (imv.shop_id == nil && !self.theTtaiModel) {
-            if (imv.frame.origin.x > _showImv.frame.size.width*0.5) {
+            if (imv.location_x > _showImv.frame.size.width*0.5) {
                 imv.isRight = NO;
             }else{
                 imv.isRight = YES;
