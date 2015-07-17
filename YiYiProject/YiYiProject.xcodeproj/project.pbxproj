@@ -4261,8 +4261,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Zhong Kun Shi (HXFU9MZ8SD)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zhong Kun Shi (HXFU9MZ8SD)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing yijiayi Network technology co., LTD (4QFHYF622N)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing yijiayi Network technology co., LTD (4QFHYF622N)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -4282,7 +4282,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "93eccb9e-dc34-4dc5-9443-06a83c16f5de";
+				PROVISIONING_PROFILE = "8260615f-be50-4052-a674-c6dac68a8528";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -4304,8 +4304,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Zhong Kun Shi (HXFU9MZ8SD)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zhong Kun Shi (HXFU9MZ8SD)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing yijiayi Network technology co., LTD (4QFHYF622N)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing yijiayi Network technology co., LTD (4QFHYF622N)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -4318,7 +4318,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "93eccb9e-dc34-4dc5-9443-06a83c16f5de";
+				PROVISIONING_PROFILE = "8260615f-be50-4052-a674-c6dac68a8528";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -4330,8 +4330,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing yijiayi Network technology co., LTD (4QFHYF622N)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing yijiayi Network technology co., LTD (4QFHYF622N)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YiYiProject/UMengShare/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
@@ -4352,7 +4352,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "f7cfa394-d071-4c50-9472-3da49a9d7665";
+				PROVISIONING_PROFILE = "8260615f-be50-4052-a674-c6dac68a8528";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 				VALID_ARCHS = "arm64 armv7s armv7";
 			};
@@ -4364,8 +4364,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhong Kun Shi (6NH6VCUU57)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing yijiayi Network technology co., LTD (4QFHYF622N)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing yijiayi Network technology co., LTD (4QFHYF622N)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YiYiProject/UMengShare/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
@@ -4386,7 +4386,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "f7cfa394-d071-4c50-9472-3da49a9d7665";
+				PROVISIONING_PROFILE = "8260615f-be50-4052-a674-c6dac68a8528";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 				VALID_ARCHS = "arm64 armv7s armv7";
 			};
