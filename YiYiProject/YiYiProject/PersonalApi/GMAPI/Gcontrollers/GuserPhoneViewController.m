@@ -55,6 +55,13 @@
 
 
 -(void)creatPhoneView{
+    
+    
+    UIControl *cc = [[UIControl alloc]initWithFrame:self.view.bounds];
+    [self.view addSubview:cc];
+    [cc addTarget:self action:@selector(gshou) forControlEvents:UIControlEventTouchUpInside];
+    
+    
     _phoneTf = [[UITextField alloc]initWithFrame:CGRectMake(14, 15, DEVICE_WIDTH-28, 30)];
     _phoneTf.placeholder = @"请输入手机号";
     _phoneTf.font = [UIFont systemFontOfSize:13];
@@ -196,5 +203,12 @@
 }
 
 
+-(void)gshou{
+    NSLog(@"%s",__FUNCTION__);
+    [_phoneTf resignFirstResponder];
+    [_yanzhengmaTf resignFirstResponder];
+    [_passWordTf resignFirstResponder];
+    
+}
 
 @end

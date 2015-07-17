@@ -170,8 +170,18 @@ typedef enum{
         
         
     }else{
-        [self cacheUserInfo];
-//        [self performSelector:@selector(GgetUserInfo) withObject:nil afterDelay:0.5];
+        
+        NSDictionary *dic = [GMAPI getUserInfoCache];
+        NSString *nowtime = [GMAPI getNowTime];
+        NSString *cacheTime = [dic stringValueForKey:@"theDayTime"];
+        if ([nowtime isEqualToString:cacheTime]) {
+            [self cacheUserInfo];
+        }else{
+            [self GgetUserInfo];
+        }
+        
+        
+
     }
     
 }
@@ -328,10 +338,6 @@ typedef enum{
     _userInfo = [[UserInfo alloc]initWithDictionary:dic];
     
     _getUserinfoSuccess = YES;
-    [self setUpuserInfoViewWithLoginState:[LTools cacheBoolForKey:LOGIN_SERVER_STATE]];
-    
-    //本地存储model
-    [GMAPI setUserInfoCacheWithDic:dic];
     
     if ([_userInfo.is_sign intValue] == 0) {//未签到
         _qiandaoBtn.userInteractionEnabled = YES;
@@ -431,6 +437,12 @@ typedef enum{
         [_hud stopAnimating];
         
         NSDictionary *dic = [result dictionaryValueForKey:@"user_info"];
+        NSMutableDictionary *dic_m = [NSMutableDictionary dictionaryWithDictionary:dic];
+        NSString *theTime = [GMAPI getNowTime];
+        [dic_m setValue:theTime forKey:@"theDayTime"];
+        dic = (NSDictionary *)dic_m;
+        
+        
         
         _userInfo = [[UserInfo alloc]initWithDictionary:dic];
         

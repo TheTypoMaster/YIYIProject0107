@@ -211,7 +211,8 @@
 +(NSDictionary *)getUserInfoCache;
 +(void)cleanUserInfo;
 
-
+//获取当前时间
++(NSString*)getNowTime;
 
 
 

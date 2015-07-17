@@ -687,5 +687,15 @@
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:USERINFO_DIC];
 }
 
++(NSString *)getNowTime{
+    NSDate *  senddate=[NSDate date];
+    
+    NSDateFormatter  *dateformatter=[[NSDateFormatter alloc] init];
+    
+    [dateformatter setDateFormat:@"YYYYMMdd"];
+    
+    NSString *locationString=[dateformatter stringFromDate:senddate];
+    return locationString;
+}
 
 @end
