@@ -149,6 +149,9 @@ static const int kFenleiKadding = 4000;//分类
         _lowPrice = [[UITextField alloc]initWithFrame:CGRectMake(18, priceLabel.bottom + 10, 70, sortHeight)];
         [bgView addSubview:_lowPrice];
         _lowPrice.keyboardType = UIKeyboardTypeNumberPad;
+        _lowPrice.leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 8, 0)];
+        //设置显示模式为永远显示(默认不显示)
+        _lowPrice.leftViewMode = UITextFieldViewModeAlways;
         
         [_lowPrice setBorderWidth:1.f borderColor:[UIColor colorWithHexString:@"e2e2e2"]];
         [_lowPrice addCornerRadius:5.f];
@@ -164,7 +167,9 @@ static const int kFenleiKadding = 4000;//分类
         [bgView addSubview:_highPrice];
         _highPrice.keyboardType = UIKeyboardTypeNumberPad;
         _highPrice.font = [UIFont systemFontOfSize:12];
-        
+        _highPrice.leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 8, 0)];
+        //设置显示模式为永远显示(默认不显示)
+        _highPrice.leftViewMode = UITextFieldViewModeAlways;
         
         [_highPrice setBorderWidth:1.f borderColor:[UIColor colorWithHexString:@"e2e2e2"]];
         [_highPrice addCornerRadius:5.f];

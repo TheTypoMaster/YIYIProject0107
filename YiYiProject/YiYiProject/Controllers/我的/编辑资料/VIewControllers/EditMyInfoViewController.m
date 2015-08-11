@@ -56,7 +56,12 @@
     
     [self addGesturesOnViews];
     
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getMyUserInfo) name:NOTIFICATION_USER_EDITPHONENUM_SUCCESS object:nil];
+    
     [self getMyUserInfo];
+    
+    
     
     // Do any additional setup after loading the view from its nib.
 }

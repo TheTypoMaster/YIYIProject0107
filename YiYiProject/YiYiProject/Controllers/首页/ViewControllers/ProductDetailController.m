@@ -539,7 +539,7 @@
 {
     NSString *phoneNum = aModel.mall_info[@"mobile"];
     
-    if ([LTools isValidateMobile:phoneNum]) {
+    if (phoneNum.length > 0) {
         
         UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"拨号" message:phoneNum delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         [al show];

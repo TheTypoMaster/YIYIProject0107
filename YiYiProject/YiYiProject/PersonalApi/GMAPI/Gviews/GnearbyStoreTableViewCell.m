@@ -50,14 +50,14 @@
     contentView.backgroundColor = [UIColor clearColor];
     [self.contentView addSubview:contentView];
     //活动名
-    UILabel *huodong = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 15)];
+    UILabel *huodong = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, DEVICE_WIDTH - 20, 15)];
     huodong.text = [theModel stringValueForKey:@"activity_title"];
     huodong.font = [UIFont systemFontOfSize:15];
     huodong.textAlignment = NSTextAlignmentCenter;
     huodong.textColor = [UIColor whiteColor];
     [contentView addSubview:huodong];
     //商场名
-    UILabel *storeName = [[UILabel alloc]initWithFrame:CGRectMake(0, 25, DEVICE_WIDTH, 15)];
+    UILabel *storeName = [[UILabel alloc]initWithFrame:CGRectMake(10, 25, DEVICE_WIDTH - 20, 15)];
     NSString *distance = [GMAPI changeDistanceWithStr:[theModel stringValueForKey:@"distance"]];
     storeName.text = [NSString stringWithFormat:@"%@   %@",[theModel stringValueForKey:@"mall_name"],distance];
     storeName.textColor = [UIColor whiteColor];

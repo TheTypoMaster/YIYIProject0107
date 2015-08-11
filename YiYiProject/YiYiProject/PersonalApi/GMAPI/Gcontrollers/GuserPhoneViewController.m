@@ -122,7 +122,7 @@
     
     if (_phoneTf.text.length==11) {
         
-        NSString *api = [NSString stringWithFormat:USER_GET_SECURITY_CODE,_phoneTf.text,5,[LTools md5Phone:_passWordTf.text]];
+        NSString *api = [NSString stringWithFormat:USER_GET_SECURITY_CODE,_phoneTf.text,7,[LTools md5Phone:_phoneTf.text]];
         LTools *ccc =[[LTools alloc]initWithUrl:api isPost:NO postData:nil];
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
             
@@ -178,9 +178,13 @@
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             
+            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_USER_EDITPHONENUM_SUCCESS object:nil];
+            
             NSLog(@"%@",result);
             
             [GMAPI showAutoHiddenMBProgressWithText:result[@"msg"] addToView:self.view];
+            
+            [self performSelector:@selector(Ggobback) withObject:nil afterDelay:0.5];
             
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
@@ -194,6 +198,11 @@
     
     
     
+}
+
+
+-(void)Ggobback{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

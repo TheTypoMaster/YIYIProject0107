@@ -844,6 +844,8 @@
     return [emailTest evaluateWithObject:pwdString];
 }
 
+
+
 /*手机及固话*/
 + (BOOL)isValidateMobile:(NSString *)mobileNum
 {
@@ -881,8 +883,9 @@
      26         * 区号：010,020,021,022,023,024,025,027,028,029
      27         * 号码：七位或八位
      28         */
-    NSString * PHS = @"^0(10|2[0-5789]|\\d{3})\\d{7,8}$";
+//    NSString * PHS = @"^0(10|2[0-5789]|\\d{3})\\d{7,8}$";
     
+    NSString *PHS = @"^(0(10|2[0-5789]|\\d{3})\\-?)?\\d{7,8}$";
     NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", mobie];
     NSPredicate *regextestcm = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", PHS];
   

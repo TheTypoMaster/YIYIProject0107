@@ -30,11 +30,6 @@
 
 //融云cloud
 
-
-//开发
-//#define RONGCLOUD_IM_APPKEY    @"kj7swf8o7zaf2" //正式 融云账号 18600912932 cocos2d
-//#define RONGCLOUD_IM_APPSECRET @"2cCSWhaLcCm37"
-
 //上线
 #define RONGCLOUD_IM_APPKEY    @"qf3d5gbj3a8gh" //正式 融云账号 18600912932 cocos2d
 #define RONGCLOUD_IM_APPSECRET @"rcUmYEhqkfs"
@@ -72,7 +67,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     // Override point for customization after application launch.
-    
     
 #pragma mark 融云
     

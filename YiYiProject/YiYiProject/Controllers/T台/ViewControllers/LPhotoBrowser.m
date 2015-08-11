@@ -61,7 +61,7 @@
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    NSLog(@"observeValueForKeyPath %@",change);
+//    NSLog(@"observeValueForKeyPath %@",change);
 }
 
 #pragma - mark 创建视图
