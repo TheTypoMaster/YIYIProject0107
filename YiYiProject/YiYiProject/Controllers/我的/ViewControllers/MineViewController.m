@@ -347,6 +347,8 @@ typedef enum{
         _qiandaoBtn.selected = YES;
     }
     
+    _qiandaoBtn.hidden = NO;
+    
     
     if ([_userInfo.shopman intValue] == 2) {//已经是店主
         [self changeTheTitleAndPicArray_dianzhu];

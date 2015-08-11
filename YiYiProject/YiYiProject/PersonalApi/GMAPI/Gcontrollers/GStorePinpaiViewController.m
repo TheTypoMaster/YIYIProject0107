@@ -257,6 +257,8 @@
         [weakSelf getPinpaiShopWithResult:result];
         
         
+        
+        
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
     }];
@@ -389,6 +391,8 @@
     
     [self createMemuView];
     [self getGuanzhuYesOrNoForPinpaiDianWithDic:result];
+    
+    [self dianpuLiulan];
 }
 
 /**
