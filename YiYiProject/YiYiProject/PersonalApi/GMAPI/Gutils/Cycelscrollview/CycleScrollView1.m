@@ -15,7 +15,7 @@
 @property (nonatomic , strong) NSMutableArray *contentViews;
 @property (nonatomic , strong) UIScrollView *scrollView;
 
-@property (nonatomic , strong) NSTimer *animationTimer;
+//@property (nonatomic , strong) NSTimer *animationTimer;
 @property (nonatomic , assign) NSTimeInterval animationDuration;
 
 @property(nonatomic,strong)UIPageControl *pageControl;

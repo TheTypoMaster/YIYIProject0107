@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,7 +11,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="466"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="465"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="465.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_yijiayi.png" id="KwF-RW-oYW">
@@ -19,31 +19,38 @@
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="d2U-Za-rn5" customClass="PropertyImageView">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="472"/>
+                        <rect key="frame" x="8" y="8" width="304" height="400"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Ttai_yuanjiao_right_up.png" id="Kyo-ZQ-TCj">
-                        <rect key="frame" x="109" y="0.0" width="213.5" height="197.5"/>
+                        <rect key="frame" x="98" y="8" width="213.5" height="197.5"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Ttai_yuanjiao_left_down.png" id="RNm-5T-cbI">
-                        <rect key="frame" x="0.0" y="269" width="213.5" height="197.5"/>
+                        <rect key="frame" x="8" y="210" width="213.5" height="197.5"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     </imageView>
-                    <view clipsSubviews="YES" contentMode="scaleToFill" id="qyO-dK-uaw">
-                        <rect key="frame" x="254" y="423" width="50" height="28"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                    <view contentMode="scaleToFill" id="1n5-nJ-I7a">
+                        <rect key="frame" x="8" y="409" width="303.5" height="56"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" alpha="0.64999999999999969" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="b2q-o4-1jI">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="28"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="Ttai_zan_normal.png">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="selected" image="Ttai_zan_selected.png"/>
-                            </button>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" id="qyO-dK-uaw">
+                                <rect key="frame" x="240" y="14" width="50" height="28"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" alpha="0.64999999999999969" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="b2q-o4-1jI">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="28"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="Ttai_zan_normal.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="selected" image="Ttai_zan_selected.png"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.99215692281723022" green="0.97254908084869385" blue="0.97647064924240112" alpha="0.5" colorSpace="deviceRGB"/>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.99215692281723022" green="0.97254908084869385" blue="0.97647064924240112" alpha="0.5" colorSpace="deviceRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                 </subviews>
                 <color key="backgroundColor" red="0.89411764709999997" green="0.89411764709999997" blue="0.89411764709999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -55,6 +62,13 @@
             </connections>
             <point key="canvasLocation" x="-541" y="219"/>
         </tableViewCell>
+        <viewController id="xGG-Hv-wUF">
+            <view key="view" contentMode="scaleToFill" id="IIY-DE-hwV">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            </view>
+        </viewController>
     </objects>
     <resources>
         <image name="Ttai_yuanjiao_left_down.png" width="201" height="201"/>
