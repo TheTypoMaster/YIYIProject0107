@@ -297,8 +297,6 @@
     }
     
     
-    //    TTaiBigPhotoCell *cell = (TTaiBigPhotoCell *)[_table cellForRowAtIndexPath:[NSIndexPath indexPathForRow:zan_btn.tag - 100 inSection:0]];
-    
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
@@ -640,12 +638,9 @@
     cell.maoDianView.backgroundColor = [UIColor clearColor];
     [cell.contentView addSubview:cell.maoDianView];
     
-    //    [self removeMaoDianForCell:cell];
-    
     [self addMaoDian:aModel imageView:cell.maoDianView];
     
     //赞按钮
-    
     cell.zanBtn.tag = 100 + indexPath.row;
     [cell.contentView bringSubviewToFront:cell.zanBackView];
     [cell.zanBtn addTarget:self action:@selector(zanTTaiDetail:) forControlEvents:UIControlEventTouchUpInside];

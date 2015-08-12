@@ -2,7 +2,7 @@
 //  CycleScrollView.h
 //  PagedScrollView
 //
-//  Created by 高猛 on 14-1-23.
+//  Created by gaomeng on 14-11-23.
 //  Copyright (c) 2014年 Apple Inc. All rights reserved.
 //
 

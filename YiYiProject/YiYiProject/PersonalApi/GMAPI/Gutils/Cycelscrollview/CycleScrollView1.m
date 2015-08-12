@@ -157,13 +157,11 @@
     int contentOffsetY = scrollView.contentOffset.y;
     if(contentOffsetY >= (2 * CGRectGetHeight(scrollView.frame))) {
         self.currentPageIndex = [self getValidNextPageIndexWithPageIndex:self.currentPageIndex + 1];
-                NSLog(@"next，当前页:%ld",(long)self.currentPageIndex);
         [self configContentViews];
         
     }
     if(contentOffsetY <= 0) {
         self.currentPageIndex = [self getValidNextPageIndexWithPageIndex:self.currentPageIndex - 1];
-                NSLog(@"previous，当前页:%ld",(long)self.currentPageIndex);
         [self configContentViews];
     }
     
@@ -175,7 +173,7 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    [scrollView setContentOffset:CGPointMake(0, CGRectGetWidth(scrollView.frame)) animated:YES];
+    [scrollView setContentOffset:CGPointMake(0, CGRectGetHeight(scrollView.frame)) animated:YES];
 }
 
 #pragma mark -
