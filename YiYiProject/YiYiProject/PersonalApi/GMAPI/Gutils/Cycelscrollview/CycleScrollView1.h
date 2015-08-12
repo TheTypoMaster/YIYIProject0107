@@ -22,6 +22,9 @@
  */
 - (id)initWithFrame:(CGRect)frame animationDuration:(NSTimeInterval)animationDuration;
 
+//新加 是否隐藏pageControl
+@property(nonatomic,assign)BOOL isPageControlHidden;
+
 /**
  数据源：获取总的page个数
  **/

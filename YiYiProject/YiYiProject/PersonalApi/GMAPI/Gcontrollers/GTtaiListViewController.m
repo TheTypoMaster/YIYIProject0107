@@ -144,6 +144,7 @@
     }
     
     CycleScrollView1 * topScrollView1 = [[CycleScrollView1 alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(topScrollView.frame)+5, DEVICE_WIDTH, 95) animationDuration:2];
+    topScrollView1.isPageControlHidden = YES;
     topScrollView1.scrollView.showsHorizontalScrollIndicator = FALSE;
     
     topScrollView1.fetchContentViewAtIndex = ^UIView *(NSInteger pageIndex){

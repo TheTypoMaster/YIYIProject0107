@@ -34,14 +34,21 @@
         [self.animationTimer resumeTimerAfterTimeInterval:self.animationDuration];
     }
 
-    CGRect rect = self.frame;
-    rect.origin.y = rect.size.height - 30;
-    rect.size.height = 30;
-    self.pageControl = [[UIPageControl alloc] initWithFrame:rect];
-    self.pageControl.userInteractionEnabled = NO;
     
-    [self addSubview:self.pageControl];
-    self.pageControl.numberOfPages = _totalPageCount;
+    
+    
+    if (!self.isPageControlHidden) {
+        CGRect rect = self.frame;
+        rect.origin.y = rect.size.height - 30;
+        rect.size.height = 30;
+        self.pageControl = [[UIPageControl alloc] initWithFrame:rect];
+        self.pageControl.userInteractionEnabled = NO;
+        
+        [self addSubview:self.pageControl];
+        self.pageControl.numberOfPages = _totalPageCount;
+    }
+    
+    
     
     
 }
