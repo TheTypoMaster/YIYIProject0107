@@ -415,6 +415,7 @@
 		E310DA771B7AEEDC00C46064 /* GTtaiListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E310DA761B7AEEDC00C46064 /* GTtaiListViewController.m */; };
 		E310DA821B7AFAC300C46064 /* CycleScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = E310DA7F1B7AFAC300C46064 /* CycleScrollView.m */; };
 		E310DA831B7AFAC300C46064 /* NSTimer+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = E310DA811B7AFAC300C46064 /* NSTimer+Addition.m */; };
+		E310DA861B7B339400C46064 /* CycleScrollView1.m in Sources */ = {isa = PBXBuildFile; fileRef = E310DA851B7B339400C46064 /* CycleScrollView1.m */; };
 		E3142BDD1B10D08E00883BA7 /* GmyTtaiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3142BDC1B10D08E00883BA7 /* GmyTtaiViewController.m */; };
 		E3268F991B13115D00F87E78 /* searchproductdefaulpic@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3268F981B13115D00F87E78 /* searchproductdefaulpic@2x.png */; };
 		E334B81E1AFB47DB00DC9209 /* MyShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E334B81D1AFB47DB00DC9209 /* MyShopViewController.m */; };
@@ -1215,6 +1216,8 @@
 		E310DA7F1B7AFAC300C46064 /* CycleScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CycleScrollView.m; sourceTree = "<group>"; };
 		E310DA801B7AFAC300C46064 /* NSTimer+Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimer+Addition.h"; sourceTree = "<group>"; };
 		E310DA811B7AFAC300C46064 /* NSTimer+Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+Addition.m"; sourceTree = "<group>"; };
+		E310DA841B7B339400C46064 /* CycleScrollView1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CycleScrollView1.h; sourceTree = "<group>"; };
+		E310DA851B7B339400C46064 /* CycleScrollView1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CycleScrollView1.m; sourceTree = "<group>"; };
 		E3142BDB1B10D08E00883BA7 /* GmyTtaiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GmyTtaiViewController.h; sourceTree = "<group>"; };
 		E3142BDC1B10D08E00883BA7 /* GmyTtaiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GmyTtaiViewController.m; sourceTree = "<group>"; };
 		E3268F981B13115D00F87E78 /* searchproductdefaulpic@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "searchproductdefaulpic@2x.png"; sourceTree = "<group>"; };
@@ -3131,6 +3134,8 @@
 				E310DA7F1B7AFAC300C46064 /* CycleScrollView.m */,
 				E310DA801B7AFAC300C46064 /* NSTimer+Addition.h */,
 				E310DA811B7AFAC300C46064 /* NSTimer+Addition.m */,
+				E310DA841B7B339400C46064 /* CycleScrollView1.h */,
+				E310DA851B7B339400C46064 /* CycleScrollView1.m */,
 			);
 			path = Cycelscrollview;
 			sourceTree = "<group>";
@@ -4090,6 +4095,7 @@
 				139D6E891B41155400BABECF /* AdvertisementController.m in Sources */,
 				13CD36401A3C69860068C12A /* TMQuiltView.m in Sources */,
 				13CD36411A3C69860068C12A /* TMQuiltViewCell.m in Sources */,
+				E310DA861B7B339400C46064 /* CycleScrollView1.m in Sources */,
 				13EA3D1E1A3B2682002AF7D6 /* HomeBuyController.m in Sources */,
 				13CEC88F1A5D95F400FE273F /* TDetailModel.m in Sources */,
 				13963F431A4FC54D007BE68B /* LEditor.m in Sources */,

@@ -30,6 +30,7 @@
 
 
 #import "CycleScrollView.h"
+#import "CycleScrollView1.h"
 
 @interface GTtaiListViewController ()<RefreshDelegate,UITableViewDataSource>
 {
@@ -40,7 +41,8 @@
     CGFloat lastContenOffsetY;
 }
 
-@property (nonatomic ,strong) CycleScrollView *topScrollView;
+@property (nonatomic ,strong) UIView *topView;
+
 
 @end
 
@@ -74,7 +76,7 @@
     
     
     [self creatUpscrollView];
-    _table.tableHeaderView = self.topScrollView;
+    _table.tableHeaderView = self.topView;
     
     
     NSDictionary *dic = [DataManager getCacheDataForType:Cache_TPlat];
@@ -109,22 +111,57 @@
     }
     
     
-    self.topScrollView = [[CycleScrollView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 125) animationDuration:2];
-    self.topScrollView.scrollView.showsHorizontalScrollIndicator = FALSE;
+    self.topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 125 + 95 +5)];
     
-    self.topScrollView.fetchContentViewAtIndex = ^UIView *(NSInteger pageIndex){
+    CycleScrollView * topScrollView = [[CycleScrollView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 125) animationDuration:2];
+    topScrollView.scrollView.showsHorizontalScrollIndicator = FALSE;
+    
+    topScrollView.fetchContentViewAtIndex = ^UIView *(NSInteger pageIndex){
         return viewsArray[pageIndex];
     };
     
     NSInteger count = viewsArray.count;
-    self.topScrollView.totalPagesCount = ^NSInteger(void){
+    topScrollView.totalPagesCount = ^NSInteger(void){
         return count;
     };
     
     __weak typeof (self)bself = self;
-    self.topScrollView.TapActionBlock = ^(NSInteger pageIndex){
+    topScrollView.TapActionBlock = ^(NSInteger pageIndex){
         [bself cycleScrollDidClickedWithIndex:pageIndex];
     };
+    
+    [self.topView addSubview:topScrollView];
+    
+    
+    
+    
+    NSArray *colorArry1 = @[[UIColor blueColor],[UIColor greenColor],[UIColor blackColor]];
+    NSMutableArray *viewsArray1 = [NSMutableArray arrayWithCapacity:1];
+    for (int i = 0; i<3; i++) {
+        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 125)];
+        view.backgroundColor = colorArry1[i];
+        [viewsArray1 addObject:view];
+    }
+    
+    CycleScrollView1 * topScrollView1 = [[CycleScrollView1 alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(topScrollView.frame)+5, DEVICE_WIDTH, 95) animationDuration:2];
+    topScrollView1.scrollView.showsHorizontalScrollIndicator = FALSE;
+    
+    topScrollView1.fetchContentViewAtIndex = ^UIView *(NSInteger pageIndex){
+        return viewsArray1[pageIndex];
+    };
+    
+    NSInteger count1 = viewsArray1.count;
+    topScrollView1.totalPagesCount = ^NSInteger(void){
+        return count1;
+    };
+    
+//    __weak typeof (self)bself = self;
+    topScrollView1.TapActionBlock = ^(NSInteger pageIndex){
+        [bself cycleScrollDidClickedWithIndex:pageIndex];
+    };
+    
+    [self.topView addSubview:topScrollView1];
+    
     
 }
 
