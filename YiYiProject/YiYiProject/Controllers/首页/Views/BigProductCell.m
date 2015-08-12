@@ -127,7 +127,7 @@
         float image_width = [middleImage[@"width"]floatValue];
         float image_height = [middleImage[@"height"]floatValue];
         
-        imageH = [LTools heightForImageHeight:image_height imageWidth:image_width originalWidth:DEVICE_WIDTH];
+        imageH = [LTools heightForImageHeight:image_height imageWidth:image_width showWidth:DEVICE_WIDTH];
     }
 //    [self.bigImageView setImageWithURL:[NSURL URLWithString:imageurl] placeHolderText:@"加载失败..." backgroundColor:[UIColor whiteColor] holderTextColor:[UIColor lightGrayColor]];
     

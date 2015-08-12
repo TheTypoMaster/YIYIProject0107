@@ -27,8 +27,6 @@
 #import "AnchorPiontView.h"//锚点view
 
 #import "GStorePinpaiViewController.h"
-#import "ProductDetailController.h"
-
 
 @interface BigPhotoTTaiViewController ()<RefreshDelegate,UITableViewDataSource>
 {
@@ -452,11 +450,7 @@
                  infoName:(NSString *)infoName
 {
     
-    ProductDetailController *detail = [[ProductDetailController alloc]init];
-    detail.product_id = infoId;
-    detail.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:detail animated:YES];
-    
+    [MiddleTools pushToProductDetailWithId:infoId fromViewController:self lastNavigationHidden:NO hiddenBottom:YES];
 }
 
 
@@ -493,10 +487,7 @@
     CGFloat image_width = [aModel.image[@"width"]floatValue];
     CGFloat image_height = [aModel.image[@"height"]floatValue];
     
-//    return 50 + 36 + [LTools heightForImageHeight:image_height imageWidth:image_width originalWidth:DEVICE_WIDTH];
-    
-    
-    return [LTools heightForImageHeight:image_height imageWidth:image_width originalWidth:DEVICE_WIDTH];
+    return [LTools heightForImageHeight:image_height imageWidth:image_width showWidth:DEVICE_WIDTH];
 }
 //将要显示
 - (void)refreshTableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath

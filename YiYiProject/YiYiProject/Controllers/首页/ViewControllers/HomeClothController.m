@@ -22,8 +22,6 @@
 #import "GwebViewController.h"
 #import "MessageDetailController.h"
 #import "GsearchViewController.h"
-#import "ProductDetailController.h"
-
 
 #import "RefreshTableView.h"
 #import "GnearbyStoreTableViewCell.h"

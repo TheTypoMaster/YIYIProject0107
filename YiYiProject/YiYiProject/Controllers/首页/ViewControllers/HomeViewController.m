@@ -179,7 +179,7 @@
         }
         
         CGFloat realWidth = maxWidth * DEVICE_WIDTH / 375;//显示宽度
-        CGFloat realHeight = [LTools heightForImageHeight:imageHeight imageWidth:imageWidth originalWidth:realWidth];
+        CGFloat realHeight = [LTools heightForImageHeight:imageHeight imageWidth:imageWidth showWidth:realWidth];
         
         UIImageView *imageView;
         

@@ -311,13 +311,13 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
  *
  *  @param image_height   图片的高度
  *  @param image_width    图片的宽度
- *  @param original_Width 实际显示宽度
+ *  @param show_Width     实际显示宽度
  *
  *  @return 实际显示高度
  */
 + (CGFloat)heightForImageHeight:(CGFloat)image_height
                      imageWidth:(CGFloat)image_width
-                  originalWidth:(CGFloat)original_Width;
+                  showWidth:(CGFloat)show_Width;
 
 #pragma mark - 分类论坛图片获取
 

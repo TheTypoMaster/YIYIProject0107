@@ -11,8 +11,6 @@
 #import "RegisterViewController.h"
 
 #import "ProductModel.h"
-#import "ProductDetailController.h"
-
 #import "FilterView.h"
 #import "DataManager.h"
 
@@ -296,17 +294,8 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     ProductModel *aMode = _tableView.dataArray[indexPath.row];
-
-    //    [LTools alertText:aMode.product_name];
-
-    ProductDetailController *detail = [[ProductDetailController alloc]init];
-    detail.product_id = aMode.product_id;
-    detail.hidesBottomBarWhenPushed = YES;
-//    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell*)[waterFlow.quitView cellAtIndexPath:indexPath];
-//    detail.theHomeBuyVcModel = aMode;
-//    detail.theHomeBuyVcProductCell = cell;
-
-    [self.rootViewController.navigationController pushViewController:detail animated:YES];
+    
+    [MiddleTools pushToProductDetailWithId:aMode.product_id fromViewController:self.rootViewController lastNavigationHidden:NO hiddenBottom:YES];
     
 }
 
@@ -321,7 +310,7 @@
         float image_width = [middleImage[@"width"]floatValue];
         float image_height = [middleImage[@"height"]floatValue];
         
-        imageH = [LTools heightForImageHeight:image_height imageWidth:image_width originalWidth:DEVICE_WIDTH];
+        imageH = [LTools heightForImageHeight:image_height imageWidth:image_width showWidth:DEVICE_WIDTH];
     }
     
     return imageH;

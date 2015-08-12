@@ -49,7 +49,7 @@
 //        imageHeight = 500;
         
         CGFloat realWidth = DEVICE_WIDTH - 20;//显示宽度
-        _realHeight = [LTools heightForImageHeight:imageHeight imageWidth:imageWidth originalWidth:realWidth];
+        _realHeight = [LTools heightForImageHeight:imageHeight imageWidth:imageWidth showWidth:realWidth];
         
         CGFloat maxHeight = DEVICE_HEIGHT - 64 - 49 - 3 - 10 - 54;
         if (_realHeight > maxHeight) {

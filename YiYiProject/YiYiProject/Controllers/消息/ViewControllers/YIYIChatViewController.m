@@ -18,6 +18,9 @@
 #import "FBMapViewController.h"//地图显示位置
 
 @implementation YIYIChatViewController
+{
+    BOOL _isPush;//是否要push
+}
 
 
 -(id)init{
@@ -45,7 +48,16 @@
 {
     [super viewWillDisappear:animated];
     
+    if (_isPush) {
+        return;
+    }
+    
     [self.navigationController setNavigationBarHidden:self.lastPageNavigationHidden animated:animated];
+}
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    _isPush = NO;
 }
 
 
@@ -199,6 +211,7 @@
     
 //    self.navigationController.delegate = self;
     
+    _isPush = YES;
     [super openLocationPicker:sender];
  
     

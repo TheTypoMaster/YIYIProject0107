@@ -169,7 +169,7 @@
             CGFloat imageWidth = [aDic[@"width"]floatValue];
             NSString *image = aDic[@"src"];
             
-            [dic setObject:[NSNumber numberWithFloat:[LTools heightForImageHeight:imageHeight imageWidth:imageWidth originalWidth:_constImageWidth]] forKey:CELL_NEW_HEIGHT];
+            [dic setObject:[NSNumber numberWithFloat:[LTools heightForImageHeight:imageHeight imageWidth:imageWidth showWidth:_constImageWidth]] forKey:CELL_NEW_HEIGHT];
             [dic setObject:[NSNumber numberWithFloat:_constImageWidth] forKey:CELL_NEW_WIDTH];
             [dic setObject:image forKey:CELL_CONTENT];
         

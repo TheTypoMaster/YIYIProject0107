@@ -133,4 +133,18 @@
                      isTPlatPush:(BOOL)isTPlatPush;
 
 
+/**
+ *  跳转至单品详情
+ *
+ *  @param infoId               单品id
+ *  @param viewController       从哪个视图push
+ *  @param lastNavigationHidden 本页面是否隐藏NavigationBar
+ *  @param hiddenBottom         是否隐藏底部tabbar
+ */
++ (void)pushToProductDetailWithId:(NSString *)infoId
+               fromViewController:(UIViewController *)viewController
+             lastNavigationHidden:(BOOL)lastNavigationHidden
+                     hiddenBottom:(BOOL)hiddenBottom;
+
+
 @end

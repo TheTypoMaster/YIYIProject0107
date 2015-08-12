@@ -15,11 +15,7 @@
 #import "CustomInputView.h"
 #import "TopicCommentsModel.h"
 #import "TopicCommentsCell.h"
-
-#import "ProductDetailController.h"
-
 #import "GStorePinpaiViewController.h"
-
 #import "AnchorPiontView.h"
 
 @interface TTaiDetailController ()<RefreshDelegate,UITableViewDataSource>
@@ -783,12 +779,8 @@
 //到单品的
 -(void)turntodanpin:(UITapGestureRecognizer *)sender{
     
-    NSLog(@"xxxsdanpin==%ld",sender.view.tag);
-
-    ProductDetailController *detail = [[ProductDetailController alloc]init];
-    detail.product_id =[NSString stringWithFormat:@"%ld",sender.view.tag] ;
-    [self.navigationController pushViewController:detail animated:YES];
-    
+    NSString *infoId = [NSString stringWithFormat:@"%ld",sender.view.tag];
+    [MiddleTools pushToProductDetailWithId:infoId fromViewController:self lastNavigationHidden:NO hiddenBottom:NO];
 }
 
 
@@ -924,8 +916,6 @@
                      shopType:(ShopType)shopType
 {
     
-//    [MiddleTools pushToStoreDetailVcWithId:infoId guanzhuleixing:shopType name:infoName fromViewController:self lastNavigationHidden:NO hiddenBottom:YES];
-    
     [MiddleTools pushToStoreDetailVcWithId:infoId shopType:shopType storeName:infoName brandName:@" " fromViewController:self lastNavigationHidden:NO hiddenBottom:YES isTPlatPush:NO];
     
 }
@@ -934,12 +924,7 @@
 -(void)turnToDanPinInfoId:(NSString *)infoId
                  infoName:(NSString *)infoName
 {
-    
-    ProductDetailController *detail = [[ProductDetailController alloc]init];
-    detail.product_id = infoId;
-    detail.lastPageNavigationHidden = YES;
-    [self.navigationController pushViewController:detail animated:YES];
-    
+    [MiddleTools pushToProductDetailWithId:infoId fromViewController:self lastNavigationHidden:YES hiddenBottom:NO];
 }
 
 

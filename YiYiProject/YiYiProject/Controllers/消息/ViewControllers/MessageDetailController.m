@@ -343,7 +343,7 @@
             CGFloat width = [info[@"width"] floatValue];
             CGFloat height = [info[@"height"] floatValue];
             
-            height = [LTools heightForImageHeight:height/2.f imageWidth:width/2.f originalWidth:DEVICE_WIDTH - 20];
+            height = [LTools heightForImageHeight:height/2.f imageWidth:width/2.f showWidth:DEVICE_WIDTH - 20];
             
             return height;
         }
@@ -433,7 +433,7 @@
             CGFloat width = [info[@"width"] floatValue];
             CGFloat height = [info[@"height"] floatValue];
             
-            height = [LTools heightForImageHeight:height/2.f imageWidth:width/2.f originalWidth:DEVICE_WIDTH - 20];
+            height = [LTools heightForImageHeight:height/2.f imageWidth:width/2.f showWidth:DEVICE_WIDTH - 20];
 
             PropertyImageView *imageView = [[PropertyImageView alloc]initWithFrame:CGRectMake(10, 0, DEVICE_WIDTH - 20, height)];
             [cell.contentView addSubview:imageView];

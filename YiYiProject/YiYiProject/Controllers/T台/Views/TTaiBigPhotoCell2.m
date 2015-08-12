@@ -30,7 +30,7 @@
     CGFloat image_width = [aModel.image[@"width"]floatValue];
     CGFloat image_height = [aModel.image[@"height"]floatValue];
     
-    self.bigImageView.height = [LTools heightForImageHeight:image_height imageWidth:image_width originalWidth:DEVICE_WIDTH];
+    self.bigImageView.height = [LTools heightForImageHeight:image_height imageWidth:image_width showWidth:DEVICE_WIDTH];
     [self.bigImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
     
     self.bigImageView.imageUrls = @[imageUrl];//imageView对应的图集url

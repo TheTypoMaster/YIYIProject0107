@@ -269,6 +269,16 @@ typedef enum{
     Product_peishi = 5//配饰
 }ProductType;
 
+
+typedef enum {
+
+    Action_like_yes = 0,//添加赞
+    Action_like_no,//取消赞
+    Action_Collect_yes,//添加收藏
+    Action_Collect_no//取消收藏
+
+}ACTION_TYPE; //网络请求类型
+
 //单品分类
 #define PRODUCT_FENLEI  @[@"全部",@"上衣",@"裤子",@"裙子",@"内衣",@"配饰",@"其他"]
 

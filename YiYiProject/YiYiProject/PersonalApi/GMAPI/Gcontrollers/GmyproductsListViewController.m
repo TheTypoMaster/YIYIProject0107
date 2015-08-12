@@ -10,7 +10,6 @@
 //点击管理单品 进入单品列表界面
 #import "GmyproductsListViewController.h"
 #import "GupClothesViewController.h"
-#import "ProductDetailController.h"
 #import "GEditProductTableViewCell.h"
 #import "RefreshTableView.h"
 @interface GmyproductsListViewController ()<UITableViewDataSource,RefreshDelegate,UITableViewDelegate,UIActionSheetDelegate>
@@ -432,14 +431,8 @@
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
     NSLog(@"%s",__FUNCTION__);
-    
-    
     ProductModel *aMode = _tableView.dataArray[indexPath.row];
-    
-    ProductDetailController *detail = [[ProductDetailController alloc]init];
-    detail.product_id = aMode.product_id;
-    detail.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:detail animated:YES];
+    [MiddleTools pushToProductDetailWithId:aMode.product_id fromViewController:self lastNavigationHidden:NO hiddenBottom:YES];
     
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView

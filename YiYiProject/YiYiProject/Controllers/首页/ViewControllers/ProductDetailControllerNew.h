@@ -1,11 +1,10 @@
 //
-//  ProductDetailController.h
-//  Created by lichaowei on 14/12/20.
-//  Copyright (c) 2014年 lcw. All rights reserved.
+//  ProductDetailControllerNew.h
+//  YiYiProject
 //
-/**
- *  单品详情
- */
+//  Created by lichaowei on 15/8/11.
+//  Copyright (c) 2015年 lcw. All rights reserved.
+//
 
 #import "MyViewController.h"
 
@@ -14,7 +13,7 @@
 
 typedef void(^ViewDidDisappearBlock)(BOOL success);//消失block
 
-@interface ProductDetailController : MyViewController
+@interface ProductDetailControllerNew : MyViewController
 
 @property(nonatomic,assign)ViewDidDisappearBlock disappearBlock;
 
@@ -49,7 +48,5 @@ typedef void(^ViewDidDisappearBlock)(BOOL success);//消失block
 //从店铺详情页跳转过来
 @property(nonatomic,retain)TMPhotoQuiltViewCell *theStorePinpaiProductCell;//店铺详情单品跳转
 @property(nonatomic,retain)ProductModel *theStorePinpaiProductModel;//店铺详情页跳转
-
-
 
 @end

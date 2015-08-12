@@ -15,8 +15,6 @@
 #import "CustomInputView.h"
 #import "TopicCommentsModel.h"
 
-#import "ProductDetailController.h"
-
 #import "GStorePinpaiViewController.h"
 
 #import "TCommentHeadCell.h"//头部cell

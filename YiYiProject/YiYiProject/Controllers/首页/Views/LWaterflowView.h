@@ -108,5 +108,7 @@
 
 -(void)removeHeaderView;
 
+- (void)finishReloadingData;
+
 
 @end

@@ -470,29 +470,6 @@
 
 
 #pragma mark---锚点的点击方法
-//到商场的
-//-(void)turntoshangchang:(UITapGestureRecognizer *)sender{
-//    
-//    NSLog(@"xxxshanchang==%ld",(long)sender.view.tag);
-//    
-//    UILabel *testlabel=(UILabel *)sender.view;
-//    
-//    GStorePinpaiViewController *detail = [[GStorePinpaiViewController alloc]init];
-//    detail.storeIdStr =[NSString stringWithFormat:@"%ld",(long)sender.view.tag] ;
-//    detail.storeNameStr=testlabel.text;
-//    [self.navigationController pushViewController:detail animated:YES];
-//}
-////到单品的
-//-(void)turntodanpin:(UITapGestureRecognizer *)sender{
-//    
-//    NSLog(@"xxxsdanpin==%ld",sender.view.tag);
-//    
-//    ProductDetailController *detail = [[ProductDetailController alloc]init];
-//    detail.product_id =[NSString stringWithFormat:@"%ld",sender.view.tag] ;
-//    detail.lastPageNavigationHidden = YES;
-//    detail.isTPlatPush = YES;
-//    [self.navigationController pushViewController:detail animated:YES];
-//}
 
 /**
  *  显示或隐藏tools

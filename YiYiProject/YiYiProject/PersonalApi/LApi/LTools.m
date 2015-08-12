@@ -577,7 +577,7 @@
     
     if (between >= 1) { //大于一个小时需要更新
         
-        NSLog(@"需要更新融云用户信息 %@ bew:%d",oldDate,between);
+        NSLog(@"需要更新融云用户信息 %@ bew:%ld",oldDate,between);
         
         return YES;
     }
@@ -1583,9 +1583,18 @@
 
 #pragma mark - 适配尺寸计算
 
+/**
+ *  计算等比例高度
+ *
+ *  @param image_height   图片的高度
+ *  @param image_width    图片的宽度
+ *  @param show_Width     实际显示宽度
+ *
+ *  @return 实际显示高度
+ */
 + (CGFloat)heightForImageHeight:(CGFloat)image_height
-                  imageWidth:(CGFloat)image_width
-               originalWidth:(CGFloat)original_width
+                     imageWidth:(CGFloat)image_width
+                      showWidth:(CGFloat)show_Width
 {
     float rate;
     
@@ -1596,7 +1605,7 @@
         rate = image_height/image_width;
     }
     
-    CGFloat imageHeight = original_width * rate;
+    CGFloat imageHeight = show_Width * rate;
     
     return imageHeight;
 
