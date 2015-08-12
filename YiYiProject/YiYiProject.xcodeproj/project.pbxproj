@@ -412,6 +412,9 @@
 		E308939A1AE04E7D00DA342C /* fshan@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E30893991AE04E7D00DA342C /* fshan@2x.png */; };
 		E308939D1AE0587700DA342C /* GChooseLocationMoveAnViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E308939C1AE0587700DA342C /* GChooseLocationMoveAnViewController.m */; };
 		E308939F1AE05D1900DA342C /* road_select@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E308939E1AE05D1900DA342C /* road_select@2x.png */; };
+		E310DA771B7AEEDC00C46064 /* GTtaiListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E310DA761B7AEEDC00C46064 /* GTtaiListViewController.m */; };
+		E310DA821B7AFAC300C46064 /* CycleScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = E310DA7F1B7AFAC300C46064 /* CycleScrollView.m */; };
+		E310DA831B7AFAC300C46064 /* NSTimer+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = E310DA811B7AFAC300C46064 /* NSTimer+Addition.m */; };
 		E3142BDD1B10D08E00883BA7 /* GmyTtaiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3142BDC1B10D08E00883BA7 /* GmyTtaiViewController.m */; };
 		E3268F991B13115D00F87E78 /* searchproductdefaulpic@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3268F981B13115D00F87E78 /* searchproductdefaulpic@2x.png */; };
 		E334B81E1AFB47DB00DC9209 /* MyShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E334B81D1AFB47DB00DC9209 /* MyShopViewController.m */; };
@@ -1206,6 +1209,12 @@
 		E308939B1AE0587700DA342C /* GChooseLocationMoveAnViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GChooseLocationMoveAnViewController.h; sourceTree = "<group>"; };
 		E308939C1AE0587700DA342C /* GChooseLocationMoveAnViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GChooseLocationMoveAnViewController.m; sourceTree = "<group>"; };
 		E308939E1AE05D1900DA342C /* road_select@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "road_select@2x.png"; sourceTree = "<group>"; };
+		E310DA751B7AEEDC00C46064 /* GTtaiListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTtaiListViewController.h; sourceTree = "<group>"; };
+		E310DA761B7AEEDC00C46064 /* GTtaiListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTtaiListViewController.m; sourceTree = "<group>"; };
+		E310DA7E1B7AFAC300C46064 /* CycleScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CycleScrollView.h; sourceTree = "<group>"; };
+		E310DA7F1B7AFAC300C46064 /* CycleScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CycleScrollView.m; sourceTree = "<group>"; };
+		E310DA801B7AFAC300C46064 /* NSTimer+Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimer+Addition.h"; sourceTree = "<group>"; };
+		E310DA811B7AFAC300C46064 /* NSTimer+Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+Addition.m"; sourceTree = "<group>"; };
 		E3142BDB1B10D08E00883BA7 /* GmyTtaiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GmyTtaiViewController.h; sourceTree = "<group>"; };
 		E3142BDC1B10D08E00883BA7 /* GmyTtaiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GmyTtaiViewController.m; sourceTree = "<group>"; };
 		E3268F981B13115D00F87E78 /* searchproductdefaulpic@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "searchproductdefaulpic@2x.png"; sourceTree = "<group>"; };
@@ -3115,6 +3124,17 @@
 			path = GBigSmallTabHeaderView;
 			sourceTree = "<group>";
 		};
+		E310DA7D1B7AFAC300C46064 /* Cycelscrollview */ = {
+			isa = PBXGroup;
+			children = (
+				E310DA7E1B7AFAC300C46064 /* CycleScrollView.h */,
+				E310DA7F1B7AFAC300C46064 /* CycleScrollView.m */,
+				E310DA801B7AFAC300C46064 /* NSTimer+Addition.h */,
+				E310DA811B7AFAC300C46064 /* NSTimer+Addition.m */,
+			);
+			path = Cycelscrollview;
+			sourceTree = "<group>";
+		};
 		E37C32C81AA23F6900B646EC /* BaiduMap_IOSSDK_v2.6.0_Lib */ = {
 			isa = PBXGroup;
 			children = (
@@ -3270,6 +3290,8 @@
 				E3554C871B41419500FE9493 /* GMyWalletViewController.m */,
 				E3554C891B415D2600FE9493 /* GMyJianquanViewController.h */,
 				E3554C8A1B415D2600FE9493 /* GMyJianquanViewController.m */,
+				E310DA751B7AEEDC00C46064 /* GTtaiListViewController.h */,
+				E310DA761B7AEEDC00C46064 /* GTtaiListViewController.m */,
 			);
 			path = Gcontrollers;
 			sourceTree = "<group>";
@@ -3343,6 +3365,7 @@
 		E3996E491A5E1DBA00673147 /* Gutils */ = {
 			isa = PBXGroup;
 			children = (
+				E310DA7D1B7AFAC300C46064 /* Cycelscrollview */,
 				E3D080861B3EF02B00E4F87D /* GTimeSwitch.h */,
 				E3D080871B3EF02B00E4F87D /* GTimeSwitch.m */,
 				E37C32C81AA23F6900B646EC /* BaiduMap_IOSSDK_v2.6.0_Lib */,
@@ -3953,6 +3976,7 @@
 				56DAB21B1A46DB6000273140 /* ApplyForViewController.m in Sources */,
 				E3996EDC1A5E1DBA00673147 /* GScrollView.m in Sources */,
 				1391DC531A8704E4006A2E15 /* GlowImageView.m in Sources */,
+				E310DA821B7AFAC300C46064 /* CycleScrollView.m in Sources */,
 				565321451A59769300E43F80 /* NSAttributedString+Attributes.m in Sources */,
 				13BEEE811AE6262C009C5BA7 /* TTaiCommentViewController.m in Sources */,
 				E37EB5701AC035A6009F5797 /* GmyproductsListViewController.m in Sources */,
@@ -4048,6 +4072,7 @@
 				19D5E6B51A4FE8E1008401E0 /* YichuListTableViewCell.m in Sources */,
 				E3FFD9721B26EBEE00A56770 /* GnearbyStoreViewController.m in Sources */,
 				13A389961A3893D000ABBACB /* TTaiViewController.m in Sources */,
+				E310DA771B7AEEDC00C46064 /* GTtaiListViewController.m in Sources */,
 				5658C79A1A4C486E00DC86F8 /* MatchWaterflowView.m in Sources */,
 				E35EF1231A6A756900B493A9 /* GchooseFloorPinpaiViewController.m in Sources */,
 				DF626D651A6964E200093568 /* TMPhotoViewQuiltViewCell.m in Sources */,
@@ -4084,6 +4109,7 @@
 				1391DC551A8704E4006A2E15 /* MenuItem.m in Sources */,
 				13CD36491A3C6A870068C12A /* EGORefreshTableFooterView.m in Sources */,
 				565321481A59769300E43F80 /* SCGIFImageView.m in Sources */,
+				E310DA831B7AFAC300C46064 /* NSTimer+Addition.m in Sources */,
 				E3E64A9A1AE0D971002F00A4 /* JKAssetsGroupCell.m in Sources */,
 				139886A51A45673500241962 /* ProductDetailController.m in Sources */,
 				13ADF8471AFC9B03001B0D29 /* TPlatCommentCell.m in Sources */,

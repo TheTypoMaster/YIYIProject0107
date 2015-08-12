@@ -11,6 +11,7 @@
 #import "TTaiViewController.h" //小图
 
 #import "BigPhotoTTaiViewController.h"//大图t台
+#import "GTtaiListViewController.h"//改版T台 和单品融合版
 
 #import "MessageViewController.h"
 #import "MineViewController.h"
@@ -106,7 +107,7 @@
 {
     
     
-    NSArray *classNames = @[@"HomeViewController",@"BigPhotoTTaiViewController",@"GBuyClothesLogViewController",@"MineViewController"];
+    NSArray *classNames = @[@"HomeViewController",@"GTtaiListViewController",@"GBuyClothesLogViewController",@"MineViewController"];
     NSArray *item_names = @[@"附近",@"T台",@"买衣日志",@"我的"];
     NSMutableArray *items = [NSMutableArray arrayWithCapacity:classNames.count];
     for (int i = 0; i < classNames.count;i ++) {
