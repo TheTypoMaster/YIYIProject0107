@@ -705,6 +705,12 @@ typedef enum {
 #define GET_CHOUJIANGSTATE @"http://www119.alayy.com/index.php?d=api&c=prize&m=get_curr&authcode=%@"
 
 
+///////////////-新版本0812-////////////////
+
+//同款单品列表
+#define HOME_PRODUCT_DETAIL_SAME_STYLE @"http://www119.alayy.com/index.php?d=api&c=products&m=get_same_style_products&long=116.403299&lat=39.914004&product_id=%@"
+
+
 #endif
 
 

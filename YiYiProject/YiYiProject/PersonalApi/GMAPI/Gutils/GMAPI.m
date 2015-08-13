@@ -340,10 +340,6 @@
                                 @"long":[NSString stringWithFormat:@"%f",userLocation.location.coordinate.longitude]
                                 };
         
-        
-        
-        
-        
         BMKReverseGeoCodeOption *reverseGeoCodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
         reverseGeoCodeSearchOption.reverseGeoPoint = userLocation.location.coordinate;
         _geoSearch = [[BMKGeoCodeSearch alloc]init];
@@ -357,15 +353,9 @@
             NSLog(@"反geo索引发送失败");
         }
         
-        
         [self stopLocation];
-        
-        
-        
     }
 }
-
-
 
 - (void)onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error{
     NSLog(@"%s",__FUNCTION__);
@@ -379,20 +369,15 @@
                             @"lat":[dic stringValueForKey:@"lat"],
                             @"long":[dic stringValueForKey:@"long"],
                             @"province":result.addressDetail.province,
-                            @"city":result.addressDetail.city
+                            @"city":result.addressDetail.city,
+                            @"addressDetail":result.address,
+                            @"result":[NSNumber numberWithBool:YES]  //定位成功
                             };
-    
-    
     if (self.delegate && [self.delegate respondsToSelector:@selector(theLocationDictionary:)]) {
         [self.delegate theLocationDictionary:self.theLocationDic];
     }
     
 }
-
-
-
-
-
 
 - (void)didFailToLocateUserWithError:(NSError *)error{
     //金领时代 40.041951,116.33934
@@ -400,12 +385,12 @@
     if (self.delegate && [self.delegate respondsToSelector:@selector(theLocationDictionary:)]) {
         self.theLocationDic = @{
                             @"lat":[NSString stringWithFormat:@"%f",40.041951],
-                            @"long":[NSString stringWithFormat:@"%f",116.33934]
+                            @"long":[NSString stringWithFormat:@"%f",116.33934],
+                            @"result":[NSNumber numberWithBool:NO]  //定位失败
                             };
         [self.delegate theLocationFaild:self.theLocationDic];
     }
 }
-
 
 
 + (void)showAutoHiddenMBProgressWithText:(NSString *)text addToView:(UIView *)aView

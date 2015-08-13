@@ -57,8 +57,6 @@
 @property(nonatomic,retain)NSDictionary *mall_info;
 
 @property(nonatomic,retain)NSArray *images;//图片数组(单品详情)
-
-
 @property(nonatomic,strong)NSString *product_new;
 
 
@@ -74,5 +72,11 @@
 
 @property(nonatomic,strong)NSString *product_type;//分类
 
+//新版本0812添加
+@property(nonatomic,retain)NSArray *tag;//标签
+@property(nonatomic,retain)NSArray *sameStyleArray;//同款单品列表
+@property(nonatomic,retain)NSString *brand_name;//品牌名字
+@property(nonatomic,retain)NSDictionary *official_pic;//官方固定介绍图
+@property(nonatomic,retain)NSDictionary *official_activity;//官方活动
 
 @end

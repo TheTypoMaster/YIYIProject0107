@@ -29,6 +29,8 @@
 
 #import "CycleScrollView1.h"//上下滚动
 
+#import "MessageDetailController.h"//活动详情
+
 @interface ProductDetailControllerNew ()<TMQuiltViewDataSource,WaterFlowDelegate,UIScrollViewDelegate>
 {
     ProductModel *_aModel;
@@ -49,6 +51,10 @@
     UILabel *_backLabel;//释放返回
     UILabel *_zanNumLabel;//赞数量label
     UILabel *_commentNumLabel;//评论数量label
+    UILabel *_addressLabel_current;//当前位置
+    
+    int _count;//网络请求完成个数
+    NSArray *_sameStyleArray;//同款单品
 }
 
 @property (strong, nonatomic) UILabel *brandName;
@@ -118,8 +124,14 @@
     
     [self addProductVisit];//添加单品浏览数
     
+    [self addObserver:self forKeyPath:@"_count" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+    
     //请求单品详情
     [self networkForDetail];
+    
+    //请求单品同款
+    [self networkForDetailSameStyle];
+    
     
     //瀑布流相关
     _waterFlow = [[LWaterflowView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT - 64) waterDelegate:self waterDataSource:self noHeadeRefresh:YES noFooterRefresh:YES];
@@ -130,6 +142,7 @@
     _backLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 40) title:@"下拉,返回单品详情" font:10 align:NSTextAlignmentCenter textColor:[UIColor colorWithHexString:@"8b8b8b"]];
     [_waterFlow addSubview:_backLabel];
     [_waterFlow bringSubviewToFront:_waterFlow.quitView];
+    _waterFlow.hidden = YES;
     
     CGFloat aHeight = [LTools heightForImageHeight:42 imageWidth:375 showWidth:DEVICE_WIDTH];
     UIImageView *lineImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, aHeight)];
@@ -147,6 +160,9 @@
 
 #pragma mark - 网络请求
 
+/**
+ *  获取单品详情
+ */
 - (void)networkForDetail
 {
     if (tool_detail) {
@@ -157,6 +173,7 @@
     
     __weak typeof(self)weakSelf = self;
     
+    self.product_id = @"11";
     NSString *url = [NSString stringWithFormat:HOME_PRODUCT_DETAIL,self.product_id,[GMAPI getAuthkey]];
     tool_detail = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     
@@ -172,7 +189,8 @@
             
             ProductModel *aModel1 = [[ProductModel alloc]initWithDictionary:dic];
             weakSelf.theModel = aModel1;
-            [weakSelf prepareViewWithModel:aModel1];
+            _aModel = aModel1;
+            [self setValue:[NSNumber numberWithInt:_count + 1] forKeyPath:@"_count"];
         }
         
         
@@ -184,6 +202,43 @@
         
     }];
 }
+
+/**
+ *  获取单品同款
+ */
+- (void)networkForDetailSameStyle
+{
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    __weak typeof(self)weakSelf = self;
+    
+    self.product_id = @"146";
+    NSString *url = [NSString stringWithFormat:HOME_PRODUCT_DETAIL_SAME_STYLE,self.product_id];
+    tool_detail = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    
+    [tool_detail requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"result %@",result);
+        NSArray *list = result[@"list"];
+        NSMutableArray *temp = [NSMutableArray arrayWithCapacity:list.count];
+        for (NSDictionary *aDic in list) {
+            ProductModel *aModel = [[ProductModel alloc]initWithDictionary:aDic];
+            [temp addObject:aModel];
+        }
+        _sameStyleArray = [NSArray arrayWithArray:temp];
+        
+        [self setValue:[NSNumber numberWithInt:_count + 1] forKeyPath:@"_count"];
+
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+        
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        
+    }];
+}
+
 
 /**
  *  赞 取消赞 收藏 取消收藏
@@ -466,6 +521,74 @@
 
 
 #pragma mark - 事件处理
+
+/**
+ *  监控 单品详情 和 相似单品都请求完再显示
+ */
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    NSLog(@"keyPath %@",change);
+    
+    NSNumber *num = [change objectForKey:@"new"];
+    if ([num intValue] == 2) {
+        
+        if (_aModel) {
+            _aModel.sameStyleArray = _sameStyleArray;
+            
+            [self prepareViewWithModel:_aModel];
+        }
+    }
+}
+
+/**
+ *  跳转活动详情页
+ */
+- (void)clickToActivity:(UIButton *)sender
+{
+    NSString *activityId = _aModel.official_activity[@"id"];
+    MessageDetailController *detail = [[MessageDetailController alloc]init];
+    detail.isActivity = YES;
+    detail.msg_id = activityId;
+    [self.navigationController pushViewController:detail animated:YES];
+}
+
+/**
+ *  点击标签调转至对应单品列表
+ *
+ *  @param sender
+ */
+- (void)clickToTagList:(UIButton *)sender
+{
+    
+}
+
+- (void)getCurrentLocation
+{
+    __weak typeof(self)weakSelf = self;
+    [[GMAPI appDeledate]startDingweiWithBlock:^(NSDictionary *dic) {
+        
+        [weakSelf theLocationDictionary:dic];
+    }];
+
+}
+
+#pragma - mark 地图坐标
+
+- (void)theLocationDictionary:(NSDictionary *)dic{
+    
+    NSLog(@"当前坐标-->%@",dic);
+    
+    BOOL result = [dic[@"result"] boolValue];
+    if (result) {
+        
+        NSString *address = dic[@"addressDetail"];
+        _addressLabel_current.text = address;
+    }else
+    {
+        _addressLabel_current.text = @"未获取到当前位置";
+    }
+    
+}
 
 /**
  *  赞数量大于1000显示 k
@@ -786,7 +909,12 @@
 
 #pragma mark--带你去买
 
-- (IBAction)clickToBuy:(id)sender {
+/**
+ *  跳转至地图
+ *
+ *  @param sender
+ */
+- (IBAction)clickToMap:(id)sender {
     
     GLeadBuyMapViewController *ll = [[GLeadBuyMapViewController alloc]init];
     ll.aModel = _aModel;
@@ -799,11 +927,7 @@
         ll.coordinate_store = CLLocationCoordinate2DMake([_aModel.mall_info[@"latitude"]floatValue], [_aModel.mall_info[@"longitude"]floatValue]);
     }
     
-    //    UINavigationController *rrr = [[UINavigationController alloc]initWithRootViewController:ll];
-    
     [self presentViewController:ll animated:YES completion:nil];
-    
-    //    [self.navigationController pushViewController:ll animated:YES];
 }
 
 - (IBAction)clickToStore:(id)sender {
@@ -937,6 +1061,8 @@
     _headerView.delegate = self;
     [self.view addSubview:_headerView];
     
+    _waterFlow.hidden = NO;
+    
     [self createBottomView];//底部
     
     //单品图片
@@ -983,8 +1109,8 @@
         [priceAttString addAttribute:NSStrikethroughStyleAttributeName value:@(NSUnderlinePatternSolid | NSUnderlineStyleSingle) range:range];
         [priceAttString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"767676"] range:range];
         
-        CGFloat aWidth = [LTools widthForText:price_now font:10];
-        UILabel *priceLabel2 = [[UILabel alloc]initWithFrame:CGRectMake(priceLabel.right + 8, titleLabel.bottom + 10, aWidth, 13) title:price_now font:10 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"646464"]];
+        CGFloat aWidth = [LTools widthForText:price_discount font:10];
+        UILabel *priceLabel2 = [[UILabel alloc]initWithFrame:CGRectMake(priceLabel.right + 8, titleLabel.bottom + 10, aWidth, 13) title:price_discount font:10 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"646464"]];
         [_headerView addSubview:priceLabel2];
         
         [priceLabel2 setAttributedText:priceAttString];
@@ -1000,31 +1126,38 @@
         [dicountLabel addCornerRadius:6.5];
 
     }
+    
+#pragma - mark 地址相关
     //地址信息
     UIImageView *addressIcon = [[UIImageView alloc]initWithFrame:CGRectMake(titleLabel.left, priceLabel.bottom + 10, 13, 13)];
     addressIcon.image = [UIImage imageNamed:@"danpinxq_dianpu"];
     [_headerView addSubview:addressIcon];
     
-    NSString *address = [NSString stringWithFormat:@"%@ - %@",[LTools NSStringNotNull:aProductModel.product_brand_name],aProductModel.mall_info[@"street"]];
+    NSString *address = [NSString stringWithFormat:@"%@ - %@",[LTools NSStringNotNull:aProductModel.product_brand_name],aProductModel.mall_info[@"mall_name"]];
     UILabel *addressLabel = [[UILabel alloc]initWithFrame:CGRectMake(addressIcon.right + 10, addressIcon.top, DEVICE_WIDTH - addressIcon.right - 5 - 20, addressIcon.height) title:address font:13 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"67bcfd"]];
     [_headerView addSubview:addressLabel];
     
-    //地址信息
+    [addressLabel addTaget:self action:@selector(clickToMap:) tag:0];
+    
+    //当前位置信息
     UIImageView *addressIcon_current = [[UIImageView alloc]initWithFrame:CGRectMake(titleLabel.left, addressIcon.bottom + 10, 13, 13)];
     addressIcon_current.image = [UIImage imageNamed:@"danpinxq_dizhi"];
     [_headerView addSubview:addressIcon_current];
     
-    NSString *address_current = [NSString stringWithFormat:@"清河小营西路17号"];
-    UILabel *addressLabel_current = [[UILabel alloc]initWithFrame:CGRectMake(addressIcon_current.right + 10, addressIcon_current.top, DEVICE_WIDTH - addressIcon.right - 5 - 20, addressIcon.height) title:address_current font:13 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"67bcfd"]];
-    [_headerView addSubview:addressLabel_current];
+    NSString *address_current = [NSString stringWithFormat:@"定位中..."];
+    _addressLabel_current = [[UILabel alloc]initWithFrame:CGRectMake(addressIcon_current.right + 10, addressIcon_current.top, DEVICE_WIDTH - addressIcon.right - 5 - 20, addressIcon.height) title:address_current font:13 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"67bcfd"]];
+    [_headerView addSubview:_addressLabel_current];
     
-    UIView *line2 = [[UIView alloc]initWithFrame:CGRectMake(0, addressLabel_current.bottom + 5, DEVICE_WIDTH, 0.5)];
+    [self getCurrentLocation];//获取当前位置
+    
+    UIView *line2 = [[UIView alloc]initWithFrame:CGRectMake(0, _addressLabel_current.bottom + 5, DEVICE_WIDTH, 0.5)];
     line2.backgroundColor = DEFAULT_VIEW_BACKGROUNDCOLOR;
     [_headerView addSubview:line2];
     UIView *line3 = [[UIView alloc]initWithFrame:CGRectMake(0, line2.bottom + 55, DEVICE_WIDTH, 0.5)];
     line3.backgroundColor = DEFAULT_VIEW_BACKGROUNDCOLOR;
     [_headerView addSubview:line3];
-    
+
+#pragma - mark 评论相关
     //评论
     
     NSArray *commentArray = @[@"张三:评论的内容在这里",@"李四:评论的内容比较长评论的内容比较长评论的内容比较长评论的内容比较长评论的内容比较长kkkkk荣荣荣",@"王二:呃逆荣在轮播滚动"];
@@ -1083,38 +1216,52 @@
     _commentNumLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 25, 40, 10) title:commentString font:10 align:NSTextAlignmentCenter textColor:DEFAULT_TEXTCOLOR];
     [commentBtn addSubview:_commentNumLabel];
     
-    
+#pragma - mark 标签相关
     //标签
-    
-    NSArray *tags = @[@"牛逼",@"帅呆",@"清凉一夏"];
+    NSArray *tags = aProductModel.tag;
     int count = (int)tags.count;
     CGFloat left = 10;
     for (int i = 0; i < count; i ++) {
-        NSString *name = tags[i];
+        NSString *name = tags[i][@"tag_name"];
         CGFloat width = [LTools widthForText:name font:10];
         UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(left, 7 + line3.bottom, width + 10, 15) title:name font:10 align:NSTextAlignmentCenter textColor:DEFAULT_TEXTCOLOR];
         [_headerView addSubview:label];
         [label addCornerRadius:7.5];
         [label setBorderWidth:0.5 borderColor:DEFAULT_TEXTCOLOR];
         left = label.right + 10;
+        [label addTaget:self action:@selector(clickToTagList:) tag:100 + i];
     }
     
     UIView *line4 = [[UIView alloc]initWithFrame:CGRectMake(0, line3.bottom + 30, DEVICE_WIDTH, 0.5)];
     line4.backgroundColor = DEFAULT_VIEW_BACKGROUNDCOLOR;
     [_headerView addSubview:line4];
+
+#pragma - mark 固定介绍图
     
-    //固定的图片
-    aHeight = [LTools heightForImageHeight:375 imageWidth:DEVICE_WIDTH showWidth:76];
-    UIImageView *constImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, line4.bottom + 5, DEVICE_WIDTH, aHeight)];
-    [_headerView addSubview:constImageView];
-    constImageView.image = [UIImage imageNamed:@"Ttaixq_banner"];
-    UIView *line5 = [[UIView alloc]initWithFrame:CGRectMake(0, constImageView.bottom + 5, DEVICE_WIDTH, 0.5)];
-    line5.backgroundColor = DEFAULT_VIEW_BACKGROUNDCOLOR;
-    [_headerView addSubview:line5];
+    CGFloat top = line4.bottom;
     
+    //有固定介绍图
+    NSDictionary *official_pic = aProductModel.official_pic;
+    if (official_pic && [official_pic isKindOfClass:[NSDictionary class]]) {
+        
+        //固定的图片
+        CGFloat imageHeight = [official_pic[@"height"] floatValue];
+        CGFloat imageWidth = [official_pic[@"width"] floatValue];
+        NSString *imageUrl = official_pic[@"url"];
+        aHeight = [LTools heightForImageHeight:imageHeight imageWidth:imageWidth showWidth:DEVICE_WIDTH];
+        UIImageView *constImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, line4.bottom + 5, DEVICE_WIDTH, aHeight)];
+        [_headerView addSubview:constImageView];
+        [constImageView l_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:DEFAULT_YIJIAYI];
+        UIView *line5 = [[UIView alloc]initWithFrame:CGRectMake(0, constImageView.bottom + 5, DEVICE_WIDTH, 0.5)];
+        line5.backgroundColor = DEFAULT_VIEW_BACKGROUNDCOLOR;
+        [_headerView addSubview:line5];
+        
+        top = line5.bottom;
+    }
+#pragma - mark 相似单品及所在商场
     //所在商场
     
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10, line5.bottom, DEVICE_WIDTH, 40) title:@"所在商场" font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10, top, DEVICE_WIDTH, 40) title:@"所在商场" font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
     [_headerView addSubview:label];
     
     UIView *line6 = [[UIView alloc]initWithFrame:CGRectMake(0, label.bottom, DEVICE_WIDTH, 0.5)];
@@ -1123,14 +1270,16 @@
     
     //只显示3个 大于3个显示更多 否则不显示
     
-    NSArray *shopArray = @[@"新燕莎购物中心",@"王府井百货大楼",@"翠微百货大楼",@"华联商厦上地店"];
+    NSArray *shopArray = aProductModel.sameStyleArray;
     count = (int)shopArray.count;
     
     int needCount = count > 3 ? 3 : count;
     
-    CGFloat top = line6.bottom;
+    top = line6.bottom;
     for (int i = 0; i < needCount; i ++) {
-        NSString *name = [NSString stringWithFormat:@"%@-%@",aProductModel.product_brand_name,shopArray[i]];
+        
+        ProductModel *model = aProductModel.sameStyleArray[i];
+        NSString *name = [NSString stringWithFormat:@"%@-%@",model.brand_name,model.mall_name];
         aWidth = [LTools widthForText:name font:12];
         
         //店铺名
@@ -1138,13 +1287,23 @@
         [_headerView addSubview:shopLabel];
         
         //距离
-        NSString *dis = [NSString stringWithFormat:@"500m"];
-        aWidth = [LTools widthForText:dis font:8];
-        UILabel *disLabel = [[UILabel alloc]initWithFrame:CGRectMake(shopLabel.right + 5, shopLabel.top, aWidth, shopLabel.height) title:dis font:8 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"8b8b8b"]];
+        NSString *distanceStr;
+        
+        double dis = [model.distance doubleValue];
+        
+        if (dis > 1000) {
+            
+            distanceStr = [NSString stringWithFormat:@"%.1fkm",dis/1000];
+        }else
+        {
+            distanceStr = [NSString stringWithFormat:@"%@m",model.distance];
+        }
+        aWidth = [LTools widthForText:distanceStr font:8];
+        UILabel *disLabel = [[UILabel alloc]initWithFrame:CGRectMake(shopLabel.right + 5, shopLabel.top, aWidth, shopLabel.height) title:distanceStr font:8 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"8b8b8b"]];
         [_headerView addSubview:disLabel];
         
         //价格
-        NSString *price = [NSString stringWithFormat:@"￥500"];
+        NSString *price = [NSString stringWithFormat:@"%.1f",[model.product_price floatValue]];
         aWidth = [LTools widthForText:price font:8];
         UILabel *priceLabel = [[UILabel alloc]initWithFrame:CGRectMake(DEVICE_WIDTH - 10 - aWidth, shopLabel.top, aWidth, shopLabel.height) title:price font:8 align:NSTextAlignmentLeft textColor:DEFAULT_TEXTCOLOR];
         [_headerView addSubview:priceLabel];
@@ -1172,28 +1331,38 @@
         top = more_btn.bottom + 6;
     }
     
-    //官方活动
+#pragma - mark 官方活动
     
-    line5 = [[UIView alloc]initWithFrame:CGRectMake(0, top, DEVICE_WIDTH, 0.5)];
+    UIView *line5 = [[UIView alloc]initWithFrame:CGRectMake(0, top, DEVICE_WIDTH, 0.5)];
     line5.backgroundColor = DEFAULT_VIEW_BACKGROUNDCOLOR;
     [_headerView addSubview:line5];
     
-    aHeight = [LTools heightForImageHeight:375 imageWidth:DEVICE_WIDTH showWidth:76];
-    constImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, line5.bottom, DEVICE_WIDTH, aHeight)];
-    [_headerView addSubview:constImageView];
-    constImageView.image = [UIImage imageNamed:@"yijiayiAdvertisement"];
+    NSDictionary *official_activity = aProductModel.official_activity;
+    if (official_activity && [official_activity isKindOfClass:[NSDictionary class]]) {
+        
+        //固定的图片
+        CGFloat imageHeight = [official_activity[@"height"] floatValue];
+        CGFloat imageWidth = [official_activity[@"width"] floatValue];
+        NSString *imageUrl = official_activity[@"url"];
+        
+        aHeight = [LTools heightForImageHeight:imageHeight imageWidth:imageWidth showWidth:DEVICE_WIDTH];
+        UIImageView *constImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, line5.bottom, DEVICE_WIDTH, aHeight)];
+        [_headerView addSubview:constImageView];
+        [constImageView l_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:DEFAULT_YIJIAYI];
+        [constImageView addTaget:self action:@selector(clickToActivity:) tag:0];
+        
+        top = constImageView.bottom;
+    }
     
-    
-    top = constImageView.bottom;
+#pragma - mark 单品详情
     //商品详情
-    
     //单品的其他图片
     NSArray *images = aProductModel.images;
     count = (int)images.count;
     if (count > 1) {
         
         aHeight = [LTools heightForImageHeight:42 imageWidth:375 showWidth:DEVICE_WIDTH];
-        UIImageView *detailImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, constImageView.bottom, DEVICE_WIDTH, aHeight)];
+        UIImageView *detailImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, top, DEVICE_WIDTH, aHeight)];
         detailImage.image = [UIImage imageNamed:@"danpinxq_xq"];
         [_headerView addSubview:detailImage];
         
@@ -1222,7 +1391,7 @@
     
     //继续拖动查看 品牌推荐
     
-    UILabel *moreLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, top - 5, DEVICE_WIDTH, 60) title:@"继续拖动,查看品牌推荐" font:10 align:NSTextAlignmentCenter textColor:[UIColor colorWithHexString:@"8b8b8b"]];
+    UILabel *moreLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, top + 10, DEVICE_WIDTH, 60) title:@"继续拖动,查看品牌推荐" font:10 align:NSTextAlignmentCenter textColor:[UIColor colorWithHexString:@"8b8b8b"]];
     [_headerView addSubview:moreLabel];
 //
 //    aHeight = [LTools heightForImageHeight:42 imageWidth:375 showWidth:DEVICE_WIDTH];
@@ -1324,7 +1493,7 @@
 {
     // 下拉到最底部时显示更多数据
     
-    if(scrollView.contentOffset.y > ((scrollView.contentSize.height - scrollView.frame.size.height - 60)))
+    if(scrollView.contentOffset.y > ((scrollView.contentSize.height - scrollView.frame.size.height + 60 + 30)))
     {
         [self moveToUp:YES];
     }
