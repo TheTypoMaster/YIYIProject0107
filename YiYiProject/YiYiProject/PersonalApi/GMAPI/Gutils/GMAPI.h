@@ -41,7 +41,7 @@
 
 
 
-@interface GMAPI : NSObject<BMKMapViewDelegate,BMKLocationServiceDelegate>
+@interface GMAPI : NSObject<BMKMapViewDelegate,BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate>
 {
     BMKLocationService* _locService;//定位服务
 //    NSDictionary *_theLocationDic;//经纬度

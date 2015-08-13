@@ -16,7 +16,10 @@
 #define HUDBACKGOUNDCOLOR  RGBA(0, 0, 0, 0.6)
 #define HUDFOREGROUNDCOLOR  RGBA(255, 255, 255, 1)
 @implementation GMAPI
-
+{
+    BMKGeoCodeSearch *_geoSearch;
+    NSArray *_areaData;
+}
 
 + (AppDelegate *)appDeledate
 {
@@ -329,23 +332,65 @@
 //用户位置更新后，会调用此函数
 
 - (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation{
+    
     NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
     if (userLocation) {
         self.theLocationDic = @{
-                            @"lat":[NSString stringWithFormat:@"%f",userLocation.location.coordinate.latitude],
-                            @"long":[NSString stringWithFormat:@"%f",userLocation.location.coordinate.longitude]
-                            };
+                                @"lat":[NSString stringWithFormat:@"%f",userLocation.location.coordinate.latitude],
+                                @"long":[NSString stringWithFormat:@"%f",userLocation.location.coordinate.longitude]
+                                };
+        
+        
+        
+        
+        
+        BMKReverseGeoCodeOption *reverseGeoCodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
+        reverseGeoCodeSearchOption.reverseGeoPoint = userLocation.location.coordinate;
+        _geoSearch = [[BMKGeoCodeSearch alloc]init];
+        BOOL flag = [_geoSearch reverseGeoCode:reverseGeoCodeSearchOption];
+        
+        _geoSearch.delegate = self;
+        
+        if (flag) {
+            NSLog(@"反geo索引发送成功");
+        }else{
+            NSLog(@"反geo索引发送失败");
+        }
         
         
         [self stopLocation];
         
-        if (self.delegate && [self.delegate respondsToSelector:@selector(theLocationDictionary:)]) {
-            [self.delegate theLocationDictionary:self.theLocationDic];
-        }
         
         
     }
 }
+
+
+
+- (void)onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error{
+    NSLog(@"%s",__FUNCTION__);
+    _geoSearch.delegate = nil;
+    _geoSearch = nil;
+    
+    NSLog(@"省份：%@ 城市：%@ 区：%@",result.addressDetail.province,result.addressDetail.city,result.addressDetail.district);
+    
+    NSDictionary *dic = self.theLocationDic;
+    self.theLocationDic = @{
+                            @"lat":[dic stringValueForKey:@"lat"],
+                            @"long":[dic stringValueForKey:@"long"],
+                            @"province":result.addressDetail.province,
+                            @"city":result.addressDetail.city
+                            };
+    
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(theLocationDictionary:)]) {
+        [self.delegate theLocationDictionary:self.theLocationDic];
+    }
+    
+}
+
+
+
 
 
 
