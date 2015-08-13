@@ -441,6 +441,7 @@
 		E310DA821B7AFAC300C46064 /* CycleScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = E310DA7F1B7AFAC300C46064 /* CycleScrollView.m */; };
 		E310DA831B7AFAC300C46064 /* NSTimer+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = E310DA811B7AFAC300C46064 /* NSTimer+Addition.m */; };
 		E310DA861B7B339400C46064 /* CycleScrollView1.m in Sources */ = {isa = PBXBuildFile; fileRef = E310DA851B7B339400C46064 /* CycleScrollView1.m */; };
+		E310DA891B7B575400C46064 /* GTtaiListCustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E310DA881B7B575400C46064 /* GTtaiListCustomTableViewCell.m */; };
 		E3142BDD1B10D08E00883BA7 /* GmyTtaiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3142BDC1B10D08E00883BA7 /* GmyTtaiViewController.m */; };
 		E3268F991B13115D00F87E78 /* searchproductdefaulpic@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3268F981B13115D00F87E78 /* searchproductdefaulpic@2x.png */; };
 		E334B81E1AFB47DB00DC9209 /* MyShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E334B81D1AFB47DB00DC9209 /* MyShopViewController.m */; };
@@ -1269,6 +1270,8 @@
 		E310DA811B7AFAC300C46064 /* NSTimer+Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+Addition.m"; sourceTree = "<group>"; };
 		E310DA841B7B339400C46064 /* CycleScrollView1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CycleScrollView1.h; sourceTree = "<group>"; };
 		E310DA851B7B339400C46064 /* CycleScrollView1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CycleScrollView1.m; sourceTree = "<group>"; };
+		E310DA871B7B575400C46064 /* GTtaiListCustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTtaiListCustomTableViewCell.h; sourceTree = "<group>"; };
+		E310DA881B7B575400C46064 /* GTtaiListCustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTtaiListCustomTableViewCell.m; sourceTree = "<group>"; };
 		E3142BDB1B10D08E00883BA7 /* GmyTtaiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GmyTtaiViewController.h; sourceTree = "<group>"; };
 		E3142BDC1B10D08E00883BA7 /* GmyTtaiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GmyTtaiViewController.m; sourceTree = "<group>"; };
 		E3268F981B13115D00F87E78 /* searchproductdefaulpic@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "searchproductdefaulpic@2x.png"; sourceTree = "<group>"; };
@@ -3551,6 +3554,8 @@
 				E37F842E1B104E780086CBB7 /* GnearbyStoreTableViewCell.m */,
 				E3D080891B3EFAB700E4F87D /* GbuyClothTableViewCell.h */,
 				E3D0808A1B3EFAB700E4F87D /* GbuyClothTableViewCell.m */,
+				E310DA871B7B575400C46064 /* GTtaiListCustomTableViewCell.h */,
+				E310DA881B7B575400C46064 /* GTtaiListCustomTableViewCell.m */,
 			);
 			path = Gviews;
 			sourceTree = "<group>";
@@ -4222,6 +4227,7 @@
 				569722291A407DAE004B6641 /* HomeMatchModel.m in Sources */,
 				1366A4D81AE9E197004F83FD /* AnchorPiontView.m in Sources */,
 				1391DC551A8704E4006A2E15 /* MenuItem.m in Sources */,
+				E310DA891B7B575400C46064 /* GTtaiListCustomTableViewCell.m in Sources */,
 				13CD36491A3C6A870068C12A /* EGORefreshTableFooterView.m in Sources */,
 				565321481A59769300E43F80 /* SCGIFImageView.m in Sources */,
 				E310DA831B7AFAC300C46064 /* NSTimer+Addition.m in Sources */,

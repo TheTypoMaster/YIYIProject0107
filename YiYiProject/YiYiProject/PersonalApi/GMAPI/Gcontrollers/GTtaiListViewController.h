@@ -14,4 +14,15 @@
 
 @interface GTtaiListViewController : MyViewController
 
+
+#pragma mark---锚点的点击方法
+//到商场的
+-(void)turnToShangChangInfoId:(NSString *)infoId
+                     infoName:(NSString *)infoName
+                     shopType:(ShopType)shopType;
+//到单品的
+-(void)turnToDanPinInfoId:(NSString *)infoId
+                 infoName:(NSString *)infoName;
+
+
 @end

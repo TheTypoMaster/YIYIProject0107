@@ -38,4 +38,10 @@
  **/
 @property (nonatomic , copy) void (^TapActionBlock)(NSInteger pageIndex);
 
+
+
+//计时器
+@property (nonatomic , strong) NSTimer *animationTimer;
+
+
 @end

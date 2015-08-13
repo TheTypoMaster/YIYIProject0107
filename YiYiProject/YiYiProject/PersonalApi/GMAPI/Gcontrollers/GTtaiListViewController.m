@@ -31,6 +31,7 @@
 
 #import "CycleScrollView.h"
 #import "CycleScrollView1.h"
+#import "GTtaiListCustomTableViewCell.h"
 
 @interface GTtaiListViewController ()<RefreshDelegate,UITableViewDataSource>
 {
@@ -39,6 +40,14 @@
     BOOL isFirst;
     
     CGFloat lastContenOffsetY;
+    
+    
+    GTtaiListCustomTableViewCell *_tmpCell;
+    
+    CycleScrollView *_topScrollView;
+    CycleScrollView1 *_topScrollView1;
+    
+    
 }
 
 @property (nonatomic ,strong) UIView *topView;
@@ -113,24 +122,24 @@
     
     self.topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 125 + 95 +5)];
     
-    CycleScrollView * topScrollView = [[CycleScrollView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 125) animationDuration:2];
-    topScrollView.scrollView.showsHorizontalScrollIndicator = FALSE;
+    _topScrollView = [[CycleScrollView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 125) animationDuration:2];
+    _topScrollView.scrollView.showsHorizontalScrollIndicator = FALSE;
     
-    topScrollView.fetchContentViewAtIndex = ^UIView *(NSInteger pageIndex){
+    _topScrollView.fetchContentViewAtIndex = ^UIView *(NSInteger pageIndex){
         return viewsArray[pageIndex];
     };
     
     NSInteger count = viewsArray.count;
-    topScrollView.totalPagesCount = ^NSInteger(void){
+    _topScrollView.totalPagesCount = ^NSInteger(void){
         return count;
     };
     
     __weak typeof (self)bself = self;
-    topScrollView.TapActionBlock = ^(NSInteger pageIndex){
+    _topScrollView.TapActionBlock = ^(NSInteger pageIndex){
         [bself cycleScrollDidClickedWithIndex:pageIndex];
     };
     
-    [self.topView addSubview:topScrollView];
+    [self.topView addSubview:_topScrollView];
     
     
     
@@ -143,25 +152,25 @@
         [viewsArray1 addObject:view];
     }
     
-    CycleScrollView1 * topScrollView1 = [[CycleScrollView1 alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(topScrollView.frame)+5, DEVICE_WIDTH, 95) animationDuration:2];
-    topScrollView1.isPageControlHidden = YES;
-    topScrollView1.scrollView.showsHorizontalScrollIndicator = FALSE;
+    _topScrollView1 = [[CycleScrollView1 alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_topScrollView.frame)+5, DEVICE_WIDTH, 95) animationDuration:2];
+    _topScrollView1.isPageControlHidden = YES;
+    _topScrollView1.scrollView.showsHorizontalScrollIndicator = FALSE;
     
-    topScrollView1.fetchContentViewAtIndex = ^UIView *(NSInteger pageIndex){
+    _topScrollView1.fetchContentViewAtIndex = ^UIView *(NSInteger pageIndex){
         return viewsArray1[pageIndex];
     };
     
     NSInteger count1 = viewsArray1.count;
-    topScrollView1.totalPagesCount = ^NSInteger(void){
+    _topScrollView1.totalPagesCount = ^NSInteger(void){
         return count1;
     };
     
 //    __weak typeof (self)bself = self;
-    topScrollView1.TapActionBlock = ^(NSInteger pageIndex){
+    _topScrollView1.TapActionBlock = ^(NSInteger pageIndex){
         [bself cycleScrollDidClickedWithIndex:pageIndex];
     };
     
-    [self.topView addSubview:topScrollView1];
+    [self.topView addSubview:_topScrollView1];
     
     
 }
@@ -321,6 +330,11 @@
 - (void)getTTaiData
 {
     
+    
+    [_topScrollView.animationTimer pauseTimer];
+    [_topScrollView.animationTimer pauseTimer];
+    
+    
     __weak typeof(self)weakSelf = self;
     
     __weak typeof(RefreshTableView)*weakTable = _table;
@@ -330,6 +344,9 @@
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
+        [_topScrollView.animationTimer resumeTimer];
+        [_topScrollView.animationTimer resumeTimer];
+        
         [weakSelf parseDataWithResult:result];
         
         if (_table.pageNum == 1) {
@@ -338,7 +355,12 @@
             
         }
         
+        
+        
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        [_topScrollView.animationTimer resumeTimer];
+        [_topScrollView.animationTimer resumeTimer];
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
         
@@ -439,7 +461,8 @@
             
             [self createbuttonWithModel:maodian_detail imageView:imageView];
             
-        }}
+        }
+    }
     
 }
 
@@ -564,23 +587,29 @@
 
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
-    //调转至老版本 详情页
-    
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    [self tapCell:[tableView cellForRowAtIndexPath:indexPath]];
+//    //调转至老版本 详情页
+//    
+//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//    
+//    [self tapCell:[tableView cellForRowAtIndexPath:indexPath]];
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
     TPlatModel *aModel = (TPlatModel *)[_table.dataArray objectAtIndex:indexPath.row];
     
-    CGFloat image_width = [aModel.image[@"width"]floatValue];
-    CGFloat image_height = [aModel.image[@"height"]floatValue];
+    static NSString *identifier = @"aaaaa";
+    if (!_tmpCell) {
+        _tmpCell = [[GTtaiListCustomTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+    }
     
-    //    return 50 + 36 + [LTools heightForImageHeight:image_height imageWidth:image_width originalWidth:DEVICE_WIDTH];
+    for (UIView *view in _tmpCell.contentView.subviews) {
+        [view removeFromSuperview];
+    }
     
+    CGFloat height = [_tmpCell loadCustomViewWithModel:aModel index:indexPath];
     
-    return [LTools heightForImageHeight:image_height imageWidth:image_width showWidth:DEVICE_WIDTH];
+//    return [LTools heightForImageHeight:image_height imageWidth:image_width showWidth:DEVICE_WIDTH];
+    return height;
 }
 //将要显示
 - (void)refreshTableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -608,42 +637,28 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    static NSString *identify = @"TTaiBigPhotoCell2";
+    static NSString *identifier = @"identifier";
+    GTtaiListCustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if (!cell) {
+        cell = [[GTtaiListCustomTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+    }
     
     TPlatModel *aModel = (TPlatModel *)[_table.dataArray objectAtIndex:indexPath.row];
     
-    TTaiBigPhotoCell2 *cell = (TTaiBigPhotoCell2 *)[LTools cellForIdentify:identify cellName:identify forTable:tableView];
-    
-    [cell setCellWithModel:aModel];
-    
-    cell.bigImageView.aModel = aModel;
-    cell.bigImageView.userInteractionEnabled = NO;
-    cell.bigImageView.tapGesture.enabled = NO;
-    //    [cell.bigImageView.tapGesture addTarget:self action:@selector(tapImage:)];
-    
-    if (cell.maoDianView) {
-        
-        for (int i = 0; i < cell.maoDianView.subviews.count; i ++) {
-            
-            UIView *sub = [[cell.maoDianView subviews] objectAtIndex:i];
-            [sub removeFromSuperview];
-            sub = nil;
-        }
-        [cell.maoDianView removeFromSuperview];
-        cell.maoDianView = nil;
+    for (UIView *view in cell.contentView.subviews) {
+        [view removeFromSuperview];
     }
     
-    cell.maoDianView = [[UIView alloc]initWithFrame:cell.bigImageView.frame];
-    cell.maoDianView.backgroundColor = [UIColor clearColor];
-    [cell.contentView addSubview:cell.maoDianView];
+    [cell loadCustomViewWithModel:aModel index:indexPath];
     
-    [self addMaoDian:aModel imageView:cell.maoDianView];
+    [self addMaoDian:aModel imageView:cell.maodianImv];
     
-    //赞按钮
-    cell.zanBtn.tag = 100 + indexPath.row;
-    [cell.contentView bringSubviewToFront:cell.zanBackView];
-    [cell.zanBtn addTarget:self action:@selector(zanTTaiDetail:) forControlEvents:UIControlEventTouchUpInside];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+//    //赞按钮
+//    cell.zanBtn.tag = 100 + indexPath.row;
+//    [cell.contentView bringSubviewToFront:cell.zanBackView];
+//    [cell.zanBtn addTarget:self action:@selector(zanTTaiDetail:) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
 }

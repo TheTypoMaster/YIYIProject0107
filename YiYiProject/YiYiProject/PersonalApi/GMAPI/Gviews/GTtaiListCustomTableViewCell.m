@@ -1,0 +1,132 @@
+//
+//  GTtaiListCustomTableViewCell.m
+//  YiYiProject
+//
+//  Created by gaomeng on 15/8/12.
+//  Copyright (c) 2015年 lcw. All rights reserved.
+//
+
+#import "GTtaiListCustomTableViewCell.h"
+#import "AnchorPiontView.h"
+#import "GTtaiListViewController.h"
+
+@implementation GTtaiListCustomTableViewCell
+
+- (void)awakeFromNib {
+    // Initialization code
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+
+    // Configure the view for the selected state
+}
+
+
+
+-(CGFloat)loadCustomViewWithModel:(TPlatModel*)model index:(NSIndexPath*)indexPath{
+    
+    NSString *imageUrl = model.image[@"url"];
+    CGFloat image_width = [model.image[@"width"]floatValue];
+    CGFloat image_height = [model.image[@"height"]floatValue];
+    
+    //图片缩放
+    float rate;
+    if (image_width == 0.0 || image_height == 0.0) {
+        image_width = image_height;
+    }else
+    {
+        rate = image_height/image_width;
+    }
+    CGFloat imageHeight = (DEVICE_WIDTH-10) * rate;
+    
+    self.maodianImv = [[UIImageView alloc]initWithFrame:CGRectMake(5, 5, DEVICE_WIDTH-10, imageHeight)];
+    self.maodianImv.userInteractionEnabled = YES;
+    [self.maodianImv l_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:DEFAULT_YIJIAYI];
+    [self.contentView addSubview:self.maodianImv];
+    
+    
+    //图片下面view
+    UIView *downView = [[UIView alloc]initWithFrame:CGRectMake(5, CGRectGetMaxY(self.maodianImv.frame), self.maodianImv.frame.size.width, 60)];
+    [self.contentView addSubview:downView];
+    
+    //活动
+    UILabel *huodongLabel = [[UILabel alloc]initWithFrame:CGRectMake(5, 0, downView.frame.size.width-10, downView.frame.size.height*0.5)];
+    huodongLabel.text = @"only全场满500减50";
+    huodongLabel.font = [UIFont systemFontOfSize:12];
+    huodongLabel.textColor = RGBCOLOR(36, 37, 38);
+    [downView addSubview:huodongLabel];
+    
+    //分割线
+    UIView *midLine = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(huodongLabel.frame), downView.frame.size.width, 0.5)];
+    midLine.backgroundColor = RGBCOLOR(220, 221, 223);
+    [downView addSubview:midLine];
+    
+    UIView *leftLine = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 0.5, downView.frame.size.height)];
+    leftLine.backgroundColor = RGBCOLOR(220, 221, 223);
+    [downView addSubview:leftLine];
+    
+    UIView *rightLine = [[UIView alloc]initWithFrame:CGRectMake(downView.frame.size.width-0.5, 0, 0.5, downView.frame.size.height)];
+    rightLine.backgroundColor = RGBCOLOR(220, 221, 223);
+    [downView addSubview:rightLine];
+    
+    UIView *downLine = [[UIView alloc]initWithFrame:CGRectMake(0, downView.frame.size.height-0.5, downView.frame.size.width, 0.5)];
+    downLine.backgroundColor = RGBCOLOR(220, 221, 223);
+    [downView addSubview:downLine];
+    
+    
+    //距离 商场名称 赞
+    CGFloat width = DEVICE_WIDTH/4.0;
+    UIView *distanceView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(midLine.frame), width, huodongLabel.frame.size.height)];
+    UILabel *distanceLabel = [[UILabel alloc]initWithFrame:distanceView.bounds];
+    distanceLabel.text = @"500m";
+    distanceLabel.textColor = RGBCOLOR(36, 37, 38);
+    distanceLabel.textAlignment = NSTextAlignmentCenter;
+    distanceLabel.font = [UIFont systemFontOfSize:12];
+    [distanceView addSubview:distanceLabel];
+    [downView addSubview:distanceView];
+    
+    
+    UILabel *storeNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(distanceView.frame), distanceView.frame.origin.y, 2*width, distanceView.frame.size.height)];
+    storeNameLabel.textAlignment = NSTextAlignmentCenter;
+    storeNameLabel.text = @"新燕莎金街购物广场";
+    storeNameLabel.font = [UIFont systemFontOfSize:12];
+    storeNameLabel.textColor = RGBCOLOR(36, 37, 38);
+    [downView addSubview:storeNameLabel];
+    
+    UIView *zanView = [[UIView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(storeNameLabel.frame), distanceView.frame.origin.y, distanceView.frame.size.width, distanceView.frame.size.height)];
+    UILabel *zanLabel = [[UILabel alloc]initWithFrame:zanView.bounds];
+    zanLabel.textAlignment = NSTextAlignmentCenter;
+    zanLabel.font = [UIFont systemFontOfSize:12];
+    zanLabel.text = @"286";
+    zanLabel.textColor = RGBCOLOR(245, 104, 155);
+    [zanView addSubview:zanLabel];
+    [downView addSubview:zanView];
+    
+    
+    
+    //小分割线
+    UIView *line_l = [[UIView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(distanceView.frame), (downView.frame.size.height*1.5 - 12)*0.5, 0.5, 12)];
+    line_l.backgroundColor = RGBCOLOR(220, 221, 223);
+    [downView addSubview:line_l];
+    UIView *line_r = [[UIView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(storeNameLabel.frame), line_l.frame.origin.y, 0.5, 12)];
+    line_r.backgroundColor = RGBCOLOR(220, 221, 223);
+    [downView addSubview:line_r];
+    
+    
+    
+    
+    
+    
+    
+    
+    CGFloat cell_height = CGRectGetMaxY(downView.frame);
+    
+    return cell_height;
+    
+}
+
+
+
+
+@end
