@@ -152,7 +152,23 @@
         [viewsArray1 addObject:view];
     }
     
-    _topScrollView1 = [[CycleScrollView1 alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_topScrollView.frame)+5, DEVICE_WIDTH, 95) animationDuration:2];
+    
+    UIView *vvv = [[UIView alloc]initWithFrame:CGRectMake(5, CGRectGetMaxY(_topScrollView.frame)+5, DEVICE_WIDTH-10, 35)];
+//    vvv.backgroundColor = [UIColor grayColor];
+    [self.topView addSubview:vvv];
+    UILabel *fujinhuodongLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 60, 35)];
+    fujinhuodongLabel.font = [UIFont systemFontOfSize:12];
+    fujinhuodongLabel.text = @"附近活动";
+    [vvv addSubview:fujinhuodongLabel];
+    
+    UILabel *dizhiLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(fujinhuodongLabel.frame), 0, DEVICE_WIDTH - 5-60-5, 35)];
+    dizhiLabel.text = @"清河小营西路27号";
+    dizhiLabel.textColor = RGBCOLOR(81, 82, 83);
+    
+    
+    
+    
+    _topScrollView1 = [[CycleScrollView1 alloc] initWithFrame:CGRectMake(5, CGRectGetMaxY(vvv.frame), DEVICE_WIDTH - 10, 60) animationDuration:2];
     _topScrollView1.isPageControlHidden = YES;
     _topScrollView1.scrollView.showsHorizontalScrollIndicator = FALSE;
     
