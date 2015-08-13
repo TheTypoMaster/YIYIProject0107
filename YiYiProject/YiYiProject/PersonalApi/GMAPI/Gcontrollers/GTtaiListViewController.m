@@ -580,7 +580,7 @@
     //    return 50 + 36 + [LTools heightForImageHeight:image_height imageWidth:image_width originalWidth:DEVICE_WIDTH];
     
     
-    return [LTools heightForImageHeight:image_height imageWidth:image_width originalWidth:DEVICE_WIDTH];
+    return [LTools heightForImageHeight:image_height imageWidth:image_width showWidth:DEVICE_WIDTH];
 }
 //将要显示
 - (void)refreshTableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath

@@ -27,9 +27,11 @@
 
 #import "LWaterflowView.h"//瀑布流
 
+#import "CycleScrollView1.h"//上下滚动
+
 @interface ProductDetailControllerNew ()<TMQuiltViewDataSource,WaterFlowDelegate,UIScrollViewDelegate>
 {
-    ProductModel *aModel;
+    ProductModel *_aModel;
     
     UIButton *heartButton;//赞 与 取消赞
     
@@ -45,6 +47,8 @@
     LWaterflowView *_waterFlow;
     
     UILabel *_backLabel;//释放返回
+    UILabel *_zanNumLabel;//赞数量label
+    UILabel *_commentNumLabel;//评论数量label
 }
 
 @property (strong, nonatomic) UILabel *brandName;
@@ -123,7 +127,7 @@
     [self.view addSubview:_waterFlow];
     
     //下拉 返回上面内容
-    _backLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 40) title:@"下拉,返回单品详情" font:14 align:NSTextAlignmentCenter textColor:[UIColor colorWithHexString:@"8b8b8b"]];
+    _backLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 40) title:@"下拉,返回单品详情" font:10 align:NSTextAlignmentCenter textColor:[UIColor colorWithHexString:@"8b8b8b"]];
     [_waterFlow addSubview:_backLabel];
     [_waterFlow bringSubviewToFront:_waterFlow.quitView];
     
@@ -205,7 +209,6 @@
     
     NSString *post = [NSString stringWithFormat:@"product_id=%@&authcode=%@",self.product_id,[GMAPI getAuthkey]];
     NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-    
     NSString *url = api;
     
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
@@ -215,7 +218,7 @@
         
         if (action_type == Action_like_yes) {
             
-            heartButton.selected = YES;
+            [weakSelf updateZanState:YES];
             
             //更改上一个界面的状态  从我的店铺界面跳转
             if (self.theLastViewClickedCell) {
@@ -286,19 +289,17 @@
                 self.theStorePinpaiProductModel.product_like_num = [NSString stringWithFormat:@"%d",like_num];
             }
             
-            
-            
-            
         }else if (action_type == Action_Collect_yes){
             
             collectButton.selected = YES;
-            
             //关注单品通知
             [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_PRODUCT object:nil userInfo:@{@"state":[NSNumber numberWithBool:YES]}];
             
         }else if (action_type == Action_like_no){
             
-            heartButton.selected = NO;
+
+            [weakSelf updateZanState:NO];
+            
             //更改上一个界面的状态 从我的店铺界面跳转
             if (self.theLastViewClickedCell) {
                 //赞的红心状态
@@ -367,14 +368,9 @@
         }else if (action_type == Action_Collect_no){
             
             collectButton.selected = NO;
-            
             //关注单品通知
             [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_PRODUCT object:nil userInfo:@{@"state":[NSNumber numberWithBool:NO]}];
-            
         }
-        
-        
-        
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
@@ -472,6 +468,43 @@
 #pragma mark - 事件处理
 
 /**
+ *  赞数量大于1000显示 k
+ *
+ *  @param zanNum
+ *
+ *  @return
+ */
+- (NSString *)zanNumStringForNum:(NSString *)zanNum
+{
+    int num = [zanNum intValue];
+    if (num >= 1000) {
+        
+        return [NSString stringWithFormat:@"%.1fk",num * 0.001];
+    }
+    return zanNum;
+}
+
+/**
+ *  更新赞的状态
+ *
+ *  @param isZan 是否赞
+ */
+- (void)updateZanState:(BOOL)isZan
+{
+    if (isZan) {
+        heartButton.selected = YES;
+        _aModel.product_like_num = NSStringFromInt([_aModel.product_like_num intValue] + 1);
+    }else
+    {
+        heartButton.selected = NO;
+        _aModel.product_like_num = NSStringFromInt([_aModel.product_like_num intValue] - 1);
+    }
+    _zanNumLabel.text = [self zanNumStringForNum:_aModel.product_like_num];
+    
+}
+
+
+/**
  *  上拉下拉移动视图
  *
  *  @param up 是否上拉
@@ -486,6 +519,16 @@
         _headerView.top = up ? - _headerView.height : 0;
         _waterFlow.top = up ? 0 : _headerView.height;
     }];
+}
+
+/**
+ *  评论页面
+ *
+ *  @param sender
+ */
+- (void)clickToComment:(UIButton *)sender
+{
+    
 }
 
 /**
@@ -541,9 +584,9 @@
     
     if ([LTools isLogin:self]) {
         
-        [LTools animationToBigger:sender duration:0.2 scacle:1.5];
+        [LTools animationToBigger:heartButton duration:0.2 scacle:1.5];
         
-        if (sender.selected) {
+        if (heartButton.selected) {
             
             [self networkForActionType:Action_like_no];
         }else
@@ -580,7 +623,7 @@
     NSString *safeString = [LTools safeString:self.theModel.product_name];
     NSString *title = safeString.length > 0 ? safeString : @"衣加衣";
     
-    [[LShareSheetView shareInstance] showShareContent:aModel.product_name title:title shareUrl:productString shareImage:self.bigImageView.image targetViewController:self];
+    [[LShareSheetView shareInstance] showShareContent:_aModel.product_name title:title shareUrl:productString shareImage:self.bigImageView.image targetViewController:self];
     [[LShareSheetView shareInstance]actionBlock:^(NSInteger buttonIndex, Share_Type shareType) {
         
         if (shareType == Share_QQ) {
@@ -642,7 +685,7 @@
  */
 - (void)clickToPhone:(UIButton *)sender
 {
-    NSString *phoneNum = aModel.mall_info[@"mobile"];
+    NSString *phoneNum = _aModel.mall_info[@"mobile"];
     
     if (phoneNum.length > 0) {
         
@@ -660,7 +703,7 @@
 //打电话
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     
-    NSString *phoneNum = aModel.mall_info[@"mobile"];
+    NSString *phoneNum = _aModel.mall_info[@"mobile"];
     
     //0取消    1确定
     if (buttonIndex == 1) {
@@ -692,14 +735,14 @@
             YIYIChatViewController *contact = [[YIYIChatViewController alloc]init];
             
             
-            if ([aModel.mall_info isKindOfClass:[NSDictionary class]]) {
+            if ([_aModel.mall_info isKindOfClass:[NSDictionary class]]) {
                 
-                useriId = aModel.mall_info[@"uid"];
-                userName = aModel.mall_info[@"mall_name"];
-                mall_type = aModel.mall_info[@"mall_type"];
+                useriId = _aModel.mall_info[@"uid"];
+                userName = _aModel.mall_info[@"mall_name"];
+                mall_type = _aModel.mall_info[@"mall_type"];
                 if ([mall_type intValue] == 1) {//商场店
-                    brand_name = aModel.brand_info[@"brand_name"];//品牌名
-                    mall_name = aModel.mall_info[@"mall_name"];//商城名
+                    brand_name = _aModel.brand_info[@"brand_name"];//品牌名
+                    mall_name = _aModel.mall_info[@"mall_name"];//商城名
                     NSString *aaa = [NSString stringWithFormat:@"%@.%@",brand_name,mall_name];
                     NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:aaa];
                     NSInteger pinpaiNameLength = brand_name.length;
@@ -746,14 +789,14 @@
 - (IBAction)clickToBuy:(id)sender {
     
     GLeadBuyMapViewController *ll = [[GLeadBuyMapViewController alloc]init];
-    ll.aModel = aModel;
+    ll.aModel = _aModel;
     
     ll.theType = LEADYOUTYPE_STORE;
     
-    if ([LTools isDictinary:aModel.mall_info]) {
+    if ([LTools isDictinary:_aModel.mall_info]) {
         
-        ll.storeName = aModel.mall_info[@"mall_name"];
-        ll.coordinate_store = CLLocationCoordinate2DMake([aModel.mall_info[@"latitude"]floatValue], [aModel.mall_info[@"longitude"]floatValue]);
+        ll.storeName = _aModel.mall_info[@"mall_name"];
+        ll.coordinate_store = CLLocationCoordinate2DMake([_aModel.mall_info[@"latitude"]floatValue], [_aModel.mall_info[@"longitude"]floatValue]);
     }
     
     //    UINavigationController *rrr = [[UINavigationController alloc]initWithRootViewController:ll];
@@ -769,10 +812,10 @@
     if (self.isChooseProductLink) {
         GAddTtaiImageLinkViewController *cc = self.navigationController.viewControllers[0];
         
-        NSString *shopId = aModel.product_shop_id;
-        NSString *productName = aModel.product_name;
-        NSString *shopName = aModel.mall_info[@"mall_name"];
-        NSString *price = [NSString stringWithFormat:@"%@",aModel.product_price];
+        NSString *shopId = _aModel.product_shop_id;
+        NSString *productName = _aModel.product_name;
+        NSString *shopName = _aModel.mall_info[@"mall_name"];
+        NSString *price = [NSString stringWithFormat:@"%@",_aModel.product_price];
         
         [cc setGmoveImvProductId:self.product_id shopid:shopId productName:productName shopName:shopName price:price type:@"单品"];
         [self.navigationController popToViewController:cc animated:YES];
@@ -780,22 +823,22 @@
     }
     
     //    int mall_type = [aModel.mall_info[@"mall_type"] intValue];
-    int shop_type = [aModel.shop_type intValue];
+    int shop_type = [_aModel.shop_type intValue];
     NSString *storeId;
     NSString *storeName;
     
     if (shop_type == ShopType_pinpaiDian) {
         
-        storeId = aModel.product_shop_id;
-        storeName = aModel.product_brand_name;
-        NSString *brandName = aModel.product_brand_name;//品牌店需要brandName
+        storeId = _aModel.product_shop_id;
+        storeName = _aModel.product_brand_name;
+        NSString *brandName = _aModel.product_brand_name;//品牌店需要brandName
         
         [MiddleTools pushToStoreDetailVcWithId:storeId shopType:shop_type storeName:storeName brandName:brandName fromViewController:self lastNavigationHidden:NO hiddenBottom:NO isTPlatPush:NO];
         
     }else if (shop_type == ShopType_jingpinDian || shop_type == ShopType_mall){
         
-        storeId = aModel.mall_info[@"mall_id"];
-        storeName = aModel.mall_info[@"mall_name"];
+        storeId = _aModel.mall_info[@"mall_id"];
+        storeName = _aModel.mall_info[@"mall_name"];
         
         [MiddleTools pushToStoreDetailVcWithId:storeId shopType:shop_type storeName:storeName brandName:@" " fromViewController:self lastNavigationHidden:NO hiddenBottom:NO isTPlatPush:NO];
     }
@@ -867,7 +910,7 @@
     }
     image_urls = [NSArray arrayWithArray:temp_arr];
     
-    aModel = aProductModel;
+    _aModel = aProductModel;
     
     //赞 与 收藏 状态
     heartButton.selected = aProductModel.is_like == 1 ? YES : NO;
@@ -879,14 +922,7 @@
     
 }
 
-
 #pragma mark - 创建视图
-/**
- *  tableView头部(图片、基本信息、评论、标签、固定说明图、所在商场)
- *
- *  @param productModel
- */
-
 /**
  *  创建详情显示view 除了底部品牌推荐 其他的作为header
  *
@@ -955,7 +991,7 @@
         
         //折扣
         
-        NSString *discount = [NSString stringWithFormat:@"%.1f",aModel.discount_num * 10];
+        NSString *discount = [NSString stringWithFormat:@"%.1f",_aModel.discount_num * 10];
         discount = [NSString stringWithFormat:@"%@折",[discount stringByRemoveTrailZero]];
         aWidth = [LTools widthForText:discount font:13];
         UILabel *dicountLabel = [[UILabel alloc]initWithFrame:CGRectMake(priceLabel2.right + 5, priceLabel2.top, aWidth + 8, 13) title:discount font:13 align:NSTextAlignmentCenter textColor:[UIColor whiteColor]];
@@ -966,24 +1002,19 @@
     }
     //地址信息
     UIImageView *addressIcon = [[UIImageView alloc]initWithFrame:CGRectMake(titleLabel.left, priceLabel.bottom + 10, 13, 13)];
-//    addressIcon.backgroundColor = DEFAULT_TEXTCOLOR;
     addressIcon.image = [UIImage imageNamed:@"danpinxq_dianpu"];
     [_headerView addSubview:addressIcon];
     
     NSString *address = [NSString stringWithFormat:@"%@ - %@",[LTools NSStringNotNull:aProductModel.product_brand_name],aProductModel.mall_info[@"street"]];
-    
     UILabel *addressLabel = [[UILabel alloc]initWithFrame:CGRectMake(addressIcon.right + 10, addressIcon.top, DEVICE_WIDTH - addressIcon.right - 5 - 20, addressIcon.height) title:address font:13 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"67bcfd"]];
     [_headerView addSubview:addressLabel];
     
-    
     //地址信息
     UIImageView *addressIcon_current = [[UIImageView alloc]initWithFrame:CGRectMake(titleLabel.left, addressIcon.bottom + 10, 13, 13)];
-//    addressIcon_current.backgroundColor = DEFAULT_TEXTCOLOR;
     addressIcon_current.image = [UIImage imageNamed:@"danpinxq_dizhi"];
     [_headerView addSubview:addressIcon_current];
     
     NSString *address_current = [NSString stringWithFormat:@"清河小营西路17号"];
-    
     UILabel *addressLabel_current = [[UILabel alloc]initWithFrame:CGRectMake(addressIcon_current.right + 10, addressIcon_current.top, DEVICE_WIDTH - addressIcon.right - 5 - 20, addressIcon.height) title:address_current font:13 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"67bcfd"]];
     [_headerView addSubview:addressLabel_current];
     
@@ -995,7 +1026,63 @@
     [_headerView addSubview:line3];
     
     //评论
-//    UIScrollView *scroll = [UIScrollView alloc]initWithFrame:CGRectMake(10, <#CGFloat y#>, <#CGFloat width#>, <#CGFloat height#>)
+    
+    NSArray *commentArray = @[@"张三:评论的内容在这里",@"李四:评论的内容比较长评论的内容比较长评论的内容比较长评论的内容比较长评论的内容比较长kkkkk荣荣荣",@"王二:呃逆荣在轮播滚动"];
+    NSMutableArray *viewsArray1 = [NSMutableArray arrayWithCapacity:1];
+    for (int i = 0; i<3; i++) {
+        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH - 105, 55)];
+        view.backgroundColor = [UIColor whiteColor];
+        [viewsArray1 addObject:view];
+        
+        NSString *content = commentArray[i];
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10, 12.5, view.width - 20, 30) title:content font:12 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"6d6d6d"]];
+        [view addSubview:label];
+        label.numberOfLines = 2;
+        label.lineBreakMode = NSLineBreakByTruncatingTail;
+    }
+    
+    CycleScrollView1 * topScrollView1 = [[CycleScrollView1 alloc] initWithFrame:CGRectMake(0, line2.bottom, DEVICE_WIDTH - 105, 55) animationDuration:2];
+    topScrollView1.isPageControlHidden = YES;
+    topScrollView1.scrollView.showsHorizontalScrollIndicator = FALSE;
+    [_headerView addSubview:topScrollView1];
+    
+    topScrollView1.fetchContentViewAtIndex = ^UIView *(NSInteger pageIndex){
+        return viewsArray1[pageIndex];
+    };
+    
+    NSInteger count1 = viewsArray1.count;
+    topScrollView1.totalPagesCount = ^NSInteger(void){
+        return count1;
+    };
+    
+    //    __weak typeof (self)bself = self;
+    topScrollView1.TapActionBlock = ^(NSInteger pageIndex){
+//        [bself cycleScrollDidClickedWithIndex:pageIndex];
+    };
+    
+    //点赞、评论
+    
+    UIButton *zanBtn = [[UIButton alloc]initWithframe:CGRectMake(DEVICE_WIDTH - 10 - 40,line2.bottom + 8, 40, 40) buttonType:UIButtonTypeCustom nornalImage:nil selectedImage:nil target:self action:@selector(clickToLike:)];
+    [_headerView addSubview:zanBtn];
+    [zanBtn addCornerRadius:20];
+    [zanBtn setBorderWidth:.5 borderColor:DEFAULT_TEXTCOLOR];
+    
+    heartButton = [[UIButton alloc]initWithframe:CGRectMake(0, 5, 40, 20) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"Ttai_zan_normal"] selectedImage:[UIImage imageNamed:@"Ttai_zan_selected"] target:self action:nil];
+    [zanBtn addSubview:heartButton];
+    heartButton.userInteractionEnabled = NO;
+    heartButton.selected = aProductModel.is_like == 1 ? YES : NO;
+    
+    NSString *zanString = [self zanNumStringForNum:aProductModel.product_like_num];
+    _zanNumLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, heartButton.bottom, 40, 10) title:zanString font:10 align:NSTextAlignmentCenter textColor:DEFAULT_TEXTCOLOR];
+    [zanBtn addSubview:_zanNumLabel];
+
+    
+    UIButton *commentBtn = [[UIButton alloc]initWithframe:CGRectMake(zanBtn.left - 14 - 40, zanBtn.top, 40, 40) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"Ttaixq_pinglun2"] selectedImage:[UIImage imageNamed:@"Ttaixq_pinglun2"] target:self action:@selector(clickToComment:)];
+    [_headerView addSubview:commentBtn];
+    NSString *commentString = [self zanNumStringForNum:@"1235"];
+    _commentNumLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 25, 40, 10) title:commentString font:10 align:NSTextAlignmentCenter textColor:DEFAULT_TEXTCOLOR];
+    [commentBtn addSubview:_commentNumLabel];
+    
     
     //标签
     
@@ -1096,19 +1183,21 @@
     [_headerView addSubview:constImageView];
     constImageView.image = [UIImage imageNamed:@"yijiayiAdvertisement"];
     
+    
+    top = constImageView.bottom;
     //商品详情
-    
-    aHeight = [LTools heightForImageHeight:42 imageWidth:375 showWidth:DEVICE_WIDTH];
-    UIImageView *detailImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, constImageView.bottom, DEVICE_WIDTH, aHeight)];
-    detailImage.image = [UIImage imageNamed:@"danpinxq_xq"];
-    [_headerView addSubview:detailImage];
-    
-    top = detailImage.bottom;
     
     //单品的其他图片
     NSArray *images = aProductModel.images;
     count = (int)images.count;
     if (count > 1) {
+        
+        aHeight = [LTools heightForImageHeight:42 imageWidth:375 showWidth:DEVICE_WIDTH];
+        UIImageView *detailImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, constImageView.bottom, DEVICE_WIDTH, aHeight)];
+        detailImage.image = [UIImage imageNamed:@"danpinxq_xq"];
+        [_headerView addSubview:detailImage];
+        
+        top = detailImage.bottom;
         
         //从第二张开始
         for (int i = 1; i < count; i ++) {
@@ -1133,14 +1222,14 @@
     
     //继续拖动查看 品牌推荐
     
-    UILabel *moreLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, top - 5, DEVICE_WIDTH, 40) title:@"继续拖动,查看品牌推荐" font:10 align:NSTextAlignmentCenter textColor:[UIColor colorWithHexString:@"8b8b8b"]];
+    UILabel *moreLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, top - 5, DEVICE_WIDTH, 60) title:@"继续拖动,查看品牌推荐" font:10 align:NSTextAlignmentCenter textColor:[UIColor colorWithHexString:@"8b8b8b"]];
     [_headerView addSubview:moreLabel];
-    
-    aHeight = [LTools heightForImageHeight:42 imageWidth:375 showWidth:DEVICE_WIDTH];
-    UIImageView *lineImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, moreLabel.top, DEVICE_WIDTH, aHeight)];
-    lineImage.image = [UIImage imageNamed:@"danpinxq_tuijianchakan"];
-    lineImage.contentMode = UIViewContentModeCenter;
-    [_headerView addSubview:lineImage];
+//
+//    aHeight = [LTools heightForImageHeight:42 imageWidth:375 showWidth:DEVICE_WIDTH];
+//    UIImageView *lineImage = [[UIImageView alloc]initWithFrame:CGRectMake(0,top - 5 + 30, DEVICE_WIDTH, aHeight)];
+//    lineImage.image = [UIImage imageNamed:@"danpinxq_tuijianchakan"];
+//    lineImage.contentMode = UIViewContentModeCenter;
+//    [_headerView addSubview:lineImage];
     
     
     _headerView.contentSize = CGSizeMake(DEVICE_WIDTH, moreLabel.bottom);
@@ -1175,15 +1264,15 @@
     //导航按钮
     
     UIView *bottom = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT - 64 - 60, DEVICE_WIDTH, 60)];
-    bottom.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.3];
+    bottom.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.5];
     [self.view addSubview:bottom];
     
     //电话
-    UIButton *phoneBtn = [[UIButton alloc]initWithframe:CGRectMake(22, 0, 46, 60) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"productDetail_phone"] selectedImage:nil target:self action:@selector(clickToPhone:)];
+    UIButton *phoneBtn = [[UIButton alloc]initWithframe:CGRectMake(22, 12, 36, 36) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"danpinxq_dianhua2"] selectedImage:nil target:self action:@selector(clickToPhone:)];
     [bottom addSubview:phoneBtn];
     
     //聊天
-    UIButton *chatBtn = [[UIButton alloc]initWithframe:CGRectMake(phoneBtn.right, 0, 46, 60) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"productDetail_chat"] selectedImage:nil target:self action:@selector(clickToPrivateChat:)];
+    UIButton *chatBtn = [[UIButton alloc]initWithframe:CGRectMake(phoneBtn.right + 25, 12, 39, 36) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"danpinxq_lianximaijia2"] selectedImage:nil target:self action:@selector(clickToPrivateChat:)];
     [bottom addSubview:chatBtn];
     
     //聊天
@@ -1202,9 +1291,9 @@
     UIButton *rightView=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 190, 44)];
     rightView.backgroundColor=[UIColor clearColor];
     
-    //是否赞
-    heartButton = [[UIButton alloc]initWithframe:CGRectMake(0, 0, 44, 44) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"productDetail_zan_normal"] selectedImage:[UIImage imageNamed:@"productDetail_zan_selected"] target:self action:@selector(clickToLike:)];
-    [heartButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
+//    //是否赞
+//    heartButton = [[UIButton alloc]initWithframe:CGRectMake(0, 0, 44, 44) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"productDetail_zan_normal"] selectedImage:[UIImage imageNamed:@"productDetail_zan_selected"] target:self action:@selector(clickToLike:)];
+//    [heartButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
     
     
     //收藏的
@@ -1220,7 +1309,7 @@
     [shareButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
     
     [rightView addSubview:shareButton];
-    [rightView addSubview:heartButton];
+//    [rightView addSubview:heartButton];
     [rightView addSubview:collectButton];
     
     UIBarButtonItem *comment_item=[[UIBarButtonItem alloc]initWithCustomView:rightView];
@@ -1235,7 +1324,7 @@
 {
     // 下拉到最底部时显示更多数据
     
-    if(scrollView.contentOffset.y > ((scrollView.contentSize.height - scrollView.frame.size.height - 40)))
+    if(scrollView.contentOffset.y > ((scrollView.contentSize.height - scrollView.frame.size.height - 60)))
     {
         [self moveToUp:YES];
     }

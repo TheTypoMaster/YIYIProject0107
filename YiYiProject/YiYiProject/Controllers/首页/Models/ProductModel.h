@@ -29,8 +29,8 @@
 @property(nonatomic,assign)CGFloat discount_num;
 @property(nonatomic,retain)NSString *product_gender;
 
-@property(nonatomic,retain)NSString *product_like_num;
-@property(nonatomic,retain)NSString *product_fav_num;
+@property(nonatomic,retain)NSString *product_like_num;//赞数量
+@property(nonatomic,retain)NSString *product_fav_num;//收藏数量
 
 @property(nonatomic,retain)NSString *product_brand_id;
 
