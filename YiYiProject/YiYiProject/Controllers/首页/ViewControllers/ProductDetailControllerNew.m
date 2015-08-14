@@ -18,20 +18,15 @@
 #import "MJPhoto.h"
 
 #import "GAddTtaiImageLinkViewController.h"
-
 #import "TMPhotoQuiltViewCell.h"
-
 #import "LContactView.h"//联系view
-
 #import "BottomToolsView.h"//底部工具
-
 #import "LWaterflowView.h"//瀑布流
-
 #import "CycleScrollView1.h"//上下滚动
-
 #import "MessageDetailController.h"//活动详情
-
 #import "ProductListForTagController.h"//标签对应单品列表
+#import "TopicCommentsModel.h"//评论
+#import "TTaiCommentViewController.h"//评论列表
 
 @interface ProductDetailControllerNew ()<TMQuiltViewDataSource,WaterFlowDelegate,UIScrollViewDelegate>
 {
@@ -60,6 +55,8 @@
     CGFloat _latitude;//维度
     CGFloat _longtitude;//经度
     NSString *_addressDetail;//地址详细信息
+    NSArray *_commentArray;//评论
+    int _commentCount;//评论总数
 }
 
 @property (strong, nonatomic) UILabel *brandName;
@@ -174,7 +171,7 @@
     
     __weak typeof(self)weakSelf = self;
     
-    self.product_id = @"11";
+    self.product_id = @"146";
     NSString *url = [NSString stringWithFormat:HOME_PRODUCT_DETAIL,self.product_id,[GMAPI getAuthkey]];
     tool_detail = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     
@@ -209,7 +206,7 @@
 {
     __weak typeof(self)weakSelf = self;
     
-//    self.product_id = @"146";
+    self.product_id = @"146";
     NSString *url = [NSString stringWithFormat:HOME_PRODUCT_DETAIL_SAME_STYLE,_longtitude,_latitude,self.product_id];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     
@@ -223,6 +220,48 @@
             [temp addObject:aModel];
         }
         _sameStyleArray = [NSArray arrayWithArray:temp];
+        
+        [self setValue:[NSNumber numberWithInt:_count + 1] forKeyPath:@"_count"];
+
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+        
+        [self setValue:[NSNumber numberWithInt:_count + 1] forKeyPath:@"_count"];
+        
+    }];
+}
+
+/**
+ *  获取单品评论列表
+ */
+- (void)networkForCommentList
+{
+    __weak typeof(self)weakSelf = self;
+    
+    self.product_id = @"11";
+    NSString *url = [NSString stringWithFormat:PRODUCT_COMMENT_LIST,self.product_id];
+    url = [NSString stringWithFormat:@"%@&page=%d&per_page=%d",url,1,10];
+    
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"result %@",result);
+        _commentCount  = [[result objectForKey:@"total"] intValue];
+        NSArray * commentsArray = [result objectForKey:@"list"];
+        
+        NSMutableArray *arr = [NSMutableArray arrayWithCapacity:commentsArray.count];
+        
+        for (NSDictionary * dic in commentsArray)
+        {
+            TopicCommentsModel * model = [[TopicCommentsModel alloc] initWithDictionary:dic];
+            model.reply_id = [NSString stringWithFormat:@"%@",[dic objectForKey:@"post_id"]];
+            model.repost_uid = [NSString stringWithFormat:@"%@",[dic objectForKey:@"uid"]];
+            [arr addObject:model];
+        }
+        _commentArray = [NSArray arrayWithArray:arr];
         
         [self setValue:[NSNumber numberWithInt:_count + 1] forKeyPath:@"_count"];
 
@@ -514,7 +553,7 @@
     NSLog(@"keyPath %@",change);
     
     NSNumber *num = [change objectForKey:@"new"];
-    if ([num intValue] == 2) {
+    if ([num intValue] == 3) {
         
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if (_aModel) {
@@ -592,6 +631,10 @@
     //请求单品同款
     [self networkForDetailSameStyle];
     
+    //请求评论
+    
+    [self networkForCommentList];
+    
     //品牌推荐
     [self getRecommentProductList];
 
@@ -658,7 +701,11 @@
  */
 - (void)clickToComment:(UIButton *)sender
 {
-    
+    TTaiCommentViewController *commentList = [[TTaiCommentViewController alloc]init];
+    commentList.tt_id = @"11";
+    commentList.commentType = COMMENTTYPE_Product;
+    commentList.aProduct = _aModel;
+    [self.navigationController pushViewController:commentList animated:YES];
 }
 
 /**
@@ -937,6 +984,23 @@
     [self presentViewController:ll animated:YES completion:nil];
 }
 
+/**
+ *  跳转至地图
+ *
+ *  @param sender
+ */
+- (IBAction)clickToMapForCurrentLoacation:(id)sender {
+    
+    GLeadBuyMapViewController *ll = [[GLeadBuyMapViewController alloc]init];
+    ll.aModel = _aModel;
+    ll.theType = LEADYOUTYPE_STORE;
+    
+    ll.storeName = @"当前位置";
+    ll.coordinate_store = CLLocationCoordinate2DMake(_latitude, _longtitude);
+    
+    [self presentViewController:ll animated:YES completion:nil];
+}
+
 - (IBAction)clickToStore:(id)sender {
     
     
@@ -1155,6 +1219,8 @@
     _addressLabel_current = [[UILabel alloc]initWithFrame:CGRectMake(addressIcon_current.right + 10, addressIcon_current.top, DEVICE_WIDTH - addressIcon.right - 5 - 20, addressIcon.height) title:address_current font:13 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"67bcfd"]];
     [_headerView addSubview:_addressLabel_current];
     
+    [_addressLabel_current addTaget:self action:@selector(clickToMapForCurrentLoacation:) tag:0];
+    
     _addressLabel_current.text = _addressDetail;
     
     UIView *line2 = [[UIView alloc]initWithFrame:CGRectMake(0, _addressLabel_current.bottom + 5, DEVICE_WIDTH, 0.5)];
@@ -1167,38 +1233,44 @@
 #pragma - mark 评论相关
     //评论
     
-    NSArray *commentArray = @[@"张三:评论的内容在这里",@"李四:评论的内容比较长评论的内容比较长评论的内容比较长评论的内容比较长评论的内容比较长kkkkk荣荣荣",@"王二:呃逆荣在轮播滚动"];
+    int commentCount = (int)_commentArray.count;
     NSMutableArray *viewsArray1 = [NSMutableArray arrayWithCapacity:1];
-    for (int i = 0; i<3; i++) {
+    for (int i = 0; i < commentCount; i++) {
+        
         UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH - 105, 55)];
         view.backgroundColor = [UIColor whiteColor];
         [viewsArray1 addObject:view];
         
-        NSString *content = commentArray[i];
+        TopicCommentsModel *amodel = _commentArray[i];
+        NSString *content = [NSString stringWithFormat:@"%@:%@",amodel.user_name,amodel.repost_content];
         UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10, 12.5, view.width - 20, 30) title:content font:12 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"6d6d6d"]];
         [view addSubview:label];
         label.numberOfLines = 2;
         label.lineBreakMode = NSLineBreakByTruncatingTail;
     }
     
-    CycleScrollView1 * topScrollView1 = [[CycleScrollView1 alloc] initWithFrame:CGRectMake(0, line2.bottom, DEVICE_WIDTH - 105, 55) animationDuration:2];
-    topScrollView1.isPageControlHidden = YES;
-    topScrollView1.scrollView.showsHorizontalScrollIndicator = FALSE;
-    [_headerView addSubview:topScrollView1];
-    
-    topScrollView1.fetchContentViewAtIndex = ^UIView *(NSInteger pageIndex){
-        return viewsArray1[pageIndex];
-    };
-    
-    NSInteger count1 = viewsArray1.count;
-    topScrollView1.totalPagesCount = ^NSInteger(void){
-        return count1;
-    };
-    
-    //    __weak typeof (self)bself = self;
-    topScrollView1.TapActionBlock = ^(NSInteger pageIndex){
-//        [bself cycleScrollDidClickedWithIndex:pageIndex];
-    };
+    if (commentCount) {
+        
+        CycleScrollView1 * topScrollView1 = [[CycleScrollView1 alloc] initWithFrame:CGRectMake(0, line2.bottom, DEVICE_WIDTH - 105, 55) animationDuration:2];
+        topScrollView1.isPageControlHidden = YES;
+        topScrollView1.scrollView.showsHorizontalScrollIndicator = FALSE;
+        [_headerView addSubview:topScrollView1];
+        
+        topScrollView1.fetchContentViewAtIndex = ^UIView *(NSInteger pageIndex){
+            return viewsArray1[pageIndex];
+        };
+        
+        NSInteger count1 = viewsArray1.count;
+        topScrollView1.totalPagesCount = ^NSInteger(void){
+            return count1;
+        };
+        
+        //    __weak typeof (self)bself = self;
+        topScrollView1.TapActionBlock = ^(NSInteger pageIndex){
+            //        [bself cycleScrollDidClickedWithIndex:pageIndex];
+        };
+
+    }
     
     //点赞、评论
     
@@ -1219,7 +1291,7 @@
     
     UIButton *commentBtn = [[UIButton alloc]initWithframe:CGRectMake(zanBtn.left - 14 - 40, zanBtn.top, 40, 40) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"Ttaixq_pinglun2"] selectedImage:[UIImage imageNamed:@"Ttaixq_pinglun2"] target:self action:@selector(clickToComment:)];
     [_headerView addSubview:commentBtn];
-    NSString *commentString = [self zanNumStringForNum:@"1235"];
+    NSString *commentString = [self zanNumStringForNum:NSStringFromInt(_commentCount)];
     _commentNumLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 25, 40, 10) title:commentString font:10 align:NSTextAlignmentCenter textColor:DEFAULT_TEXTCOLOR];
     [commentBtn addSubview:_commentNumLabel];
     
@@ -1398,15 +1470,8 @@
     
     //继续拖动查看 品牌推荐
     
-    UILabel *moreLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, top + 10, DEVICE_WIDTH, 60) title:@"继续拖动,查看品牌推荐" font:10 align:NSTextAlignmentCenter textColor:[UIColor colorWithHexString:@"8b8b8b"]];
+    UILabel *moreLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, top + 10, DEVICE_WIDTH, 46) title:@"继续拖动,查看品牌推荐" font:10 align:NSTextAlignmentCenter textColor:[UIColor colorWithHexString:@"8b8b8b"]];
     [_headerView addSubview:moreLabel];
-//
-//    aHeight = [LTools heightForImageHeight:42 imageWidth:375 showWidth:DEVICE_WIDTH];
-//    UIImageView *lineImage = [[UIImageView alloc]initWithFrame:CGRectMake(0,top - 5 + 30, DEVICE_WIDTH, aHeight)];
-//    lineImage.image = [UIImage imageNamed:@"danpinxq_tuijianchakan"];
-//    lineImage.contentMode = UIViewContentModeCenter;
-//    [_headerView addSubview:lineImage];
-    
     
     _headerView.contentSize = CGSizeMake(DEVICE_WIDTH, moreLabel.bottom);
 
@@ -1439,20 +1504,20 @@
 {
     //导航按钮
     
-    UIView *bottom = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT - 64 - 60, DEVICE_WIDTH, 60)];
+    UIView *bottom = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT - 64 - 46, DEVICE_WIDTH, 46)];
     bottom.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.5];
     [self.view addSubview:bottom];
     
     //电话
-    UIButton *phoneBtn = [[UIButton alloc]initWithframe:CGRectMake(22, 12, 36, 36) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"danpinxq_dianhua2"] selectedImage:nil target:self action:@selector(clickToPhone:)];
+    UIButton *phoneBtn = [[UIButton alloc]initWithframe:CGRectMake(22, 5, 36, 36) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"danpinxq_dianhua2"] selectedImage:nil target:self action:@selector(clickToPhone:)];
     [bottom addSubview:phoneBtn];
     
     //聊天
-    UIButton *chatBtn = [[UIButton alloc]initWithframe:CGRectMake(phoneBtn.right + 25, 12, 39, 36) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"danpinxq_lianximaijia2"] selectedImage:nil target:self action:@selector(clickToPrivateChat:)];
+    UIButton *chatBtn = [[UIButton alloc]initWithframe:CGRectMake(phoneBtn.right + 25, 5, 39, 36) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"danpinxq_lianximaijia2"] selectedImage:nil target:self action:@selector(clickToPrivateChat:)];
     [bottom addSubview:chatBtn];
     
     //聊天
-    UIButton *shopBtn = [[UIButton alloc]initWithframe:CGRectMake(DEVICE_WIDTH - 70 - 20, 15, 70, 30) buttonType:UIButtonTypeCustom normalTitle:@"进入店铺" selectedTitle:nil target:self action:@selector(clickToStore:)];
+    UIButton *shopBtn = [[UIButton alloc]initWithframe:CGRectMake(DEVICE_WIDTH - 70 - 20, 8, 70, 30) buttonType:UIButtonTypeCustom normalTitle:@"进入店铺" selectedTitle:nil target:self action:@selector(clickToStore:)];
     [shopBtn addCornerRadius:15];
     [shopBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
     [shopBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

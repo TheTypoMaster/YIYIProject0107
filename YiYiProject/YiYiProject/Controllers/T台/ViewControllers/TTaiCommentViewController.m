@@ -64,8 +64,6 @@
     [super viewWillAppear:animated];
     [_input_view addKeyBordNotification];
     
-
-    
     self.navigationController.navigationBarHidden = YES;
     
     [[UIApplication sharedApplication]setStatusBarHidden:NO];
@@ -104,7 +102,7 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    self.myTitleLabel.text = @"T台评论";
+    self.myTitleLabel.text = _commentType == COMMENTTYPE_TPlat ? @"T台评论" : @"单品评论";
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     
@@ -112,12 +110,26 @@
     
     //头部赞人员
     
-    CGFloat height = [TCommentHeadCell cellHeightForString:self.t_model.tt_content];
+    NSString *content = nil;
+    id amodel = nil;
+    if (_commentType == COMMENTTYPE_TPlat) {
+        
+        content = self.t_model.tt_content;
+        amodel = self.t_model;
+        
+    }else if(_commentType == COMMENTTYPE_Product)
+    {
+        content = self.aProduct.product_name;
+        amodel = self.aProduct;
+    }
+    
+    CGFloat height = [TCommentHeadCell cellHeightForString:content];
 
     NSString *identify = @"TCommentHeadCell";
     _headCell = [[[NSBundle mainBundle]loadNibNamed:identify owner:self options:nil]lastObject];
     _headCell.frame = CGRectMake(0, 0, DEVICE_WIDTH, height);
-    [_headCell setCellWithModel:self.t_model];
+    
+    [_headCell setCellWithModel:amodel];
     [_headCell.zanUserView addTaget:self action:@selector(clickToZanList:) tag:0];
     [self.view addSubview:_headCell];
     
@@ -129,7 +141,6 @@
     _table.dataSource = self;
     [self.view addSubview:_table];
     _table.backgroundColor = [UIColor clearColor];
-//    _table.separatorInset = UIEdgeInsetsMake(0,0,0,0);
     
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
     loading = [LTools MBProgressWithText:@"加载..." addToView:self.view];
@@ -271,57 +282,6 @@
     }
 }
 
-/**
- *  弹出转发视图
- */
-- (void)clickToZhuanFa:(UIButton *)sender
-{
-    [[LShareSheetView shareInstance] showShareContent:detail_model.tt_content title:@"衣加衣" shareUrl:@"http://www.alayy.com" shareImage:bigImageView.image targetViewController:self];
-    [[LShareSheetView shareInstance]actionBlock:^(NSInteger buttonIndex, Share_Type shareType) {
-        
-        if (shareType == Share_QQ) {
-            
-            NSLog(@"Share_QQ");
-            
-        }else if (shareType == Share_QQZone){
-            
-            NSLog(@"Share_QQZone");
-            
-        }else if (shareType == Share_WeiBo){
-            
-            NSLog(@"Share_WeiBo");
-            
-        }else if (shareType == Share_WX_HaoYou){
-            
-            NSLog(@"Share_WX_HaoYou");
-            
-        }else if (shareType == Share_WX_PengYouQuan){
-            
-            NSLog(@"Share_WX_PengYouQuan");
-            
-        }
-        
-    }];
-    
-    [[LShareSheetView shareInstance]shareResult:^(Share_Result result, Share_Type type) {
-        
-        if (result == Share_Success) {
-            
-            //分享 + 1
-            NSLog(@"分享成功");
-            
-            [self zhuanFaTTaiDetail];
-            
-        }else
-        {
-            //分享失败
-            
-            NSLog(@"分享失败");
-        }
-        
-    }];
-}
-
 #pragma mark - 网络请求
 
 /**
@@ -329,17 +289,19 @@
  */
 - (void)getZanList
 {
-    //    NSString *key = [GMAPI getAuthkey];
-    
     __weak typeof(self)weakSelf = self;
     
-//    __weak typeof(_table)weakTable = _table;
+    NSString *api = nil;
     
-//    __block int blockTotal = _zanTotalNum;
-//    
-//    __block NSArray *blockZanList = _zanListArray;
-    
-    NSString *api = [NSString stringWithFormat:TPLat_ZanList,self.t_model.tt_id];
+    if (_commentType == COMMENTTYPE_TPlat) {
+        
+        api = [NSString stringWithFormat:TPLat_ZanList,self.t_model.tt_id];
+        
+    }else if (_commentType == COMMENTTYPE_Product){
+        
+        api = [NSString stringWithFormat:PRODUCT_ZAN_LIST,self.aProduct.product_id];
+
+    }
     
     NSString *url = [NSString stringWithFormat:@"%@&authcode=%@&page=%d&per_page=%d",api,[GMAPI getAuthkey],_table.pageNum,L_PAGE_SIZE];
     
@@ -348,7 +310,6 @@
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
-//        NSLog(@"获取赞列表:%@",result);
         NSArray *list = [result objectForKey:@"list"];
         NSMutableArray *temp = [NSMutableArray arrayWithCapacity:list.count];
         for (NSDictionary *aDic in list) {
@@ -375,11 +336,19 @@
 ///T台评论
 -(void)getTTaiComments
 {
-//    _tt_id = @"47";
-    
-    NSString * url = [NSString stringWithFormat:TTAI_COMMENTS_URL,_table.pageNum,_tt_id];
 
-    NSLog(@"请求t台评论接口 --  %@",url);
+    NSString * url = nil;
+    if (_commentType == COMMENTTYPE_TPlat) {
+        
+        url = [NSString stringWithFormat:TTAI_COMMENTS_URL,_table.pageNum,_tt_id];
+    }else if (_commentType == COMMENTTYPE_Product){
+        
+        url = [NSString stringWithFormat:PRODUCT_COMMENT_LIST,_tt_id];
+        url = [NSString stringWithFormat:@"%@&page=%d&per_page=%d",url,1,10];
+
+    }
+
+    NSLog(@"请求评论接口 --  %@",url);
     
     __weak typeof(self)weakSelf = self;
     __weak typeof(RefreshTableView) *weakTable = _table;
@@ -431,12 +400,26 @@
 {
     NSString *content = _input_view.text_input_view.text;
     
-    NSString *post = [NSString stringWithFormat:@"authcode=%@&tt_id=%@&parent_post=%@&content=%@",[GMAPI getAuthkey],self.tt_id,r_replyId,content];
-    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    NSString *post = nil;
+    NSData *postData = nil;
+    NSString *url = nil;
+
+    if (_commentType == COMMENTTYPE_TPlat) {
+        
+        url = [NSString stringWithFormat:TTAI_COMMENT];
+        
+        post = [NSString stringWithFormat:@"authcode=%@&tt_id=%@&parent_post=%@&content=%@",[GMAPI getAuthkey],self.tt_id,r_replyId,content];
+        
+    }else if (_commentType == COMMENTTYPE_Product){
+        
+        url = [NSString stringWithFormat:PRODUCT_COMMENT_ADD];
+        post = [NSString stringWithFormat:@"authcode=%@&product_id=%@&parent_post=%@&content=%@",[GMAPI getAuthkey],self.tt_id,r_replyId,content];
+
+    }
     
+    postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+
     __weak typeof(_table)weakTable = _table;
-    
-    NSString *url = [NSString stringWithFormat:TTAI_COMMENT];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
     
     __weak typeof(self)bself = self;
@@ -465,11 +448,19 @@
     
     __weak typeof(self)weakSelf = self;
     
-    NSString *url = [NSString stringWithFormat:TTAI_DETAIL,self.tt_id,[GMAPI getAuthkey]];
+    NSString *url = nil;
+    
+    if (_commentType == COMMENTTYPE_TPlat) {
+        
+        url = [NSString stringWithFormat:TTAI_DETAIL,self.tt_id,[GMAPI getAuthkey]];
+        
+    }else if (_commentType == COMMENTTYPE_Product){
+        
+        url = [NSString stringWithFormat:HOME_PRODUCT_DETAIL,self.tt_id,[GMAPI getAuthkey]];
+    }
     
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
-        
         
         [loading hide:YES];
         
@@ -478,7 +469,6 @@
         [weakSelf createViewsWithModel:detail_model];
         
         [weakSelf setViewWithModel:detail_model];
-        
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
@@ -530,35 +520,6 @@
                                          UPDATE_TPLAT_ISLIKE:[NSNumber numberWithBool:zan]});
         }
         
-        
-    } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        
-    }];
-}
-
-// 转发 + 1
-
-- (void)zhuanFaTTaiDetail
-{
-    NSString *authkey = [GMAPI getAuthkey];
-    
-    if (authkey.length == 0) {
-        return;
-    }
-    
-    NSString *post = [NSString stringWithFormat:@"tt_id=%@&authcode=%@",self.tt_id,authkey];
-    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-    
-    NSString *url = TTAI_ZHUANFA_ADD;
-    
-    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
-    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
-        
-        NSLog(@"-->%@",result);
-        
-        int like_num = [detail_model.tt_share_num intValue];
-        detail_model.tt_like_num = [NSString stringWithFormat:@"%d",like_num + 1];
-        zhuan_num_label.text = detail_model.tt_like_num;
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
@@ -657,16 +618,38 @@
 {
     UIView *head_view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 0)];
     
+    
     NSString *iconUrl = @"";
     NSString *userName = @"";
-    if ([aModel.uinfo isKindOfClass:[NSDictionary class]]) {
+    NSString *desString = @"";//描述
+    NSString *addtime = @"";
+    
+    if(_commentType == COMMENTTYPE_TPlat){
         
-        iconUrl = aModel.uinfo[@"photo"];
-        userName = aModel.uinfo[@"user_name"];
+        TPlatModel *model = (TPlatModel *)aModel;
+        desString = model.tt_content;//描述
+        addtime = model.add_time;
+        if ([model.uinfo isKindOfClass:[NSDictionary class]]) {
+            
+            iconUrl = model.uinfo[@"photo"];
+            userName = model.uinfo[@"user_name"];
+        }
+        
+    }else if (_commentType == COMMENTTYPE_Product)
+    {
+        
+        ProductModel *model = (ProductModel *)aModel;
+        desString = model.product_name;
+        addtime = model.product_add_time;
+        
+        if ([model.brand_info isKindOfClass:[NSDictionary class]]) {
+            
+            iconUrl = model.brand_info[@"brand_logo"];
+            userName = model.brand_info[@"brand_name"];
+        }
     }
     
     //头像
-    
     UIImageView *iconView = [[UIImageView alloc]initWithFrame:CGRectMake(12, 12, 50, 50)];
     iconView.layer.cornerRadius = 25.f;
     iconView.layer.borderColor = [UIColor whiteColor].CGColor;
@@ -745,25 +728,10 @@
     if (indexPath.row == 0) {
         return;
     }
-    
-//    TopicCommentsModel * model = [_table.dataArray objectAtIndex:indexPath.row - 1];
-//    _parent_post = model.reply_id;
-//    _r_reply_uid = model.repost_uid;
-//    _r_reply_userName = model.user_name;
-//    
-//    _input_view.text_input_view.text = [NSString stringWithFormat:@"回复 %@:",model.user_name];
-//    
-//    [self beiginComment];
 }
 
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
-//    if (indexPath.row == 0) {
-//        
-//        return [TCommentHeadCell cellHeightForString:self.t_model.tt_content];
-//    }
-    
-    
     TopicCommentsModel * model = [_table.dataArray objectAtIndex:indexPath.row];
     
 //    /数字一次代表距离顶部距离、头像高度、内容离头像距离、底部距离、评论的回复高度
@@ -775,23 +743,6 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    if (indexPath.row == 0) {
-//        
-//        static NSString *identify = @"TCommentHeadCell";
-//        TCommentHeadCell *cell = (TCommentHeadCell *)[LTools cellForIdentify:identify cellName:identify forTable:tableView];
-//        
-//        [cell setCellWithModel:self.t_model];
-//        
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        
-//        [cell addZanList:_zanListArray total:_zanTotalNum];
-//        
-//        [cell.zanUserView addTaget:self action:@selector(clickToZanList:) tag:0];
-//        
-//        return cell;
-//    }
-    
-    
     static NSString * identifier = @"TPlatCommentCell";
     
     TPlatCommentCell * cell = (TPlatCommentCell *)[LTools cellForIdentify:@"llll" cellName:identifier forTable:tableView];
@@ -826,12 +777,6 @@
     }];
     
     [cell.second_view setSeconForwardViewBlock:^(TPlatCommentCellClickType aType, NSString *userName, NSString *uid, NSString *reply_id) {
-//        bself.parent_post = reply_id;
-//        bself.r_reply_uid = uid;
-//        bself.r_reply_userName = userName;
-//        _input_view.text_input_view.text = [NSString stringWithFormat:@"回复 %@:",userName];
-//        
-//        [self beiginComment];
         
         if (aType == TPlatCommentCellClickType_UserCenter) {
             

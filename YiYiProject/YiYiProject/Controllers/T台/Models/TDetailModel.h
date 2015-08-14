@@ -30,8 +30,23 @@
 
 //史忠坤修改
 @property(nonatomic,assign)int have_detail;
-
 @property(nonatomic,strong)NSArray *img_detail;
 //end
+
+/**
+ *  单品详情model
+ */
+
+@property(nonatomic,retain)NSString *product_id;
+@property(nonatomic,retain)NSString *product_name;//品牌名
+@property(nonatomic,retain)NSString *product_like_num;//赞数量
+@property(nonatomic,retain)NSString *product_fav_num;//收藏数量
+@property(nonatomic,retain)NSString *product_brand_id;
+@property(nonatomic,retain)NSString *product_brand_name;//品牌名
+@property(nonatomic,retain)NSString *product_share_num;
+@property(nonatomic,retain)NSString *product_add_time;
+@property(nonatomic,retain)NSDictionary *brand_info;
+@property(nonatomic,retain)NSDictionary *mall_info;
+
 
 @end

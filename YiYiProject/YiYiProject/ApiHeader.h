@@ -713,7 +713,12 @@ typedef enum {
 #define PRODUCT_LIST_FORTAG @"http://www119.alayy.com/index.php?d=api&c=products&m=get_near_product_by_tag&long=%@&lat=%@&tag_id=%@&page=%d&per_page=%d&authcode=%@"
 //品牌推荐
 #define PRODUCT_LIST_SAME_BRAND_RECOMMENT @"http://www119.alayy.com/index.php?d=api&c=products&m=get_same_brand_products&product_id=%@&page=%d&per_page=%d&authcode=%@"
-
+//单品评论列表
+#define PRODUCT_COMMENT_LIST @"http://www119.alayy.com/index.php?d=api&c=products&m=listReply&product_id=%@"
+//单品添加评论
+#define PRODUCT_COMMENT_ADD @"http://www119.alayy.com/index.php?d=api&c=products&m=comment"
+//单品赞列表
+#define PRODUCT_ZAN_LIST @"http://www119.alayy.com/index.php?d=api&c=products&m=get_like_user&product_id=%@"
 
 #endif
 

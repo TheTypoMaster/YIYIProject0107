@@ -9,6 +9,7 @@
 #import "TCommentHeadCell.h"
 #import "TPlatModel.h"
 #import "ZanUserModel.h"
+#import "ProductModel.h"
 
 @implementation TCommentHeadCell
 
@@ -25,30 +26,49 @@
     // Configure the view for the selected state
 }
 
-- (void)setCellWithModel:(TPlatModel *)aModel
+- (void)setCellWithModel:(id)aModel
 {
     NSString *iconUrl = @"";
     NSString *userName = @"";
-    if ([aModel.uinfo isKindOfClass:[NSDictionary class]]) {
+    NSString *desString = @"";//描述
+    NSString *addtime = @"";
+    
+    if([aModel isKindOfClass:[TPlatModel class]]){
         
-        iconUrl = aModel.uinfo[@"photo"];
-        userName = aModel.uinfo[@"user_name"];
+        TPlatModel *model = (TPlatModel *)aModel;
+        desString = model.tt_content;//描述
+        addtime = model.add_time;
+        if ([model.uinfo isKindOfClass:[NSDictionary class]]) {
+            
+            iconUrl = model.uinfo[@"photo"];
+            userName = model.uinfo[@"user_name"];
+        }
+        
+    }else if ([aModel isKindOfClass:[ProductModel class]])
+    {
+        
+        ProductModel *model = (ProductModel *)aModel;
+        desString = model.product_name;
+        addtime = model.product_add_time;
+        
+        if ([model.brand_info isKindOfClass:[NSDictionary class]]) {
+            
+            iconUrl = model.brand_info[@"brand_logo"];
+            userName = model.brand_info[@"brand_name"];
+        }
     }
+    
     
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:iconUrl] placeholderImage:DEFAULT_HEADIMAGE];
     self.nameLabel.text = userName;
     
-//    @"YYYY-MM-dd HH:mm:ss"
-    self.timeLabel.text = [LTools timeString:aModel.add_time withFormat:@"MM月dd日 HH:mm"];
+    self.timeLabel.text = [LTools timeString:addtime withFormat:@"MM月dd日 HH:mm"];
     
     //描述
     
     CGFloat aWidth = DEVICE_WIDTH - 10 - 50;//左侧距离50,右侧间距10
-    NSString *desString = aModel.tt_content;
-    
     CGFloat aHeight = [LTools heightForText:desString width:aWidth font:14];
     self.descriptionLabel.height = aHeight;
-    
     self.descriptionLabel.text = desString;
     
     //隐藏评论和赞toolsView
@@ -56,47 +76,32 @@
     
     desString = [LTools stringHeadNoSpace:desString];
     if (desString.length == 0) {
-        
-//        self.toolsView.top = _iconImageView.bottom + 10;
-        
+
         self.zanUserView.top = _iconImageView.bottom + 10;
         
     }else
     {
-//        self.toolsView.top = _descriptionLabel.bottom;
         self.zanUserView.top = _descriptionLabel.bottom + 10;
     }
     
-    //工具
-    
-    //放置赞人员view
-    
-//    self.zanUserView.top = _toolsView.bottom;
-    
-    //评论
-    
-    NSString *commentString = [NSString stringWithFormat:@"评论 %d",[aModel.tt_comment_num intValue]];
-    
-    aWidth = [LTools widthForText:commentString font:12.f];
-    
-    self.commentLabel.left = DEVICE_WIDTH - 10 - aWidth;
-    self.commentLabel.width = aWidth;
-    self.commentLabel.text = commentString;
-    
-    self.commentButton.left = _commentLabel.left - _commentButton.width;
-
-    
-    //赞
-    NSString *zanString = [NSString stringWithFormat:@"赞 %@",aModel.tt_like_num];
-    aWidth = [LTools widthForText:zanString font:12];
-    self.zanLabel.width = aWidth;
-    
-    self.zanLabel.left = _commentButton.left - 10 - _zanLabel.width;
-
-    
-    self.zanButton.left = _zanLabel.left - _zanButton.width;
-    
-    self.zanLabel.text = zanString;
+//    //评论
+//    
+//    NSString *commentString = [NSString stringWithFormat:@"评论 %d",[aModel.tt_comment_num intValue]];
+//    
+//    aWidth = [LTools widthForText:commentString font:12.f];
+//    
+//    self.commentLabel.left = DEVICE_WIDTH - 10 - aWidth;
+//    self.commentLabel.width = aWidth;
+//    self.commentLabel.text = commentString;
+//    self.commentButton.left = _commentLabel.left - _commentButton.width;
+//    
+//    //赞
+//    NSString *zanString = [NSString stringWithFormat:@"赞 %@",aModel.tt_like_num];
+//    aWidth = [LTools widthForText:zanString font:12];
+//    self.zanLabel.width = aWidth;
+//    self.zanLabel.left = _commentButton.left - 10 - _zanLabel.width;
+//    self.zanButton.left = _zanLabel.left - _zanButton.width;
+//    self.zanLabel.text = zanString;
     
 }
 
