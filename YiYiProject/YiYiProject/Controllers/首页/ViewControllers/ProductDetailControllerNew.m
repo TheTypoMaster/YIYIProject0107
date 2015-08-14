@@ -31,6 +31,8 @@
 
 #import "MessageDetailController.h"//活动详情
 
+#import "ProductListForTagController.h"//标签对应单品列表
+
 @interface ProductDetailControllerNew ()<TMQuiltViewDataSource,WaterFlowDelegate,UIScrollViewDelegate>
 {
     ProductModel *_aModel;
@@ -55,6 +57,9 @@
     
     int _count;//网络请求完成个数
     NSArray *_sameStyleArray;//同款单品
+    CGFloat _latitude;//维度
+    CGFloat _longtitude;//经度
+    NSString *_addressDetail;//地址详细信息
 }
 
 @property (strong, nonatomic) UILabel *brandName;
@@ -126,17 +131,12 @@
     
     [self addObserver:self forKeyPath:@"_count" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
     
-    //请求单品详情
-    [self networkForDetail];
-    
-    //请求单品同款
-    [self networkForDetailSameStyle];
-    
-    
     //瀑布流相关
     _waterFlow = [[LWaterflowView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT - 64) waterDelegate:self waterDataSource:self noHeadeRefresh:YES noFooterRefresh:YES];
     _waterFlow.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_waterFlow];
+
+    _waterFlow.hidden = YES;
     
     //下拉 返回上面内容
     _backLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 40) title:@"下拉,返回单品详情" font:10 align:NSTextAlignmentCenter textColor:[UIColor colorWithHexString:@"8b8b8b"]];
@@ -150,7 +150,8 @@
     lineImage.contentMode = UIViewContentModeCenter;
     _waterFlow.headerView = lineImage;
     
-    [self deserveBuyForSex:Sort_Sex_No discount:Sort_Discount_No page:1];
+    [self getCurrentLocation];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -198,8 +199,6 @@
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
         
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        
     }];
 }
 
@@ -208,15 +207,13 @@
  */
 - (void)networkForDetailSameStyle
 {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    
     __weak typeof(self)weakSelf = self;
     
-    self.product_id = @"146";
-    NSString *url = [NSString stringWithFormat:HOME_PRODUCT_DETAIL_SAME_STYLE,self.product_id];
-    tool_detail = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+//    self.product_id = @"146";
+    NSString *url = [NSString stringWithFormat:HOME_PRODUCT_DETAIL_SAME_STYLE,_longtitude,_latitude,self.product_id];
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     
-    [tool_detail requestCompletion:^(NSDictionary *result, NSError *erro) {
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"result %@",result);
         NSArray *list = result[@"list"];
@@ -234,7 +231,7 @@
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
         
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [self setValue:[NSNumber numberWithInt:_count + 1] forKeyPath:@"_count"];
         
     }];
 }
@@ -455,8 +452,32 @@
     }];
 }
 
+/**
+ *  获取品牌推荐
+ */
+- (void)getRecommentProductList
+{
+    //test
+    self.product_id = @"146";
 
-#pragma mark --解析数据
+    NSString *url = [NSString stringWithFormat:PRODUCT_LIST_SAME_BRAND_RECOMMENT,self.product_id,_waterFlow.pageNum,L_PAGE_SIZE,[GMAPI getAuthkey]];
+
+    __weak typeof(self)weakSelf = self;
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        [weakSelf parseDataWithResult:result];
+        
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+        [_waterFlow loadFail];
+        
+    }];
+}
+
+#pragma - mark 解析数据
 
 - (void)parseDataWithResult:(NSDictionary *)result
 {
@@ -483,43 +504,6 @@
 }
 
 
-#pragma mark---------网络请求
-
-/**
- *  long 经度 非空
- lat 维度 非空
- sex 性别 1 女士 2男士 0 不按照性别 默认为0
- discount 折扣排序 1 是 0 否 默认为0
- */
-- (void)deserveBuyForSex:(SORT_SEX_TYPE)sortType
-                discount:(SORT_Discount_TYPE)discountType
-                    page:(int)pageNum
-{
-    //金领时代 40.041951,116.33934
-    
-    NSString *longtitud = @"116.33934";
-    NSString *latitude = @"40.041951";
-    
-    NSString *url = [NSString stringWithFormat:HOME_DESERVE_BUY,longtitud,latitude,sortType,discountType,pageNum,L_PAGE_SIZE,[GMAPI getAuthkey]];
-    
-    url = [NSString stringWithFormat:@"%@&low_price=%@&high_price=%@&product_type=%d",url,@"0",@"1000",0];
-    
-    __weak typeof(self)weakSelf = self;
-    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
-    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
-        
-        [weakSelf parseDataWithResult:result];
-        
-        
-    } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        
-        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-        [_waterFlow loadFail];
-        
-    }];
-}
-
-
 #pragma mark - 事件处理
 
 /**
@@ -532,6 +516,7 @@
     NSNumber *num = [change objectForKey:@"new"];
     if ([num intValue] == 2) {
         
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if (_aModel) {
             _aModel.sameStyleArray = _sameStyleArray;
             
@@ -559,11 +544,17 @@
  */
 - (void)clickToTagList:(UIButton *)sender
 {
-    
+    NSArray *tagList = _aModel.tag;
+    int index = (int)sender.tag - 100;
+    ProductListForTagController *list = [[ProductListForTagController alloc]init];
+    list.tag_id = [tagList[index] objectForKey:@"tag_id"];
+    list.tag_name = [tagList[index] objectForKey:@"tag_name"];
+    [self.navigationController pushViewController:list animated:YES];
 }
 
 - (void)getCurrentLocation
 {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     __weak typeof(self)weakSelf = self;
     [[GMAPI appDeledate]startDingweiWithBlock:^(NSDictionary *dic) {
         
@@ -572,22 +563,38 @@
 
 }
 
+
 #pragma - mark 地图坐标
 
 - (void)theLocationDictionary:(NSDictionary *)dic{
     
     NSLog(@"当前坐标-->%@",dic);
     
+    CGFloat lat = [dic[@"lat"]doubleValue];;
+    CGFloat lon = [dic[@"long"]doubleValue];
+    
+    _latitude = lat;
+    _longtitude = lon;
+    
     BOOL result = [dic[@"result"] boolValue];
     if (result) {
         
         NSString *address = dic[@"addressDetail"];
-        _addressLabel_current.text = address;
+        _addressDetail = address;
     }else
     {
-        _addressLabel_current.text = @"未获取到当前位置";
+        _addressDetail = @"未获取到当前位置";
     }
     
+    //请求单品详情
+    [self networkForDetail];
+    
+    //请求单品同款
+    [self networkForDetailSameStyle];
+    
+    //品牌推荐
+    [self getRecommentProductList];
+
 }
 
 /**
@@ -1148,7 +1155,7 @@
     _addressLabel_current = [[UILabel alloc]initWithFrame:CGRectMake(addressIcon_current.right + 10, addressIcon_current.top, DEVICE_WIDTH - addressIcon.right - 5 - 20, addressIcon.height) title:address_current font:13 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"67bcfd"]];
     [_headerView addSubview:_addressLabel_current];
     
-    [self getCurrentLocation];//获取当前位置
+    _addressLabel_current.text = _addressDetail;
     
     UIView *line2 = [[UIView alloc]initWithFrame:CGRectMake(0, _addressLabel_current.bottom + 5, DEVICE_WIDTH, 0.5)];
     line2.backgroundColor = DEFAULT_VIEW_BACKGROUNDCOLOR;
@@ -1303,7 +1310,7 @@
         [_headerView addSubview:disLabel];
         
         //价格
-        NSString *price = [NSString stringWithFormat:@"%.1f",[model.product_price floatValue]];
+        NSString *price = [NSString stringWithFormat:@"￥%.1f",[model.product_price floatValue]];
         aWidth = [LTools widthForText:price font:8];
         UILabel *priceLabel = [[UILabel alloc]initWithFrame:CGRectMake(DEVICE_WIDTH - 10 - aWidth, shopLabel.top, aWidth, shopLabel.height) title:price font:8 align:NSTextAlignmentLeft textColor:DEFAULT_TEXTCOLOR];
         [_headerView addSubview:priceLabel];
@@ -1527,7 +1534,7 @@
 }
 - (void)waterLoadMoreData
 {
-    
+    [self getRecommentProductList];
 }
 
 - (void)waterDidSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -1550,11 +1557,12 @@
 {
     CGFloat imageH = 0.f;
     ProductModel *aMode = _waterFlow.dataArray[indexPath.row];
-    if (aMode.imagelist.count >= 1) {
+    
+    NSDictionary *images = (NSDictionary *)aMode.images;
+    if (images && [images isKindOfClass:[NSDictionary class]]) {
         
         
-        NSDictionary *imageDic = aMode.imagelist[0];
-        NSDictionary *middleImage = imageDic[@"540Middle"];
+        NSDictionary *middleImage = [images objectForKey:@"540Middle"];
         float image_width = [middleImage[@"width"]floatValue];
         float image_height = [middleImage[@"height"]floatValue];
         
@@ -1563,9 +1571,10 @@
         }
         float rate = image_height/image_width;
         
-        imageH = (DEVICE_WIDTH - 6)/2.0*rate + 45;
+        imageH = (DEVICE_WIDTH - 6)/2.0*rate + 25;
         
     }
+
     
     return imageH;
 }
@@ -1589,11 +1598,13 @@
     
     cell.layer.cornerRadius = 3.f;
     
+    cell.cellStyle = CELLSTYLE_BrandRecommendList;
+    
     ProductModel *aMode = _waterFlow.dataArray[indexPath.row];
-    [cell setCellWithModel:aMode];
+    [cell setCellWithModel222:aMode];
     
     cell.likeBackBtn.tag = 100 + indexPath.row;
-    [cell.likeBackBtn addTarget:self action:@selector(clickToZan:) forControlEvents:UIControlEventTouchUpInside];
+//    [cell.likeBackBtn addTarget:self action:@selector(clickToZan:) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
 }

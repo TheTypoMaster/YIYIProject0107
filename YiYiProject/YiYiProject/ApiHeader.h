@@ -708,7 +708,11 @@ typedef enum {
 ///////////////-新版本0812-////////////////
 
 //同款单品列表
-#define HOME_PRODUCT_DETAIL_SAME_STYLE @"http://www119.alayy.com/index.php?d=api&c=products&m=get_same_style_products&long=116.403299&lat=39.914004&product_id=%@"
+#define HOME_PRODUCT_DETAIL_SAME_STYLE @"http://www119.alayy.com/index.php?d=api&c=products&m=get_same_style_products&long=%f&lat=%f&product_id=%@"
+//根据标签获取单品列表
+#define PRODUCT_LIST_FORTAG @"http://www119.alayy.com/index.php?d=api&c=products&m=get_near_product_by_tag&long=%@&lat=%@&tag_id=%@&page=%d&per_page=%d&authcode=%@"
+//品牌推荐
+#define PRODUCT_LIST_SAME_BRAND_RECOMMENT @"http://www119.alayy.com/index.php?d=api&c=products&m=get_same_brand_products&product_id=%@&page=%d&per_page=%d&authcode=%@"
 
 
 #endif

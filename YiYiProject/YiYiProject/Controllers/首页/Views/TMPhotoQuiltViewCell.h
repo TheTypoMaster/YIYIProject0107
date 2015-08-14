@@ -22,20 +22,13 @@
 #import "ProductModel.h"
 
 typedef enum {
-    CELLSTYLE_DanPinList = 0, //单品列表样式
-    CELLSTYLE_DianPuList = 1, //店铺列表样式 不显示距离
-    CELLSTYLE_CollectList = 2 //收藏
+    CELLSTYLE_DanPinList = 0, //单品列表样式 有店名、价格、折扣、距离,点赞在图片左下角
+    CELLSTYLE_DianPuList = 1, //店铺列表样式 有店名、价格、折扣、不显示距离,点赞不在图片上,在价格等infoView上
+    CELLSTYLE_CollectList = 2, //收藏 和 单品列表类似,只是没有店名
+    CELLSTYLE_BrandRecommendList = 3 //品牌推荐 只有点赞、大图
 }CELLSTYLE;
 
 @interface TMPhotoQuiltViewCell : TMQuiltViewCell
-{
-    UIView *_priceView;
-    UIImageView *_priceImageView;//价格图标
-    UIView *_discountView;
-    UIImageView *_discountImageView;//折扣图标
-    UIView *_distanceView;
-    UIImageView *_distanceImageView;//距离图标
-}
 
 @property(nonatomic,retain)UIView *backGroudView;//背景view
 
@@ -44,19 +37,25 @@ typedef enum {
 
 //@property(nonatomic,retain)UIView *titleView;//存放 店铺名、距离
 @property(nonatomic,retain)UILabel *dianPuName_Label;//店铺名
-@property(nonatomic,retain)UILabel *distance_label;//距离
 
 @property(nonatomic,retain)UIView *infoView;//存放 价格 打折 收藏
 
 @property(nonatomic,retain)UILabel *price_label;//价格
 @property(nonatomic,retain)UILabel *discount_label;//打折
+@property(nonatomic,retain)UILabel *distance_label;//距离
 
 @property(nonatomic,retain)UIButton *likeBackBtn;//喜欢的背景大button
 @property(nonatomic,retain)UIButton *like_btn;//喜欢标识
 @property(nonatomic,retain)UILabel *like_label;//喜欢数量
 
+@property(nonatomic,retain)UIView *lineHeng;//店铺名底部横线
+@property(nonatomic,retain)UIView *lineShuLeft;//第一个竖线
+@property(nonatomic,retain)UIView *lineShuRight;//第二个竖线
+
 @property(nonatomic,assign)CELLSTYLE cellStyle;//cell样式
 
 - (void)setCellWithModel:(ProductModel *)aModel;
+
+- (void)setCellWithModel222:(ProductModel *)aModel;//数据结构不一样
 
 @end

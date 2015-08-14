@@ -61,9 +61,6 @@
     [self getChouJiangState];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getChouJiangState) name:NOTIFICATION_GETCHOUJIANGSTATE object:nil];
-    
-    NSLog(@"HomeViewController 1111");
-
 }
 
 #pragma - mark 网络请求
