@@ -165,6 +165,9 @@
     {
         
         url = @"粉丝";
+    }else if (self.listType == User_ProductZanList){
+        
+        url = @"赞";
     }
 
     self.myTitleLabel.text = url;
@@ -343,6 +346,11 @@
     {
         
         url = [NSString stringWithFormat:@"%@&authcode=%@&uid=%@&page=%d&per_page=%d",USER_FANS_LIST,[GMAPI getAuthkey],self.objectId,_table.pageNum,L_PAGE_SIZE];
+    }else if (self.listType == User_ProductZanList){
+        
+        url = [NSString stringWithFormat:PRODUCT_ZAN_LIST,self.objectId];
+        
+        url = [NSString stringWithFormat:@"%@&authcode=%@&page=%d&per_page=%d",url,[GMAPI getAuthkey],_table.pageNum,L_PAGE_SIZE];
     }
     
     NSLog(@"%@",url);

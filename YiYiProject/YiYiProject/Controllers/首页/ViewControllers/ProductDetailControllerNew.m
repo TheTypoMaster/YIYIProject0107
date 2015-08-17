@@ -27,6 +27,11 @@
 #import "ProductListForTagController.h"//标签对应单品列表
 #import "TopicCommentsModel.h"//评论
 #import "TTaiCommentViewController.h"//评论列表
+#import "MallListViewController.h"//相似单品所在商场
+
+#define kTag_Tags 100 //单品标签
+#define kTag_Mall 1000 //所在商场
+#define kTag_Images 2000 //单品图片
 
 @interface ProductDetailControllerNew ()<TMQuiltViewDataSource,WaterFlowDelegate,UIScrollViewDelegate>
 {
@@ -172,6 +177,7 @@
     __weak typeof(self)weakSelf = self;
     
     self.product_id = @"146";
+    
     NSString *url = [NSString stringWithFormat:HOME_PRODUCT_DETAIL,self.product_id,[GMAPI getAuthkey]];
     tool_detail = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     
@@ -206,7 +212,6 @@
 {
     __weak typeof(self)weakSelf = self;
     
-    self.product_id = @"146";
     NSString *url = [NSString stringWithFormat:HOME_PRODUCT_DETAIL_SAME_STYLE,_longtitude,_latitude,self.product_id];
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     
@@ -221,7 +226,7 @@
         }
         _sameStyleArray = [NSArray arrayWithArray:temp];
         
-        [self setValue:[NSNumber numberWithInt:_count + 1] forKeyPath:@"_count"];
+        [weakSelf setValue:[NSNumber numberWithInt:_count + 1] forKeyPath:@"_count"];
 
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
@@ -240,7 +245,6 @@
 {
     __weak typeof(self)weakSelf = self;
     
-    self.product_id = @"11";
     NSString *url = [NSString stringWithFormat:PRODUCT_COMMENT_LIST,self.product_id];
     url = [NSString stringWithFormat:@"%@&page=%d&per_page=%d",url,1,10];
     
@@ -263,7 +267,7 @@
         }
         _commentArray = [NSArray arrayWithArray:arr];
         
-        [self setValue:[NSNumber numberWithInt:_count + 1] forKeyPath:@"_count"];
+        [weakSelf setValue:[NSNumber numberWithInt:_count + 1] forKeyPath:@"_count"];
 
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
@@ -496,9 +500,6 @@
  */
 - (void)getRecommentProductList
 {
-    //test
-    self.product_id = @"146";
-
     NSString *url = [NSString stringWithFormat:PRODUCT_LIST_SAME_BRAND_RECOMMENT,self.product_id,_waterFlow.pageNum,L_PAGE_SIZE,[GMAPI getAuthkey]];
 
     __weak typeof(self)weakSelf = self;
@@ -545,6 +546,32 @@
 
 #pragma mark - 事件处理
 
+- (void)tapImage:(UITapGestureRecognizer *)tap
+{
+    int count = (int)image_urls.count;
+    
+    int index = (int)tap.view.tag - kTag_Images;
+    
+    UIImageView *aImageView = (UIImageView *)tap.view;
+    
+    // 1.封装图片数据
+    NSMutableArray *photos = [NSMutableArray arrayWithCapacity:count];
+    for (int i = 0; i < count; i++) {
+        // 替换为中等尺寸图片
+        NSString *url = image_urls[i];
+        MJPhoto *photo = [[MJPhoto alloc] init];
+        photo.url = [NSURL URLWithString:url]; // 图片路径
+        photo.srcImageView = aImageView; // 来源于哪个UIImageView
+        [photos addObject:photo];
+    }
+    
+    // 2.显示相册
+    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
+    browser.currentPhotoIndex = index; // 弹出相册时显示的第一张图片是？
+    browser.photos = photos; // 设置所有的图片
+    [browser show];
+}
+
 /**
  *  监控 单品详情 和 相似单品都请求完再显示
  */
@@ -577,6 +604,18 @@
 }
 
 /**
+ *  跳转至单品详情
+ *
+ *  @param sender
+ */
+- (void)clickToProductDetail:(UIButton *)sender
+{
+    int index = (int)sender.tag - kTag_Mall;
+    ProductModel *model = _aModel.sameStyleArray[index];
+    [MiddleTools pushToProductDetailWithId:model.product_id fromViewController:self lastNavigationHidden:NO hiddenBottom:NO];
+}
+
+/**
  *  点击标签调转至对应单品列表
  *
  *  @param sender
@@ -584,7 +623,7 @@
 - (void)clickToTagList:(UIButton *)sender
 {
     NSArray *tagList = _aModel.tag;
-    int index = (int)sender.tag - 100;
+    int index = (int)sender.tag - kTag_Tags;
     ProductListForTagController *list = [[ProductListForTagController alloc]init];
     list.tag_id = [tagList[index] objectForKey:@"tag_id"];
     list.tag_name = [tagList[index] objectForKey:@"tag_name"];
@@ -702,7 +741,7 @@
 - (void)clickToComment:(UIButton *)sender
 {
     TTaiCommentViewController *commentList = [[TTaiCommentViewController alloc]init];
-    commentList.tt_id = @"11";
+    commentList.tt_id = self.product_id;
     commentList.commentType = COMMENTTYPE_Product;
     commentList.aProduct = _aModel;
     [self.navigationController pushViewController:commentList animated:YES];
@@ -715,7 +754,11 @@
  */
 - (void)clickToMoreMall:(UIButton *)btn
 {
-    
+    MallListViewController *mall = [[MallListViewController alloc]init];
+    mall.product_id = _aModel.product_id;
+    mall.latitude = _latitude;
+    mall.longtitude = _longtitude;
+    [self.navigationController pushViewController:mall animated:YES];
 }
 
 -(void)leftButtonTap:(UIButton *)sender
@@ -727,30 +770,6 @@
     {
         [self.navigationController popViewControllerAnimated:YES];
     }
-}
-
-- (void)tapImage:(UITapGestureRecognizer *)tap
-{
-    int count = (int)image_urls.count;
-    
-    UIImageView *aImageView = (UIImageView *)tap.view;
-    
-    // 1.封装图片数据
-    NSMutableArray *photos = [NSMutableArray arrayWithCapacity:count];
-    for (int i = 0; i < count; i++) {
-        // 替换为中等尺寸图片
-        NSString *url = image_urls[i];
-        MJPhoto *photo = [[MJPhoto alloc] init];
-        photo.url = [NSURL URLWithString:url]; // 图片路径
-        photo.srcImageView = aImageView; // 来源于哪个UIImageView
-        [photos addObject:photo];
-    }
-    
-    // 2.显示相册
-    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
-    browser.currentPhotoIndex = 0; // 弹出相册时显示的第一张图片是？
-    browser.photos = photos; // 设置所有的图片
-    [browser show];
 }
 
 /*
@@ -1056,6 +1075,25 @@
     return @"";
 }
 
+/*
+ 原图
+ */
+- (CGFloat)originalImageHeightForArr:(NSArray *)imagesArr
+{
+    CGFloat aHeight = 0.f;
+    CGFloat aWidth = 0.f;
+    if (imagesArr.count >= 1) {
+        
+        NSDictionary *imageDic = imagesArr[0];
+        NSDictionary *originalImage = imageDic[@"original"];
+        
+        aHeight = [originalImage[@"height"] floatValue];
+        aWidth = [originalImage[@"width"] floatValue];
+    }
+    
+    return aHeight * (DEVICE_WIDTH / aWidth);
+}
+
 - (NSString *)thumbImageForArr:(NSArray *)imagesArr
 {
     if (imagesArr.count >= 1) {
@@ -1138,12 +1176,13 @@
     
     //单品图片
     //图片高度
-    CGFloat aHeight = [self thumbImageHeightForArr:aProductModel.images];
+    CGFloat aHeight = [self originalImageHeightForArr:aProductModel.images];
     
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, aHeight)];
     [imageView l_setImageWithURL:[NSURL URLWithString:[self originalImageForArr:aProductModel.images]] placeholderImage:DEFAULT_YIJIAYI];
     [_headerView addSubview:imageView];
-    
+    //加手势
+    [imageView addTapGestureTarget:self action:@selector(tapImage:) tag:kTag_Images + 0];
     
     UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, imageView.bottom, DEVICE_WIDTH, 0.5)];
     line.backgroundColor = DEFAULT_VIEW_BACKGROUNDCOLOR;
@@ -1198,9 +1237,18 @@
 
     }
     
+    //品牌
+    NSString *brandName = [LTools NSStringNotNull:aProductModel.product_brand_name];
+    brandName = [NSString stringWithFormat:@"品牌  %@",brandName];
+    UILabel *brandLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, priceLabel.bottom + 10, 200, 15) title:brandName font:13 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"333333"]];
+    [_headerView addSubview:brandLabel];
+    //货号
+    NSString *skuName = [NSString stringWithFormat:@"货号  %@",aProductModel.product_sku];
+    UILabel *skuLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, brandLabel.bottom + 10, 200, 15) title:skuName font:13 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"333333"]];
+    [_headerView addSubview:skuLabel];
 #pragma - mark 地址相关
     //地址信息
-    UIImageView *addressIcon = [[UIImageView alloc]initWithFrame:CGRectMake(titleLabel.left, priceLabel.bottom + 10, 13, 13)];
+    UIImageView *addressIcon = [[UIImageView alloc]initWithFrame:CGRectMake(titleLabel.left, skuLabel.bottom + 10, 13, 13)];
     addressIcon.image = [UIImage imageNamed:@"danpinxq_dianpu"];
     [_headerView addSubview:addressIcon];
     
@@ -1308,16 +1356,21 @@
         [label addCornerRadius:7.5];
         [label setBorderWidth:0.5 borderColor:DEFAULT_TEXTCOLOR];
         left = label.right + 10;
-        [label addTaget:self action:@selector(clickToTagList:) tag:100 + i];
+        [label addTaget:self action:@selector(clickToTagList:) tag:kTag_Tags + i];
     }
     
-    UIView *line4 = [[UIView alloc]initWithFrame:CGRectMake(0, line3.bottom + 30, DEVICE_WIDTH, 0.5)];
+    CGFloat top = line3.bottom;
+    
+    if (count > 0) {
+        
+        top = line3.bottom + 30;
+    }
+
+    UIView *line4 = [[UIView alloc]initWithFrame:CGRectMake(0, top, DEVICE_WIDTH, 0.5)];
     line4.backgroundColor = DEFAULT_VIEW_BACKGROUNDCOLOR;
     [_headerView addSubview:line4];
 
 #pragma - mark 固定介绍图
-    
-    CGFloat top = line4.bottom;
     
     //有固定介绍图
     NSDictionary *official_pic = aProductModel.official_pic;
@@ -1338,23 +1391,29 @@
         top = line5.bottom;
     }
 #pragma - mark 相似单品及所在商场
-    //所在商场
-    
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10, top, DEVICE_WIDTH, 40) title:@"所在商场" font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
-    [_headerView addSubview:label];
-    
-    UIView *line6 = [[UIView alloc]initWithFrame:CGRectMake(0, label.bottom, DEVICE_WIDTH, 0.5)];
-    line6.backgroundColor = DEFAULT_VIEW_BACKGROUNDCOLOR;
-    [_headerView addSubview:line6];
-    
-    //只显示3个 大于3个显示更多 否则不显示
     
     NSArray *shopArray = aProductModel.sameStyleArray;
     count = (int)shopArray.count;
     
+    //所在商场
+    
+    if (count > 0) {
+        
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10, top, DEVICE_WIDTH, 40) title:@"所在商场" font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
+        [_headerView addSubview:label];
+        
+        UIView *line6 = [[UIView alloc]initWithFrame:CGRectMake(0, label.bottom, DEVICE_WIDTH, 0.5)];
+        line6.backgroundColor = DEFAULT_VIEW_BACKGROUNDCOLOR;
+        [_headerView addSubview:line6];
+        
+        top = line6.bottom;
+
+    }
+    
+    //只显示3个 大于3个显示更多 否则不显示
+    
     int needCount = count > 3 ? 3 : count;
     
-    top = line6.bottom;
     for (int i = 0; i < needCount; i ++) {
         
         ProductModel *model = aProductModel.sameStyleArray[i];
@@ -1393,6 +1452,10 @@
             line.image = [UIImage imageNamed:@"danpinxq_line"];
             [_headerView addSubview:line];
         }
+        
+        UIButton *selectBtn = [[UIButton alloc]initWithframe:CGRectMake(0, shopLabel.top, DEVICE_WIDTH, shopLabel.height) buttonType:UIButtonTypeCustom normalTitle:nil selectedTitle:nil target:self action:@selector(clickToProductDetail:)];
+        [_headerView addSubview:selectBtn];
+        selectBtn.tag = kTag_Mall + i;
         
         top = priceLabel.bottom + 0.5;
     }
@@ -1451,7 +1514,7 @@
         for (int i = 1; i < count; i ++) {
             
             NSDictionary *imageDic = images[i];
-            NSDictionary *originalImage = imageDic[@"540Middle"];
+            NSDictionary *originalImage = imageDic[@"original"];
             
             aHeight = [originalImage[@"height"] floatValue];
             aWidth = [originalImage[@"width"] floatValue];
@@ -1463,6 +1526,8 @@
             UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, top, DEVICE_WIDTH, aHeight)];
             [imageView l_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:DEFAULT_YIJIAYI];
             [_headerView addSubview:imageView];
+            
+            [imageView addTapGestureTarget:self action:@selector(tapImage:) tag:kTag_Images + i];
             
             top = imageView.bottom + 5;
         }
@@ -1668,7 +1733,7 @@
     ProductModel *aMode = _waterFlow.dataArray[indexPath.row];
     [cell setCellWithModel222:aMode];
     
-    cell.likeBackBtn.tag = 100 + indexPath.row;
+//    cell.likeBackBtn.tag = 100 + indexPath.row;
 //    [cell.likeBackBtn addTarget:self action:@selector(clickToZan:) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;

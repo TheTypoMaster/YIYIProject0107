@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController">
@@ -514,7 +514,7 @@
                                 <constraint firstAttribute="height" constant="21" id="mHw-FS-Bk5"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                             <variation key="default">
                                 <mask key="constraints">
@@ -643,27 +643,27 @@
                     <exclude reference="XL2-w8-uTo"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="J5z-t8-Agh"/>
-                    <exclude reference="mvX-ID-gAc"/>
-                    <exclude reference="sj2-Pe-rXB"/>
-                    <exclude reference="1FO-Ed-7M4"/>
-                    <exclude reference="R3C-bj-fBf"/>
+                    <exclude reference="2Yx-vC-aaX"/>
+                    <exclude reference="t5D-xf-xPP"/>
+                    <exclude reference="BRb-rS-hEb"/>
+                    <exclude reference="Cex-B5-UOF"/>
+                    <exclude reference="LoK-ba-fb5"/>
                     <exclude reference="YSB-Ye-kZK"/>
                     <exclude reference="dmK-eZ-aVb"/>
                     <exclude reference="g6q-GA-5U2"/>
                     <exclude reference="ibz-gd-FVJ"/>
-                    <exclude reference="BRb-rS-hEb"/>
-                    <exclude reference="Cex-B5-UOF"/>
-                    <exclude reference="LoK-ba-fb5"/>
-                    <exclude reference="NaZ-mG-zWZ"/>
-                    <exclude reference="Xxu-1L-BiA"/>
-                    <exclude reference="riN-vq-Jjf"/>
-                    <exclude reference="2Yx-vC-aaX"/>
-                    <exclude reference="t5D-xf-xPP"/>
                     <exclude reference="T8Z-xd-Gdt"/>
                     <exclude reference="jcu-el-Ex7"/>
                     <exclude reference="oLe-3g-91l"/>
                     <exclude reference="y85-W9-Dif"/>
+                    <exclude reference="1FO-Ed-7M4"/>
+                    <exclude reference="R3C-bj-fBf"/>
+                    <exclude reference="J5z-t8-Agh"/>
+                    <exclude reference="mvX-ID-gAc"/>
+                    <exclude reference="sj2-Pe-rXB"/>
+                    <exclude reference="NaZ-mG-zWZ"/>
+                    <exclude reference="Xxu-1L-BiA"/>
+                    <exclude reference="riN-vq-Jjf"/>
                     <exclude reference="Fwm-A1-pC4"/>
                     <exclude reference="PNY-2B-dAK"/>
                     <exclude reference="nnf-YH-DzU"/>
@@ -681,27 +681,27 @@
                     <include reference="XL2-w8-uTo"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="J5z-t8-Agh"/>
-                    <include reference="mvX-ID-gAc"/>
-                    <include reference="sj2-Pe-rXB"/>
-                    <include reference="1FO-Ed-7M4"/>
-                    <include reference="R3C-bj-fBf"/>
+                    <include reference="2Yx-vC-aaX"/>
+                    <include reference="t5D-xf-xPP"/>
+                    <include reference="BRb-rS-hEb"/>
+                    <include reference="Cex-B5-UOF"/>
+                    <exclude reference="LoK-ba-fb5"/>
                     <include reference="YSB-Ye-kZK"/>
                     <include reference="dmK-eZ-aVb"/>
                     <include reference="g6q-GA-5U2"/>
                     <exclude reference="ibz-gd-FVJ"/>
-                    <include reference="BRb-rS-hEb"/>
-                    <include reference="Cex-B5-UOF"/>
-                    <exclude reference="LoK-ba-fb5"/>
-                    <include reference="NaZ-mG-zWZ"/>
-                    <include reference="Xxu-1L-BiA"/>
-                    <include reference="riN-vq-Jjf"/>
-                    <include reference="2Yx-vC-aaX"/>
-                    <include reference="t5D-xf-xPP"/>
                     <exclude reference="T8Z-xd-Gdt"/>
                     <include reference="jcu-el-Ex7"/>
                     <include reference="oLe-3g-91l"/>
                     <include reference="y85-W9-Dif"/>
+                    <include reference="1FO-Ed-7M4"/>
+                    <include reference="R3C-bj-fBf"/>
+                    <include reference="J5z-t8-Agh"/>
+                    <include reference="mvX-ID-gAc"/>
+                    <include reference="sj2-Pe-rXB"/>
+                    <include reference="NaZ-mG-zWZ"/>
+                    <include reference="Xxu-1L-BiA"/>
+                    <include reference="riN-vq-Jjf"/>
                     <include reference="Fwm-A1-pC4"/>
                     <include reference="PNY-2B-dAK"/>
                     <include reference="nnf-YH-DzU"/>

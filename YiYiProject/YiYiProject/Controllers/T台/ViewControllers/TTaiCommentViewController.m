@@ -184,6 +184,16 @@
     
     needRefreshZan = YES;
     
+    if (_commentType == COMMENTTYPE_Product) {
+        
+        [MiddleTools pushToUserListWithObjectId:_aProduct.product_id listType:User_ProductZanList forViewController:self lastNavigationHidden:NO hiddenBottom:NO updateParmsBlock:^(NSDictionary *params) {
+            
+            
+        }];
+        
+        return;
+    }
+    
     [MiddleTools pushToZanListWithModel:self.t_model forViewController:self lastNavigationHidden:NO updateParmsBlock:^(NSDictionary *params) {
         
         if (_aParmasBlock) {
@@ -209,15 +219,16 @@
 -(void)leftButtonTap:(UIButton *)sender
 {
 //    [self dismissViewControllerAnimated:YES completion:nil];
-    
-    
-    CATransition *transition = [CATransition animation];
-    transition.duration = 0.7f;
-    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    transition.type = @"oglFlip";
-    transition.subtype = kCATransitionFromLeft;
-    transition.delegate = self;
-    [self.navigationController.view.layer addAnimation:transition forKey:nil];
+    if (_commentType == COMMENTTYPE_TPlat) {
+        
+        CATransition *transition = [CATransition animation];
+        transition.duration = 0.7f;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        transition.type = @"oglFlip";
+        transition.subtype = kCATransitionFromLeft;
+        transition.delegate = self;
+        [self.navigationController.view.layer addAnimation:transition forKey:nil];
+    }
     
     [self.navigationController popViewControllerAnimated:YES];
 }

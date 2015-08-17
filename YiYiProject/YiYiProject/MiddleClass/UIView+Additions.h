@@ -18,6 +18,12 @@
  *  @param tag      包含button tag值
  */
 - (void)addTaget:(id)target action:(SEL)selector tag:(int)tag;
+
+/**
+ *  给imageView添加tap手势
+ */
+- (void)addTapGestureTarget:(id)target action:(SEL)selector tag:(int)tag;
+
 /**
  *  给view加圆角
  *

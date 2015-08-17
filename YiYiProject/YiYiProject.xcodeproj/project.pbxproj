@@ -51,6 +51,9 @@
 		13684A791A37583E00A508FB /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13684A771A37583E00A508FB /* LaunchScreen.xib */; };
 		13684A851A37583E00A508FB /* YiYiProjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 13684A841A37583E00A508FB /* YiYiProjectTests.m */; };
 		136875B81A598EE40048CB4D /* BrandModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 136875B71A598EE40048CB4D /* BrandModel.m */; };
+		13775A931B818A6F006A1EDB /* MallListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13775A921B818A6F006A1EDB /* MallListViewController.m */; };
+		13775A971B818D1F006A1EDB /* MallCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13775A951B818D1F006A1EDB /* MallCell.m */; };
+		13775A981B818D1F006A1EDB /* MallCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13775A961B818D1F006A1EDB /* MallCell.xib */; };
 		137B08331A4E716700DE7DCC /* dian_xiaojiantou@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 137B081D1A4E716700DE7DCC /* dian_xiaojiantou@2x.png */; };
 		137B08551A4E993C00DE7DCC /* love_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 137B08521A4E993C00DE7DCC /* love_down@2x.png */; };
 		137B08571A4E993C00DE7DCC /* shaixuan@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 137B08541A4E993C00DE7DCC /* shaixuan@2x.png */; };
@@ -689,6 +692,11 @@
 		13684A841A37583E00A508FB /* YiYiProjectTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YiYiProjectTests.m; sourceTree = "<group>"; };
 		136875B61A598EE40048CB4D /* BrandModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrandModel.h; sourceTree = "<group>"; };
 		136875B71A598EE40048CB4D /* BrandModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrandModel.m; sourceTree = "<group>"; };
+		13775A911B818A6F006A1EDB /* MallListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MallListViewController.h; sourceTree = "<group>"; };
+		13775A921B818A6F006A1EDB /* MallListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MallListViewController.m; sourceTree = "<group>"; };
+		13775A941B818D1F006A1EDB /* MallCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MallCell.h; sourceTree = "<group>"; };
+		13775A951B818D1F006A1EDB /* MallCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MallCell.m; sourceTree = "<group>"; };
+		13775A961B818D1F006A1EDB /* MallCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MallCell.xib; sourceTree = "<group>"; };
 		137B081D1A4E716700DE7DCC /* dian_xiaojiantou@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dian_xiaojiantou@2x.png"; sourceTree = "<group>"; };
 		137B08521A4E993C00DE7DCC /* love_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "love_down@2x.png"; sourceTree = "<group>"; };
 		137B08541A4E993C00DE7DCC /* shaixuan@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shaixuan@2x.png"; sourceTree = "<group>"; };
@@ -2386,6 +2394,8 @@
 				566FE2531A503A9E00A96B5F /* MatchInfoViewController.m */,
 				139C5EBE1B7CA91000DADC5B /* ProductListForTagController.h */,
 				139C5EBF1B7CA91000DADC5B /* ProductListForTagController.m */,
+				13775A911B818A6F006A1EDB /* MallListViewController.h */,
+				13775A921B818A6F006A1EDB /* MallListViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -2834,6 +2844,9 @@
 				13934DB61B26CA8400705B02 /* BigProductCell.m */,
 				134BBFBF1B2962970047E0D9 /* ImageTitleView.h */,
 				134BBFC01B2962970047E0D9 /* ImageTitleView.m */,
+				13775A941B818D1F006A1EDB /* MallCell.h */,
+				13775A951B818D1F006A1EDB /* MallCell.m */,
+				13775A961B818D1F006A1EDB /* MallCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3872,6 +3885,7 @@
 				13ABB0781B01ADCD002DC700 /* UMSnsAccountViewController.xib in Resources */,
 				566FE24C1A501C4E00A96B5F /* TopicCommentsCell.xib in Resources */,
 				E308939A1AE04E7D00DA342C /* fshan@2x.png in Resources */,
+				13775A981B818D1F006A1EDB /* MallCell.xib in Resources */,
 				19F7B43F1A67FFA600087BCB /* messages_toolbar_background.png in Resources */,
 				13963F5A1A4FE3B8007BE68B /* fabu_shous@2x.png in Resources */,
 				19F7B4411A67FFA600087BCB /* nav_bar_bg@2x.png in Resources */,
@@ -4169,6 +4183,7 @@
 				136875B81A598EE40048CB4D /* BrandModel.m in Sources */,
 				139DC34F1B00560000C94073 /* AMPActivityIndicator.m in Sources */,
 				19F7B44D1A67FFA600087BCB /* UMFeedbackViewController.m in Sources */,
+				13775A971B818D1F006A1EDB /* MallCell.m in Sources */,
 				E3996EBF1A5E1DBA00673147 /* GpinpaiDetailViewController.m in Sources */,
 				13CD364E1A3C6BD90068C12A /* TMPhotoQuiltViewCell.m in Sources */,
 				1391DC561A8704E4006A2E15 /* MenuView.m in Sources */,
@@ -4296,6 +4311,7 @@
 				DF5E89A71A5E115900535EBA /* MyBodyViewController.m in Sources */,
 				E37374001AC4FE4B00935D2B /* GchatSettingViewController.m in Sources */,
 				E305222D1A6ED1B5007BEAFD /* GHolderTextView.m in Sources */,
+				13775A931B818A6F006A1EDB /* MallListViewController.m in Sources */,
 				13D03D3E1AEDD60F0078AA9E /* EditMyInfoViewController.m in Sources */,
 				566FE2571A503B1000A96B5F /* MatchInfoModel.m in Sources */,
 				E3E64A9E1AE0D971002F00A4 /* JKImagePickerController.m in Sources */,
