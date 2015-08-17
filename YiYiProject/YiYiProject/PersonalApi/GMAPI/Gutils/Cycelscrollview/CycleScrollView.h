@@ -2,7 +2,7 @@
 //  CycleScrollView.h
 //  PagedScrollView
 //
-//  Created by gaomeng on 14-11-23.
+//  Created by gaomeng on 14-1-23.
 //  Copyright (c) 2014年 Apple Inc. All rights reserved.
 //
 
@@ -33,10 +33,5 @@
  当点击的时候，执行的block
  **/
 @property (nonatomic , copy) void (^TapActionBlock)(NSInteger pageIndex);
-
-
-//计时器
-@property (nonatomic , strong) NSTimer *animationTimer;
-
 
 @end

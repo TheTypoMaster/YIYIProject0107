@@ -2,7 +2,7 @@
 //  CycleScrollView.m
 //  PagedScrollView
 //
-//  Created by gaomeng on 14-11-23.
+//  Created by gaomeng on 14-1-23.
 //  Copyright (c) 2014年 Apple Inc. All rights reserved.
 //
 
@@ -16,7 +16,7 @@
 @property (nonatomic , strong) NSMutableArray *contentViews;
 @property (nonatomic , strong) UIScrollView *scrollView;
 
-//@property (nonatomic , strong) NSTimer *animationTimer;
+@property (nonatomic , strong) NSTimer *animationTimer;
 @property (nonatomic , assign) NSTimeInterval animationDuration;
 
 @property(nonatomic,strong)UIPageControl *pageControl;
@@ -28,7 +28,11 @@
 - (void)setTotalPagesCount:(NSInteger (^)(void))totalPagesCount
 {
     _totalPageCount = totalPagesCount();
-    if (_totalPageCount > 0) {
+    
+    
+    if (_totalPageCount == 1) {
+        [self configContentViews];
+    }else if (_totalPageCount > 0) {
         [self configContentViews];
         [self.animationTimer resumeTimerAfterTimeInterval:self.animationDuration];
     }
@@ -108,18 +112,37 @@
  */
 - (void)setScrollViewContentDataSource
 {
-    NSInteger previousPageIndex = [self getValidNextPageIndexWithPageIndex:self.currentPageIndex - 1];
-    NSInteger rearPageIndex = [self getValidNextPageIndexWithPageIndex:self.currentPageIndex + 1];
-    if (self.contentViews == nil) {
-        self.contentViews = [@[] mutableCopy];
-    }
-    [self.contentViews removeAllObjects];
     
-    if (self.fetchContentViewAtIndex) {
-        [self.contentViews addObject:self.fetchContentViewAtIndex(previousPageIndex)];
-        [self.contentViews addObject:self.fetchContentViewAtIndex(_currentPageIndex)];
-        [self.contentViews addObject:self.fetchContentViewAtIndex(rearPageIndex)];
+    
+    if (_totalPageCount == 1) {
+        
+        NSInteger rearPageIndex = [self getValidNextPageIndexWithPageIndex:self.currentPageIndex + 1];
+        if (self.contentViews == nil) {
+            self.contentViews = [@[] mutableCopy];
+        }
+        [self.contentViews removeAllObjects];
+        
+        if (self.fetchContentViewAtIndex) {
+            [self.contentViews addObject:self.fetchContentViewAtIndex(_currentPageIndex)];
+            [self.contentViews addObject:self.fetchContentViewAtIndex(rearPageIndex)];
+            self.scrollView.scrollEnabled = NO;
+        }
+    }else{
+        NSInteger previousPageIndex = [self getValidNextPageIndexWithPageIndex:self.currentPageIndex - 1];
+        NSInteger rearPageIndex = [self getValidNextPageIndexWithPageIndex:self.currentPageIndex + 1];
+        if (self.contentViews == nil) {
+            self.contentViews = [@[] mutableCopy];
+        }
+        [self.contentViews removeAllObjects];
+        
+        if (self.fetchContentViewAtIndex) {
+            [self.contentViews addObject:self.fetchContentViewAtIndex(previousPageIndex)];
+            [self.contentViews addObject:self.fetchContentViewAtIndex(_currentPageIndex)];
+            [self.contentViews addObject:self.fetchContentViewAtIndex(rearPageIndex)];
+        }
     }
+    
+    
 }
 
 - (NSInteger)getValidNextPageIndexWithPageIndex:(NSInteger)currentPageIndex;
@@ -151,13 +174,13 @@
     int contentOffsetX = scrollView.contentOffset.x;
     if(contentOffsetX >= (2 * CGRectGetWidth(scrollView.frame))) {
         self.currentPageIndex = [self getValidNextPageIndexWithPageIndex:self.currentPageIndex + 1];
-//        NSLog(@"next，当前页:%ld",(long)self.currentPageIndex);
+        NSLog(@"next，当前页:%ld",(long)self.currentPageIndex);
         [self configContentViews];
         
     }
     if(contentOffsetX <= 0) {
         self.currentPageIndex = [self getValidNextPageIndexWithPageIndex:self.currentPageIndex - 1];
-//        NSLog(@"previous，当前页:%ld",(long)self.currentPageIndex);
+        NSLog(@"previous，当前页:%ld",(long)self.currentPageIndex);
         [self configContentViews];
     }
     

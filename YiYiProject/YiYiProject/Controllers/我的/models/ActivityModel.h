@@ -37,4 +37,17 @@
 @property(nonatomic,retain)NSString *latitude;//维度
 @property(nonatomic,retain)NSString *longitude;//经度
 
+@property(nonatomic,strong)NSString *mall_name;//商场名
+
+@property(nonatomic,strong)NSString *activity_id;//活动id
+
+
+
+//T台列表
+@property(nonatomic,strong)NSString *img_url;//活动图
+@property(nonatomic,strong)NSString *adv_type_val; //广告类型1=》外链 2=》商场活动 3=》商铺活动 4=》单品  根据这个参数进行跳转
+@property(nonatomic,strong)NSString *redirect_type;//0 原生 1 h5打开
+
+
+
 @end

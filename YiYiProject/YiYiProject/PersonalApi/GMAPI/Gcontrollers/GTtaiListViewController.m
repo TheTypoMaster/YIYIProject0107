@@ -33,6 +33,15 @@
 #import "CycleScrollView1.h"
 #import "GTtaiListCustomTableViewCell.h"
 
+#import "GTtaiDetailViewController.h"
+
+#import "ProductDetailControllerNew.h"
+
+
+#import "GTtaiNearActivViewController.h"//T台列表附近的活动
+#import "ActivityModel.h"//活动model
+#import "GTtaiNearActOneView.h"//自定义附近活动view
+
 @interface GTtaiListViewController ()<RefreshDelegate,UITableViewDataSource>
 {
     RefreshTableView *_table;
@@ -47,11 +56,13 @@
     CycleScrollView *_topScrollView;
     CycleScrollView1 *_topScrollView1;
     
+    LTools *_tool_detail;
+    
     
 }
 
 @property (nonatomic ,strong) UIView *topView;
-
+@property(nonatomic,strong)NSMutableArray *huodongArray;
 
 @end
 
@@ -91,6 +102,8 @@
     NSDictionary *dic = [DataManager getCacheDataForType:Cache_TPlat];
     if (dic) {
         [self parseDataWithResult:dic];
+        [self prepareNearActity];
+        [self prepareTopScrollViewNetData];
     }
     
     [self performSelector:@selector(loadData) withObject:nil afterDelay:0.2];
@@ -110,85 +123,130 @@
 
 
 #pragma mark - MyMethod
+
+-(void)prepareNearActity{
+    NSString *url = [NSString stringWithFormat:@"%@&page=1&per_page=5&long=116.403299&lat=39.914004",HOME_TTAI_ACTIVITY];
+    _tool_detail = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [_tool_detail requestCompletion:^(NSDictionary *result, NSError *erro) {
+        NSArray *arr = [result arrayValueForKey:@"list"];
+        NSMutableArray *viewsArray1 = [NSMutableArray arrayWithCapacity:1];
+        for (NSDictionary *dic in arr) {
+            
+            ActivityModel *amodel = [[ActivityModel alloc]initWithDictionary:dic];
+            GTtaiNearActOneView *view = [[GTtaiNearActOneView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH - 10, 60) huodongModel:amodel type:nil];
+            view.backgroundColor = RGBCOLOR(239, 239, 239);
+            [viewsArray1 addObject:view];
+        }
+        
+        UIView *vvv = [[UIView alloc]initWithFrame:CGRectMake(5, CGRectGetMaxY(_topScrollView.frame)+5, DEVICE_WIDTH-10, 35)];
+        [self.topView addSubview:vvv];
+        UILabel *fujinhuodongLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 60, 35)];
+        fujinhuodongLabel.font = [UIFont systemFontOfSize:12];
+        fujinhuodongLabel.text = @"附近活动";
+        [vvv addSubview:fujinhuodongLabel];
+        
+        UILabel *dizhiLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(fujinhuodongLabel.frame), 0, DEVICE_WIDTH - 5-60-5, 35)];
+        dizhiLabel.textAlignment = NSTextAlignmentRight;
+        dizhiLabel.font = [UIFont systemFontOfSize:12];
+        dizhiLabel.text = @"清河小营西路27号";
+        dizhiLabel.textColor = RGBCOLOR(81, 82, 83);
+        [vvv addSubview:dizhiLabel];
+        
+        
+        
+        _topScrollView1 = [[CycleScrollView1 alloc] initWithFrame:CGRectMake(5, CGRectGetMaxY(vvv.frame), DEVICE_WIDTH - 10, 60) animationDuration:2];
+        _topScrollView1.isPageControlHidden = YES;
+        _topScrollView1.scrollView.showsHorizontalScrollIndicator = FALSE;
+        
+        _topScrollView1.fetchContentViewAtIndex = ^UIView *(NSInteger pageIndex){
+            return viewsArray1[pageIndex];
+        };
+        
+        NSInteger count1 = viewsArray1.count;
+        _topScrollView1.totalPagesCount = ^NSInteger(void){
+            return count1;
+        };
+        
+        __weak typeof (self)bself = self;
+        _topScrollView1.TapActionBlock = ^(NSInteger pageIndex){
+            [bself cycleScrollDidClickedWithIndex1:pageIndex];
+        };
+        
+        [self.topView addSubview:_topScrollView1];
+        
+    } failBlock:^(NSDictionary *result, NSError *erro) {
+        
+    }];
+}
+
+
+
+
+-(void)prepareTopScrollViewNetData{
+    NSString *url = [NSString stringWithFormat:@"%@",HOME_TTAI_TOPSCROLLVIEW];
+    _tool_detail = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [_tool_detail requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSArray *arr = [result arrayValueForKey:@"advertisements_data"];
+        NSMutableArray *viewsArray = [NSMutableArray arrayWithCapacity:1];
+        for (NSDictionary *dic in arr) {
+            
+            ActivityModel *amodel = [[ActivityModel alloc]initWithDictionary:dic];
+            UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 125)];
+            [imv l_setImageWithURL:[NSURL URLWithString:amodel.img_url] placeholderImage:nil];
+            [viewsArray addObject:imv];
+        }
+        
+        
+        //测试只有一条数据的时候
+//        for (int i = 0; i<1;i++) {
+//            NSDictionary *dic = arr[i];
+//            ActivityModel *amodel = [[ActivityModel alloc]initWithDictionary:dic];
+//            UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 125)];
+//            [imv l_setImageWithURL:[NSURL URLWithString:amodel.img_url] placeholderImage:nil];
+//            [viewsArray addObject:imv];
+//            
+//        }
+        
+        
+        
+        
+        _topScrollView = [[CycleScrollView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 125) animationDuration:3];
+        _topScrollView.scrollView.showsHorizontalScrollIndicator = FALSE;
+        
+        _topScrollView.fetchContentViewAtIndex = ^UIView *(NSInteger pageIndex){
+            return viewsArray[pageIndex];
+        };
+        
+        NSInteger count = viewsArray.count;
+        _topScrollView.totalPagesCount = ^NSInteger(void){
+            return count;
+        };
+        
+        __weak typeof (self)bself = self;
+        _topScrollView.TapActionBlock = ^(NSInteger pageIndex){
+            [bself cycleScrollDidClickedWithIndex:pageIndex];
+        };
+        
+        [self.topView addSubview:_topScrollView];
+       
+        
+    } failBlock:^(NSDictionary *result, NSError *erro) {
+        
+    }];
+}
+
+
+
+
+
+//创建scrollview
 -(void)creatUpscrollView{
-    NSArray *colorArry = @[[UIColor orangeColor],[UIColor purpleColor],[UIColor redColor]];
-    NSMutableArray *viewsArray = [NSMutableArray arrayWithCapacity:1];
-    for (int i = 0; i<3; i++) {
-        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 125)];
-        view.backgroundColor = colorArry[i];
-        [viewsArray addObject:view];
-    }
-    
-    
     self.topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 125 + 95 +5)];
+    self.topView.backgroundColor = [UIColor whiteColor];
+    
     
     _topScrollView = [[CycleScrollView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 125) animationDuration:2];
-    _topScrollView.scrollView.showsHorizontalScrollIndicator = FALSE;
-    
-    _topScrollView.fetchContentViewAtIndex = ^UIView *(NSInteger pageIndex){
-        return viewsArray[pageIndex];
-    };
-    
-    NSInteger count = viewsArray.count;
-    _topScrollView.totalPagesCount = ^NSInteger(void){
-        return count;
-    };
-    
-    __weak typeof (self)bself = self;
-    _topScrollView.TapActionBlock = ^(NSInteger pageIndex){
-        [bself cycleScrollDidClickedWithIndex:pageIndex];
-    };
-    
-    [self.topView addSubview:_topScrollView];
-    
-    
-    
-    
-    NSArray *colorArry1 = @[[UIColor blueColor],[UIColor greenColor],[UIColor blackColor]];
-    NSMutableArray *viewsArray1 = [NSMutableArray arrayWithCapacity:1];
-    for (int i = 0; i<3; i++) {
-        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 125)];
-        view.backgroundColor = colorArry1[i];
-        [viewsArray1 addObject:view];
-    }
-    
-    
-    UIView *vvv = [[UIView alloc]initWithFrame:CGRectMake(5, CGRectGetMaxY(_topScrollView.frame)+5, DEVICE_WIDTH-10, 35)];
-//    vvv.backgroundColor = [UIColor grayColor];
-    [self.topView addSubview:vvv];
-    UILabel *fujinhuodongLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 60, 35)];
-    fujinhuodongLabel.font = [UIFont systemFontOfSize:12];
-    fujinhuodongLabel.text = @"附近活动";
-    [vvv addSubview:fujinhuodongLabel];
-    
-    UILabel *dizhiLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(fujinhuodongLabel.frame), 0, DEVICE_WIDTH - 5-60-5, 35)];
-    dizhiLabel.text = @"清河小营西路27号";
-    dizhiLabel.textColor = RGBCOLOR(81, 82, 83);
-    
-    
-    
-    
-    _topScrollView1 = [[CycleScrollView1 alloc] initWithFrame:CGRectMake(5, CGRectGetMaxY(vvv.frame), DEVICE_WIDTH - 10, 60) animationDuration:2];
-    _topScrollView1.isPageControlHidden = YES;
-    _topScrollView1.scrollView.showsHorizontalScrollIndicator = FALSE;
-    
-    _topScrollView1.fetchContentViewAtIndex = ^UIView *(NSInteger pageIndex){
-        return viewsArray1[pageIndex];
-    };
-    
-    NSInteger count1 = viewsArray1.count;
-    _topScrollView1.totalPagesCount = ^NSInteger(void){
-        return count1;
-    };
-    
-//    __weak typeof (self)bself = self;
-    _topScrollView1.TapActionBlock = ^(NSInteger pageIndex){
-        [bself cycleScrollDidClickedWithIndex:pageIndex];
-    };
-    
-    [self.topView addSubview:_topScrollView1];
-    
-    
 }
 
 
@@ -197,6 +255,14 @@
     NSLog(@"%ld",index);
 }
 
+
+-(void)cycleScrollDidClickedWithIndex1:(NSInteger)index{
+    NSLog(@"%ld",index);
+    
+    GTtaiNearActivViewController *cc = [[GTtaiNearActivViewController alloc]init];
+    cc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:cc animated:YES];
+}
 
 
 
@@ -347,10 +413,6 @@
 {
     
     
-    [_topScrollView.animationTimer pauseTimer];
-    [_topScrollView.animationTimer pauseTimer];
-    
-    
     __weak typeof(self)weakSelf = self;
     
     __weak typeof(RefreshTableView)*weakTable = _table;
@@ -360,8 +422,6 @@
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
-        [_topScrollView.animationTimer resumeTimer];
-        [_topScrollView.animationTimer resumeTimer];
         
         [weakSelf parseDataWithResult:result];
         
@@ -375,8 +435,7 @@
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
-        [_topScrollView.animationTimer resumeTimer];
-        [_topScrollView.animationTimer resumeTimer];
+        
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
         
@@ -575,7 +634,7 @@
                  infoName:(NSString *)infoName
 {
     
-    ProductDetailController *detail = [[ProductDetailController alloc]init];
+    ProductDetailControllerNew *detail = [[ProductDetailControllerNew alloc]init];
     detail.product_id = infoId;
     detail.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:detail animated:YES];
@@ -584,11 +643,14 @@
 
 
 
+
 #pragma - mark RefreshDelegate
 
 -(void)loadNewData
 {
     [self getTTaiData];
+    [self prepareTopScrollViewNetData];
+    
 }
 
 -(void)loadMoreData
@@ -603,11 +665,12 @@
 
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
-//    //调转至老版本 详情页
-//    
-//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    
-//    [self tapCell:[tableView cellForRowAtIndexPath:indexPath]];
+    GTtaiDetailViewController *ggg = [[GTtaiDetailViewController alloc]init];
+    ggg.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:ggg animated:YES];
+    
+    
+    
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
@@ -624,7 +687,6 @@
     
     CGFloat height = [_tmpCell loadCustomViewWithModel:aModel index:indexPath];
     
-//    return [LTools heightForImageHeight:image_height imageWidth:image_width showWidth:DEVICE_WIDTH];
     return height;
 }
 //将要显示

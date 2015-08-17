@@ -29,4 +29,19 @@
 @property(nonatomic,assign)int is_like;//是否喜欢 赞
 @property(nonatomic,assign)int is_favor;//是否收藏
 
+
+
+//新版本0812添加
+@property(nonatomic,retain)NSArray *tag;//标签
+@property(nonatomic,retain)NSArray *sameStyleArray;//同款单品列表
+@property(nonatomic,retain)NSString *brand_name;//品牌名字
+@property(nonatomic,retain)NSDictionary *official_pic;//官方固定介绍图
+@property(nonatomic,retain)NSDictionary *official_activity;//官方活动
+@property(nonatomic,retain)NSArray *images;//图片数组(T台详情)
+@property(nonatomic,strong)NSString *tPlat_like_num;//赞数量
+
+//测试数据
+@property(nonatomic,strong)NSString *tPlat_name;
+@property(nonatomic,strong)NSString *original_price;
+
 @end

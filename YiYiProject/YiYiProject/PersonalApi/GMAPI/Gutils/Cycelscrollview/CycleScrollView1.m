@@ -29,14 +29,12 @@
 - (void)setTotalPagesCount:(NSInteger (^)(void))totalPagesCount
 {
     _totalPageCount = totalPagesCount();
-    if (_totalPageCount > 0) {
+    if (_totalPageCount == 1) {
+        [self configContentViews];
+    }else if (_totalPageCount > 0) {
         [self configContentViews];
         [self.animationTimer resumeTimerAfterTimeInterval:self.animationDuration];
     }
-
-    
-    
-    
     if (!self.isPageControlHidden) {
         CGRect rect = self.frame;
         rect.origin.y = rect.size.height - 30;
@@ -114,18 +112,37 @@
  */
 - (void)setScrollViewContentDataSource
 {
-    NSInteger previousPageIndex = [self getValidNextPageIndexWithPageIndex:self.currentPageIndex - 1];
-    NSInteger rearPageIndex = [self getValidNextPageIndexWithPageIndex:self.currentPageIndex + 1];
-    if (self.contentViews == nil) {
-        self.contentViews = [@[] mutableCopy];
-    }
-    [self.contentViews removeAllObjects];
     
-    if (self.fetchContentViewAtIndex) {
-        [self.contentViews addObject:self.fetchContentViewAtIndex(previousPageIndex)];
-        [self.contentViews addObject:self.fetchContentViewAtIndex(_currentPageIndex)];
-        [self.contentViews addObject:self.fetchContentViewAtIndex(rearPageIndex)];
+    
+    if (_totalPageCount == 1) {
+        
+        NSInteger rearPageIndex = [self getValidNextPageIndexWithPageIndex:self.currentPageIndex + 1];
+        if (self.contentViews == nil) {
+            self.contentViews = [@[] mutableCopy];
+        }
+        [self.contentViews removeAllObjects];
+        
+        if (self.fetchContentViewAtIndex) {
+            [self.contentViews addObject:self.fetchContentViewAtIndex(_currentPageIndex)];
+            [self.contentViews addObject:self.fetchContentViewAtIndex(rearPageIndex)];
+            self.scrollView.scrollEnabled = NO;
+        }
+    }else{
+        NSInteger previousPageIndex = [self getValidNextPageIndexWithPageIndex:self.currentPageIndex - 1];
+        NSInteger rearPageIndex = [self getValidNextPageIndexWithPageIndex:self.currentPageIndex + 1];
+        if (self.contentViews == nil) {
+            self.contentViews = [@[] mutableCopy];
+        }
+        [self.contentViews removeAllObjects];
+        
+        if (self.fetchContentViewAtIndex) {
+            [self.contentViews addObject:self.fetchContentViewAtIndex(previousPageIndex)];
+            [self.contentViews addObject:self.fetchContentViewAtIndex(_currentPageIndex)];
+            [self.contentViews addObject:self.fetchContentViewAtIndex(rearPageIndex)];
+        }
     }
+    
+    
 }
 
 - (NSInteger)getValidNextPageIndexWithPageIndex:(NSInteger)currentPageIndex;

@@ -442,12 +442,11 @@
 		E308939D1AE0587700DA342C /* GChooseLocationMoveAnViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E308939C1AE0587700DA342C /* GChooseLocationMoveAnViewController.m */; };
 		E308939F1AE05D1900DA342C /* road_select@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E308939E1AE05D1900DA342C /* road_select@2x.png */; };
 		E310DA771B7AEEDC00C46064 /* GTtaiListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E310DA761B7AEEDC00C46064 /* GTtaiListViewController.m */; };
-		E310DA821B7AFAC300C46064 /* CycleScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = E310DA7F1B7AFAC300C46064 /* CycleScrollView.m */; };
-		E310DA831B7AFAC300C46064 /* NSTimer+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = E310DA811B7AFAC300C46064 /* NSTimer+Addition.m */; };
 		E310DA861B7B339400C46064 /* CycleScrollView1.m in Sources */ = {isa = PBXBuildFile; fileRef = E310DA851B7B339400C46064 /* CycleScrollView1.m */; };
 		E310DA891B7B575400C46064 /* GTtaiListCustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E310DA881B7B575400C46064 /* GTtaiListCustomTableViewCell.m */; };
 		E3142BDD1B10D08E00883BA7 /* GmyTtaiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3142BDC1B10D08E00883BA7 /* GmyTtaiViewController.m */; };
 		E3268F991B13115D00F87E78 /* searchproductdefaulpic@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3268F981B13115D00F87E78 /* searchproductdefaulpic@2x.png */; };
+		E334806C1B7D91BA0080A89F /* GTtaiDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E334806B1B7D91BA0080A89F /* GTtaiDetailViewController.m */; };
 		E334B81E1AFB47DB00DC9209 /* MyShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E334B81D1AFB47DB00DC9209 /* MyShopViewController.m */; };
 		E334B8251AFB943F00DC9209 /* dianzhu_01@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E334B81F1AFB943F00DC9209 /* dianzhu_01@2x.png */; };
 		E334B8261AFB943F00DC9209 /* dianzhu_02@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E334B8201AFB943F00DC9209 /* dianzhu_02@2x.png */; };
@@ -459,6 +458,8 @@
 		E33737371AD7AF2800EAA23C /* productDetail_collect_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E33737361AD7AF2800EAA23C /* productDetail_collect_normal@2x.png */; };
 		E337373F1AD7D0A500EAA23C /* g_redline_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E337373E1AD7D0A500EAA23C /* g_redline_down@2x.png */; };
 		E33737411AD7D1FB00EAA23C /* gTtai_dianwo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E33737401AD7D1FB00EAA23C /* gTtai_dianwo@2x.png */; };
+		E351AFE01B81F50B00C78EC4 /* CycleScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = E351AFDD1B81F50B00C78EC4 /* CycleScrollView.m */; };
+		E351AFE11B81F50B00C78EC4 /* NSTimer+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = E351AFDF1B81F50B00C78EC4 /* NSTimer+Addition.m */; };
 		E3554C7E1B411B0700FE9493 /* buy_jiantou_d@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3554C7C1B411B0700FE9493 /* buy_jiantou_d@2x.png */; };
 		E3554C7F1B411B0700FE9493 /* buy_jiantou_u@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3554C7D1B411B0700FE9493 /* buy_jiantou_u@2x.png */; };
 		E3554C851B413E0600FE9493 /* my_wallet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3554C841B413E0600FE9493 /* my_wallet@2x.png */; };
@@ -541,6 +542,8 @@
 		E3996EE21A5E1DBA00673147 /* GLeadbuyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996EB71A5E1DBA00673147 /* GLeadbuyTableViewCell.m */; };
 		E3996EE31A5E1DBA00673147 /* GTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996EB91A5E1DBA00673147 /* GTableViewCell.m */; };
 		E3996EE61A5E1E0600673147 /* HomeClothController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996EE51A5E1E0600673147 /* HomeClothController.m */; };
+		E39AF4F51B7DEC1300BCDF39 /* GTtaiNearActivViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E39AF4F41B7DEC1300BCDF39 /* GTtaiNearActivViewController.m */; };
+		E39AF4F81B7DF52300BCDF39 /* GTtaiNearActOneView.m in Sources */ = {isa = PBXBuildFile; fileRef = E39AF4F71B7DF52300BCDF39 /* GTtaiNearActOneView.m */; };
 		E3AFFDC51B1D87A600A6FB42 /* GupActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3AFFDC41B1D87A600A6FB42 /* GupActivityViewController.m */; };
 		E3B7BE051AC9557D00FE8495 /* gfujin_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3B7BE031AC9557D00FE8495 /* gfujin_down@2x.png */; };
 		E3B7BE061AC9557D00FE8495 /* gfujin_up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3B7BE041AC9557D00FE8495 /* gfujin_up@2x.png */; };
@@ -1275,10 +1278,6 @@
 		E308939E1AE05D1900DA342C /* road_select@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "road_select@2x.png"; sourceTree = "<group>"; };
 		E310DA751B7AEEDC00C46064 /* GTtaiListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTtaiListViewController.h; sourceTree = "<group>"; };
 		E310DA761B7AEEDC00C46064 /* GTtaiListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTtaiListViewController.m; sourceTree = "<group>"; };
-		E310DA7E1B7AFAC300C46064 /* CycleScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CycleScrollView.h; sourceTree = "<group>"; };
-		E310DA7F1B7AFAC300C46064 /* CycleScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CycleScrollView.m; sourceTree = "<group>"; };
-		E310DA801B7AFAC300C46064 /* NSTimer+Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimer+Addition.h"; sourceTree = "<group>"; };
-		E310DA811B7AFAC300C46064 /* NSTimer+Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+Addition.m"; sourceTree = "<group>"; };
 		E310DA841B7B339400C46064 /* CycleScrollView1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CycleScrollView1.h; sourceTree = "<group>"; };
 		E310DA851B7B339400C46064 /* CycleScrollView1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CycleScrollView1.m; sourceTree = "<group>"; };
 		E310DA871B7B575400C46064 /* GTtaiListCustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTtaiListCustomTableViewCell.h; sourceTree = "<group>"; };
@@ -1286,6 +1285,8 @@
 		E3142BDB1B10D08E00883BA7 /* GmyTtaiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GmyTtaiViewController.h; sourceTree = "<group>"; };
 		E3142BDC1B10D08E00883BA7 /* GmyTtaiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GmyTtaiViewController.m; sourceTree = "<group>"; };
 		E3268F981B13115D00F87E78 /* searchproductdefaulpic@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "searchproductdefaulpic@2x.png"; sourceTree = "<group>"; };
+		E334806A1B7D91BA0080A89F /* GTtaiDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTtaiDetailViewController.h; sourceTree = "<group>"; };
+		E334806B1B7D91BA0080A89F /* GTtaiDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTtaiDetailViewController.m; sourceTree = "<group>"; };
 		E334B81C1AFB47DB00DC9209 /* MyShopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyShopViewController.h; sourceTree = "<group>"; };
 		E334B81D1AFB47DB00DC9209 /* MyShopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyShopViewController.m; sourceTree = "<group>"; };
 		E334B81F1AFB943F00DC9209 /* dianzhu_01@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dianzhu_01@2x.png"; sourceTree = "<group>"; };
@@ -1298,6 +1299,10 @@
 		E33737361AD7AF2800EAA23C /* productDetail_collect_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "productDetail_collect_normal@2x.png"; sourceTree = "<group>"; };
 		E337373E1AD7D0A500EAA23C /* g_redline_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "g_redline_down@2x.png"; sourceTree = "<group>"; };
 		E33737401AD7D1FB00EAA23C /* gTtai_dianwo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gTtai_dianwo@2x.png"; sourceTree = "<group>"; };
+		E351AFDC1B81F50B00C78EC4 /* CycleScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CycleScrollView.h; sourceTree = "<group>"; };
+		E351AFDD1B81F50B00C78EC4 /* CycleScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CycleScrollView.m; sourceTree = "<group>"; };
+		E351AFDE1B81F50B00C78EC4 /* NSTimer+Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimer+Addition.h"; sourceTree = "<group>"; };
+		E351AFDF1B81F50B00C78EC4 /* NSTimer+Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+Addition.m"; sourceTree = "<group>"; };
 		E3554C7C1B411B0700FE9493 /* buy_jiantou_d@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buy_jiantou_d@2x.png"; sourceTree = "<group>"; };
 		E3554C7D1B411B0700FE9493 /* buy_jiantou_u@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buy_jiantou_u@2x.png"; sourceTree = "<group>"; };
 		E3554C841B413E0600FE9493 /* my_wallet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "my_wallet@2x.png"; sourceTree = "<group>"; };
@@ -1486,6 +1491,10 @@
 		E3996EB91A5E1DBA00673147 /* GTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTableViewCell.m; sourceTree = "<group>"; };
 		E3996EE41A5E1E0600673147 /* HomeClothController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeClothController.h; sourceTree = "<group>"; };
 		E3996EE51A5E1E0600673147 /* HomeClothController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeClothController.m; sourceTree = "<group>"; };
+		E39AF4F31B7DEC1300BCDF39 /* GTtaiNearActivViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTtaiNearActivViewController.h; sourceTree = "<group>"; };
+		E39AF4F41B7DEC1300BCDF39 /* GTtaiNearActivViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTtaiNearActivViewController.m; sourceTree = "<group>"; };
+		E39AF4F61B7DF52300BCDF39 /* GTtaiNearActOneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTtaiNearActOneView.h; sourceTree = "<group>"; };
+		E39AF4F71B7DF52300BCDF39 /* GTtaiNearActOneView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTtaiNearActOneView.m; sourceTree = "<group>"; };
 		E3AFFDC31B1D87A600A6FB42 /* GupActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GupActivityViewController.h; sourceTree = "<group>"; };
 		E3AFFDC41B1D87A600A6FB42 /* GupActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GupActivityViewController.m; sourceTree = "<group>"; };
 		E3B7BE031AC9557D00FE8495 /* gfujin_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gfujin_down@2x.png"; sourceTree = "<group>"; };
@@ -3236,10 +3245,10 @@
 		E310DA7D1B7AFAC300C46064 /* Cycelscrollview */ = {
 			isa = PBXGroup;
 			children = (
-				E310DA7E1B7AFAC300C46064 /* CycleScrollView.h */,
-				E310DA7F1B7AFAC300C46064 /* CycleScrollView.m */,
-				E310DA801B7AFAC300C46064 /* NSTimer+Addition.h */,
-				E310DA811B7AFAC300C46064 /* NSTimer+Addition.m */,
+				E351AFDC1B81F50B00C78EC4 /* CycleScrollView.h */,
+				E351AFDD1B81F50B00C78EC4 /* CycleScrollView.m */,
+				E351AFDE1B81F50B00C78EC4 /* NSTimer+Addition.h */,
+				E351AFDF1B81F50B00C78EC4 /* NSTimer+Addition.m */,
 				E310DA841B7B339400C46064 /* CycleScrollView1.h */,
 				E310DA851B7B339400C46064 /* CycleScrollView1.m */,
 			);
@@ -3403,6 +3412,10 @@
 				E3554C8A1B415D2600FE9493 /* GMyJianquanViewController.m */,
 				E310DA751B7AEEDC00C46064 /* GTtaiListViewController.h */,
 				E310DA761B7AEEDC00C46064 /* GTtaiListViewController.m */,
+				E334806A1B7D91BA0080A89F /* GTtaiDetailViewController.h */,
+				E334806B1B7D91BA0080A89F /* GTtaiDetailViewController.m */,
+				E39AF4F31B7DEC1300BCDF39 /* GTtaiNearActivViewController.h */,
+				E39AF4F41B7DEC1300BCDF39 /* GTtaiNearActivViewController.m */,
 			);
 			path = Gcontrollers;
 			sourceTree = "<group>";
@@ -3574,6 +3587,8 @@
 				E3D0808A1B3EFAB700E4F87D /* GbuyClothTableViewCell.m */,
 				E310DA871B7B575400C46064 /* GTtaiListCustomTableViewCell.h */,
 				E310DA881B7B575400C46064 /* GTtaiListCustomTableViewCell.m */,
+				E39AF4F61B7DF52300BCDF39 /* GTtaiNearActOneView.h */,
+				E39AF4F71B7DF52300BCDF39 /* GTtaiNearActOneView.m */,
 			);
 			path = Gviews;
 			sourceTree = "<group>";
@@ -4114,7 +4129,6 @@
 				56DAB21B1A46DB6000273140 /* ApplyForViewController.m in Sources */,
 				E3996EDC1A5E1DBA00673147 /* GScrollView.m in Sources */,
 				1391DC531A8704E4006A2E15 /* GlowImageView.m in Sources */,
-				E310DA821B7AFAC300C46064 /* CycleScrollView.m in Sources */,
 				565321451A59769300E43F80 /* NSAttributedString+Attributes.m in Sources */,
 				13BEEE811AE6262C009C5BA7 /* TTaiCommentViewController.m in Sources */,
 				E37EB5701AC035A6009F5797 /* GmyproductsListViewController.m in Sources */,
@@ -4133,6 +4147,7 @@
 				138986301A6A5DDF00F187C9 /* MessageModel.m in Sources */,
 				133B17761A750988005B8B3F /* MJPhotoBrowser.m in Sources */,
 				565321471A59769300E43F80 /* RegexKitLite.m in Sources */,
+				E39AF4F81B7DF52300BCDF39 /* GTtaiNearActOneView.m in Sources */,
 				1356EF1B1B1D850700F3B3B2 /* LRichTextView.m in Sources */,
 				E3D0804B1B3E922E00E4F87D /* GupLogClothesViewController.m in Sources */,
 				13D03D481AEDD60F0078AA9E /* GmyMainViewController.m in Sources */,
@@ -4212,6 +4227,7 @@
 				19D5E6B51A4FE8E1008401E0 /* YichuListTableViewCell.m in Sources */,
 				E3FFD9721B26EBEE00A56770 /* GnearbyStoreViewController.m in Sources */,
 				13A389961A3893D000ABBACB /* TTaiViewController.m in Sources */,
+				E39AF4F51B7DEC1300BCDF39 /* GTtaiNearActivViewController.m in Sources */,
 				E310DA771B7AEEDC00C46064 /* GTtaiListViewController.m in Sources */,
 				5658C79A1A4C486E00DC86F8 /* MatchWaterflowView.m in Sources */,
 				E35EF1231A6A756900B493A9 /* GchooseFloorPinpaiViewController.m in Sources */,
@@ -4251,7 +4267,6 @@
 				E310DA891B7B575400C46064 /* GTtaiListCustomTableViewCell.m in Sources */,
 				13CD36491A3C6A870068C12A /* EGORefreshTableFooterView.m in Sources */,
 				565321481A59769300E43F80 /* SCGIFImageView.m in Sources */,
-				E310DA831B7AFAC300C46064 /* NSTimer+Addition.m in Sources */,
 				E3E64A9A1AE0D971002F00A4 /* JKAssetsGroupCell.m in Sources */,
 				139886A51A45673500241962 /* ProductDetailController.m in Sources */,
 				13ADF8471AFC9B03001B0D29 /* TPlatCommentCell.m in Sources */,
@@ -4262,10 +4277,12 @@
 				1356EF1E1B1D85FB00F3B3B2 /* PublishActivityController.m in Sources */,
 				DFB196EB1A6D3D900006633F /* UIImageView+LBBlurredImage.m in Sources */,
 				56A8A8311A45946000E85F6B /* MatchTopicModel.m in Sources */,
+				E351AFE11B81F50B00C78EC4 /* NSTimer+Addition.m in Sources */,
 				13D03D4B1AEDD60F0078AA9E /* WaterFallFooter.m in Sources */,
 				13BD6EE01B79ECFF00F39E0A /* ProductDetailControllerNew.m in Sources */,
 				566FE24B1A501C4E00A96B5F /* TopicCommentsCell.m in Sources */,
 				1387B08D1A5EC2D0006365D8 /* TopicImageModel.m in Sources */,
+				E351AFE01B81F50B00C78EC4 /* CycleScrollView.m in Sources */,
 				E35EF15F1A6B947800B493A9 /* GupClothesViewController.m in Sources */,
 				133B17781A750988005B8B3F /* MJPhotoProgressView.m in Sources */,
 				139A05201A66ADB100A8EB49 /* MailMessageViewController.m in Sources */,
@@ -4345,6 +4362,7 @@
 				13963F451A4FC54D007BE68B /* LPropertyActionSheet.m in Sources */,
 				13A389BA1A38974F00ABBACB /* LRefreshTableHeaderView.m in Sources */,
 				19D5E6B21A4FE39B008401E0 /* YiChuListModel.m in Sources */,
+				E334806C1B7D91BA0080A89F /* GTtaiDetailViewController.m in Sources */,
 				E3FC8DE71A3C4B430025525D /* GeditUserInfoViewController.m in Sources */,
 				5653214F1A59785F00E43F80 /* OHLableHelper.m in Sources */,
 				E334B81E1AFB47DB00DC9209 /* MyShopViewController.m in Sources */,
