@@ -42,6 +42,8 @@
     
     self.maodianImv = [[UIImageView alloc]initWithFrame:CGRectMake(5, 5, DEVICE_WIDTH-10, imageHeight)];
     self.maodianImv.userInteractionEnabled = YES;
+    self.maodianImv.layer.borderWidth = 0.5;
+    self.maodianImv.layer.borderColor = [RGBCOLOR(220, 221, 223)CGColor];
     [self.maodianImv l_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:DEFAULT_YIJIAYI];
     [self.contentView addSubview:self.maodianImv];
     

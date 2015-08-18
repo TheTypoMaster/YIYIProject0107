@@ -5230,11 +5230,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GTtaiListViewController.m"
-            timestampString = "461586236.640955"
+            timestampString = "461587258.494722"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "694"
-            endingLineNumber = "694"
+            startingLineNumber = "706"
+            endingLineNumber = "706"
             landmarkName = "-turnToShangChangInfoId:infoName:shopType:"
             landmarkType = "5">
          </BreakpointContent>
@@ -5246,11 +5246,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GTtaiListViewController.m"
-            timestampString = "461586236.640955"
+            timestampString = "461587258.494722"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "703"
-            endingLineNumber = "703"
+            startingLineNumber = "715"
+            endingLineNumber = "715"
             landmarkName = "-turnToDanPinInfoId:infoName:"
             landmarkType = "5">
          </BreakpointContent>
@@ -5390,11 +5390,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GTtaiListViewController.m"
-            timestampString = "461586236.640955"
+            timestampString = "461587258.494722"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "320"
-            endingLineNumber = "320"
+            startingLineNumber = "332"
+            endingLineNumber = "332"
             landmarkName = "-cycleScrollDidClickedWithIndex1:"
             landmarkType = "5">
          </BreakpointContent>
@@ -5438,11 +5438,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GTtaiListViewController.m"
-            timestampString = "461586236.640955"
+            timestampString = "461587258.494722"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "423"
-            endingLineNumber = "423"
+            startingLineNumber = "435"
+            endingLineNumber = "435"
             landmarkName = "-zanTTaiDetail:"
             landmarkType = "5">
          </BreakpointContent>
@@ -5454,11 +5454,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GTtaiListViewController.m"
-            timestampString = "461586236.640955"
+            timestampString = "461587258.494722"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "449"
-            endingLineNumber = "449"
+            startingLineNumber = "461"
+            endingLineNumber = "461"
             landmarkName = "-zanTTaiDetail:"
             landmarkType = "5">
          </BreakpointContent>
@@ -5470,11 +5470,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GTtaiListViewController.m"
-            timestampString = "461586236.640955"
+            timestampString = "461587258.494722"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "452"
-            endingLineNumber = "452"
+            startingLineNumber = "464"
+            endingLineNumber = "464"
             landmarkName = "-zanTTaiDetail:"
             landmarkType = "5">
          </BreakpointContent>

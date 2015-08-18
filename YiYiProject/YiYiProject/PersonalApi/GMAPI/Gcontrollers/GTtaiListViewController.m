@@ -154,14 +154,20 @@
         }
         
         
-        UIView *vvv = [[UIView alloc]initWithFrame:CGRectMake(5, CGRectGetMaxY(_topScrollView.frame)+5, DEVICE_WIDTH-10, 35)];
+        UIView *l1 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_topScrollView.frame)+5, DEVICE_WIDTH, 0.5)];
+        l1.backgroundColor = RGBCOLOR(220, 221, 223);
+        [self.topView addSubview:l1];
+        
+        UIView *vvv = [[UIView alloc]initWithFrame:CGRectMake(5, CGRectGetMaxY(_topScrollView.frame), DEVICE_WIDTH-10, 32)];
         [self.topView addSubview:vvv];
+        
+        
         UILabel *fujinhuodongLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 60, 35)];
         fujinhuodongLabel.font = [UIFont systemFontOfSize:12];
         fujinhuodongLabel.text = @"附近活动";
         [vvv addSubview:fujinhuodongLabel];
         
-        UILabel *dizhiLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(fujinhuodongLabel.frame), 0, DEVICE_WIDTH - 5-60-5, 35)];
+        UILabel *dizhiLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(fujinhuodongLabel.frame), 0, DEVICE_WIDTH - 5-60-5, 32)];
         dizhiLabel.textAlignment = NSTextAlignmentRight;
         dizhiLabel.font = [UIFont systemFontOfSize:12];
         dizhiLabel.text = streetStr;
@@ -171,6 +177,7 @@
         
         
         _topScrollView1 = [[CycleScrollView1 alloc] initWithFrame:CGRectMake(5, CGRectGetMaxY(vvv.frame), DEVICE_WIDTH - 10, 60) animationDuration:2];
+        _topScrollView1.backgroundColor = [UIColor orangeColor];
         _topScrollView1.isPageControlHidden = YES;
         _topScrollView1.scrollView.showsHorizontalScrollIndicator = FALSE;
         
@@ -189,6 +196,11 @@
         };
         
         [self.topView addSubview:_topScrollView1];
+        
+        UIView *l2 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_topScrollView1.frame)+6, DEVICE_WIDTH, 0.5)];
+        l2.backgroundColor = RGBCOLOR(220, 221, 223);
+        [self.topView addSubview:l2];
+        
         
         _table.tableHeaderView = self.topView;
         [_table reloadData];
