@@ -176,7 +176,7 @@
     
     __weak typeof(self)weakSelf = self;
     
-    self.product_id = @"146";
+//    self.product_id = @"146";
     
     NSString *url = [NSString stringWithFormat:HOME_PRODUCT_DETAIL,self.product_id,[GMAPI getAuthkey]];
     tool_detail = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
