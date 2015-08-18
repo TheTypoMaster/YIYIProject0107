@@ -129,7 +129,7 @@
         int like_num = [detail_model.tt_like_num intValue];
         detail_model.tt_like_num = [NSString stringWithFormat:@"%d",zan ? like_num + 1 : like_num - 1];
         detail_model.is_like = zan ? 1 : 0;
-        
+                
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         

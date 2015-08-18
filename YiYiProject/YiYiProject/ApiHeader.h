@@ -336,7 +336,8 @@ typedef enum {
 #define HOME_TTAI_ACTIVITY @"http://www119.alayy.com/index.php?d=api&c=activity&m=get_near_activity_list"
 //T台列表首页顶部滚动视图
 #define HOME_TTAI_TOPSCROLLVIEW @"http://www119.alayy.com/index.php?d=api&c=advertisement&m=get_advertisement"
-
+//T台列表
+#define HOME_TTAI_LIST @"http://www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_near_tts"
 
 
 //单品详情

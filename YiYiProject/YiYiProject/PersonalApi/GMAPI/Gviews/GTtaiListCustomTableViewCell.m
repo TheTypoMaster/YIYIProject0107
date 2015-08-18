@@ -52,9 +52,20 @@
     
     //活动
     UILabel *huodongLabel = [[UILabel alloc]initWithFrame:CGRectMake(5, 0, downView.frame.size.width-10, downView.frame.size.height*0.5)];
-    huodongLabel.text = @"only全场满500减50";
     huodongLabel.font = [UIFont systemFontOfSize:12];
     huodongLabel.textColor = RGBCOLOR(36, 37, 38);
+    
+    if ([model.activity isKindOfClass:[NSDictionary class]]) {
+        NSLog(@"字典");
+        NSString *huodong_str = [model.activity stringValueForKey:@"activity_title"];
+        huodongLabel.text = huodong_str;
+        
+    }else{
+        NSLog(@"无数据");
+        huodongLabel.text = @"暂无活动";
+    }
+    
+    
     [downView addSubview:huodongLabel];
     
     //分割线
@@ -76,32 +87,66 @@
     
     
     //距离 商场名称 赞
-    CGFloat width = DEVICE_WIDTH/4.0;
+    CGFloat width = (DEVICE_WIDTH-10)/4.0;
     UIView *distanceView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(midLine.frame), width, huodongLabel.frame.size.height)];
-    UILabel *distanceLabel = [[UILabel alloc]initWithFrame:distanceView.bounds];
-    distanceLabel.text = @"500m";
-    distanceLabel.textColor = RGBCOLOR(36, 37, 38);
-    distanceLabel.textAlignment = NSTextAlignmentCenter;
-    distanceLabel.font = [UIFont systemFontOfSize:12];
-    [distanceView addSubview:distanceLabel];
+    
+    UIButton *distanceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [distanceBtn setFrame:distanceView.bounds];
+    
+    NSString *distance = model.distance;
+    NSInteger distance_int = [distance integerValue];
+    NSString *distance_str;
+    if (distance_int>=1000) {
+        distance_str = [NSString stringWithFormat:@"%.1fkm",distance_int*0.001];
+    }else{
+        distance_str = [NSString stringWithFormat:@"%.1fm",distance_int*1.0];
+    }
+    
+    distanceBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+    [distanceBtn setImage:[UIImage imageNamed:@"activity_location.png"] forState:UIControlStateNormal];
+    [distanceBtn setTitle:distance_str forState:UIControlStateNormal];
+    [distanceBtn setTitleColor:RGBCOLOR(36, 37, 38) forState:UIControlStateNormal];
+    [distanceBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 10, 0, width-30)];
+    [distanceBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+    [distanceView addSubview:distanceBtn];
     [downView addSubview:distanceView];
+    
     
     
     UILabel *storeNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(distanceView.frame), distanceView.frame.origin.y, 2*width, distanceView.frame.size.height)];
     storeNameLabel.textAlignment = NSTextAlignmentCenter;
-    storeNameLabel.text = @"新燕莎金街购物广场";
+    storeNameLabel.text = model.mall_name;
     storeNameLabel.font = [UIFont systemFontOfSize:12];
     storeNameLabel.textColor = RGBCOLOR(36, 37, 38);
     [downView addSubview:storeNameLabel];
     
-    UIView *zanView = [[UIView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(storeNameLabel.frame), distanceView.frame.origin.y, distanceView.frame.size.width, distanceView.frame.size.height)];
-    UILabel *zanLabel = [[UILabel alloc]initWithFrame:zanView.bounds];
-    zanLabel.textAlignment = NSTextAlignmentCenter;
-    zanLabel.font = [UIFont systemFontOfSize:12];
-    zanLabel.text = @"286";
-    zanLabel.textColor = RGBCOLOR(245, 104, 155);
-    [zanView addSubview:zanLabel];
-    [downView addSubview:zanView];
+    self.zanBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.zanBtn setFrame:CGRectMake(CGRectGetMaxX(storeNameLabel.frame), distanceView.frame.origin.y, distanceView.frame.size.width, distanceView.frame.size.height)];
+    self.zanBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+    self.zanBtn.titleLabel.textColor = RGBCOLOR(245, 104, 155);
+    [self.zanBtn setImage:[UIImage imageNamed:@"Ttai_zan_normal.png"] forState:UIControlStateNormal];
+    [self.zanBtn setImage:[UIImage imageNamed:@"Ttai_zan_selected.png"] forState:UIControlStateSelected];
+    [self.zanBtn setTitle:model.tt_like_num forState:UIControlStateNormal];
+    [self.zanBtn setTitleColor:RGBCOLOR(36, 37, 38) forState:UIControlStateNormal];
+    [self.zanBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 15, 0, width-35)];
+    [self.zanBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+    
+    if (model.is_like) {
+        self.zanBtn.selected = YES;
+    }else{
+        self.zanBtn.selected = NO;
+    }
+    
+    
+    
+//    UILabel *zanLabel = [[UILabel alloc]initWithFrame:zanView.bounds];
+//    zanLabel.textAlignment = NSTextAlignmentCenter;
+//    zanLabel.font = [UIFont systemFontOfSize:12];
+//    zanLabel.text = model.tt_like_num;
+//    zanLabel.textColor = RGBCOLOR(245, 104, 155);
+//    [zanView addSubview:zanLabel];
+    
+    [downView addSubview:self.zanBtn];
     
     
     

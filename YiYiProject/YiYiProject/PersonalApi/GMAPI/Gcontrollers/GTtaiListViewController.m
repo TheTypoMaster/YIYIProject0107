@@ -42,7 +42,10 @@
 #import "ActivityModel.h"//活动model
 #import "GTtaiNearActOneView.h"//自定义附近活动view
 
-@interface GTtaiListViewController ()<RefreshDelegate,UITableViewDataSource>
+#import "GwebViewController.h"//webview
+#import "MessageDetailController.h"//跳转活动详情
+
+@interface GTtaiListViewController ()<RefreshDelegate,UITableViewDataSource,GgetllocationDelegate>
 {
     RefreshTableView *_table;
     LPhotoBrowser *browser;
@@ -57,6 +60,8 @@
     CycleScrollView1 *_topScrollView1;
     
     LTools *_tool_detail;
+    
+    NSMutableArray *_upScrollViewData;
     
     
 }
@@ -95,15 +100,13 @@
     [self.view addSubview:_table];
     
     
-    [self creatUpscrollView];
-    _table.tableHeaderView = self.topView;
+    
     
     
     NSDictionary *dic = [DataManager getCacheDataForType:Cache_TPlat];
     if (dic) {
         [self parseDataWithResult:dic];
-        [self prepareNearActity];
-        [self prepareTopScrollViewNetData];
+        
     }
     
     [self performSelector:@selector(loadData) withObject:nil afterDelay:0.2];
@@ -125,7 +128,12 @@
 #pragma mark - MyMethod
 
 -(void)prepareNearActity{
-    NSString *url = [NSString stringWithFormat:@"%@&page=1&per_page=5&long=116.403299&lat=39.914004",HOME_TTAI_ACTIVITY];
+    GMAPI *gmapi = [GMAPI sharedManager];
+    NSDictionary *locationDic = gmapi.theLocationDic;
+    NSString *longStr = [locationDic stringValueForKey:@"long"];
+    NSString *latStr = [locationDic stringValueForKey:@"lat"];
+    NSString *streetStr = [locationDic stringValueForKey:@"addressDetail"];
+    NSString *url = [NSString stringWithFormat:@"%@&page=1&per_page=5&long=%@&lat=%@",HOME_TTAI_ACTIVITY,longStr,latStr];
     _tool_detail = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [_tool_detail requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSArray *arr = [result arrayValueForKey:@"list"];
@@ -138,6 +146,14 @@
             [viewsArray1 addObject:view];
         }
         
+        
+        if (!self.topView) {
+            self.topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 125 + 95 +5)];
+            self.topView.backgroundColor = [UIColor whiteColor];
+            _topScrollView = [[CycleScrollView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 125) animationDuration:3];
+        }
+        
+        
         UIView *vvv = [[UIView alloc]initWithFrame:CGRectMake(5, CGRectGetMaxY(_topScrollView.frame)+5, DEVICE_WIDTH-10, 35)];
         [self.topView addSubview:vvv];
         UILabel *fujinhuodongLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 60, 35)];
@@ -148,7 +164,7 @@
         UILabel *dizhiLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(fujinhuodongLabel.frame), 0, DEVICE_WIDTH - 5-60-5, 35)];
         dizhiLabel.textAlignment = NSTextAlignmentRight;
         dizhiLabel.font = [UIFont systemFontOfSize:12];
-        dizhiLabel.text = @"清河小营西路27号";
+        dizhiLabel.text = streetStr;
         dizhiLabel.textColor = RGBCOLOR(81, 82, 83);
         [vvv addSubview:dizhiLabel];
         
@@ -174,6 +190,9 @@
         
         [self.topView addSubview:_topScrollView1];
         
+        _table.tableHeaderView = self.topView;
+        [_table reloadData];
+        
     } failBlock:^(NSDictionary *result, NSError *erro) {
         
     }];
@@ -189,12 +208,14 @@
         
         NSArray *arr = [result arrayValueForKey:@"advertisements_data"];
         NSMutableArray *viewsArray = [NSMutableArray arrayWithCapacity:1];
+        _upScrollViewData = [NSMutableArray arrayWithCapacity:1];
         for (NSDictionary *dic in arr) {
             
             ActivityModel *amodel = [[ActivityModel alloc]initWithDictionary:dic];
             UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 125)];
             [imv l_setImageWithURL:[NSURL URLWithString:amodel.img_url] placeholderImage:nil];
             [viewsArray addObject:imv];
+            [_upScrollViewData addObject:amodel];
         }
         
         
@@ -208,6 +229,10 @@
 //            
 //        }
         
+        if (!self.topView) {
+            self.topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 125 + 95 +5)];
+            self.topView.backgroundColor = [UIColor whiteColor];
+        }
         
         
         
@@ -225,10 +250,13 @@
         
         __weak typeof (self)bself = self;
         _topScrollView.TapActionBlock = ^(NSInteger pageIndex){
+            
             [bself cycleScrollDidClickedWithIndex:pageIndex];
         };
         
         [self.topView addSubview:_topScrollView];
+        _table.tableHeaderView = self.topView;
+        [_table reloadData];
        
         
     } failBlock:^(NSDictionary *result, NSError *erro) {
@@ -242,17 +270,48 @@
 
 //创建scrollview
 -(void)creatUpscrollView{
-    self.topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 125 + 95 +5)];
-    self.topView.backgroundColor = [UIColor whiteColor];
     
-    
-    _topScrollView = [[CycleScrollView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 125) animationDuration:2];
+//    
+//    
+//    _topScrollView = [[CycleScrollView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 125) animationDuration:2];
 }
 
 
 
 -(void)cycleScrollDidClickedWithIndex:(NSInteger)index{
     NSLog(@"%ld",index);
+    
+    ActivityModel *amodel = _upScrollViewData[index];
+    
+    if ([amodel.redirect_type intValue] == 1) {//外链
+        GwebViewController *ccc = [[GwebViewController alloc]init];
+        ccc.urlstring = amodel.theme_id;
+        ccc.isSaoyisao = YES;
+        ccc.hidesBottomBarWhenPushed = YES;
+        UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:ccc];
+        [self presentViewController:navc animated:YES completion:^{
+            
+        }];
+    }else if ([amodel.redirect_type intValue] == 0){//应用内
+        if ([amodel.adv_type_val intValue] == 2 || [amodel.adv_type_val intValue] == 3){//2商场活动 3店铺活动
+            NSString *activityId = amodel.theme_id;
+            MessageDetailController *detail = [[MessageDetailController alloc]init];
+            detail.isActivity = YES;
+            detail.msg_id = activityId;
+            detail.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:detail animated:YES];
+        }else if ([amodel.adv_type_val intValue] == 4){//单品
+            ProductDetailControllerNew *detail = [[ProductDetailControllerNew alloc]init];
+            detail.product_id = amodel.theme_id;
+            detail.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:detail animated:YES];
+        }
+    }
+    
+    
+    
+    
+    
 }
 
 
@@ -398,6 +457,7 @@
         int like_num = [detail_model.tt_like_num intValue];
         detail_model.tt_like_num = [NSString stringWithFormat:@"%d",zan ? like_num + 1 : like_num - 1];
         detail_model.is_like = zan ? 1 : 0;
+        [zan_btn setTitle:detail_model.tt_like_num forState:UIControlStateNormal];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
@@ -413,11 +473,17 @@
 {
     
     
+    GMAPI *gmapi = [GMAPI sharedManager];
+    NSDictionary *locationDic = gmapi.theLocationDic;
+    NSString *longStr = [locationDic stringValueForKey:@"long"];
+    NSString *latStr = [locationDic stringValueForKey:@"lat"];
+    
     __weak typeof(self)weakSelf = self;
     
     __weak typeof(RefreshTableView)*weakTable = _table;
     
-    NSString *url = [NSString stringWithFormat:@"%@&page=%d&count=%d&authcode=%@",TTAi_LIST,_table.pageNum,L_PAGE_SIZE,[GMAPI getAuthkey]];
+    
+    NSString *url = [NSString stringWithFormat:@"%@&page=%d&count=%d&authcode=%@&longitude=%@&latitude=%@",HOME_TTAI_LIST,_table.pageNum,L_PAGE_SIZE,[GMAPI getAuthkey],longStr,latStr];
     
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
@@ -643,13 +709,33 @@
 
 
 
+#pragma mark - GgetllocationDelegate
+
+- (void)theLocationDictionary:(NSDictionary *)dic{
+    
+    NSLog(@"定位成功信息%@",dic);
+    
+    [self prepareTopScrollViewNetData];
+    [self prepareNearActity];
+    [self getTTaiData];
+}
+
+
+- (void)theLocationFaild:(NSDictionary *)dic{
+    NSLog(@"定位失败%@",dic);
+    [self prepareTopScrollViewNetData];
+    [self prepareNearActity];
+    [self getTTaiData];
+}
 
 #pragma - mark RefreshDelegate
 
 -(void)loadNewData
 {
-    [self getTTaiData];
-    [self prepareTopScrollViewNetData];
+    
+    GMAPI *gmapi = [GMAPI sharedManager];
+    gmapi.delegate = self;
+    [gmapi startDingwei];
     
 }
 
@@ -734,9 +820,9 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
 //    //赞按钮
-//    cell.zanBtn.tag = 100 + indexPath.row;
-//    [cell.contentView bringSubviewToFront:cell.zanBackView];
-//    [cell.zanBtn addTarget:self action:@selector(zanTTaiDetail:) forControlEvents:UIControlEventTouchUpInside];
+    cell.zanBtn.tag = 100 + indexPath.row;
+    [cell.contentView bringSubviewToFront:cell.zanBtn];
+    [cell.zanBtn addTarget:self action:@selector(zanTTaiDetail:) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
 }
