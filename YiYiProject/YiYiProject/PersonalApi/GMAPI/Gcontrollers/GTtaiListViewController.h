@@ -15,6 +15,10 @@
 @interface GTtaiListViewController : MyViewController
 
 
+
+@property(nonatomic,strong)NSDictionary *locationDic;//定位信息dic
+
+
 #pragma mark---锚点的点击方法
 //到商场的
 -(void)turnToShangChangInfoId:(NSString *)infoId

@@ -726,6 +726,8 @@
 - (void)theLocationDictionary:(NSDictionary *)dic{
     
     NSLog(@"定位成功信息%@",dic);
+    GMAPI *gmapi = [GMAPI sharedManager];
+    self.locationDic = gmapi.theLocationDic;
     
     [self prepareTopScrollViewNetData];
     [self prepareNearActity];
@@ -764,6 +766,9 @@
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
     GTtaiDetailViewController *ggg = [[GTtaiDetailViewController alloc]init];
+    TPlatModel *amdol = _table.dataArray[indexPath.row];
+    ggg.locationDic = self.locationDic;
+    ggg.tPlat_id = amdol.tt_id;
     ggg.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:ggg animated:YES];
     

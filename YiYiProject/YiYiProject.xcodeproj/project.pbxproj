@@ -581,6 +581,7 @@
 		E3D0808B1B3EFAB700E4F87D /* GbuyClothTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3D0808A1B3EFAB700E4F87D /* GbuyClothTableViewCell.m */; };
 		E3D2EBFF1AF8DEAA00C09A49 /* gxiaozhu_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3D2EBFE1AF8DEAA00C09A49 /* gxiaozhu_bg@2x.png */; };
 		E3DA29E01AF9F50300FE9B75 /* gqiandaoguanbi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3DA29DF1AF9F50300FE9B75 /* gqiandaoguanbi@2x.png */; };
+		E3DDEDB41B847B1A00EEFE15 /* GTtaiDetailProductMaodian.m in Sources */ = {isa = PBXBuildFile; fileRef = E3DDEDB31B847B1A00EEFE15 /* GTtaiDetailProductMaodian.m */; };
 		E3E1F4181B42ADD0009DAD25 /* search_fangdajing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3E1F4171B42ADD0009DAD25 /* search_fangdajing@2x.png */; };
 		E3E3E8481A3C6772001A1DD6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E3E8471A3C6772001A1DD6 /* CoreLocation.framework */; };
 		E3E3E84A1A3C6780001A1DD6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E3E8491A3C6780001A1DD6 /* QuartzCore.framework */; };
@@ -1549,6 +1550,8 @@
 		E3D0808A1B3EFAB700E4F87D /* GbuyClothTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GbuyClothTableViewCell.m; sourceTree = "<group>"; };
 		E3D2EBFE1AF8DEAA00C09A49 /* gxiaozhu_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gxiaozhu_bg@2x.png"; sourceTree = "<group>"; };
 		E3DA29DF1AF9F50300FE9B75 /* gqiandaoguanbi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gqiandaoguanbi@2x.png"; sourceTree = "<group>"; };
+		E3DDEDB21B847B1A00EEFE15 /* GTtaiDetailProductMaodian.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTtaiDetailProductMaodian.h; sourceTree = "<group>"; };
+		E3DDEDB31B847B1A00EEFE15 /* GTtaiDetailProductMaodian.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTtaiDetailProductMaodian.m; sourceTree = "<group>"; };
 		E3E1F4171B42ADD0009DAD25 /* search_fangdajing@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search_fangdajing@2x.png"; sourceTree = "<group>"; };
 		E3E3E8471A3C6772001A1DD6 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		E3E3E8491A3C6780001A1DD6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -3502,6 +3505,8 @@
 				E3FB5C421B0B48FB00787D5A /* GmaodianModel.m */,
 				E3D080831B3EEC0700E4F87D /* GBuyClothLogModel.h */,
 				E3D080841B3EEC0700E4F87D /* GBuyClothLogModel.m */,
+				E3DDEDB21B847B1A00EEFE15 /* GTtaiDetailProductMaodian.h */,
+				E3DDEDB31B847B1A00EEFE15 /* GTtaiDetailProductMaodian.m */,
 			);
 			path = Gmodels;
 			sourceTree = "<group>";
@@ -4261,6 +4266,7 @@
 				E3996EE01A5E1DBA00673147 /* GClothWaveCustomView.m in Sources */,
 				DF5E89B61A5E7E6C00535EBA /* MyMatchViewController.m in Sources */,
 				E3AFFDC51B1D87A600A6FB42 /* GupActivityViewController.m in Sources */,
+				E3DDEDB41B847B1A00EEFE15 /* GTtaiDetailProductMaodian.m in Sources */,
 				E36BFC871A6939FC009DAF81 /* FBCity.m in Sources */,
 				13934DB81B26CA8400705B02 /* BigProductCell.m in Sources */,
 				139D6E891B41155400BABECF /* AdvertisementController.m in Sources */,

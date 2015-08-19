@@ -36,6 +36,8 @@
     
     
     LTools *tool_detail;
+    
+    
 }
 @end
 
@@ -89,10 +91,10 @@
     [self addObserver:self forKeyPath:@"_count" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
     
     //请求单品详情
-    [self networkForDetail];
+    [self prepareNetDataForTtaiDetail];
     
-    //请求单品同款
-    [self networkForDetailSameStyle];
+    //请求关联商场
+    [self prepareNetDataForStore];
     
     
     //瀑布流相关
@@ -118,12 +120,17 @@
     
 }
 
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
 
 
 #pragma mark - MyMethod
 
+#pragma mark - 请求网络数据
 //请求T台详情数据
--(void)networkForDetail{
+-(void)prepareNetDataForTtaiDetail{
     if (tool_detail) {
         [tool_detail cancelRequest];
     }
@@ -132,8 +139,11 @@
     
     __weak typeof(self)weakSelf = self;
     
-    self.tPlat_id = @"11";
-    NSString *url = [NSString stringWithFormat:HOME_PRODUCT_DETAIL,self.tPlat_id,[GMAPI getAuthkey]];
+    NSString *url = [NSString stringWithFormat:@"%@&authcode=%@&tt_id=%@",TTAI_DETAIL_V2,[GMAPI getAuthkey],self.tPlat_id];
+    
+    //测试
+    url = @"www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_tt_info&page=1&count=20&authcode=An1XLlEoBuBR6gSZVeUI31XwBOZXolanAi9SY1cyUWZVa1JhVDRQYwE2AzYAbQ19CTg=&tt_id=26";
+    
     tool_detail = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     
     [tool_detail requestCompletion:^(NSDictionary *result, NSError *erro) {
@@ -143,35 +153,33 @@
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         
         if ([result isKindOfClass:[NSDictionary class]]) {
-            
-            NSDictionary *dic = result[@"pinfo"];
-            
-            TPlatModel *aModel1 = [[TPlatModel alloc]initWithDictionary:dic];
+            TPlatModel *aModel1 = [[TPlatModel alloc]initWithDictionary:result];
             weakSelf.theModel = aModel1;
             _aModel = aModel1;
             [self setValue:[NSNumber numberWithInt:_count + 1] forKeyPath:@"_count"];
-            
-            NSLog(@"........................%d",_count);
-            
         }
         
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-        
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         
     }];
 }
 
-//请求同款T台数据
--(void)networkForDetailSameStyle{
+//请求T台关联的商场
+-(void)prepareNetDataForStore{
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
+    NSString *longitude = [self.locationDic stringValueForKey:@"long"];
+    NSString *latitude = [self.locationDic stringValueForKey:@"lat"];
     
-    self.tPlat_id = @"146";
-    NSString *url = [NSString stringWithFormat:HOME_PRODUCT_DETAIL_SAME_STYLE,self.tPlat_id];
+    NSString *url = [NSString stringWithFormat:@"%@&authcode=%@&longitude=%@&latitude=%@&tt_id=%@",TTAI_STORE,[GMAPI getAuthkey],longitude,latitude,self.tPlat_id];
+    //测试
+    url = @"http://www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_relation_tts&page=1&count=20&authcode=An1XLlEoBuBR6gSZVeUI31XwBOZXolanAi9SY1cyUWZVa1JhVDRQYwE2AzYAbQ19CTg=&longitude=116.402982&latitude=39.912950&tt_id=26";
+    
+    
     tool_detail = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     
     [tool_detail requestCompletion:^(NSDictionary *result, NSError *erro) {
@@ -192,16 +200,12 @@
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-        
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         
     }];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+
 
 
 //创建收藏分享按钮
@@ -231,111 +235,10 @@
     
 }
 
-
-/*
- 是否收藏
- */
-
-- (void)clickToCollect:(UIButton *)sender
-{
-    if (sender.selected) {
-        
-        [self networkForActionType:Action_Collect_no];
-    }else
-    {
-        [self networkForActionType:Action_Collect_yes];
-    }
+//收藏
+-(void)clickToCollect:(UIButton*)sender{
+    
 }
-
-
-
-/*
- 是否喜欢
- */
-- (void)clickToLike:(UIButton *)sender
-{
-    
-    if ([LTools isLogin:self]) {
-        
-        [LTools animationToBigger:_heartButton duration:0.2 scacle:1.5];
-        
-        if (_heartButton.selected) {
-            
-            [self networkForActionType:Action_like_no];
-        }else
-        {
-            [self networkForActionType:Action_like_yes];
-        }
-    }
-}
-
-
-
-
-
-
-
-/**
- *  赞 取消赞 收藏 取消收藏
- *
- *  @param action_type
- */
-- (void)networkForActionType:(ACTION_TYPE)action_type
-{
-    
-    __weak typeof(self)weakSelf = self;
-    
-    NSString *api;
-    if (action_type == Action_like_yes) {
-        api = HOME_PRODUCT_ZAN_ADD;
-    }else if (action_type == Action_Collect_yes){
-        api = HOME_PRODUCT_COLLECT_ADD;
-    }else if (action_type == Action_like_no){
-        api = HOME_PRODUCT_ZAN_Cancel;
-    }else if (action_type == Action_Collect_no){
-        
-        api = HOME_PRODUCT_COLLECT_Cancel;
-    }
-    
-    NSString *post = [NSString stringWithFormat:@"product_id=%@&authcode=%@",self.tPlat_id,[GMAPI getAuthkey]];
-    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-    NSString *url = api;
-    
-    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
-    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
-        
-        NSLog(@"result %@",result);
-        
-        if (action_type == Action_like_yes) {
-            
-            [weakSelf updateZanState:YES];
-            
-            
-        }else if (action_type == Action_Collect_yes){
-            
-            _collectButton.selected = YES;
-            //关注单品通知
-            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_TTai object:nil userInfo:@{@"state":[NSNumber numberWithBool:YES]}];
-            
-        }else if (action_type == Action_like_no){
-            
-            [weakSelf updateZanState:NO];
-            
-        }else if (action_type == Action_Collect_no){
-            _collectButton.selected = NO;
-            //关注单品通知
-            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_TTai object:nil userInfo:@{@"state":[NSNumber numberWithBool:NO]}];
-        }
-        
-    } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        
-        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-        
-    }];
-}
-
-
-
 
 
 /*

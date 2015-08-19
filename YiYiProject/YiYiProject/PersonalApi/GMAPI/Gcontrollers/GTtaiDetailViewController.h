@@ -24,4 +24,8 @@
 //分享
 @property (strong, nonatomic) UIImageView *bigImageView;
 
+
+//定位信息
+@property(nonatomic,strong)NSDictionary *locationDic;
+
 @end

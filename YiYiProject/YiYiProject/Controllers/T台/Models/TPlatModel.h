@@ -15,7 +15,7 @@
 @property(nonatomic,retain)NSString *add_time;
 @property(nonatomic,retain)NSArray *tt_detail;//t台详情 数组
 
-@property(nonatomic,retain)NSString *tt_content;
+@property(nonatomic,retain)NSString *tt_content;//T台描述
 
 @property(nonatomic,retain)NSString *tt_like_num;//红心个数
 @property(nonatomic,retain)NSString *tt_share_num;
@@ -46,5 +46,13 @@
 //测试数据
 @property(nonatomic,strong)NSString *tPlat_name;
 @property(nonatomic,strong)NSString *original_price;
+
+
+
+//T台详情
+@property(nonatomic,strong)NSString *photo_mall_name;//拍摄地
+@property(nonatomic,strong)NSArray *tags;//标签
+@property(nonatomic,strong)NSArray *reply;//回复
+@property(nonatomic,strong)NSArray *same_tts;//相同的T台
 
 @end
