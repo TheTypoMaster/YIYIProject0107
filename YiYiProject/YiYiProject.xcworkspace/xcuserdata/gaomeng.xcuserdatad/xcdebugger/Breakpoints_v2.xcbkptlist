@@ -5267,7 +5267,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "393"
             endingLineNumber = "393"
-            landmarkName = "-observeValueForKeyPath:ofObject:change:context:"
+            landmarkName = "-zanNumStringForNum:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -5283,7 +5283,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "413"
             endingLineNumber = "413"
-            landmarkName = "-prepareViewWithModel:"
+            landmarkName = "-updateZanState:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -5299,7 +5299,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "432"
             endingLineNumber = "432"
-            landmarkName = "-prepareViewWithModel:"
+            landmarkName = "-createDetailViewsWithModel:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -5363,7 +5363,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "676"
             endingLineNumber = "676"
-            landmarkName = "-createDetailViewsWithModel:"
+            landmarkName = "-clickToActivity:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -5379,7 +5379,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "719"
             endingLineNumber = "719"
-            landmarkName = "-createDetailViewsWithModel:"
+            landmarkName = "-waterScrollViewDidEndDragging:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
