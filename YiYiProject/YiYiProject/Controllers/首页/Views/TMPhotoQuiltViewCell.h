@@ -21,13 +21,6 @@
 #import "TMQuiltViewCell.h"
 #import "ProductModel.h"
 
-typedef enum {
-    CELLSTYLE_DanPinList = 0, //单品列表样式 有店名、价格、折扣、距离,点赞在图片左下角
-    CELLSTYLE_DianPuList = 1, //店铺列表样式 有店名、价格、折扣、不显示距离,点赞不在图片上,在价格等infoView上
-    CELLSTYLE_CollectList = 2, //收藏 和 单品列表类似,只是没有店名
-    CELLSTYLE_BrandRecommendList = 3 //品牌推荐 只有点赞、大图
-}CELLSTYLE;
-
 @interface TMPhotoQuiltViewCell : TMQuiltViewCell
 
 @property(nonatomic,retain)UIView *backGroudView;//背景view

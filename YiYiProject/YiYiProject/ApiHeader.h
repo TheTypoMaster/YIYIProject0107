@@ -279,6 +279,13 @@ typedef enum {
 
 }ACTION_TYPE; //网络请求类型
 
+typedef enum {
+    CELLSTYLE_DanPinList = 0, //单品列表样式 有店名、价格、折扣、距离,点赞在图片左下角
+    CELLSTYLE_DianPuList = 1, //店铺列表样式 有店名、价格、折扣、不显示距离,点赞不在图片上,在价格等infoView上
+    CELLSTYLE_CollectList = 2, //收藏 和 单品列表类似,只是没有店名
+    CELLSTYLE_BrandRecommendList = 3 //品牌推荐 只有点赞、大图
+}CELLSTYLE;
+
 //单品分类
 #define PRODUCT_FENLEI  @[@"全部",@"上衣",@"裤子",@"裙子",@"内衣",@"配饰",@"其他"]
 

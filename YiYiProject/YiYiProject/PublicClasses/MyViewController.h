@@ -42,7 +42,7 @@ typedef void(^UpdateParamsBlock)(NSDictionary *params);
     
 }
 
-@property(nonatomic,assign)UpdateParamsBlock updateParamsBlock;
+@property(nonatomic,copy)UpdateParamsBlock updateParamsBlock;
 
 @property(nonatomic,assign)MyViewControllerLeftbuttonType * leftButtonType;
 

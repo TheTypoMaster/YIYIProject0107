@@ -443,6 +443,12 @@
         weakTable.pageNum = 1;
         weakTable.isReloadData = YES;
         [bself getTTaiComments];
+        //评论成功
+        if (bself.updateParamsBlock) {
+            
+            bself.updateParamsBlock(@{@"result":[NSNumber numberWithBool:YES]});
+
+        }
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         

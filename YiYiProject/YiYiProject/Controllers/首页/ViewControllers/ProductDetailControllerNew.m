@@ -29,11 +29,17 @@
 #import "TTaiCommentViewController.h"//评论列表
 #import "MallListViewController.h"//相似单品所在商场
 
+#import "PSCollectionView.h"
+#import "ProductCell.h"
+
+#import "LWaterFlow2.h"
+
+
 #define kTag_Tags 100 //单品标签
 #define kTag_Mall 1000 //所在商场
 #define kTag_Images 2000 //单品图片
 
-@interface ProductDetailControllerNew ()<TMQuiltViewDataSource,WaterFlowDelegate,UIScrollViewDelegate>
+@interface ProductDetailControllerNew ()<PSWaterFlowDelegate,UIScrollViewDelegate,PSCollectionViewDataSource>
 {
     ProductModel *_aModel;
     
@@ -41,14 +47,13 @@
     
     UIButton *collectButton;//收藏 与 取消收藏
     
-    MBProgressHUD *loading;
-    
-    LTools *tool_detail;
+    LTools *tool_detail;//详情
+    LTools *tool_sameStyle;//同款
+    LTools *tool_comment;//评论
     
     NSArray *image_urls;//图片链接数组
     
-    UIScrollView *_headerView;
-    LWaterflowView *_waterFlow;
+    UIView *_headerView;
     
     UILabel *_backLabel;//释放返回
     UILabel *_zanNumLabel;//赞数量label
@@ -62,24 +67,15 @@
     NSString *_addressDetail;//地址详细信息
     NSArray *_commentArray;//评论
     int _commentCount;//评论总数
+    
+    LWaterFlow2 *_collectionView;
+    
+    CycleScrollView1 *_commentCycle;//评论轮滚
+    UIView *_commentView;//评论背景view
 }
 
-@property (strong, nonatomic) UILabel *brandName;
-
-@property (strong, nonatomic) UILabel *shopNameLabel;
 @property (strong, nonatomic) UIImageView *bigImageView;
-@property (strong, nonatomic) UILabel *priceLabel;
-@property (strong, nonatomic) UILabel *discountLabel;
-@property (strong, nonatomic) UILabel *titleLabel;
-@property (strong, nonatomic) UILabel *xingHaoLabel;
-@property (strong, nonatomic) UILabel *biaoQianLabel;
-@property (strong, nonatomic) UILabel *addressLabel;
-@property (strong, nonatomic) UIButton *bugButton;
-@property (strong, nonatomic) UIButton *shopButton;
-@property (weak, nonatomic) UIButton *lianxiDianzhuBtn;
-
 @property(nonatomic,strong)ProductModel *theModel;//单品model 给聊天界面传递
-
 
 @end
 
@@ -115,6 +111,18 @@
     [tool_detail cancelRequest];
     heartButton = nil;
     collectButton = nil;
+    
+    [tool_sameStyle cancelRequest];
+    [tool_comment cancelRequest];
+    
+    _collectionView.waterDelegate = nil;
+    _collectionView.quitView = nil;
+    _collectionView = nil;
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 - (void)viewDidLoad {
@@ -127,38 +135,108 @@
     
     [self createNavigationbarTools];//导航条
     
-    [self.bugButton addCornerRadius:3.f];
-    
     [self addProductVisit];//添加单品浏览数
     
     [self addObserver:self forKeyPath:@"_count" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
     
-    //瀑布流相关
-    _waterFlow = [[LWaterflowView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT - 64) waterDelegate:self waterDataSource:self noHeadeRefresh:YES noFooterRefresh:YES];
-    _waterFlow.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:_waterFlow];
-
-    _waterFlow.hidden = YES;
+    _collectionView = [[LWaterFlow2 alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT - 64 - 46) waterDelegate:self waterDataSource:self noHeadeRefresh:NO noFooterRefresh:NO];
+    [self.view addSubview:_collectionView];
+    _collectionView.backgroundColor = [UIColor clearColor];
+    _collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
-    //下拉 返回上面内容
-    _backLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 40) title:@"下拉,返回单品详情" font:10 align:NSTextAlignmentCenter textColor:[UIColor colorWithHexString:@"8b8b8b"]];
-    [_waterFlow addSubview:_backLabel];
-    [_waterFlow bringSubviewToFront:_waterFlow.quitView];
-    _waterFlow.hidden = YES;
-    
-    CGFloat aHeight = [LTools heightForImageHeight:42 imageWidth:375 showWidth:DEVICE_WIDTH];
-    UIImageView *lineImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, aHeight)];
-    lineImage.image = [UIImage imageNamed:@"danpinxq_tuijian"];
-    lineImage.contentMode = UIViewContentModeCenter;
-    _waterFlow.headerView = lineImage;
-    
-    [self getCurrentLocation];
+    [_collectionView showRefreshHeader:YES];
     
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma - mark UIAlertViewDelegate
+
+//打电话
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    NSString *phoneNum = _aModel.mall_info[@"mobile"];
+    
+    //0取消    1确定
+    if (buttonIndex == 1) {
+        NSString *strPhone = [NSString stringWithFormat:@"tel://%@",phoneNum];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:strPhone]];
+    }
+}
+
+#pragma - mark PSWaterFlowDelegate <NSObject>
+- (void)waterLoadNewDataForWaterView:(PSCollectionView *)waterView
+{
+    _count = 0;
+    [self getCurrentLocation];
+
+}
+- (void)waterLoadMoreDataForWaterView:(PSCollectionView *)waterView
+{
+    [self getRecommentProductList];
+}
+
+- (void)waterDidSelectRowAtIndexPath:(NSInteger)index
+{
+    ProductModel *aMode = _collectionView.dataArray[index];
+    [MiddleTools pushToProductDetailWithId:aMode.product_id fromViewController:self lastNavigationHidden:NO hiddenBottom:YES];
+}
+
+- (void)waterScrollViewDidScroll:(UIScrollView *)scrollView
+{
+    
+}
+
+- (void)waterScrollViewDidEndDragging:(UIScrollView *)scrollView
+{
+    
+}
+
+#pragma mark - PSCollectionViewDataSource <NSObject>
+
+- (NSInteger)numberOfRowsInCollectionView:(PSCollectionView *)collectionView
+{
+    return _collectionView.dataArray.count;
+}
+
+- (PSCollectionViewCell *)collectionView:(PSCollectionView *)collectionView1 cellForRowAtIndex:(NSInteger)index
+{
+    ProductCell *cell = (ProductCell *)[collectionView1 dequeueReusableViewForClass:[ProductCell class]];
+    
+    if(cell == nil) {
+        
+        cell = [[ProductCell alloc]init];
+    }
+
+    cell.cellStyle = CELLSTYLE_BrandRecommendList;
+    cell.photoView.userInteractionEnabled = NO;
+    ProductModel *aMode = _collectionView.dataArray[index];
+    [cell setCellWithModel222:aMode];
+    
+    return cell;
+}
+- (CGFloat)collectionView:(PSCollectionView *)collectionView heightForRowAtIndex:(NSInteger)index
+{
+    CGFloat imageH = 0.f;
+    ProductModel *aMode = _collectionView.dataArray[index];
+    
+    NSDictionary *images = (NSDictionary *)aMode.images;
+    if (images && [images isKindOfClass:[NSDictionary class]]) {
+        
+        
+        NSDictionary *middleImage = [images objectForKey:@"540Middle"];
+        float image_width = [middleImage[@"width"]floatValue];
+        float image_height = [middleImage[@"height"]floatValue];
+        
+        if (image_width == 0.0) {
+            image_width = image_height;
+        }
+        float rate = image_height/image_width;
+        
+        imageH = (DEVICE_WIDTH - 6)/2.0*rate + 25;
+        
+    }
+    
+    
+    return imageH;
 }
 
 #pragma mark - 网络请求
@@ -172,8 +250,6 @@
         [tool_detail cancelRequest];
     }
     
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    
     __weak typeof(self)weakSelf = self;
     
 //    self.product_id = @"146";
@@ -184,8 +260,6 @@
     [tool_detail requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"result %@",result);
-        
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         
         if ([result isKindOfClass:[NSDictionary class]]) {
             
@@ -201,7 +275,8 @@
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-        
+        [self setValue:[NSNumber numberWithInt:_count + 1] forKeyPath:@"_count"];
+
     }];
 }
 
@@ -213,9 +288,10 @@
     __weak typeof(self)weakSelf = self;
     
     NSString *url = [NSString stringWithFormat:HOME_PRODUCT_DETAIL_SAME_STYLE,_longtitude,_latitude,self.product_id];
-    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     
-    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+    tool_sameStyle = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    
+    [tool_sameStyle requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"result %@",result);
         NSArray *list = result[@"list"];
@@ -227,7 +303,7 @@
         _sameStyleArray = [NSArray arrayWithArray:temp];
         
         [weakSelf setValue:[NSNumber numberWithInt:_count + 1] forKeyPath:@"_count"];
-
+        
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
@@ -240,17 +316,19 @@
 
 /**
  *  获取单品评论列表
+ *
+ *  @param isUpdate 是否是更新评论
  */
-- (void)networkForCommentList
+- (void)networkForCommentList:(BOOL)isUpdate
 {
     __weak typeof(self)weakSelf = self;
     
     NSString *url = [NSString stringWithFormat:PRODUCT_COMMENT_LIST,self.product_id];
     url = [NSString stringWithFormat:@"%@&page=%d&per_page=%d",url,1,10];
     
-    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    tool_comment = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     
-    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+    [tool_comment requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"result %@",result);
         _commentCount  = [[result objectForKey:@"total"] intValue];
@@ -267,8 +345,22 @@
         }
         _commentArray = [NSArray arrayWithArray:arr];
         
-        [weakSelf setValue:[NSNumber numberWithInt:_count + 1] forKeyPath:@"_count"];
-
+        if (isUpdate) {
+            
+            if (_commentCycle) {
+                
+                [_commentCycle removeFromSuperview];
+                _commentCycle = nil;
+            }
+            _commentCycle = [self cycleScrollWithCommentArray:_commentArray];
+            [_commentView addSubview:_commentCycle];
+            _commentNumLabel.text = NSStringFromInt(_commentCount);
+        }else
+        {
+            [weakSelf setValue:[NSNumber numberWithInt:_count + 1] forKeyPath:@"_count"];
+            
+        }
+        
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
@@ -500,49 +592,40 @@
  */
 - (void)getRecommentProductList
 {
-    NSString *url = [NSString stringWithFormat:PRODUCT_LIST_SAME_BRAND_RECOMMENT,self.product_id,_waterFlow.pageNum,L_PAGE_SIZE,[GMAPI getAuthkey]];
+    NSString *url = [NSString stringWithFormat:PRODUCT_LIST_SAME_BRAND_RECOMMENT,@"146",_collectionView.pageNum,L_PAGE_SIZE,[GMAPI getAuthkey]];
 
-    __weak typeof(self)weakSelf = self;
+//    __weak typeof(self)weakSelf = self;
+    __weak typeof(_collectionView)weakCollection = _collectionView;
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
-        [weakSelf parseDataWithResult:result];
-        
+        NSMutableArray *arr;
+        if ([result isKindOfClass:[NSDictionary class]]) {
+            
+            NSArray *list = result[@"list"];
+            arr = [NSMutableArray arrayWithCapacity:list.count];
+            if ([list isKindOfClass:[NSArray class]]) {
+                
+                for (NSDictionary *aDic in list) {
+                    
+                    ProductModel *model = [[ProductModel alloc]initWithDictionary:aDic];
+                    
+                    [arr addObject:model];
+                }
+                
+                [weakCollection reloadData:arr pageSize:L_PAGE_SIZE];
+                
+            }
+            
+        }
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-        [_waterFlow loadFail];
+        [weakCollection loadFail];
         
     }];
 }
-
-#pragma - mark 解析数据
-
-- (void)parseDataWithResult:(NSDictionary *)result
-{
-    NSMutableArray *arr;
-    if ([result isKindOfClass:[NSDictionary class]]) {
-        
-        NSArray *list = result[@"list"];
-        arr = [NSMutableArray arrayWithCapacity:list.count];
-        if ([list isKindOfClass:[NSArray class]]) {
-            
-            for (NSDictionary *aDic in list) {
-                
-                ProductModel *model = [[ProductModel alloc]initWithDictionary:aDic];
-                
-                [arr addObject:model];
-            }
-            
-            
-            [_waterFlow reloadData:arr pageSize:L_PAGE_SIZE];
-        }
-        
-    }
-    
-}
-
 
 #pragma mark - 事件处理
 
@@ -582,12 +665,13 @@
     NSNumber *num = [change objectForKey:@"new"];
     if ([num intValue] == 3) {
         
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if (_aModel) {
             _aModel.sameStyleArray = _sameStyleArray;
             
             [self prepareViewWithModel:_aModel];
         }
+        
+        [self getRecommentProductList];//推荐品牌
     }
 }
 
@@ -630,9 +714,10 @@
     [self.navigationController pushViewController:list animated:YES];
 }
 
+#pragma - mark 地图坐标
+
 - (void)getCurrentLocation
 {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     __weak typeof(self)weakSelf = self;
     [[GMAPI appDeledate]startDingweiWithBlock:^(NSDictionary *dic) {
         
@@ -640,10 +725,6 @@
     }];
 
 }
-
-
-#pragma - mark 地图坐标
-
 - (void)theLocationDictionary:(NSDictionary *)dic{
     
     NSLog(@"当前坐标-->%@",dic);
@@ -671,12 +752,7 @@
     [self networkForDetailSameStyle];
     
     //请求评论
-    
-    [self networkForCommentList];
-    
-    //品牌推荐
-    [self getRecommentProductList];
-
+    [self networkForCommentList:NO];
 }
 
 /**
@@ -715,24 +791,6 @@
     
 }
 
-
-/**
- *  上拉下拉移动视图
- *
- *  @param up 是否上拉
- */
-- (void)moveToUp:(BOOL)up
-{
-    if (up) {
-        _waterFlow.top = _headerView.height;
-    }
-    [UIView animateWithDuration:1 animations:^{
-       
-        _headerView.top = up ? - _headerView.height : 0;
-        _waterFlow.top = up ? 0 : _headerView.height;
-    }];
-}
-
 /**
  *  评论页面
  *
@@ -740,10 +798,22 @@
  */
 - (void)clickToComment:(UIButton *)sender
 {
+    __weak typeof(self) weakSelf = self;
+
     TTaiCommentViewController *commentList = [[TTaiCommentViewController alloc]init];
     commentList.tt_id = self.product_id;
     commentList.commentType = COMMENTTYPE_Product;
     commentList.aProduct = _aModel;
+    
+    commentList.updateParamsBlock = ^(NSDictionary *params){
+        
+        BOOL result = [params[@"result"]boolValue];
+        if (result) {
+            
+            [weakSelf networkForCommentList:YES];//更新评论
+        }
+    };
+    
     [self.navigationController pushViewController:commentList animated:YES];
 }
 
@@ -847,33 +917,6 @@
     }];
 }
 
-#pragma mark--联系搭配师
-
-/**
- *  联系商家
- *
- *  @param sender
- */
-- (IBAction)clickToContact:(id)sender {
-    
-    __weak typeof(self)weakSelf = self;
-    
-    [[LContactView shareInstance] show];
-    
-    [[LContactView shareInstance] setContactBlock:^ (CONTACTTYPE contactType,int extra){
-        
-        if (contactType == CONTACTTYPE_PHONE) {
-            
-            [weakSelf clickToPhone:nil];
-            
-        }else if (contactType == CONTACTTYPE_PRIVATECHAT){
-            
-            [weakSelf clickToPrivateChat:nil];
-        }
-        
-    }];
-}
-
 /**
  *  私聊
  *
@@ -889,22 +932,7 @@
         [al show];
     }else
     {
-        //        UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        //        [al show];
-        
         [LTools showMBProgressWithText:@"抱歉!该商家暂未填写有效联系方式" addToView:self.view];
-    }
-}
-
-//打电话
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    
-    NSString *phoneNum = _aModel.mall_info[@"mobile"];
-    
-    //0取消    1确定
-    if (buttonIndex == 1) {
-        NSString *strPhone = [NSString stringWithFormat:@"tel://%@",phoneNum];
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:strPhone]];
     }
 }
 
@@ -979,9 +1007,6 @@
         
     }
 }
-
-#pragma mark--带你去买
-
 /**
  *  跳转至地图
  *
@@ -1164,13 +1189,13 @@
 
 - (void)createDetailViewsWithModel:(ProductModel *)aProductModel
 {
+    if (_headerView) {
+        [_headerView removeFromSuperview];
+        _headerView = nil;
+    }
     //头部view
-    _headerView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT - 64)];
+    _headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT - 64)];
     _headerView.backgroundColor = [UIColor whiteColor];
-    _headerView.delegate = self;
-    [self.view addSubview:_headerView];
-    
-    _waterFlow.hidden = NO;
     
     [self createBottomView];//底部
     
@@ -1181,6 +1206,9 @@
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, aHeight)];
     [imageView l_setImageWithURL:[NSURL URLWithString:[self originalImageForArr:aProductModel.images]] placeholderImage:DEFAULT_YIJIAYI];
     [_headerView addSubview:imageView];
+    
+    self.bigImageView = imageView;
+    
     //加手势
     [imageView addTapGestureTarget:self action:@selector(tapImage:) tag:kTag_Images + 0];
     
@@ -1281,44 +1309,12 @@
 #pragma - mark 评论相关
     //评论
     
-    int commentCount = (int)_commentArray.count;
-    NSMutableArray *viewsArray1 = [NSMutableArray arrayWithCapacity:1];
-    for (int i = 0; i < commentCount; i++) {
-        
-        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH - 105, 55)];
-        view.backgroundColor = [UIColor whiteColor];
-        [viewsArray1 addObject:view];
-        
-        TopicCommentsModel *amodel = _commentArray[i];
-        NSString *content = [NSString stringWithFormat:@"%@:%@",amodel.user_name,amodel.repost_content];
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10, 12.5, view.width - 20, 30) title:content font:12 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"6d6d6d"]];
-        [view addSubview:label];
-        label.numberOfLines = 2;
-        label.lineBreakMode = NSLineBreakByTruncatingTail;
-    }
+    _commentView = [[UIView alloc]initWithFrame:CGRectMake(0, line2.bottom, DEVICE_WIDTH - 105, 55)];
+    _commentView.backgroundColor = [UIColor whiteColor];
+    [_headerView addSubview:_commentView];
     
-    if (commentCount) {
-        
-        CycleScrollView1 * topScrollView1 = [[CycleScrollView1 alloc] initWithFrame:CGRectMake(0, line2.bottom, DEVICE_WIDTH - 105, 55) animationDuration:2];
-        topScrollView1.isPageControlHidden = YES;
-        topScrollView1.scrollView.showsHorizontalScrollIndicator = FALSE;
-        [_headerView addSubview:topScrollView1];
-        
-        topScrollView1.fetchContentViewAtIndex = ^UIView *(NSInteger pageIndex){
-            return viewsArray1[pageIndex];
-        };
-        
-        NSInteger count1 = viewsArray1.count;
-        topScrollView1.totalPagesCount = ^NSInteger(void){
-            return count1;
-        };
-        
-        //    __weak typeof (self)bself = self;
-        topScrollView1.TapActionBlock = ^(NSInteger pageIndex){
-            //        [bself cycleScrollDidClickedWithIndex:pageIndex];
-        };
-
-    }
+    _commentCycle = [self cycleScrollWithCommentArray:_commentArray];
+    [_commentView addSubview:_commentCycle];
     
     //点赞、评论
     
@@ -1369,7 +1365,9 @@
     UIView *line4 = [[UIView alloc]initWithFrame:CGRectMake(0, top, DEVICE_WIDTH, 0.5)];
     line4.backgroundColor = DEFAULT_VIEW_BACKGROUNDCOLOR;
     [_headerView addSubview:line4];
-
+    
+    top = line4.bottom;
+    
 #pragma - mark 固定介绍图
     
     //有固定介绍图
@@ -1535,32 +1533,74 @@
     
     //继续拖动查看 品牌推荐
     
-    UILabel *moreLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, top + 10, DEVICE_WIDTH, 46) title:@"继续拖动,查看品牌推荐" font:10 align:NSTextAlignmentCenter textColor:[UIColor colorWithHexString:@"8b8b8b"]];
-    [_headerView addSubview:moreLabel];
+//    UILabel *moreLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, top + 10, DEVICE_WIDTH, 46) title:@"继续拖动,查看品牌推荐" font:10 align:NSTextAlignmentCenter textColor:[UIColor colorWithHexString:@"8b8b8b"]];
+//    [_headerView addSubview:moreLabel];
     
-    _headerView.contentSize = CGSizeMake(DEVICE_WIDTH, moreLabel.bottom);
+    aHeight = [LTools heightForImageHeight:42 imageWidth:375 showWidth:DEVICE_WIDTH];
+    UIImageView *lineImage = [[UIImageView alloc]initWithFrame:CGRectMake(0,top + 10, DEVICE_WIDTH, aHeight)];
+    lineImage.image = [UIImage imageNamed:@"danpinxq_tuijian"];
+    lineImage.contentMode = UIViewContentModeCenter;
+    [_headerView addSubview:lineImage];
+    
+    _headerView.height = lineImage.bottom;
+    _collectionView.headerView = _headerView;
 
 }
 
+
 /**
- *  判断内容是否为空,内容为空时label移除
+ *  创建评论循环滚动
  *
- *  @param text  内容
- *  @param label 对应label
+ *  @param commentArray 评论model数组
  *
  *  @return
  */
-- (BOOL)isValidateForText:(NSString *)text
-                withLabel:(UILabel *)label
+- (CycleScrollView1 *)cycleScrollWithCommentArray:(NSArray *)commentArray
 {
-    if ([LTools isEmpty:text]) {
+    int commentCount = (int)commentArray.count;
+    NSMutableArray *viewsArray1 = [NSMutableArray arrayWithCapacity:1];
+    for (int i = 0; i < commentCount; i++) {
         
-        [label removeFromSuperview];
-        label = nil;
-        return NO;
+        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH - 105, 55)];
+        view.backgroundColor = [UIColor whiteColor];
+        [viewsArray1 addObject:view];
+        
+        TopicCommentsModel *amodel = _commentArray[i];
+        NSString *content = [NSString stringWithFormat:@"%@:%@",amodel.user_name,amodel.repost_content];
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10, 12.5, view.width - 20, 30) title:content font:12 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"6d6d6d"]];
+        [view addSubview:label];
+        label.numberOfLines = 2;
+        label.lineBreakMode = NSLineBreakByTruncatingTail;
     }
-    return YES;
+    
+    if (commentCount) {
+        
+        _commentCycle = [[CycleScrollView1 alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH - 105, 55) animationDuration:2];
+        _commentCycle.isPageControlHidden = YES;
+        _commentCycle.scrollView.showsHorizontalScrollIndicator = FALSE;
+        [_commentView addSubview:_commentCycle];
+        
+        _commentCycle.fetchContentViewAtIndex = ^UIView *(NSInteger pageIndex){
+            return viewsArray1[pageIndex];
+        };
+        
+        NSInteger count1 = viewsArray1.count;
+        _commentCycle.totalPagesCount = ^NSInteger(void){
+            return count1;
+        };
+        
+        __weak typeof (self)bself = self;
+        _commentCycle.TapActionBlock = ^(NSInteger pageIndex){
+            //        [bself cycleScrollDidClickedWithIndex:pageIndex];
+            [bself clickToComment:nil];
+        };
+        
+    }
+    
+    return _commentCycle;
+    
 }
+
 
 /**
  *  底部工具栏
@@ -1608,7 +1648,6 @@
     collectButton.center = CGPointMake(rightView.width / 2.f, collectButton.center.y);
     [collectButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
     
-    
     //分享
     
     UIButton *shareButton = [[UIButton alloc] initWithframe:CGRectMake(rightView.width - 44, 0, 44, 44) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"product_share"] selectedImage:nil target:self action:@selector(clickToShare:)];
@@ -1622,122 +1661,5 @@
     
     self.navigationItem.rightBarButtonItem = comment_item;
 }
-
-
-#pragma mark - @protocol UIScrollViewDelegate<NSObject>
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    // 下拉到最底部时显示更多数据
-    
-    if(scrollView.contentOffset.y > ((scrollView.contentSize.height - scrollView.frame.size.height + 60 + 30)))
-    {
-        [self moveToUp:YES];
-    }
-}
-
-#pragma mark - WaterFlowDelegate
-
-- (void)waterScrollViewDidScroll:(UIScrollView *)scrollView
-{
-    if(scrollView.contentOffset.y < -40)
-    {
-        _backLabel.text = @"释放,返回单品详情";
-    }else
-    {
-        _backLabel.text = @"下拉,返回单品详情";
-    }
-    
-}
-
-- (void)waterScrollViewDidEndDragging:(UIScrollView *)scrollView
-{
-    if(scrollView.contentOffset.y < -40)
-    {
-        [self moveToUp:NO];
-    }
-}
-
-- (void)waterLoadNewData
-{
-    
-}
-- (void)waterLoadMoreData
-{
-    [self getRecommentProductList];
-}
-
-- (void)waterDidSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    ProductModel *aMode = _waterFlow.dataArray[indexPath.row];
-    //    ProductDetailController *detail = [[ProductDetailController alloc]init];
-    //    detail.product_id = aMode.product_id;
-    //    detail.hidesBottomBarWhenPushed = YES;
-    //    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell*)[waterFlow.quitView cellAtIndexPath:indexPath];
-    //    detail.theHomeBuyVcModel = aMode;
-    //    detail.theHomeBuyVcProductCell = cell;
-    //
-    //    [self.rootViewController.navigationController pushViewController:detail animated:YES];
-    
-    [MiddleTools pushToProductDetailWithId:aMode.product_id fromViewController:self lastNavigationHidden:NO hiddenBottom:YES];
-    
-}
-
-- (CGFloat)waterHeightForCellIndexPath:(NSIndexPath *)indexPath
-{
-    CGFloat imageH = 0.f;
-    ProductModel *aMode = _waterFlow.dataArray[indexPath.row];
-    
-    NSDictionary *images = (NSDictionary *)aMode.images;
-    if (images && [images isKindOfClass:[NSDictionary class]]) {
-        
-        
-        NSDictionary *middleImage = [images objectForKey:@"540Middle"];
-        float image_width = [middleImage[@"width"]floatValue];
-        float image_height = [middleImage[@"height"]floatValue];
-        
-        if (image_width == 0.0) {
-            image_width = image_height;
-        }
-        float rate = image_height/image_width;
-        
-        imageH = (DEVICE_WIDTH - 6)/2.0*rate + 25;
-        
-    }
-
-    
-    return imageH;
-}
-- (CGFloat)waterViewNumberOfColumns
-{
-    
-    return 2;
-}
-
-#pragma mark - TMQuiltViewDataSource
-
-- (NSInteger)quiltViewNumberOfCells:(TMQuiltView *)TMQuiltView {
-    return [_waterFlow.dataArray count];
-}
-
-- (TMQuiltViewCell *)quiltView:(TMQuiltView *)quiltView cellAtIndexPath:(NSIndexPath *)indexPath {
-    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[quiltView dequeueReusableCellWithReuseIdentifier:@"PhotoCell"];
-    if (!cell) {
-        cell = [[TMPhotoQuiltViewCell alloc] initWithReuseIdentifier:@"PhotoCell"];
-    }
-    
-    cell.layer.cornerRadius = 3.f;
-    
-    cell.cellStyle = CELLSTYLE_BrandRecommendList;
-    
-    ProductModel *aMode = _waterFlow.dataArray[indexPath.row];
-    [cell setCellWithModel222:aMode];
-    
-//    cell.likeBackBtn.tag = 100 + indexPath.row;
-//    [cell.likeBackBtn addTarget:self action:@selector(clickToZan:) forControlEvents:UIControlEventTouchUpInside];
-    
-    return cell;
-}
-
 
 @end

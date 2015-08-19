@@ -19,6 +19,14 @@
 
 @implementation MallListViewController
 
+- (void)dealloc
+{
+    NSLog(@"%s",__FUNCTION__);
+    _table.dataSource = nil;
+    _table.refreshDelegate = nil;
+    _table = nil;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -48,9 +56,8 @@
     __weak typeof(self)weakSelf = self;
     __weak typeof(_table)weakTable = _table;
     
-    self.product_id = @"146";
     NSString *url = [NSString stringWithFormat:HOME_PRODUCT_DETAIL_SAME_STYLE,_longtitude,_latitude,self.product_id];
-    url = [NSString stringWithFormat:@"%@&page=%d&per_page=%d",url,1,10];
+    url = [NSString stringWithFormat:@"%@&page=%d&per_page=%d",url,1,30];
 
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
@@ -62,7 +69,7 @@
             ProductModel *aModel = [[ProductModel alloc]initWithDictionary:aDic];
             [temp addObject:aModel];
         }
-        [weakTable reloadData:temp pageSize:10];
+        [weakTable reloadData:temp pageSize:30];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         

@@ -89,6 +89,8 @@
 -(void)setUpdateParamsBlock:(UpdateParamsBlock)updateParamsBlock
 {
     _aParmasBlock = updateParamsBlock;
+    
+    _updateParamsBlock = updateParamsBlock;
 }
 
 
