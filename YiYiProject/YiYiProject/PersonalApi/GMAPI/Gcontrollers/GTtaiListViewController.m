@@ -537,7 +537,7 @@
 - (void)tapCell:(UITableViewCell *)cell
 {
     
-    PropertyImageView *aImageView = ((TTaiBigPhotoCell2 *)cell).bigImageView;
+    PropertyImageView *aImageView = ((GTtaiListCustomTableViewCell *)cell).maodianImv;
     
     [MiddleTools showTPlatDetailFromPropertyImageView:aImageView withController:self.tabBarController cancelSingleTap:YES];
 }
@@ -765,13 +765,24 @@
 
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
-    GTtaiDetailViewController *ggg = [[GTtaiDetailViewController alloc]init];
-    TPlatModel *amdol = _table.dataArray[indexPath.row];
-    ggg.locationDic = self.locationDic;
-    ggg.tPlat_id = amdol.tt_id;
-    ggg.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:ggg animated:YES];
     
+    //老版本
+    //调转至老版本 详情页
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    [self tapCell:[tableView cellForRowAtIndexPath:indexPath]];
+    
+    
+    
+//    //新版
+//    GTtaiDetailViewController *ggg = [[GTtaiDetailViewController alloc]init];
+//    TPlatModel *amdol = _table.dataArray[indexPath.row];
+//    ggg.locationDic = self.locationDic;
+//    ggg.tPlat_id = amdol.tt_id;
+//    ggg.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:ggg animated:YES];
+   
     
     
 }
@@ -858,6 +869,13 @@
 {
     return 0.5;
 }
+
+
+
+
+
+
+
 
 
 

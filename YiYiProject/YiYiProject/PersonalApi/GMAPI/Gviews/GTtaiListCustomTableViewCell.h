@@ -10,6 +10,7 @@
 //首页T台列表自定义cell
 #import <UIKit/UIKit.h>
 #import "TPlatModel.h"
+#import "PropertyImageView.h"
 
 @class GTtaiListViewController;
 
@@ -17,7 +18,7 @@
 
 @property (nonatomic, strong)UIButton *zanBtn;//点赞
 @property(nonatomic,strong)TPlatModel *theModel;//数据model
-@property(nonatomic,strong)UIImageView *maodianImv;
+@property(nonatomic,strong)PropertyImageView *maodianImv;
 
 
 //加载自定义视图

@@ -8,14 +8,14 @@
 
 #import "GTtaiDetailViewController.h"
 
-#import "LWaterflowView.h"//瀑布流
 #import "CycleScrollView1.h"//上下滚动
 #import "MessageDetailController.h"//活动详情
 #import "TMPhotoQuiltViewCell.h"//瀑布流cell
 #import "TPlatModel.h"//T台model
 #import "LShareSheetView.h"//分享
+#import "LWaterFlow2.h"//瀑布流
 
-@interface GTtaiDetailViewController ()<TMQuiltViewDataSource,WaterFlowDelegate,UIScrollViewDelegate>
+@interface GTtaiDetailViewController ()<UIScrollViewDelegate,PSWaterFlowDelegate,PSCollectionViewDataSource>
 {
     
     TPlatModel *_aModel;
@@ -25,7 +25,6 @@
     MBProgressHUD *_loading;
     
     UIScrollView *_headerView;
-    LWaterflowView *_waterFlow;
     UILabel *_backLabel;//释放返回
     UILabel *_zanNumLabel;//赞数量label
     UILabel *_commentNumLabel;//评论数量label
@@ -36,6 +35,9 @@
     
     
     LTools *tool_detail;
+    
+    LWaterFlow2 *_collectionView;//瀑布流
+    
     
     
 }
@@ -50,6 +52,10 @@
     [tool_detail cancelRequest];
     _heartButton = nil;
     _collectButton = nil;
+    
+    _collectionView.waterDelegate = nil;
+    _collectionView.quitView = nil;
+    _collectionView = nil;
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -90,32 +96,14 @@
     
     [self addObserver:self forKeyPath:@"_count" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
     
-    //请求单品详情
-    [self prepareNetDataForTtaiDetail];
+    ;
     
-    //请求关联商场
-    [self prepareNetDataForStore];
+    _collectionView = [[LWaterFlow2 alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT - 64 - 46) waterDelegate:self waterDataSource:self noHeadeRefresh:NO noFooterRefresh:NO];
+    [self.view addSubview:_collectionView];
+    _collectionView.backgroundColor = [UIColor clearColor];
+    _collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
-    
-    //瀑布流相关
-    _waterFlow = [[LWaterflowView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT - 64) waterDelegate:self waterDataSource:self noHeadeRefresh:YES noFooterRefresh:YES];
-    _waterFlow.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:_waterFlow];
-    
-    //下拉 返回上面内容
-    _backLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 40) title:@"下拉,返回单品详情" font:10 align:NSTextAlignmentCenter textColor:[UIColor colorWithHexString:@"8b8b8b"]];
-    [_waterFlow addSubview:_backLabel];
-    [_waterFlow bringSubviewToFront:_waterFlow.quitView];
-    _waterFlow.hidden = YES;
-    
-    CGFloat aHeight = [LTools heightForImageHeight:42 imageWidth:375 showWidth:DEVICE_WIDTH];
-    UIImageView *lineImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, aHeight)];
-    lineImage.image = [UIImage imageNamed:@"danpinxq_tuijian"];
-    lineImage.contentMode = UIViewContentModeCenter;
-    _waterFlow.headerView = lineImage;
-    
-//    [self deserveBuyForSex:Sort_Sex_No discount:Sort_Discount_No page:1];
-    
+    [_collectionView showRefreshHeader:YES];
     
     
 }
@@ -142,7 +130,7 @@
     NSString *url = [NSString stringWithFormat:@"%@&authcode=%@&tt_id=%@",TTAI_DETAIL_V2,[GMAPI getAuthkey],self.tPlat_id];
     
     //测试
-    url = @"www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_tt_info&page=1&count=20&authcode=An1XLlEoBuBR6gSZVeUI31XwBOZXolanAi9SY1cyUWZVa1JhVDRQYwE2AzYAbQ19CTg=&tt_id=26";
+    url = @"http://www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_tt_info&page=1&count=20&authcode=An1XLlEoBuBR6gSZVeUI31XwBOZXolanAi9SY1cyUWZVa1JhVDRQYwE2AzYAbQ19CTg=&tt_id=26";
     
     tool_detail = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     
@@ -184,6 +172,9 @@
     
     [tool_detail requestCompletion:^(NSDictionary *result, NSError *erro) {
         
+        
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        
         NSLog(@"result %@",result);
         NSArray *list = result[@"list"];
         NSMutableArray *temp = [NSMutableArray arrayWithCapacity:list.count];
@@ -205,7 +196,25 @@
     }];
 }
 
+#pragma mark - 定位
 
+- (void)getCurrentLocation
+{
+    __weak typeof(self)weakSelf = self;
+    [[GMAPI appDeledate]startDingweiWithBlock:^(NSDictionary *dic) {
+        
+        [weakSelf theLocationDictionary:dic];
+    }];
+    
+}
+- (void)theLocationDictionary:(NSDictionary *)dic{
+    
+    NSLog(@"当前坐标-->%@",dic);
+    
+    
+}
+
+#pragma mark - 创建视图
 
 
 //创建收藏分享按钮
@@ -295,42 +304,10 @@
         
         if (_aModel) {
             _aModel.sameStyleArray = _sameStyleArray;
-            
-            [self prepareViewWithModel:_aModel];
         }
     }
 }
 
-/**
- *  给view 赋值
- *
- *  @param aProductModel
- */
-- (void)prepareViewWithModel:(TPlatModel *)aProductModel
-{
-    
-    //解析 原图
-    NSArray *arr = aProductModel.images;
-    NSMutableArray *temp_arr = [NSMutableArray arrayWithCapacity:arr.count];
-    for (NSDictionary *aDic in arr) {
-        
-        NSDictionary *original = aDic[@"original"];
-        NSString *src = original[@"src"];
-        [temp_arr addObject:src];
-    }
-    _image_urls = [NSArray arrayWithArray:temp_arr];
-    
-    _aModel = aProductModel;
-    
-    //赞 与 收藏 状态
-    _heartButton.selected = aProductModel.is_like == 1 ? YES : NO;
-    _collectButton.selected = aProductModel.is_favor ==  1 ? YES : NO;
-    
-    //创建详情相关view 并赋值
-    
-    [self createDetailViewsWithModel:aProductModel];
-    
-}
 
 
 
@@ -420,244 +397,7 @@
     
 }
 
-/**
- *  创建详情显示view 除了底部品牌推荐 其他的作为header
- *
- *  @param aProductModel 单品详情model
- */
 
-- (void)createDetailViewsWithModel:(TPlatModel *)aProductModel
-{
-    //头部view
-    _headerView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT - 64)];
-    _headerView.backgroundColor = [UIColor whiteColor];
-    _headerView.delegate = self;
-    [self.view addSubview:_headerView];
-    
-    _waterFlow.hidden = NO;
-    
-    [self createBottomView];//底部
-    
-    //单品图片
-    //图片高度
-    CGFloat aHeight = [self thumbImageHeightForArr:aProductModel.images];
-    CGFloat aWidth = DEVICE_WIDTH;
-    
-    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, aHeight)];
-    [imageView l_setImageWithURL:[NSURL URLWithString:[self originalImageForArr:aProductModel.images]] placeholderImage:DEFAULT_YIJIAYI];
-    [_headerView addSubview:imageView];
-    
-    
-    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, imageView.bottom, DEVICE_WIDTH, 0.5)];
-    line.backgroundColor = DEFAULT_VIEW_BACKGROUNDCOLOR;
-    [_headerView addSubview:line];
-    
-    //标题
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, imageView.bottom + 10, DEVICE_WIDTH - 20, 18) title:aProductModel.tPlat_name font:15 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
-    [_headerView addSubview:titleLabel];
-    titleLabel.font = [UIFont boldSystemFontOfSize:15];
-    titleLabel.lineBreakMode = NSLineBreakByCharWrapping;
-    titleLabel.numberOfLines = 0;
-    aHeight = [LTools heightForText:aProductModel.tPlat_name width:titleLabel.width Boldfont:15];
-    titleLabel.height = aHeight;
-    
-    UIView *line2 = [[UIView alloc]initWithFrame:CGRectMake(0, titleLabel.bottom + 5, DEVICE_WIDTH, 0.5)];
-    line2.backgroundColor = DEFAULT_VIEW_BACKGROUNDCOLOR;
-    [_headerView addSubview:line2];
-    UIView *line3 = [[UIView alloc]initWithFrame:CGRectMake(0, line2.bottom + 55, DEVICE_WIDTH, 0.5)];
-    line3.backgroundColor = DEFAULT_VIEW_BACKGROUNDCOLOR;
-    [_headerView addSubview:line3];
-    
-#pragma - mark 评论相关
-    //评论
-    
-    NSArray *commentArray = @[@"张三:评论的内容在这里",@"李四:评论的内容比较长评论的内容比较长评论的内容比较长评论的内容比较长评论的内容比较长kkkkk荣荣荣",@"王二:呃逆荣在轮播滚动"];
-    NSMutableArray *viewsArray1 = [NSMutableArray arrayWithCapacity:1];
-    for (int i = 0; i<3; i++) {
-        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH - 105, 55)];
-        view.backgroundColor = [UIColor whiteColor];
-        [viewsArray1 addObject:view];
-        
-        NSString *content = commentArray[i];
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10, 12.5, view.width - 20, 30) title:content font:12 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"6d6d6d"]];
-        [view addSubview:label];
-        label.numberOfLines = 2;
-        label.lineBreakMode = NSLineBreakByTruncatingTail;
-    }
-    
-    CycleScrollView1 * topScrollView1 = [[CycleScrollView1 alloc] initWithFrame:CGRectMake(0, line2.bottom, DEVICE_WIDTH - 105, 55) animationDuration:2];
-    topScrollView1.isPageControlHidden = YES;
-    topScrollView1.scrollView.showsHorizontalScrollIndicator = FALSE;
-    [_headerView addSubview:topScrollView1];
-    
-    topScrollView1.fetchContentViewAtIndex = ^UIView *(NSInteger pageIndex){
-        return viewsArray1[pageIndex];
-    };
-    
-    NSInteger count1 = viewsArray1.count;
-    topScrollView1.totalPagesCount = ^NSInteger(void){
-        return count1;
-    };
-    
-    //    __weak typeof (self)bself = self;
-    topScrollView1.TapActionBlock = ^(NSInteger pageIndex){
-        //        [bself cycleScrollDidClickedWithIndex:pageIndex];
-    };
-    
-    //点赞、评论
-    
-    UIButton *zanBtn = [[UIButton alloc]initWithframe:CGRectMake(DEVICE_WIDTH - 10 - 40,line2.bottom + 8, 40, 40) buttonType:UIButtonTypeCustom nornalImage:nil selectedImage:nil target:self action:@selector(clickToLike:)];
-    [_headerView addSubview:zanBtn];
-    [zanBtn addCornerRadius:20];
-    [zanBtn setBorderWidth:.5 borderColor:DEFAULT_TEXTCOLOR];
-    
-    _heartButton = [[UIButton alloc]initWithframe:CGRectMake(0, 5, 40, 20) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"Ttai_zan_normal"] selectedImage:[UIImage imageNamed:@"Ttai_zan_selected"] target:self action:nil];
-    [zanBtn addSubview:_heartButton];
-    _heartButton.userInteractionEnabled = NO;
-    _heartButton.selected = aProductModel.is_like == 1 ? YES : NO;
-    
-    NSString *zanString = [self zanNumStringForNum:aProductModel.tPlat_like_num];
-    _zanNumLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, _heartButton.bottom, 40, 10) title:zanString font:10 align:NSTextAlignmentCenter textColor:DEFAULT_TEXTCOLOR];
-    [zanBtn addSubview:_zanNumLabel];
-    
-    
-    UIButton *commentBtn = [[UIButton alloc]initWithframe:CGRectMake(zanBtn.left - 14 - 40, zanBtn.top, 40, 40) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"Ttaixq_pinglun2"] selectedImage:[UIImage imageNamed:@"Ttaixq_pinglun2"] target:self action:@selector(clickToComment:)];
-    [_headerView addSubview:commentBtn];
-    NSString *commentString = [self zanNumStringForNum:@"1235"];
-    _commentNumLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 25, 40, 10) title:commentString font:10 align:NSTextAlignmentCenter textColor:DEFAULT_TEXTCOLOR];
-    [commentBtn addSubview:_commentNumLabel];
-    
-#pragma - mark 标签相关
-    //标签
-    NSArray *tags = aProductModel.tag;
-    int count = (int)tags.count;
-    CGFloat left = 10;
-    for (int i = 0; i < count; i ++) {
-        NSString *name = tags[i][@"tag_name"];
-        CGFloat width = [LTools widthForText:name font:10];
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(left, 7 + line3.bottom, width + 10, 15) title:name font:10 align:NSTextAlignmentCenter textColor:DEFAULT_TEXTCOLOR];
-        [_headerView addSubview:label];
-        [label addCornerRadius:7.5];
-        [label setBorderWidth:0.5 borderColor:DEFAULT_TEXTCOLOR];
-        left = label.right + 10;
-        [label addTaget:self action:@selector(clickToTagList:) tag:100 + i];
-    }
-    
-    UIView *line4 = [[UIView alloc]initWithFrame:CGRectMake(0, line3.bottom + 30, DEVICE_WIDTH, 0.5)];
-    line4.backgroundColor = DEFAULT_VIEW_BACKGROUNDCOLOR;
-    [_headerView addSubview:line4];
-    
-#pragma - mark 固定介绍图
-    
-    CGFloat top = line4.bottom;
-    
-    //有固定介绍图
-    NSDictionary *official_pic = aProductModel.official_pic;
-    if (official_pic && [official_pic isKindOfClass:[NSDictionary class]]) {
-        
-        //固定的图片
-        CGFloat imageHeight = [official_pic[@"height"] floatValue];
-        CGFloat imageWidth = [official_pic[@"width"] floatValue];
-        NSString *imageUrl = official_pic[@"url"];
-        aHeight = [LTools heightForImageHeight:imageHeight imageWidth:imageWidth showWidth:DEVICE_WIDTH];
-        UIImageView *constImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, line4.bottom + 5, DEVICE_WIDTH, aHeight)];
-        [_headerView addSubview:constImageView];
-        [constImageView l_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:DEFAULT_YIJIAYI];
-        UIView *line5 = [[UIView alloc]initWithFrame:CGRectMake(0, constImageView.bottom + 5, DEVICE_WIDTH, 0.5)];
-        line5.backgroundColor = DEFAULT_VIEW_BACKGROUNDCOLOR;
-        [_headerView addSubview:line5];
-        
-        top = line5.bottom;
-    }
-#pragma - mark 相似单品及所在商场
-    //所在商场
-    
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10, top, DEVICE_WIDTH, 40) title:@"所在商场" font:14 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
-    [_headerView addSubview:label];
-    
-    UIView *line6 = [[UIView alloc]initWithFrame:CGRectMake(0, label.bottom, DEVICE_WIDTH, 0.5)];
-    line6.backgroundColor = DEFAULT_VIEW_BACKGROUNDCOLOR;
-    [_headerView addSubview:line6];
-    
-    //大于3个显示更多
-    if (count > 3) {
-        
-        UIButton *more_btn = [[UIButton alloc]initWithframe:CGRectMake(DEVICE_WIDTH - 35 - 10,top + 6, 35, 16.5) buttonType:UIButtonTypeRoundedRect normalTitle:@"更多" selectedTitle:nil target:self action:@selector(clickToMoreMall:)];
-        [_headerView addSubview:more_btn];
-        [more_btn addCornerRadius:8];
-        [more_btn setBorderWidth:.5 borderColor:DEFAULT_TEXTCOLOR];
-        [more_btn setTitleColor:DEFAULT_TEXTCOLOR forState:UIControlStateNormal];
-        [more_btn.titleLabel setFont:[UIFont systemFontOfSize:10]];
-        
-        top = more_btn.bottom + 6;
-    }
-    
-#pragma - mark 官方活动
-    
-    UIView *line5 = [[UIView alloc]initWithFrame:CGRectMake(0, top, DEVICE_WIDTH, 0.5)];
-    line5.backgroundColor = DEFAULT_VIEW_BACKGROUNDCOLOR;
-    [_headerView addSubview:line5];
-    
-    NSDictionary *official_activity = aProductModel.official_activity;
-    if (official_activity && [official_activity isKindOfClass:[NSDictionary class]]) {
-        
-        //固定的图片
-        CGFloat imageHeight = [official_activity[@"height"] floatValue];
-        CGFloat imageWidth = [official_activity[@"width"] floatValue];
-        NSString *imageUrl = official_activity[@"url"];
-        
-        aHeight = [LTools heightForImageHeight:imageHeight imageWidth:imageWidth showWidth:DEVICE_WIDTH];
-        UIImageView *constImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, line5.bottom, DEVICE_WIDTH, aHeight)];
-        [_headerView addSubview:constImageView];
-        [constImageView l_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:DEFAULT_YIJIAYI];
-        [constImageView addTaget:self action:@selector(clickToActivity:) tag:0];
-        
-        top = constImageView.bottom;
-    }
-    
-#pragma - mark 单品详情
-    //商品详情
-    //单品的其他图片
-    NSArray *images = aProductModel.images;
-    count = (int)images.count;
-    if (count > 1) {
-        
-        aHeight = [LTools heightForImageHeight:42 imageWidth:375 showWidth:DEVICE_WIDTH];
-        UIImageView *detailImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, top, DEVICE_WIDTH, aHeight)];
-        detailImage.image = [UIImage imageNamed:@"danpinxq_xq"];
-        [_headerView addSubview:detailImage];
-        
-        top = detailImage.bottom;
-        
-        //从第二张开始
-        for (int i = 1; i < count; i ++) {
-            
-            NSDictionary *imageDic = images[i];
-            NSDictionary *originalImage = imageDic[@"540Middle"];
-            
-            aHeight = [originalImage[@"height"] floatValue];
-            aWidth = [originalImage[@"width"] floatValue];
-            
-            NSString *imageUrl = originalImage[@"src"];
-            //图片高度
-            aHeight = [LTools heightForImageHeight:aHeight imageWidth:aWidth showWidth:DEVICE_WIDTH];
-            
-            UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, top, DEVICE_WIDTH, aHeight)];
-            [imageView l_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:DEFAULT_YIJIAYI];
-            [_headerView addSubview:imageView];
-            
-            top = imageView.bottom + 5;
-        }
-    }
-    
-    //继续拖动查看 品牌推荐
-    
-    UILabel *moreLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, top + 10, DEVICE_WIDTH, 60) title:@"继续拖动,查看品牌推荐" font:10 align:NSTextAlignmentCenter textColor:[UIColor colorWithHexString:@"8b8b8b"]];
-    [_headerView addSubview:moreLabel];
-    
-    _headerView.contentSize = CGSizeMake(DEVICE_WIDTH, moreLabel.bottom);
-    
-}
 
 
 
@@ -686,64 +426,83 @@
 }
 
 
-#pragma mark - @protocol UIScrollViewDelegate<NSObject>
 
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+
+
+#pragma - mark PSWaterFlowDelegate <NSObject>
+- (void)waterLoadNewDataForWaterView:(PSCollectionView *)waterView
 {
-    // 下拉到最底部时显示更多数据
+    //请求单品详情
+    [self prepareNetDataForTtaiDetail];
     
-    if(scrollView.contentOffset.y > ((scrollView.contentSize.height - scrollView.frame.size.height + 60 + 30)))
-    {
-        [self moveToUp:YES];
-    }
+    //请求关联商场
+    [self prepareNetDataForStore];
+    _count = 0;
+    [self getCurrentLocation];
+    
+}
+- (void)waterLoadMoreDataForWaterView:(PSCollectionView *)waterView
+{
+    [self prepareNetDataForTtaiDetail];
 }
 
-#pragma mark - WaterFlowDelegate
+- (void)waterDidSelectRowAtIndexPath:(NSInteger)index
+{
+    ProductModel *aMode = _collectionView.dataArray[index];
+    [MiddleTools pushToProductDetailWithId:aMode.product_id fromViewController:self lastNavigationHidden:NO hiddenBottom:YES];
+}
 
 - (void)waterScrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if(scrollView.contentOffset.y < -40)
-    {
-        _backLabel.text = @"释放,返回单品详情";
-    }else
-    {
-        _backLabel.text = @"下拉,返回单品详情";
-    }
     
 }
 
 - (void)waterScrollViewDidEndDragging:(UIScrollView *)scrollView
 {
-    if(scrollView.contentOffset.y < -40)
-    {
-        [self moveToUp:NO];
+    
+}
+
+#pragma mark - PSCollectionViewDataSource <NSObject>
+
+- (NSInteger)numberOfRowsInCollectionView:(PSCollectionView *)collectionView
+{
+    return _collectionView.dataArray.count;
+}
+
+- (PSCollectionViewCell *)collectionView:(PSCollectionView *)collectionView1 cellForRowAtIndex:(NSInteger)index
+{
+//    ProductCell *cell = (ProductCell *)[collectionView1 dequeueReusableViewForClass:[ProductCell class]];
+//    
+//    if(cell == nil) {
+//        
+//        cell = [[ProductCell alloc]init];
+//    }
+//    
+//    cell.cellStyle = CELLSTYLE_BrandRecommendList;
+//    cell.photoView.userInteractionEnabled = NO;
+//    ProductModel *aMode = _collectionView.dataArray[index];
+//    [cell setCellWithModel222:aMode];
+    
+    
+    PSCollectionViewCell *cell = [collectionView1 dequeueReusableViewForClass:[PSCollectionViewCell class]];
+    if (!cell) {
+        cell = [[PSCollectionViewCell alloc]init];
     }
-}
-
-- (void)waterLoadNewData
-{
     
-}
-- (void)waterLoadMoreData
-{
     
+    
+    return cell;
 }
-
-- (void)waterDidSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    ProductModel *aMode = _waterFlow.dataArray[indexPath.row];
-    [MiddleTools pushToProductDetailWithId:aMode.product_id fromViewController:self lastNavigationHidden:NO hiddenBottom:YES];
-}
-
-- (CGFloat)waterHeightForCellIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)collectionView:(PSCollectionView *)collectionView heightForRowAtIndex:(NSInteger)index
 {
     CGFloat imageH = 0.f;
-    ProductModel *aMode = _waterFlow.dataArray[indexPath.row];
-    if (aMode.imagelist.count >= 1) {
+    ProductModel *aMode = _collectionView.dataArray[index];
+    
+    NSDictionary *images = (NSDictionary *)aMode.images;
+    if (images && [images isKindOfClass:[NSDictionary class]]) {
         
         
-        NSDictionary *imageDic = aMode.imagelist[0];
-        NSDictionary *middleImage = imageDic[@"540Middle"];
+        NSDictionary *middleImage = [images objectForKey:@"540Middle"];
         float image_width = [middleImage[@"width"]floatValue];
         float image_height = [middleImage[@"height"]floatValue];
         
@@ -752,59 +511,19 @@
         }
         float rate = image_height/image_width;
         
-        imageH = (DEVICE_WIDTH - 6)/2.0*rate + 45;
+        imageH = (DEVICE_WIDTH - 6)/2.0*rate + 25;
         
     }
+    
     
     return imageH;
 }
-- (CGFloat)waterViewNumberOfColumns
-{
-    
-    return 2;
-}
-
-#pragma mark - TMQuiltViewDataSource
-
-- (NSInteger)quiltViewNumberOfCells:(TMQuiltView *)TMQuiltView {
-    return [_waterFlow.dataArray count];
-}
-
-- (TMQuiltViewCell *)quiltView:(TMQuiltView *)quiltView cellAtIndexPath:(NSIndexPath *)indexPath {
-    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[quiltView dequeueReusableCellWithReuseIdentifier:@"PhotoCell"];
-    if (!cell) {
-        cell = [[TMPhotoQuiltViewCell alloc] initWithReuseIdentifier:@"PhotoCell"];
-    }
-    
-    cell.layer.cornerRadius = 3.f;
-    
-    ProductModel *aMode = _waterFlow.dataArray[indexPath.row];
-    [cell setCellWithModel:aMode];
-    
-    cell.likeBackBtn.tag = 100 + indexPath.row;
-    [cell.likeBackBtn addTarget:self action:@selector(clickToZan:) forControlEvents:UIControlEventTouchUpInside];
-    
-    return cell;
-}
 
 
 
-/**
- *  上拉下拉移动视图
- *
- *  @param up 是否上拉
- */
-- (void)moveToUp:(BOOL)up
-{
-    if (up) {
-        _waterFlow.top = _headerView.height;
-    }
-    [UIView animateWithDuration:1 animations:^{
-        
-        _headerView.top = up ? - _headerView.height : 0;
-        _waterFlow.top = up ? 0 : _headerView.height;
-    }];
-}
+
+
+
 
 
 

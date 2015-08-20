@@ -40,12 +40,21 @@
     }
     CGFloat imageHeight = (DEVICE_WIDTH-10) * rate;
     
-    self.maodianImv = [[UIImageView alloc]initWithFrame:CGRectMake(5, 5, DEVICE_WIDTH-10, imageHeight)];
+    self.maodianImv = [[PropertyImageView alloc]initWithFrame:CGRectMake(5, 5, DEVICE_WIDTH-10, imageHeight)];
     self.maodianImv.userInteractionEnabled = YES;
     self.maodianImv.layer.borderWidth = 0.5;
     self.maodianImv.layer.borderColor = [RGBCOLOR(220, 221, 223)CGColor];
     [self.maodianImv l_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:DEFAULT_YIJIAYI];
+ 
+    self.maodianImv.imageUrls = @[imageUrl];//imageView对应的图集url
+    self.maodianImv.infoId = model.tt_id;//imageView对应的信息id
+    self.maodianImv.aModel = model;
     [self.contentView addSubview:self.maodianImv];
+    
+    
+    
+    
+    
     
     
     //图片下面view
@@ -139,14 +148,10 @@
         self.zanBtn.selected = NO;
     }
     
+//    self.zanBtn.selected = model.is_like == 1 ? YES : NO;
     
     
-//    UILabel *zanLabel = [[UILabel alloc]initWithFrame:zanView.bounds];
-//    zanLabel.textAlignment = NSTextAlignmentCenter;
-//    zanLabel.font = [UIFont systemFontOfSize:12];
-//    zanLabel.text = model.tt_like_num;
-//    zanLabel.textColor = RGBCOLOR(245, 104, 155);
-//    [zanView addSubview:zanLabel];
+
     
     [downView addSubview:self.zanBtn];
     
