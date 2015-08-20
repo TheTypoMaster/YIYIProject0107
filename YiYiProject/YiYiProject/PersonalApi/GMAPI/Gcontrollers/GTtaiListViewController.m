@@ -766,11 +766,8 @@
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
     
-    //老版本
     //调转至老版本 详情页
-    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
     [self tapCell:[tableView cellForRowAtIndexPath:indexPath]];
     
     

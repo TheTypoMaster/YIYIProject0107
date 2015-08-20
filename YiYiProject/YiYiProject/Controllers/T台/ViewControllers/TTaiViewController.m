@@ -69,6 +69,7 @@
 
 - (void)updateTTai:(NSNotification *)noti
 {
+    
     [waterFlow showRefreshHeader:YES];
 }
 

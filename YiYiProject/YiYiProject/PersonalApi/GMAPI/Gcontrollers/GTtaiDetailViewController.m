@@ -98,13 +98,8 @@
     
     ;
     
-    _collectionView = [[LWaterFlow2 alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT - 64 - 46) waterDelegate:self waterDataSource:self noHeadeRefresh:NO noFooterRefresh:NO];
-    [self.view addSubview:_collectionView];
-    _collectionView.backgroundColor = [UIColor clearColor];
-    _collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
-    [_collectionView showRefreshHeader:YES];
-    
+    [self creatPubuLiu];
     
 }
 
@@ -123,7 +118,6 @@
         [tool_detail cancelRequest];
     }
     
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     __weak typeof(self)weakSelf = self;
     
@@ -151,14 +145,13 @@
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [_collectionView loadFail];
         
     }];
 }
 
 //请求T台关联的商场
 -(void)prepareNetDataForStore{
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     NSString *longitude = [self.locationDic stringValueForKey:@"long"];
     NSString *latitude = [self.locationDic stringValueForKey:@"lat"];
@@ -173,7 +166,6 @@
     [tool_detail requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         
         NSLog(@"result %@",result);
         NSArray *list = result[@"list"];
@@ -191,7 +183,8 @@
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        
+        [_collectionView loadFail];
         
     }];
 }
@@ -210,11 +203,24 @@
 - (void)theLocationDictionary:(NSDictionary *)dic{
     
     NSLog(@"当前坐标-->%@",dic);
-    
+    //请求单品详情
+    [self prepareNetDataForTtaiDetail];
+    //请求关联商场
+    [self prepareNetDataForStore];
     
 }
 
 #pragma mark - 创建视图
+
+//创建瀑布流
+-(void)creatPubuLiu{
+    _collectionView = [[LWaterFlow2 alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT - 64 - 46) waterDelegate:self waterDataSource:self noHeadeRefresh:NO noFooterRefresh:NO];
+    [self.view addSubview:_collectionView];
+    _collectionView.backgroundColor = [UIColor clearColor];
+    _collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [_collectionView showRefreshHeader:YES];
+}
+
 
 
 //创建收藏分享按钮
@@ -305,6 +311,11 @@
         if (_aModel) {
             _aModel.sameStyleArray = _sameStyleArray;
         }
+        
+        
+        [_collectionView reloadData:_sameStyleArray pageSize:L_PAGE_SIZE];
+        
+        
     }
 }
 
@@ -432,13 +443,13 @@
 #pragma - mark PSWaterFlowDelegate <NSObject>
 - (void)waterLoadNewDataForWaterView:(PSCollectionView *)waterView
 {
-    //请求单品详情
-    [self prepareNetDataForTtaiDetail];
-    
-    //请求关联商场
-    [self prepareNetDataForStore];
     _count = 0;
     [self getCurrentLocation];
+    
+    
+    
+    
+    
     
 }
 - (void)waterLoadMoreDataForWaterView:(PSCollectionView *)waterView
@@ -466,7 +477,7 @@
 
 - (NSInteger)numberOfRowsInCollectionView:(PSCollectionView *)collectionView
 {
-    return _collectionView.dataArray.count;
+    return 10;
 }
 
 - (PSCollectionViewCell *)collectionView:(PSCollectionView *)collectionView1 cellForRowAtIndex:(NSInteger)index
@@ -495,28 +506,30 @@
 }
 - (CGFloat)collectionView:(PSCollectionView *)collectionView heightForRowAtIndex:(NSInteger)index
 {
-    CGFloat imageH = 0.f;
-    ProductModel *aMode = _collectionView.dataArray[index];
+//    CGFloat imageH = 0.f;
+//    ProductModel *aMode = _collectionView.dataArray[index];
+//    
+//    NSDictionary *images = (NSDictionary *)aMode.images;
+//    if (images && [images isKindOfClass:[NSDictionary class]]) {
+//        
+//        
+//        NSDictionary *middleImage = [images objectForKey:@"540Middle"];
+//        float image_width = [middleImage[@"width"]floatValue];
+//        float image_height = [middleImage[@"height"]floatValue];
+//        
+//        if (image_width == 0.0) {
+//            image_width = image_height;
+//        }
+//        float rate = image_height/image_width;
+//        
+//        imageH = (DEVICE_WIDTH - 6)/2.0*rate + 25;
+//        
+//    }
+//    
+//    
+//    return imageH;
     
-    NSDictionary *images = (NSDictionary *)aMode.images;
-    if (images && [images isKindOfClass:[NSDictionary class]]) {
-        
-        
-        NSDictionary *middleImage = [images objectForKey:@"540Middle"];
-        float image_width = [middleImage[@"width"]floatValue];
-        float image_height = [middleImage[@"height"]floatValue];
-        
-        if (image_width == 0.0) {
-            image_width = image_height;
-        }
-        float rate = image_height/image_width;
-        
-        imageH = (DEVICE_WIDTH - 6)/2.0*rate + 25;
-        
-    }
-    
-    
-    return imageH;
+    return 60;
 }
 
 
