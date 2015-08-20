@@ -10,6 +10,7 @@
  *  最新版单品cell
  */
 #import "PSCollectionViewCell.h"
+@class ButtonProperty;
 
 @interface ProductCell : PSCollectionViewCell
 
@@ -26,7 +27,7 @@
 @property(nonatomic,retain)UILabel *discount_label;//打折
 @property(nonatomic,retain)UILabel *distance_label;//距离
 
-@property(nonatomic,retain)UIButton *likeBackBtn;//喜欢的背景大button
+@property(nonatomic,retain)ButtonProperty *likeBackBtn;//喜欢的背景大button
 @property(nonatomic,retain)UIButton *like_btn;//喜欢标识
 @property(nonatomic,retain)UILabel *like_label;//喜欢数量
 

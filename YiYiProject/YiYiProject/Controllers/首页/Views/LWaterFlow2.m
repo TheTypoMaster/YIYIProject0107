@@ -54,6 +54,8 @@
         qtmquitView.delegate = self;
         self.waterDelegate = waterDelegate;
         
+//        qtmquitView.backgroundColor = [UIColor orangeColor];
+        
         qtmquitView.numColsLandscape = 3;
         qtmquitView.numColsPortrait = 2;
         

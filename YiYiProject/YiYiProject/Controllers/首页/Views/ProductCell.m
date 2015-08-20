@@ -7,6 +7,7 @@
 //
 
 #import "ProductCell.h"
+#import "ButtonProperty.h"
 
 @implementation ProductCell
 
@@ -34,7 +35,8 @@
         self.backGroudView = [[UIView alloc]init];
         _backGroudView.clipsToBounds = YES;
         [self addSubview:_backGroudView];
-        _backGroudView.userInteractionEnabled = NO;
+//        _backGroudView.userInteractionEnabled = NO;
+        
         //大图 大图放置赞
         self.photoView = [[UIImageView alloc] init];
         _photoView.contentMode = UIViewContentModeScaleAspectFill;
@@ -42,7 +44,7 @@
         _photoView.userInteractionEnabled =  YES;
         [_backGroudView addSubview:_photoView];
         
-        self.likeBackBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.likeBackBtn = [ButtonProperty buttonWithType:UIButtonTypeCustom];
         [_likeBackBtn addCornerRadius:3.f];
         _likeBackBtn.backgroundColor = [UIColor colorWithHexString:@"fdf8f9"];
         [_photoView addSubview:_likeBackBtn];
@@ -64,7 +66,6 @@
         [_like_btn setImage:[UIImage imageNamed:@"danpin_zan_selected"] forState:UIControlStateSelected];
         [_likeBackBtn addSubview:_like_btn];
         _like_btn.userInteractionEnabled = NO;
-        
         
         //infoView 存放 店铺名 价格 打折 距离
         
@@ -152,8 +153,11 @@
     CGFloat infoHeight = 0.f;//infoView高度
     if (self.cellStyle == CELLSTYLE_DanPinList) {
         infoHeight = 45.f;
-    }else if (_cellStyle == CELLSTYLE_DianPuList || _cellStyle == CELLSTYLE_CollectList || _cellStyle == CELLSTYLE_BrandRecommendList){
+    }else if (_cellStyle == CELLSTYLE_DianPuList || _cellStyle == CELLSTYLE_CollectList){
         infoHeight = 25.f;
+    }else if (_cellStyle == CELLSTYLE_BrandRecommendList){
+        
+        infoHeight = 0.f;
     }
     
     CGRect aBound = self.bounds;
@@ -167,7 +171,7 @@
     CGFloat evertyWidth = _photoView.width / 3.f;
     CGFloat top = (infoHeight - 20) - 2.5;
     
-    CGFloat top_likeBackBtn = _photoView.height - 3 - 17;//赞 背景view
+    CGFloat top_likeBackBtn = _photoView.height - 5 - 17;//赞 背景view
     
     //店铺名
     self.dianPuName_Label.frame = CGRectMake(5, 0, _infoView.width - 5 * 2, infoHeight/2.f);
@@ -191,7 +195,7 @@
         [_infoView addSubview:_likeBackBtn];
         top_likeBackBtn = (_infoView.height - 17)/2.f;
         
-    }else if (_cellStyle == CELLSTYLE_CollectList || _cellStyle == CELLSTYLE_BrandRecommendList){
+    }else if (_cellStyle == CELLSTYLE_CollectList){
         
         //价格
         self.price_label.frame = CGRectMake(0, top + 5, evertyWidth, 10);
@@ -204,6 +208,12 @@
         //控制赞 显示位置
         [_infoView addSubview:_likeBackBtn];
         top_likeBackBtn = (_infoView.height - 17)/2.f;
+        
+    }else if (_cellStyle == CELLSTYLE_BrandRecommendList){
+     
+        [self.price_label removeFromSuperview];
+        [self.discount_label removeFromSuperview];
+        [self.dianPuName_Label removeFromSuperview];
         
     }else
     {
@@ -220,8 +230,6 @@
     self.likeBackBtn.frame = CGRectMake(_photoView.width - 5 - likeBackBtnWidth, top_likeBackBtn, likeBackBtnWidth, 17);
     self.like_btn.frame = CGRectMake(0, 0, 17, 17);
     self.like_label.frame = CGRectMake(_like_btn.right, 0, likeBackBtnWidth - _like_btn.width, 17);
-    
-    
     
     //    CELLSTYLE_DanPinList = 0, //单品列表样式 有店名、价格、折扣、距离,点赞在图片左下角
     //    CELLSTYLE_CollectList = 2, //收藏 和 单品列表类似,只是没有店名
@@ -322,7 +330,6 @@
         
         NSDictionary *middleImage = [images objectForKey:@"540Middle"];
         imageurl = middleImage[@"src"];
-        
     }
     
     [self.photoView l_setImageWithURL:[NSURL URLWithString:imageurl] placeholderImage:DEFAULT_YIJIAYI];

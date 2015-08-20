@@ -33,7 +33,7 @@
 #import "ProductCell.h"
 
 #import "LWaterFlow2.h"
-
+#import "ButtonProperty.h"//带属性button
 
 #define kTag_Tags 100 //单品标签
 #define kTag_Mall 1000 //所在商场
@@ -141,11 +141,10 @@
     
     _collectionView = [[LWaterFlow2 alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT - 64 - 46) waterDelegate:self waterDataSource:self noHeadeRefresh:NO noFooterRefresh:NO];
     [self.view addSubview:_collectionView];
-    _collectionView.backgroundColor = [UIColor clearColor];
-    _collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+//    _collectionView.backgroundColor = [UIColor redColor];
+//    _collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     [_collectionView showRefreshHeader:YES];
-    
 }
 
 #pragma - mark UIAlertViewDelegate
@@ -206,9 +205,18 @@
         cell = [[ProductCell alloc]init];
     }
 
-    cell.cellStyle = CELLSTYLE_BrandRecommendList;
-    cell.photoView.userInteractionEnabled = NO;
     ProductModel *aMode = _collectionView.dataArray[index];
+
+    //设置button参数
+    NSDictionary *params = @{@"button":cell.like_btn,
+                             @"label":cell.like_label,
+                             @"model":aMode};
+    cell.likeBackBtn.object = params;
+    
+    [cell.likeBackBtn addTarget:self action:@selector(clickToZan:) forControlEvents:UIControlEventTouchUpInside];
+    
+    cell.cellStyle = CELLSTYLE_BrandRecommendList;
+//    cell.photoView.userInteractionEnabled = NO;
     [cell setCellWithModel222:aMode];
     
     return cell;
@@ -592,7 +600,7 @@
  */
 - (void)getRecommentProductList
 {
-    NSString *url = [NSString stringWithFormat:PRODUCT_LIST_SAME_BRAND_RECOMMENT,@"146",_collectionView.pageNum,L_PAGE_SIZE,[GMAPI getAuthkey]];
+    NSString *url = [NSString stringWithFormat:PRODUCT_LIST_SAME_BRAND_RECOMMENT,self.product_id,_collectionView.pageNum,L_PAGE_SIZE,[GMAPI getAuthkey]];
 
 //    __weak typeof(self)weakSelf = self;
     __weak typeof(_collectionView)weakCollection = _collectionView;
@@ -609,7 +617,6 @@
                 for (NSDictionary *aDic in list) {
                     
                     ProductModel *model = [[ProductModel alloc]initWithDictionary:aDic];
-                    
                     [arr addObject:model];
                 }
                 
@@ -877,6 +884,61 @@
     }
 }
 
+/**
+ *  赞 取消赞
+ */
+
+- (void)clickToZan:(ButtonProperty *)sender
+{
+    if (![LTools isLogin:self]) {
+        
+        return;
+    }
+    //直接变状态
+    //更新数据
+    
+    NSDictionary *params = sender.object;
+    if (!params || ![params isKindOfClass:[NSDictionary class]]) {
+        
+        return;
+    }
+    
+    UIButton *btn = params[@"button"];
+    UILabel *label = params[@"label"];
+    ProductModel *aModel = params[@"model"];
+    
+    [LTools animationToBigger:btn duration:0.2 scacle:1.5];
+    
+    NSString *productId = aModel.product_id;
+    
+    //    __weak typeof(self)weakSelf = self;
+    
+    __block BOOL isZan = !btn.selected;
+    
+    NSString *api = btn.selected ? HOME_PRODUCT_ZAN_Cancel : HOME_PRODUCT_ZAN_ADD;
+    
+    NSString *post = [NSString stringWithFormat:@"product_id=%@&authcode=%@",productId,[GMAPI getAuthkey]];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    
+    NSString *url = api;
+    
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"result %@",result);
+        btn.selected = isZan;
+        aModel.is_like = isZan ? 1 : 0;
+        aModel.product_like_num = NSStringFromInt([aModel.product_like_num intValue] + (isZan ? 1 : -1));
+        label.text = aModel.product_like_num;
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+        
+        aModel.product_like_num = NSStringFromInt([aModel.product_like_num intValue]);
+        label.text = aModel.product_like_num;
+    }];
+}
 
 /*
  分享
@@ -1210,7 +1272,7 @@
     self.bigImageView = imageView;
     
     //加手势
-    [imageView addTapGestureTarget:self action:@selector(tapImage:) tag:kTag_Images + 0];
+//    [imageView addTapGestureTarget:self action:@selector(tapImage:) tag:kTag_Images + 0];
     
     UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, imageView.bottom, DEVICE_WIDTH, 0.5)];
     line.backgroundColor = DEFAULT_VIEW_BACKGROUNDCOLOR;
@@ -1267,11 +1329,11 @@
     
     //品牌
     NSString *brandName = [LTools NSStringNotNull:aProductModel.product_brand_name];
-    brandName = [NSString stringWithFormat:@"品牌  %@",brandName];
+    brandName = [NSString stringWithFormat:@"品牌: %@",brandName];
     UILabel *brandLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, priceLabel.bottom + 10, 200, 15) title:brandName font:13 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"333333"]];
     [_headerView addSubview:brandLabel];
     //货号
-    NSString *skuName = [NSString stringWithFormat:@"货号  %@",aProductModel.product_sku];
+    NSString *skuName = [NSString stringWithFormat:@"货号: %@",aProductModel.product_sku];
     UILabel *skuLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, brandLabel.bottom + 10, 200, 15) title:skuName font:13 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"333333"]];
     [_headerView addSubview:skuLabel];
 #pragma - mark 地址相关

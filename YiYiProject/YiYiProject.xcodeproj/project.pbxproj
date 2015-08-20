@@ -117,6 +117,7 @@
 		139139921B84807D005A4BB6 /* LWaterFlow2.m in Sources */ = {isa = PBXBuildFile; fileRef = 139139911B84807D005A4BB6 /* LWaterFlow2.m */; };
 		139139971B848279005A4BB6 /* PSCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 139139941B848279005A4BB6 /* PSCollectionView.m */; };
 		139139981B848279005A4BB6 /* PSCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 139139961B848279005A4BB6 /* PSCollectionViewCell.m */; };
+		1391399B1B848DEA005A4BB6 /* ButtonProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 1391399A1B848DEA005A4BB6 /* ButtonProperty.m */; };
 		1391DC3B1A87033A006A2E15 /* LNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1391DC391A87033A006A2E15 /* LNavigationController.m */; };
 		1391DC451A8703E3006A2E15 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1391DC431A8703E3006A2E15 /* LoginViewController.m */; };
 		1391DC461A8703E3006A2E15 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1391DC441A8703E3006A2E15 /* LoginViewController.xib */; };
@@ -789,6 +790,8 @@
 		139139941B848279005A4BB6 /* PSCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSCollectionView.m; sourceTree = "<group>"; };
 		139139951B848279005A4BB6 /* PSCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSCollectionViewCell.h; sourceTree = "<group>"; };
 		139139961B848279005A4BB6 /* PSCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSCollectionViewCell.m; sourceTree = "<group>"; };
+		139139991B848DEA005A4BB6 /* ButtonProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonProperty.h; sourceTree = "<group>"; };
+		1391399A1B848DEA005A4BB6 /* ButtonProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonProperty.m; sourceTree = "<group>"; };
 		1391DC381A87033A006A2E15 /* LNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNavigationController.h; sourceTree = "<group>"; };
 		1391DC391A87033A006A2E15 /* LNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNavigationController.m; sourceTree = "<group>"; };
 		1391DC421A8703E3006A2E15 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -2531,6 +2534,8 @@
 				13A389B11A38974F00ABBACB /* RefreshTableView.m */,
 				1359956D1B1710F400F2EB49 /* LContactView.h */,
 				1359956E1B1710F400F2EB49 /* LContactView.m */,
+				139139991B848DEA005A4BB6 /* ButtonProperty.h */,
+				1391399A1B848DEA005A4BB6 /* ButtonProperty.m */,
 			);
 			path = LApi;
 			sourceTree = "<group>";
@@ -4287,6 +4292,7 @@
 				E3D0808B1B3EFAB700E4F87D /* GbuyClothTableViewCell.m in Sources */,
 				E3E64A9C1AE0D971002F00A4 /* JKAssetsThumbnailView.m in Sources */,
 				E3D080481B3E846200E4F87D /* GBuyClothesLogViewController.m in Sources */,
+				1391399B1B848DEA005A4BB6 /* ButtonProperty.m in Sources */,
 				569722291A407DAE004B6641 /* HomeMatchModel.m in Sources */,
 				1366A4D81AE9E197004F83FD /* AnchorPiontView.m in Sources */,
 				1391DC551A8704E4006A2E15 /* MenuItem.m in Sources */,
