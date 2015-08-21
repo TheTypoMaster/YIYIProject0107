@@ -9,7 +9,7 @@
 #import "GmoveImv.h"
 #import "UILabel+GautoMatchedText.h"
 
-#define ACHORVIEW_HEIGHT 16
+#define ACHORVIEW_HEIGHT 22
 
 @implementation GmoveImv
 
@@ -59,7 +59,7 @@
             
             //标记位置view
             
-            self.annimationView = [[UIView alloc]initWithFrame:CGRectMake(0, (ACHORVIEW_HEIGHT - 5) /2.f, 5, 5)];
+            self.annimationView = [[UIView alloc]initWithFrame:CGRectMake(0, (ACHORVIEW_HEIGHT - 5) /2.f, 6, 6)];
             self.annimationView.backgroundColor = [UIColor whiteColor];
             self.annimationView.layer.cornerRadius = 2.5f;
             self.annimationView.clipsToBounds = YES;
@@ -76,12 +76,12 @@
             //文字宽度
             UILabel *tmpLabel = [[UILabel alloc]initWithFrame:CGRectZero];
             tmpLabel.text = title;
-            tmpLabel.font = [UIFont systemFontOfSize:11];
+            tmpLabel.font = [UIFont systemFontOfSize:12];
             [tmpLabel setMatchedFrame4LabelWithOrigin:CGPointZero height:12 limitMaxWidth:140];
             
             CGFloat aWidth = tmpLabel.frame.size.width;
             
-            CGFloat aWidth_imageView = aWidth + 8 + 16;//8 titleLabel的frame.x  16删除按钮的宽度
+            CGFloat aWidth_imageView = aWidth + 8 + 22;//8 titleLabel的frame.x  22删除按钮的宽度
             
             //箭头imageView
             
@@ -94,12 +94,14 @@
             
             //文字显示label
             
-            self.titleLabel = [LTools createLabelFrame:CGRectMake(8, 0, aWidth, ACHORVIEW_HEIGHT) title:title font:11.f align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
+            self.titleLabel = [LTools createLabelFrame:CGRectMake(8, 0, aWidth, ACHORVIEW_HEIGHT) title:title font:12.f align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
             [self.imageView addSubview:self.titleLabel];
             
             self.deleteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
             self.deleteBtn.frame = CGRectMake(CGRectGetMaxX(self.titleLabel.frame), 0, ACHORVIEW_HEIGHT, ACHORVIEW_HEIGHT);
-            [self.deleteBtn setImage:[UIImage imageNamed:@"g_linkdelete.png"] forState:UIControlStateNormal];
+//            self.deleteBtn.backgroundColor = [UIColor orangeColor];
+            [self.deleteBtn setBackgroundImage:[UIImage imageNamed:@"g_linkdelete.png"] forState:UIControlStateNormal];
+//            [self.deleteBtn setImage:[UIImage imageNamed:@"g_linkdelete.png"] forState:UIControlStateNormal];
             [self.deleteBtn addTarget:self action:@selector(clickToDo:) forControlEvents:UIControlEventTouchUpInside];
             self.deleteBtn.tag = -self.tag;
             self.imageView.userInteractionEnabled = YES;
@@ -116,12 +118,12 @@
             //文字宽度
             UILabel *tmpLabel = [[UILabel alloc]initWithFrame:CGRectZero];
             tmpLabel.text = title;
-            tmpLabel.font = [UIFont systemFontOfSize:11];
+            tmpLabel.font = [UIFont systemFontOfSize:12];
             [tmpLabel setMatchedFrame4LabelWithOrigin:CGPointZero height:12 limitMaxWidth:140];
             
             CGFloat aWidth = tmpLabel.frame.size.width;
             
-            CGFloat aWidth_imageView = aWidth + 8 + 16;//8 titleLabel的frame.x  16删除按钮的宽度
+            CGFloat aWidth_imageView = aWidth + 8 + 22;//8 titleLabel的frame.x  22删除按钮的宽度
             
             //箭头imageView
             self.imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, aWidth_imageView, ACHORVIEW_HEIGHT)];
@@ -143,15 +145,15 @@
             
             //文字显示label
             
-            self.titleLabel = [LTools createLabelFrame:CGRectMake(self.deleteBtn.frame.size.width, 0, aWidth, ACHORVIEW_HEIGHT) title:title font:11.f align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
+            self.titleLabel = [LTools createLabelFrame:CGRectMake(self.deleteBtn.frame.size.width, 0, aWidth, ACHORVIEW_HEIGHT) title:title font:12.f align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
             [self.imageView addSubview:self.titleLabel];
             
             
             //标记位置view
             
-            self.annimationView = [[UIView alloc]initWithFrame:CGRectMake(self.imageView.right + 5, (ACHORVIEW_HEIGHT - 5) /2.f, 5, 5)];
+            self.annimationView = [[UIView alloc]initWithFrame:CGRectMake(self.imageView.right + 5, (ACHORVIEW_HEIGHT - 5) /2.f, 6, 6)];
             self.annimationView.backgroundColor = [UIColor whiteColor];
-            self.annimationView.layer.cornerRadius = 2.5f;
+            self.annimationView.layer.cornerRadius = 3.0f;
             self.annimationView.clipsToBounds = YES;
             [self addSubview:self.annimationView];
             
@@ -189,12 +191,12 @@
         //文字宽度
         UILabel *tmpLabel = [[UILabel alloc]initWithFrame:CGRectZero];
         tmpLabel.text = title;
-        tmpLabel.font = [UIFont systemFontOfSize:11];
+        tmpLabel.font = [UIFont systemFontOfSize:12];
         [tmpLabel setMatchedFrame4LabelWithOrigin:CGPointZero height:12 limitMaxWidth:140];
         
         CGFloat aWidth = tmpLabel.frame.size.width;
         
-        CGFloat aWidth_imageView = aWidth + 8 + 16;//8 titleLabel的frame.x  16删除按钮的宽度
+        CGFloat aWidth_imageView = aWidth + 8 + 22;//8 titleLabel的frame.x  22删除按钮的宽度
 
         
         //图
@@ -228,7 +230,7 @@
         //文字宽度
         UILabel *tmpLabel = [[UILabel alloc]initWithFrame:CGRectZero];
         tmpLabel.text = title;
-        tmpLabel.font = [UIFont systemFontOfSize:11];
+        tmpLabel.font = [UIFont systemFontOfSize:12];
         [tmpLabel setMatchedFrame4LabelWithOrigin:CGPointZero height:12 limitMaxWidth:140];
         
         CGFloat aWidth = tmpLabel.frame.size.width;
@@ -390,7 +392,7 @@
     r.origin.y = self.frame.origin.y - ACHORVIEW_HEIGHT * 0.5;
     r.size.width = self.annimationView.frame.size.width + 5 + self.imageView.frame.size.width;
     
-    self.location_x = r.origin.x + ACHORVIEW_HEIGHT *0.5 + r.size.width - 2;
+    self.location_x = r.origin.x + ACHORVIEW_HEIGHT *0.5 + r.size.width - 11;
     self.location_y = r.origin.y + ACHORVIEW_HEIGHT*0.5;
     
 //    NSLog(@"left 初始化的locationx = %f locationy = %f",self.location_x,self.location_y);

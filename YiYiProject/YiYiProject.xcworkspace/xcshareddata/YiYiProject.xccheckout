@@ -12,8 +12,6 @@
 	<dict>
 		<key>13BFFBC0123CC18E755D27526CE4500D90BD1984</key>
 		<string>github.com:TeamOfFBAuto/YIYIProject.git</string>
-		<key>4E861CA3062D2647600D9443C8068A364C789119</key>
-		<string>https://github.com/ptshih/PSCollectionView.git</string>
 		<key>B17D34269DFBBFFD1B28E5067E72F14F24527419</key>
 		<string>https://github.com/TeamOfFBAuto/YIYIProject0107.git</string>
 	</dict>
@@ -23,8 +21,6 @@
 	<dict>
 		<key>13BFFBC0123CC18E755D27526CE4500D90BD1984</key>
 		<string>../../../YIYIProject</string>
-		<key>4E861CA3062D2647600D9443C8068A364C789119</key>
-		<string>../../YiYiProject/YiYiProject/PublicClasses/PSCollectionView</string>
 		<key>B17D34269DFBBFFD1B28E5067E72F14F24527419</key>
 		<string>../..</string>
 	</dict>
@@ -36,14 +32,6 @@
 	<string>B17D34269DFBBFFD1B28E5067E72F14F24527419</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>4E861CA3062D2647600D9443C8068A364C789119</string>
-			<key>IDESourceControlWCCName</key>
-			<string>PSCollectionView</string>
-		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
