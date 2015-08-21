@@ -74,12 +74,12 @@
             
             self.imageView = [[UIImageView alloc]initWithFrame:CGRectMake(left, 0, aWidth_imageView, ACHORVIEW_HEIGHT)];
             UIImage *image = [UIImage imageNamed:@"jiantou_anchor_right"];
-            _imageView.image = [image stretchableImageWithLeftCapWidth:10 topCapHeight:ACHORVIEW_HEIGHT];
+            _imageView.image = [image stretchableImageWithLeftCapWidth:15 topCapHeight:ACHORVIEW_HEIGHT];
             [self addSubview:_imageView];
             
             //文字显示label
             
-            self.titleLabel = [LTools createLabelFrame:CGRectMake(11, 0, aWidth, ACHORVIEW_HEIGHT) title:title font:12.f align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
+            self.titleLabel = [LTools createLabelFrame:CGRectMake(12, 0, aWidth, ACHORVIEW_HEIGHT) title:title font:12.f align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
             [_imageView addSubview:_titleLabel];
             
             
@@ -99,7 +99,7 @@
             
             self.imageView = [[UIImageView alloc]initWithFrame:CGRectMake(left, 0, aWidth_imageView, ACHORVIEW_HEIGHT)];
             UIImage *image = [UIImage imageNamed:@"jiantou_anchor_left"];
-            _imageView.image = [image stretchableImageWithLeftCapWidth:10 topCapHeight:ACHORVIEW_HEIGHT];
+            _imageView.image = [image stretchableImageWithLeftCapWidth:15 topCapHeight:ACHORVIEW_HEIGHT];
             [self addSubview:_imageView];
             
             //文字显示label
@@ -210,9 +210,9 @@
             
             //标记位置view
             
-            self.annimationView = [[UIView alloc]initWithFrame:CGRectMake(0, (ACHORVIEW_HEIGHT - 5) /2.f, 5, 5)];
+            self.annimationView = [[UIView alloc]initWithFrame:CGRectMake(0, (ACHORVIEW_HEIGHT - 5) /2.f, 7, 7)];
             self.annimationView.backgroundColor = [UIColor whiteColor];
-            self.annimationView.layer.cornerRadius = 2.5f;
+            self.annimationView.layer.cornerRadius = 3.5f;
             self.annimationView.clipsToBounds = YES;
             [self addSubview:_annimationView];
             
@@ -226,7 +226,7 @@
             
             //文字宽度
             
-            CGFloat aWidth = [LTools widthForText:title font:11.f];
+            CGFloat aWidth = [LTools widthForText:title font:12.f];
             
             CGFloat aWidth_imageView = aWidth + 7 * 2;//左侧 右侧 7
             
@@ -241,14 +241,14 @@
             
             //文字显示label
             
-            self.titleLabel = [LTools createLabelFrame:CGRectMake(10, 0, aWidth, ACHORVIEW_HEIGHT) title:title font:11.f align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
+            self.titleLabel = [LTools createLabelFrame:CGRectMake(10, 0, aWidth, ACHORVIEW_HEIGHT) title:title font:12.f align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
             [_imageView addSubview:_titleLabel];
             
         }else
         {
             //文字宽度
             
-            CGFloat aWidth = [LTools widthForText:title font:11.f];
+            CGFloat aWidth = [LTools widthForText:title font:12.f];
             
             CGFloat aWidth_imageView = aWidth + 7 * 2;//左侧 右侧 7
             
@@ -263,15 +263,15 @@
             
             //文字显示label
             
-            self.titleLabel = [LTools createLabelFrame:CGRectMake(5, 0, aWidth, ACHORVIEW_HEIGHT) title:title font:11.f align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
+            self.titleLabel = [LTools createLabelFrame:CGRectMake(5, 0, aWidth, ACHORVIEW_HEIGHT) title:title font:12.f align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
             [_imageView addSubview:_titleLabel];
             
             
             //标记位置view
             
-            self.annimationView = [[UIView alloc]initWithFrame:CGRectMake(_imageView.right + 5, (ACHORVIEW_HEIGHT - 5) /2.f, 5, 5)];
+            self.annimationView = [[UIView alloc]initWithFrame:CGRectMake(_imageView.right + 5, (ACHORVIEW_HEIGHT - 5) /2.f, 7, 7)];
             self.annimationView.backgroundColor = [UIColor whiteColor];
-            self.annimationView.layer.cornerRadius = 2.5f;
+            self.annimationView.layer.cornerRadius = 3.5f;
             self.annimationView.clipsToBounds = YES;
             [self addSubview:_annimationView];
             
