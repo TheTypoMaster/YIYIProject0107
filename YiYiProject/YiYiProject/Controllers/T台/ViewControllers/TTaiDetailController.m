@@ -788,7 +788,7 @@
 /**
  *  添加锚点
  */
-- (void)addMaoDian:(TDetailModel *)aModel imageView:(UIImageView *)imageView
+- (void)addMaoDian:(TPlatModel *)aModel imageView:(UIView *)imageView
 {
     //史忠坤修改
     
@@ -803,10 +803,8 @@
         img_detail=aModel.image[@"img_detail"];
         
     }
-    
     if (image_have_detail>0) {
         //代表有锚点，0代表没有锚点
-        
         
         for (int i=0; i<img_detail.count; i++) {
             
@@ -830,31 +828,15 @@
 
 //等到加载完图片之后再加载图片上的三个button
 
-
--(void)createbuttonWithModel:(NSDictionary*)maodian_detail imageView:(UIImageView *)imageView{
+-(void)createbuttonWithModel:(NSDictionary*)maodian_detail imageView:(UIView *)imageView{
     
     NSString *productId = maodian_detail[@"product_id"];
     
     NSInteger product_id = [productId integerValue];
     
-    NSString *shopId = maodian_detail[@"shop_id"];
-    
-    //    NSInteger shop_id = [shopId integerValue];
-    
     float dx=[maodian_detail[@"img_x"] floatValue];
     float dy=[maodian_detail[@"img_y"] floatValue];
     
-    /**
-     *  由于image 和 imageView不能一样大小,需要计算image实际坐标
-     */
-    
-    //    CGSize size_image = imageView.image.size;//图片实际大小
-    //
-    //    CGFloat realWidth = DEVICE_WIDTH;//显示大小
-    //
-    //    CGFloat realHeight = size_image.height / (size_image.width/DEVICE_WIDTH);//显示大小
-    //
-    //    CGFloat dis = (DEVICE_HEIGHT - realHeight) / 2.f;//imageView和屏幕一样大小,image相对于imageView坐标偏移
     
     __weak typeof(self)weakSelf = self;
     if (product_id>0) {
@@ -862,16 +844,17 @@
         
         NSString *title = maodian_detail[@"product_name"];
         CGPoint point = CGPointMake(dx * imageView.width, dy * imageView.height);
-        AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title superViewWidth:imageView.width];
+        AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title];
         [imageView addSubview:pointView];
         pointView.infoId = productId;
         pointView.infoName = title;
-        
         
         [pointView setAnchorBlock:^(NSString *infoId,NSString *infoName,ShopType shopType){
             
             [weakSelf turnToDanPinInfoId:infoId infoName:infoName];
         }];
+        
+        //        NSLog(@"单品--title %@",title);
         
     }else{
         
@@ -894,15 +877,14 @@
         AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title];
         [imageView addSubview:pointView];
         
-        pointView.infoId = shopId;
+        pointView.infoId = storeId;
         pointView.infoName = title;
+        pointView.shopType = mall_type;
         
         [pointView setAnchorBlock:^(NSString *infoId,NSString *infoName,ShopType shopType){
             
             [weakSelf turnToShangChangInfoId:infoId infoName:infoName shopType:shopType];
         }];
-        
-        NSLog(@"品牌--title %@",title);
         
     }
     
