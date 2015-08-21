@@ -16,6 +16,9 @@
 
 - (void)photoViewDidLoad:(MJPhotoView *)photoView;//完成显示
 
+- (void)photoViewDidHidden:(MJPhotoView *)photoView;//隐藏显示
+
+
 @end
 
 @interface MJPhotoView : UIScrollView <UIScrollViewDelegate>

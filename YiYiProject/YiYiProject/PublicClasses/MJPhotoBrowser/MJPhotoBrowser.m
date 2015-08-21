@@ -201,6 +201,19 @@
     
 }
 
+/**
+ *  隐藏
+ *
+ *  @param photoView
+ */
+-(void)photoViewDidHidden:(MJPhotoView *)photoView
+{
+    if (_delegate && [_delegate respondsToSelector:@selector(photoBrowserDidHidden:)]) {
+        
+        [_delegate photoBrowserDidHidden:self];
+    }
+}
+
 #pragma mark 显示照片
 - (void)showPhotos
 {

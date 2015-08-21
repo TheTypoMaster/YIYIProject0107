@@ -242,6 +242,11 @@
         return;
     }
     
+    //隐藏代理
+    if ([self.photoViewDelegate respondsToSelector:@selector(photoViewDidHidden:)]) {
+        [self.photoViewDelegate photoViewDidHidden:self];
+    }
+    
     // 移除进度条
     [_photoLoadingView removeFromSuperview];
     self.contentOffset = CGPointZero;

@@ -26,7 +26,7 @@
 
 #import "BottomToolsView.h"//底部工具
 
-@interface ProductDetailController ()
+@interface ProductDetailController ()<MJPhotoBrowserDelegate>
 {
     ProductModel *aModel;
     
@@ -416,6 +416,7 @@
     MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
     browser.currentPhotoIndex = 0; // 弹出相册时显示的第一张图片是？
     browser.photos = photos; // 设置所有的图片
+    browser.delegate = self;
     [browser show];
 }
 
@@ -545,9 +546,6 @@
         [al show];
     }else
     {
-//        UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-//        [al show];
-        
         [LTools showMBProgressWithText:@"抱歉!该商家暂未填写有效联系方式" addToView:self.view];
     }
 }
@@ -1053,5 +1051,20 @@
     self.navigationItem.rightBarButtonItem = comment_item;
 }
 
+#pragma - mark MJPhotoBrowserDelegate <NSObject>
+
+// 切换到某一页图片
+- (void)photoBrowser:(MJPhotoBrowser *)photoBrowser didChangedToPageAtIndex:(NSUInteger)index
+{
+    
+}
+
+- (void)photoBrowserDidHidden:(MJPhotoBrowser *)photoBrowser
+{
+    CGFloat top = self.view.top;
+    if (top == 44) {
+        self.view.top = 64;
+    }
+}
 
 @end

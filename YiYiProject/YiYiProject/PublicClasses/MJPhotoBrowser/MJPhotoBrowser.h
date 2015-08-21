@@ -39,4 +39,6 @@
 // 切换到某一页图片
 - (void)photoBrowser:(MJPhotoBrowser *)photoBrowser didChangedToPageAtIndex:(NSUInteger)index;
 
+- (void)photoBrowserDidHidden:(MJPhotoBrowser *)photoBrowser;
+
 @end
