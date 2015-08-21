@@ -362,9 +362,28 @@
     _geoSearch.delegate = nil;
     _geoSearch = nil;
     
+    
+    
     NSLog(@"省份：%@ 城市：%@ 区：%@",result.addressDetail.province,result.addressDetail.city,result.addressDetail.district);
     
     NSDictionary *dic = self.theLocationDic;
+    
+    
+    if (!result.addressDetail.province) {
+        self.theLocationDic = @{
+                                @"lat":[dic stringValueForKey:@"lat"],
+                                @"long":[dic stringValueForKey:@"long"],
+                                @"result":[NSNumber numberWithBool:NO]  //定位成功
+                                };
+        if (self.delegate && [self.delegate respondsToSelector:@selector(theLocationDictionary:)]) {
+            [self.delegate theLocationDictionary:self.theLocationDic];
+        }
+        
+        return;
+    }
+    
+    
+    
     self.theLocationDic = @{
                             @"lat":[dic stringValueForKey:@"lat"],
                             @"long":[dic stringValueForKey:@"long"],
