@@ -59,7 +59,7 @@
     [super viewDidLoad];
     
     self.myTitleLabel.text = @"T台";
-    [self createNavigationbarTools];
+//    [self createNavigationbarTools];
     
     _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH,DEVICE_HEIGHT - 64)];
     _table.refreshDelegate = self;
