@@ -19,8 +19,6 @@
 
 #import "ProductDetailController.h"
 
-#import "ProductDetailControllerNew.h"
-
 #import "FilterView.h"
 
 #import "DataManager.h"

@@ -317,7 +317,7 @@
         [_tool_brand cancelRequest];
     }
     NSString *theWord = _searchTextField.text;
-    NSString *url = [NSString stringWithFormat:@"%@&keywords=%@&page=%d&per_page=%d&long=%@&lat=%@&action=brand",GSEARCH,theWord,_tableView_brand.pageNum,L_PAGE_SIZE,[_locationDic stringValueForKey:@"long"],[_locationDic stringValueForKey:@"lat"]];
+    NSString *url = [NSString stringWithFormat:@"%@&keywords=%@&page=%d&per_page=%d&long=%@&lat=%@&type=brand",GSEARCH,theWord,_tableView_brand.pageNum,L_PAGE_SIZE,[_locationDic stringValueForKey:@"long"],[_locationDic stringValueForKey:@"lat"]];
     
     //接口url:
     NSLog(@"请求用户通知接口:%@",url);

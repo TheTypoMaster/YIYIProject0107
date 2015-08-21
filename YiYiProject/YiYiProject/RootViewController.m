@@ -107,7 +107,7 @@
 {
     
     
-    NSArray *classNames = @[@"HomeViewController",@"GTtaiListViewController",@"GBuyClothesLogViewController",@"MineViewController"];
+    NSArray *classNames = @[@"HomeViewController",@"BigPhotoTTaiViewController",@"GBuyClothesLogViewController",@"MineViewController"];
     NSArray *item_names = @[@"附近",@"T台",@"买衣日志",@"我的"];
     NSMutableArray *items = [NSMutableArray arrayWithCapacity:classNames.count];
     for (int i = 0; i < classNames.count;i ++) {

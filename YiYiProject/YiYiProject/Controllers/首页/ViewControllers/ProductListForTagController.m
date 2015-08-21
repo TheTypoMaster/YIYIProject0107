@@ -13,7 +13,6 @@
 #import "LWaterflowView.h"
 #import "RegisterViewController.h"
 #import "ProductModel.h"
-#import "ProductDetailControllerNew.h"
 
 @interface ProductListForTagController ()<TMQuiltViewDataSource,WaterFlowDelegate,GgetllocationDelegate>
 {

@@ -35,9 +35,6 @@
 
 #import "GTtaiDetailViewController.h"
 
-#import "ProductDetailControllerNew.h"
-
-
 #import "GTtaiNearActivViewController.h"//T台列表附近的活动
 #import "ActivityModel.h"//活动model
 #import "GTtaiNearActOneView.h"//自定义附近活动view
@@ -313,10 +310,8 @@
             detail.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:detail animated:YES];
         }else if ([amodel.adv_type_val intValue] == 4){//单品
-            ProductDetailControllerNew *detail = [[ProductDetailControllerNew alloc]init];
-            detail.product_id = amodel.theme_id;
-            detail.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:detail animated:YES];
+            
+            [MiddleTools pushToProductDetailWithId:amodel.theme_id fromViewController:self lastNavigationHidden:NO hiddenBottom:YES];
         }
     }
     
@@ -711,12 +706,7 @@
 -(void)turnToDanPinInfoId:(NSString *)infoId
                  infoName:(NSString *)infoName
 {
-    
-    ProductDetailControllerNew *detail = [[ProductDetailControllerNew alloc]init];
-    detail.product_id = infoId;
-    detail.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:detail animated:YES];
-    
+    [MiddleTools pushToProductDetailWithId:infoId fromViewController:self lastNavigationHidden:NO hiddenBottom:YES];
 }
 
 
