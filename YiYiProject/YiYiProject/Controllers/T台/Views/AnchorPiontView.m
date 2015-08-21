@@ -8,7 +8,7 @@
 
 #import "AnchorPiontView.h"
 
-#define ACHORVIEW_HEIGHT 16
+#define ACHORVIEW_HEIGHT 20
 
 @implementation AnchorPiontView
 
@@ -34,7 +34,7 @@
     self = [super initWithFrame:CGRectMake(anchorPoint.x, anchorPoint.y, 0, ACHORVIEW_HEIGHT)];
     if (self) {
         
-//        self.backgroundColor = [UIColor orangeColor];
+        self.backgroundColor = [UIColor orangeColor];
         
         BOOL isRight  = YES;
         
@@ -48,9 +48,9 @@
             
             //标记位置view
             
-            self.annimationView = [[UIView alloc]initWithFrame:CGRectMake(0, (ACHORVIEW_HEIGHT - 5) /2.f, 5, 5)];
+            self.annimationView = [[UIView alloc]initWithFrame:CGRectMake(0, (ACHORVIEW_HEIGHT - 7) /2.f, 6, 6)];
             self.annimationView.backgroundColor = [UIColor whiteColor];
-            self.annimationView.layer.cornerRadius = 2.5f;
+            self.annimationView.layer.cornerRadius = 3.0f;
             self.annimationView.clipsToBounds = YES;
             [self addSubview:_annimationView];
             
@@ -74,12 +74,15 @@
             
             self.imageView = [[UIImageView alloc]initWithFrame:CGRectMake(left, 0, aWidth_imageView, ACHORVIEW_HEIGHT)];
             UIImage *image = [UIImage imageNamed:@"jiantou_anchor_right"];
-            _imageView.image = [image stretchableImageWithLeftCapWidth:10 topCapHeight:ACHORVIEW_HEIGHT];
+            self.imageView.backgroundColor = [UIColor blueColor];
+            [_imageView setImage:image];
+//            _imageView.image = [image stretchableImageWithLeftCapWidth:10 topCapHeight:ACHORVIEW_HEIGHT];
             [self addSubview:_imageView];
             
             //文字显示label
             
             self.titleLabel = [LTools createLabelFrame:CGRectMake(10, 0, aWidth, ACHORVIEW_HEIGHT) title:title font:11.f align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
+            self.titleLabel.backgroundColor = [UIColor purpleColor];
             [_imageView addSubview:_titleLabel];
             
             
@@ -196,7 +199,7 @@
     self = [super initWithFrame:CGRectMake(anchorPoint.x, anchorPoint.y, 0, ACHORVIEW_HEIGHT)];
     if (self) {
         
-        //        self.backgroundColor = [UIColor orangeColor];
+                self.backgroundColor = [UIColor orangeColor];
         
         BOOL isRight  = YES;
         

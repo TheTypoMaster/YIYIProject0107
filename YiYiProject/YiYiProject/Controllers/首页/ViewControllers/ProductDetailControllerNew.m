@@ -1617,6 +1617,7 @@
  *
  *  @return
  */
+
 - (CycleScrollView1 *)cycleScrollWithCommentArray:(NSArray *)commentArray
 {
     int commentCount = (int)commentArray.count;
