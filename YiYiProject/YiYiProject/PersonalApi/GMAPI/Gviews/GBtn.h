@@ -13,4 +13,6 @@
 
 @property(nonatomic,strong)NSString *shopType;//1商场店铺 2精品店
 
+@property(nonatomic,strong)NSIndexPath *theIndex;
+
 @end

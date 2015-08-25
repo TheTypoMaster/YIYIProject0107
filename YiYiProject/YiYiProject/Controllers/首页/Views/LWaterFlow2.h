@@ -22,7 +22,10 @@
 - (void)waterLoadMoreDataForWaterView:(PSCollectionView *)waterView;
 
 - (void)waterDidSelectRowAtIndexPath:(NSInteger)index;
-- (CGFloat)waterHeightForCellIndexPath:(NSInteger)index waterView:(PSCollectionView *)waterView;
+- (CGFloat)waterHeightForCellIndexPath:(NSInteger)index waterView:(LWaterFlow2 *)waterView;
+
+//meng添加
+- (void)waterDidSelectRowAtIndexPath:(NSInteger)index water:(PSCollectionView*)waterview;
 
 - (CGFloat)waterViewNumberOfColumns;
 

@@ -757,18 +757,18 @@
 {
     
     //调转至老版本 详情页
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [self tapCell:[tableView cellForRowAtIndexPath:indexPath]];
+//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//    [self tapCell:[tableView cellForRowAtIndexPath:indexPath]];
     
     
     
-//    //新版
-//    GTtaiDetailViewController *ggg = [[GTtaiDetailViewController alloc]init];
-//    TPlatModel *amdol = _table.dataArray[indexPath.row];
-//    ggg.locationDic = self.locationDic;
-//    ggg.tPlat_id = amdol.tt_id;
-//    ggg.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:ggg animated:YES];
+    //新版
+    GTtaiDetailViewController *ggg = [[GTtaiDetailViewController alloc]init];
+    TPlatModel *amdol = _table.dataArray[indexPath.row];
+    ggg.locationDic = self.locationDic;
+    ggg.tPlat_id = amdol.tt_id;
+    ggg.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:ggg animated:YES];
    
     
     
