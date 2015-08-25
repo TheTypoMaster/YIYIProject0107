@@ -47,6 +47,10 @@
 
 #define RedirectUrl @"http://sns.whalecloud.com/sina2/callback" //回调地址
 
+#define BAIDU_APPKEY @"iiUyYDDK4A6CnzmHL4SVUvuo" //企业 com.yijiayi.yjy
+//#define BAIDU_APPKEY @"xVfbtQq4cB5OLkTk8hmxlyLd" //appStore com.yijiayi.yijiayi
+
+
 //sns.whalecloud.com
 
 
@@ -143,7 +147,8 @@
     // 要使用百度地图，请先启动BaiduMapManager
     _mapManager = [[BMKMapManager alloc]init];
     // 如果要关注网络及授权验证事件，请设定   BMKGeneralDelegate协议
-    BOOL ret = [_mapManager start:@"xVfbtQq4cB5OLkTk8hmxlyLd"  generalDelegate:self];
+    
+    BOOL ret = [_mapManager start:BAIDU_APPKEY  generalDelegate:self];
     if (!ret) {
         NSLog(@"manager start failed!");
     }

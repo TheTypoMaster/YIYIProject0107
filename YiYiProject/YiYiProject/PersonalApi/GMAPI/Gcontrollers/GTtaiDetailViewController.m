@@ -222,6 +222,7 @@
     NSString *url = [NSString stringWithFormat:@"%@&authcode=%@&longitude=%@&latitude=%@&tt_id=%@",TTAI_STORE,[GMAPI getAuthkey],longitude,latitude,self.tPlat_id];
     //测试
     url = @"http://www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_relation_tts&page=1&count=20&authcode=An1XLlEoBuBR6gSZVeUI31XwBOZXolanAi9SY1cyUWZVa1JhVDRQYwE2AzYAbQ19CTg=&longitude=116.402982&latitude=39.912950&tt_id=409";
+//    url = @"http://www.alayy.com/index.php?d=api&c=tplat_v2&m=get_relation_tts&page=1&count=20&authcode=An1XLlEoBuBR6gSZVeUI31XwBOZXolanAi9SY1cyUWZVa1JhVDRQYwE2AzYAbQ19CTg=&longitude=116.402982&latitude=39.912950&tt_id=26";
     
     
     tool_detail = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
@@ -343,13 +344,23 @@
 
 //收藏
 -(void)clickToCollect:(UIButton*)sender{
-    if (sender.selected) {
+    
+    if ([LTools isLogin:self]) {
         
-        [self networkForActionType:Action_Collect_no];
-    }else
-    {
-        [self networkForActionType:Action_Collect_yes];
+        if (sender.selected) {
+            
+            [self networkForActionType:Action_Collect_no];
+        }else
+        {
+            [self networkForActionType:Action_Collect_yes];
+        }
+        
     }
+    
+    
+    
+    
+    
 }
 
 
@@ -711,6 +722,8 @@
 - (void)networkForActionType:(ACTION_TYPE)action_type
 {
     
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
     __weak typeof(self)weakSelf = self;
     
     NSString *api;
@@ -757,9 +770,15 @@
             [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_TTai object:nil userInfo:@{@"state":[NSNumber numberWithBool:NO]}];
         }
         
+        
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+        [GMAPI showAutoHiddenMBProgressWithText:RESULT_INFO addToView:self.view];
         
     }];
 }

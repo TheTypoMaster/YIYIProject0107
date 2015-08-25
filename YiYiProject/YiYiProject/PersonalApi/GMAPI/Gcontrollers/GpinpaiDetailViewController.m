@@ -73,8 +73,7 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:_my_right_button];
     
     
-    
-    [self getGuanzhuYesOrNoForPinpai];//获取是否收藏了该品牌
+    [_tableView showRefreshHeader:YES];
     
     
 }
@@ -233,7 +232,6 @@
             [_my_right_button setTitle:@"已收藏" forState:UIControlStateNormal];
         }
         
-        [self prepareNetData];//获取品牌附近的商场
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
@@ -274,7 +272,9 @@
 
 - (void)loadNewData
 {
-    [self prepareNetData];
+    [self prepareNetData];//获取品牌附近的商场
+    
+    [self getGuanzhuYesOrNoForPinpai];//获取是否收藏了该品牌
 }
 - (void)loadMoreData
 {

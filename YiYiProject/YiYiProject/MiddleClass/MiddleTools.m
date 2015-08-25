@@ -232,17 +232,17 @@
              lastNavigationHidden:(BOOL)lastNavigationHidden
                      hiddenBottom:(BOOL)hiddenBottom
 {
-//    ProductDetailControllerNew *detail = [[ProductDetailControllerNew alloc]init];
-//    detail.product_id = infoId;
-//    detail.lastPageNavigationHidden = lastNavigationHidden;
-//    detail.hidesBottomBarWhenPushed = hiddenBottom;
-//    [viewController.navigationController pushViewController:detail animated:YES];
-    
-    ProductDetailController *detail = [[ProductDetailController alloc]init];
+    ProductDetailControllerNew *detail = [[ProductDetailControllerNew alloc]init];
     detail.product_id = infoId;
     detail.lastPageNavigationHidden = lastNavigationHidden;
     detail.hidesBottomBarWhenPushed = hiddenBottom;
     [viewController.navigationController pushViewController:detail animated:YES];
+    
+//    ProductDetailController *detail = [[ProductDetailController alloc]init];
+//    detail.product_id = infoId;
+//    detail.lastPageNavigationHidden = lastNavigationHidden;
+//    detail.hidesBottomBarWhenPushed = hiddenBottom;
+//    [viewController.navigationController pushViewController:detail animated:YES];
 }
 
 
