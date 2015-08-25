@@ -29,6 +29,8 @@
 
 #import "GBtn.h"
 
+#import "TTaiCommentViewController.h"//评论页面
+
 @interface GTtaiDetailViewController ()<UIScrollViewDelegate,PSWaterFlowDelegate,PSCollectionViewDataSource,GgetllocationDelegate,UITableViewDataSource,UITableViewDelegate>
 {
     
@@ -62,7 +64,7 @@
     UITableView *_tabHeaderTableView;
     
     //T台详情model
-    GTtaiDetailModel *_ttaiDetailModel;
+    TPlatModel *_ttaiDetailModel;
     
     //关联的商场数据
     NSArray *_relationStoreArray;//里面装的是GTtaiRelationStoreModel
@@ -520,6 +522,7 @@
     pinglunBtn.layer.borderColor = [RGBCOLOR(247, 76, 139)CGColor];
     pinglunBtn.layer.cornerRadius = 20;
     [pinglunBtn setImage:[UIImage imageNamed:@"Ttaixq_pinglun2"] forState:UIControlStateNormal];
+    [pinglunBtn addTarget:self action:@selector(clickToComment:) forControlEvents:UIControlEventTouchUpInside];
     [view2 addSubview:pinglunBtn];
     
     _commentNumLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 25, 40, 10) title:_ttaiDetailModel.tt_comment_num font:10 align:NSTextAlignmentCenter textColor:DEFAULT_TEXTCOLOR];
@@ -690,6 +693,33 @@
     
 }
 
+
+
+/**
+ *  评论页面
+ *
+ *  @param sender
+ */
+- (void)clickToComment:(UIButton *)sender
+{
+    __weak typeof(self) weakSelf = self;
+    
+    TTaiCommentViewController *commentList = [[TTaiCommentViewController alloc]init];
+    commentList.tt_id = self.tPlat_id;
+    commentList.commentType = COMMENTTYPE_TPlat;
+    commentList.t_model = _ttaiDetailModel;
+    
+    commentList.updateParamsBlock = ^(NSDictionary *params){
+        
+        BOOL result = [params[@"result"]boolValue];
+        if (result) {
+            
+//            [weakSelf networkForCommentList:YES];//更新评论
+        }
+    };
+    
+    [self.navigationController pushViewController:commentList animated:YES];
+}
 
 
 /*
@@ -928,15 +958,7 @@
 //    [self.navigationController pushViewController:detail animated:YES];
 }
 
-/**
- *  评论页面
- *
- *  @param sender
- */
-- (void)clickToComment:(UIButton *)sender
-{
-    
-}
+
 
 
 

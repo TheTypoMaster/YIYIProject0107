@@ -55,4 +55,11 @@
 @property(nonatomic,strong)NSArray *reply;//回复
 @property(nonatomic,strong)NSArray *same_tts;//相同的T台
 
+
+
+@property(nonatomic,strong)NSDictionary *official_act;//官方活动
+
+
+
+
 @end
