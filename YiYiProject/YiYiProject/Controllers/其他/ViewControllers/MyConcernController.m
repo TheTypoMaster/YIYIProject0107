@@ -22,8 +22,6 @@
 
 #import "NSDictionary+GJson.h"
 
-#import "ProductDetailController.h"//单品详情页
-
 #define TAGINCREM_PRODUCT 10000 //单品tag增量
 #define TAGINCREM_TTAI 20000 //t台
 #define TAGINCREM_STROE 30000 //商家
@@ -1038,19 +1036,10 @@
     //单品
     if ([self buttonForTag:100].selected) {
         ProductModel *aMode = waterFlow.dataArray[indexPath.row];
-        
-        //    [LTools alertText:aMode.product_name];
-        
-        ProductDetailController *detail = [[ProductDetailController alloc]init];
-        detail.product_id = aMode.product_id;
-        detail.hidesBottomBarWhenPushed = YES;
-        
-        
         TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell*)[waterFlow.quitView cellAtIndexPath:indexPath];
-        detail.theMyshoucangProductModel = aMode;
-        detail.theMyshoucangProductCell = cell;
-        
-        [self.navigationController pushViewController:detail animated:YES];
+        NSDictionary *params = @{@"cell":cell,
+                                 @"model":aMode};
+        [MiddleTools pushToProductDetailWithId:aMode.product_id fromViewController:self lastNavigationHidden:NO hiddenBottom:YES extraParams:params updateBlock:nil];
     }
     
     //T台
@@ -1062,11 +1051,7 @@
         PropertyImageView *aImageView = (PropertyImageView *)((TPlatCell *)cell).photoView;
             
         [MiddleTools showTPlatDetailFromPropertyImageView:aImageView withController:self.tabBarController cancelSingleTap:YES];
-        
     }
-    
-    
-    
 }
 
 - (CGFloat)waterHeightForCellIndexPath:(NSIndexPath *)indexPath waterView:(TMQuiltView *)waterView

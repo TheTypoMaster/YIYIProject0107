@@ -7,7 +7,6 @@
 //
 
 #import "YIYIChatViewController.h"
-#import "ProductDetailController.h"
 #import "RCIM.h"
 #import "GchatSettingViewController.h"
 #import "RCPreviewViewController.h"
@@ -149,12 +148,10 @@
 }
 
 -(void)pushToProductDetailVcWithMessage:(RCMessage*)message{
-    ProductDetailController *detail = [[ProductDetailController alloc]init];
+    
     RCRichContentMessage *ccc = (RCRichContentMessage*)message.content;
-    detail.product_id = ccc.extra;
-    detail.isYYChatVcPush = YES;
-    detail.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:detail animated:YES];
+    NSDictionary *params = @{@"isYYChat":[NSNumber numberWithBool:YES]};
+    [MiddleTools pushToProductDetailWithId:ccc.extra fromViewController:self lastNavigationHidden:NO hiddenBottom:YES extraParams:params updateBlock:nil];
 }
 
 /**

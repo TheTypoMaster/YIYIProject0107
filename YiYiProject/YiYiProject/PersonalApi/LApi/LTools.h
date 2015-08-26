@@ -311,7 +311,7 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
  *
  *  @param image_height   图片的高度
  *  @param image_width    图片的宽度
- *  @param show_Width     实际显示宽度
+ *  @param show_Width     实际显示宽度a
  *
  *  @return 实际显示高度
  */

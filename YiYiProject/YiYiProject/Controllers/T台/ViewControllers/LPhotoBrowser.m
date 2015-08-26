@@ -659,6 +659,7 @@
 -(void)turnToDanPinInfoId:(NSString *)infoId
                  infoName:(NSString *)infoName
 {
+    //不需要换新版
     
     ProductDetailController *detail = [[ProductDetailController alloc]init];
     detail.product_id = infoId;

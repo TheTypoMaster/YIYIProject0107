@@ -245,6 +245,41 @@
 //    [viewController.navigationController pushViewController:detail animated:YES];
 }
 
+/**
+ *  跳转至单品详情、加拓展参数
+ *
+ *  @param infoId               单品id
+ *  @param viewController       从哪个视图push
+ *  @param lastNavigationHidden 本页面是否隐藏NavigationBar
+ *  @param hiddenBottom         是否隐藏底部tabbar
+ *  @param extraParams          额外参数
+ *  @param updateBlock          数据同步更新block(选填)
+ */
++ (void)pushToProductDetailWithId:(NSString *)infoId
+               fromViewController:(UIViewController *)viewController
+             lastNavigationHidden:(BOOL)lastNavigationHidden
+                     hiddenBottom:(BOOL)hiddenBottom
+                      extraParams:(NSDictionary *)extraParams
+                      updateBlock:(UpdateParamsBlock)updateBlock
+{
+    ProductDetailControllerNew *detail = [[ProductDetailControllerNew alloc]init];
+    detail.product_id = infoId;
+    detail.lastPageNavigationHidden = lastNavigationHidden;
+    detail.hidesBottomBarWhenPushed = hiddenBottom;
+    if (updateBlock) {
+        detail.updateParamsBlock = updateBlock;
+    }
+    if (extraParams) {
+        id cell = extraParams[@"cell"];
+        id model = extraParams[@"model"];
+        BOOL isYYChat = [extraParams[@"isYYChat"]boolValue];
+        detail.theLastViewClickedCell = cell;
+        detail.theLastViewProductModel = model;
+        detail.isYYChatVcPush = isYYChat;
+    }
+    [viewController.navigationController pushViewController:detail animated:YES];
+}
+
 
 
 ///**

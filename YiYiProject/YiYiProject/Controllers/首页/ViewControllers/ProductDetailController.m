@@ -192,79 +192,7 @@
         
         if (action_type == Action_like_yes) {
             
-            heartButton.selected = YES;
-            
-            //更改上一个界面的状态  从我的店铺界面跳转
-            if (self.theLastViewClickedCell) {
-                
-                //赞的红心状态
-                weakSelf.theLastViewClickedCell.like_btn.selected = YES;
-                int zanNum = [weakSelf.theLastViewClickedCell.like_label.text intValue];
-                zanNum++;
-                weakSelf.theLastViewClickedCell.like_label.text = [NSString stringWithFormat:@"%d",zanNum];
-                
-                //赞后面的数字
-                weakSelf.theLastViewProductModel.is_like = 1;
-                int like_num = [weakSelf.theLastViewProductModel.product_like_num intValue];
-                like_num++;
-                weakSelf.theLastViewProductModel.product_like_num = [NSString stringWithFormat:@"%d",like_num];
-            }
-            
-            //更改上一个界面的状态  从首页单品跳转
-            if (self.theHomeBuyVcProductCell) {
-                
-                if (self.theHomeBuyVcModel) {
-                    
-                    //赞的红心状态
-                    self.theHomeBuyVcProductCell.like_btn.selected = YES;
-                    int zanNum = [self.theHomeBuyVcProductCell.like_label.text intValue];
-                    zanNum++;
-                    self.theHomeBuyVcProductCell.like_label.text = [NSString stringWithFormat:@"%d",zanNum];
-                    
-                    //赞后面的数字
-                    self.theHomeBuyVcModel.is_like = 1;
-                    int like_num = [self.theHomeBuyVcModel.product_like_num intValue];
-                    like_num++;
-                    self.theHomeBuyVcModel.product_like_num = [NSString stringWithFormat:@"%d",like_num];
-                }
-                
-            }
-            
-            //更改上一个界面的状态  从收藏界面跳转
-            if (self.theMyshoucangProductCell) {
-                
-                //赞的红心状态
-                self.theMyshoucangProductCell.like_btn.selected = YES;
-                int zanNum = [self.theMyshoucangProductCell.like_label.text intValue];
-                zanNum++;
-                self.theMyshoucangProductCell.like_label.text = [NSString stringWithFormat:@"%d",zanNum];
-                
-                //赞后面的数字
-                self.theMyshoucangProductModel.is_like = 1;
-                int like_num = [self.theMyshoucangProductModel.product_like_num intValue];
-                like_num++;
-                self.theMyshoucangProductModel.product_like_num = [NSString stringWithFormat:@"%d",like_num];
-            }
-            
-            
-            //更改上一个界面的状态  从店铺详情页跳转
-            if (self.theStorePinpaiProductCell) {
-                
-                //赞的红心状态
-                self.theStorePinpaiProductCell.like_btn.selected = YES;
-                int zanNum = [self.theStorePinpaiProductCell.like_label.text intValue];
-                zanNum++;
-                self.theStorePinpaiProductCell.like_label.text = [NSString stringWithFormat:@"%d",zanNum];
-                
-                //赞后面的数字
-                self.theStorePinpaiProductModel.is_like = 1;
-                int like_num = [self.theStorePinpaiProductModel.product_like_num intValue];
-                like_num++;
-                self.theStorePinpaiProductModel.product_like_num = [NSString stringWithFormat:@"%d",like_num];
-            }
-            
-            
-            
+            [weakSelf updateZan:YES];
             
         }else if (action_type == Action_Collect_yes){
             
@@ -275,71 +203,7 @@
             
         }else if (action_type == Action_like_no){
             
-            heartButton.selected = NO;
-            //更改上一个界面的状态 从我的店铺界面跳转
-            if (self.theLastViewClickedCell) {
-                //赞的红心状态
-                self.theLastViewClickedCell.like_btn.selected = NO;
-                int zanNum = [self.theLastViewClickedCell.like_label.text intValue];
-                zanNum--;
-                self.theLastViewClickedCell.like_label.text = [NSString stringWithFormat:@"%d",zanNum];
-                //赞后面的数字
-                self.theLastViewProductModel.is_like = 0;
-                int like_num = [self.theLastViewProductModel.product_like_num intValue];
-                like_num--;
-                self.theLastViewProductModel.product_like_num = [NSString stringWithFormat:@"%d",like_num];
-                
-            }
-            
-            //更改上一个界面的状态 从首页单品标签跳转
-            if (self.theHomeBuyVcProductCell) {
-                
-                if (self.theHomeBuyVcModel) {
-                    //赞的红心状态
-                    self.theHomeBuyVcProductCell.like_btn.selected = NO;
-                    int zanNum = [self.theHomeBuyVcProductCell.like_label.text intValue];
-                    zanNum--;
-                    self.theHomeBuyVcProductCell.like_label.text = [NSString stringWithFormat:@"%d",zanNum];
-                    //赞后面的数字
-                    self.theHomeBuyVcModel.is_like = 0;
-                    int like_num = [self.theHomeBuyVcModel.product_like_num intValue];
-                    like_num--;
-                    self.theHomeBuyVcModel.product_like_num = [NSString stringWithFormat:@"%d",like_num];
-                }
-                
-            }
-            
-            //更改上一个界面的状态  从收藏界面跳转
-            if (self.theMyshoucangProductCell) {
-                //赞的红心状态
-                self.theMyshoucangProductCell.like_btn.selected = NO;
-                int zanNum = [self.theMyshoucangProductCell.like_label.text intValue];
-                zanNum--;
-                self.theMyshoucangProductCell.like_label.text = [NSString stringWithFormat:@"%d",zanNum];
-                //赞后面的数字
-                self.theMyshoucangProductModel.is_like = 0;
-                int like_num = [self.theMyshoucangProductModel.product_like_num intValue];
-                like_num--;
-                self.theMyshoucangProductModel.product_like_num = [NSString stringWithFormat:@"%d",like_num];
-            }
-            
-            
-            //更改上一个界面的状态  从店铺详情页跳转
-            
-            if (self.theStorePinpaiProductCell) {
-                //赞的红心状态
-                self.theStorePinpaiProductCell.like_btn.selected = NO;
-                int zanNum = [self.theStorePinpaiProductCell.like_label.text intValue];
-                zanNum--;
-                self.theStorePinpaiProductCell.like_label.text = [NSString stringWithFormat:@"%d",zanNum];
-                //赞后面的数字
-                self.theStorePinpaiProductModel.is_like = 0;
-                int like_num = [self.theStorePinpaiProductModel.product_like_num intValue];
-                like_num--;
-                self.theStorePinpaiProductModel.product_like_num = [NSString stringWithFormat:@"%d",like_num];
-            }
-            
-            
+            [weakSelf updateZan:NO];
             
         }else if (action_type == Action_Collect_no){
             
@@ -347,11 +211,7 @@
             
             //关注单品通知
             [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_PRODUCT object:nil userInfo:@{@"state":[NSNumber numberWithBool:NO]}];
-
         }
-        
-        
-        
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
@@ -383,6 +243,30 @@
 
 
 #pragma mark - 事件处理
+/**
+ *  更新赞状态
+ *
+ *  @param isZan 是否是赞
+ */
+- (void)updateZan:(BOOL)isZan
+{
+    heartButton.selected = isZan;
+    
+    //更改上一个界面的状态  从我的店铺界面跳转
+    if (self.theLastViewClickedCell) {
+        
+        //赞的红心状态
+        self.theLastViewClickedCell.like_btn.selected = isZan;
+        int zanNum = [self.theLastViewClickedCell.like_label.text intValue];
+        zanNum = isZan ? zanNum + 1 : zanNum - 1;
+        self.theLastViewClickedCell.like_label.text = [NSString stringWithFormat:@"%d",zanNum];
+        //赞后面的数字
+        self.theLastViewProductModel.is_like = isZan ? 1 : 0;
+        int like_num = [self.theLastViewProductModel.product_like_num intValue];
+        like_num = isZan ? like_num + 1 : like_num - 1;
+        self.theLastViewProductModel.product_like_num = [NSString stringWithFormat:@"%d",like_num];
+    }
+}
 
 -(void)leftButtonTap:(UIButton *)sender
 {

@@ -26,8 +26,6 @@
 #import "AnchorPiontView.h"//锚点view
 
 #import "GStorePinpaiViewController.h"
-#import "ProductDetailController.h"
-
 
 #import "CycleScrollView.h"
 #import "CycleScrollView1.h"

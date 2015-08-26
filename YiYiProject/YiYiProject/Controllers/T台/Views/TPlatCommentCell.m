@@ -82,8 +82,9 @@
         NSDictionary *params = @{USER_NAME:model.user_name,USER_UID:model.uid,REPLY_ID:model.father_id};
         label.params = params;
         
-        height += iconImageView.height + 5;
+        CGFloat aHeight = iconImageView.height > label.height ? iconImageView.height : label.height;
         
+        height += aHeight + 5;
         
         sum = label.bottom > iconImageView.bottom ? label.bottom : iconImageView.bottom;
 

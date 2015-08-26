@@ -483,13 +483,22 @@
             
         }
     }else if (_selectIndex == 102){//搜索的是单品
+        
         NSDictionary *dic = _tableView_product.dataArray[indexPath.row];
-        ProductDetailController *ccc = [[ProductDetailController alloc]init];
-        ccc.product_id = [dic stringValueForKey:@"product_id"];
+        NSString *productId = [dic stringValueForKey:@"product_id"];
+        
+        //添加品牌链接
         if (self.isChooseProductLink) {
+            
+            ProductDetailController *ccc = [[ProductDetailController alloc]init];
+            ccc.product_id = productId;
             ccc.isChooseProductLink = YES;
+            [self.navigationController pushViewController:ccc animated:YES];
+            
+        }else
+        {
+            [MiddleTools pushToProductDetailWithId:productId fromViewController:self lastNavigationHidden:NO hiddenBottom:NO];
         }
-        [self.navigationController pushViewController:ccc animated:YES];
     }
     
 }

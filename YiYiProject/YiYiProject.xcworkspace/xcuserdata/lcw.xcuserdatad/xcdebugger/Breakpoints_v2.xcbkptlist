@@ -20,11 +20,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/Controllers/&#x9996;&#x9875;/ViewControllers/ProductDetailControllerNew.m"
-            timestampString = "461746832.229618"
+            timestampString = "462276698.370324"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "893"
-            endingLineNumber = "893"
+            startingLineNumber = "787"
+            endingLineNumber = "787"
             landmarkName = "-clickToZan:"
             landmarkType = "5">
          </BreakpointContent>

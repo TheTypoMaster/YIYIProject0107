@@ -17,8 +17,6 @@
 
 #import "ProductModel.h"
 
-#import "ProductDetailController.h"
-
 #import "FilterView.h"
 
 #import "DataManager.h"
@@ -316,16 +314,11 @@
 - (void)waterDidSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ProductModel *aMode = waterFlow.dataArray[indexPath.row];
-//    ProductDetailController *detail = [[ProductDetailController alloc]init];
-//    detail.product_id = aMode.product_id;
-//    detail.hidesBottomBarWhenPushed = YES;
-//    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell*)[waterFlow.quitView cellAtIndexPath:indexPath];
-//    detail.theHomeBuyVcModel = aMode;
-//    detail.theHomeBuyVcProductCell = cell;
-//    
-//    [self.rootViewController.navigationController pushViewController:detail animated:YES];
-    
-    [MiddleTools pushToProductDetailWithId:aMode.product_id fromViewController:self.rootViewController lastNavigationHidden:NO hiddenBottom:YES];
+
+    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell*)[waterFlow.quitView cellAtIndexPath:indexPath];    
+    NSDictionary *params = @{@"cell":cell,
+                             @"model":aMode};
+    [MiddleTools pushToProductDetailWithId:aMode.product_id fromViewController:self.rootViewController lastNavigationHidden:NO hiddenBottom:YES extraParams:params updateBlock:nil];
     
 }
 

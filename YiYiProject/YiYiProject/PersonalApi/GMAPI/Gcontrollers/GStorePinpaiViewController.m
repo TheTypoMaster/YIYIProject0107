@@ -1235,27 +1235,33 @@
 //点击方法
 - (void)waterDidSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ProductModel *aMode = _waterFlow.dataArray[indexPath.row];
-    ProductDetailController *detail = [[ProductDetailController alloc]init];
-    detail.product_id = aMode.product_id;
-    detail.gShop_id = self.shopId;
-    detail.hidesBottomBarWhenPushed = YES;
-    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell*)[_waterFlow.quitView cellAtIndexPath:indexPath];
-    
-    detail.theStorePinpaiProductCell = cell;
-    detail.theStorePinpaiProductModel = aMode;
-    
-    if (self.isChooseProductLink) {
-        detail.isChooseProductLink = YES;
-    }
-    
     self.productDetaillVCpop = YES;
     self.upStoreInfoView_frame = _upStoreInfoView.frame;
     self.backView_water_frame = _backView_water.frame;
     self.waterFlow_frame = _waterFlow.frame;
     self.mainScrollView_contentOffSet = _mainScrollview.contentOffset;
-    [self.navigationController pushViewController:detail animated:YES];
     
+    ProductModel *aMode = _waterFlow.dataArray[indexPath.row];
+    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell*)[_waterFlow.quitView cellAtIndexPath:indexPath];
+
+    if (self.isChooseProductLink) {
+        
+        ProductDetailController *detail = [[ProductDetailController alloc]init];
+        detail.product_id = aMode.product_id;
+        detail.gShop_id = self.shopId;
+        detail.hidesBottomBarWhenPushed = YES;
+        
+        detail.theLastViewClickedCell = cell;
+        detail.theLastViewProductModel = aMode;
+        detail.isChooseProductLink = YES;
+        [self.navigationController pushViewController:detail animated:YES];
+
+    }else
+    {
+        NSDictionary *params = @{@"cell":cell,
+                                 @"model":aMode};
+        [MiddleTools pushToProductDetailWithId:aMode.product_id fromViewController:self lastNavigationHidden:NO hiddenBottom:YES extraParams:params updateBlock:nil];
+    }
 }
 
 - (CGFloat)waterHeightForCellIndexPath:(NSIndexPath *)indexPath
