@@ -79,7 +79,7 @@
     
     
     //缩放tablview
-    int _isOpen[200];
+    int _isOpen[10];
     
     
     //没有tableview时候的header高度
@@ -88,6 +88,8 @@
     
     
     UIView *_tableFooterView;//官方活动view
+    
+    BOOL _isHaveMoreStoreData;//是否有更多商场
     
     
 }
@@ -140,18 +142,19 @@
     
     
     //测试
-    self.tPlat_id = @"26";
+    self.tPlat_id = @"409";
+    
     
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     
     
-    
+    _isHaveMoreStoreData = NO;
     
     [self addObserver:self forKeyPath:@"_count" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
     
     
-    for (int i=0; i<200; i++) {
+    for (int i=0; i<10; i++) {
         _isOpen[i]=0;
     }
     _isOpen[0] = 1;
@@ -179,10 +182,10 @@
     
     
     
-    NSString *url = [NSString stringWithFormat:@"%@&authcode=%@&tt_id=%@",TTAI_DETAIL_V2,[GMAPI getAuthkey],self.tPlat_id];
+    NSString *url = [NSString stringWithFormat:@"%@&authcode=%@&tt_id=%@&&page=%d&count=%d",TTAI_DETAIL_V2,[GMAPI getAuthkey],self.tPlat_id,_collectionView.pageNum,L_PAGE_SIZE];
     
     //测试
-    url = @"http://www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_tt_info&page=1&count=20&authcode=An1XLlEoBuBR6gSZVeUI31XwBOZXolanAi9SY1cyUWZVa1JhVDRQYwE2AzYAbQ19CTg=&tt_id=26";
+    url = @"http://www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_tt_info&page=1&count=6&authcode=An1XLlEoBuBR6gSZVeUI31XwBOZXolanAi9SY1cyUWZVa1JhVDRQYwE2AzYAbQ19CTg=&tt_id=26";
     
     tool_detail = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     
@@ -200,6 +203,9 @@
                 TPlatModel *model = [[TPlatModel alloc]initWithDictionary:dic];
                 [tmpArray addObject:model];
             }
+            
+            
+            
             
             _ttaiDetailModel = [[TPlatModel alloc]initWithDictionary:result];
             _ttaiDetailModel.same_tts = tmpArray;
@@ -225,10 +231,10 @@
     NSString *longitude = [self.locationDic stringValueForKey:@"long"];
     NSString *latitude = [self.locationDic stringValueForKey:@"lat"];
     
-    NSString *url = [NSString stringWithFormat:@"%@&authcode=%@&longitude=%@&latitude=%@&tt_id=%@",TTAI_STORE,[GMAPI getAuthkey],longitude,latitude,self.tPlat_id];
+    NSString *url = [NSString stringWithFormat:@"%@&authcode=%@&longitude=%@&latitude=%@&tt_id=%@page=%d&count=6",TTAI_STORE,[GMAPI getAuthkey],longitude,latitude,self.tPlat_id,_collectionView.pageNum];
     //测试
-    url = @"http://www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_relation_tts&page=1&count=20&authcode=An1XLlEoBuBR6gSZVeUI31XwBOZXolanAi9SY1cyUWZVa1JhVDRQYwE2AzYAbQ19CTg=&longitude=116.402982&latitude=39.912950&tt_id=409";
-//    url = @"http://www.alayy.com/index.php?d=api&c=tplat_v2&m=get_relation_tts&page=1&count=20&authcode=An1XLlEoBuBR6gSZVeUI31XwBOZXolanAi9SY1cyUWZVa1JhVDRQYwE2AzYAbQ19CTg=&longitude=116.402982&latitude=39.912950&tt_id=26";
+    url = @"http://www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_relation_tts&page=1&count=6&authcode=An1XLlEoBuBR6gSZVeUI31XwBOZXolanAi9SY1cyUWZVa1JhVDRQYwE2AzYAbQ19CTg=&longitude=116.402982&latitude=39.912950&tt_id=409";
+
     
     
     tool_detail = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
@@ -251,6 +257,12 @@
                 }
             }
             [temp addObject:amodel];
+        }
+        
+        if (temp.count >= 6) {
+            _isHaveMoreStoreData = YES;
+        }else{
+            _isHaveMoreStoreData = NO;
         }
         
         _relationStoreArray = temp;
@@ -445,6 +457,7 @@
     CGFloat img_width = [[_ttaiDetailModel.image stringValueForKey:@"width"]floatValue];
     CGFloat img_height  = [[_ttaiDetailModel.image stringValueForKey:@"height"]floatValue];
     UIImageView *bigTtaiView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_WIDTH/img_width*img_height)];
+    bigTtaiView.userInteractionEnabled = YES;
     [bigTtaiView sd_setImageWithURL:[NSURL URLWithString:[_ttaiDetailModel.image stringValueForKey:@"url"]] placeholderImage:nil];
     
     [_tabHeaderView addSubview:bigTtaiView];
@@ -644,6 +657,10 @@
     moreStoreBtn.layer.cornerRadius = 10;
     moreStoreBtn.layer.borderColor = [RGBCOLOR(244, 76, 139)CGColor];
     [moreStoreBtn addTarget:self action:@selector(moreStoreBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+    if (!_isHaveMoreStoreData) {
+        [_tableFooterView setFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_WIDTH/official_act_width * official_act_height + tongpinpaituijian_height)];
+        [moreStoreBtn setFrame:CGRectZero];
+    }
     [_tableFooterView addSubview:moreStoreBtn];
     
     UIView *fenLine4 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(moreStoreBtn.frame)+5, DEVICE_WIDTH, 0.5)];
@@ -745,8 +762,13 @@
     }
     
     
+    if (_isHaveMoreStoreData) {
+        height += (_tableFooterView.frame.size.height+5);
+    }else{
+        height += (_tableFooterView.frame.size.height+10);
+    }
     
-    height += (_tableFooterView.frame.size.height+5);
+    
     
     return height;
 }
@@ -1214,7 +1236,11 @@
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return _relationStoreArray.count;
+    NSInteger count = _relationStoreArray.count;
+    if (count>5) {
+        count = 5;
+    }
+    return count;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -1290,6 +1316,7 @@
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 30)];
+    view.backgroundColor = [UIColor whiteColor];
     view.tag = section+10;
     [view addTaget:self action:@selector(viewForHeaderInSectionClicked:) tag:view.tag];
     UILabel *ttLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, DEVICE_WIDTH*0.6, 30)];

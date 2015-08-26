@@ -28,4 +28,5 @@
 //定位信息
 @property(nonatomic,strong)NSDictionary *locationDic;
 
+
 @end
