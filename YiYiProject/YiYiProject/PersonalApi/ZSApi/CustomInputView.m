@@ -151,8 +151,12 @@
     
     [[UIApplication sharedApplication].keyWindow addSubview:text_background_view];
     
+    //标题
+    self.titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 10, DEVICE_WIDTH - 40, 15) title:nil font:14 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"5175a7"]];
+    [text_background_view addSubview:_titleLabel];
     
-    text_input_view = [[UITextView alloc] initWithFrame:CGRectMake(20,20,DEVICE_WIDTH-40,84)];
+    //输入框
+    text_input_view = [[UITextView alloc] initWithFrame:CGRectMake(20,_titleLabel.bottom + 10,DEVICE_WIDTH-40,84 - 10)];
     
     text_input_view.layer.masksToBounds = NO;
     
@@ -167,7 +171,7 @@
     
     send_button = [UIButton buttonWithType:UIButtonTypeCustom];
     
-    send_button.frame = CGRectMake(DEVICE_WIDTH-80,120,60,30);
+    send_button.frame = CGRectMake(DEVICE_WIDTH-80,120,60,30 - 5);
     
     send_button.enabled = NO;
     
@@ -277,7 +281,7 @@
     
     [UIView animateWithDuration:0.275f animations:^{
         _theTouchView.hidden = YES;
-        bself.text_background_view.frame = CGRectMake(0,DEVICE_HEIGHT,DEVICE_WIDTH,250);
+        bself.text_background_view.frame = CGRectMake(0,DEVICE_HEIGHT,DEVICE_WIDTH,250 - 10);
         
         _theTouchView.frame = CGRectMake(0,0,DEVICE_WIDTH,bself.text_background_view.frame.origin.y);
     } completion:^(BOOL finished) {

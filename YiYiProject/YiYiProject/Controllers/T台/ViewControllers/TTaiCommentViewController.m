@@ -259,7 +259,7 @@
  */
 - (void)clickToComment:(UIButton *)sender
 {
-    [self addCommentParentId:@"0" reply_uid:@"0" replyName:@"0"];
+    [self addCommentParentId:@"0" reply_uid:@"0" replyName:@"主题"];
 }
 
 /**
@@ -278,7 +278,9 @@
     self.r_reply_uid = reply_uid;
     self.r_reply_userName = replyName;
 
-    _input_view.text_input_view.text = [parentId isEqualToString:@"0"] ? @"" : [NSString stringWithFormat:@"回复%@:",replyName];
+//    _input_view.text_input_view.text = [parentId isEqualToString:@"0"] ? @"" : [NSString stringWithFormat:@"回复%@:",replyName];
+    
+    _input_view.titleLabel.text = [NSString stringWithFormat:@"回复%@:",replyName];
     
     [self beiginComment];
 }

@@ -32,4 +32,6 @@
 @property(nonatomic,strong)NSString *uid;//回复对应的人
 @property(nonatomic,strong)NSString *type;
 
+@property(nonatomic,strong)NSString *repost_to_username;//回复的对象
+
 @end

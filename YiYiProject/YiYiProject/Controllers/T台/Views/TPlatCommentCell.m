@@ -57,9 +57,9 @@
         
         NSString * content = model.repost_content;
         
-        if (model.r_reply_user_name.length)
+        if (model.repost_to_username.length)
         {
-            content = [NSString stringWithFormat:@"%@:回复 %@:%@",model.user_name,model.r_reply_user_name,content];
+            content = [NSString stringWithFormat:@"%@:回复 %@:%@",model.user_name,model.repost_to_username,content];
         }else
         {
             content = [NSString stringWithFormat:@"%@:%@",model.user_name,content];
@@ -135,7 +135,7 @@
         
         NSString *replyId = params[REPLY_ID];
         
-        //点击名字 调到个人中心
+        //评论
         
         SecondForwardView_block(TPlatCommentCellClickType_Comment,userName,uid,replyId);
     }

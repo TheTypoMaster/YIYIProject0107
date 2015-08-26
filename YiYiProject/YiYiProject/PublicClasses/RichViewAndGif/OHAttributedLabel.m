@@ -425,7 +425,10 @@ BOOL CTRunContainsCharactersFromStringRange(CTRunRef run, NSRange range) {
 }
 
 -(void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
-	[activeLink release];
+	
+    self.backgroundColor = [UIColor clearColor];
+
+    [activeLink release];
 	activeLink = nil;
 	[self setNeedsDisplay];
 }
