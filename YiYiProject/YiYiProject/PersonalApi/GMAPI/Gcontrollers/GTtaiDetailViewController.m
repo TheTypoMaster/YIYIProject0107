@@ -197,7 +197,7 @@
                 [tmpArray addObject:model];
             }
             
-            _ttaiDetailModel = [[GTtaiDetailModel alloc]initWithDictionary:result];
+            _ttaiDetailModel = [[TPlatModel alloc]initWithDictionary:result];
             _ttaiDetailModel.same_tts = tmpArray;
             
             [self setValue:[NSNumber numberWithInt:_count + 1] forKeyPath:@"_count"];
@@ -280,7 +280,7 @@
     _loactionDic = [GMAPI sharedManager].theLocationDic;
     _lat = [_loactionDic stringValueForKey:@"lat"];
     _long = [_locationDic stringValueForKey:@"long"];
-    //请求单品详情
+    //请求T台详情
     [self prepareNetDataForTtaiDetail];
     //请求关联商场
     [self prepareNetDataForStore];
@@ -695,6 +695,14 @@
 
 
 
+-(void)jisuanTabHeight{
+    
+}
+
+
+
+
+
 /**
  *  评论页面
  *
@@ -702,7 +710,6 @@
  */
 - (void)clickToComment:(UIButton *)sender
 {
-    __weak typeof(self) weakSelf = self;
     
     TTaiCommentViewController *commentList = [[TTaiCommentViewController alloc]init];
     commentList.tt_id = self.tPlat_id;

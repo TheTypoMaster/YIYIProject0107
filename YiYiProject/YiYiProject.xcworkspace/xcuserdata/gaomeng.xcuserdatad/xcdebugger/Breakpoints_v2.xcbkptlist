@@ -5326,11 +5326,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GTtaiDetailViewController.m"
-            timestampString = "462195848.818412"
+            timestampString = "462249384.923376"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "909"
-            endingLineNumber = "909"
+            startingLineNumber = "908"
+            endingLineNumber = "908"
             landmarkName = "@implementation GTtaiDetailViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -5342,11 +5342,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GTtaiDetailViewController.m"
-            timestampString = "462195848.818412"
+            timestampString = "462249384.923376"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "955"
-            endingLineNumber = "955"
+            startingLineNumber = "954"
+            endingLineNumber = "954"
             landmarkName = "-clickToActivity:"
             landmarkType = "5">
          </BreakpointContent>
@@ -5566,11 +5566,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GTtaiDetailViewController.m"
-            timestampString = "462195848.818412"
+            timestampString = "462249384.923376"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1248"
-            endingLineNumber = "1248"
+            startingLineNumber = "1247"
+            endingLineNumber = "1247"
             landmarkName = "-tableView:heightForFooterInSection:"
             landmarkType = "5">
          </BreakpointContent>
@@ -5582,11 +5582,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GTtaiDetailViewController.m"
-            timestampString = "462195848.818412"
+            timestampString = "462249384.923376"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1144"
-            endingLineNumber = "1144"
+            startingLineNumber = "1143"
+            endingLineNumber = "1143"
             landmarkName = "@implementation GTtaiDetailViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -5598,11 +5598,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GTtaiDetailViewController.m"
-            timestampString = "462195848.818412"
+            timestampString = "462249384.923376"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "985"
-            endingLineNumber = "985"
+            startingLineNumber = "984"
+            endingLineNumber = "984"
             landmarkName = "-waterDidSelectRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -5614,11 +5614,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GTtaiDetailViewController.m"
-            timestampString = "462195848.818412"
+            timestampString = "462249384.923376"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1257"
-            endingLineNumber = "1257"
+            startingLineNumber = "1256"
+            endingLineNumber = "1256"
             landmarkName = "@implementation GTtaiDetailViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -5630,11 +5630,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GTtaiDetailViewController.m"
-            timestampString = "462195848.818412"
+            timestampString = "462249384.923376"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1285"
-            endingLineNumber = "1285"
+            startingLineNumber = "1284"
+            endingLineNumber = "1284"
             landmarkName = "-viewForHeaderInSectionClicked:"
             landmarkType = "5">
          </BreakpointContent>
@@ -5662,11 +5662,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GTtaiDetailViewController.m"
-            timestampString = "462195848.818412"
+            timestampString = "462249384.923376"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "751"
-            endingLineNumber = "751"
+            startingLineNumber = "750"
+            endingLineNumber = "750"
             landmarkName = "-networkForActionType:"
             landmarkType = "5">
          </BreakpointContent>
@@ -5678,11 +5678,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GTtaiDetailViewController.m"
-            timestampString = "462195848.818412"
+            timestampString = "462249384.923376"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "977"
-            endingLineNumber = "977"
+            startingLineNumber = "976"
+            endingLineNumber = "976"
             landmarkName = "-waterLoadMoreDataForWaterView:"
             landmarkType = "5">
          </BreakpointContent>
