@@ -440,12 +440,31 @@ static inline NSInteger PSCollectionIndexForKey(NSString *key) {
 
     //lcw add
     
-    if ([touch.view isMemberOfClass:[[self.visibleViews objectForKey:key] class]] |
-        [touch.view.superview isMemberOfClass:[[self.visibleViews objectForKey:key] class]]) {
+    UIView *view = touch.view;
+    
+    if ([view isMemberOfClass:[[self.visibleViews objectForKey:key] class]]) {
+        
         return YES;
-    } else {
+    }else
+    {
+        while (view.superview) {
+            
+            if ([view.superview isMemberOfClass:[[self.visibleViews objectForKey:key] class]]) {
+                return YES;
+            }
+            view = view.superview;
+        }
+        
         return NO;
     }
+    
+//    if ([touch.view isMemberOfClass:[[self.visibleViews objectForKey:key] class]] |
+//        [touch.view.superview isMemberOfClass:[[self.visibleViews objectForKey:key] class]] |
+//        [touch.view.superview.superview isMemberOfClass:[[self.visibleViews objectForKey:key] class]]) {
+//        return YES;
+//    } else {
+//        return NO;
+//    }
 }
 
 @end
