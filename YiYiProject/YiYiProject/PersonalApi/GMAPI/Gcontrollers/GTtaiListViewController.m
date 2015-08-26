@@ -632,7 +632,7 @@
         
         NSString *title = maodian_detail[@"product_name"];
         CGPoint point = CGPointMake(dx * imageView.width, dy * imageView.height);
-        AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title];
+        AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title price:[maodian_detail stringValueForKey:@"product_price"]];
         [imageView addSubview:pointView];
         pointView.infoId = productId;
         pointView.infoName = title;
@@ -643,36 +643,6 @@
         }];
         
         //        NSLog(@"单品--title %@",title);
-        
-    }else{
-        
-        //说明是品牌店面
-        
-        NSString *title = maodian_detail[@"shop_name"];
-        int mall_type = [maodian_detail[@"mall_type"] intValue];
-        NSString *storeId;
-        
-        if (mall_type == ShopType_pinpaiDian) {
-            
-            storeId = maodian_detail[@"shop_id"];
-            
-        }else if (mall_type == ShopType_jingpinDian){
-            
-            storeId = maodian_detail[@"mall_id"];
-        }
-        
-        CGPoint point = CGPointMake(dx * imageView.width, dy * imageView.height);
-        AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title];
-        [imageView addSubview:pointView];
-        
-        pointView.infoId = storeId;
-        pointView.infoName = title;
-        pointView.shopType = mall_type;
-        
-        [pointView setAnchorBlock:^(NSString *infoId,NSString *infoName,ShopType shopType){
-            
-            [weakSelf turnToShangChangInfoId:infoId infoName:infoName shopType:shopType];
-        }];
         
     }
     

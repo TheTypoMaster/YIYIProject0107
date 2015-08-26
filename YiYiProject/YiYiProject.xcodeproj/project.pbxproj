@@ -545,6 +545,7 @@
 		E37F843F1B1072D70086CBB7 /* my_store@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E37F84371B1072D70086CBB7 /* my_store@2x.png */; };
 		E37F84431B10784C0086CBB7 /* my_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E37F84421B10784C0086CBB7 /* my_bg@2x.png */; };
 		E37F84451B1080890086CBB7 /* shouye_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E37F84441B1080890086CBB7 /* shouye_bg@2x.png */; };
+		E38232791B8DC55A00C93CB9 /* GMoreTtaiSameStroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E38232781B8DC55A00C93CB9 /* GMoreTtaiSameStroViewController.m */; };
 		E38487721AAA9B7A00BB4B3C /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E38487711AAA9B7A00BB4B3C /* libstdc++.6.0.9.dylib */; };
 		E389FDC21AE64FAD002D6566 /* DynamicMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E389FDC01AE64FAD002D6566 /* DynamicMessageCell.m */; };
 		E389FDC31AE64FAD002D6566 /* DynamicMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E389FDC11AE64FAD002D6566 /* DynamicMessageCell.xib */; };
@@ -1490,6 +1491,8 @@
 		E37F84371B1072D70086CBB7 /* my_store@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "my_store@2x.png"; sourceTree = "<group>"; };
 		E37F84421B10784C0086CBB7 /* my_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "my_bg@2x.png"; sourceTree = "<group>"; };
 		E37F84441B1080890086CBB7 /* shouye_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shouye_bg@2x.png"; sourceTree = "<group>"; };
+		E38232771B8DC55A00C93CB9 /* GMoreTtaiSameStroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMoreTtaiSameStroViewController.h; sourceTree = "<group>"; };
+		E38232781B8DC55A00C93CB9 /* GMoreTtaiSameStroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMoreTtaiSameStroViewController.m; sourceTree = "<group>"; };
 		E38487711AAA9B7A00BB4B3C /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
 		E389FDBF1AE64FAD002D6566 /* DynamicMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamicMessageCell.h; sourceTree = "<group>"; };
 		E389FDC01AE64FAD002D6566 /* DynamicMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamicMessageCell.m; sourceTree = "<group>"; };
@@ -3519,6 +3522,8 @@
 				E334806B1B7D91BA0080A89F /* GTtaiDetailViewController.m */,
 				E39AF4F31B7DEC1300BCDF39 /* GTtaiNearActivViewController.h */,
 				E39AF4F41B7DEC1300BCDF39 /* GTtaiNearActivViewController.m */,
+				E38232771B8DC55A00C93CB9 /* GMoreTtaiSameStroViewController.h */,
+				E38232781B8DC55A00C93CB9 /* GMoreTtaiSameStroViewController.m */,
 			);
 			path = Gcontrollers;
 			sourceTree = "<group>";
@@ -4395,6 +4400,7 @@
 				139139851B847FEF005A4BB6 /* ProductDetailControllerNew.m in Sources */,
 				E305222D1A6ED1B5007BEAFD /* GHolderTextView.m in Sources */,
 				13775A931B818A6F006A1EDB /* MallListViewController.m in Sources */,
+				E38232791B8DC55A00C93CB9 /* GMoreTtaiSameStroViewController.m in Sources */,
 				13D03D3E1AEDD60F0078AA9E /* EditMyInfoViewController.m in Sources */,
 				566FE2571A503B1000A96B5F /* MatchInfoModel.m in Sources */,
 				E3E64A9E1AE0D971002F00A4 /* JKImagePickerController.m in Sources */,

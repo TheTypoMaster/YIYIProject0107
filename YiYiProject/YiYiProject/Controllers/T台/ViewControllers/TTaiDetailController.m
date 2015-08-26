@@ -844,7 +844,7 @@
         
         NSString *title = maodian_detail[@"product_name"];
         CGPoint point = CGPointMake(dx * imageView.width, dy * imageView.height);
-        AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title];
+        AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title price:[maodian_detail stringValueForKey:@"product_price"]];
         [imageView addSubview:pointView];
         pointView.infoId = productId;
         pointView.infoName = title;
@@ -874,7 +874,7 @@
         }
         
         CGPoint point = CGPointMake(dx * imageView.width, dy * imageView.height);
-        AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title];
+        AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title price:[maodian_detail stringValueForKey:@"product_price"]];
         [imageView addSubview:pointView];
         
         pointView.infoId = storeId;

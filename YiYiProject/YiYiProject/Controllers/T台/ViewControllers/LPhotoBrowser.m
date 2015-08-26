@@ -595,7 +595,7 @@
 //        CGPoint point = CGPointMake(dx * realWidth, dy * realHeight + dis);
 
         
-        AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title];
+        AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title price:[maodian_detail stringValueForKey:@"product_price"]];
         [self.clearView addSubview:pointView];
         pointView.infoId = productId;
         pointView.infoName = title;
@@ -626,7 +626,7 @@
             storeId = maodian_detail[@"mall_id"];
         }
         
-        AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title];
+        AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title price:[maodian_detail stringValueForKey:@"product_price"]];
         [self.clearView addSubview:pointView];
         
         pointView.infoId = shopId;

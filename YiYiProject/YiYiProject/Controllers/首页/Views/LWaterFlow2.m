@@ -428,12 +428,8 @@
     if (_waterDelegate && [_waterDelegate respondsToSelector:@selector(waterDidSelectRowAtIndexPath:)]) {
         
         [_waterDelegate waterDidSelectRowAtIndexPath:index];
-    }else if (_waterDelegate && [_waterDelegate respondsToSelector:@selector(waterDidSelectRowAtIndexPath:water:)]){
-        [_waterDelegate waterDidSelectRowAtIndexPath:index water:self];
+        
     }
-    
-    
-    
     
 }
 //- (Class)collectionView:(PSCollectionView *)collectionView cellClassForRowAtIndex:(NSInteger)index

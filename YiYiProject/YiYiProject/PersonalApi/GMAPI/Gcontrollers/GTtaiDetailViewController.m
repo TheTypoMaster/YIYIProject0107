@@ -31,6 +31,10 @@
 
 #import "TTaiCommentViewController.h"//评论页面
 
+#import "GwebViewController.h"//webview
+
+#import "GMoreTtaiSameStroViewController.h"//有T台锚点单品的更多商场
+
 @interface GTtaiDetailViewController ()<UIScrollViewDelegate,PSWaterFlowDelegate,PSCollectionViewDataSource,GgetllocationDelegate,UITableViewDataSource,UITableViewDelegate>
 {
     
@@ -600,6 +604,7 @@
     
     UIImageView *yjyPic = [[UIImageView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(fenLine2.frame)+5, DEVICE_WIDTH, DEVICE_WIDTH/kuan_yjyImage*gao_yjyImage)];
     [yjyPic sd_setImageWithURL:[NSURL URLWithString:[_ttaiDetailModel.official_pic stringValueForKey:@"url"]] placeholderImage:nil];
+    [yjyPic addTaget:self action:@selector(yjyPicClicked) tag:0];
     [view2 addSubview:yjyPic];
     
     UIView *fenLine3 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(yjyPic.frame)+5, DEVICE_WIDTH, 0.5)];
@@ -638,6 +643,7 @@
     moreStoreBtn.layer.borderWidth = 0.5;
     moreStoreBtn.layer.cornerRadius = 10;
     moreStoreBtn.layer.borderColor = [RGBCOLOR(244, 76, 139)CGColor];
+    [moreStoreBtn addTarget:self action:@selector(moreStoreBtnClicked) forControlEvents:UIControlEventTouchUpInside];
     [_tableFooterView addSubview:moreStoreBtn];
     
     UIView *fenLine4 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(moreStoreBtn.frame)+5, DEVICE_WIDTH, 0.5)];
@@ -646,6 +652,7 @@
     
     UIImageView *guanwanghuodongImv = [[UIImageView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(fenLine4.frame), DEVICE_WIDTH, DEVICE_WIDTH/official_act_width * official_act_height)];
     [guanwanghuodongImv l_setImageWithURL:[NSURL URLWithString:_ttaiDetailModel.official_act[@"cover_pic"]] placeholderImage:DEFAULT_YIJIAYI];
+    [guanwanghuodongImv addTaget:self action:@selector(pushToGuanfanghuodong) tag:0];
     [_tableFooterView addSubview:guanwanghuodongImv];
     
     
@@ -658,32 +665,17 @@
     
     
     
-    NSInteger count1 = 0;
-    if (_relationStoreArray.count>0) {
-        GTtaiRelationStoreModel *amodel = _relationStoreArray[0];
-        NSDictionary *image = amodel.image;
-        if ([[image stringValueForKey:@"have_detail"]intValue] == 1) {
-            count1 = [image arrayValueForKey:@"img_detail"].count;
-        }else{
-            count1 = 0;
-        }
-        height = height+ count1*60+_relationStoreArray.count*30;
-        
-    }
+    CGFloat jjj = [self jisuanTabHeight];
+    
+    height +=jjj;
+    
+    
     //header上的可缩放tableview
-    _tabHeaderTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(view2.frame), DEVICE_WIDTH, count1*60+_relationStoreArray.count*30 + _tableFooterView.frame.size.height) style:UITableViewStyleGrouped];
+    _tabHeaderTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(view2.frame), DEVICE_WIDTH, jjj) style:UITableViewStyleGrouped];
     _tabHeaderTableView.delegate = self;
     _tabHeaderTableView.dataSource = self;
     _tabHeaderTableView.tableFooterView = _tableFooterView;
     [_tabHeaderView addSubview:_tabHeaderTableView];
-    
-    
-    
-   
-    
-    
-    
-    height += (_tableFooterView.frame.size.height+5);
     
     [_tabHeaderView setHeight:height];
     
@@ -693,10 +685,70 @@
     
 }
 
-
-
--(void)jisuanTabHeight{
+-(void)moreStoreBtnClicked{
     
+    GMoreTtaiSameStroViewController *cc = [[GMoreTtaiSameStroViewController alloc]init];
+    [self.navigationController pushViewController:cc animated:YES];
+    
+}
+
+
+-(void)pushToGuanfanghuodong{
+    
+}
+
+-(void)yjyPicClicked{
+    if ([[_ttaiDetailModel.official_pic stringValueForKey:@"redirect_type"]intValue] == 0) {
+        GwebViewController *ccc = [[GwebViewController alloc]init];
+        ccc.urlstring = [_ttaiDetailModel.official_pic stringValueForKey:@"url"];
+        ccc.isSaoyisao = YES;
+        ccc.hidesBottomBarWhenPushed = YES;
+        UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:ccc];
+        [self presentViewController:navc animated:YES completion:^{
+            
+        }];
+    }else{
+        
+    }
+}
+
+
+//计算缩放tableview的高度
+-(CGFloat)jisuanTabHeight{
+    CGFloat height = 0;
+    NSInteger count1 = 0;
+    NSInteger tCount = _relationStoreArray.count;
+    
+    
+    for (int i = 0; i<tCount; i++) {
+        GTtaiRelationStoreModel *model = _relationStoreArray[i];
+        if ([[model.image stringValueForKey:@"have_detail"]intValue] == 1) {
+            count1 = [model.image arrayValueForKey:@"img_detail"].count;
+        }else{
+            count1 = 0;
+        }
+        
+        
+        if (_isOpen[i] == 1) {//打开状态
+            height += (count1*60+30);
+            if (model.activity) {
+                CGFloat p_width = [[model.activity stringValueForKey:@"width"] floatValue];
+                CGFloat p_height = [[model.activity stringValueForKey:@"height"]floatValue];
+                CGFloat n_height = DEVICE_WIDTH/p_width*p_height;
+                height += n_height;
+            }
+        }else{
+            height += 30;
+        }
+        
+        
+    }
+    
+    
+    
+    height += (_tableFooterView.frame.size.height+5);
+    
+    return height;
 }
 
 
@@ -846,7 +898,7 @@
 //        NSString *title = maodian_detail[@"product_name"];
         NSString *title = _ttaiDetailModel.brand_name;
         CGPoint point = CGPointMake(dx * imageView.width, dy * imageView.height);
-        AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title];
+        AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title price:[maodian_detail stringValueForKey:@"product_price"]];
         [imageView addSubview:pointView];
         pointView.infoId = productId;
         pointView.infoName = title;
@@ -986,14 +1038,6 @@
 - (void)waterDidSelectRowAtIndexPath:(NSInteger)index
 {
     
-    
-    
-    
-}
-
--(void)waterDidSelectRowAtIndexPath:(NSInteger)index water:(PSCollectionView *)waterview{
-    NSLog(@"%s",__FUNCTION__);
-    
     TPlatModel *model = _collectionView.dataArray[index];
     
     //新版
@@ -1004,6 +1048,7 @@
     [self.navigationController pushViewController:ggg animated:YES];
     
 }
+
 
 
 
@@ -1193,6 +1238,56 @@
     return count;
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    
+    CGFloat height = 0;
+    NSString *url;
+    GTtaiRelationStoreModel *model = _relationStoreArray[section];
+    if (model.activity) {//有活动
+        url = [model.activity stringValueForKey:@"cover_pic"];
+        CGFloat p_width = [[model.activity stringValueForKey:@"width"]floatValue];
+        CGFloat p_height = [[model.activity stringValueForKey:@"height"]floatValue];
+        height = DEVICE_WIDTH/p_width * p_height;
+    }
+    
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, height)];
+    view.backgroundColor = [UIColor redColor];
+    UIImageView *imv = [[UIImageView alloc]initWithFrame:view.bounds];
+    [imv l_setImageWithURL:[NSURL URLWithString:url] placeholderImage:DEFAULT_YIJIAYI];
+    
+    [imv addTapGestureTarget:self action:@selector(viewForFooterInSectionClicked:) tag:(int)(section + 1000)];
+    
+    [view addSubview:imv];
+    
+    return view;
+}
+
+
+-(void)viewForFooterInSectionClicked:(UITapGestureRecognizer*)sender{
+    
+    NSInteger tt = sender.view.tag-1000;
+    GTtaiRelationStoreModel *model = _relationStoreArray[tt];
+    if ([[model.activity stringValueForKey:@"redirect_type"]intValue] == 1) {//外链活动
+        GwebViewController *ccc = [[GwebViewController alloc]init];
+        ccc.urlstring = [model.activity stringValueForKey:@"url"];
+        ccc.isSaoyisao = YES;
+        ccc.hidesBottomBarWhenPushed = YES;
+        UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:ccc];
+        [self presentViewController:navc animated:YES completion:^{
+            
+        }];
+    }else if ([[model.activity stringValueForKey:@"redirect_type"]intValue] == 0){//跳转应用内活动
+        NSString *activityId = [model.activity stringValueForKey:@"id"];
+        MessageDetailController *detail = [[MessageDetailController alloc]init];
+        detail.isActivity = YES;
+        detail.msg_id = activityId;
+        detail.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:detail animated:YES];
+    }
+    
+}
+
+
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 30)];
     view.tag = section+10;
@@ -1252,13 +1347,27 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 0.01;
-}
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"%s",__FUNCTION__);
+    CGFloat height = 0.01;
+    GTtaiRelationStoreModel *model = _relationStoreArray[section];
+    if (model.activity) {//有活动
+        CGFloat p_width = [[model.activity stringValueForKey:@"width"]floatValue];
+        CGFloat p_height = [[model.activity stringValueForKey:@"height"]floatValue];
+        height = DEVICE_WIDTH/p_width * p_height;
+    }
+    
+    
+    for (int i = 0; i<_relationStoreArray.count; i++) {
+        if (_isOpen[i] != 1) {
+            height = 0.01;
+        }
+    }
+    
+    
+    return height;
     
 }
+
+
 
 
 
@@ -1271,36 +1380,40 @@
     NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:sender.tag-10];
     
     
-    
     CGFloat newHeight = 0;//新高度
+
     
-    CGFloat height = 0;//tableview高度
-    height += _tableFooterView.frame.size.height;
+    newHeight = [self jisuanTabHeight];
     
-    for (int i = 0; i<_relationStoreArray.count; i++) {
-        if (_isOpen[i] == 1) {
-            GTtaiRelationStoreModel *model = _relationStoreArray[i];
-            if ([[model.image stringValueForKey:@"have_detail"]intValue] == 1) {
-                CGFloat hhh = [model.image arrayValueForKey:@"img_detail"].count *60;
-                height = height + hhh +30;
-            }
-            
-        }else{
-            height += 30;
-        }
-    }
+    newHeight += _noTabHeaderHeight;
     
-    
-    
-    newHeight += (_noTabHeaderHeight+height+5);
     
     [_tabHeaderView setHeight:newHeight];
     
     
-    [_tabHeaderTableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
-    [UIView animateWithDuration:0.3 animations:^{
-        [_collectionView reloadData];
+    
+    [UIView animateWithDuration:0.0 animations:^{
+        [_tabHeaderTableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
+        _collectionView.headerView = _tabHeaderView;
     }];
+    
+    
+    
+    
+}
+
+
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"%s",__FUNCTION__);
+    
+    
+    GTtaiRelationStoreModel *model = _relationStoreArray[indexPath.section];
+    NSArray *img_detail = [model.image arrayValueForKey:@"img_detail"];
+    NSDictionary *dic = img_detail[indexPath.row];
+    NSString *product_id = [dic stringValueForKey:@"product_id"];
+    
+    [MiddleTools pushToProductDetailWithId:product_id fromViewController:self lastNavigationHidden:NO hiddenBottom:YES];
     
     
 }

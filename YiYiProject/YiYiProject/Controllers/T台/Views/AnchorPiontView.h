@@ -46,7 +46,8 @@ typedef void(^AnchorClickBlock)(NSString *infoId,NSString *infoName,ShopType sho
  *  @param title       锚点name
  */
 -(instancetype)initWithAnchorPoint:(CGPoint)anchorPoint
-                             title:(NSString *)title;
+                             title:(NSString *)title
+                             price:(NSString*)thePrice;
 
 
 -(instancetype)initWithAnchorPoint:(CGPoint)anchorPoint

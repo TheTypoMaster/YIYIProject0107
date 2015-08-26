@@ -30,19 +30,21 @@
 
 -(instancetype)initWithAnchorPoint:(CGPoint)anchorPoint
                              title:(NSString *)title
+                             price:(NSString *)thePrice
 {
     self = [super initWithFrame:CGRectMake(anchorPoint.x, anchorPoint.y, 0, ACHORVIEW_HEIGHT)];
     if (self) {
         
-//        self.backgroundColor = [UIColor orangeColor];
         
         BOOL isRight  = YES;
         
         //满足此条件则放左侧
-        if (anchorPoint.x > DEVICE_WIDTH - 50) {
+        if (anchorPoint.x > DEVICE_WIDTH*0.5) {
             
             isRight = NO;
         }
+        
+        thePrice = [NSString stringWithFormat:@"￥%d",[thePrice intValue]];
         
         if (isRight) {
             
@@ -66,7 +68,12 @@
             
             CGFloat aWidth = [LTools widthForText:title font:12.f];
             
-            CGFloat aWidth_imageView = aWidth + 7 * 2;//左侧 右侧 7
+            CGFloat aWidth1 = [LTools widthForText:thePrice font:12.f];
+            aWidth1+=2;
+            if (aWidth>DEVICE_WIDTH*0.5-aWidth1) {
+                aWidth = DEVICE_WIDTH*0.5-aWidth1-10;
+            }
+            CGFloat aWidth_imageView = aWidth + aWidth1 + 5.5 * 2;//左侧 右侧 7
             
             //箭头imageView
             
@@ -78,9 +85,22 @@
             [self addSubview:_imageView];
             
             //文字显示label
+            self.titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(12, 0, aWidth, ACHORVIEW_HEIGHT)];
+            self.titleLabel.font = [UIFont systemFontOfSize:12];
+            self.titleLabel.textAlignment = NSTextAlignmentLeft;
+            self.titleLabel.textColor = [UIColor whiteColor];
+            self.titleLabel.text = title;
+            [_imageView addSubview:self.titleLabel];
             
-            self.titleLabel = [LTools createLabelFrame:CGRectMake(12, 0, aWidth, ACHORVIEW_HEIGHT) title:title font:12.f align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
-            [_imageView addSubview:_titleLabel];
+            //价钱
+            UILabel *priceLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.titleLabel.frame)+2, 0, aWidth1, ACHORVIEW_HEIGHT)];
+            priceLabel.backgroundColor = RGBCOLOR(244, 76, 139);
+            priceLabel.textColor = [UIColor whiteColor];
+            priceLabel.font = [UIFont systemFontOfSize:12];
+            priceLabel.textAlignment = NSTextAlignmentLeft;
+            priceLabel.text = [NSString stringWithFormat:@"%@",thePrice];
+            [_imageView addSubview:priceLabel];
+            
             
             
             [self setTheRightLocationAndFrame];
@@ -89,9 +109,14 @@
         {
             //文字宽度
             
-            CGFloat aWidth = [LTools widthForText:title font:12.f];
             
-            CGFloat aWidth_imageView = aWidth + 7 * 2;//左侧 右侧 7
+            CGFloat aWidth = [LTools widthForText:title font:12.f];
+            CGFloat aWidth1 = [LTools widthForText:thePrice font:12.f];
+            aWidth1+=2;
+            if (aWidth>DEVICE_WIDTH*0.5-aWidth1) {
+                aWidth = DEVICE_WIDTH*0.5-aWidth1-10;
+            }
+            CGFloat aWidth_imageView = aWidth + aWidth1 + 5.5 * 2;//左侧 右侧 7
             
             //箭头imageView
             
@@ -102,9 +127,20 @@
             _imageView.image = [image stretchableImageWithLeftCapWidth:15 topCapHeight:ACHORVIEW_HEIGHT];
             [self addSubview:_imageView];
             
+            //价钱
+            UILabel *priceLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, aWidth1, ACHORVIEW_HEIGHT)];
+            priceLabel.backgroundColor = RGBCOLOR(244, 76, 139);
+            priceLabel.textColor = [UIColor whiteColor];
+            priceLabel.font = [UIFont systemFontOfSize:12];
+            priceLabel.textAlignment = NSTextAlignmentLeft;
+            priceLabel.text = [NSString stringWithFormat:@"%@",thePrice];
+            [_imageView addSubview:priceLabel];
+            
+            
+            
             //文字显示label
             
-            self.titleLabel = [LTools createLabelFrame:CGRectMake(5, 0, aWidth, ACHORVIEW_HEIGHT) title:title font:12.f align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
+            self.titleLabel = [LTools createLabelFrame:CGRectMake(CGRectGetMaxX(priceLabel.frame)+2, 0, aWidth, ACHORVIEW_HEIGHT) title:title font:12.f align:NSTextAlignmentLeft textColor:[UIColor whiteColor]];
             [_imageView addSubview:_titleLabel];
             
             
