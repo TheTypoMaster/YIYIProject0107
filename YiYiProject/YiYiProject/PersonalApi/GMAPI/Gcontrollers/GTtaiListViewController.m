@@ -605,7 +605,7 @@
              },*/
             NSDictionary *maodian_detail=(NSDictionary *)[img_detail objectAtIndex:i];
             
-            [self createbuttonWithModel:maodian_detail imageView:imageView];
+            [self createbuttonWithModel:maodian_detail imageView:imageView model:aModel];
             
         }
     }
@@ -614,7 +614,7 @@
 
 //等到加载完图片之后再加载图片上的三个button
 
--(void)createbuttonWithModel:(NSDictionary*)maodian_detail imageView:(UIView *)imageView{
+-(void)createbuttonWithModel:(NSDictionary*)maodian_detail imageView:(UIView *)imageView model:(TPlatModel*)theMofel{
     
     NSString *productId = maodian_detail[@"product_id"];
     
@@ -628,7 +628,8 @@
     if (product_id>0) {
         //说明是单品
         
-        NSString *title = maodian_detail[@"product_name"];
+//        NSString *title = maodian_detail[@"product_name"];
+        NSString *title = theMofel.brand_name;
         CGPoint point = CGPointMake(dx * imageView.width, dy * imageView.height);
         AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title price:[maodian_detail stringValueForKey:@"product_price"]];
         [imageView addSubview:pointView];
