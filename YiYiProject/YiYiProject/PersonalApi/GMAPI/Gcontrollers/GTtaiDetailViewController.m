@@ -187,7 +187,7 @@
     NSString *url = [NSString stringWithFormat:@"%@&authcode=%@&tt_id=%@&&page=%d&count=%d",TTAI_DETAIL_V2,[GMAPI getAuthkey],self.tPlat_id,_collectionView.pageNum,L_PAGE_SIZE];
     
     //测试
-    url = @"http://www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_tt_info&page=1&count=6&authcode=An1XLlEoBuBR6gSZVeUI31XwBOZXolanAi9SY1cyUWZVa1JhVDRQYwE2AzYAbQ19CTg=&tt_id=26";
+//    url = @"http://www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_tt_info&page=1&count=6&authcode=An1XLlEoBuBR6gSZVeUI31XwBOZXolanAi9SY1cyUWZVa1JhVDRQYwE2AzYAbQ19CTg=&tt_id=26";
     
     
     NSLog(@"T台详情%@",url);
@@ -242,7 +242,7 @@
     NSString *url = [NSString stringWithFormat:@"%@&authcode=%@&tt_id=%@&&page=%d&count=%d",TTAI_DETAIL_V2,[GMAPI getAuthkey],self.tPlat_id,_collectionView.pageNum,L_PAGE_SIZE];
     
     //测试
-        url = @"http://www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_tt_info&page=1&count=6&authcode=An1XLlEoBuBR6gSZVeUI31XwBOZXolanAi9SY1cyUWZVa1JhVDRQYwE2AzYAbQ19CTg=&tt_id=26";
+//        url = @"http://www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_tt_info&page=1&count=6&authcode=An1XLlEoBuBR6gSZVeUI31XwBOZXolanAi9SY1cyUWZVa1JhVDRQYwE2AzYAbQ19CTg=&tt_id=26";
     
     
     NSLog(@"T台详情%@",url);
@@ -296,8 +296,8 @@
     
     NSString *url = [NSString stringWithFormat:@"%@&authcode=%@&longitude=%@&latitude=%@&tt_id=%@page=%d&count=6",TTAI_STORE,[GMAPI getAuthkey],longitude,latitude,self.tPlat_id,_collectionView.pageNum];
     //测试
-    url = @"http://www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_relation_tts&page=1&count=6&authcode=An1XLlEoBuBR6gSZVeUI31XwBOZXolanAi9SY1cyUWZVa1JhVDRQYwE2AzYAbQ19CTg=&longitude=116.402982&latitude=39.912950&tt_id=409";
-    NSLog(@"T台关联商场%@",url);
+//    url = @"http://www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_relation_tts&page=1&count=6&authcode=An1XLlEoBuBR6gSZVeUI31XwBOZXolanAi9SY1cyUWZVa1JhVDRQYwE2AzYAbQ19CTg=&longitude=116.402982&latitude=39.912950&tt_id=409";
+//    NSLog(@"T台关联商场%@",url);
 
     
     
