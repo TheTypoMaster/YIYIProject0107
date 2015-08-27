@@ -91,6 +91,8 @@
     
     BOOL _isHaveMoreStoreData;//是否有更多商场
     
+    NSMutableArray *_tmpArray;
+    
     
 }
 @end
@@ -142,7 +144,7 @@
     
     
     //测试
-    self.tPlat_id = @"409";
+//    self.tPlat_id = @"409";
     
     
     
@@ -187,6 +189,9 @@
     //测试
     url = @"http://www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_tt_info&page=1&count=6&authcode=An1XLlEoBuBR6gSZVeUI31XwBOZXolanAi9SY1cyUWZVa1JhVDRQYwE2AzYAbQ19CTg=&tt_id=26";
     
+    
+    NSLog(@"T台详情%@",url);
+    
     tool_detail = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     
     [tool_detail requestCompletion:^(NSDictionary *result, NSError *erro) {
@@ -198,20 +203,20 @@
         if ([result isKindOfClass:[NSDictionary class]]) {
             
             NSArray *same_tts = [result arrayValueForKey:@"same_tts"];
-            NSMutableArray *tmpArray = [NSMutableArray arrayWithCapacity:1];
+            _tmpArray = [NSMutableArray arrayWithCapacity:1];
             for (NSDictionary *dic in same_tts) {
                 TPlatModel *model = [[TPlatModel alloc]initWithDictionary:dic];
-                [tmpArray addObject:model];
+                [_tmpArray addObject:model];
             }
             
             
             
             
             _ttaiDetailModel = [[TPlatModel alloc]initWithDictionary:result];
-            _ttaiDetailModel.same_tts = tmpArray;
-            
             [self setValue:[NSNumber numberWithInt:_count + 1] forKeyPath:@"_count"];
         }
+        
+        
         
         
         [self createNavigationbarTools];//导航条
@@ -225,6 +230,64 @@
     }];
 }
 
+
+//请求T台详情数据
+-(void)prepareMoreNetDataForTtaiDetail{
+    if (tool_detail) {
+        [tool_detail cancelRequest];
+    }
+    
+    
+    
+    NSString *url = [NSString stringWithFormat:@"%@&authcode=%@&tt_id=%@&&page=%d&count=%d",TTAI_DETAIL_V2,[GMAPI getAuthkey],self.tPlat_id,_collectionView.pageNum,L_PAGE_SIZE];
+    
+    //测试
+        url = @"http://www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_tt_info&page=1&count=6&authcode=An1XLlEoBuBR6gSZVeUI31XwBOZXolanAi9SY1cyUWZVa1JhVDRQYwE2AzYAbQ19CTg=&tt_id=26";
+    
+    
+    NSLog(@"T台详情%@",url);
+    
+    tool_detail = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    
+    [tool_detail requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"result %@",result);
+        
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        
+        if ([result isKindOfClass:[NSDictionary class]]) {
+            
+            NSArray *same_tts = [result arrayValueForKey:@"same_tts"];
+            _tmpArray = [NSMutableArray arrayWithCapacity:1];
+            for (NSDictionary *dic in same_tts) {
+                TPlatModel *model = [[TPlatModel alloc]initWithDictionary:dic];
+                [_tmpArray addObject:model];
+            }
+            
+            
+            
+            
+            _ttaiDetailModel = [[TPlatModel alloc]initWithDictionary:result];
+             [_collectionView reloadData:_tmpArray pageSize:L_PAGE_SIZE];
+            _ttaiDetailModel.same_tts = _collectionView.dataArray;
+            
+        }
+        
+        
+       
+        
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+        [_collectionView loadFail];
+        
+    }];
+}
+
+
+
+
 //请求T台关联的商场
 -(void)prepareNetDataForStore{
     
@@ -234,6 +297,7 @@
     NSString *url = [NSString stringWithFormat:@"%@&authcode=%@&longitude=%@&latitude=%@&tt_id=%@page=%d&count=6",TTAI_STORE,[GMAPI getAuthkey],longitude,latitude,self.tPlat_id,_collectionView.pageNum];
     //测试
     url = @"http://www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_relation_tts&page=1&count=6&authcode=An1XLlEoBuBR6gSZVeUI31XwBOZXolanAi9SY1cyUWZVa1JhVDRQYwE2AzYAbQ19CTg=&longitude=116.402982&latitude=39.912950&tt_id=409";
+    NSLog(@"T台关联商场%@",url);
 
     
     
@@ -437,7 +501,7 @@
         [self loadCustomHeaderView];
         
         //同款推荐
-        [_collectionView reloadData:_ttaiDetailModel.same_tts pageSize:L_PAGE_SIZE];
+        [_collectionView reloadData:_tmpArray pageSize:L_PAGE_SIZE];
         
     }
 }
@@ -458,7 +522,7 @@
     CGFloat img_height  = [[_ttaiDetailModel.image stringValueForKey:@"height"]floatValue];
     UIImageView *bigTtaiView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_WIDTH/img_width*img_height)];
     bigTtaiView.userInteractionEnabled = YES;
-    [bigTtaiView sd_setImageWithURL:[NSURL URLWithString:[_ttaiDetailModel.image stringValueForKey:@"url"]] placeholderImage:nil];
+    [bigTtaiView l_setImageWithURL:[NSURL URLWithString:[_ttaiDetailModel.image stringValueForKey:@"url"]] placeholderImage:DEFAULT_YIJIAYI];
     
     [_tabHeaderView addSubview:bigTtaiView];
     if ([[_ttaiDetailModel.image stringValueForKey:@"have_detail"]intValue] == 1) {
@@ -471,14 +535,18 @@
     height = bigTtaiView.frame.size.height;
     
     //拍摄地 T台content 相关view
-    UIView *view1 = [[UIView alloc]initWithFrame:CGRectMake(0, height+5, DEVICE_WIDTH, 0)];
+    UIView *view1 = [[UIView alloc]initWithFrame:CGRectMake(0, height, DEVICE_WIDTH, 0)];
     [_tabHeaderView addSubview:view1];
     
-    UILabel *paishedi = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, DEVICE_WIDTH - 20, 15)];
+    UILabel *paishedi = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, DEVICE_WIDTH - 20, 15)];
     paishedi.font = [UIFont systemFontOfSize:12];
     paishedi.numberOfLines = 1;
     paishedi.textColor = RGBCOLOR(134, 135, 136);
-    paishedi.text = [NSString stringWithFormat:@"拍摄于%@",_ttaiDetailModel.photo_mall_name];
+    if (![LTools isEmpty:_ttaiDetailModel.photo_mall_name]) {
+        paishedi.text = [NSString stringWithFormat:@"拍摄于%@",_ttaiDetailModel.photo_mall_name];
+    }else{
+        [paishedi setFrame:CGRectMake(10, 5, DEVICE_WIDTH-20, 0)];
+    }
     [view1 addSubview:paishedi];
     
     
@@ -487,10 +555,22 @@
     miaoshuLabel.font = [UIFont systemFontOfSize:12];
     miaoshuLabel.textColor = [UIColor blackColor];
     miaoshuLabel.numberOfLines = 2;
-    miaoshuLabel.text = _ttaiDetailModel.tt_content;
-    [miaoshuLabel setMatchedFrame4LabelWithOrigin:CGPointMake(paishedi.frame.origin.x, CGRectGetMaxY(paishedi.frame)+5) width: paishedi.frame.size.width];
+    if (![LTools isEmpty:_ttaiDetailModel.tt_content]) {
+        miaoshuLabel.text = _ttaiDetailModel.tt_content;
+        [miaoshuLabel setMatchedFrame4LabelWithOrigin:CGPointMake(paishedi.frame.origin.x, CGRectGetMaxY(paishedi.frame)+5) width: paishedi.frame.size.width];
+    }else{
+        [miaoshuLabel setFrame:CGRectZero];
+    }
     
-    [view1 setHeight:paishedi.frame.size.height+miaoshuLabel.frame.size.height+10];
+    
+    NSLog(@"paishedi.frame.size.height %f  miaoshuLabel.frame.size.height %f",paishedi.frame.size.height,miaoshuLabel.frame.size.height);
+    
+    if (paishedi.frame.size.height == 0 && miaoshuLabel.frame.size.height == 0) {
+        [view1 setHeight:paishedi.frame.size.height+miaoshuLabel.frame.size.height+0.5];
+    }else{
+        [view1 setHeight:paishedi.frame.size.height+miaoshuLabel.frame.size.height+15];
+    }
+    
     
     height+=view1.frame.size.height;
     
@@ -531,6 +611,11 @@
         [bself cycleScrollDidClickedWithIndex:pageIndex];
     };
     [view2 addSubview:_topScrollView1];
+    if (count == 0) {
+        _topScrollView1.hidden = YES;
+    }else{
+        _topScrollView1.hidden = NO;
+    }
     
     //评论
     UIButton *pinglunBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -606,7 +691,9 @@
     }
     
     [tagScrollView setContentSize:CGSizeMake(tagScrollViewContentWidth, 30)];
-    
+    if (tagWidthArray.count == 0) {
+        [tagScrollView setFrame:CGRectMake(0, CGRectGetMaxY(fenLine1.frame), DEVICE_WIDTH, 0)];
+    }
     
     UIView *fenLine2 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(tagScrollView.frame), DEVICE_WIDTH, 0.5)];
     fenLine2.backgroundColor = fenLine.backgroundColor;
@@ -711,11 +798,27 @@
 
 
 -(void)pushToGuanfanghuodong{
-    
+    if ([[_ttaiDetailModel.official_act stringValueForKey:@"redirect_type"]intValue] == 1) {
+        GwebViewController *ccc = [[GwebViewController alloc]init];
+        ccc.urlstring = [_ttaiDetailModel.official_act stringValueForKey:@"url"];
+        ccc.isSaoyisao = YES;
+        ccc.hidesBottomBarWhenPushed = YES;
+        UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:ccc];
+        [self presentViewController:navc animated:YES completion:^{
+            
+        }];
+    }else if ([[_ttaiDetailModel.official_act stringValueForKey:@"redirect_type"]intValue] == 0){
+        NSString *activityId = [_ttaiDetailModel.official_act stringValueForKey:@"activity_id"];
+        MessageDetailController *detail = [[MessageDetailController alloc]init];
+        detail.isActivity = YES;
+        detail.msg_id = activityId;
+        detail.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:detail animated:YES];
+    }
 }
 
 -(void)yjyPicClicked{
-    if ([[_ttaiDetailModel.official_pic stringValueForKey:@"redirect_type"]intValue] == 0) {
+    if ([[_ttaiDetailModel.official_pic stringValueForKey:@"redirect_type"]intValue] == 1) {
         GwebViewController *ccc = [[GwebViewController alloc]init];
         ccc.urlstring = [_ttaiDetailModel.official_pic stringValueForKey:@"url"];
         ccc.isSaoyisao = YES;
@@ -762,11 +865,13 @@
     }
     
     
-    if (_isHaveMoreStoreData) {
-        height += (_tableFooterView.frame.size.height+5);
-    }else{
-        height += (_tableFooterView.frame.size.height+10);
-    }
+//    if (_isHaveMoreStoreData) {
+//        height += (_tableFooterView.frame.size.height+5);
+//    }else{
+//        height += (_tableFooterView.frame.size.height+10);
+//    }
+    
+    height += (_tableFooterView.frame.size.height+5);
     
     
     
@@ -798,6 +903,23 @@
 //            [weakSelf networkForCommentList:YES];//更新评论
         }
     };
+    
+    
+    
+    CATransition *transition = [CATransition animation];
+    
+    transition.duration = 0.7f;
+    
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    
+    transition.type = @"oglFlip";
+    
+    transition.subtype = kCATransitionFromLeft;
+    
+    transition.delegate = self;
+    
+    [self.navigationController.view.layer addAnimation:transition forKey:nil];
+    
     
     [self.navigationController pushViewController:commentList animated:YES];
 }
@@ -889,7 +1011,6 @@
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-        [GMAPI showAutoHiddenMBProgressWithText:RESULT_INFO addToView:self.view];
         
     }];
 }
@@ -1054,7 +1175,7 @@
 }
 - (void)waterLoadMoreDataForWaterView:(PSCollectionView *)waterView
 {
-    [self prepareNetDataForTtaiDetail];
+    [self prepareMoreNetDataForTtaiDetail];
 }
 
 - (void)waterDidSelectRowAtIndexPath:(NSInteger)index
@@ -1104,6 +1225,12 @@
     if (!cell) {
         cell = [[GTtaiDetailSamettCell alloc]init];
     }
+    
+    
+    for (UIView*view in cell.subviews) {
+        [view removeFromSuperview];
+    }
+    
     
     cell.photoView.userInteractionEnabled = NO;
     
@@ -1322,11 +1449,17 @@
     UILabel *ttLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, DEVICE_WIDTH*0.6, 30)];
     
     
+    
     GTtaiRelationStoreModel *amodel = _relationStoreArray[section];
-    ttLabel.text = [NSString stringWithFormat:@"%@-%@ %@m",amodel.brand_name,amodel.mall_name,amodel.distance];
+    NSString *distance;
+    if ([amodel.distance integerValue]>=1000) {
+        distance = [NSString stringWithFormat:@"%.1fkm",[amodel.distance floatValue]*0.001];
+    }else{
+        distance = [NSString stringWithFormat:@"%.1fm",[amodel.distance floatValue]];
+    }
+    ttLabel.text = [NSString stringWithFormat:@"%@-%@ %@",amodel.brand_name,amodel.mall_name,distance];
     ttLabel.font = [UIFont systemFontOfSize:12];
     [view addSubview:ttLabel];
-//    ttLabel.backgroundColor = [UIColor orangeColor];
     
     
     CGFloat totlePrice = 0;

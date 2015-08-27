@@ -106,12 +106,12 @@
     
     [self performSelector:@selector(loadData) withObject:nil afterDelay:0.2];
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateTTai:) name:NOTIFICATION_LOGIN object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateTTai:) name:NOTIFICATION_LOGOUT object:nil];
-    
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateTTai:) name:NOTIFICATION_TTAI_PUBLISE_SUCCESS object:nil];
-    
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receiverNotify2:) name:NOTIFICATION_TPLATDETAIL_SHOW object:nil];
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateTTai:) name:NOTIFICATION_LOGIN object:nil];
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateTTai:) name:NOTIFICATION_LOGOUT object:nil];
+//    
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateTTai:) name:NOTIFICATION_TTAI_PUBLISE_SUCCESS object:nil];
+//    
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receiverNotify2:) name:NOTIFICATION_TPLATDETAIL_SHOW object:nil];
     
     
     //添加滑动到顶部按钮
@@ -220,7 +220,7 @@
             
             ActivityModel *amodel = [[ActivityModel alloc]initWithDictionary:dic];
             UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 125)];
-            [imv l_setImageWithURL:[NSURL URLWithString:amodel.img_url] placeholderImage:nil];
+            [imv l_setImageWithURL:[NSURL URLWithString:amodel.img_url] placeholderImage:DEFAULT_YIJIAYI];
             [viewsArray addObject:imv];
             [_upScrollViewData addObject:amodel];
         }
