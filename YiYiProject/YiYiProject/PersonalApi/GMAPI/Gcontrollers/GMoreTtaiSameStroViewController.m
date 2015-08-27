@@ -11,6 +11,8 @@
 #import "GTtaiRelationStoreModel.h"
 #import "GBtn.h"
 #import "GTtaiDetailViewController.h"
+#import "GwebViewController.h"
+#import "MessageDetailController.h"
 
 @interface GMoreTtaiSameStroViewController ()<RefreshDelegate,UITableViewDataSource>
 {
@@ -35,7 +37,7 @@
     self.myTitle = @"更多商场";
     
     
-    for (int i=0; i<10; i++) {
+    for (int i=0; i<1000; i++) {
         _isOpen[i]=0;
     }
     _isOpen[0] = 1;
@@ -118,7 +120,7 @@
     
     NSString *url = [NSString stringWithFormat:@"%@&authcode=%@&longitude=%@&latitude=%@&tt_id=%@",TTAI_STORE,[GMAPI getAuthkey],longitude,latitude,self.tPlat_id];
     //测试
-    url = @"http://www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_relation_tts&page=1&count=20&authcode=An1XLlEoBuBR6gSZVeUI31XwBOZXolanAi9SY1cyUWZVa1JhVDRQYwE2AzYAbQ19CTg=&longitude=116.402982&latitude=39.912950&tt_id=409";
+//    url = @"http://www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_relation_tts&page=1&count=20&authcode=An1XLlEoBuBR6gSZVeUI31XwBOZXolanAi9SY1cyUWZVa1JhVDRQYwE2AzYAbQ19CTg=&longitude=116.402982&latitude=39.912950&tt_id=409";
     //    url = @"http://www.alayy.com/index.php?d=api&c=tplat_v2&m=get_relation_tts&page=1&count=20&authcode=An1XLlEoBuBR6gSZVeUI31XwBOZXolanAi9SY1cyUWZVa1JhVDRQYwE2AzYAbQ19CTg=&longitude=116.402982&latitude=39.912950&tt_id=26";
     
     
@@ -318,6 +320,88 @@
 }
 
 
+-(CGFloat)heightForFooterInSection:(NSInteger)section tableView:(UITableView *)tableView{
+    CGFloat height = 0.01;
+    NSString *url;
+    
+    
+    GTtaiRelationStoreModel *model = _tab.dataArray[section];
+    if (model.activity) {//有活动
+        url = [model.activity stringValueForKey:@"cover_pic"];
+        CGFloat p_width = [[model.activity stringValueForKey:@"width"]floatValue];
+        CGFloat p_height = [[model.activity stringValueForKey:@"height"]floatValue];
+        height = DEVICE_WIDTH/p_width * p_height;
+        
+    }
+    
+    
+    if (_isOpen[section] == 0) {
+        height = 0.01;
+    }
+    
+    
+    
+    return height;
+    
+}
+-(UIView *)viewForFooterInSection:(NSInteger)section tableView:(UITableView *)tableView{
+    CGFloat height = 0;
+    NSString *url;
+    
+    
+    UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectZero];
+    
+    GTtaiRelationStoreModel *model = _tab.dataArray[section];
+    if (model.activity) {//有活动
+        url = [model.activity stringValueForKey:@"cover_pic"];
+        CGFloat p_width = [[model.activity stringValueForKey:@"width"]floatValue];
+        CGFloat p_height = [[model.activity stringValueForKey:@"height"]floatValue];
+        height = DEVICE_WIDTH/p_width * p_height;
+        
+        
+        [imv setHeight:height];
+        
+        [imv l_setImageWithURL:[NSURL URLWithString:url] placeholderImage:DEFAULT_YIJIAYI];
+        
+        [imv addTapGestureTarget:self action:@selector(viewForFooterInSectionClicked:) tag:(int)(section + 1000)];
+        
+        
+        
+    }
+    
+    return imv;
+}
+
+
+//- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+//    
+//    
+//}
+
+
+-(void)viewForFooterInSectionClicked:(UITapGestureRecognizer*)sender{
+    
+    NSInteger tt = sender.view.tag-1000;
+    GTtaiRelationStoreModel *model = _tab.dataArray[tt];
+    if ([[model.activity stringValueForKey:@"redirect_type"]intValue] == 1) {//外链活动
+        GwebViewController *ccc = [[GwebViewController alloc]init];
+        ccc.urlstring = [model.activity stringValueForKey:@"url"];
+        ccc.isSaoyisao = YES;
+        ccc.hidesBottomBarWhenPushed = YES;
+        UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:ccc];
+        [self presentViewController:navc animated:YES completion:^{
+            
+        }];
+    }else if ([[model.activity stringValueForKey:@"redirect_type"]intValue] == 0){//跳转应用内活动
+        NSString *activityId = [model.activity stringValueForKey:@"id"];
+        MessageDetailController *detail = [[MessageDetailController alloc]init];
+        detail.isActivity = YES;
+        detail.msg_id = activityId;
+        detail.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:detail animated:YES];
+    }
+    
+}
 
 
 

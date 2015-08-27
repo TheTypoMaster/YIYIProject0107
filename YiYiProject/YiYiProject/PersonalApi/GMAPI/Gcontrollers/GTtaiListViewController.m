@@ -58,6 +58,8 @@
     
     NSMutableArray *_upScrollViewData;
     
+    UILabel *_dizhiLabel;
+    
     
 }
 
@@ -78,6 +80,12 @@
     
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     
+    if (_table.reloading) {
+        [_table loadFail];
+    }
+    
+//
+    
 }
 
 
@@ -92,6 +100,43 @@
     _table.refreshDelegate = self;
     _table.dataSource = self;
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    
+    if (!self.topView) {
+        self.topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_WIDTH/750.0*250 + DEVICE_WIDTH/710.0*120 +35 +5)];
+        self.topView.backgroundColor = [UIColor whiteColor];
+        
+        if (!_topScrollView) {
+            _topScrollView = [[CycleScrollView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_WIDTH/750.0*250) animationDuration:3];
+            [self.topView addSubview:_topScrollView];
+        }
+        
+        UIView *vvv = [[UIView alloc]initWithFrame:CGRectMake(5, CGRectGetMaxY(_topScrollView.frame), DEVICE_WIDTH-10, 32)];
+        [self.topView addSubview:vvv];
+        
+        UILabel *fujinhuodongLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 60, 35)];
+        fujinhuodongLabel.font = [UIFont systemFontOfSize:12];
+        fujinhuodongLabel.text = @"附近活动";
+        [vvv addSubview:fujinhuodongLabel];
+        
+        _dizhiLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(fujinhuodongLabel.frame), 0, DEVICE_WIDTH - 5-60-5, 32)];
+        _dizhiLabel.textAlignment = NSTextAlignmentRight;
+        _dizhiLabel.font = [UIFont systemFontOfSize:12];
+//        dizhiLabel.text = streetStr;
+         _dizhiLabel.text = @"正在定位···";
+        _dizhiLabel.textColor = RGBCOLOR(81, 82, 83);
+        [vvv addSubview:_dizhiLabel];
+        
+        if (!_topScrollView1) {
+            _topScrollView1 = [[CycleScrollView1 alloc] initWithFrame:CGRectMake(5, CGRectGetMaxY(vvv.frame), DEVICE_WIDTH - 10, DEVICE_WIDTH/710.0*120) animationDuration:2];
+            [self.topView addSubview:_topScrollView1];
+        }
+        
+    }
+    
+    
+    _table.tableHeaderView = self.topView;
+    
     [self.view addSubview:_table];
     
     
@@ -127,7 +172,7 @@
     NSDictionary *locationDic = gmapi.theLocationDic;
     NSString *longStr = [locationDic stringValueForKey:@"long"];
     NSString *latStr = [locationDic stringValueForKey:@"lat"];
-    NSString *streetStr = [locationDic stringValueForKey:@"addressDetail"];
+    
     NSString *url = [NSString stringWithFormat:@"%@&page=1&per_page=5&long=%@&lat=%@",HOME_TTAI_ACTIVITY,longStr,latStr];
     _tool_detail = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [_tool_detail requestCompletion:^(NSDictionary *result, NSError *erro) {
@@ -142,37 +187,13 @@
         }
         
         
-        if (!self.topView) {
-            self.topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 125 + 95 +5)];
-            self.topView.backgroundColor = [UIColor whiteColor];
-            _topScrollView = [[CycleScrollView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 125) animationDuration:3];
-        }
-        
         
         UIView *l1 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_topScrollView.frame)+5, DEVICE_WIDTH, 0.5)];
         l1.backgroundColor = RGBCOLOR(220, 221, 223);
         [self.topView addSubview:l1];
         
-        UIView *vvv = [[UIView alloc]initWithFrame:CGRectMake(5, CGRectGetMaxY(_topScrollView.frame), DEVICE_WIDTH-10, 32)];
-        [self.topView addSubview:vvv];
         
         
-        UILabel *fujinhuodongLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 60, 35)];
-        fujinhuodongLabel.font = [UIFont systemFontOfSize:12];
-        fujinhuodongLabel.text = @"附近活动";
-        [vvv addSubview:fujinhuodongLabel];
-        
-        UILabel *dizhiLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(fujinhuodongLabel.frame), 0, DEVICE_WIDTH - 5-60-5, 32)];
-        dizhiLabel.textAlignment = NSTextAlignmentRight;
-        dizhiLabel.font = [UIFont systemFontOfSize:12];
-        dizhiLabel.text = streetStr;
-        dizhiLabel.textColor = RGBCOLOR(81, 82, 83);
-        [vvv addSubview:dizhiLabel];
-        
-        
-        
-        _topScrollView1 = [[CycleScrollView1 alloc] initWithFrame:CGRectMake(5, CGRectGetMaxY(vvv.frame), DEVICE_WIDTH - 10, 60) animationDuration:2];
-        _topScrollView1.backgroundColor = [UIColor orangeColor];
         _topScrollView1.isPageControlHidden = YES;
         _topScrollView1.scrollView.showsHorizontalScrollIndicator = FALSE;
         
@@ -190,7 +211,7 @@
             [bself cycleScrollDidClickedWithIndex1:pageIndex];
         };
         
-        [self.topView addSubview:_topScrollView1];
+        
         
         UIView *l2 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_topScrollView1.frame)+6, DEVICE_WIDTH, 0.5)];
         l2.backgroundColor = RGBCOLOR(220, 221, 223);
@@ -236,14 +257,11 @@
 //            
 //        }
         
-        if (!self.topView) {
-            self.topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 125 + 95 +5)];
-            self.topView.backgroundColor = [UIColor whiteColor];
-        }
         
         
         
-        _topScrollView = [[CycleScrollView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 125) animationDuration:3];
+        
+        
         _topScrollView.scrollView.showsHorizontalScrollIndicator = FALSE;
         
         _topScrollView.fetchContentViewAtIndex = ^UIView *(NSInteger pageIndex){
@@ -261,8 +279,7 @@
             [bself cycleScrollDidClickedWithIndex:pageIndex];
         };
         
-        [self.topView addSubview:_topScrollView];
-        _table.tableHeaderView = self.topView;
+        
         [_table reloadData];
        
         
@@ -688,6 +705,11 @@
     GMAPI *gmapi = [GMAPI sharedManager];
     self.locationDic = gmapi.theLocationDic;
     
+    
+    NSString *streetStr = [self.locationDic stringValueForKey:@"addressDetail"];
+    _dizhiLabel.text = streetStr;
+    
+    
     [self prepareTopScrollViewNetData];
     [self prepareNearActity];
     [self getTTaiData];
@@ -696,6 +718,7 @@
 
 - (void)theLocationFaild:(NSDictionary *)dic{
     NSLog(@"定位失败%@",dic);
+    _dizhiLabel.text = @"定位失败";
     [self prepareTopScrollViewNetData];
     [self prepareNearActity];
     [self getTTaiData];
@@ -705,12 +728,17 @@
 
 -(void)loadNewData
 {
+    __weak typeof(self)weakSelf = self;
     
-    GMAPI *gmapi = [GMAPI sharedManager];
-    gmapi.delegate = self;
-    [gmapi startDingwei];
+    [[GMAPI appDeledate]startDingweiWithBlock:^(NSDictionary *dic) {
+        
+        [weakSelf theLocationDictionary:dic];
+    }];
+    
     
 }
+
+
 
 -(void)loadMoreData
 {

@@ -55,7 +55,7 @@
     
     LWaterFlow2 *_collectionView;//瀑布流
     
-    NSDictionary *_loactionDic;
+    
     NSString *_lat;
     NSString *_long;
     
@@ -134,6 +134,10 @@
     
     [self.navigationController setNavigationBarHidden:self.lastPageNavigationHidden animated:animated];
     
+    if (_collectionView.reloading) {
+        [_collectionView loadFail];
+    }
+    
 }
 
 
@@ -187,7 +191,7 @@
     NSString *url = [NSString stringWithFormat:@"%@&authcode=%@&tt_id=%@&&page=%d&count=%d",TTAI_DETAIL_V2,[GMAPI getAuthkey],self.tPlat_id,_collectionView.pageNum,L_PAGE_SIZE];
     
     //测试
-//    url = @"http://www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_tt_info&page=1&count=6&authcode=An1XLlEoBuBR6gSZVeUI31XwBOZXolanAi9SY1cyUWZVa1JhVDRQYwE2AzYAbQ19CTg=&tt_id=26";
+//    url = @"http://www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_tt_info&page=1&count=20&authcode=An1XLlEoBuBR6gSZVeUI31XwBOZXolanAi9SY1cyUWZVa1JhVDRQYwE2AzYAbQ19CTg=&tt_id=26";
     
     
     NSLog(@"T台详情%@",url);
@@ -242,7 +246,7 @@
     NSString *url = [NSString stringWithFormat:@"%@&authcode=%@&tt_id=%@&&page=%d&count=%d",TTAI_DETAIL_V2,[GMAPI getAuthkey],self.tPlat_id,_collectionView.pageNum,L_PAGE_SIZE];
     
     //测试
-//        url = @"http://www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_tt_info&page=1&count=6&authcode=An1XLlEoBuBR6gSZVeUI31XwBOZXolanAi9SY1cyUWZVa1JhVDRQYwE2AzYAbQ19CTg=&tt_id=26";
+//        url = @"http://www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_tt_info&page=1&count=20&authcode=An1XLlEoBuBR6gSZVeUI31XwBOZXolanAi9SY1cyUWZVa1JhVDRQYwE2AzYAbQ19CTg=&tt_id=26";
     
     
     NSLog(@"T台详情%@",url);
@@ -297,7 +301,11 @@
     NSString *url = [NSString stringWithFormat:@"%@&authcode=%@&longitude=%@&latitude=%@&tt_id=%@page=%d&count=6",TTAI_STORE,[GMAPI getAuthkey],longitude,latitude,self.tPlat_id,_collectionView.pageNum];
     //测试
 //    url = @"http://www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_relation_tts&page=1&count=6&authcode=An1XLlEoBuBR6gSZVeUI31XwBOZXolanAi9SY1cyUWZVa1JhVDRQYwE2AzYAbQ19CTg=&longitude=116.402982&latitude=39.912950&tt_id=409";
-//    NSLog(@"T台关联商场%@",url);
+    
+    //有一条数据只有商场没有单品但是又活动
+//    url = @"http://www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_relation_tts&authcode=VCtaI1MqVrAGvVbLBLQB1gWgAOID9gDxUH0AMVI3UmIANlNmVTFSYlFiBjRWMwp6AzI=&longitude=116.402982&latitude=39.912950&tt_id=3page=1&count=6";
+    
+    NSLog(@"T台关联商场%@",url);
 
     
     
@@ -348,18 +356,24 @@
 
 - (void)getCurrentLocation
 {
-    GMAPI *gmapi = [GMAPI sharedManager];
-    gmapi.delegate = self;
-    [gmapi startDingwei];
+
+    
+    __weak typeof(self)weakSelf = self;
+    
+    [[GMAPI appDeledate]startDingweiWithBlock:^(NSDictionary *dic) {
+        
+        [weakSelf theLocationDictionary:dic];
+    }];
+    
     
     
 }
 - (void)theLocationDictionary:(NSDictionary *)dic{
     
     NSLog(@"当前坐标-->%@",dic);
-    _loactionDic = [GMAPI sharedManager].theLocationDic;
-    _lat = [_loactionDic stringValueForKey:@"lat"];
-    _long = [_locationDic stringValueForKey:@"long"];
+    self.locationDic = [GMAPI sharedManager].theLocationDic;
+    _lat = [self.locationDic stringValueForKey:@"lat"];
+    _long = [self.locationDic stringValueForKey:@"long"];
     //请求T台详情
     [self prepareNetDataForTtaiDetail];
     //请求关联商场
@@ -372,9 +386,9 @@
     
     NSLog(@"%s",__FUNCTION__);
     NSLog(@"%@",dic);
-    _loactionDic = [GMAPI sharedManager].theLocationDic;
-    _lat = [_loactionDic stringValueForKey:@"lat"];
-    _long = [_locationDic stringValueForKey:@"long"];
+    self.locationDic = [GMAPI sharedManager].theLocationDic;
+    _lat = [self.locationDic stringValueForKey:@"lat"];
+    _long = [self.locationDic stringValueForKey:@"long"];
     //请求单品详情
     [self prepareNetDataForTtaiDetail];
     //请求关联商场
@@ -489,11 +503,18 @@
 
 
 /**
- *  监控 单品详情 和 相似单品都请求完再显示
+ *  监控 单品详情 和 相似单品都请求完再显示 监控tableview的contentSize
  */
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     NSLog(@"keyPath %@",change);
+    
+    if ([keyPath isEqualToString:@"contentSize"]) {
+        
+        NSLog(@"change %@",change);
+        
+        return;
+    }
     
     NSNumber *num = [change objectForKey:@"new"];
     if ([num intValue] == 2) {
@@ -781,6 +802,8 @@
     _tabHeaderTableView.tableFooterView = _tableFooterView;
     [_tabHeaderView addSubview:_tabHeaderTableView];
     
+    [_tabHeaderTableView addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+    
     [_tabHeaderView setHeight:height];
     
     _collectionView.headerView = _tabHeaderView;
@@ -792,6 +815,9 @@
 -(void)moreStoreBtnClicked{
     
     GMoreTtaiSameStroViewController *cc = [[GMoreTtaiSameStroViewController alloc]init];
+    cc.tPlat_id = self.tPlat_id;
+    cc.tPlat_id = @"3";
+    cc.locationDic = self.locationDic;
     [self.navigationController pushViewController:cc animated:YES];
     
 }
@@ -835,6 +861,7 @@
 
 //计算缩放tableview的高度
 -(CGFloat)jisuanTabHeight{
+    
     CGFloat height = 0;
     NSInteger count1 = 0;
     NSInteger tCount = _relationStoreArray.count;
@@ -848,13 +875,12 @@
             count1 = 0;
         }
         
-        
         if (_isOpen[i] == 1) {//打开状态
             height += (count1*60+30);
             if (model.activity) {
                 CGFloat p_width = [[model.activity stringValueForKey:@"width"] floatValue];
                 CGFloat p_height = [[model.activity stringValueForKey:@"height"]floatValue];
-                CGFloat n_height = DEVICE_WIDTH/p_width*p_height;
+                CGFloat n_height = DEVICE_WIDTH/p_width * p_height;
                 height += n_height;
             }
         }else{
@@ -864,12 +890,7 @@
         
     }
     
-    
-//    if (_isHaveMoreStoreData) {
-//        height += (_tableFooterView.frame.size.height+5);
-//    }else{
-//        height += (_tableFooterView.frame.size.height+10);
-//    }
+
     
     height += (_tableFooterView.frame.size.height+5);
     
@@ -1395,24 +1416,54 @@
     
     CGFloat height = 0;
     NSString *url;
+    
+//    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, height)];
+//    view.backgroundColor = [UIColor redColor];
+    
+    UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectZero];
+    
     GTtaiRelationStoreModel *model = _relationStoreArray[section];
     if (model.activity) {//有活动
         url = [model.activity stringValueForKey:@"cover_pic"];
         CGFloat p_width = [[model.activity stringValueForKey:@"width"]floatValue];
         CGFloat p_height = [[model.activity stringValueForKey:@"height"]floatValue];
         height = DEVICE_WIDTH/p_width * p_height;
+        
+        
+        [imv setHeight:height];
+        
+        [imv l_setImageWithURL:[NSURL URLWithString:url] placeholderImage:DEFAULT_YIJIAYI];
+        
+        [imv addTapGestureTarget:self action:@selector(viewForFooterInSectionClicked:) tag:(int)(section + 1000)];
+        
+//        [view addSubview:imv];
+        
+        
     }
     
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, height)];
-    view.backgroundColor = [UIColor redColor];
-    UIImageView *imv = [[UIImageView alloc]initWithFrame:view.bounds];
-    [imv l_setImageWithURL:[NSURL URLWithString:url] placeholderImage:DEFAULT_YIJIAYI];
     
-    [imv addTapGestureTarget:self action:@selector(viewForFooterInSectionClicked:) tag:(int)(section + 1000)];
     
-    [view addSubview:imv];
     
-    return view;
+    return imv;
+}
+
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    CGFloat height = 0.01;
+    GTtaiRelationStoreModel *model = _relationStoreArray[section];
+    if (model.activity) {//有活动
+        CGFloat p_width = [[model.activity stringValueForKey:@"width"]floatValue];
+        CGFloat p_height = [[model.activity stringValueForKey:@"height"]floatValue];
+        height = DEVICE_WIDTH/p_width * p_height;
+    }
+    
+    if (_isOpen[section] != 1) {
+        height = 0.01;
+    }
+    
+    
+    return height;
+    
 }
 
 
@@ -1506,26 +1557,7 @@
     return 30;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    CGFloat height = 0.01;
-    GTtaiRelationStoreModel *model = _relationStoreArray[section];
-    if (model.activity) {//有活动
-        CGFloat p_width = [[model.activity stringValueForKey:@"width"]floatValue];
-        CGFloat p_height = [[model.activity stringValueForKey:@"height"]floatValue];
-        height = DEVICE_WIDTH/p_width * p_height;
-    }
-    
-    
-    for (int i = 0; i<_relationStoreArray.count; i++) {
-        if (_isOpen[i] != 1) {
-            height = 0.01;
-        }
-    }
-    
-    
-    return height;
-    
-}
+
 
 
 
@@ -1553,7 +1585,11 @@
     
     
     [UIView animateWithDuration:0.0 animations:^{
-        [_tabHeaderTableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
+//        [_tabHeaderTableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
+        [_tabHeaderTableView reloadData];
+        CGRect r = _tabHeaderTableView.frame;
+        r.size.height = _tabHeaderTableView.contentSize.height;
+        _tabHeaderTableView.frame = r;
         _collectionView.headerView = _tabHeaderView;
     }];
     
