@@ -41,7 +41,7 @@
         //用户名
         self.userNameLabel = [[UILabel alloc]init];
         _userNameLabel.font = [UIFont systemFontOfSize:15];
-        _userNameLabel.text = @"玛莎爱丽";
+        _userNameLabel.text = @"";
         [_headBgView addSubview:_userNameLabel];
         
         //时间
@@ -69,8 +69,7 @@
         //评论标识
         self.comment_btn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_comment_btn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-        [_comment_btn setImage:[UIImage imageNamed:@"Ttai_pinglun"] forState:UIControlStateNormal];
-        [_comment_btn setImage:[UIImage imageNamed:@"Ttai_pinglun"] forState:UIControlStateSelected];
+        [_comment_btn setImage:[UIImage imageNamed:@"Ttaixq_pinglun_small"] forState:UIControlStateNormal];
         [_infoView addSubview:_comment_btn];
         
         //喜欢数量
@@ -83,8 +82,8 @@
         //喜欢标识
         self.like_btn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_like_btn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-        [_like_btn setImage:[UIImage imageNamed:@"love_up"] forState:UIControlStateNormal];
-        [_like_btn setImage:[UIImage imageNamed:@"love_down"] forState:UIControlStateSelected];
+        [_like_btn setImage:[UIImage imageNamed:@"danpin_zan_normal"] forState:UIControlStateNormal];
+        [_like_btn setImage:[UIImage imageNamed:@"danpin_zan_selected"] forState:UIControlStateSelected];
         [_infoView addSubview:_like_btn];
     }
     return self;
@@ -121,15 +120,15 @@
 
     //评论 喜欢 view
 
-    _infoView.frame = CGRectMake(0, _photoView.bottom, self.width, 36);
+    _infoView.frame = CGRectMake(0, _photoView.bottom, self.width, 30);
     
     _like_label.frame = CGRectMake(self.width - _like_label.width - 5, 0, _like_label.width, _infoView.height);
-    self.like_btn.frame = CGRectMake(_like_label.left - 20 - 2, 0, 20, 20);
+    self.like_btn.frame = CGRectMake(_like_label.left - 21 - 2, 0, 21, 18);
     _like_btn.center = CGPointMake(_like_btn.center.x, _infoView.height / 2.f);
     
     
     _comment_label.frame = CGRectMake(_like_btn.left - 10 - _comment_label.width, 0, _comment_label.width, _infoView.height);
-    self.comment_btn.frame = CGRectMake(_comment_label.left - _like_btn.width - 5, 0, 20, 20);
+    self.comment_btn.frame = CGRectMake(_comment_label.left - _like_btn.width - 5, 0, 18, 18);
     _comment_btn.center = CGPointMake(_comment_btn.center.x, _like_label.center.y);
     
     

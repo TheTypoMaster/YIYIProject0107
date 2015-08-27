@@ -1067,7 +1067,7 @@
         }
         float rate = image_height/image_width;
         
-        return (DEVICE_WIDTH-30)/2.0*rate + 36;
+        return (DEVICE_WIDTH-30)/2.0*rate + 30;
     }
     
     CGFloat imageH = 0.f;

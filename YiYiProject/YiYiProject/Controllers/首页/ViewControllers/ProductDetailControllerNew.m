@@ -28,6 +28,7 @@
 #import "TopicCommentsModel.h"//评论
 #import "TTaiCommentViewController.h"//评论列表
 #import "MallListViewController.h"//相似单品所在商场
+#import "GwebViewController.h"//浏览器
 
 #import "PSCollectionView.h"
 #import "ProductCell.h"
@@ -577,18 +578,6 @@
 }
 
 /**
- *  跳转活动详情页
- */
-- (void)clickToActivity:(UIButton *)sender
-{
-    NSString *activityId = _aModel.official_activity[@"id"];
-    MessageDetailController *detail = [[MessageDetailController alloc]init];
-    detail.isActivity = YES;
-    detail.msg_id = activityId;
-    [self.navigationController pushViewController:detail animated:YES];
-}
-
-/**
  *  跳转至单品详情
  *
  *  @param sender
@@ -1038,6 +1027,49 @@
         [MiddleTools pushToStoreDetailVcWithId:storeId shopType:shop_type storeName:storeName brandName:@" " fromViewController:self lastNavigationHidden:NO hiddenBottom:NO isTPlatPush:NO];
     }
 }
+/**
+ *  跳转活动详情页
+ */
+- (void)clickToActivity:(UIButton *)sender
+{
+    // 1 的时候外部链接 0 不处理
+    if ([[_aModel.official_activity stringValueForKey:@"redirect_type"]intValue] == 1) {
+        GwebViewController *ccc = [[GwebViewController alloc]init];
+        ccc.urlstring = [_aModel.official_activity stringValueForKey:@"url"];
+        ccc.isSaoyisao = YES;
+        ccc.hidesBottomBarWhenPushed = YES;
+        UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:ccc];
+        [self presentViewController:navc animated:YES completion:^{
+            
+        }];
+    }else{
+        
+        NSString *activityId = _aModel.official_activity[@"id"];
+        MessageDetailController *detail = [[MessageDetailController alloc]init];
+        detail.isActivity = YES;
+        detail.msg_id = activityId;
+        [self.navigationController pushViewController:detail animated:YES];
+    }
+}
+/**
+ *  衣加衣介绍图
+ */
+-(void)yjyPicClicked{
+    
+    // 1 的时候外部链接 0 不处理
+    if ([[_aModel.official_pic stringValueForKey:@"redirect_type"]intValue] == 1) {
+        GwebViewController *ccc = [[GwebViewController alloc]init];
+        ccc.urlstring = [_aModel.official_pic stringValueForKey:@"url"];
+        ccc.isSaoyisao = YES;
+        ccc.hidesBottomBarWhenPushed = YES;
+        UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:ccc];
+        [self presentViewController:navc animated:YES completion:^{
+            
+        }];
+    }else{
+        
+    }
+}
 
 /*
  原图
@@ -1342,6 +1374,8 @@
         line5.backgroundColor = DEFAULT_VIEW_BACKGROUNDCOLOR;
         [_headerView addSubview:line5];
         
+        [constImageView addTaget:self action:@selector(yjyPicClicked) tag:0];
+        
         top = line5.bottom;
     }
 #pragma - mark 相似单品及所在商场
@@ -1481,7 +1515,7 @@
             [imageView l_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:DEFAULT_YIJIAYI];
             [_headerView addSubview:imageView];
             
-            [imageView addTapGestureTarget:self action:@selector(tapImage:) tag:kTag_Images + i];
+//            [imageView addTapGestureTarget:self action:@selector(tapImage:) tag:kTag_Images + i];
             
             top = imageView.bottom + 5;
         }
@@ -1536,6 +1570,10 @@
         _commentCycle.isPageControlHidden = YES;
         _commentCycle.scrollView.showsHorizontalScrollIndicator = FALSE;
         [_commentView addSubview:_commentCycle];
+        
+        _commentCycle.userInteractionEnabled = NO;//关掉滚动评论的交互
+        
+        [_commentView addTaget:self action:@selector(clickToComment:) tag:0];//点击跳转至评论列表
         
         _commentCycle.fetchContentViewAtIndex = ^UIView *(NSInteger pageIndex){
             return viewsArray1[pageIndex];

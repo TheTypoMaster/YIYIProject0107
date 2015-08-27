@@ -844,6 +844,7 @@
 }
 
 -(void)yjyPicClicked{
+    
     if ([[_ttaiDetailModel.official_pic stringValueForKey:@"redirect_type"]intValue] == 1) {
         GwebViewController *ccc = [[GwebViewController alloc]init];
         ccc.urlstring = [_ttaiDetailModel.official_pic stringValueForKey:@"url"];
