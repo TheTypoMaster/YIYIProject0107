@@ -106,6 +106,13 @@
         self.topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_WIDTH/750.0*250 + DEVICE_WIDTH/710.0*120 +35 +5)];
         self.topView.backgroundColor = [UIColor whiteColor];
         
+        
+        UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_WIDTH/750.0*250)];
+        [imv setImage:[UIImage imageNamed:@"g01.png"]];
+        
+        [self.topView addSubview:imv];
+        
+        
         if (!_topScrollView) {
             _topScrollView = [[CycleScrollView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_WIDTH/750.0*250) animationDuration:3];
             [self.topView addSubview:_topScrollView];
@@ -126,6 +133,13 @@
          _dizhiLabel.text = @"正在定位···";
         _dizhiLabel.textColor = RGBCOLOR(81, 82, 83);
         [vvv addSubview:_dizhiLabel];
+        
+        
+        
+        UIImageView *imvv = [[UIImageView alloc]initWithFrame:CGRectMake(5, CGRectGetMaxY(vvv.frame), DEVICE_WIDTH-10, DEVICE_WIDTH/710.0*120)];
+        [imvv setImage:[UIImage imageNamed:@"g02.png"]];
+        [self.topView addSubview:imvv];
+        
         
         if (!_topScrollView1) {
             _topScrollView1 = [[CycleScrollView1 alloc] initWithFrame:CGRectMake(5, CGRectGetMaxY(vvv.frame), DEVICE_WIDTH - 10, DEVICE_WIDTH/710.0*120) animationDuration:2];
@@ -388,19 +402,19 @@
 - (void)createNavigationbarTools
 {
     
-    UIButton *rightView=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 44, 44)];
-    rightView.backgroundColor=[UIColor clearColor];
-    
-    UIButton *heartButton=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 44, 44)];
-    [heartButton addTarget:self action:@selector(clickToPhoto:) forControlEvents:UIControlEventTouchUpInside];
-    [heartButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [heartButton setImage:[UIImage imageNamed:@"gcamera.png"] forState:UIControlStateNormal];
-    [heartButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
-    
-    [rightView addSubview:heartButton];
-    
-    UIBarButtonItem *comment_item=[[UIBarButtonItem alloc]initWithCustomView:rightView];
-    self.navigationItem.rightBarButtonItem = comment_item;
+//    UIButton *rightView=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 44, 44)];
+//    rightView.backgroundColor=[UIColor clearColor];
+//    
+//    UIButton *heartButton=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 44, 44)];
+//    [heartButton addTarget:self action:@selector(clickToPhoto:) forControlEvents:UIControlEventTouchUpInside];
+//    [heartButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [heartButton setImage:[UIImage imageNamed:@"gcamera.png"] forState:UIControlStateNormal];
+//    [heartButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
+//    
+//    [rightView addSubview:heartButton];
+//    
+//    UIBarButtonItem *comment_item=[[UIBarButtonItem alloc]initWithCustomView:rightView];
+//    self.navigationItem.rightBarButtonItem = comment_item;
 }
 
 #pragma mark 数据解析

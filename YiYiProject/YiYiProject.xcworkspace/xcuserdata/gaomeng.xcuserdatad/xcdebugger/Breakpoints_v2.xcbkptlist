@@ -5230,11 +5230,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GTtaiListViewController.m"
-            timestampString = "462422658.584154"
+            timestampString = "462423868.489806"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "709"
-            endingLineNumber = "709"
+            startingLineNumber = "723"
+            endingLineNumber = "723"
             landmarkName = "-turnToDanPinInfoId:infoName:"
             landmarkType = "5">
          </BreakpointContent>
@@ -5278,11 +5278,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GTtaiListViewController.m"
-            timestampString = "462422658.584154"
+            timestampString = "462423868.489806"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "364"
-            endingLineNumber = "364"
+            startingLineNumber = "378"
+            endingLineNumber = "378"
             landmarkName = "@implementation GTtaiListViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -5326,11 +5326,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GTtaiListViewController.m"
-            timestampString = "462422658.584154"
+            timestampString = "462423868.489806"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "467"
-            endingLineNumber = "467"
+            startingLineNumber = "481"
+            endingLineNumber = "481"
             landmarkName = "-zanTTaiDetail:"
             landmarkType = "5">
          </BreakpointContent>
@@ -5342,11 +5342,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GTtaiListViewController.m"
-            timestampString = "462422658.584154"
+            timestampString = "462423868.489806"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "493"
-            endingLineNumber = "493"
+            startingLineNumber = "507"
+            endingLineNumber = "507"
             landmarkName = "-zanTTaiDetail:"
             landmarkType = "5">
          </BreakpointContent>
@@ -5358,11 +5358,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GTtaiListViewController.m"
-            timestampString = "462422658.584154"
+            timestampString = "462423868.489806"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "496"
-            endingLineNumber = "496"
+            startingLineNumber = "510"
+            endingLineNumber = "510"
             landmarkName = "-zanTTaiDetail:"
             landmarkType = "5">
          </BreakpointContent>
@@ -5374,11 +5374,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GTtaiListViewController.m"
-            timestampString = "462422658.584154"
+            timestampString = "462423868.489806"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "571"
-            endingLineNumber = "571"
+            startingLineNumber = "585"
+            endingLineNumber = "585"
             landmarkName = "-updateTTai:"
             landmarkType = "5">
          </BreakpointContent>
@@ -5582,11 +5582,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GTtaiListViewController.m"
-            timestampString = "462422658.584154"
+            timestampString = "462423868.489806"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "526"
-            endingLineNumber = "526"
+            startingLineNumber = "540"
+            endingLineNumber = "540"
             landmarkName = "-getTTaiData"
             landmarkType = "5">
             <Locations>
