@@ -192,6 +192,16 @@
         l1.backgroundColor = RGBCOLOR(220, 221, 223);
         [self.topView addSubview:l1];
         
+        UIView *vvv = [[UIView alloc]initWithFrame:CGRectMake(5, CGRectGetMaxY(_topScrollView.frame), DEVICE_WIDTH-10, 32)];
+        [self.topView addSubview:vvv];
+        
+        if (_topScrollView1) {
+            [_topScrollView1 removeFromSuperview];
+            _topScrollView1 = nil;
+            _topScrollView1 = [[CycleScrollView1 alloc] initWithFrame:CGRectMake(5, CGRectGetMaxY(vvv.frame), DEVICE_WIDTH - 10, DEVICE_WIDTH/710.0*120) animationDuration:2];
+            [self.topView addSubview:_topScrollView1];
+        }
+        
         
         
         _topScrollView1.isPageControlHidden = YES;
@@ -258,8 +268,13 @@
 //        }
         
         
-        
-        
+        if (_topScrollView) {
+            [_topScrollView removeFromSuperview];
+            _topScrollView = nil;
+            _topScrollView = [[CycleScrollView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_WIDTH/750.0*250) animationDuration:3];
+            [self.topView addSubview:_topScrollView];
+            
+        }
         
         
         _topScrollView.scrollView.showsHorizontalScrollIndicator = FALSE;
