@@ -167,12 +167,11 @@
     self.window.backgroundColor = [UIColor whiteColor];
     
     NSLog(@"didFinishLaunch 1111");
+
+
     
     return YES;
 }
-
-
-
 
 #pragma mark - 获取坐标
 
