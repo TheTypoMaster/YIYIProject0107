@@ -66,7 +66,7 @@
 @property(nonatomic,retain)UILabel *loadingLabel;
 @property(nonatomic,assign)BOOL hiddenLoadMore;//隐藏加载更多,默认隐藏
 
-@property(nonatomic,assign)PSCollectionView *quitView;
+@property(nonatomic,retain)PSCollectionView *quitView;
 
 @property(nonatomic,retain)UIView *headerView;//头view
 

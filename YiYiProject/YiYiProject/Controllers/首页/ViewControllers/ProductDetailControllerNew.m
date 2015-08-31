@@ -65,7 +65,6 @@
     NSArray *_sameStyleArray;//同款单品
     CGFloat _latitude;//维度
     CGFloat _longtitude;//经度
-    NSString *_addressDetail;//地址详细信息
     NSArray *_commentArray;//评论
     int _commentCount;//评论总数
     
@@ -109,9 +108,6 @@
 - (void)dealloc
 {
     NSLog(@"dealloc %@",self);
-    [tool_detail cancelRequest];
-    heartButton = nil;
-    collectButton = nil;
     
     [tool_sameStyle cancelRequest];
     [tool_comment cancelRequest];
@@ -120,6 +116,24 @@
     _collectionView.waterDelegate = nil;
     _collectionView.quitView = nil;
     _collectionView = nil;
+    
+    [self removeObserver:self forKeyPath:@"_count"];
+    
+    _aModel = nil;
+    heartButton = nil;
+    collectButton = nil;
+    image_urls = nil;//图片链接数组
+    
+    _headerView = nil;
+    
+    _zanNumLabel = nil;//赞数量label
+    _commentNumLabel = nil;//评论数量label
+    _addressLabel_current = nil;//当前位置
+    
+    _sameStyleArray = nil;//同款单品
+    _commentArray = nil;//评论
+    _commentCycle = nil;//评论轮滚
+    _commentView = nil;//评论背景view
 }
 
 - (void)didReceiveMemoryWarning {
@@ -143,8 +157,6 @@
     
     _collectionView = [[LWaterFlow2 alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT - 64 - 46) waterDelegate:self waterDataSource:self noHeadeRefresh:NO noFooterRefresh:NO];
     [self.view addSubview:_collectionView];
-//    _collectionView.backgroundColor = [UIColor redColor];
-//    _collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     [_collectionView showRefreshHeader:YES];
 }
@@ -167,7 +179,20 @@
 - (void)waterLoadNewDataForWaterView:(PSCollectionView *)waterView
 {
     _count = 0;
-    [self getCurrentLocation];
+//    [self getCurrentLocation];
+    
+    
+    _latitude = 40.041951;
+    _longtitude = 116.33934;
+    
+    //请求单品详情
+    [self networkForDetail];
+    
+    //请求单品同款
+    [self networkForDetailSameStyle];
+    
+    //请求评论
+    [self networkForCommentList:NO];
 
 }
 - (void)waterLoadMoreDataForWaterView:(PSCollectionView *)waterView
@@ -270,24 +295,33 @@
     [tool_detail requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"result %@",result);
-        
-        if ([result isKindOfClass:[NSDictionary class]]) {
-            
-            NSDictionary *dic = result[@"pinfo"];
-            
-            ProductModel *aModel1 = [[ProductModel alloc]initWithDictionary:dic];
-            weakSelf.theModel = aModel1;
-            _aModel = aModel1;
-            [self setValue:[NSNumber numberWithInt:_count + 1] forKeyPath:@"_count"];
-        }
+        [weakSelf parseDetailResult:result];
         
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-        [self setValue:[NSNumber numberWithInt:_count + 1] forKeyPath:@"_count"];
+        [weakSelf setValue:[NSNumber numberWithInt:_count + 1] forKeyPath:@"_count"];
 
     }];
+}
+
+/**
+ *  解析单品详情result
+ *
+ *  @param result
+ */
+- (void)parseDetailResult:(NSDictionary *)result
+{
+    if ([result isKindOfClass:[NSDictionary class]]) {
+        
+        NSDictionary *dic = result[@"pinfo"];
+        
+        ProductModel *aModel1 = [[ProductModel alloc]initWithDictionary:dic];
+        self.theModel = aModel1;
+        _aModel = aModel1;
+        [self setValue:[NSNumber numberWithInt:_count + 1] forKeyPath:@"_count"];
+    }
 }
 
 /**
@@ -304,24 +338,29 @@
     [tool_sameStyle requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"result %@",result);
-        NSArray *list = result[@"list"];
-        NSMutableArray *temp = [NSMutableArray arrayWithCapacity:list.count];
-        for (NSDictionary *aDic in list) {
-            ProductModel *aModel = [[ProductModel alloc]initWithDictionary:aDic];
-            [temp addObject:aModel];
-        }
-        _sameStyleArray = [NSArray arrayWithArray:temp];
-        
-        [weakSelf setValue:[NSNumber numberWithInt:_count + 1] forKeyPath:@"_count"];
-        
+       
+        [weakSelf parseSameStyleResult:result];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
         
-        [self setValue:[NSNumber numberWithInt:_count + 1] forKeyPath:@"_count"];
+        [weakSelf setValue:[NSNumber numberWithInt:_count + 1] forKeyPath:@"_count"];
         
     }];
+}
+
+- (void)parseSameStyleResult:(NSDictionary *)result
+{
+    NSArray *list = result[@"list"];
+    NSMutableArray *temp = [NSMutableArray arrayWithCapacity:list.count];
+    for (NSDictionary *aDic in list) {
+        ProductModel *aModel = [[ProductModel alloc]initWithDictionary:aDic];
+        [temp addObject:aModel];
+    }
+    _sameStyleArray = [NSArray arrayWithArray:temp];
+    
+    [self setValue:[NSNumber numberWithInt:_count + 1] forKeyPath:@"_count"];
 }
 
 /**
@@ -341,42 +380,48 @@
     [tool_comment requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"result %@",result);
-        _commentCount  = [[result objectForKey:@"total"] intValue];
-        NSArray * commentsArray = [result objectForKey:@"list"];
         
-        NSMutableArray *arr = [NSMutableArray arrayWithCapacity:commentsArray.count];
-        
-        for (NSDictionary * dic in commentsArray)
-        {
-            TopicCommentsModel * model = [[TopicCommentsModel alloc] initWithDictionary:dic];
-            [arr addObject:model];
-        }
-        _commentArray = [NSArray arrayWithArray:arr];
-        
-        if (isUpdate) {
-            
-            if (_commentCycle) {
-                
-                [_commentCycle removeFromSuperview];
-                _commentCycle = nil;
-            }
-            _commentCycle = [self cycleScrollWithCommentArray:_commentArray];
-            [_commentView addSubview:_commentCycle];
-            _commentNumLabel.text = NSStringFromInt(_commentCount);
-        }else
-        {
-            [weakSelf setValue:[NSNumber numberWithInt:_count + 1] forKeyPath:@"_count"];
-            
-        }
-        
+        [weakSelf parseCommentListResult:result isUpdate:isUpdate];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
         
-        [self setValue:[NSNumber numberWithInt:_count + 1] forKeyPath:@"_count"];
+        [weakSelf setValue:[NSNumber numberWithInt:_count + 1] forKeyPath:@"_count"];
         
     }];
+}
+
+- (void)parseCommentListResult:(NSDictionary *)result
+                      isUpdate:(BOOL)isUpdate
+{
+    _commentCount  = [[result objectForKey:@"total"] intValue];
+    NSArray * commentsArray = [result objectForKey:@"list"];
+    
+    NSMutableArray *arr = [NSMutableArray arrayWithCapacity:commentsArray.count];
+    
+    for (NSDictionary * dic in commentsArray)
+    {
+        TopicCommentsModel * model = [[TopicCommentsModel alloc] initWithDictionary:dic];
+        [arr addObject:model];
+    }
+    _commentArray = [NSArray arrayWithArray:arr];
+    
+    if (isUpdate) {
+        
+        if (_commentCycle) {
+            
+            [_commentCycle removeFromSuperview];
+            _commentCycle = nil;
+        }
+        _commentCycle = [self cycleScrollWithCommentArray:_commentArray];
+        [_commentView addSubview:_commentCycle];
+        _commentNumLabel.text = NSStringFromInt(_commentCount);
+    }else
+    {
+        [self setValue:[NSNumber numberWithInt:_count + 1] forKeyPath:@"_count"];
+        
+    }
 }
 
 
@@ -623,16 +668,6 @@
     
     _latitude = lat;
     _longtitude = lon;
-    
-    BOOL result = [dic[@"result"] boolValue];
-    if (result) {
-        
-        NSString *address = dic[@"addressDetail"];
-        _addressDetail = address;
-    }else
-    {
-        _addressDetail = @"未获取到当前位置";
-    }
     
     //请求单品详情
     [self networkForDetail];

@@ -155,8 +155,9 @@
     failBlock = failedBlock;
     
     NSString *newStr = [requestUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
-    NSLog(@"requestUrl %@",newStr);
+    if (![newStr rangeOfString:@"get_my_msg"].length) {
+        NSLog(@"requestUrl %@",newStr);
+    }
     NSURL *urlS = [NSURL URLWithString:newStr];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:urlS cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10];
     
