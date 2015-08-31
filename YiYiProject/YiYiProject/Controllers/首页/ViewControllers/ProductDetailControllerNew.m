@@ -178,20 +178,20 @@
 - (void)waterLoadNewDataForWaterView:(PSCollectionView *)waterView
 {
     _count = 0;
-//    [self getCurrentLocation];
+    [self getCurrentLocation];
     
     
-    _latitude = 40.041951;
-    _longtitude = 116.33934;
-    
-    //请求单品详情
-    [self networkForDetail];
-    
-    //请求单品同款
-    [self networkForDetailSameStyle];
-    
-    //请求评论
-    [self networkForCommentList:NO];
+//    _latitude = 40.041951;
+//    _longtitude = 116.33934;
+//    
+//    //请求单品详情
+//    [self networkForDetail];
+//    
+//    //请求单品同款
+//    [self networkForDetailSameStyle];
+//    
+//    //请求评论
+//    [self networkForCommentList:NO];
 
 }
 - (void)waterLoadMoreDataForWaterView:(PSCollectionView *)waterView
