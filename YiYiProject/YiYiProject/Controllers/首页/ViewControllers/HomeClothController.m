@@ -133,12 +133,19 @@
         return;
     }
     
-    __weak typeof(self)weakSelf = self;
+//    __weak typeof(self)weakSelf = self;
+//    
+//    [[GMAPI appDeledate]startDingweiWithBlock:^(NSDictionary *dic) {
+//        
+//        [weakSelf theLocationDictionary:dic];
+//    }];
     
-    [[GMAPI appDeledate]startDingweiWithBlock:^(NSDictionary *dic) {
-        
-        [weakSelf theLocationDictionary:dic];
-    }];
+    _locationDic = [GMAPI sharedManager].theLocationDic;
+    if (_locationDic) {
+        [_tableView showRefreshHeader:YES];
+    }
+    
+    
     
 }
 

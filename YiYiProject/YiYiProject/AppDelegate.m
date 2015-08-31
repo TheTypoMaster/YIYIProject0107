@@ -169,10 +169,35 @@
     NSLog(@"didFinishLaunch 1111");
 
     
+    
+    
+#pragma mark - 定位
+    //10秒更新消息
+    [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(getLoactionDic) userInfo:nil repeats:YES];
+    
+    
+    
+    
+    
+    
+    
     return YES;
 }
 
+
+
+
 #pragma mark - 获取坐标
+
+-(void)getLoactionDic{
+    mapApi = [GMAPI sharedManager];
+    mapApi.delegate = self;
+    [mapApi startDingwei];
+}
+
+
+
+
 
 - (void)startDingweiWithBlock:(LocationBlock)location
 {
@@ -194,12 +219,17 @@
     
     NSLog(@"定位成功------>%@",dic);
     
-    if (_locationBlock) {
-        
-        _locationBlock(dic);
-    }
+//    if (_locationBlock) {
+//        
+//        _locationBlock(dic);
+//    }
     
     [GMAPI sharedManager].theLocationDic = [dic copy];
+    
+    
+    [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_UPDATELOCATION_SUCCESS object:nil];
+    
+    
 }
 
 
@@ -207,9 +237,9 @@
     
     NSLog(@"定位失败----->%@",dic);
     
-    if (_locationBlock) {
-        _locationBlock(dic);
-    }
+//    if (_locationBlock) {
+//        _locationBlock(dic);
+//    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

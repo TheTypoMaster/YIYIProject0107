@@ -349,46 +349,40 @@
 
 #pragma mark - 定位
 
-- (void)getCurrentLocation
-{
-
-    
-    __weak typeof(self)weakSelf = self;
-    
-    [[GMAPI appDeledate]startDingweiWithBlock:^(NSDictionary *dic) {
-        
-        [weakSelf theLocationDictionary:dic];
-    }];
-    
-    
-    
-}
-- (void)theLocationDictionary:(NSDictionary *)dic{
-    
-    NSLog(@"当前坐标-->%@",dic);
-    self.locationDic = [GMAPI sharedManager].theLocationDic;
-    _lat = [self.locationDic stringValueForKey:@"lat"];
-    _long = [self.locationDic stringValueForKey:@"long"];
-    //请求T台详情
-    [self prepareNetDataForTtaiDetail];
-    //请求关联商场
-    [self prepareNetDataForStore];
-    
-}
-
-
--(void)theLocationFaild:(NSDictionary *)dic{
-    
-    NSLog(@"%s",__FUNCTION__);
-    NSLog(@"%@",dic);
-    self.locationDic = [GMAPI sharedManager].theLocationDic;
-    _lat = [self.locationDic stringValueForKey:@"lat"];
-    _long = [self.locationDic stringValueForKey:@"long"];
-    //请求单品详情
-    [self prepareNetDataForTtaiDetail];
-    //请求关联商场
-    [self prepareNetDataForStore];
-}
+//- (void)getCurrentLocation
+//{
+//
+//    
+//    __weak typeof(self)weakSelf = self;
+//    
+////    [[GMAPI appDeledate]startDingweiWithBlock:^(NSDictionary *dic) {
+////        
+////        [weakSelf theLocationDictionary:dic];
+////    }];
+//    
+//    
+//    
+//}
+//- (void)theLocationDictionary:(NSDictionary *)dic{
+//    
+//    NSLog(@"当前坐标-->%@",dic);
+//    
+//    
+//}
+//
+//
+//-(void)theLocationFaild:(NSDictionary *)dic{
+//    
+//    NSLog(@"%s",__FUNCTION__);
+//    NSLog(@"%@",dic);
+//    self.locationDic = [GMAPI sharedManager].theLocationDic;
+//    _lat = [self.locationDic stringValueForKey:@"lat"];
+//    _long = [self.locationDic stringValueForKey:@"long"];
+//    //请求单品详情
+//    [self prepareNetDataForTtaiDetail];
+//    //请求关联商场
+//    [self prepareNetDataForStore];
+//}
 
 
 
@@ -1238,7 +1232,15 @@
 - (void)waterLoadNewDataForWaterView:(PSCollectionView *)waterView
 {
     _count = 0;
-    [self getCurrentLocation];
+//    [self getCurrentLocation];
+    
+    self.locationDic = [GMAPI sharedManager].theLocationDic;
+    _lat = [self.locationDic stringValueForKey:@"lat"];
+    _long = [self.locationDic stringValueForKey:@"long"];
+    //请求T台详情
+    [self prepareNetDataForTtaiDetail];
+    //请求关联商场
+    [self prepareNetDataForStore];
     
 }
 - (void)waterLoadMoreDataForWaterView:(PSCollectionView *)waterView
