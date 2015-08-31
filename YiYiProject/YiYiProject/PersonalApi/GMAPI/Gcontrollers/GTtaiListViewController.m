@@ -76,7 +76,6 @@
 {
     [super viewWillAppear:animated];
     
-    NSLog(@"BigPhotoTTaiViewController viewWillAppear");
     
     [[UIApplication sharedApplication]setStatusBarHidden:NO];
     

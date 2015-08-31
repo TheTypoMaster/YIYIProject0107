@@ -167,16 +167,6 @@
     self.window.backgroundColor = [UIColor whiteColor];
     
     NSLog(@"didFinishLaunch 1111");
-
-    
-    
-    
-#pragma mark - 定位
-    
-    
-    
-    
-    [self getLoactionDic];
     
     return YES;
 }
@@ -185,16 +175,6 @@
 
 
 #pragma mark - 获取坐标
-
--(void)getLoactionDic{
-    mapApi = [GMAPI sharedManager];
-    mapApi.delegate = self;
-    [mapApi startDingwei];
-}
-
-
-
-
 
 - (void)startDingweiWithBlock:(LocationBlock)location
 {

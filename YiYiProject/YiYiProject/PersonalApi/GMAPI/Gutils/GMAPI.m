@@ -304,12 +304,23 @@
         
         NSLog(@"请打开您的位置服务!");
         
+        //金领时代 40.041951,116.33934
+        //天安门 39.915187,116.403877
+        if (self.delegate && [self.delegate respondsToSelector:@selector(theLocationFaild:)]) {
+            self.theLocationDic = @{
+                                    @"lat":[NSString stringWithFormat:@"%f",40.041951],
+                                    @"long":[NSString stringWithFormat:@"%f",116.33934],
+                                    @"result":[NSNumber numberWithBool:NO]  //定位失败
+                                    };
+            [self.delegate theLocationFaild:self.theLocationDic];
+        }
+        
+        
     }else{
-        //10秒更新消息
-        [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(startDingwei) userInfo:nil repeats:YES];
+        [weakSelf startLocation];
     }
     
-    [weakSelf startLocation];
+    
     
 }
 
@@ -379,7 +390,7 @@
         self.theLocationDic = @{
                                 @"lat":[dic stringValueForKey:@"lat"],
                                 @"long":[dic stringValueForKey:@"long"],
-                                @"result":[NSNumber numberWithBool:NO]  //定位成功
+                                @"result":[NSNumber numberWithBool:NO]  //定位失败
                                 };
         if (self.delegate && [self.delegate respondsToSelector:@selector(theLocationDictionary:)]) {
             [self.delegate theLocationDictionary:self.theLocationDic];

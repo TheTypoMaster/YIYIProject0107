@@ -110,6 +110,8 @@
     _collectionView.waterDelegate = nil;
     _collectionView.quitView = nil;
     _collectionView = nil;
+    
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -145,11 +147,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    
-    //测试
-//    self.tPlat_id = @"409";
-    
+
     
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
@@ -349,40 +347,48 @@
 
 #pragma mark - 定位
 
-//- (void)getCurrentLocation
-//{
-//
-//    
-//    __weak typeof(self)weakSelf = self;
-//    
-////    [[GMAPI appDeledate]startDingweiWithBlock:^(NSDictionary *dic) {
-////        
-////        [weakSelf theLocationDictionary:dic];
-////    }];
-//    
-//    
-//    
-//}
-//- (void)theLocationDictionary:(NSDictionary *)dic{
-//    
-//    NSLog(@"当前坐标-->%@",dic);
-//    
-//    
-//}
-//
-//
-//-(void)theLocationFaild:(NSDictionary *)dic{
-//    
-//    NSLog(@"%s",__FUNCTION__);
-//    NSLog(@"%@",dic);
-//    self.locationDic = [GMAPI sharedManager].theLocationDic;
-//    _lat = [self.locationDic stringValueForKey:@"lat"];
-//    _long = [self.locationDic stringValueForKey:@"long"];
-//    //请求单品详情
-//    [self prepareNetDataForTtaiDetail];
-//    //请求关联商场
-//    [self prepareNetDataForStore];
-//}
+- (void)getCurrentLocation
+{
+
+    __weak typeof(self)weakSelf = self;
+    
+    [[GMAPI appDeledate]startDingweiWithBlock:^(NSDictionary *dic) {
+        
+        [weakSelf theLocationDictionary:dic];
+    }];
+    
+    
+    
+}
+- (void)theLocationDictionary:(NSDictionary *)dic{
+    
+    NSLog(@"当前坐标-->%@",dic);
+    NSLog(@"%s",__FUNCTION__);
+    NSLog(@"%@",dic);
+    self.locationDic = [GMAPI sharedManager].theLocationDic;
+    _lat = [self.locationDic stringValueForKey:@"lat"];
+    _long = [self.locationDic stringValueForKey:@"long"];
+    //请求单品详情
+    [self prepareNetDataForTtaiDetail];
+    //请求关联商场
+    [self prepareNetDataForStore];
+    
+    
+}
+
+
+-(void)theLocationFaild:(NSDictionary *)dic{
+    
+    NSLog(@"%s",__FUNCTION__);
+    NSLog(@"%@",dic);
+    self.locationDic = [GMAPI sharedManager].theLocationDic;
+    _lat = [self.locationDic stringValueForKey:@"lat"];
+    _long = [self.locationDic stringValueForKey:@"long"];
+    //请求单品详情
+    [self prepareNetDataForTtaiDetail];
+    //请求关联商场
+    [self prepareNetDataForStore];
+}
 
 
 
@@ -712,9 +718,16 @@
     CGFloat kuan_yjyImage = [[_ttaiDetailModel.official_pic stringValueForKey:@"width"]floatValue];
     CGFloat gao_yjyImage = [[_ttaiDetailModel.official_pic stringValueForKey:@"height"]floatValue];
     
-    UIImageView *yjyPic = [[UIImageView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(fenLine2.frame)+5, DEVICE_WIDTH, DEVICE_WIDTH/kuan_yjyImage*gao_yjyImage)];
-    [yjyPic sd_setImageWithURL:[NSURL URLWithString:[_ttaiDetailModel.official_pic stringValueForKey:@"url"]] placeholderImage:nil];
-    [yjyPic addTaget:self action:@selector(yjyPicClicked) tag:0];
+    UIImageView *yjyPic;
+    
+    if (!_ttaiDetailModel.official_pic) {
+        yjyPic = [[UIImageView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(fenLine2.frame)+5, DEVICE_WIDTH, 0)];
+    }else{
+        yjyPic = [[UIImageView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(fenLine2.frame)+5, DEVICE_WIDTH, DEVICE_WIDTH/kuan_yjyImage*gao_yjyImage)];
+        [yjyPic sd_setImageWithURL:[NSURL URLWithString:[_ttaiDetailModel.official_pic stringValueForKey:@"url"]] placeholderImage:nil];
+        [yjyPic addTaget:self action:@selector(yjyPicClicked) tag:0];
+    }
+    
     [view2 addSubview:yjyPic];
     
     UIView *fenLine3 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(yjyPic.frame)+5, DEVICE_WIDTH, 0.5)];
@@ -1232,15 +1245,8 @@
 - (void)waterLoadNewDataForWaterView:(PSCollectionView *)waterView
 {
     _count = 0;
-//    [self getCurrentLocation];
+    [self getCurrentLocation];
     
-    self.locationDic = [GMAPI sharedManager].theLocationDic;
-    _lat = [self.locationDic stringValueForKey:@"lat"];
-    _long = [self.locationDic stringValueForKey:@"long"];
-    //请求T台详情
-    [self prepareNetDataForTtaiDetail];
-    //请求关联商场
-    [self prepareNetDataForStore];
     
 }
 - (void)waterLoadMoreDataForWaterView:(PSCollectionView *)waterView
