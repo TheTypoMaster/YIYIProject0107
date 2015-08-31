@@ -4666,8 +4666,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Chaowei Li (D8TKB68L88)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Chaowei Li (D8TKB68L88)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: chaowei li (WJC7LQ9EE7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: chaowei li (WJC7LQ9EE7)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -4679,7 +4679,7 @@
 				INFOPLIST_FILE = YiYiProjectTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e618f4c1-6692-49eb-a6bc-ba0bb5f73aef";
+				PROVISIONING_PROFILE = "1ac615bd-4333-42cd-8038-64d46384f9a3";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YiYiProject.app/YiYiProject";
 			};
 			name = Debug;
@@ -4688,8 +4688,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Chaowei Li (D8TKB68L88)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Chaowei Li (D8TKB68L88)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: chaowei li (WJC7LQ9EE7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: chaowei li (WJC7LQ9EE7)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -4697,7 +4697,7 @@
 				INFOPLIST_FILE = YiYiProjectTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e618f4c1-6692-49eb-a6bc-ba0bb5f73aef";
+				PROVISIONING_PROFILE = "1ac615bd-4333-42cd-8038-64d46384f9a3";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YiYiProject.app/YiYiProject";
 			};
 			name = Release;

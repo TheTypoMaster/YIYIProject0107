@@ -195,8 +195,9 @@
         for (NSDictionary *dic in arr) {
             
             ActivityModel *amodel = [[ActivityModel alloc]initWithDictionary:dic];
-            GTtaiNearActOneView *view = [[GTtaiNearActOneView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH - 10, 60) huodongModel:amodel type:nil];
-            view.backgroundColor = RGBCOLOR(239, 239, 239);
+            GTtaiNearActOneView *view = [[GTtaiNearActOneView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH - 10, DEVICE_WIDTH/710.0*120) huodongModel:amodel type:nil];
+//            view.backgroundColor = RGBCOLOR(239, 239, 239);
+//            view.backgroundColor = [UIColor redColor];
             [viewsArray1 addObject:view];
         }
         
@@ -207,6 +208,7 @@
         [self.topView addSubview:l1];
         
         UIView *vvv = [[UIView alloc]initWithFrame:CGRectMake(5, CGRectGetMaxY(_topScrollView.frame), DEVICE_WIDTH-10, 32)];
+//        vvv.backgroundColor = [UIColor grayColor];
         [self.topView addSubview:vvv];
         
         if (_topScrollView1) {
@@ -217,7 +219,7 @@
         }
         
         [_g02 removeFromSuperview];
-        
+        _topScrollView1.backgroundColor = [UIColor purpleColor];
         _topScrollView1.isPageControlHidden = YES;
         _topScrollView1.scrollView.showsHorizontalScrollIndicator = FALSE;
         

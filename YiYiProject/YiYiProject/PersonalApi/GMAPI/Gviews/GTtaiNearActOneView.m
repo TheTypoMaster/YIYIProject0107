@@ -25,12 +25,11 @@
         
         UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width/3.0, frame.size.height)];
 //        imv.backgroundColor = [UIColor purpleColor];
-//        [imv sd_setImageWithURL:[NSURL URLWithString:model.cover_pic] placeholderImage:nil];
         [imv l_setImageWithURL:[NSURL URLWithString:model.cover_pic] placeholderImage:DEFAULT_YIJIAYI];
         [self addSubview:imv];
         
         UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(imv.frame)+5, 0, frame.size.width - imv.frame.size.width - 10, imv.frame.size.height *2.0/3.0)];
-//        titleLabel.backgroundColor = [UIColor orangeColor];
+        titleLabel.backgroundColor = [UIColor orangeColor];
         titleLabel.text = model.activity_title;
         titleLabel.font = [UIFont systemFontOfSize:13];
         titleLabel.numberOfLines = 2;
@@ -51,6 +50,9 @@
         adressLabel.font = [UIFont systemFontOfSize:11];
         adressLabel.textColor = RGBCOLOR(79, 80, 81);
         [self addSubview:adressLabel];
+        
+        
+        self.backgroundColor = RGBCOLOR_ONE;
         
     }
     

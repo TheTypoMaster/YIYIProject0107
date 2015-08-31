@@ -171,6 +171,9 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    
+    NSLog(@"%s",__FUNCTION__);
+    
     int contentOffsetY = scrollView.contentOffset.y;
     if(contentOffsetY >= (2 * CGRectGetHeight(scrollView.frame))) {
         self.currentPageIndex = [self getValidNextPageIndexWithPageIndex:self.currentPageIndex + 1];
@@ -198,8 +201,8 @@
 
 - (void)animationTimerDidFired:(NSTimer *)timer
 {
-    CGPoint newOffset = CGPointMake(self.scrollView.contentOffset.x,self.scrollView.contentOffset.y + CGRectGetHeight(self.scrollView.frame));
-    [self.scrollView setContentOffset:newOffset animated:YES];
+//    CGPoint newOffset = CGPointMake(self.scrollView.contentOffset.x,self.scrollView.contentOffset.y + CGRectGetHeight(self.scrollView.frame));
+//    [self.scrollView setContentOffset:newOffset animated:YES];
 }
 
 - (void)contentViewTapAction:(UITapGestureRecognizer *)tap
