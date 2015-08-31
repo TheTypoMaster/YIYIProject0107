@@ -330,12 +330,12 @@
     
     _locService = [[BMKLocationService alloc]init];
     _locService.delegate = self;
+    [BMKLocationService setLocationDistanceFilter:100];
     [_locService startUserLocationService];
 }
 
 ///停止定位
 -(void)stopLocation{
-    
     
     [_locService stopUserLocationService];
     if (_locService) {

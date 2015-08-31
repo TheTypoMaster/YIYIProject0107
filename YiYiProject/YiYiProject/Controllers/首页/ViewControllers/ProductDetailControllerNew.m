@@ -115,6 +115,7 @@
     
     [tool_sameStyle cancelRequest];
     [tool_comment cancelRequest];
+    [tool_detail cancelRequest];
     
     _collectionView.waterDelegate = nil;
     _collectionView.quitView = nil;
