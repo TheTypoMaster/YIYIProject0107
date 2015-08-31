@@ -130,8 +130,7 @@
         _dizhiLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(fujinhuodongLabel.frame), 0, DEVICE_WIDTH - 5-60-5, 32)];
         _dizhiLabel.textAlignment = NSTextAlignmentRight;
         _dizhiLabel.font = [UIFont systemFontOfSize:12];
-//        dizhiLabel.text = streetStr;
-         _dizhiLabel.text = @"正在定位···";
+        _dizhiLabel.text = @"正在定位···";
         _dizhiLabel.textColor = RGBCOLOR(81, 82, 83);
         [vvv addSubview:_dizhiLabel];
         
@@ -309,6 +308,10 @@
             [bself cycleScrollDidClickedWithIndex:pageIndex];
         };
         
+        if (_upScrollViewData.count == 0) {
+            [_topScrollView removeFromSuperview];
+        }
+        
         
         [_table reloadData];
        
@@ -335,6 +338,10 @@
 -(void)cycleScrollDidClickedWithIndex:(NSInteger)index{
     NSLog(@"%ld",index);
     
+    if (_upScrollViewData.count == 0) {
+        
+        return;
+    }
     ActivityModel *amodel = _upScrollViewData[index];
     
     if ([amodel.redirect_type intValue] == 1) {//外链
