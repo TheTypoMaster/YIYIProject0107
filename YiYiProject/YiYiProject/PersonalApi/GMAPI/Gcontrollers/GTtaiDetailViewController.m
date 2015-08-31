@@ -111,6 +111,8 @@
     _collectionView.quitView = nil;
     _collectionView = nil;
     
+     [self removeObserver:self forKeyPath:@"_count"];
+    
     
 }
 
