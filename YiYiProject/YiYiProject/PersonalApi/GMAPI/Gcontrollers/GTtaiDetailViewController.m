@@ -977,6 +977,9 @@
 - (void)networkForActionType:(ACTION_TYPE)action_type
 {
     
+    
+    //线上T台收藏为get请求
+    
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     __weak typeof(self)weakSelf = self;
@@ -994,47 +997,95 @@
     
     NSString *post = [NSString stringWithFormat:@"tt_id=%@&authcode=%@",self.tPlat_id,[GMAPI getAuthkey]];
     NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-    NSString *url = api;
+    NSString *url = api;//post
+    if (action_type == Action_Collect_yes || action_type == Action_Collect_no) {
+        url = [NSString stringWithFormat:@"%@&%@",api,post];//get
+        LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:postData];
+        [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+            
+            NSLog(@"result %@",result);
+            
+            if (action_type == Action_like_yes) {
+                
+                [weakSelf updateZanState:YES];
+                
+                
+            }else if (action_type == Action_Collect_yes){
+                
+                _collectButton.selected = YES;
+                //关注T台通知
+                [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_TTai object:nil userInfo:@{@"state":[NSNumber numberWithBool:YES]}];
+                
+            }else if (action_type == Action_like_no){
+                
+                
+                [weakSelf updateZanState:NO];
+                
+                
+            }else if (action_type == Action_Collect_no){
+                
+                _collectButton.selected = NO;
+                //关注T台通知
+                [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_TTai object:nil userInfo:@{@"state":[NSNumber numberWithBool:NO]}];
+            }
+            
+            
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            
+        } failBlock:^(NSDictionary *failDic, NSError *erro) {
+            
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            
+            NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+            
+        }];
+        
+    }else{
+        LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
+        [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+            
+            NSLog(@"result %@",result);
+            
+            if (action_type == Action_like_yes) {
+                
+                [weakSelf updateZanState:YES];
+                
+                
+            }else if (action_type == Action_Collect_yes){
+                
+                _collectButton.selected = YES;
+                //关注T台通知
+                [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_TTai object:nil userInfo:@{@"state":[NSNumber numberWithBool:YES]}];
+                
+            }else if (action_type == Action_like_no){
+                
+                
+                [weakSelf updateZanState:NO];
+                
+                
+            }else if (action_type == Action_Collect_no){
+                
+                _collectButton.selected = NO;
+                //关注T台通知
+                [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_TTai object:nil userInfo:@{@"state":[NSNumber numberWithBool:NO]}];
+            }
+            
+            
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            
+        } failBlock:^(NSDictionary *failDic, NSError *erro) {
+            
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            
+            NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+            
+        }];
+    }
     
-    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
-    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
-        
-        NSLog(@"result %@",result);
-        
-        if (action_type == Action_like_yes) {
-            
-            [weakSelf updateZanState:YES];
-            
-            
-        }else if (action_type == Action_Collect_yes){
-            
-            _collectButton.selected = YES;
-            //关注T台通知
-            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_TTai object:nil userInfo:@{@"state":[NSNumber numberWithBool:YES]}];
-            
-        }else if (action_type == Action_like_no){
-            
-            
-            [weakSelf updateZanState:NO];
-
-            
-        }else if (action_type == Action_Collect_no){
-            
-            _collectButton.selected = NO;
-            //关注T台通知
-            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_TTai object:nil userInfo:@{@"state":[NSNumber numberWithBool:NO]}];
-        }
-        
-        
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        
-    } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        
-        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-        
-    }];
+    
+    
+    
+    
 }
 
 

@@ -60,6 +60,8 @@
     
     UILabel *_dizhiLabel;
     
+    UIImageView *_g02;
+    UIImageView *_g01;
     
 }
 
@@ -107,10 +109,10 @@
         self.topView.backgroundColor = [UIColor whiteColor];
         
         
-        UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_WIDTH/750.0*250)];
-        [imv setImage:[UIImage imageNamed:@"g01.png"]];
+        _g01 = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_WIDTH/750.0*250)];
+        [_g01 setImage:[UIImage imageNamed:@"g01.png"]];
         
-        [self.topView addSubview:imv];
+        [self.topView addSubview:_g01];
         
         
         if (!_topScrollView) {
@@ -136,9 +138,9 @@
         
         
         
-        UIImageView *imvv = [[UIImageView alloc]initWithFrame:CGRectMake(5, CGRectGetMaxY(vvv.frame), DEVICE_WIDTH-10, DEVICE_WIDTH/710.0*120)];
-        [imvv setImage:[UIImage imageNamed:@"g02.png"]];
-        [self.topView addSubview:imvv];
+        _g02 = [[UIImageView alloc]initWithFrame:CGRectMake(5, CGRectGetMaxY(vvv.frame), DEVICE_WIDTH-10, DEVICE_WIDTH/710.0*120)];
+        [_g02 setImage:[UIImage imageNamed:@"g02.png"]];
+        [self.topView addSubview:_g02];
         
         
         if (!_topScrollView1) {
@@ -216,7 +218,7 @@
             [self.topView addSubview:_topScrollView1];
         }
         
-        
+        [_g02 removeFromSuperview];
         
         _topScrollView1.isPageControlHidden = YES;
         _topScrollView1.scrollView.showsHorizontalScrollIndicator = FALSE;
