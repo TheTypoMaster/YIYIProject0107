@@ -348,8 +348,6 @@
         for (NSDictionary * dic in commentsArray)
         {
             TopicCommentsModel * model = [[TopicCommentsModel alloc] initWithDictionary:dic];
-//            model.reply_id = [NSString stringWithFormat:@"%@",[dic objectForKey:@"post_id"]];
-//            model.repost_uid = [NSString stringWithFormat:@"%@",[dic objectForKey:@"uid"]];
             [arr addObject:model];
         }
         _commentArray = [NSArray arrayWithArray:arr];
@@ -973,22 +971,6 @@
     [self presentViewController:ll animated:YES completion:nil];
 }
 
-/**
- *  跳转至地图
- *
- *  @param sender
- */
-- (IBAction)clickToMapForCurrentLoacation:(id)sender {
-    
-    GLeadBuyMapViewController *ll = [[GLeadBuyMapViewController alloc]init];
-    ll.aModel = _aModel;
-    ll.theType = LEADYOUTYPE_STORE;
-    
-    ll.storeName = @"当前位置";
-    ll.coordinate_store = CLLocationCoordinate2DMake(_latitude, _longtitude);
-    
-    [self presentViewController:ll animated:YES completion:nil];
-}
 
 - (IBAction)clickToStore:(id)sender {
     
@@ -1262,32 +1244,26 @@
     NSString *skuName = [NSString stringWithFormat:@"货号: %@",aProductModel.product_sku];
     UILabel *skuLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, brandLabel.bottom + 10, 200, 15) title:skuName font:13 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"333333"]];
     [_headerView addSubview:skuLabel];
+    
 #pragma - mark 地址相关
-    //地址信息
-    UIImageView *addressIcon = [[UIImageView alloc]initWithFrame:CGRectMake(titleLabel.left, skuLabel.bottom + 10, 13, 13)];
-    addressIcon.image = [UIImage imageNamed:@"danpinxq_dianpu"];
+    
+    //店铺名
+    NSString *mallName = [NSString stringWithFormat:@"商铺: %@",aProductModel.mall_info[@"mall_name"]];
+    UILabel *malllNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, skuLabel.bottom + 10, DEVICE_WIDTH - 20, 15) title:mallName font:13 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"333333"]];
+    [_headerView addSubview:malllNameLabel];
+    
+    //店铺位置
+    //当前位置信息
+    UIImageView *addressIcon = [[UIImageView alloc]initWithFrame:CGRectMake(titleLabel.left, malllNameLabel.bottom + 10, 13, 13)];
+    addressIcon.image = [UIImage imageNamed:@"danpinxq_dizhi"];
     [_headerView addSubview:addressIcon];
     
-    NSString *address = [NSString stringWithFormat:@"%@ - %@",[LTools NSStringNotNull:aProductModel.product_brand_name],aProductModel.mall_info[@"mall_name"]];
-    UILabel *addressLabel = [[UILabel alloc]initWithFrame:CGRectMake(addressIcon.right + 10, addressIcon.top, DEVICE_WIDTH - addressIcon.right - 5 - 20, addressIcon.height) title:address font:13 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"67bcfd"]];
-    [_headerView addSubview:addressLabel];
+    NSString *mallAddress = [NSString stringWithFormat:@"%@",aProductModel.mall_info[@"address"]];
+    UILabel *mallAddressLabel = [[UILabel alloc]initWithFrame:CGRectMake(addressIcon.right + 10, malllNameLabel.bottom + 10, DEVICE_WIDTH - addressIcon.right - 5 - 20, 15) title:mallAddress font:13 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"67bcfd"]];
+    [_headerView addSubview:mallAddressLabel];
+    [mallAddressLabel addTaget:self action:@selector(clickToMap:) tag:0];
     
-    [addressLabel addTaget:self action:@selector(clickToMap:) tag:0];
-    
-    //当前位置信息
-    UIImageView *addressIcon_current = [[UIImageView alloc]initWithFrame:CGRectMake(titleLabel.left, addressIcon.bottom + 10, 13, 13)];
-    addressIcon_current.image = [UIImage imageNamed:@"danpinxq_dizhi"];
-    [_headerView addSubview:addressIcon_current];
-    
-    NSString *address_current = [NSString stringWithFormat:@"定位中..."];
-    _addressLabel_current = [[UILabel alloc]initWithFrame:CGRectMake(addressIcon_current.right + 10, addressIcon_current.top, DEVICE_WIDTH - addressIcon.right - 5 - 20, addressIcon.height) title:address_current font:13 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"67bcfd"]];
-    [_headerView addSubview:_addressLabel_current];
-    
-    [_addressLabel_current addTaget:self action:@selector(clickToMapForCurrentLoacation:) tag:0];
-    
-    _addressLabel_current.text = _addressDetail;
-    
-    UIView *line2 = [[UIView alloc]initWithFrame:CGRectMake(0, _addressLabel_current.bottom + 5, DEVICE_WIDTH, 0.5)];
+    UIView *line2 = [[UIView alloc]initWithFrame:CGRectMake(0, mallAddressLabel.bottom + 5, DEVICE_WIDTH, 0.5)];
     line2.backgroundColor = DEFAULT_VIEW_BACKGROUNDCOLOR;
     [_headerView addSubview:line2];
     UIView *line3 = [[UIView alloc]initWithFrame:CGRectMake(0, line2.bottom + 55, DEVICE_WIDTH, 0.5)];
