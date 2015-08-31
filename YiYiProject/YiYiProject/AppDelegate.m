@@ -168,19 +168,12 @@
     
     NSLog(@"didFinishLaunch 1111");
 
-    
-    
-    
 #pragma mark - 定位
-    //10秒更新消息
-    [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(getLoactionDic) userInfo:nil repeats:YES];
     
+    [self getLoactionDic];
     
     return YES;
 }
-
-
-
 
 #pragma mark - 获取坐标
 
@@ -214,10 +207,10 @@
     
     NSLog(@"定位成功------>%@",dic);
     
-//    if (_locationBlock) {
-//        
-//        _locationBlock(dic);
-//    }
+    if (_locationBlock) {
+        
+        _locationBlock(dic);
+    }
     
     [GMAPI sharedManager].theLocationDic = [dic copy];
     
@@ -232,9 +225,9 @@
     
     NSLog(@"定位失败----->%@",dic);
     
-//    if (_locationBlock) {
-//        _locationBlock(dic);
-//    }
+    if (_locationBlock) {
+        _locationBlock(dic);
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

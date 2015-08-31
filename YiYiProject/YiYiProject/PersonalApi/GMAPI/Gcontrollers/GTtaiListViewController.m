@@ -730,46 +730,46 @@
 
 #pragma mark - GgetllocationDelegate
 
-//- (void)theLocationDictionary:(NSDictionary *)dic{
-//    
-//    NSLog(@"定位成功信息%@",dic);
-//    GMAPI *gmapi = [GMAPI sharedManager];
-//    self.locationDic = gmapi.theLocationDic;
-//    
-//    
-//    NSString *streetStr = [self.locationDic stringValueForKey:@"addressDetail"];
-//    _dizhiLabel.text = streetStr;
-//    
-//    
-//    [self prepareTopScrollViewNetData];
-//    [self prepareNearActity];
-//    [self getTTaiData];
-//}
-//
-//
-//- (void)theLocationFaild:(NSDictionary *)dic{
-//    NSLog(@"定位失败%@",dic);
-//    _dizhiLabel.text = @"定位失败";
-//    [self prepareTopScrollViewNetData];
-//    [self prepareNearActity];
-//    [self getTTaiData];
-//}
+- (void)theLocationDictionary:(NSDictionary *)dic{
+    
+    NSLog(@"定位成功信息%@",dic);
+    GMAPI *gmapi = [GMAPI sharedManager];
+    self.locationDic = gmapi.theLocationDic;
+    
+    
+    NSString *streetStr = [self.locationDic stringValueForKey:@"addressDetail"];
+    _dizhiLabel.text = streetStr;
+    
+    
+    [self prepareTopScrollViewNetData];
+    [self prepareNearActity];
+    [self getTTaiData];
+}
+
+
+- (void)theLocationFaild:(NSDictionary *)dic{
+    NSLog(@"定位失败%@",dic);
+    _dizhiLabel.text = @"定位失败";
+    [self prepareTopScrollViewNetData];
+    [self prepareNearActity];
+    [self getTTaiData];
+}
 
 #pragma - mark RefreshDelegate
 
 -(void)loadNewData
 {
-//    __weak typeof(self)weakSelf = self;
-//    
-//    [[GMAPI appDeledate]startDingweiWithBlock:^(NSDictionary *dic) {
-//        
-//        [weakSelf theLocationDictionary:dic];
-//    }];
+    __weak typeof(self)weakSelf = self;
+    
+    [[GMAPI appDeledate]startDingweiWithBlock:^(NSDictionary *dic) {
+        
+        [weakSelf theLocationDictionary:dic];
+    }];
     
     
     
     
-    NSLog(@"我擦%@",[self.locationDic stringValueForKey:@"addressDetail"]);
+//    NSLog(@"%@",[self.locationDic stringValueForKey:@"addressDetail"]);
     if ([LTools isEmpty:[self.locationDic stringValueForKey:@"addressDetail"]]) {
         _dizhiLabel.text = nil;
     }else{
