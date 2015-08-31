@@ -176,11 +176,6 @@
     [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(getLoactionDic) userInfo:nil repeats:YES];
     
     
-    
-    
-    
-    
-    
     return YES;
 }
 
