@@ -213,14 +213,9 @@
                 [_tmpArray addObject:model];
             }
             
-            
-            
-            
             _ttaiDetailModel = [[TPlatModel alloc]initWithDictionary:result];
             [self setValue:[NSNumber numberWithInt:_count + 1] forKeyPath:@"_count"];
         }
-        
-        
         
         
         [self createNavigationbarTools];//导航条

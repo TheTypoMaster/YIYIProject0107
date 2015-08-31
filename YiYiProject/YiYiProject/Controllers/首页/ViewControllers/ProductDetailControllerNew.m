@@ -348,8 +348,8 @@
         for (NSDictionary * dic in commentsArray)
         {
             TopicCommentsModel * model = [[TopicCommentsModel alloc] initWithDictionary:dic];
-            model.reply_id = [NSString stringWithFormat:@"%@",[dic objectForKey:@"post_id"]];
-            model.repost_uid = [NSString stringWithFormat:@"%@",[dic objectForKey:@"uid"]];
+//            model.reply_id = [NSString stringWithFormat:@"%@",[dic objectForKey:@"post_id"]];
+//            model.repost_uid = [NSString stringWithFormat:@"%@",[dic objectForKey:@"uid"]];
             [arr addObject:model];
         }
         _commentArray = [NSArray arrayWithArray:arr];

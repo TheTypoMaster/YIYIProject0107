@@ -440,7 +440,7 @@
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     TopicCommentsModel * model = [_array_comments objectAtIndex:indexPath.row];
-    [self clickWithType:TopicCommentsCellClickTypeComment WithUserName:model.user_name WithUid:model.repost_uid WithReplyId:model.reply_id];
+    [self clickWithType:TopicCommentsCellClickTypeComment WithUserName:model.user_name WithUid:model.post_id WithReplyId:model.uid];
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
 {

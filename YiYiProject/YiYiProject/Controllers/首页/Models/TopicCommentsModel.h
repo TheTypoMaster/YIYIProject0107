@@ -17,10 +17,10 @@
     
 }
 
-///回复id
-@property(nonatomic,strong)NSString * reply_id;
-///回复人uid
-@property(nonatomic,strong)NSString * repost_uid;
+/////回复id
+//@property(nonatomic,strong)NSString * reply_id;
+/////回复人uid
+//@property(nonatomic,strong)NSString * repost_uid;
 ///回复内容
 @property(nonatomic,strong)NSString * repost_content;
 ///回复
@@ -37,6 +37,9 @@
 @property(nonatomic,strong)NSString * photo;
 ///对评论进行的回复
 @property(nonatomic,strong)NSMutableArray * child_array;
+
+@property(nonatomic,strong)NSString *post_id;//评论id
+@property(nonatomic,strong)NSString *uid;//发表回复人的id
 
 
 -(id)initWithDictionary:(NSDictionary *)dic;

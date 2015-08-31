@@ -214,8 +214,8 @@
         for (NSDictionary * dic in commentsArray)
         {
             TopicCommentsModel * model = [[TopicCommentsModel alloc] initWithDictionary:dic];
-            model.reply_id = [NSString stringWithFormat:@"%@",[dic objectForKey:@"post_id"]];
-            model.repost_uid = [NSString stringWithFormat:@"%@",[dic objectForKey:@"uid"]];
+//            model.reply_id = [NSString stringWithFormat:@"%@",[dic objectForKey:@"post_id"]];
+//            model.repost_uid = [NSString stringWithFormat:@"%@",[dic objectForKey:@"uid"]];
 //            [bself.comments_array addObject:model];
             [arr addObject:model];
         }
@@ -929,8 +929,8 @@
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
     TopicCommentsModel * model = [_table.dataArray objectAtIndex:indexPath.row];
-    _parent_post = model.reply_id;
-    _r_reply_uid = model.repost_uid;
+    _parent_post = model.post_id;
+    _r_reply_uid = model.uid;
     _r_reply_userName = model.user_name;
     
     _input_view.text_input_view.text = [NSString stringWithFormat:@"回复 %@:",model.user_name];

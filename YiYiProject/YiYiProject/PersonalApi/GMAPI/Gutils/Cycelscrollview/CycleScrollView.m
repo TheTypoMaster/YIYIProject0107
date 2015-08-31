@@ -10,6 +10,9 @@
 #import "NSTimer+Addition.h"
 
 @interface CycleScrollView () <UIScrollViewDelegate>
+{
+    CGFloat _currentOffsetx;
+}
 
 @property (nonatomic , assign) NSInteger currentPageIndex;
 @property (nonatomic , assign) NSInteger totalPageCount;
@@ -81,6 +84,7 @@
         self.scrollView.pagingEnabled = YES;
         [self addSubview:self.scrollView];
         self.currentPageIndex = 0;
+        _currentOffsetx = 0.f;
     }
     return self;
 }
@@ -128,6 +132,7 @@
             self.scrollView.scrollEnabled = NO;
         }
     }else{
+        
         NSInteger previousPageIndex = [self getValidNextPageIndexWithPageIndex:self.currentPageIndex - 1];
         NSInteger rearPageIndex = [self getValidNextPageIndexWithPageIndex:self.currentPageIndex + 1];
         if (self.contentViews == nil) {
@@ -136,9 +141,12 @@
         [self.contentViews removeAllObjects];
         
         if (self.fetchContentViewAtIndex) {
+            
             [self.contentViews addObject:self.fetchContentViewAtIndex(previousPageIndex)];
             [self.contentViews addObject:self.fetchContentViewAtIndex(_currentPageIndex)];
             [self.contentViews addObject:self.fetchContentViewAtIndex(rearPageIndex)];
+            
+            NSLog(@"\npre %ld\ncurrent %ld next %ld",previousPageIndex,_currentPageIndex,rearPageIndex);
         }
     }
     
@@ -147,11 +155,18 @@
 
 - (NSInteger)getValidNextPageIndexWithPageIndex:(NSInteger)currentPageIndex;
 {
+    NSLog(@"----%ld",currentPageIndex);
+    
     if(currentPageIndex == -1) {
+        
         return self.totalPageCount - 1;
+
+        
     } else if (currentPageIndex == self.totalPageCount) {
+        
         return 0;
-    } else {
+    }
+    else {
         return currentPageIndex;
     }
 }
@@ -162,6 +177,11 @@
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     [self.animationTimer pauseTimer];
+    
+    //lcw
+//    [scrollView setContentOffset:CGPointMake(_scrollView.width, 0) animated:NO];
+//    self.currentPageIndex = 1 - _currentPageIndex;
+    //end
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
@@ -171,6 +191,32 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    NSLog(@"offset %f",scrollView.contentOffset.x);
+    
+    //lcw
+    
+//    //一共有两个的时候
+//    if (self.totalPageCount == 2) {
+//
+//        UIView *view_next = self.fetchContentViewAtIndex(_currentPageIndex);
+//        UIView *view_current = self.fetchContentViewAtIndex(1 -_currentPageIndex);
+//        
+//        //左滑动
+//        if (scrollView.contentOffset.x < _currentOffsetx) {
+//            
+//            //调换顺序
+//            view_current.left = _scrollView.width;
+//            view_next.left = 0;
+//            
+//            _currentOffsetx = scrollView.contentOffset.x;
+//
+//            return;
+//
+//        }
+//        
+//    }
+    //end
+    
     int contentOffsetX = scrollView.contentOffset.x;
     if(contentOffsetX >= (2 * CGRectGetWidth(scrollView.frame))) {
         self.currentPageIndex = [self getValidNextPageIndexWithPageIndex:self.currentPageIndex + 1];
@@ -179,14 +225,15 @@
         
     }
     if(contentOffsetX <= 0) {
+        NSLog(@"previous，当前页:%ld",(long)self.currentPageIndex);
         self.currentPageIndex = [self getValidNextPageIndexWithPageIndex:self.currentPageIndex - 1];
         NSLog(@"previous，当前页:%ld",(long)self.currentPageIndex);
         [self configContentViews];
     }
     
-    
     self.pageControl.currentPage = self.currentPageIndex;
     
+    _currentOffsetx = scrollView.contentOffset.x;
     
 }
 

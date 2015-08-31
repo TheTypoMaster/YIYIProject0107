@@ -16,8 +16,6 @@
     self = [super init];
     if (self)
     {
-        _reply_id = [NSString stringWithFormat:@"%@",[dic objectForKey:@"reply_id"]];
-        _repost_uid = [NSString stringWithFormat:@"%@",[dic objectForKey:@"repost_uid"]];
         _repost_content = [NSString stringWithFormat:@"%@",[dic objectForKey:@"repost_content"]];
         _parent_post = [NSString stringWithFormat:@"%@",[dic objectForKey:@"parent_post"]];
         _r_reply_id = [NSString stringWithFormat:@"%@",[dic objectForKey:@"r_reply_id"]];
@@ -25,7 +23,9 @@
         _post_time = [NSString stringWithFormat:@"%@",[dic objectForKey:@"post_time"]];
         _user_name = [NSString stringWithFormat:@"%@",[dic objectForKey:@"user_name"]];
         _photo = [NSString stringWithFormat:@"%@",[dic objectForKey:@"photo"]];
-        _reply_id = [NSString stringWithFormat:@"%@",[dic objectForKey:@"reply_id"]];
+        
+        _post_id = [NSString stringWithFormat:@"%@",dic[@"post_id"]];//回复id
+        _uid = [NSString stringWithFormat:@"%@",dic[@"uid"]];//评论发布人
         
         _child_array = [NSMutableArray array];
         

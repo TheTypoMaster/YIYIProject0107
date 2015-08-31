@@ -79,7 +79,7 @@
         label.labelSelectedColor = [UIColor lightGrayColor];
 
         //label赋值
-        NSDictionary *params = @{USER_NAME:model.user_name,USER_UID:model.uid,REPLY_ID:model.father_id};
+        NSDictionary *params = @{USER_NAME:model.user_name,USER_UID:model.uid,REPLY_ID:model.post_id};
         label.params = params;
         
         CGFloat aHeight = iconImageView.height > label.height ? iconImageView.height : label.height;
@@ -190,7 +190,8 @@
     [OHLableHelper creatAttributedText:contentString Label:label OHDelegate:self WithWidht:13 WithHeight:14 WithLineBreak:NO];
     NSRange range = [contentString rangeOfString:model.user_name];
     label.underlineLinks = NO;
-    [label addCustomLink:[NSURL URLWithString:model.repost_uid] inRange:range];
+    
+    [label addCustomLink:[NSURL URLWithString:model.post_id] inRange:range];
 
     [label setLinkColor:[UIColor colorWithHexString:@"5175a7"]];
     label.textColor = [UIColor colorWithHexString:@"727272"];
@@ -198,7 +199,8 @@
 //    label.backgroundColor = [UIColor orangeColor];
     label.labelSelectedColor = [UIColor lightGrayColor];
     //label赋值
-    NSDictionary *params = @{USER_NAME:model.user_name,USER_UID:model.repost_uid};
+
+    NSDictionary *params = @{USER_NAME:model.user_name,USER_UID:model.uid};
     label.params = params;
 
     //底部线的坐标top
@@ -271,13 +273,14 @@
 ///点击内容去评论
 -(void)tapCnontentToComment:(UITapGestureRecognizer *)sender
 {
-    TopicCommentsCell_block(TPlatCommentCellClickType_Comment,aModel.user_name,aModel.repost_uid,aModel.reply_id);
+    TopicCommentsCell_block(TPlatCommentCellClickType_Comment,aModel.user_name,aModel.uid,aModel.post_id);
 }
+
 
 /// 点击评论按钮进行评论
 - (void)clickToComment
 {
-    TopicCommentsCell_block(TPlatCommentCellClickType_Comment,aModel.user_name,aModel.repost_uid,aModel.reply_id);
+    TopicCommentsCell_block(TPlatCommentCellClickType_Comment,aModel.user_name,aModel.uid,aModel.post_id);
 }
 
 
@@ -288,7 +291,7 @@
 -(BOOL)attributedLabel:(OHAttributedLabel*)attributedLabel shouldFollowLink:(NSTextCheckingResult*)linkInfo
 {
     
-    TopicCommentsCell_block(TPlatCommentCellClickType_UserCenter,aModel.user_name,aModel.repost_uid,aModel.reply_id);
+    TopicCommentsCell_block(TPlatCommentCellClickType_UserCenter,aModel.user_name,aModel.uid,aModel.post_id);
     
     return YES;
 }
@@ -297,7 +300,7 @@
 
 -(void)didSelectedAttributedLabel:(OHAttributedLabel*)attributedLabel//整个label被选中
 {
-    TopicCommentsCell_block(TPlatCommentCellClickType_Comment,aModel.user_name,aModel.repost_uid,aModel.reply_id);
+    TopicCommentsCell_block(TPlatCommentCellClickType_Comment,aModel.user_name,aModel.uid,aModel.post_id);
 }
 
 

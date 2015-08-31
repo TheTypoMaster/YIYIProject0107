@@ -152,7 +152,7 @@
 ///点击内容去评论
 -(void)CommentsTap:(UITapGestureRecognizer *)sender
 {
-    TopicCommentsCell_block(TopicCommentsCellClickTypeComment,aModel.user_name,aModel.repost_uid,aModel.reply_id);
+    TopicCommentsCell_block(TopicCommentsCellClickTypeComment,aModel.user_name,aModel.post_id,aModel.uid);
 }
 
 @end
