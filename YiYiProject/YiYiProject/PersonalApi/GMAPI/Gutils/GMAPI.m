@@ -304,6 +304,9 @@
         
         NSLog(@"请打开您的位置服务!");
         
+    }else{
+        //10秒更新消息
+        [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(startDingwei) userInfo:nil repeats:YES];
     }
     
     [weakSelf startLocation];
@@ -340,6 +343,8 @@
                                 @"long":[NSString stringWithFormat:@"%f",userLocation.location.coordinate.longitude]
                                 };
         
+        [LTools cache:self.theLocationDic ForKey:CACHE_THELOCATION];
+        
         BMKReverseGeoCodeOption *reverseGeoCodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
         reverseGeoCodeSearchOption.reverseGeoPoint = userLocation.location.coordinate;
         _geoSearch = [[BMKGeoCodeSearch alloc]init];
@@ -368,6 +373,7 @@
     
     NSDictionary *dic = self.theLocationDic;
     
+    [LTools cache:self.theLocationDic ForKey:CACHE_THELOCATION];
     
     if (!result.addressDetail.province) {
         self.theLocationDic = @{

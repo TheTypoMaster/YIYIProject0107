@@ -133,26 +133,23 @@
         return;
     }
     
-//    __weak typeof(self)weakSelf = self;
-//    
-//    [[GMAPI appDeledate]startDingweiWithBlock:^(NSDictionary *dic) {
-//        
-//        [weakSelf theLocationDictionary:dic];
-//    }];
+    __weak typeof(self)weakSelf = self;
     
-    _locationDic = [GMAPI sharedManager].theLocationDic;
-    if (_locationDic) {
-        [_tableView showRefreshHeader:YES];
-    }
+    [[GMAPI appDeledate]startDingweiWithBlock:^(NSDictionary *dic) {
+        
+        [weakSelf theDelegateLocationDictionary:dic];
+    }];
+    
     
     
     
 }
 
-- (void)theLocationDictionary:(NSDictionary *)dic{
+- (void)theDelegateLocationDictionary:(NSDictionary *)dic{
     
     NSLog(@"%@",dic);
     _locationDic = dic;
+    [LTools cache:dic ForKey:CACHE_THELOCATION];
     
     if (dic) {
         

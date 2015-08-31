@@ -74,6 +74,7 @@ alpha:(a)]
 
 #define CACHE_DESERVE_BUY @"deserveBuy"//值得买
 #define CACHE_TPLAT @"tPlat"//t台
+#define CACHE_THELOCATION @"CACHE_THELOCATION"//定位信息
 
 //错误提示信息 
 
@@ -107,6 +108,7 @@ alpha:(a)]
 #define NOTIFICATION_USER_EDITPHONENUM_SUCCESS @"NOTIFICATION_USER_EDITPHONENUM"//绑定手机号成功
 
 #define NOTIFICATION_UPDATELOCATION_SUCCESS @"NOTIFICATION_UPLOADLOCATION_SUCCESS"//定位成功后通知
+
 
 //单品关注相关操作
 #define NOTIFICATION_GUANZHU_PRODUCT @"guanzhu_product"
