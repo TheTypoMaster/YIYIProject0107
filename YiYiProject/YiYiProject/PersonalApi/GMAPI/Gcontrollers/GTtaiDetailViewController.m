@@ -754,8 +754,12 @@
     NSLog(@"%f",tongpinpaituijian_height);
     
     //更多按钮和官方活动图
-    _tableFooterView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_WIDTH/official_act_width * official_act_height+35+tongpinpaituijian_height)];//35为更多按钮的高度
-    _tableFooterView.backgroundColor = [UIColor whiteColor];
+    if (!_ttaiDetailModel.official_act) {
+        _tableFooterView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 35+tongpinpaituijian_height)];//35为更多按钮的高度
+    }else{
+         _tableFooterView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_WIDTH/official_act_width * official_act_height+35+tongpinpaituijian_height)];//35为更多按钮的高度
+    }
+   
     
     //更多按钮
     UIButton *moreStoreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -768,18 +772,34 @@
     moreStoreBtn.layer.borderColor = [RGBCOLOR(244, 76, 139)CGColor];
     [moreStoreBtn addTarget:self action:@selector(moreStoreBtnClicked) forControlEvents:UIControlEventTouchUpInside];
     if (!_isHaveMoreStoreData) {
-        [_tableFooterView setFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_WIDTH/official_act_width * official_act_height + tongpinpaituijian_height)];
-        [moreStoreBtn setFrame:CGRectZero];
+        
+        if (!_ttaiDetailModel.official_act) {
+            _tableFooterView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH,tongpinpaituijian_height)];//35为更多按钮的高度
+            [moreStoreBtn setFrame:CGRectZero];
+        }else{
+            [_tableFooterView setFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_WIDTH/official_act_width * official_act_height + tongpinpaituijian_height)];
+            [moreStoreBtn setFrame:CGRectZero];
+        }
+        
     }
+    
     [_tableFooterView addSubview:moreStoreBtn];
+    _tableFooterView.backgroundColor = [UIColor whiteColor];
     
     UIView *fenLine4 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(moreStoreBtn.frame)+5, DEVICE_WIDTH, 0.5)];
     fenLine4.backgroundColor = fenLine.backgroundColor;
     [_tableFooterView addSubview:fenLine4];
     
-    UIImageView *guanwanghuodongImv = [[UIImageView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(fenLine4.frame), DEVICE_WIDTH, DEVICE_WIDTH/official_act_width * official_act_height)];
-    [guanwanghuodongImv l_setImageWithURL:[NSURL URLWithString:_ttaiDetailModel.official_act[@"cover_pic"]] placeholderImage:DEFAULT_YIJIAYI];
-    [guanwanghuodongImv addTaget:self action:@selector(pushToGuanfanghuodong) tag:0];
+    
+    UIImageView *guanwanghuodongImv;
+    if (!_ttaiDetailModel.official_act) {
+        guanwanghuodongImv = [[UIImageView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(fenLine4.frame), DEVICE_WIDTH, 0)];
+    }else{
+        guanwanghuodongImv = [[UIImageView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(fenLine4.frame), DEVICE_WIDTH, DEVICE_WIDTH/official_act_width * official_act_height)];
+        [guanwanghuodongImv l_setImageWithURL:[NSURL URLWithString:_ttaiDetailModel.official_act[@"cover_pic"]] placeholderImage:DEFAULT_YIJIAYI];
+        [guanwanghuodongImv addTaget:self action:@selector(pushToGuanfanghuodong) tag:0];
+    }
+    
     [_tableFooterView addSubview:guanwanghuodongImv];
     
     
