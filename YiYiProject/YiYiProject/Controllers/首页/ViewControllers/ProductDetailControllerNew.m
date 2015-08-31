@@ -84,8 +84,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    
+
     if (self.isTPlatPush) {
         
         self.navigationController.navigationBarHidden = YES;
@@ -286,9 +285,7 @@
     }
     
     __weak typeof(self)weakSelf = self;
-    
-//    self.product_id = @"146";
-    
+        
     NSString *url = [NSString stringWithFormat:HOME_PRODUCT_DETAIL,self.product_id,[GMAPI getAuthkey]];
     tool_detail = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     

@@ -85,10 +85,12 @@
     _fenleiIndex = -1;//分类index -1代表全部
     
     //更新位置
-    [self updateLocation];
+//    [self updateLocation];
     
-    //10分钟更新一次位置
-    [NSTimer scheduledTimerWithTimeInterval:10 * 60 target:self selector:@selector(updateLocation) userInfo:nil repeats:YES];
+    [waterFlow showRefreshHeader:YES];
+    
+//    //10分钟更新一次位置
+//    [NSTimer scheduledTimerWithTimeInterval:10 * 60 target:self selector:@selector(updateLocation) userInfo:nil repeats:YES];
     
 }
 
@@ -131,7 +133,9 @@
     _latitude = NSStringFromFloat(lat);
     _longtitud = NSStringFromFloat(lon);
     
-    [waterFlow showRefreshHeader:YES];
+//    [waterFlow showRefreshHeader:YES];
+    
+    [self deserveBuyForSex:_sex_type discount:_discount_type page:waterFlow.pageNum];
 
 }
 
@@ -304,11 +308,15 @@
 
 - (void)waterLoadNewData
 {
-    [self deserveBuyForSex:_sex_type discount:_discount_type page:waterFlow.pageNum];
+//    [self deserveBuyForSex:_sex_type discount:_discount_type page:waterFlow.pageNum];
+    [self updateLocation];
+
 }
 - (void)waterLoadMoreData
 {
-    [self deserveBuyForSex:_sex_type discount:_discount_type page:waterFlow.pageNum];
+//    [self deserveBuyForSex:_sex_type discount:_discount_type page:waterFlow.pageNum];
+    [self updateLocation];
+
 }
 
 - (void)waterDidSelectRowAtIndexPath:(NSIndexPath *)indexPath
