@@ -20,7 +20,6 @@
 
 #import "ChouJiangModel.h"//抽奖model
 #import "ChouJiangView.h"//抽奖view
-#import "AdvertisementController.h"//抽奖或者广告
 
 #import "GwebViewController.h"
 

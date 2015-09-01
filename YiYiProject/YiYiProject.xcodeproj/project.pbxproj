@@ -181,6 +181,7 @@
 		139DC34F1B00560000C94073 /* AMPActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 139DC34E1B00560000C94073 /* AMPActivityIndicator.m */; };
 		13A0CC4B1B95A263003A8569 /* Ttai_dingwei@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13A0CC4A1B95A263003A8569 /* Ttai_dingwei@2x.png */; };
 		13A0CC4D1B95AF7C003A8569 /* Ttai_present@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13A0CC4C1B95AF7C003A8569 /* Ttai_present@2x.png */; };
+		13A0CC4F1B95C0F2003A8569 /* Ttai_guanbi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13A0CC4E1B95C0F2003A8569 /* Ttai_guanbi@2x.png */; };
 		13A3897E1A3878FE00ABBACB /* MyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A3897D1A3878FE00ABBACB /* MyViewController.m */; };
 		13A389861A387A8800ABBACB /* UIColor+ConvertColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A389821A387A8800ABBACB /* UIColor+ConvertColor.m */; };
 		13A3898B1A38937600ABBACB /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A389891A38937600ABBACB /* HomeViewController.m */; };
@@ -896,6 +897,7 @@
 		139DC34E1B00560000C94073 /* AMPActivityIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPActivityIndicator.m; sourceTree = "<group>"; };
 		13A0CC4A1B95A263003A8569 /* Ttai_dingwei@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Ttai_dingwei@2x.png"; sourceTree = "<group>"; };
 		13A0CC4C1B95AF7C003A8569 /* Ttai_present@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Ttai_present@2x.png"; sourceTree = "<group>"; };
+		13A0CC4E1B95C0F2003A8569 /* Ttai_guanbi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Ttai_guanbi@2x.png"; sourceTree = "<group>"; };
 		13A3897C1A3878FE00ABBACB /* MyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyViewController.h; sourceTree = "<group>"; };
 		13A3897D1A3878FE00ABBACB /* MyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyViewController.m; sourceTree = "<group>"; };
 		13A3897F1A38796D00ABBACB /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
@@ -2753,6 +2755,7 @@
 		13B690591A566A4A007FE152 /* T台 */ = {
 			isa = PBXGroup;
 			children = (
+				13A0CC4E1B95C0F2003A8569 /* Ttai_guanbi@2x.png */,
 				13A0CC4C1B95AF7C003A8569 /* Ttai_present@2x.png */,
 				13A0CC4A1B95A263003A8569 /* Ttai_dingwei@2x.png */,
 				139A788B1B186A0900EFA10A /* Ttai_collect_normal@2x.png */,
@@ -4084,6 +4087,7 @@
 				13ABB0871B01F905002DC700 /* qq@2x.png in Resources */,
 				1381253A1B281F06000310FF /* productDetail_white@2x.png in Resources */,
 				19F7B4451A67FFA600087BCB /* nav_btn_bg_lighted@2x.png in Resources */,
+				13A0CC4F1B95C0F2003A8569 /* Ttai_guanbi@2x.png in Resources */,
 				13681C8A1A453DE600671D07 /* login_suo@2x.png in Resources */,
 				13681C821A453B3200671D07 /* share_sina@2x.png in Resources */,
 				56A8A82D1A458FF200E85F6B /* clock_image@2x.png in Resources */,

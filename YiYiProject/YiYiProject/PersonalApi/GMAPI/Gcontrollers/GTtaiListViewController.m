@@ -44,6 +44,8 @@
 #import "SGFocusImageItem.h"
 
 #import "ChouJiangModel.h"//抽奖model
+#import "AdvertisementController.h"//抽奖或者广告
+#import "ChouJiangView.h"
 
 @interface GTtaiListViewController ()<RefreshDelegate,UITableViewDataSource,GgetllocationDelegate,NewHuandengViewDelegate,NewHuandengViewDelegate1>
 {
@@ -84,6 +86,7 @@
     NSDictionary *_huandengDic1;//幻灯的整体数据
     
     ChouJiangModel *_chouJiangModel;//抽奖
+    ChouJiangView *_chouJiangView;//
     
 }
 
@@ -808,8 +811,39 @@
  */
 - (void)clickToGift:(UIButton *)sender
 {
+    if ([_chouJiangModel.pop_small intValue] != 1) {
+        
+        return;
+    }
+//    AdvertisementController *advertise = [[AdvertisementController alloc]init];
+
+//    UIView *view = [[UIView alloc]initWithFrame:[UIScreen mainScreen].bounds];
+//    view.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.5];
+
     
+    UIView *root = [UIApplication sharedApplication].keyWindow;
+    
+    //先把原先的移除
+    if (_chouJiangView) {
+        
+        [_chouJiangView removeFromSuperview];
+        _chouJiangView = nil;
+    }
+    
+    //是否显示过大图
+    
+    //显示抽奖入口
+    _chouJiangView = [[ChouJiangView alloc]initWithChouJiangModel:_chouJiangModel];
+    [_chouJiangView showWithView:root];
+    __weak typeof(self)weakSelf = self;
+    
+    _chouJiangView.actionBlock = ^(ActionStyle actionStyle){
+        
+//            [weakSelf chouJiangToDo:actionStyle];
+    };
 }
+
+
 
 - (void)tapImage:(UITapGestureRecognizer *)tap
 {

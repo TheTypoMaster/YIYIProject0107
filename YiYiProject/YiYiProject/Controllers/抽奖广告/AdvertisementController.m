@@ -21,43 +21,23 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-
-    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
+    self.view.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.5];
     
-    self.myTitleLabel.text = self.targetTitle;
-    _webView = [[UIWebView alloc]initWithFrame:self.view.bounds];
-    [self.view addSubview:_webView];
-    [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.targetUrl]]];
+    
+    UIButton *closeBtn = [[UIButton alloc]initWithframe:CGRectMake(DEVICE_WIDTH - 27 - 15 + 2, 30 - 4, 30, 30) buttonType:UIButtonTypeCustom normalTitle:nil selectedTitle:nil nornalImage:[UIImage imageNamed:@"Ttai_guanbi"] selectedImage:nil target:self action:@selector(clickToClose:)];
+    [self.view addSubview:closeBtn];
     
 }
 
-- (void)viewWillDisappear:(BOOL)animated
+- (void)clickToClose:(UIButton *)sender
 {
-    [super viewWillDisappear:animated];
     
+    [self.view removeFromSuperview];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-#pragma - mark UIWebViewDelegate <NSObject>
-
-//- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType;
-- (void)webViewDidStartLoad:(UIWebView *)webView
-{
-    NSLog(@"webViewDidStartLoad");
-}
-- (void)webViewDidFinishLoad:(UIWebView *)webView
-{
-    NSLog(@"webViewDidFinishLoad");
-
-}
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
-{
-    NSLog(@"didFailLoadWithError %@",error);
-
 }
 
 @end

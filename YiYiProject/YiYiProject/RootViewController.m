@@ -35,7 +35,6 @@
 
 #import "GTTPublishViewController.h"//发布T台
 
-#import "AdvertisementController.h"
 #import "GBuyClothesLogViewController.h"//买衣日志
 
 #import "GBuyClothesLogViewController.h"
