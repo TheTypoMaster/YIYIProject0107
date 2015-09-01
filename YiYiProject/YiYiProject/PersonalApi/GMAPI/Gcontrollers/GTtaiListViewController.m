@@ -43,6 +43,8 @@
 #import "GcycleScrollView1.h"
 #import "SGFocusImageItem.h"
 
+#import "ChouJiangModel.h"//抽奖model
+
 @interface GTtaiListViewController ()<RefreshDelegate,UITableViewDataSource,GgetllocationDelegate,NewHuandengViewDelegate,NewHuandengViewDelegate1>
 {
     RefreshTableView *_table;
@@ -81,6 +83,8 @@
     NSMutableArray *_com_title_array1;//幻灯的index
     NSDictionary *_huandengDic1;//幻灯的整体数据
     
+    ChouJiangModel *_chouJiangModel;//抽奖
+    
 }
 
 @property (nonatomic ,strong) UIView *topView;
@@ -117,6 +121,8 @@
     self.myTitleLabel.text = @"T台";
     [self createNavigationbarTools];
     
+    [self getChouJiangState];//获取抽奖接口
+    
     _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH,DEVICE_HEIGHT - 64) showLoadMore:NO];
     _table.refreshDelegate = self;
     _table.dataSource = self;
@@ -132,9 +138,6 @@
         [_g01 setImage:[UIImage imageNamed:@"g01.png"]];
         
         [self.topView addSubview:_g01];
-        
-        
-        
         
         UIView *vvv = [[UIView alloc]initWithFrame:CGRectMake(5, DEVICE_WIDTH/750.0*250, DEVICE_WIDTH-10, 32)];
         [self.topView addSubview:vvv];
@@ -395,11 +398,7 @@
         [self.topView addSubview:vvv];
         _topScrollView1 = [[GcycleScrollView1 alloc] initWithFrame:CGRectMake(5, CGRectGetMaxY(vvv.frame), DEVICE_WIDTH - 10,(int)(DEVICE_WIDTH/710.0*120)) delegate:self imageItems:itemArray isAuto:YES pageControlNum:0];//0为不显示pagecontrol
         [_topScrollView scrollToIndex:0];
-        
-        
-        
     }
-    
     
 }
 
@@ -666,6 +665,41 @@
 }
 
 #pragma mark 网络请求
+
+/**
+ *  获取是否弹出抽奖入口
+ */
+- (void)getChouJiangState
+{
+    __weak typeof(self)weakSelf = self;
+    NSString *url = [NSString stringWithFormat:GET_CHOUJIANGSTATE,[GMAPI getAuthkey]];
+    
+    NSLog(@"抽奖---%@",url);
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        [weakSelf parseChouJiang:result];
+        
+    } failBlock:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"获取是否抽奖状态失败");
+    }];
+}
+
+- (void)parseChouJiang:(NSDictionary *)dic
+{
+    NSDictionary *info = dic[@"info"];
+    //数据无效
+    if (!info || ![info isKindOfClass:[NSDictionary class]]) {
+        return;
+    }
+    _chouJiangModel = [[ChouJiangModel alloc]initWithDictionary:info];
+    
+    if ([_chouJiangModel.pop_small intValue] == 1) {
+        
+        _redPoint.hidden = NO;
+    }
+}
 
 
 //T台赞 或 取消

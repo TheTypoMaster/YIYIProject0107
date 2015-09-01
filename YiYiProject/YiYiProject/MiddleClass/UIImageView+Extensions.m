@@ -108,7 +108,7 @@
     
     self.contentMode =  UIViewContentModeCenter;
     self.backgroundColor = DEFAULT_VIEW_BACKGROUNDCOLOR;
-
+    self.clipsToBounds = YES;
     [self sd_setImageWithURL:url placeholderImage:placeholder completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         
         if (image) {
