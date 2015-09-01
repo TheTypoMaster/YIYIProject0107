@@ -89,14 +89,14 @@
     head.backgroundColor = [UIColor whiteColor];
     
     //是否有封面
-    CGFloat imageWidth = DEVICE_WIDTH - 20;
-    CGFloat imageHeight = 0.f;//封面高度
+    CGFloat showWidth = DEVICE_WIDTH - 20;
+    CGFloat imageWidth = [aModel.width floatValue];
+    CGFloat imageHeight = [aModel.height floatValue];//封面高度
     //有封面
     if (aModel.cover_pic.length > 0) {
         
-        imageHeight = (imageWidth * 10) / 16;
-        
-        PropertyImageView *coverImageView = [[PropertyImageView alloc]initWithFrame:CGRectMake(10, 0, imageWidth, imageHeight)];
+        imageHeight = [LTools heightForImageHeight:imageHeight imageWidth:imageWidth showWidth:showWidth];
+        PropertyImageView *coverImageView = [[PropertyImageView alloc]initWithFrame:CGRectMake(10, 0, showWidth, imageHeight)];
         [coverImageView sd_setImageWithURL:[NSURL URLWithString:aModel.cover_pic] placeholderImage:nil];
         [head addSubview:coverImageView];
         
@@ -111,8 +111,8 @@
     }
     
     //活动标题
-    CGFloat textHeight = [LTools heightForText:aModel.activity_title width:imageWidth Boldfont:15];
-    UILabel *titleLabel = [LTools createLabelFrame:CGRectMake(10, imageHeight + 10, imageWidth, textHeight) title:aModel.activity_title font:15 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"ef3c42"]];
+    CGFloat textHeight = [LTools heightForText:aModel.activity_title width:showWidth Boldfont:15];
+    UILabel *titleLabel = [LTools createLabelFrame:CGRectMake(10, imageHeight + 10, showWidth, textHeight) title:aModel.activity_title font:15 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"ef3c42"]];
     titleLabel.lineBreakMode = NSLineBreakByCharWrapping;
     titleLabel.numberOfLines = 0;
     titleLabel.font = [UIFont boldSystemFontOfSize:15];
@@ -125,35 +125,41 @@
     
     NSString *timeString = [NSString stringWithFormat:@"活动时间:%@ - %@",[LTools timeString:aModel.start_time withFormat:@"yyyy.MM.dd"],[LTools timeString:aModel.end_time withFormat:@"yyyy.MM.dd"]];
     CGFloat left = timeIcon.right + 5;
-    UILabel *timeLabel = [LTools createLabelFrame:CGRectMake(left, timeIcon.top, imageWidth - left, 13) title:timeString font:13 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
+    UILabel *timeLabel = [LTools createLabelFrame:CGRectMake(left, timeIcon.top, showWidth - left, 13) title:timeString font:13 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
     [head addSubview:timeLabel];
     
-    //活动地点
-    UIImageView *addressIcon = [[UIImageView alloc]initWithFrame:CGRectMake(10, timeIcon.bottom + 8, 13, 13)];
-    addressIcon.image = [UIImage imageNamed:@"activity_location"];
-    [head addSubview:addressIcon];
     
-    NSString *addressString = [NSString stringWithFormat:@"活动地点:%@",aModel.address];
-    left = addressIcon.right + 5;
-//    UILabel *addressLabel = [LTools createLabelFrame:CGRectMake(left, addressIcon.top, imageWidth - left, 13) title:addressString font:13 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"b9b9b9"]];
-//    [head addSubview:addressLabel];
+    CGFloat top = timeLabel.bottom;
     
+    if (aModel.address && ![LTools isEmpty:aModel.address]) {
+        
+        //活动地点
+        UIImageView *addressIcon = [[UIImageView alloc]initWithFrame:CGRectMake(10, timeIcon.bottom + 8, 13, 13)];
+        addressIcon.image = [UIImage imageNamed:@"activity_location"];
+        [head addSubview:addressIcon];
+        
+        NSString *addressString = [NSString stringWithFormat:@"活动地点:%@",aModel.address];
+        left = addressIcon.right + 5;
+        //    UILabel *addressLabel = [LTools createLabelFrame:CGRectMake(left, addressIcon.top, imageWidth - left, 13) title:addressString font:13 align:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"b9b9b9"]];
+        //    [head addSubview:addressLabel];
+        
+        
+        OHAttributedLabel * label = [[OHAttributedLabel alloc] initWithFrame:CGRectMake(left, addressIcon.top, showWidth - left, 13)];
+        label.userInteractionEnabled = YES;
+        label.font = [UIFont systemFontOfSize:12];
+        [head addSubview:label];
+        [OHLableHelper creatAttributedText:addressString Label:label OHDelegate:self WithWidht:14 WithHeight:14 WithLineBreak:NO];
+        NSRange range = [addressString rangeOfString:aModel.address];
+        label.underlineLinks = NO;
+        [label addCustomLink:[NSURL URLWithString:@"坐标"] inRange:range];
+        [label setLinkColor:[UIColor colorWithHexString:@"0f60d3"]];
+        
+        label.textColor = [UIColor blackColor];
+        
+        top = label.bottom;
+    }
     
-    OHAttributedLabel * label = [[OHAttributedLabel alloc] initWithFrame:CGRectMake(left, addressIcon.top, imageWidth - left, 13)];
-    label.userInteractionEnabled = YES;
-    label.font = [UIFont systemFontOfSize:12];
-    [head addSubview:label];
-    [OHLableHelper creatAttributedText:addressString Label:label OHDelegate:self WithWidht:14 WithHeight:14 WithLineBreak:NO];
-    NSRange range = [addressString rangeOfString:aModel.address];
-    label.underlineLinks = NO;
-    [label addCustomLink:[NSURL URLWithString:@"坐标"] inRange:range];
-    [label setLinkColor:[UIColor colorWithHexString:@"0f60d3"]];
-    
-    label.textColor = [UIColor blackColor];
-
-    
-    
-    head.frame = CGRectMake(0, 0, DEVICE_WIDTH, label.bottom + 10 + 10);
+    head.frame = CGRectMake(0, 0, DEVICE_WIDTH, top + 10 + 10);
     
     UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, head.height - 0.5f - 10, DEVICE_WIDTH, 0.5f)];
     line.backgroundColor = [UIColor colorWithHexString:@"e4e4e4"];

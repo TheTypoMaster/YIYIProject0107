@@ -22,8 +22,12 @@ typedef void(^LocationBlock)(NSDictionary *dic);//获取坐标block
 
 - (void)startDingweiWithBlock:(LocationBlock)location;
 
-
-
+/**
+ *  根据坐标获取位置详细信息
+ */
+- (void)getAddressDetailWithLontitud:(CGFloat)longtitude
+                            latitude:(CGFloat)latitude
+                        addressBlock:(LocationBlock)addressBlock;
 
 
 //登录融云

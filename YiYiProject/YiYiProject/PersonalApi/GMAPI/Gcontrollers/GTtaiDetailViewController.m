@@ -224,6 +224,9 @@
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+        
+        [self setValue:[NSNumber numberWithInt:_count + 1] forKeyPath:@"_count"];
+
         [_collectionView loadFail];
         
     }];
@@ -342,6 +345,8 @@
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
         
+        [self setValue:[NSNumber numberWithInt:_count + 1] forKeyPath:@"_count"];
+
         [_collectionView loadFail];
         
     }];
@@ -449,10 +454,6 @@
         }
         
     }
-    
-    
-    
-    
     
 }
 

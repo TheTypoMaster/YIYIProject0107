@@ -28,6 +28,10 @@
 @property(nonatomic,retain)NSString *status;//活动有效无效
 @property(nonatomic,retain)NSString *pic_width;
 @property(nonatomic,retain)NSString *pic_height;
+
+@property(nonatomic,retain)NSString *width;//封面的宽
+@property(nonatomic,retain)NSString *height;//封面的高
+
 @property(nonatomic,retain)NSString *ori_pic;//活动原图
 @property(nonatomic,retain)NSNumber *ended;//活动是否结束 0未结束 1结束
 

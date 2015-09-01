@@ -1489,7 +1489,7 @@
         //固定的图片
         CGFloat imageHeight = [official_activity[@"height"] floatValue];
         CGFloat imageWidth = [official_activity[@"width"] floatValue];
-        NSString *imageUrl = official_activity[@"url"];
+        NSString *imageUrl = official_activity[@"cover_pic"];
         
         aHeight = [LTools heightForImageHeight:imageHeight imageWidth:imageWidth showWidth:DEVICE_WIDTH];
         UIImageView *constImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, line5.bottom, DEVICE_WIDTH, aHeight)];

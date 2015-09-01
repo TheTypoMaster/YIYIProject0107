@@ -59,10 +59,12 @@
     NSMutableArray *_upScrollViewData;
     
     UILabel *_dizhiLabel;
+    UIImageView *_dingweiImage;//定位图标
     
     UIImageView *_g02;
     UIImageView *_g01;
     
+    UIView *_redPoint;
 }
 
 @property (nonatomic ,strong) UIView *topView;
@@ -127,13 +129,18 @@
         fujinhuodongLabel.text = @"附近活动";
         [vvv addSubview:fujinhuodongLabel];
         
-        _dizhiLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(fujinhuodongLabel.frame), 0, DEVICE_WIDTH - 5-60-5, 32)];
+        _dizhiLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(fujinhuodongLabel.frame), 0, DEVICE_WIDTH - 5 - 60 - 5, 32)];
         _dizhiLabel.textAlignment = NSTextAlignmentRight;
         _dizhiLabel.font = [UIFont systemFontOfSize:12];
-        _dizhiLabel.text = @"正在定位···";
         _dizhiLabel.textColor = RGBCOLOR(81, 82, 83);
         [vvv addSubview:_dizhiLabel];
         
+        _dingweiImage = [[UIImageView alloc]initWithFrame:CGRectMake(_dizhiLabel.left - 14 - 2, 0, 14, 13)];
+        _dingweiImage.image = [UIImage imageNamed:@"Ttai_dingwei"];
+        [vvv addSubview:_dingweiImage];
+        _dingweiImage.centerY = _dizhiLabel.centerY;
+        
+        [self updateCurrentAddress:@"正在定位···"];
         
         
         _g02 = [[UIImageView alloc]initWithFrame:CGRectMake(5, CGRectGetMaxY(vvv.frame), DEVICE_WIDTH-10, DEVICE_WIDTH/710.0*120)];
@@ -148,22 +155,18 @@
         
     }
     
-    
     _table.tableHeaderView = self.topView;
-    
     [self.view addSubview:_table];
     
     
+    [self prepareTopScrollViewNetData];//获取顶部活动图
     
-    
-    
-    NSDictionary *dic = [DataManager getCacheDataForType:Cache_TPlat];
+    NSDictionary *dic = [DataManager getCacheDataForType:Cache_TPlat];//获取T台缓存数据
     if (dic) {
         [self parseDataWithResult:dic];
-        
     }
     
-    [self performSelector:@selector(loadData) withObject:nil afterDelay:0.2];
+    [self performSelector:@selector(loadData) withObject:nil afterDelay:0.1];//获取网络T台数据
     
 //    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateTTai:) name:NOTIFICATION_LOGIN object:nil];
 //    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateTTai:) name:NOTIFICATION_LOGOUT object:nil];
@@ -181,6 +184,26 @@
 
 #pragma mark - MyMethod
 
+/**
+ *  更新当前位置信息
+ *
+ *  @param text
+ */
+- (void)updateCurrentAddress:(NSString *)text
+{
+    //max -60 - 10
+    CGFloat max = DEVICE_WIDTH - 60 - 10 - _dingweiImage.width - 2;
+    CGFloat aWidth = [LTools widthForText:text font:12];
+    aWidth = aWidth > max ? max : aWidth;
+    _dizhiLabel.width = aWidth;
+    _dizhiLabel.left = DEVICE_WIDTH - aWidth - 10;
+    _dingweiImage.left = _dizhiLabel.left - 2 - 14;
+    _dizhiLabel.text = text;
+}
+
+/**
+ *  获取附近活动
+ */
 -(void)prepareNearActity{
     GMAPI *gmapi = [GMAPI sharedManager];
     NSDictionary *locationDic = gmapi.theLocationDic;
@@ -200,8 +223,6 @@
 //            view.backgroundColor = [UIColor redColor];
             [viewsArray1 addObject:view];
         }
-        
-        
         
         UIView *l1 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_topScrollView.frame)+5, DEVICE_WIDTH, 0.5)];
         l1.backgroundColor = RGBCOLOR(220, 221, 223);
@@ -238,7 +259,6 @@
         };
         
         
-        
         UIView *l2 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_topScrollView1.frame)+6, DEVICE_WIDTH, 0.5)];
         l2.backgroundColor = RGBCOLOR(220, 221, 223);
         [self.topView addSubview:l2];
@@ -253,8 +273,9 @@
 }
 
 
-
-
+/**
+ *  获取顶部广告图
+ */
 -(void)prepareTopScrollViewNetData{
     NSString *url = [NSString stringWithFormat:@"%@",HOME_TTAI_TOPSCROLLVIEW];
     _tool_detail = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
@@ -369,10 +390,6 @@
         }
     }
     
-    
-    
-    
-    
 }
 
 
@@ -403,28 +420,44 @@
     [self.navigationController setNavigationBarHidden:NO];
 }
 
-
 - (void)loadData
 {
+    CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
+    if (kCLAuthorizationStatusRestricted == status) {
+        NSLog(@"kCLAuthorizationStatusRestricted 开启定位失败");
+        UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"开启定位失败,请允许衣加衣使用定位服务" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [al show];
+        return;
+    }else if (kCLAuthorizationStatusDenied == status){
+        NSLog(@"请允许衣加衣使用定位服务");
+//        UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请允许衣加衣使用定位服务" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//        [al show];
+        return;
+    }
+
     [_table showRefreshHeader:YES];
 }
 
 - (void)createNavigationbarTools
 {
+    UIButton *rightView=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 44, 44)];
+    rightView.backgroundColor=[UIColor clearColor];
     
-//    UIButton *rightView=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 44, 44)];
-//    rightView.backgroundColor=[UIColor clearColor];
-//    
-//    UIButton *heartButton=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 44, 44)];
-//    [heartButton addTarget:self action:@selector(clickToPhoto:) forControlEvents:UIControlEventTouchUpInside];
-//    [heartButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    [heartButton setImage:[UIImage imageNamed:@"gcamera.png"] forState:UIControlStateNormal];
-//    [heartButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
-//    
-//    [rightView addSubview:heartButton];
-//    
-//    UIBarButtonItem *comment_item=[[UIBarButtonItem alloc]initWithCustomView:rightView];
-//    self.navigationItem.rightBarButtonItem = comment_item;
+    UIButton *heartButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 44, 44)];
+    [heartButton addTarget:self action:@selector(clickToGift:) forControlEvents:UIControlEventTouchUpInside];
+    [heartButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [heartButton setImage:[UIImage imageNamed:@"Ttai_present"] forState:UIControlStateNormal];
+    [heartButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
+    [rightView addSubview:heartButton];
+    
+    _redPoint = [[UIView alloc]initWithFrame:CGRectMake(heartButton.width - 4, heartButton.height/2.f - 12, 8, 8)];
+    [heartButton addSubview:_redPoint];
+    _redPoint.backgroundColor = [UIColor redColor];
+    [_redPoint addRoundCorner];
+    _redPoint.hidden = YES;
+    
+    UIBarButtonItem *comment_item=[[UIBarButtonItem alloc]initWithCustomView:rightView];
+    self.navigationItem.rightBarButtonItem = comment_item;
 }
 
 #pragma mark 数据解析
@@ -533,7 +566,6 @@
 - (void)getTTaiData
 {
     
-    
     GMAPI *gmapi = [GMAPI sharedManager];
     NSDictionary *locationDic = gmapi.theLocationDic;
     NSString *longStr = [locationDic stringValueForKey:@"long"];
@@ -542,7 +574,6 @@
     __weak typeof(self)weakSelf = self;
     
     __weak typeof(RefreshTableView)*weakTable = _table;
-    
     
     NSString *url = [NSString stringWithFormat:@"%@&page=%d&count=%d&authcode=%@&longitude=%@&latitude=%@",HOME_TTAI_LIST,_table.pageNum,L_PAGE_SIZE,[GMAPI getAuthkey],longStr,latStr];
     
@@ -573,6 +604,16 @@
 
 
 #pragma mark 事件处理
+
+/**
+ *  点击去抽奖
+ *
+ *  @param sender
+ */
+- (void)clickToGift:(UIButton *)sender
+{
+    
+}
 
 - (void)tapImage:(UITapGestureRecognizer *)tap
 {
@@ -734,9 +775,7 @@
     [MiddleTools pushToProductDetailWithId:infoId fromViewController:self lastNavigationHidden:NO hiddenBottom:YES];
 }
 
-
-
-#pragma mark - GgetllocationDelegate
+#pragma mark - 位置定位
 
 - (void)theLocationDictionary:(NSDictionary *)dic{
     
@@ -744,24 +783,25 @@
     GMAPI *gmapi = [GMAPI sharedManager];
     self.locationDic = gmapi.theLocationDic;
     
+    __weak typeof(self)weakSelf = self;
+    //根据坐标获取当前位置
+    [[GMAPI appDeledate]getAddressDetailWithLontitud:[[dic stringValueForKey:@"long"]floatValue] latitude:[[dic stringValueForKey:@"lat"]floatValue] addressBlock:^(NSDictionary *dic) {
+       
+        BOOL result = [dic[@"result"]boolValue];
+        NSString *streetStr;
+        if (result) {
+            streetStr = [dic stringValueForKey:@"addressDetail"];
+        }else
+        {
+            streetStr = @"无法获取当前位置";
+        }
+        [weakSelf updateCurrentAddress:streetStr];
+    }];
     
-    NSString *streetStr = [self.locationDic stringValueForKey:@"addressDetail"];
-    _dizhiLabel.text = streetStr;
-    
-    
-    [self prepareTopScrollViewNetData];
     [self prepareNearActity];
     [self getTTaiData];
 }
 
-
-- (void)theLocationFaild:(NSDictionary *)dic{
-    NSLog(@"定位失败%@",dic);
-    _dizhiLabel.text = @"定位失败";
-    [self prepareTopScrollViewNetData];
-    [self prepareNearActity];
-    [self getTTaiData];
-}
 
 #pragma - mark RefreshDelegate
 
@@ -774,31 +814,13 @@
         [weakSelf theLocationDictionary:dic];
     }];
     
-    
-    
-    
-//    NSLog(@"%@",[self.locationDic stringValueForKey:@"addressDetail"]);
-    if ([LTools isEmpty:[self.locationDic stringValueForKey:@"addressDetail"]]) {
-        _dizhiLabel.text = nil;
-    }else{
-        NSString *streetStr = [self.locationDic stringValueForKey:@"addressDetail"];
-        _dizhiLabel.text = streetStr;
-    }
-
-    
-    [self prepareTopScrollViewNetData];
-    [self prepareNearActity];
-    [self getTTaiData];
-
-    
-    
 }
-
-
 
 -(void)loadMoreData
 {
     [self getTTaiData];
+    [self prepareNearActity];
+
 }
 
 - (void)refreshScrollViewDidScroll:(UIScrollView *)scrollView
@@ -813,8 +835,6 @@
 //    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 //    [self tapCell:[tableView cellForRowAtIndexPath:indexPath]];
     
-    
-    
     //新版
     GTtaiDetailViewController *ggg = [[GTtaiDetailViewController alloc]init];
     TPlatModel *amdol = _table.dataArray[indexPath.row];
@@ -822,9 +842,7 @@
     ggg.tPlat_id = amdol.tt_id;
     ggg.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:ggg animated:YES];
-   
-    
-    
+
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
