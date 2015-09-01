@@ -29,7 +29,7 @@
         [self addSubview:imv];
         
         UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(imv.frame)+5, 0, frame.size.width - imv.frame.size.width - 10, imv.frame.size.height *2.0/3.0)];
-        titleLabel.backgroundColor = [UIColor orangeColor];
+//        titleLabel.backgroundColor = [UIColor orangeColor];
         titleLabel.text = model.activity_title;
         titleLabel.font = [UIFont systemFontOfSize:13];
         titleLabel.numberOfLines = 2;
@@ -37,7 +37,14 @@
         
         UILabel *juliLabel = [[UILabel alloc]initWithFrame:CGRectMake(titleLabel.frame.origin.x, CGRectGetMaxY(titleLabel.frame), titleLabel.frame.size.width /3.0, titleLabel.frame.size.height *0.5)];
 //        juliLabel.backgroundColor = [UIColor redColor];
-        juliLabel.text = @"500m";
+        
+        if ([model.distance floatValue]>=1000) {
+            CGFloat aa = [model.distance floatValue];
+            juliLabel.text = [NSString stringWithFormat:@"%.1fkm",aa*0.001];
+        }else{
+            juliLabel.text = [NSString stringWithFormat:@"%.1fm",[model.distance floatValue]];
+        }
+        
         juliLabel.font = [UIFont systemFontOfSize:11];
         juliLabel.textColor = RGBCOLOR(79, 80, 81);
         [self addSubview:juliLabel];
@@ -52,7 +59,7 @@
         [self addSubview:adressLabel];
         
         
-        self.backgroundColor = RGBCOLOR_ONE;
+//        self.backgroundColor = RGBCOLOR_ONE;
         
     }
     

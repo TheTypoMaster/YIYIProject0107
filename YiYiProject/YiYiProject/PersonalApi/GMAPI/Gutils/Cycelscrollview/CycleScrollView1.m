@@ -81,6 +81,7 @@
         self.scrollView.pagingEnabled = YES;
         [self addSubview:self.scrollView];
         self.currentPageIndex = 0;
+        self.scrollView.pagingEnabled=YES;
     }
     return self;
 }
@@ -172,7 +173,6 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     
-    NSLog(@"%s",__FUNCTION__);
     
     int contentOffsetY = scrollView.contentOffset.y;
     if(contentOffsetY >= (2 * CGRectGetHeight(scrollView.frame))) {
@@ -201,8 +201,8 @@
 
 - (void)animationTimerDidFired:(NSTimer *)timer
 {
-//    CGPoint newOffset = CGPointMake(self.scrollView.contentOffset.x,self.scrollView.contentOffset.y + CGRectGetHeight(self.scrollView.frame));
-//    [self.scrollView setContentOffset:newOffset animated:YES];
+    CGPoint newOffset = CGPointMake(self.scrollView.contentOffset.x,self.scrollView.contentOffset.y + CGRectGetHeight(self.scrollView.frame));
+    [self.scrollView setContentOffset:newOffset animated:YES];
 }
 
 - (void)contentViewTapAction:(UITapGestureRecognizer *)tap
