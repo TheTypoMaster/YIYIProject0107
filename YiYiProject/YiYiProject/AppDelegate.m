@@ -182,12 +182,26 @@
     //定位获取坐标
     mapApi = [GMAPI sharedManager];
     mapApi.delegate = self;
-    
     [mapApi startDingwei];
     
+//    [self startDingWeiTimer];//开始定位计时器
 }
 
-
+/**
+ *  开启定位定时器 lcw
+ */
+- (void)startDingWeiTimer
+{
+    CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
+    if (kCLAuthorizationStatusDenied == status || kCLAuthorizationStatusRestricted == status) {
+        
+        NSLog(@"请打开您的位置服务!");
+        
+    }else{
+        //开启了地图定位 时间器
+        [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(startDingweiWithBlock:) userInfo:nil repeats:YES];
+    }
+}
 
 #pragma mark - 定位Delegate
 
@@ -198,16 +212,17 @@
     if (_locationBlock) {
         
         _locationBlock(dic);
+        
+        _locationBlock = nil;//撤销定位block
     }
     
     [GMAPI sharedManager].theLocationDic = [dic copy];
     
+    [self updateLocationCache:dic];//更新当前位置信息
     
-    [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_UPDATELOCATION_SUCCESS object:nil];
-    
+    [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_UPDATELOCATION_SUCCESS object:nil];//更新当前位置成功通知
     
 }
-
 
 -(void)theLocationFaild:(NSDictionary *)dic{
     
@@ -216,6 +231,21 @@
     if (_locationBlock) {
         _locationBlock(dic);
     }
+}
+
+/**
+ *  更新当前定位信息的本地保存
+ *
+ *  @param dic
+ */
+- (void)updateLocationCache:(NSDictionary *)dic
+{
+    [LTools cache:[dic stringValueForKey:@"long"] ForKey:USER_LOCATION_LONG];
+    [LTools cache:[dic stringValueForKey:@"lat"] ForKey:USER_LOCATION_LAT];
+    [LTools cache:[dic stringValueForKey:@"province"] ForKey:USER_LOCATION_PROVINCE];
+    [LTools cache:[dic stringValueForKey:@"city"] ForKey:USER_LOCATION_CITY];
+    [LTools cache:[dic stringValueForKey:@"addressDetail"] ForKey:USER_LOCATION_ADDRESS_DETAIL];
+    [LTools cacheBool:[dic boolValueForKey:@"result"] ForKey:USER_LOCATION_STATE];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

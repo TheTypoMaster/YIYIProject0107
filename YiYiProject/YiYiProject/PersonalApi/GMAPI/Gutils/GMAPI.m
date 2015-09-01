@@ -428,6 +428,60 @@
     }
 }
 
+#pragma - mark 获取当前定位信息
+
+/**
+ *  经度
+ *
+ *  @return
+ */
++ (NSString *)getLongitude
+{
+    NSString *longtitude=[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:USER_LOCATION_LONG]];
+    return longtitude;
+}
+/**
+ *  维度
+ *
+ *  @return
+ */
++ (NSString *)getLatitude
+{
+    NSString *latitude = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:USER_LOCATION_LAT]];
+    return latitude;
+}
+
+/**
+ *  省份
+ *
+ *  @return
+ */
++ (NSString *)getProvince
+{
+    NSString *province=[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:USER_LOCATION_PROVINCE]];
+    return province;
+}
+/**
+ *  城市
+ *
+ *  @return
+ */
++ (NSString *)getCity
+{
+    NSString *city = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:USER_LOCATION_CITY]];
+    return city;
+}
+
+/**
+ *  城市
+ *
+ *  @return
+ */
++ (NSString *)getAddressDetail
+{
+    NSString *addressDetail = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:USER_LOCATION_ADDRESS_DETAIL]];
+    return addressDetail;
+}
 
 + (void)showAutoHiddenMBProgressWithText:(NSString *)text addToView:(UIView *)aView
 {

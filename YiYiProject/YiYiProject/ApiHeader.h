@@ -76,6 +76,14 @@ alpha:(a)]
 #define CACHE_TPLAT @"tPlat"//t台
 #define CACHE_THELOCATION @"CACHE_THELOCATION"//定位信息
 
+//位置记录标识
+#define USER_LOCATION_LAT @"lat" //维度
+#define USER_LOCATION_LONG @"long" //经度
+#define USER_LOCATION_ADDRESS_DETAIL @"addressDetail"//当前的地址详情
+#define USER_LOCATION_PROVINCE @"province" //当前所在省份
+#define USER_LOCATION_CITY @"city" //当前所在城市
+#define USER_LOCATION_STATE @"locationState"//定位是否成功
+
 //错误提示信息 
 
 #define ALERT_ERRO_PHONE @"请输入有效手机号"

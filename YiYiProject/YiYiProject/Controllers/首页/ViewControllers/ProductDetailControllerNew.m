@@ -177,6 +177,8 @@
 #pragma - mark PSWaterFlowDelegate <NSObject>
 - (void)waterLoadNewDataForWaterView:(PSCollectionView *)waterView
 {
+    NSLog(@"time====1 %@",[NSDate date]);
+
     _count = 0;
     [self getCurrentLocation];
     
@@ -614,6 +616,9 @@
             [self prepareViewWithModel:_aModel];
         }
         
+        NSLog(@"time====3 %@",[NSDate date]);
+
+        
         [self getRecommentProductList];//推荐品牌
     }
 }
@@ -658,7 +663,7 @@
 }
 - (void)theLocationDictionary:(NSDictionary *)dic{
     
-    NSLog(@"当前坐标-->%@",dic);
+    NSLog(@"time====2 %@",[NSDate date]);
     
     CGFloat lat = [dic[@"lat"]doubleValue];;
     CGFloat lon = [dic[@"long"]doubleValue];
@@ -789,6 +794,8 @@
 
 - (void)clickToCollect:(UIButton *)sender
 {
+    if (![LTools isLogin:self]) return;
+    
     if (sender.selected) {
         
         [self networkForActionType:Action_Collect_no];

@@ -135,6 +135,41 @@
 //开启定位
 -(void)startDingwei;
 
+#pragma - mark 获取当前定位信息
+
+/**
+ *  经度
+ *
+ *  @return
+ */
++ (NSString *)getLongitude;
+/**
+ *  维度
+ *
+ *  @return
+ */
++ (NSString *)getLatitude;
+
+/**
+ *  省份
+ *
+ *  @return
+ */
++ (NSString *)getProvince;
+/**
+ *  城市
+ *
+ *  @return
+ */
++ (NSString *)getCity;
+
+/**
+ *  城市
+ *
+ *  @return
+ */
++ (NSString *)getAddressDetail;
+
 
 //地区选择相关
 + (int)cityIdForName:(NSString *)cityName;

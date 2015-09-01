@@ -139,10 +139,6 @@
         
         [weakSelf theDelegateLocationDictionary:dic];
     }];
-    
-    
-    
-    
 }
 
 - (void)theDelegateLocationDictionary:(NSDictionary *)dic{
@@ -155,12 +151,7 @@
         
         [_tableView showRefreshHeader:YES];
     }
-    
-    
 }
-
-
-
 
 #pragma mark - 走缓存数据
 -(void)cacheData{
@@ -169,7 +160,6 @@
     [_tableView reloadData:arr pageSize:19];
     
 }
-
 
 
 #pragma mark - RefreshDelegate
