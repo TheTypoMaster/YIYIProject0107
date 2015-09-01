@@ -727,7 +727,7 @@
         yjyPic = [[UIImageView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(fenLine2.frame)+5, DEVICE_WIDTH, 0)];
     }else{
         yjyPic = [[UIImageView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(fenLine2.frame)+5, DEVICE_WIDTH, DEVICE_WIDTH/kuan_yjyImage*gao_yjyImage)];
-        [yjyPic sd_setImageWithURL:[NSURL URLWithString:[_ttaiDetailModel.official_pic stringValueForKey:@"url"]] placeholderImage:nil];
+        [yjyPic sd_setImageWithURL:[NSURL URLWithString:[_ttaiDetailModel.official_pic stringValueForKey:@"cover_pic"]] placeholderImage:nil];
         [yjyPic addTaget:self action:@selector(yjyPicClicked) tag:0];
     }
     
@@ -1514,7 +1514,7 @@
         
         [imv setHeight:height];
         
-        [imv l_setImageWithURL:[NSURL URLWithString:url] placeholderImage:DEFAULT_YIJIAYI];
+        [imv l_setImageWithURL:[NSURL URLWithString:url] placeholderImage:nil];
         
         [imv addTapGestureTarget:self action:@selector(viewForFooterInSectionClicked:) tag:(int)(section + 1000)];
         

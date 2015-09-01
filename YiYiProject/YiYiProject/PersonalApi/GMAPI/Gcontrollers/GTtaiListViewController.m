@@ -243,7 +243,7 @@
         l1.backgroundColor = RGBCOLOR(220, 221, 223);
         [self.topView addSubview:l1];
         [_g02 removeFromSuperview];
-        _topScrollView1.backgroundColor = [UIColor purpleColor];
+//        _topScrollView1.backgroundColor = [UIColor purpleColor];
         
        
         UIView *l2 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_topScrollView1.frame)+6, DEVICE_WIDTH, 0.5)];
@@ -426,18 +426,37 @@
             
             NSDictionary *dic_ofcomment=[self.commentarray objectAtIndex:i];
             NSString *strimg=[dic_ofcomment objectForKey:@"img_url"];
+            if ([LTools isEmpty:strimg]) {
+                strimg = @" ";
+            }
             [imgarray addObject:strimg];
             
             //第几个
             NSString *str_rec_title = [NSString stringWithFormat:@"%d",i];
+            if ([LTools isEmpty:str_rec_title]) {
+                str_rec_title = @" ";
+            }
             [_com_title_array addObject:str_rec_title];
             
             //图片url
             NSString *redirect_url=[dic_ofcomment objectForKey:@"redirect_url"];
+            if ([LTools isEmpty:redirect_url]) {
+                redirect_url = @" ";
+            }
             [_com_link_array addObject:redirect_url];
+            
+            //类型 暂时无用
             NSString *adv_type_val=[dic_ofcomment objectForKey:@"adv_type_val"];
+            if ([LTools isEmpty:adv_type_val]) {
+                adv_type_val = @" ";
+            }
             [_com_type_array addObject:adv_type_val];
+            
+            //id 暂时无用
             NSString *str__id=[dic_ofcomment objectForKey:@"id"];
+            if ([LTools isEmpty:str__id]) {
+                str__id = @" ";
+            }
             [_com_id_array addObject:str__id];
             
             
