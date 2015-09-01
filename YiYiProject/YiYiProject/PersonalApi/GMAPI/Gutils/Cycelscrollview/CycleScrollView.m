@@ -11,7 +11,7 @@
 
 @interface CycleScrollView () <UIScrollViewDelegate>
 {
-    CGFloat _currentOffsetx;
+    CGFloat _currentOffsetx;//当前第几个
 }
 
 @property (nonatomic , assign) NSInteger currentPageIndex;
@@ -146,7 +146,7 @@
             [self.contentViews addObject:self.fetchContentViewAtIndex(_currentPageIndex)];
             [self.contentViews addObject:self.fetchContentViewAtIndex(rearPageIndex)];
             
-            NSLog(@"\npre %ld\ncurrent %ld next %ld",previousPageIndex,_currentPageIndex,rearPageIndex);
+          //  NSLog(@"\npre %ld\ncurrent %ld next %ld",previousPageIndex,_currentPageIndex,rearPageIndex);
         }
     }
     
@@ -155,7 +155,7 @@
 
 - (NSInteger)getValidNextPageIndexWithPageIndex:(NSInteger)currentPageIndex;
 {
-    NSLog(@"----%ld",currentPageIndex);
+    NSLog(@"----%ld",(long)currentPageIndex);
     
     if(currentPageIndex == -1) {
         
@@ -195,7 +195,7 @@
     
     //lcw
     
-//    //一共有两个的时候
+    //一共有两个的时候
 //    if (self.totalPageCount == 2) {
 //
 //        UIView *view_next = self.fetchContentViewAtIndex(_currentPageIndex);
@@ -208,8 +208,10 @@
 //            view_current.left = _scrollView.width;
 //            view_next.left = 0;
 //            
+//            
 //            _currentOffsetx = scrollView.contentOffset.x;
 //
+//        
 //            return;
 //
 //        }

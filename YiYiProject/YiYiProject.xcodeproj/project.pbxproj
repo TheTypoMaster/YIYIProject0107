@@ -569,7 +569,6 @@
 		E3996ED81A5E1DBA00673147 /* UILabel+GautoMatchedText.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996EA11A5E1DBA00673147 /* UILabel+GautoMatchedText.m */; };
 		E3996ED91A5E1DBA00673147 /* UIView+Gstring.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996EA31A5E1DBA00673147 /* UIView+Gstring.m */; };
 		E3996EDA1A5E1DBA00673147 /* GcustomActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996EA61A5E1DBA00673147 /* GcustomActionSheet.m */; };
-		E3996EDB1A5E1DBA00673147 /* GCycleScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996EA81A5E1DBA00673147 /* GCycleScrollView.m */; };
 		E3996EDC1A5E1DBA00673147 /* GScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996EAA1A5E1DBA00673147 /* GScrollView.m */; };
 		E3996EDD1A5E1DBA00673147 /* GShowStarsView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996EAC1A5E1DBA00673147 /* GShowStarsView.m */; };
 		E3996EDE1A5E1DBA00673147 /* GStarsView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3996EAE1A5E1DBA00673147 /* GStarsView.m */; };
@@ -597,6 +596,12 @@
 		E3D080851B3EEC0700E4F87D /* GBuyClothLogModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E3D080841B3EEC0700E4F87D /* GBuyClothLogModel.m */; };
 		E3D080881B3EF02B00E4F87D /* GTimeSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = E3D080871B3EF02B00E4F87D /* GTimeSwitch.m */; };
 		E3D0808B1B3EFAB700E4F87D /* GbuyClothTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3D0808A1B3EFAB700E4F87D /* GbuyClothTableViewCell.m */; };
+		E3D8B4A11B9578A4004D77AD /* GcycleScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3D8B49C1B9578A4004D77AD /* GcycleScrollView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		E3D8B4A21B9578A4004D77AD /* SGFocusImageItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E3D8B49E1B9578A4004D77AD /* SGFocusImageItem.m */; };
+		E3D8B4A31B9578A4004D77AD /* SMPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = E3D8B4A01B9578A4004D77AD /* SMPageControl.m */; };
+		E3D8B4A61B958902004D77AD /* roundblue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3D8B4A41B958902004D77AD /* roundblue@2x.png */; };
+		E3D8B4A71B958902004D77AD /* roundgray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3D8B4A51B958902004D77AD /* roundgray@2x.png */; };
+		E3D8B4AA1B9590D8004D77AD /* GcycleScrollView1.m in Sources */ = {isa = PBXBuildFile; fileRef = E3D8B4A91B9590D8004D77AD /* GcycleScrollView1.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E3E3E8481A3C6772001A1DD6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E3E8471A3C6772001A1DD6 /* CoreLocation.framework */; };
 		E3E3E84A1A3C6780001A1DD6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E3E8491A3C6780001A1DD6 /* QuartzCore.framework */; };
 		E3E3E84C1A3C678C001A1DD6 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E3E84B1A3C678C001A1DD6 /* OpenGLES.framework */; };
@@ -1533,8 +1538,6 @@
 		E3996EA31A5E1DBA00673147 /* UIView+Gstring.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Gstring.m"; sourceTree = "<group>"; };
 		E3996EA51A5E1DBA00673147 /* GcustomActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GcustomActionSheet.h; sourceTree = "<group>"; };
 		E3996EA61A5E1DBA00673147 /* GcustomActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GcustomActionSheet.m; sourceTree = "<group>"; };
-		E3996EA71A5E1DBA00673147 /* GCycleScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCycleScrollView.h; sourceTree = "<group>"; };
-		E3996EA81A5E1DBA00673147 /* GCycleScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCycleScrollView.m; sourceTree = "<group>"; };
 		E3996EA91A5E1DBA00673147 /* GScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GScrollView.h; sourceTree = "<group>"; };
 		E3996EAA1A5E1DBA00673147 /* GScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GScrollView.m; sourceTree = "<group>"; };
 		E3996EAB1A5E1DBA00673147 /* GShowStarsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GShowStarsView.h; sourceTree = "<group>"; };
@@ -1580,6 +1583,16 @@
 		E3D080871B3EF02B00E4F87D /* GTimeSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTimeSwitch.m; sourceTree = "<group>"; };
 		E3D080891B3EFAB700E4F87D /* GbuyClothTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GbuyClothTableViewCell.h; sourceTree = "<group>"; };
 		E3D0808A1B3EFAB700E4F87D /* GbuyClothTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GbuyClothTableViewCell.m; sourceTree = "<group>"; };
+		E3D8B49B1B9578A4004D77AD /* GcycleScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GcycleScrollView.h; sourceTree = "<group>"; };
+		E3D8B49C1B9578A4004D77AD /* GcycleScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GcycleScrollView.m; sourceTree = "<group>"; };
+		E3D8B49D1B9578A4004D77AD /* SGFocusImageItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGFocusImageItem.h; sourceTree = "<group>"; };
+		E3D8B49E1B9578A4004D77AD /* SGFocusImageItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGFocusImageItem.m; sourceTree = "<group>"; };
+		E3D8B49F1B9578A4004D77AD /* SMPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMPageControl.h; sourceTree = "<group>"; };
+		E3D8B4A01B9578A4004D77AD /* SMPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMPageControl.m; sourceTree = "<group>"; };
+		E3D8B4A41B958902004D77AD /* roundblue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "roundblue@2x.png"; sourceTree = "<group>"; };
+		E3D8B4A51B958902004D77AD /* roundgray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "roundgray@2x.png"; sourceTree = "<group>"; };
+		E3D8B4A81B9590D8004D77AD /* GcycleScrollView1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GcycleScrollView1.h; sourceTree = "<group>"; };
+		E3D8B4A91B9590D8004D77AD /* GcycleScrollView1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GcycleScrollView1.m; sourceTree = "<group>"; };
 		E3E3E8471A3C6772001A1DD6 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		E3E3E8491A3C6780001A1DD6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E3E3E84B1A3C678C001A1DD6 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -3555,6 +3568,7 @@
 		E3996E491A5E1DBA00673147 /* Gutils */ = {
 			isa = PBXGroup;
 			children = (
+				E3D8B49A1B9578A4004D77AD /* GcycelScrollv */,
 				E310DA7D1B7AFAC300C46064 /* Cycelscrollview */,
 				E3D080861B3EF02B00E4F87D /* GTimeSwitch.h */,
 				E3D080871B3EF02B00E4F87D /* GTimeSwitch.m */,
@@ -3602,8 +3616,6 @@
 				E30479421A6109B800709985 /* GBigSmallTabHeaderView */,
 				E3996EA51A5E1DBA00673147 /* GcustomActionSheet.h */,
 				E3996EA61A5E1DBA00673147 /* GcustomActionSheet.m */,
-				E3996EA71A5E1DBA00673147 /* GCycleScrollView.h */,
-				E3996EA81A5E1DBA00673147 /* GCycleScrollView.m */,
 				E3996EA91A5E1DBA00673147 /* GScrollView.h */,
 				E3996EAA1A5E1DBA00673147 /* GScrollView.m */,
 				E3996EAB1A5E1DBA00673147 /* GShowStarsView.h */,
@@ -3659,6 +3671,23 @@
 				E39AF4F71B7DF52300BCDF39 /* GTtaiNearActOneView.m */,
 			);
 			path = Gviews;
+			sourceTree = "<group>";
+		};
+		E3D8B49A1B9578A4004D77AD /* GcycelScrollv */ = {
+			isa = PBXGroup;
+			children = (
+				E3D8B4A41B958902004D77AD /* roundblue@2x.png */,
+				E3D8B4A51B958902004D77AD /* roundgray@2x.png */,
+				E3D8B49B1B9578A4004D77AD /* GcycleScrollView.h */,
+				E3D8B49C1B9578A4004D77AD /* GcycleScrollView.m */,
+				E3D8B4A81B9590D8004D77AD /* GcycleScrollView1.h */,
+				E3D8B4A91B9590D8004D77AD /* GcycleScrollView1.m */,
+				E3D8B49D1B9578A4004D77AD /* SGFocusImageItem.h */,
+				E3D8B49E1B9578A4004D77AD /* SGFocusImageItem.m */,
+				E3D8B49F1B9578A4004D77AD /* SMPageControl.h */,
+				E3D8B4A01B9578A4004D77AD /* SMPageControl.m */,
+			);
+			path = GcycelScrollv;
 			sourceTree = "<group>";
 		};
 		E3E64A6F1AE0D971002F00A4 /* GImagePicker */ = {
@@ -3892,6 +3921,7 @@
 				19F7B43A1A67FFA600087BCB /* item_ok_selected@2x.png in Resources */,
 				13934DC41B26CDE900705B02 /* danpin_discount@2x.png in Resources */,
 				E39960721ACFEDD000D2D4B7 /* gsearch_up@2x.png in Resources */,
+				E3D8B4A71B958902004D77AD /* roundgray@2x.png in Resources */,
 				13BD6F181B7B56B500F39E0A /* danpinxq_dianhua2@2x.png in Resources */,
 				13934DC31B26CDE900705B02 /* danpin_bg@2x.png in Resources */,
 				1382C51D1A812A5A0079AF55 /* MJRefresh.bundle in Resources */,
@@ -4120,6 +4150,7 @@
 				E3108B081B8BCB5000C93A66 /* xuanze_down_44_44@2x.png in Resources */,
 				137B088A1A4EBAAB00DE7DCC /* fenxiangb@2x.png in Resources */,
 				E3E64AA61AE0D971002F00A4 /* ImagesPicker.xcassets in Resources */,
+				E3D8B4A61B958902004D77AD /* roundblue@2x.png in Resources */,
 				137B08931A4ECDD100DE7DCC /* shaixuan_girl@2x.png in Resources */,
 				137B6FFB1A6B995D007035DE /* dz_tianjia@2x.png in Resources */,
 			);
@@ -4216,6 +4247,7 @@
 				E3E64AA11AE0D971002F00A4 /* JKPromptView.m in Sources */,
 				13CD36421A3C69860068C12A /* TMQuiltViewController.m in Sources */,
 				DFC7812A1A6159FD00776C62 /* MyMatchDetailViewController.m in Sources */,
+				E3D8B4A31B9578A4004D77AD /* SMPageControl.m in Sources */,
 				13A389BC1A38974F00ABBACB /* NSString+Emoji.m in Sources */,
 				56DAB2101A46A8E100273140 /* SNRefreshTableView.m in Sources */,
 				138986301A6A5DDF00F187C9 /* MessageModel.m in Sources */,
@@ -4321,6 +4353,7 @@
 				139D6E891B41155400BABECF /* AdvertisementController.m in Sources */,
 				13CD36401A3C69860068C12A /* TMQuiltView.m in Sources */,
 				13CD36411A3C69860068C12A /* TMQuiltViewCell.m in Sources */,
+				E3D8B4AA1B9590D8004D77AD /* GcycleScrollView1.m in Sources */,
 				E310DA861B7B339400C46064 /* CycleScrollView1.m in Sources */,
 				13EA3D1E1A3B2682002AF7D6 /* HomeBuyController.m in Sources */,
 				13CEC88F1A5D95F400FE273F /* TDetailModel.m in Sources */,
@@ -4393,11 +4426,13 @@
 				E3E64A981AE0D971002F00A4 /* JKAssets.m in Sources */,
 				19F7B4331A67FFA600087BCB /* UMEGORefreshTableHeaderView.m in Sources */,
 				E30893941AE04AE700DA342C /* GScanViewController.m in Sources */,
+				E3D8B4A21B9578A4004D77AD /* SGFocusImageItem.m in Sources */,
 				1356EF221B1DB61D00F3B3B2 /* ActivityImageModel.m in Sources */,
 				E3E64AAB1AE0D971002F00A4 /* PhotoCell.m in Sources */,
 				E3E64AA31AE0D971002F00A4 /* PhotoAlbumManager.m in Sources */,
 				1381253D1B285609000310FF /* BottomToolsView.m in Sources */,
 				139D6E8F1B411AC700BABECF /* ChouJiangView.m in Sources */,
+				E3D8B4A11B9578A4004D77AD /* GcycleScrollView.m in Sources */,
 				E35CD5311B8AE8090031004F /* GTtaiRelationStoreModel.m in Sources */,
 				13D03D3F1AEDD60F0078AA9E /* EditInfoView.m in Sources */,
 				DF6855861A592CD2004D924F /* UploadPicViewController.m in Sources */,
@@ -4437,7 +4472,6 @@
 				E308939D1AE0587700DA342C /* GChooseLocationMoveAnViewController.m in Sources */,
 				E3142BDD1B10D08E00883BA7 /* GmyTtaiViewController.m in Sources */,
 				13934DCD1B26E70500705B02 /* BigProductViewController.m in Sources */,
-				E3996EDB1A5E1DBA00673147 /* GCycleScrollView.m in Sources */,
 				19F7B44B1A67FFA600087BCB /* UMFeedbackTableViewCellLeft.m in Sources */,
 				E3996EBB1A5E1DBA00673147 /* GLeadBuyMapViewController.m in Sources */,
 				13963F451A4FC54D007BE68B /* LPropertyActionSheet.m in Sources */,

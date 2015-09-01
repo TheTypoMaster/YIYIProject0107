@@ -39,8 +39,11 @@
 
 #import "GwebViewController.h"//webview
 #import "MessageDetailController.h"//跳转活动详情
+#import "GcycleScrollView.h"
+#import "GcycleScrollView1.h"
+#import "SGFocusImageItem.h"
 
-@interface GTtaiListViewController ()<RefreshDelegate,UITableViewDataSource,GgetllocationDelegate>
+@interface GTtaiListViewController ()<RefreshDelegate,UITableViewDataSource,GgetllocationDelegate,NewHuandengViewDelegate,NewHuandengViewDelegate1>
 {
     RefreshTableView *_table;
     LPhotoBrowser *browser;
@@ -51,8 +54,8 @@
     
     GTtaiListCustomTableViewCell *_tmpCell;
     
-    CycleScrollView *_topScrollView;
-    CycleScrollView1 *_topScrollView1;
+    GcycleScrollView *_topScrollView;
+    GcycleScrollView1 *_topScrollView1;
     
     LTools *_tool_detail;
     
@@ -63,11 +66,26 @@
     UIImageView *_g02;
     UIImageView *_g01;
     
+    
+    NSMutableArray *_com_id_array;//幻灯的id
+    NSMutableArray *_com_type_array;//幻灯的type
+    NSMutableArray *_com_link_array;//幻灯的外链
+    NSMutableArray *_com_title_array;//幻灯的index
+    NSDictionary *_huandengDic;//幻灯的整体数据
+    
+    NSMutableArray *_com_id_array1;//幻灯的id
+    NSMutableArray *_com_type_array1;//幻灯的type
+    NSMutableArray *_com_link_array1;//幻灯的外链
+    NSMutableArray *_com_title_array1;//幻灯的index
+    NSDictionary *_huandengDic1;//幻灯的整体数据
+    
 }
 
 @property (nonatomic ,strong) UIView *topView;
 @property(nonatomic,strong)NSMutableArray *huodongArray;
 
+@property(nonatomic,strong)NSMutableArray *commentarray;
+@property(nonatomic,strong)NSMutableArray *commentarray1;
 @end
 
 @implementation GTtaiListViewController
@@ -114,12 +132,9 @@
         [self.topView addSubview:_g01];
         
         
-        if (!_topScrollView) {
-            _topScrollView = [[CycleScrollView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_WIDTH/750.0*250) animationDuration:3];
-            [self.topView addSubview:_topScrollView];
-        }
         
-        UIView *vvv = [[UIView alloc]initWithFrame:CGRectMake(5, CGRectGetMaxY(_topScrollView.frame), DEVICE_WIDTH-10, 32)];
+        
+        UIView *vvv = [[UIView alloc]initWithFrame:CGRectMake(5, DEVICE_WIDTH/750.0*250, DEVICE_WIDTH-10, 32)];
         [self.topView addSubview:vvv];
         
         UILabel *fujinhuodongLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 60, 35)];
@@ -140,11 +155,6 @@
         [_g02 setImage:[UIImage imageNamed:@"g02.png"]];
         [self.topView addSubview:_g02];
         
-        
-        if (!_topScrollView1) {
-            _topScrollView1 = [[CycleScrollView1 alloc] initWithFrame:CGRectMake(5, CGRectGetMaxY(vvv.frame), DEVICE_WIDTH - 10, DEVICE_WIDTH/710.0*120) animationDuration:2];
-            [self.topView addSubview:_topScrollView1];
-        }
         
     }
     
@@ -193,52 +203,24 @@
         NSArray *arr = [result arrayValueForKey:@"list"];
         NSMutableArray *viewsArray1 = [NSMutableArray arrayWithCapacity:1];
         for (NSDictionary *dic in arr) {
-            
             ActivityModel *amodel = [[ActivityModel alloc]initWithDictionary:dic];
             GTtaiNearActOneView *view = [[GTtaiNearActOneView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH - 10, DEVICE_WIDTH/710.0*120) huodongModel:amodel type:nil];
-//            view.backgroundColor = RGBCOLOR(239, 239, 239);
-//            view.backgroundColor = [UIColor redColor];
+            view.backgroundColor = RGBCOLOR(239, 239, 239);
             [viewsArray1 addObject:view];
         }
         
-        
+        for (UIView *view in _topScrollView1.subviews) {
+            [view removeFromSuperview];
+        }
+        [self setTopScrollView1WithDic:result];
+        [_topScrollView1 removeFromSuperview];
+        [self.topView addSubview:_topScrollView1];
         
         UIView *l1 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_topScrollView.frame)+5, DEVICE_WIDTH, 0.5)];
         l1.backgroundColor = RGBCOLOR(220, 221, 223);
         [self.topView addSubview:l1];
-        
-        UIView *vvv = [[UIView alloc]initWithFrame:CGRectMake(5, CGRectGetMaxY(_topScrollView.frame), DEVICE_WIDTH-10, 32)];
-//        vvv.backgroundColor = [UIColor grayColor];
-        [self.topView addSubview:vvv];
-        
-        if (_topScrollView1) {
-            [_topScrollView1 removeFromSuperview];
-            _topScrollView1 = nil;
-            _topScrollView1 = [[CycleScrollView1 alloc] initWithFrame:CGRectMake(5, CGRectGetMaxY(vvv.frame), DEVICE_WIDTH - 10, DEVICE_WIDTH/710.0*120) animationDuration:2];
-            [self.topView addSubview:_topScrollView1];
-        }
-        
         [_g02 removeFromSuperview];
-        _topScrollView1.backgroundColor = [UIColor purpleColor];
-        _topScrollView1.isPageControlHidden = YES;
-        _topScrollView1.scrollView.showsHorizontalScrollIndicator = FALSE;
-        
-        _topScrollView1.fetchContentViewAtIndex = ^UIView *(NSInteger pageIndex){
-            return viewsArray1[pageIndex];
-        };
-        
-        NSInteger count1 = viewsArray1.count;
-        _topScrollView1.totalPagesCount = ^NSInteger(void){
-            return count1;
-        };
-        
-        __weak typeof (self)bself = self;
-        _topScrollView1.TapActionBlock = ^(NSInteger pageIndex){
-            [bself cycleScrollDidClickedWithIndex1:pageIndex];
-        };
-        
-        
-        
+       
         UIView *l2 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_topScrollView1.frame)+6, DEVICE_WIDTH, 0.5)];
         l2.backgroundColor = RGBCOLOR(220, 221, 223);
         [self.topView addSubview:l2];
@@ -260,11 +242,11 @@
     _tool_detail = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [_tool_detail requestCompletion:^(NSDictionary *result, NSError *erro) {
         
+        
         NSArray *arr = [result arrayValueForKey:@"advertisements_data"];
         NSMutableArray *viewsArray = [NSMutableArray arrayWithCapacity:1];
         _upScrollViewData = [NSMutableArray arrayWithCapacity:1];
         for (NSDictionary *dic in arr) {
-            
             ActivityModel *amodel = [[ActivityModel alloc]initWithDictionary:dic];
             UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 125)];
             [imv l_setImageWithURL:[NSURL URLWithString:amodel.img_url] placeholderImage:DEFAULT_YIJIAYI];
@@ -272,49 +254,13 @@
             [_upScrollViewData addObject:amodel];
         }
         
-        
-        //测试只有一条数据的时候
-//        for (int i = 0; i<1;i++) {
-//            NSDictionary *dic = arr[i];
-//            ActivityModel *amodel = [[ActivityModel alloc]initWithDictionary:dic];
-//            UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 125)];
-//            [imv l_setImageWithURL:[NSURL URLWithString:amodel.img_url] placeholderImage:nil];
-//            [viewsArray addObject:imv];
-//            
-//        }
-        
-        
-        if (_topScrollView) {
-            [_topScrollView removeFromSuperview];
-            _topScrollView = nil;
-            _topScrollView = [[CycleScrollView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_WIDTH/750.0*250) animationDuration:3];
-            [self.topView addSubview:_topScrollView];
-            
+        for (UIView *view in _topScrollView.subviews) {
+            [view removeFromSuperview];
         }
-        
-        
-        _topScrollView.scrollView.showsHorizontalScrollIndicator = FALSE;
-        
-        _topScrollView.fetchContentViewAtIndex = ^UIView *(NSInteger pageIndex){
-            return viewsArray[pageIndex];
-        };
-        
-        NSInteger count = viewsArray.count;
-        _topScrollView.totalPagesCount = ^NSInteger(void){
-            return count;
-        };
-        
-        __weak typeof (self)bself = self;
-        _topScrollView.TapActionBlock = ^(NSInteger pageIndex){
-            
-            [bself cycleScrollDidClickedWithIndex:pageIndex];
-        };
-        
-        if (_upScrollViewData.count == 0) {
-            [_topScrollView removeFromSuperview];
-        }
-        
-        
+        [self setTopScrollViewWithDic:result];
+        [_topScrollView removeFromSuperview];
+        [self.topView addSubview:_topScrollView];
+        _table.tableHeaderView = self.topView;
         [_table reloadData];
        
         
@@ -323,23 +269,203 @@
     }];
 }
 
-
-
-
-
-//创建scrollview
--(void)creatUpscrollView{
+-(void)setTopScrollView1WithDic:(NSDictionary*)headerDic {
     
-//    
-//    
-//    _topScrollView = [[CycleScrollView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 125) animationDuration:2];
+    
+    
+    NSLog(@"竖着的幻灯的数据===%@",headerDic);
+    
+    
+    _com_id_array1 = [NSMutableArray array];
+    _com_link_array1 = [NSMutableArray array];
+    _com_type_array1 = [NSMutableArray array];
+    _com_title_array1 = [NSMutableArray array];
+    
+    self.commentarray1=[NSMutableArray arrayWithArray:[headerDic objectForKey:@"list"]];
+    
+    if (self.commentarray1.count>0) {
+        NSMutableArray *imgarray=[NSMutableArray array];
+        
+        for ( int i=0; i<[self.commentarray1 count]; i++) {
+            
+            NSDictionary *dic_ofcomment=[self.commentarray1 objectAtIndex:i];
+            
+            //图片url
+            NSString *strimg=[dic_ofcomment objectForKey:@"url"];
+            if ([LTools isEmpty:strimg]) {
+                strimg = @" ";
+            }
+            [imgarray addObject:strimg];
+            
+            //内容
+            NSString *str_rec_title = [dic_ofcomment objectForKey:@"activity_info"];
+            if ([LTools isEmpty:str_rec_title]) {
+                str_rec_title = @" ";
+            }
+            [_com_title_array1 addObject:str_rec_title];
+            
+            //距离
+            NSString *redirect_url=[dic_ofcomment objectForKey:@"distance"];
+            if ([LTools isEmpty:redirect_url]) {
+                redirect_url = @" ";
+            }
+            [_com_link_array1 addObject:redirect_url];
+            
+            //商场名
+            NSString *adv_type_val=[dic_ofcomment objectForKey:@"mall_name"];
+            if ([LTools isEmpty:adv_type_val]) {
+                adv_type_val = @" ";
+            }
+            [_com_type_array1 addObject:adv_type_val];
+            
+            //活动id
+            NSString *str__id=[dic_ofcomment objectForKey:@"activity_id"];
+            if ([LTools isEmpty:str__id]) {
+                str__id = @" ";
+            }
+            [_com_id_array1 addObject:str__id];
+            
+            
+        }
+        NSInteger length = self.commentarray1.count;
+        NSMutableArray *tempArray = [NSMutableArray array];
+        for (int i = 0 ; i < length; i++)
+        {
+            NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  
+                                  [NSString stringWithFormat:@"%@",[_com_title_array1 objectAtIndex:i]],@"title" ,
+                                  
+                                  [NSString stringWithFormat:@"%@",[imgarray objectAtIndex:i]],@"image",[NSString stringWithFormat:@"%@",[_com_link_array1 objectAtIndex:i]],@"link",
+                                  
+                                  [NSString stringWithFormat:@"%@",[_com_type_array1 objectAtIndex:i]],@"type",[NSString stringWithFormat:@"%@",[_com_id_array1 objectAtIndex:i]],@"idoftype",nil];
+            
+            
+            [tempArray addObject:dict];
+        }
+        
+        NSMutableArray *itemArray = [NSMutableArray arrayWithCapacity:length+2];
+        if (length > 1)
+        {
+            NSDictionary *dict = [tempArray objectAtIndex:length-1];
+            SGFocusImageItem *item = [[SGFocusImageItem alloc] initWithDict:dict tag:-1] ;
+            [itemArray addObject:item];
+        }
+        for (int i = 0; i < length; i++)
+        {
+            NSDictionary *dict = [tempArray objectAtIndex:i];
+            SGFocusImageItem *item = [[SGFocusImageItem alloc] initWithDict:dict tag:i] ;
+            [itemArray addObject:item];
+            
+        }
+        //添加第一张图 用于循环
+        if (length >1)
+        {
+            NSDictionary *dict = [tempArray objectAtIndex:0];
+            SGFocusImageItem *item = [[SGFocusImageItem alloc] initWithDict:dict tag:length];
+            [itemArray addObject:item];
+        }
+        
+        UIView *vvv = [[UIView alloc]initWithFrame:CGRectMake(5, CGRectGetMaxY(_topScrollView.frame), DEVICE_WIDTH-10, 32)];
+        [self.topView addSubview:vvv];
+        _topScrollView1 = [[GcycleScrollView1 alloc] initWithFrame:CGRectMake(5, CGRectGetMaxY(vvv.frame), DEVICE_WIDTH - 10,(int)(DEVICE_WIDTH/710.0*120)) delegate:self imageItems:itemArray isAuto:YES pageControlNum:0];//0为不显示pagecontrol
+        [_topScrollView scrollToIndex:0];
+        
+        
+        
+    }
+    
+    
 }
 
 
 
--(void)cycleScrollDidClickedWithIndex:(NSInteger)index{
-    NSLog(@"%ld",index);
+-(void)setTopScrollViewWithDic:(NSDictionary*)headerDic {
     
+    
+    
+    NSLog(@"最新的幻灯的数据===%@",headerDic);
+    
+    
+    _com_id_array=[NSMutableArray array];
+    _com_link_array=[NSMutableArray array];
+    _com_type_array=[NSMutableArray array];
+    _com_title_array=[NSMutableArray array];
+    
+    self.commentarray=[NSMutableArray arrayWithArray:[headerDic objectForKey:@"advertisements_data"]];
+    
+    if (self.commentarray.count>0) {
+        NSMutableArray *imgarray=[NSMutableArray array];
+        
+        for ( int i=0; i<[self.commentarray count]; i++) {
+            
+            NSDictionary *dic_ofcomment=[self.commentarray objectAtIndex:i];
+            NSString *strimg=[dic_ofcomment objectForKey:@"img_url"];
+            [imgarray addObject:strimg];
+            
+            //第几个
+            NSString *str_rec_title = [NSString stringWithFormat:@"%d",i];
+            [_com_title_array addObject:str_rec_title];
+            
+            //图片url
+            NSString *redirect_url=[dic_ofcomment objectForKey:@"redirect_url"];
+            [_com_link_array addObject:redirect_url];
+            NSString *adv_type_val=[dic_ofcomment objectForKey:@"adv_type_val"];
+            [_com_type_array addObject:adv_type_val];
+            NSString *str__id=[dic_ofcomment objectForKey:@"id"];
+            [_com_id_array addObject:str__id];
+            
+            
+        }
+        NSInteger length = self.commentarray.count;
+        NSMutableArray *tempArray = [NSMutableArray array];
+        for (int i = 0 ; i < length; i++)
+        {
+            NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  [NSString stringWithFormat:@"%@",[_com_title_array objectAtIndex:i]],@"title" ,
+                                  [NSString stringWithFormat:@"%@",[imgarray objectAtIndex:i]],@"image",[NSString stringWithFormat:@"%@",[_com_link_array objectAtIndex:i]],@"link",
+                                  [NSString stringWithFormat:@"%@",[_com_type_array objectAtIndex:i]],@"type",[NSString stringWithFormat:@"%@",[_com_id_array objectAtIndex:i]],@"idoftype",nil];
+            
+            
+            [tempArray addObject:dict];
+        }
+        
+        NSMutableArray *itemArray = [NSMutableArray arrayWithCapacity:length+2];
+        if (length > 1)
+        {
+            NSDictionary *dict = [tempArray objectAtIndex:length-1];
+            SGFocusImageItem *item = [[SGFocusImageItem alloc] initWithDict:dict tag:-1] ;
+            [itemArray addObject:item];
+        }
+        for (int i = 0; i < length; i++)
+        {
+            NSDictionary *dict = [tempArray objectAtIndex:i];
+            SGFocusImageItem *item = [[SGFocusImageItem alloc] initWithDict:dict tag:i] ;
+            [itemArray addObject:item];
+            
+        }
+        //添加第一张图 用于循环
+        if (length >1)
+        {
+            NSDictionary *dict = [tempArray objectAtIndex:0];
+            SGFocusImageItem *item = [[SGFocusImageItem alloc] initWithDict:dict tag:length];
+            [itemArray addObject:item];
+        }
+        _topScrollView = [[GcycleScrollView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, (int)(DEVICE_WIDTH*250/750)) delegate:self imageItems:itemArray isAuto:YES pageControlNum:self.commentarray.count];
+        [_topScrollView scrollToIndex:0];
+        
+        
+        
+    }
+    
+    
+}
+
+#pragma mark-SGFocusImageItem的代理
+- (void)testfoucusImageFrame:(NewHuandengView *)imageFrame didSelectItem:(SGFocusImageItem *)item
+{
+    NSLog(@"%s \n click===>%@",__FUNCTION__,item.title);
+    
+    NSInteger index = [item.title integerValue];
     if (_upScrollViewData.count == 0) {
         
         return;
@@ -369,9 +495,15 @@
         }
     }
     
-    
-    
-    
+}
+
+
+- (void)testfoucusImageFrame1:(NewHuandengView *)imageFrame didSelectItem:(SGFocusImageItem *)item
+{
+    NSLog(@"%s \n click===>%@",__FUNCTION__,item.title);
+    GTtaiNearActivViewController *cc = [[GTtaiNearActivViewController alloc]init];
+    cc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:cc animated:YES];
     
 }
 
@@ -379,9 +511,7 @@
 -(void)cycleScrollDidClickedWithIndex1:(NSInteger)index{
     NSLog(@"%ld",index);
     
-    GTtaiNearActivViewController *cc = [[GTtaiNearActivViewController alloc]init];
-    cc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:cc animated:YES];
+    
 }
 
 

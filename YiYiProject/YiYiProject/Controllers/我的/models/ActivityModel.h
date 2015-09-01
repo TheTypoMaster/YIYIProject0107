@@ -41,6 +41,8 @@
 
 @property(nonatomic,strong)NSString *activity_id;//活动id
 
+@property(nonatomic,strong)NSString *distance;//距离
+
 
 
 //T台列表
