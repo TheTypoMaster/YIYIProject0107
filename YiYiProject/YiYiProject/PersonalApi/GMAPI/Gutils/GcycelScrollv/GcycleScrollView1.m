@@ -148,11 +148,7 @@ static CGFloat SWITCH_FOCUS_PICTURE_INTERVAL = 3.0; //switch interval time
         
         [self loadCustomViewWithItems:item index:i];
         
-        
-//        [imv l_setImageWithURL:[NSURL URLWithString:item.image] placeholderImage:DEFAULT_YIJIAYI];
-//        [_scrollView addSubview:imv];
-//        [imv release];
-        
+
         
     }
     [tapGestureRecognize release];
@@ -227,6 +223,7 @@ static CGFloat SWITCH_FOCUS_PICTURE_INTERVAL = 3.0; //switch interval time
 -(void)loadCustomViewWithItems:(SGFocusImageItem*)item index:(NSInteger)i{
     UIView *backView = [[UIView alloc]initWithFrame:CGRectMake(0, i*self.frame.size.height, self.frame.size.width,self.frame.size.height)];
 //    backView.backgroundColor = RGBCOLOR_ONE;
+    backView.backgroundColor = RGBCOLOR(241, 242, 244);
     [_scrollView addSubview:backView];
     
     

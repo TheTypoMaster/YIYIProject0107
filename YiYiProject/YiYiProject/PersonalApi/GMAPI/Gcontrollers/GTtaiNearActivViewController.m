@@ -67,7 +67,7 @@
         for (NSDictionary *dic in arr) {
             
             ActivityModel *amodel = [[ActivityModel alloc]initWithDictionary:dic];
-            GTtaiNearActOneView *view = [[GTtaiNearActOneView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 60) huodongModel:amodel type:@"活动列表"];
+            GTtaiNearActOneView *view = [[GTtaiNearActOneView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, (int)(DEVICE_WIDTH*120/710)) huodongModel:amodel type:@"活动列表"];
             view.backgroundColor = RGBCOLOR(239, 239, 239);
             [viewsArray1 addObject:view];
         }
@@ -110,7 +110,7 @@
     
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath{
-    return 65;
+    return (int)(DEVICE_WIDTH*120/710+5);
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

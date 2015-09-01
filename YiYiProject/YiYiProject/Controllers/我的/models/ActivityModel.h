@@ -33,6 +33,7 @@
 @property(nonatomic,retain)NSString *height;//封面的高
 
 @property(nonatomic,retain)NSString *ori_pic;//活动原图
+@property(nonatomic,strong)NSString *url;//封面图
 @property(nonatomic,retain)NSNumber *ended;//活动是否结束 0未结束 1结束
 
 @property(nonatomic,retain)NSString *cover_pic;//活动封面
