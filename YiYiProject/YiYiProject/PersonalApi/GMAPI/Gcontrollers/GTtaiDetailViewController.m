@@ -1514,7 +1514,7 @@
         
         [imv setHeight:height];
         
-        [imv l_setImageWithURL:[NSURL URLWithString:url] placeholderImage:nil];
+        [imv l_setImageWithURL:[NSURL URLWithString:url] placeholderImage:DEFAULT_YIJIAYI];
         
         [imv addTapGestureTarget:self action:@selector(viewForFooterInSectionClicked:) tag:(int)(section + 1000)];
         
