@@ -179,9 +179,6 @@ typedef enum{
         }else{
             [self GgetUserInfo];
         }
-        
-        
-
     }
     
 }
@@ -199,9 +196,30 @@ typedef enum{
     //初始化相关
     _changeImageType = USERIMAGENULL;
     
+    
+    //---lcw:和店铺相关暂时去掉----
+    
+//    _logoImageArray = @[[UIImage imageNamed:@"my_shoucang.png"],
+//                        [UIImage imageNamed:@"my_wallet.png"],
+//                        [UIImage imageNamed:@"my_store.png"],
+//                        [UIImage imageNamed:@"my_message.png"],
+//                        [UIImage imageNamed:@"my_friends.png"],
+//                        [UIImage imageNamed:@"my_saoma.png"],
+//                        [UIImage imageNamed:@"my_setting.png"]];
+//    
+//    
+//    _tabelViewCellTitleArray = @[@"我的收藏",
+//                                 @"我的钱包",
+//                                 @"我是店主，申请衣+衣店铺",
+//                                 @"消息中心",
+//                                 @"邀请好友",
+//                                 @"扫一扫",
+//                                 @"设置"
+//                                 ];
+    //----end----
+    
     _logoImageArray = @[[UIImage imageNamed:@"my_shoucang.png"],
                         [UIImage imageNamed:@"my_wallet.png"],
-                        [UIImage imageNamed:@"my_store.png"],
                         [UIImage imageNamed:@"my_message.png"],
                         [UIImage imageNamed:@"my_friends.png"],
                         [UIImage imageNamed:@"my_saoma.png"],
@@ -210,7 +228,6 @@ typedef enum{
     
     _tabelViewCellTitleArray = @[@"我的收藏",
                                  @"我的钱包",
-                                 @"我是店主，申请衣+衣店铺",
                                  @"消息中心",
                                  @"邀请好友",
                                  @"扫一扫",
@@ -243,11 +260,15 @@ typedef enum{
     //退出登录
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GLogoutAction) name:NOTIFICATION_LOGOUT object:nil];
     
+    //---lcw:和店铺相关暂时去掉----
+    
     //店铺提交申请 改变成审核中状态
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeTheTitleAndPicArray_shenhe) name:NOTIFICATION_SHENQINGDIANPU_SUCCESS object:nil];
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeTheTitleAndPicArray_shenhe) name:NOTIFICATION_SHENQINGDIANPU_SUCCESS object:nil];
     
     //接收审核结果
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GgetUserInfo) name:NOTIFICATION_SHENQINGDIANPU_STATE object:nil];
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GgetUserInfo) name:NOTIFICATION_SHENQINGDIANPU_STATE object:nil];
+    
+    //---end------
     
     //从后台转到前台更新用户数据
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GgetUserInfo) name:NOTIFICATION_APPENTERFOREGROUND object:nil];
@@ -349,12 +370,14 @@ typedef enum{
     
     _qiandaoBtn.hidden = NO;
     
+    //---lcw:和店铺相关暂时去掉----
     
-    if ([_userInfo.shopman intValue] == 2) {//已经是店主
-        [self changeTheTitleAndPicArray_dianzhu];
-    }else if ([_userInfo.shopman intValue]==1){//正在审核
-        [self changeTheTitleAndPicArray_shenhe];
-    }
+//    if ([_userInfo.shopman intValue] == 2) {//已经是店主
+//        [self changeTheTitleAndPicArray_dianzhu];
+//    }else if ([_userInfo.shopman intValue]==1){//正在审核
+//        [self changeTheTitleAndPicArray_shenhe];
+//    }
+    //---end-----
     
     NSString *name = [dic stringValueForKey:@"user_name"];
     if ([name isEqualToString:@"(null)"] || name == nil) {
@@ -445,7 +468,6 @@ typedef enum{
         dic = (NSDictionary *)dic_m;
         
         
-        
         _userInfo = [[UserInfo alloc]initWithDictionary:dic];
         
         
@@ -460,12 +482,15 @@ typedef enum{
             _qiandaoBtn.selected = YES;
         }
 
+        //---lcw:和店铺相关暂时去掉----
         
-        if ([_userInfo.shopman intValue] == 2) {//已经是店主
-            [self changeTheTitleAndPicArray_dianzhu];
-        }else if ([_userInfo.shopman intValue]==1){//正在审核
-            [self changeTheTitleAndPicArray_shenhe];
-        }
+//        if ([_userInfo.shopman intValue] == 2) {//已经是店主
+//            [self changeTheTitleAndPicArray_dianzhu];
+//        }else if ([_userInfo.shopman intValue]==1){//正在审核
+//            [self changeTheTitleAndPicArray_shenhe];
+//        }
+        
+        //---end---
         
         NSString *name = [dic stringValueForKey:@"user_name"];
         if ([name isEqualToString:@"(null)"] || name == nil) {
@@ -634,12 +659,7 @@ typedef enum{
     [_fensiView addTaget:self action:@selector(fensiClicked) tag:0];
     [_guanzhuView addTaget:self action:@selector(guanzuClicked) tag:0];
     [_ttaiView addTaget:self action:@selector(ttaiClicked) tag:0];
-    
-    
-    
-    
-    
-    
+
     
     
     //手势
@@ -1055,9 +1075,6 @@ typedef enum{
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
     return _tabelViewCellTitleArray.count;
-    
-    
-    //return num;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -1088,7 +1105,7 @@ typedef enum{
     }
 //    cell.separatorInset = UIEdgeInsetsMake(0,0,0,0);//上左下右
     
-    if (indexPath.row == 3) {
+    if (indexPath.row == 2) {
         
         //消息中心
         
@@ -1172,30 +1189,30 @@ typedef enum{
             
         }
             break;
-        case 2://申请店铺/我的店铺
-        {
-            int shopMan = [_userInfo.shopman intValue];
-            
-            if (shopMan == 2) {
-                NSLog(@"店主");
-                MyShopViewController *shop = [[MyShopViewController alloc]init];
-                shop.userInfo = _userInfo;
-                shop.lastPageNavigationHidden = YES;
-                shop.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:shop animated:YES];
-            }else if (shopMan == 1){
-                NSLog(@"店铺申请");
-                [LTools showMBProgressWithText:@"您已申请店铺,正在审核中..." addToView:self.view];
-            }else if (shopMan == 0){
-                NSLog(@"普通");
-                ShenQingDianPuViewController *_shenqingVC = [[ShenQingDianPuViewController alloc]init];
-                _shenqingVC.hidesBottomBarWhenPushed = YES;
-                _shenqingVC.lastPageNavigationHidden = YES;
-                [self.navigationController pushViewController:_shenqingVC animated:YES];
-            }
-        }
-            break;
-        case 3://消息中心
+////        case 2://申请店铺/我的店铺
+////        {
+////            int shopMan = [_userInfo.shopman intValue];
+////            
+////            if (shopMan == 2) {
+////                NSLog(@"店主");
+////                MyShopViewController *shop = [[MyShopViewController alloc]init];
+////                shop.userInfo = _userInfo;
+////                shop.lastPageNavigationHidden = YES;
+////                shop.hidesBottomBarWhenPushed = YES;
+////                [self.navigationController pushViewController:shop animated:YES];
+////            }else if (shopMan == 1){
+////                NSLog(@"店铺申请");
+////                [LTools showMBProgressWithText:@"您已申请店铺,正在审核中..." addToView:self.view];
+////            }else if (shopMan == 0){
+////                NSLog(@"普通");
+////                ShenQingDianPuViewController *_shenqingVC = [[ShenQingDianPuViewController alloc]init];
+////                _shenqingVC.hidesBottomBarWhenPushed = YES;
+////                _shenqingVC.lastPageNavigationHidden = YES;
+////                [self.navigationController pushViewController:_shenqingVC animated:YES];
+////            }
+////        }
+//            break;
+        case 2://消息中心
         {
             MessageListController *messageList = [[MessageListController alloc]init];
             messageList.hidesBottomBarWhenPushed = YES;
@@ -1204,19 +1221,19 @@ typedef enum{
             
         }
             break;
-        case 4://邀请好友
+        case 3://邀请好友
         {
             [self clickToShare:nil];
             
         }
             break;
-        case 5://扫一扫
+        case 4://扫一扫
         {
             [self saoyisaoClicked];
             
         }
             break;
-        case 6://设置
+        case 5://设置
         {
             [self xiaochilun];
         }
@@ -1225,15 +1242,7 @@ typedef enum{
             break;
     }
     
-    
-    
-
-    
 }
-
-
-
-
 
 -(void)saoyisaoClicked{
     NSLog(@"扫一扫");
@@ -1246,16 +1255,12 @@ typedef enum{
     
 }
 
-
-
-
 ///编辑资料
 -(void)goToEdit{
     
     if (!_getUserinfoSuccess) {
         return;
     }
-    
     
     if ([LTools isLogin:self]) {
         //编辑
@@ -1264,8 +1269,6 @@ typedef enum{
         editInfoVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:editInfoVC animated:YES];
     }
-    
-    
 }
 
 
@@ -1283,8 +1286,6 @@ typedef enum{
         return;
         
     }
-    
-    
     
     _changeImageType = USERBANNER;
     GcustomActionSheet *aaa = [[GcustomActionSheet alloc]initWithTitle:nil

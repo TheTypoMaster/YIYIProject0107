@@ -61,6 +61,7 @@
     
     GMAPI *mapApi;
     LocationBlock _locationBlock;
+    LocationBlock _addressDetailBlock;//根据坐标获取位置详细信息
 }
 
 @end
@@ -175,6 +176,7 @@
 
 #pragma mark - 获取坐标
 
+//获取坐标
 - (void)startDingweiWithBlock:(LocationBlock)location
 {
     _locationBlock = location;
@@ -185,6 +187,19 @@
     [mapApi startDingwei];
     
 //    [self startDingWeiTimer];//开始定位计时器
+}
+
+//根据坐标获取位置详细信息
+- (void)getAddressDetailWithLontitud:(CGFloat)longtitude
+                            latitude:(CGFloat)latitude
+                        addressBlock:(LocationBlock)addressBlock
+{
+    _addressDetailBlock = addressBlock;
+    //定位获取坐标
+    mapApi = [GMAPI sharedManager];
+    mapApi.delegate = self;
+    [mapApi getAddressDetailWithLontitud:longtitude latitude:latitude];
+
 }
 
 /**
@@ -207,8 +222,6 @@
 
 - (void)theLocationDictionary:(NSDictionary *)dic{
     
-    NSLog(@"定位成功------>%@",dic);
-    
     if (_locationBlock) {
         
         _locationBlock(dic);
@@ -226,12 +239,22 @@
 
 -(void)theLocationFaild:(NSDictionary *)dic{
     
-    NSLog(@"定位失败----->%@",dic);
-    
     if (_locationBlock) {
         _locationBlock(dic);
     }
 }
+
+- (void)theLocationAddressDetailDictionary:(NSDictionary *)dic //定位返回详细地址信息
+{
+    if (dic) {
+        
+        if (_addressDetailBlock) {
+            
+            _addressDetailBlock(dic);
+        }
+    }
+}
+
 
 /**
  *  更新当前定位信息的本地保存

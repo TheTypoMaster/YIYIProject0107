@@ -294,6 +294,8 @@
     return sharedAccountManagerInstance;
 }
 
+#pragma - mark 开启定位
+
 //开启定位
 -(void)startDingwei{
     
@@ -315,13 +317,10 @@
             [self.delegate theLocationFaild:self.theLocationDic];
         }
         
-        
     }else{
+        
         [weakSelf startLocation];
     }
-    
-    
-    
 }
 
 
@@ -330,7 +329,7 @@
     
     _locService = [[BMKLocationService alloc]init];
     _locService.delegate = self;
-    [BMKLocationService setLocationDistanceFilter:100];
+    [BMKLocationService setLocationDistanceFilter:50];
     [_locService startUserLocationService];
 }
 
@@ -343,89 +342,105 @@
     }
 }
 
-//用户位置更新后，会调用此函数
+#pragma - mark BMKLocationServiceDelegate <NSObject>
 
+//用户位置更新后，会调用此函数
 - (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation{
     
-    NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
+    NSLog(@"定位成功:lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
     if (userLocation) {
         self.theLocationDic = @{
                                 @"lat":[NSString stringWithFormat:@"%f",userLocation.location.coordinate.latitude],
-                                @"long":[NSString stringWithFormat:@"%f",userLocation.location.coordinate.longitude]
+                                @"long":[NSString stringWithFormat:@"%f",userLocation.location.coordinate.longitude],
+                                @"result":[NSNumber numberWithBool:YES]  //定位失败
                                 };
         
         [LTools cache:self.theLocationDic ForKey:CACHE_THELOCATION];
         
-        BMKReverseGeoCodeOption *reverseGeoCodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
-        reverseGeoCodeSearchOption.reverseGeoPoint = userLocation.location.coordinate;
-        _geoSearch = [[BMKGeoCodeSearch alloc]init];
-        BOOL flag = [_geoSearch reverseGeoCode:reverseGeoCodeSearchOption];
+        [self.delegate theLocationDictionary:self.theLocationDic];
+
         
-        _geoSearch.delegate = self;
-        
-        if (flag) {
-            NSLog(@"反geo索引发送成功");
-        }else{
-            NSLog(@"反geo索引发送失败");
-        }
-        
-        [self stopLocation];
+        [self stopLocation];//定位成功则停止定位服务
     }
 }
+//*定位失败后，会调用此函数
+- (void)didFailToLocateUserWithError:(NSError *)error{
+    //金领时代 40.041951,116.33934
+    //天安门 39.915187,116.403877
+    
+    NSLog(@"定位失败%@",error);
+    if (self.delegate && [self.delegate respondsToSelector:@selector(theLocationFaild:)]) {
+        self.theLocationDic = @{
+                                @"lat":[NSString stringWithFormat:@"%f",40.041951],
+                                @"long":[NSString stringWithFormat:@"%f",116.33934],
+                                @"result":[NSNumber numberWithBool:NO]  //定位失败
+                                };
+        [self.delegate theLocationFaild:self.theLocationDic];
+    }
+}
+
+/**
+ *  根据经纬度获取位置信息
+ *
+ *  @param longtitude 经度
+ *  @param latitude   维度
+ */
+- (void)getAddressDetailWithLontitud:(CGFloat)longtitude
+                            latitude:(CGFloat)latitude
+{
+    self.longtitude = NSStringFromFloat(longtitude);
+    self.latitude = NSStringFromFloat(latitude);
+    
+    CLLocationCoordinate2D location = CLLocationCoordinate2DMake(latitude, longtitude);
+    BMKReverseGeoCodeOption *reverseGeoCodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
+    reverseGeoCodeSearchOption.reverseGeoPoint = location;
+    _geoSearch = [[BMKGeoCodeSearch alloc]init];
+    BOOL flag = [_geoSearch reverseGeoCode:reverseGeoCodeSearchOption];
+    
+    _geoSearch.delegate = self;
+    
+    if (flag) {
+        NSLog(@"反geo索引发送成功");
+    }else{
+        NSLog(@"反geo索引发送失败");
+    }
+}
+
+#pragma - mark BMKGeoCodeSearchDelegate
 
 - (void)onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error{
     NSLog(@"%s",__FUNCTION__);
     _geoSearch.delegate = nil;
     _geoSearch = nil;
     
-    
-    
     NSLog(@"省份：%@ 城市：%@ 区：%@",result.addressDetail.province,result.addressDetail.city,result.addressDetail.district);
-    
-    NSDictionary *dic = self.theLocationDic;
-    
+        
     [LTools cache:self.theLocationDic ForKey:CACHE_THELOCATION];
     
+    //失败
     if (!result.addressDetail.province) {
         self.theLocationDic = @{
-                                @"lat":[dic stringValueForKey:@"lat"],
-                                @"long":[dic stringValueForKey:@"long"],
-                                @"result":[NSNumber numberWithBool:NO]  //定位失败
+                                @"lat":self.latitude,
+                                @"long":self.longtitude,
+                                @"result":[NSNumber numberWithBool:NO]
                                 };
-        if (self.delegate && [self.delegate respondsToSelector:@selector(theLocationDictionary:)]) {
-            [self.delegate theLocationDictionary:self.theLocationDic];
-        }
-        
-        return;
-    }
-    
-    
-    
-    self.theLocationDic = @{
-                            @"lat":[dic stringValueForKey:@"lat"],
-                            @"long":[dic stringValueForKey:@"long"],
-                            @"province":result.addressDetail.province,
-                            @"city":result.addressDetail.city,
-                            @"addressDetail":result.address,
-                            @"result":[NSNumber numberWithBool:YES]  //定位成功
-                            };
-    if (self.delegate && [self.delegate respondsToSelector:@selector(theLocationDictionary:)]) {
-        [self.delegate theLocationDictionary:self.theLocationDic];
-    }
-    
-}
-
-- (void)didFailToLocateUserWithError:(NSError *)error{
-    //金领时代 40.041951,116.33934
-    //天安门 39.915187,116.403877
-    if (self.delegate && [self.delegate respondsToSelector:@selector(theLocationFaild:)]) {
+    }else
+    {
+    //成功
         self.theLocationDic = @{
-                            @"lat":[NSString stringWithFormat:@"%f",40.041951],
-                            @"long":[NSString stringWithFormat:@"%f",116.33934],
-                            @"result":[NSNumber numberWithBool:NO]  //定位失败
-                            };
-        [self.delegate theLocationFaild:self.theLocationDic];
+                                @"lat":self.latitude,
+                                @"long":self.longtitude,
+                                @"province":result.addressDetail.province,
+                                @"city":result.addressDetail.city,
+                                @"addressDetail":result.address,
+                                @"result":[NSNumber numberWithBool:YES]
+                                };
     }
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(theLocationAddressDetailDictionary:)]) {
+        [self.delegate theLocationAddressDetailDictionary:self.theLocationDic];
+    }
+    
 }
 
 #pragma - mark 获取当前定位信息

@@ -32,9 +32,11 @@
 
 @optional
 
-- (void)theLocationDictionary:(NSDictionary *)dic;
+- (void)theLocationDictionary:(NSDictionary *)dic;//定位成功
 
-- (void)theLocationFaild:(NSDictionary *)dic;
+- (void)theLocationFaild:(NSDictionary *)dic;//定位失败
+
+- (void)theLocationAddressDetailDictionary:(NSDictionary *)dic;//定位返回详细地址信息 result yes成功 no失败
 
 
 @end
@@ -50,6 +52,8 @@
 
 @property(nonatomic,strong)NSDictionary *theLocationDic;
 @property(nonatomic,assign)id<GgetllocationDelegate> delegate;
+@property(nonatomic,strong)NSString *longtitude;//经度
+@property(nonatomic,strong)NSString *latitude;//维度
 
 +(NSString *)getUsername;
 
@@ -128,14 +132,23 @@
 
 
 
-//地图相关
+
+#pragma - mark 获取当前定位信息
 
 //获取单例
 + (GMAPI *)sharedManager;
+
 //开启定位
 -(void)startDingwei;
 
-#pragma - mark 获取当前定位信息
+/**
+ *  根据经纬度获取位置信息
+ *
+ *  @param longtitude 经度
+ *  @param latitude   维度
+ */
+- (void)getAddressDetailWithLontitud:(CGFloat)longtitude
+                            latitude:(CGFloat)latitude;
 
 /**
  *  经度

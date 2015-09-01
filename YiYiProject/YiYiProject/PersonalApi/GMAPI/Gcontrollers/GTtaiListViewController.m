@@ -97,7 +97,7 @@
     self.myTitleLabel.text = @"T台";
     [self createNavigationbarTools];
     
-    _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH,DEVICE_HEIGHT - 64)];
+    _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH,DEVICE_HEIGHT - 64) showLoadMore:NO];
     _table.refreshDelegate = self;
     _table.dataSource = self;
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -875,7 +875,11 @@
         cell = [[GTtaiListCustomTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     
-    TPlatModel *aModel = (TPlatModel *)[_table.dataArray objectAtIndex:indexPath.row];
+    TPlatModel *aModel = nil;
+    if (indexPath.row < _table.dataArray.count) {
+        
+        aModel  = (TPlatModel *)[_table.dataArray objectAtIndex:indexPath.row];
+    }
     
     for (UIView *view in cell.contentView.subviews) {
         [view removeFromSuperview];

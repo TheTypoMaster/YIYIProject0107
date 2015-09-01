@@ -146,7 +146,6 @@
         item.selectedImage = selectImage;
         
         item.title = [item_names objectAtIndex:i];
-        
 
     }
     

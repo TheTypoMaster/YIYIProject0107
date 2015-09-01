@@ -68,9 +68,7 @@
     {
         self.navigationController.navigationBar.translucent = NO;
     }
-    
 }
-
 
 - (void)dealloc
 {
@@ -83,6 +81,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    //精选
     
     self.view.backgroundColor = RGBCOLOR(235, 235, 235);
     
@@ -97,41 +97,38 @@
     [self addScroll:_tableView topButtonPoint:CGPointMake(DEVICE_WIDTH - 40 - 10, DEVICE_HEIGHT - 10 - 40 - 49 - 64)];
     
     //先走缓存
-    [self cacheData];
-    
-    [self performSelector:@selector(prepareNetData) withObject:[NSNumber numberWithBool:YES] afterDelay:0.5];
-    
+    NSDictionary *dic = [GMAPI getHomeClothCacheOfNearStore];
+    NSArray *arr = [dic arrayValueForKey:@"list"];
+    if (arr.count) {
+        
+        [_tableView reloadData:arr pageSize:L_PAGE_SIZE];
+
+    }
+    //网络请求,先定位
+    [self performSelector:@selector(prepareNetData) withObject:[NSNumber numberWithBool:YES] afterDelay:0.1];
     
 }
 
-
-
-
-
-
-
-
 #pragma mark - 请求网络数据
 -(void)prepareNetData{
-    //获取经纬度
-    [self getjingweidu];
     
+    [_tableView showRefreshHeader:YES];
 }
 
 #pragma mark - 获取经纬度
 -(void)getjingweidu{
-    CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
-    if (kCLAuthorizationStatusRestricted == status) {
-        NSLog(@"kCLAuthorizationStatusRestricted 开启定位失败");
-        UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"开启定位失败" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [al show];
-        return;
-    }else if (kCLAuthorizationStatusDenied == status){
-        NSLog(@"请允许衣加衣使用定位服务");
-        UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请允许衣加衣使用定位服务" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [al show];
-        return;
-    }
+//    CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
+//    if (kCLAuthorizationStatusRestricted == status) {
+//        NSLog(@"kCLAuthorizationStatusRestricted 开启定位失败");
+//        UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"开启定位失败" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//        [al show];
+//        return;
+//    }else if (kCLAuthorizationStatusDenied == status){
+//        NSLog(@"请允许衣加衣使用定位服务");
+//        UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请允许衣加衣使用定位服务" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//        [al show];
+//        return;
+//    }
     
     __weak typeof(self)weakSelf = self;
     
@@ -147,18 +144,7 @@
     _locationDic = dic;
     [LTools cache:dic ForKey:CACHE_THELOCATION];
     
-    if (dic) {
-        
-        [_tableView showRefreshHeader:YES];
-    }
-}
-
-#pragma mark - 走缓存数据
--(void)cacheData{
-    NSDictionary *dic = [GMAPI getHomeClothCacheOfNearStore];
-    NSArray *arr = [dic arrayValueForKey:@"list"];
-    [_tableView reloadData:arr pageSize:19];
-    
+    [self prepareNearbyStore];
 }
 
 
@@ -166,12 +152,12 @@
 
 - (void)loadNewData
 {
-    [self prepareNearbyStore];
+    [self getjingweidu];
 }
 - (void)loadMoreData
 {
     
-    [self prepareNearbyStore];
+    [self getjingweidu];
 }
 
 //点击
@@ -224,9 +210,6 @@
 
 
 
-
-
-
 //请求附近的商店
 -(void)prepareNearbyStore{
     
@@ -237,7 +220,6 @@
                          @"long":[NSString stringWithFormat:@"%f",116.33934]
                         };
     }
-    
     
     NSString *lon = [_locationDic stringValueForKey:@"long"];
     NSString *lat = [_locationDic stringValueForKey:@"lat"];
@@ -257,6 +239,7 @@
                 [GMAPI setHomeClothCacheOfNearStoreWithDic:result];
             }
             [_tableView reloadData:arr pageSize:L_PAGE_SIZE];
+            
         }else{
             [_tableView loadFail];
         }
@@ -267,8 +250,6 @@
     }];
     
 }
-
-
 
 
 -(void)pushToNearbyStoreVCWithIdStr:(NSString *)theID theStoreName:(NSString *)nameStr theType:(NSString *)mallType{

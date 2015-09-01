@@ -256,9 +256,7 @@
     _preview.frame = CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT);
     
     [self.view.layer insertSublayer:self.preview atIndex:0];
-    
-    
-    
+
     
     
     // Start

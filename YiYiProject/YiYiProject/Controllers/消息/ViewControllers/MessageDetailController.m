@@ -244,7 +244,6 @@
             
             //活动不存在
             
-            
             [self performSelector:@selector(leftButtonTap:) withObject:nil afterDelay:1.f];
             
             return ;

@@ -46,15 +46,16 @@
     self.maodianImv.layer.borderColor = [RGBCOLOR(220, 221, 223)CGColor];
     [self.maodianImv l_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:DEFAULT_YIJIAYI];
  
-    self.maodianImv.imageUrls = @[imageUrl];//imageView对应的图集url
+    //imageView对应的图集url
+    if (imageUrl) {
+        self.maodianImv.imageUrls = @[imageUrl];
+    }else
+    {
+        self.maodianImv.imageUrls = nil;
+    }
     self.maodianImv.infoId = model.tt_id;//imageView对应的信息id
     self.maodianImv.aModel = model;
     [self.contentView addSubview:self.maodianImv];
-    
-    
-    
-    
-    
     
     
     //图片下面view

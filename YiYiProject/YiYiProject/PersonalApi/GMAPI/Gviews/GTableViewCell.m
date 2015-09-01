@@ -40,11 +40,6 @@
         [jiantou setImage:[UIImage imageNamed:@"my_jiantou.png"]];
         [self.contentView addSubview:jiantou];
         
-        
-        
-        
-        
-        
     }
 }
 
