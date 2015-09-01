@@ -123,11 +123,6 @@
     timeIcon.image = [UIImage imageNamed:@"activity_time"];
     [head addSubview:timeIcon];
     
-    NSLog(@"活动时间--%@",[LTools timeString:@"1451570400" withFormat:@"yyyy.MM.dd.HHMMss"]);
-    
-    NSLog(@"活动时间--%@",[LTools timeString:@"1451570400" withFormat:@"YYYY.MM.dd.HHMMss"]);
-
-    
     NSString *timeString = [NSString stringWithFormat:@"活动时间:%@ - %@",[LTools timeString:aModel.start_time withFormat:@"yyyy.MM.dd"],[LTools timeString:aModel.end_time withFormat:@"yyyy.MM.dd"]];
     CGFloat left = timeIcon.right + 5;
     UILabel *timeLabel = [LTools createLabelFrame:CGRectMake(left, timeIcon.top, imageWidth - left, 13) title:timeString font:13 align:NSTextAlignmentLeft textColor:[UIColor blackColor]];
@@ -212,7 +207,6 @@
     
     if (self.isActivity) {
         
-//        _msg_id = @"198";
         url = [NSString stringWithFormat:GET_MAIL_ACTIVITY_DETAIL,self.msg_id];
     }
     

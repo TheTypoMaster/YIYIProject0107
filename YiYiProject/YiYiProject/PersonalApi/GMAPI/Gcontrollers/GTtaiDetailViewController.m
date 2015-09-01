@@ -848,6 +848,9 @@
 
 
 -(void)pushToGuanfanghuodong{
+    
+    // 1 为外链 url为外链地址
+
     if ([[_ttaiDetailModel.official_act stringValueForKey:@"redirect_type"]intValue] == 1) {
         GwebViewController *ccc = [[GwebViewController alloc]init];
         ccc.urlstring = [_ttaiDetailModel.official_act stringValueForKey:@"url"];
@@ -869,6 +872,7 @@
 
 -(void)yjyPicClicked{
     
+    // 1 为外链 url为外链地址
     if ([[_ttaiDetailModel.official_pic stringValueForKey:@"redirect_type"]intValue] == 1) {
         GwebViewController *ccc = [[GwebViewController alloc]init];
         ccc.urlstring = [_ttaiDetailModel.official_pic stringValueForKey:@"url"];

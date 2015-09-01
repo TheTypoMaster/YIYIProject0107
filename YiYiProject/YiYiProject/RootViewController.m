@@ -107,12 +107,12 @@
 {
     
     
-    NSArray *classNames = @[@"HomeViewController",@"GTtaiListViewController",@"GBuyClothesLogViewController",@"MineViewController"];
-    NSArray *item_names = @[@"附近",@"T台",@"买衣日志",@"我的"];
+    NSArray *classNames = @[@"GTtaiListViewController",@"HomeViewController",@"GBuyClothesLogViewController",@"MineViewController"];
+    NSArray *item_names = @[@"T台",@"附近",@"买衣日志",@"我的"];
     NSMutableArray *items = [NSMutableArray arrayWithCapacity:classNames.count];
     for (int i = 0; i < classNames.count;i ++) {
         
-        if (i == 0) {
+        if (i == 1) {
             
             HomeViewController *home = [[HomeViewController alloc]init];
             LNavigationController *unvc = [[LNavigationController alloc]initWithRootViewController:home];
@@ -131,8 +131,8 @@
     self.viewControllers = [NSArray arrayWithArray:items];
     
     
-    NSArray *normalImages = @[@"gfujin_up",@"ttai_up",@"gprize_no",@"my_up"];
-    NSArray *selectedImages = @[@"gfujin_down",@"ttai_down",@"gbuy",@"my_down"];
+    NSArray *normalImages = @[@"ttai_up",@"gfujin_up",@"gprize_no",@"my_up"];
+    NSArray *selectedImages = @[@"ttai_down",@"gfujin_down",@"gbuy",@"my_down"];
     
     for (int i = 0; i < normalImages.count; i ++) {
         
