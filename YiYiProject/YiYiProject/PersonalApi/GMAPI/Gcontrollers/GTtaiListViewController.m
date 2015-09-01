@@ -328,6 +328,7 @@
             
             //内容
             NSString *str_rec_title = [dic_ofcomment objectForKey:@"activity_info"];
+            str_rec_title = [NSString stringWithFormat:@"%@:%@",[dic_ofcomment objectForKey:@"activity_title"],[dic_ofcomment objectForKey:@"activity_info"]];
             if ([LTools isEmpty:str_rec_title]) {
                 str_rec_title = @" ";
             }
@@ -396,7 +397,7 @@
         
         UIView *vvv = [[UIView alloc]initWithFrame:CGRectMake(5, CGRectGetMaxY(_topScrollView.frame), DEVICE_WIDTH-10, 32)];
         [self.topView addSubview:vvv];
-        _topScrollView1 = [[GcycleScrollView1 alloc] initWithFrame:CGRectMake(5, CGRectGetMaxY(vvv.frame), DEVICE_WIDTH - 10,(int)(DEVICE_WIDTH/710.0*120)) delegate:self imageItems:itemArray isAuto:YES pageControlNum:0];//0为不显示pagecontrol
+        _topScrollView1 = [[GcycleScrollView1 alloc] initWithFrame:CGRectMake(5, CGRectGetMaxY(vvv.frame), DEVICE_WIDTH - 10,(int)(DEVICE_WIDTH*120/710)) delegate:self imageItems:itemArray isAuto:YES pageControlNum:0];//0为不显示pagecontrol
         [_topScrollView scrollToIndex:0];
     }
     
@@ -546,6 +547,9 @@
 {
     NSLog(@"%s \n click===>%@",__FUNCTION__,item.title);
     GTtaiNearActivViewController *cc = [[GTtaiNearActivViewController alloc]init];
+    GMAPI *gmapi = [GMAPI sharedManager];
+    NSDictionary *locationDic = gmapi.theLocationDic;
+    cc.locationDic = locationDic;
     cc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:cc animated:YES];
     

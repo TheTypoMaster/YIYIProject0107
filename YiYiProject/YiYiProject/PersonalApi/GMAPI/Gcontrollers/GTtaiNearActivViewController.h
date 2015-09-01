@@ -13,6 +13,6 @@
 
 @interface GTtaiNearActivViewController : MyViewController
 
-
+@property(nonatomic,strong)NSDictionary *locationDic;
 
 @end

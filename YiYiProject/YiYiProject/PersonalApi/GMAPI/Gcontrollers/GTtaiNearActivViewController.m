@@ -53,9 +53,12 @@
 
 
 -(void)prepareNetData{
+    GMAPI *gmapi = [GMAPI sharedManager];
+    NSDictionary *locationDic = gmapi.theLocationDic;
+    NSString *longStr = [locationDic stringValueForKey:@"long"];
+    NSString *latStr = [locationDic stringValueForKey:@"lat"];
     
-    
-    NSString *url = [NSString stringWithFormat:@"%@&long=116.403299&lat=39.914004&page=%d&per_page=%d",HOME_TTAI_ACTIVITY,_refreshTab.pageNum,L_PAGE_SIZE];
+    NSString *url = [NSString stringWithFormat:@"%@&long=%@&lat=%@&page=%d&per_page=%d",HOME_TTAI_ACTIVITY,longStr,latStr,_refreshTab.pageNum,L_PAGE_SIZE];
     
     _tool_detail = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [_tool_detail requestCompletion:^(NSDictionary *result, NSError *erro) {

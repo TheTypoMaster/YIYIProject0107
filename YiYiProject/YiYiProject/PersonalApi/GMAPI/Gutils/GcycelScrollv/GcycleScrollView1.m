@@ -231,7 +231,9 @@ static CGFloat SWITCH_FOCUS_PICTURE_INTERVAL = 3.0; //switch interval time
     
     
     //图片
-    UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, backView.frame.size.width/3.0, self.frame.size.height)];
+    UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width*0.3, self.frame.size.height)];
+    imv.clipsToBounds = YES;
+    imv.contentMode = UIViewContentModeCenter;
     [imv l_setImageWithURL:[NSURL URLWithString:item.image] placeholderImage:DEFAULT_YIJIAYI];
     [backView addSubview:imv];
     [imv release];
