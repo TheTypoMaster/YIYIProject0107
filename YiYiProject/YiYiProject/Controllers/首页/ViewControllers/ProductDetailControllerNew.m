@@ -204,7 +204,10 @@
 - (void)waterDidSelectRowAtIndexPath:(NSInteger)index
 {
     ProductModel *aMode = _collectionView.dataArray[index];
-    [MiddleTools pushToProductDetailWithId:aMode.product_id fromViewController:self lastNavigationHidden:NO hiddenBottom:YES];
+    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell*)[_collectionView.quitView cellForIndex:index];
+    NSDictionary *params = @{@"cell":cell,
+                             @"model":aMode};
+    [MiddleTools pushToProductDetailWithId:aMode.product_id fromViewController:self lastNavigationHidden:NO hiddenBottom:YES extraParams:params updateBlock:nil];
 }
 
 - (void)waterScrollViewDidScroll:(UIScrollView *)scrollView
@@ -301,6 +304,14 @@
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
         [weakSelf setValue:[NSNumber numberWithInt:_count + 1] forKeyPath:@"_count"];
+        
+        int errocode = [failDic[RESULT_CODE]intValue];
+        if (errocode == 1181) {
+            
+            [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:weakSelf.view];
+            
+            [weakSelf performSelector:@selector(leftButtonTap:) withObject:nil afterDelay:0.5];
+        }
 
     }];
 }
@@ -870,9 +881,16 @@
     NSString *productString = [NSString stringWithFormat:SHARE_PRODUCT_DETAIL,self.product_id];
     
     NSString *safeString = [LTools safeString:self.theModel.product_name];
-    NSString *title = safeString.length > 0 ? safeString : @"衣加衣";
+    NSString *productName = self.theModel.product_name;
+    NSString *brand_name = _aModel.brand_info[@"brand_name"];//品牌名
+
+    if ([LTools isEmpty:productName]) {
+        
+        safeString = [NSString stringWithFormat:@"%@-%@",brand_name,productName];
+    }
+    NSString *title = safeString.length > 0 ? safeString : @"衣加衣-穿衣管家";
     
-    [[LShareSheetView shareInstance] showShareContent:_aModel.product_name title:title shareUrl:productString shareImage:self.bigImageView.image targetViewController:self];
+    [[LShareSheetView shareInstance] showShareContent:safeString title:title shareUrl:productString shareImage:self.bigImageView.image targetViewController:self];
     [[LShareSheetView shareInstance]actionBlock:^(NSInteger buttonIndex, Share_Type shareType) {
         
         if (shareType == Share_QQ) {
@@ -1096,38 +1114,38 @@
 /*
  原图
  */
-- (NSString *)originalImageForArr:(NSArray *)imagesArr
-{
-    if (imagesArr.count >= 1) {
-        
-        NSDictionary *imageDic = imagesArr[0];
-        NSDictionary *originalImage = imageDic[@"original"];
-        
-        
-        return originalImage[@"src"];
-    }
-    
-    return @"";
-}
+//- (NSString *)originalImageForArr:(NSArray *)imagesArr
+//{
+//    if (imagesArr.count >= 1) {
+//        
+//        NSDictionary *imageDic = imagesArr[0];
+//        NSDictionary *originalImage = imageDic[@"original"];
+//        
+//        
+//        return originalImage[@"src"];
+//    }
+//    
+//    return @"";
+//}
 
 /*
  原图
  */
-- (CGFloat)originalImageHeightForArr:(NSArray *)imagesArr
-{
-    CGFloat aHeight = 0.f;
-    CGFloat aWidth = 0.f;
-    if (imagesArr.count >= 1) {
-        
-        NSDictionary *imageDic = imagesArr[0];
-        NSDictionary *originalImage = imageDic[@"original"];
-        
-        aHeight = [originalImage[@"height"] floatValue];
-        aWidth = [originalImage[@"width"] floatValue];
-    }
-    
-    return aHeight * (DEVICE_WIDTH / aWidth);
-}
+//- (CGFloat)originalImageHeightForArr:(NSArray *)imagesArr
+//{
+//    CGFloat aHeight = 0.f;
+//    CGFloat aWidth = 0.f;
+//    if (imagesArr.count >= 1) {
+//        
+//        NSDictionary *imageDic = imagesArr[0];
+//        NSDictionary *originalImage = imageDic[@"original"];
+//        
+//        aHeight = [originalImage[@"height"] floatValue];
+//        aWidth = [originalImage[@"width"] floatValue];
+//    }
+//    
+//    return aHeight * (DEVICE_WIDTH / aWidth);
+//}
 
 - (NSString *)thumbImageForArr:(NSArray *)imagesArr
 {
@@ -1211,10 +1229,10 @@
     
     //单品图片
     //图片高度
-    CGFloat aHeight = [self originalImageHeightForArr:aProductModel.images];
+    CGFloat aHeight = [self thumbImageHeightForArr:aProductModel.images];
     
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, aHeight)];
-    [imageView l_setImageWithURL:[NSURL URLWithString:[self originalImageForArr:aProductModel.images]] placeholderImage:DEFAULT_YIJIAYI];
+    [imageView l_setImageWithURL:[NSURL URLWithString:[self thumbImageForArr:aProductModel.images]] placeholderImage:DEFAULT_YIJIAYI];
     [_headerView addSubview:imageView];
     
     self.bigImageView = imageView;

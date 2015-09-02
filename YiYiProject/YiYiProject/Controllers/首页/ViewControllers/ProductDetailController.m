@@ -349,7 +349,7 @@
     NSString *productString = [NSString stringWithFormat:SHARE_PRODUCT_DETAIL,self.product_id];
     
     NSString *safeString = [LTools safeString:self.theModel.product_name];
-    NSString *title = safeString.length > 0 ? safeString : @"衣加衣";
+    NSString *title = safeString.length > 0 ? safeString : @"衣加衣-穿衣管家";
     
     [[LShareSheetView shareInstance] showShareContent:aModel.product_name title:title shareUrl:productString shareImage:self.bigImageView.image targetViewController:self];
     [[LShareSheetView shareInstance]actionBlock:^(NSInteger buttonIndex, Share_Type shareType) {

@@ -221,13 +221,13 @@
 //    [self dismissViewControllerAnimated:YES completion:nil];
     if (_commentType == COMMENTTYPE_TPlat) {
         
-        CATransition *transition = [CATransition animation];
-        transition.duration = 0.7f;
-        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-        transition.type = @"oglFlip";
-        transition.subtype = kCATransitionFromLeft;
-        transition.delegate = self;
-        [self.navigationController.view.layer addAnimation:transition forKey:nil];
+//        CATransition *transition = [CATransition animation];
+//        transition.duration = 0.7f;
+//        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+//        transition.type = @"oglFlip";
+//        transition.subtype = kCATransitionFromLeft;
+//        transition.delegate = self;
+//        [self.navigationController.view.layer addAnimation:transition forKey:nil];
     }
     
     [self.navigationController popViewControllerAnimated:YES];

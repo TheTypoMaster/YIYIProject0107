@@ -133,8 +133,6 @@
     _latitude = NSStringFromFloat(lat);
     _longtitud = NSStringFromFloat(lon);
     
-//    [waterFlow showRefreshHeader:YES];
-    
     [self deserveBuyForSex:_sex_type discount:_discount_type page:waterFlow.pageNum];
 
 }

@@ -73,7 +73,6 @@
         huodongLabel.text = huodong_str;
         
     }else{
-        NSLog(@"无数据");
         huodongLabel.text = @"暂无活动";
     }
     

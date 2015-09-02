@@ -186,13 +186,7 @@
         [tool_detail cancelRequest];
     }
     
-    
-    
     NSString *url = [NSString stringWithFormat:@"%@&authcode=%@&tt_id=%@&&page=%d&count=%d",TTAI_DETAIL_V2,[GMAPI getAuthkey],self.tPlat_id,_collectionView.pageNum,L_PAGE_SIZE];
-    
-    //测试
-//    url = @"http://www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_tt_info&page=1&count=20&authcode=An1XLlEoBuBR6gSZVeUI31XwBOZXolanAi9SY1cyUWZVa1JhVDRQYwE2AzYAbQ19CTg=&tt_id=26";
-    
     
     NSLog(@"T台详情%@",url);
     
@@ -265,10 +259,6 @@
             
         }
         
-        
-       
-        
-        
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
@@ -278,8 +268,6 @@
 }
 
 
-
-
 //请求T台关联的商场
 -(void)prepareNetDataForStore{
     
@@ -287,16 +275,8 @@
     NSString *latitude = [self.locationDic stringValueForKey:@"lat"];
     
     NSString *url = [NSString stringWithFormat:@"%@&authcode=%@&longitude=%@&latitude=%@&tt_id=%@page=%d&count=6",TTAI_STORE,[GMAPI getAuthkey],longitude,latitude,self.tPlat_id,_collectionView.pageNum];
-    //测试
-//    url = @"http://www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_relation_tts&page=1&count=6&authcode=An1XLlEoBuBR6gSZVeUI31XwBOZXolanAi9SY1cyUWZVa1JhVDRQYwE2AzYAbQ19CTg=&longitude=116.402982&latitude=39.912950&tt_id=409";
-    
-    //有一条数据只有商场没有单品但是又活动
-//    url = @"http://www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_relation_tts&authcode=VCtaI1MqVrAGvVbLBLQB1gWgAOID9gDxUH0AMVI3UmIANlNmVTFSYlFiBjRWMwp6AzI=&longitude=116.402982&latitude=39.912950&tt_id=3page=1&count=6";
-    
     NSLog(@"T台关联商场%@",url);
 
-    
-    
     tool_detail = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     
     [tool_detail requestCompletion:^(NSDictionary *result, NSError *erro) {
@@ -519,19 +499,20 @@
     
 }
 
-
 /*
  分享
  */
 
-- (void)clickToShare:(UIButton *)sender
+- (void)clickToZhuanFa:(UIButton *)sender
 {
-    NSString *productString = [NSString stringWithFormat:SHARE_PRODUCT_DETAIL,self.tPlat_id];
-    
     NSString *safeString = [LTools safeString:self.theModel.tPlat_name];
-    NSString *title = safeString.length > 0 ? safeString : @"衣加衣";
+    NSString *title = safeString.length > 0 ? safeString : @"衣加衣—穿衣管家";
     
-    [[LShareSheetView shareInstance] showShareContent:_ttaiDetailModel.tt_content title:title shareUrl:productString shareImage:self.bigImageView.image targetViewController:self];
+    NSString *content = [LTools isEmpty:_ttaiDetailModel.tt_content] ? @"随时逛商场，美衣送到家。线上浏览，在家试穿" : _ttaiDetailModel.tt_content;
+
+    NSString *productString = [NSString stringWithFormat:SHARE_TPLAT_DETAIL,self.tPlat_id];
+    
+    [[LShareSheetView shareInstance] showShareContent:content title:title shareUrl:productString shareImage:self.bigImageView.image targetViewController:self];
     [[LShareSheetView shareInstance]actionBlock:^(NSInteger buttonIndex, Share_Type shareType) {
         
         if (shareType == Share_QQ) {
@@ -557,7 +538,51 @@
         }
         
     }];
+    
+    [[LShareSheetView shareInstance]shareResult:^(Share_Result result, Share_Type type) {
+        
+        if (result == Share_Success) {
+            
+            //分享 + 1
+            NSLog(@"分享成功");
+            
+            [self zhuanFaTTaiDetail];
+            
+        }else
+        {
+            //分享失败
+            
+            NSLog(@"分享失败");
+        }
+        
+    }];
 }
+
+// 转发 + 1
+
+- (void)zhuanFaTTaiDetail
+{
+    NSString *authkey = [GMAPI getAuthkey];
+    
+    if (authkey.length == 0) {
+        return;
+    }
+    
+    NSString *post = [NSString stringWithFormat:@"tt_id=%@&authcode=%@",self.tPlat_id,authkey];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    
+    NSString *url = TTAI_ZHUANFA_ADD;
+    
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"-->%@",result);
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+    }];
+}
+
 
 /**
  *  评论页面
@@ -583,19 +608,19 @@
     
     
     
-    CATransition *transition = [CATransition animation];
-    
-    transition.duration = 0.7f;
-    
-    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    
-    transition.type = @"oglFlip";
-    
-    transition.subtype = kCATransitionFromLeft;
-    
-    transition.delegate = self;
-    
-    [self.navigationController.view.layer addAnimation:transition forKey:nil];
+//    CATransition *transition = [CATransition animation];
+//    
+//    transition.duration = 0.7f;
+//    
+//    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+//    
+//    transition.type = @"oglFlip";
+//    
+//    transition.subtype = kCATransitionFromLeft;
+//    
+//    transition.delegate = self;
+//    
+//    [self.navigationController.view.layer addAnimation:transition forKey:nil];
     
     
     [self.navigationController pushViewController:commentList animated:YES];
@@ -794,7 +819,7 @@
     
     //分享
     
-    UIButton *shareButton = [[UIButton alloc] initWithframe:CGRectMake(rightView.width - 44, 0, 44, 44) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"product_share"] selectedImage:nil target:self action:@selector(clickToShare:)];
+    UIButton *shareButton = [[UIButton alloc] initWithframe:CGRectMake(rightView.width - 44, 0, 44, 44) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"product_share"] selectedImage:nil target:self action:@selector(clickToZhuanFa:)];
     [shareButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
     
     [rightView addSubview:shareButton];
@@ -824,6 +849,9 @@
     [bigTtaiView l_setImageWithURL:[NSURL URLWithString:[_ttaiDetailModel.image stringValueForKey:@"url"]] placeholderImage:DEFAULT_YIJIAYI];
     
     [_tabHeaderView addSubview:bigTtaiView];
+    
+    self.bigImageView = bigTtaiView;//用于分享
+    
     if ([[_ttaiDetailModel.image stringValueForKey:@"have_detail"]intValue] == 1) {
         NSArray *img_detail = [_ttaiDetailModel.image arrayValueForKey:@"img_detail"];
         for (NSDictionary *dic in img_detail) {
@@ -837,12 +865,16 @@
     UIView *view1 = [[UIView alloc]initWithFrame:CGRectMake(0, height, DEVICE_WIDTH, 0)];
     [_tabHeaderView addSubview:view1];
     
-    UILabel *paishedi = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, DEVICE_WIDTH - 20, 15)];
+    UIImageView *icon = [[UIImageView alloc]initWithFrame:CGRectMake(10, 5 + 1.5, 14, 12)];
+    icon.image = [UIImage imageNamed:@"Ttaixq_paishe"];
+    [view1 addSubview:icon];
+    
+    UILabel *paishedi = [[UILabel alloc]initWithFrame:CGRectMake(icon.right + 5, 5, DEVICE_WIDTH - 15 - icon.right, 15)];
     paishedi.font = [UIFont systemFontOfSize:12];
     paishedi.numberOfLines = 1;
     paishedi.textColor = RGBCOLOR(134, 135, 136);
     if (![LTools isEmpty:_ttaiDetailModel.photo_mall_name]) {
-        paishedi.text = [NSString stringWithFormat:@"拍摄于%@",_ttaiDetailModel.photo_mall_name];
+        paishedi.text = [NSString stringWithFormat:@"拍摄于 %@",_ttaiDetailModel.photo_mall_name];
     }else{
         [paishedi setFrame:CGRectMake(10, 5, DEVICE_WIDTH-20, 0)];
     }
@@ -1117,7 +1149,7 @@
 
 
 -(void)tagLabelClicked:(UITapGestureRecognizer*)sender{
-    int index = sender.view.tag - 10000;
+    int index = (int)sender.view.tag - 10000;
     NSDictionary *dic = _ttaiDetailModel.tags[index];
     NSLog(@"%@",dic);
     
@@ -1128,17 +1160,6 @@
     [self.navigationController pushViewController:cc animated:YES];
     
 }
-
--(void)moreStoreBtnClicked{
-    
-    GMoreTtaiSameStroViewController *cc = [[GMoreTtaiSameStroViewController alloc]init];
-    cc.tPlat_id = self.tPlat_id;
-    cc.tPlat_id = @"3";
-    cc.locationDic = self.locationDic;
-    [self.navigationController pushViewController:cc animated:YES];
-    
-}
-
 
 -(void)createbuttonWithModel:(NSDictionary*)maodian_detail imageView:(UIView *)imageView{
     
@@ -1239,12 +1260,11 @@
     
     TPlatModel *model = _collectionView.dataArray[index];
     
-    //新版
-    GTtaiDetailViewController *ggg = [[GTtaiDetailViewController alloc]init];
-    ggg.locationDic = self.locationDic;
-    ggg.tPlat_id = model.tt_id;
-    ggg.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:ggg animated:YES];
+    GTtaiDetailSamettCell *cell = (GTtaiDetailSamettCell *)[_collectionView.quitView cellForIndex:index];
+    NSDictionary *params = @{@"button":cell.like_btn,
+                             @"label":cell.like_label,
+                             @"model":model};
+    [MiddleTools pushToTPlatDetailWithInfoId:model.tt_id fromViewController:self lastNavigationHidden:NO hiddenBottom:YES extraParams:params updateBlock:nil];
     
 }
 
@@ -1262,8 +1282,6 @@
 
 - (NSInteger)numberOfRowsInCollectionView:(PSCollectionView *)collectionView
 {
-    
-    
     return _collectionView.dataArray.count;
 }
 

@@ -155,13 +155,12 @@
 
 //获取标签T台
 -(void)getTagTPlat{
-    NSString *text = @"http://www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_tts_by_tag&tag_id=1&authcode=US5SK1ApBeNV7gabVuZci1L3V7UE8Qf2Ay5dbFcyBjEBMgAyBmMHMFFtBDNXOg19BTICOQ==";
-    
+   
     //请求网络数据
     NSString *api = [NSString stringWithFormat:@"%@&page=%d&per_page=%d&tag_id=%@&authcode=%@",TTAi_LIST,_waterFlow.pageNum,L_PAGE_SIZE,self.tagId,[GMAPI getAuthkey]];
     NSLog(@"请求的接口%@",api);
     
-    LTools *cc = [[LTools alloc]initWithUrl:text isPost:NO postData:nil];
+    LTools *cc = [[LTools alloc]initWithUrl:api isPost:NO postData:nil];
     [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"result : %@",result);

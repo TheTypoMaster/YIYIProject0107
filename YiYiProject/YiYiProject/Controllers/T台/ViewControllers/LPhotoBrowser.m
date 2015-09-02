@@ -395,9 +395,14 @@
 
 - (void)clickToZhuanFa:(UIButton *)sender
 {
+    NSString *safeString = [LTools safeString:self.t_model.tPlat_name];
+    NSString *title = safeString.length > 0 ? safeString : @"衣加衣—穿衣管家";
+    
+    NSString *content = [LTools isEmpty:self.t_model.tt_content] ? @"随时逛商场，美衣送到家。线上浏览，在家试穿" : self.t_model.tt_content;
+    
     NSString *productString = [NSString stringWithFormat:SHARE_TPLAT_DETAIL,self.t_model.tt_id];
     
-    [[LShareSheetView shareInstance] showShareContent:detail_model.tt_content title:@"衣加衣" shareUrl:productString shareImage:self.showImageView.image targetViewController:self];
+    [[LShareSheetView shareInstance] showShareContent:content title:title shareUrl:productString shareImage:self.showImageView.image targetViewController:self];
     [[LShareSheetView shareInstance]actionBlock:^(NSInteger buttonIndex, Share_Type shareType) {
         
         if (shareType == Share_QQ) {

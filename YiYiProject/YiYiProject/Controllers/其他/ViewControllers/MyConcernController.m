@@ -246,7 +246,7 @@
     BrandModel *aModel = brandTable.dataArray[index];
     
     __weak typeof(self)weakSelf = self;
-    //测试
+
     NSString *authkey = [GMAPI getAuthkey];
     
     NSString *post = [NSString stringWithFormat:@"brand_id=%@&authcode=%@",aModel.id,authkey];
@@ -283,7 +283,6 @@
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
-    //测试
     NSString *authkey = [GMAPI getAuthkey];
     NSString *post = @" ";
     NSString *url = @" ";

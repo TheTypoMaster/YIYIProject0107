@@ -62,6 +62,15 @@
  */
 - (PSCollectionViewCell *)dequeueReusableViewForClass:(Class)viewClass;
 
+/**
+ *  根据index获取 PSCollectionViewCell
+ *
+ *  @param index 下标
+ *
+ *  @return PSCollectionViewCell
+ */
+- (PSCollectionViewCell *)cellForIndex:(NSInteger)index;
+
 @end
 
 #pragma mark - Delegate
