@@ -15,6 +15,7 @@
 
 #import "MJPhoto.h"
 #import "LPhotoBrowser.h"
+#import "GTtaiDetailViewController.h"
 
 @interface GmyTtaiViewController ()<TMQuiltViewDataSource,WaterFlowDelegate>
 {
@@ -291,8 +292,13 @@
 //点击方法
 - (void)waterDidSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TPlatCell *cell = (TPlatCell *)[_waterFlow.quitView cellAtIndexPath:indexPath];
-    [self tapCell:cell];
+//    TPlatCell *cell = (TPlatCell *)[_waterFlow.quitView cellAtIndexPath:indexPath];
+//    [self tapCell:cell];
+    
+    GTtaiDetailViewController *cc = [[GTtaiDetailViewController alloc]init];
+    TPlatModel *model = _waterFlow.dataArray[indexPath.row];
+    cc.tPlat_id = model.tt_id;
+    [self.navigationController pushViewController:cc animated:YES];
 }
 
 - (CGFloat)waterHeightForCellIndexPath:(NSIndexPath *)indexPath
