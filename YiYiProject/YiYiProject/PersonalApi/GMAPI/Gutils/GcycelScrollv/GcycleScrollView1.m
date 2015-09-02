@@ -141,7 +141,7 @@ static CGFloat SWITCH_FOCUS_PICTURE_INTERVAL = 3.0; //switch interval time
     
     
     for (int i = 0; i < imageItems.count; i++) {
-        NSLog(@"%@",NSStringFromCGRect(self.bounds));
+//        NSLog(@"%@",NSStringFromCGRect(self.bounds));
         
         SGFocusImageItem *item = [imageItems objectAtIndex:i];
         
@@ -195,7 +195,7 @@ static CGFloat SWITCH_FOCUS_PICTURE_INTERVAL = 3.0; //switch interval time
     _scrollView.contentSize = CGSizeMake(_scrollView.frame.size.width * imageItems.count, _scrollView.frame.size.height);
     
     for (int i = 0; i < imageItems.count; i++) {
-        NSLog(@"%@",NSStringFromCGRect(self.bounds));
+//        NSLog(@"%@",NSStringFromCGRect(self.bounds));
         UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0, i*self.frame.size.height, self.frame.size.width,self.frame.size.height)];
         SGFocusImageItem *item = [imageItems objectAtIndex:i];
         [imv l_setImageWithURL:[NSURL URLWithString:item.image] placeholderImage:DEFAULT_YIJIAYI];

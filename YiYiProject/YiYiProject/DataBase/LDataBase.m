@@ -20,7 +20,7 @@ static sqlite3 *db = nil;
     }
     NSString *documents = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)objectAtIndex:0];//获取document路径
     NSString *filePath = [documents stringByAppendingPathComponent:@"yiyiDB.sqlite"]; //将要存放位置
-    NSLog(@"值得买数据库路径 = %@",filePath);
+//    NSLog(@"值得买数据库路径 = %@",filePath);
     NSString *bundlePath = [[NSBundle mainBundle]pathForResource:@"yiyiDB" ofType:@"sqlite"];//bundle中位置
     NSFileManager *fm = [NSFileManager defaultManager];
     if (![fm fileExistsAtPath:filePath]) {

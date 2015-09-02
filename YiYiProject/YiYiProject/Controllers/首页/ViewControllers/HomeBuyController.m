@@ -92,6 +92,23 @@
 //    //10分钟更新一次位置
 //    [NSTimer scheduledTimerWithTimeInterval:10 * 60 target:self selector:@selector(updateLocation) userInfo:nil repeats:YES];
     
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(notificationForUpdateLocation:) name:NOTIFICATION_UPDATELOCATION_SUCCESS object:nil];
+    
+}
+
+/**
+ *  定位成功通知
+ *
+ *  @param notify
+ */
+- (void)notificationForUpdateLocation:(NSNotification *)notify
+{
+    if (waterFlow.reloading) {
+        
+        _latitude = [GMAPI getLatitude];
+        _longtitud = [GMAPI getLongitude];
+        [self deserveBuyForSex:_sex_type discount:_discount_type page:waterFlow.pageNum];
+    }
 }
 
 - (void)updateLocation

@@ -155,7 +155,7 @@
 
 - (NSInteger)getValidNextPageIndexWithPageIndex:(NSInteger)currentPageIndex;
 {
-    NSLog(@"----%ld",(long)currentPageIndex);
+//    NSLog(@"----%ld",(long)currentPageIndex);
     
     if(currentPageIndex == -1) {
         
@@ -191,7 +191,6 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    NSLog(@"offset %f",scrollView.contentOffset.x);
     
     //lcw
     

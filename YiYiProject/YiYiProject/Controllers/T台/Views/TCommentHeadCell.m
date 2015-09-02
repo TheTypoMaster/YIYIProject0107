@@ -42,6 +42,7 @@
             
             iconUrl = model.uinfo[@"photo"];
             userName = model.uinfo[@"user_name"];
+            userName = [LTools isEmpty:userName] ? @"衣加衣-穿衣管家" : userName;
         }
         
     }else if ([aModel isKindOfClass:[ProductModel class]])

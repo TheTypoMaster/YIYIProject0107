@@ -138,7 +138,7 @@ static CGFloat SWITCH_FOCUS_PICTURE_INTERVAL = 4.0; //switch interval time
     _scrollView.contentSize = CGSizeMake(_scrollView.frame.size.width * imageItems.count, _scrollView.frame.size.height);
     
     for (int i = 0; i < imageItems.count; i++) {
-        NSLog(@"%@",NSStringFromCGRect(self.bounds));
+//        NSLog(@"%@",NSStringFromCGRect(self.bounds));
         UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(i*self.frame.size.width, 0, self.frame.size.width,self.frame.size.height)];
         imv.backgroundColor = RGBCOLOR_ONE;
         SGFocusImageItem *item = [imageItems objectAtIndex:i];
@@ -192,7 +192,7 @@ static CGFloat SWITCH_FOCUS_PICTURE_INTERVAL = 4.0; //switch interval time
     _scrollView.contentSize = CGSizeMake(_scrollView.frame.size.width * imageItems.count, _scrollView.frame.size.height);
     
     for (int i = 0; i < imageItems.count; i++) {
-        NSLog(@"%@",NSStringFromCGRect(self.bounds));
+//        NSLog(@"%@",NSStringFromCGRect(self.bounds));
         UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(i*DEVICE_WIDTH, 0, DEVICE_WIDTH,(int)(DEVICE_WIDTH*250/750))];
         imv.backgroundColor = RGBCOLOR_ONE;
         SGFocusImageItem *item = [imageItems objectAtIndex:i];
@@ -236,7 +236,7 @@ static CGFloat SWITCH_FOCUS_PICTURE_INTERVAL = 4.0; //switch interval time
 
 - (void)singleTapGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
 {
-    NSLog(@"%s", __FUNCTION__);
+//    NSLog(@"%s", __FUNCTION__);
     
     NSArray *imageItems = objc_getAssociatedObject(self, (const void *)SG_FOCUS_ITEM_ASS_KEY);
     int page = (int)(_scrollView.contentOffset.x / _scrollView.frame.size.width);

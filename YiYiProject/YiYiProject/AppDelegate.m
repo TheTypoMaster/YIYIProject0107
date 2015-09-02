@@ -93,7 +93,7 @@
     
     [[LTools shareInstance]versionForAppid:@"951259287" Block:^(BOOL isNewVersion, NSString *updateUrl, NSString *updateContent) {
         
-        NSLog(@"updateContent %@ %@",updateUrl,updateContent);
+//        NSLog(@"updateContent %@ %@",updateUrl,updateContent);
         
     }];
     
@@ -130,7 +130,7 @@
     if (infoDic)
     {
         //test
-        NSLog(@"didFinishLaunch : infoDic %@",infoDic);
+//        NSLog(@"didFinishLaunch : infoDic %@",infoDic);
         
     }
 #pragma mark 百度地图相关
@@ -166,9 +166,6 @@
     unVc.navigationBarHidden = YES;
     self.window.rootViewController = unVc;
     self.window.backgroundColor = [UIColor whiteColor];
-    
-    NSLog(@"didFinishLaunch 1111");
-
 
     
     return YES;
@@ -233,7 +230,7 @@
     
     [self updateLocationCache:dic];//更新当前位置信息
     
-    [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_UPDATELOCATION_SUCCESS object:nil];//更新当前位置成功通知
+    [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_UPDATELOCATION_SUCCESS object:nil userInfo:dic];//更新当前位置成功通知
     
 }
 
@@ -296,8 +293,6 @@
         [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_APPENTERFOREGROUND object:nil];
     }
     
-    NSLog(@"applicationWillEnterForeground 1111");
-    
     //通知获取抽奖状态
     
     [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GETCHOUJIANGSTATE object:nil];
@@ -322,8 +317,6 @@
  */
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    NSLog(@"applicationDidBecomeActive 1111");
-    
     [UMSocialSnsService  applicationDidBecomeActive];
 }
 
@@ -337,7 +330,7 @@
     [MobClick startWithAppkey:UmengAppkey];
     
     //打开调试log的开关
-    [UMSocialData openLog:YES];
+    [UMSocialData openLog:NO];
     
     //打开新浪微博的SSO开关
     [UMSocialSinaHandler openSSOWithRedirectURL:RedirectUrl];
@@ -390,7 +383,7 @@
         string_pushtoken=[string_pushtoken stringByReplacingOccurrencesOfString:@" " withString:@""];
         
     }
-    NSLog(@"mytoken==%@",string_pushtoken);
+//    NSLog(@"mytoken==%@",string_pushtoken);
     
     [self PostDevicetoken:string_pushtoken];
     
@@ -413,7 +406,7 @@
         LTools *ccc = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
         [ccc requestCompletion:^(NSDictionary *result, NSError *erro) {
             
-            NSLog(@"devicetoken给后台传过去 thedic==%@",result);
+//            NSLog(@"devicetoken给后台传过去 thedic==%@",result);
 
             
         } failBlock:^(NSDictionary *failDic, NSError *erro) {
@@ -428,8 +421,8 @@
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
-    NSString *str = [NSString stringWithFormat: @"Error: %@", error];
-    NSLog(@"远程注册 erro  %@",str);
+//    NSString *str = [NSString stringWithFormat: @"Error: %@", error];
+//    NSLog(@"远程注册 erro  %@",str);
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
@@ -645,12 +638,9 @@
         
         if (0 == buttonIndex) {
             
-            NSLog(@"NO");
         }
         
         if (1 == buttonIndex) {
-            
-            NSLog(@"YES");
             
             [RCIMClient reconnect:self];
         }
@@ -659,12 +649,9 @@
         
         if (0 == buttonIndex) {
             
-            NSLog(@"忽略");
         }
         
         if (1 == buttonIndex) {
-            
-            NSLog(@"查看");
             
             [self dealMessageWithDictionary:self.remote_message];
         }

@@ -214,8 +214,6 @@
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
-        NSLog(@"-->%@",result);
-        
         zan_btn.selected = !zan_btn.selected;
         
         int like_num = [detail_model.tt_like_num intValue];
