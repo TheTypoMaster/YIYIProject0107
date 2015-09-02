@@ -985,6 +985,8 @@
     [view2 addSubview:fenLine1];
     
     UIScrollView *tagScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(fenLine1.frame), DEVICE_WIDTH, 30)];
+    tagScrollView.showsHorizontalScrollIndicator = NO;
+    tagScrollView.showsVerticalScrollIndicator = NO;
     [view2 addSubview:tagScrollView];
     NSMutableArray *tagsNameArray = [NSMutableArray arrayWithCapacity:1];
     for (NSDictionary *dic in _ttaiDetailModel.tags) {
@@ -992,7 +994,7 @@
         [tagsNameArray addObject:tag_name];
     }
     
-    CGFloat tagScrollViewContentWidth = 0;
+    CGFloat tagScrollViewContentWidth = 10;
     NSMutableArray *tagWidthArray = [NSMutableArray arrayWithCapacity:1];
     
     CGFloat last_x = 10.0f;
@@ -1006,7 +1008,7 @@
         [tagLabel setMatchedFrame4LabelWithOrigin:CGPointMake(last_x, 8) height:12 limitMaxWidth:DEVICE_WIDTH];
         [tagLabel setWidth:tagLabel.width +15];
         [tagWidthArray addObject:[NSString stringWithFormat:@"%f",tagLabel.frame.size.width]];
-        last_x = tagLabel.frame.size.width+10+10;
+        last_x += tagLabel.frame.size.width+10;
         tagLabel.layer.borderColor = [RGBCOLOR(243, 75, 137)CGColor];
         tagLabel.textAlignment = NSTextAlignmentCenter;
         tagLabel.layer.cornerRadius = 7;
@@ -1018,7 +1020,6 @@
         tagScrollViewContentWidth += (tagLabel.frame.size.width +10);
         
     }
-    
     [tagScrollView setContentSize:CGSizeMake(tagScrollViewContentWidth, 30)];
     if (tagWidthArray.count == 0) {
         [tagScrollView setFrame:CGRectMake(0, CGRectGetMaxY(fenLine1.frame), DEVICE_WIDTH, 0)];

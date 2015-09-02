@@ -109,6 +109,8 @@
     //奖项
     NSDictionary *category_info = [dataDic dictionaryValueForKey:@"category_info"];
     NSString *category_name = [category_info stringValueForKey:@"category_name"];
+    
+    
     tishiLabel.text = prize_tips;
     tishiLabel.font = [UIFont systemFontOfSize:14.0];
     tishiLabel.textColor = RGBCOLOR(249, 148, 151);
@@ -117,11 +119,27 @@
 //    tishiLabel.backgroundColor = [UIColor orangeColor];
     
     UILabel *jiangxiangLabel = [[UILabel alloc]initWithFrame:CGRectMake(tishiLabel.frame.origin.x, CGRectGetMaxY(tishiLabel.frame), tishiLabel.frame.size.width, 168.0/234*imv.frame.size.height *0.6)];
-    jiangxiangLabel.text = category_name;
     jiangxiangLabel.font = [UIFont systemFontOfSize:22];
     jiangxiangLabel.textColor = [UIColor whiteColor];
+    
+    if ([[dataDic stringValueForKey:@"is_accepted"]intValue] == 0) {//未兑奖
+        jiangxiangLabel.text = category_name;
+    }else if ([[dataDic stringValueForKey:@"is_accepted"]intValue] == 1){//已兑奖
+        NSString *aa = [category_info stringValueForKey:@"category_name"];
+        NSString *bb = @"(已兑奖)";
+        NSString *cc = [NSString stringWithFormat:@"%@%@",aa,bb];
+        NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:cc];
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor]range:NSMakeRange(0,aa.length)];
+        [str addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(249, 148, 151) range:NSMakeRange(aa.length,bb.length)];
+        
+        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:22] range:NSMakeRange(0, aa.length)];
+        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:18] range:NSMakeRange(aa.length, bb.length)];
+        jiangxiangLabel.attributedText = str;
+    }
+    
+    
+    
     jiangxiangLabel.textAlignment = NSTextAlignmentCenter;
-//    jiangxiangLabel.backgroundColor = [UIColor purpleColor];
     [imv addSubview:jiangxiangLabel];
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
