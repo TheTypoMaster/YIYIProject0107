@@ -35,6 +35,8 @@
 
 #import "GMoreTtaiSameStroViewController.h"//有T台锚点单品的更多商场
 
+#import "ButtonProperty.h"//带属性的button
+
 @interface GTtaiDetailViewController ()<UIScrollViewDelegate,PSWaterFlowDelegate,PSCollectionViewDataSource,GgetllocationDelegate,UITableViewDataSource,UITableViewDelegate>
 {
     
@@ -110,9 +112,7 @@
     _collectionView.waterDelegate = nil;
     _collectionView.quitView = nil;
     _collectionView = nil;
-    
      [self removeObserver:self forKeyPath:@"_count"];
-    
     
 }
 
@@ -149,8 +149,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-
-    
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     
@@ -239,13 +237,7 @@
         [tool_detail cancelRequest];
     }
     
-    
-    
     NSString *url = [NSString stringWithFormat:@"%@&authcode=%@&tt_id=%@&&page=%d&count=%d",TTAI_DETAIL_V2,[GMAPI getAuthkey],self.tPlat_id,_collectionView.pageNum,L_PAGE_SIZE];
-    
-    //测试
-//        url = @"http://www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_tt_info&page=1&count=20&authcode=An1XLlEoBuBR6gSZVeUI31XwBOZXolanAi9SY1cyUWZVa1JhVDRQYwE2AzYAbQ19CTg=&tt_id=26";
-    
     
     NSLog(@"T台详情%@",url);
     
@@ -265,10 +257,6 @@
                 TPlatModel *model = [[TPlatModel alloc]initWithDictionary:dic];
                 [_tmpArray addObject:model];
             }
-            
-            
-            
-            
             _ttaiDetailModel = [[TPlatModel alloc]initWithDictionary:result];
              [_collectionView reloadData:_tmpArray pageSize:L_PAGE_SIZE];
             _ttaiDetailModel.same_tts = _collectionView.dataArray;
@@ -338,8 +326,6 @@
         _relationStoreArray = temp;
         
         [self setValue:[NSNumber numberWithInt:_count + 1] forKeyPath:@"_count"];
-        NSLog(@"........................%d",_count);
-
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
@@ -351,6 +337,120 @@
         
     }];
 }
+
+/**
+ *  赞 取消赞 收藏 取消收藏
+ *
+ *  @param action_type
+ */
+- (void)networkForActionType:(ACTION_TYPE)action_type
+{
+    
+    //线上T台收藏为get请求
+    
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    __weak typeof(self)weakSelf = self;
+    
+    NSString *api;
+    if (action_type == Action_like_yes) {
+        api = TTAI_ZAN;
+    }else if (action_type == Action_Collect_yes){
+        api = TTAI_COLLECT_ADD1;
+    }else if (action_type == Action_like_no){
+        api = TTAI_ZAN_CANCEL;
+    }else if (action_type == Action_Collect_no){
+        api = TTAI_COLLECT_CANCEL1;
+    }
+    
+    NSString *post = [NSString stringWithFormat:@"tt_id=%@&authcode=%@",self.tPlat_id,[GMAPI getAuthkey]];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    NSString *url = api;//post
+    if (action_type == Action_Collect_yes || action_type == Action_Collect_no) {
+        url = [NSString stringWithFormat:@"%@&%@",api,post];//get
+        LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:postData];
+        [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+            
+            NSLog(@"result %@",result);
+            
+            if (action_type == Action_like_yes) {
+                
+                [weakSelf updateZanState:YES];
+                
+                
+            }else if (action_type == Action_Collect_yes){
+                
+                _collectButton.selected = YES;
+                //关注T台通知
+                [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_TTai object:nil userInfo:@{@"state":[NSNumber numberWithBool:YES]}];
+                
+            }else if (action_type == Action_like_no){
+                
+                
+                [weakSelf updateZanState:NO];
+                
+                
+            }else if (action_type == Action_Collect_no){
+                
+                _collectButton.selected = NO;
+                //关注T台通知
+                [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_TTai object:nil userInfo:@{@"state":[NSNumber numberWithBool:NO]}];
+            }
+            
+            
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            
+        } failBlock:^(NSDictionary *failDic, NSError *erro) {
+            
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            
+            NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+            
+        }];
+        
+    }else{
+        LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
+        [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+            
+            NSLog(@"result %@",result);
+            
+            if (action_type == Action_like_yes) {
+                
+                [weakSelf updateZanState:YES];
+                
+                
+            }else if (action_type == Action_Collect_yes){
+                
+                _collectButton.selected = YES;
+                //关注T台通知
+                [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_TTai object:nil userInfo:@{@"state":[NSNumber numberWithBool:YES]}];
+                
+            }else if (action_type == Action_like_no){
+                
+                
+                [weakSelf updateZanState:NO];
+                
+                
+            }else if (action_type == Action_Collect_no){
+                
+                _collectButton.selected = NO;
+                //关注T台通知
+                [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_TTai object:nil userInfo:@{@"state":[NSNumber numberWithBool:NO]}];
+            }
+            
+            
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            
+        } failBlock:^(NSDictionary *failDic, NSError *erro) {
+            
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            
+            NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+            
+        }];
+    }
+}
+
 
 #pragma mark - 定位
 
@@ -397,48 +497,8 @@
     [self prepareNetDataForStore];
 }
 
+#pragma mark - 事件处理
 
-
-#pragma mark - 创建视图
-
-//创建瀑布流
--(void)creatPubuLiu{
-    _collectionView = [[LWaterFlow2 alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT - 64) waterDelegate:self waterDataSource:self noHeadeRefresh:NO noFooterRefresh:NO];
-    [self.view addSubview:_collectionView];
-//    _collectionView.backgroundColor = [UIColor clearColor];
-//    _collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    [_collectionView showRefreshHeader:YES];
-}
-
-
-
-//创建收藏分享按钮
-- (void)createNavigationbarTools
-{
-    
-    UIButton *rightView=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 190, 44)];
-    rightView.backgroundColor=[UIColor clearColor];
-    
-    //收藏的
-    _collectButton = [[UIButton alloc]initWithframe:CGRectMake(74, 0, 44, 44) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"productDetail_collect_normal"] selectedImage:[UIImage imageNamed:@"productDetail_collect_selected"] target:self action:@selector(clickToCollect:)];
-    _collectButton.center = CGPointMake(rightView.width / 2.f, _collectButton.center.y);
-    [_collectButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
-    
-    _collectButton.selected = _ttaiDetailModel.is_favor == 1 ? YES : NO;
-    
-    //分享
-    
-    UIButton *shareButton = [[UIButton alloc] initWithframe:CGRectMake(rightView.width - 44, 0, 44, 44) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"product_share"] selectedImage:nil target:self action:@selector(clickToShare:)];
-    [shareButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
-    
-    [rightView addSubview:shareButton];
-    [rightView addSubview:_collectButton];
-    
-    UIBarButtonItem *comment_item=[[UIBarButtonItem alloc]initWithCustomView:rightView];
-    
-    self.navigationItem.rightBarButtonItem = comment_item;
-    
-}
 
 //收藏
 -(void)clickToCollect:(UIButton*)sender{
@@ -497,8 +557,164 @@
     }];
 }
 
+/**
+ *  评论页面
+ *
+ *  @param sender
+ */
+- (void)clickToComment:(UIButton *)sender
+{
+    
+    TTaiCommentViewController *commentList = [[TTaiCommentViewController alloc]init];
+    commentList.tt_id = self.tPlat_id;
+    commentList.commentType = COMMENTTYPE_TPlat;
+    commentList.t_model = _ttaiDetailModel;
+    
+    commentList.updateParamsBlock = ^(NSDictionary *params){
+        
+        BOOL result = [params[@"result"]boolValue];
+        if (result) {
+            
+            //            [weakSelf networkForCommentList:YES];//更新评论
+        }
+    };
+    
+    
+    
+    CATransition *transition = [CATransition animation];
+    
+    transition.duration = 0.7f;
+    
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    
+    transition.type = @"oglFlip";
+    
+    transition.subtype = kCATransitionFromLeft;
+    
+    transition.delegate = self;
+    
+    [self.navigationController.view.layer addAnimation:transition forKey:nil];
+    
+    
+    [self.navigationController pushViewController:commentList animated:YES];
+}
 
 
+/*
+ 是否喜欢
+ */
+- (void)clickToLike:(UIButton *)sender
+{
+    
+    if ([LTools isLogin:self]) {
+        
+        [LTools animationToBigger:_heartButton duration:0.2 scacle:1.5];
+        
+        if (_heartButton.selected) {
+            
+            [self networkForActionType:Action_like_no];
+        }else
+        {
+            [self networkForActionType:Action_like_yes];
+        }
+    }
+}
+
+
+/**
+ *  同品牌推荐 赞与取消赞
+ */
+- (void)clickToZan:(ButtonProperty *)sender
+{
+    [MiddleTools zanTPlatWithParams:sender.object viewController:self resultBlock:nil];
+}
+
+
+-(void)clickToMoreStore{
+    
+    GMoreTtaiSameStroViewController *cc = [[GMoreTtaiSameStroViewController alloc]init];
+    cc.tPlat_id = self.tPlat_id;
+    cc.tPlat_id = @"3";
+    cc.locationDic = self.locationDic;
+    [self.navigationController pushViewController:cc animated:YES];
+    
+}
+
+
+-(void)pushToGuanfanghuodong{
+    
+    // 1 为外链 url为外链地址
+    
+    if ([[_ttaiDetailModel.official_act stringValueForKey:@"redirect_type"]intValue] == 1) {
+        GwebViewController *ccc = [[GwebViewController alloc]init];
+        ccc.urlstring = [_ttaiDetailModel.official_act stringValueForKey:@"url"];
+        ccc.isSaoyisao = YES;
+        ccc.hidesBottomBarWhenPushed = YES;
+        UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:ccc];
+        [self presentViewController:navc animated:YES completion:^{
+            
+        }];
+    }else if ([[_ttaiDetailModel.official_act stringValueForKey:@"redirect_type"]intValue] == 0){
+        NSString *activityId = [_ttaiDetailModel.official_act stringValueForKey:@"activity_id"];
+        MessageDetailController *detail = [[MessageDetailController alloc]init];
+        detail.isActivity = YES;
+        detail.msg_id = activityId;
+        detail.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:detail animated:YES];
+    }
+}
+
+-(void)yjyPicClicked{
+    
+    // 1 为外链 url为外链地址
+    if ([[_ttaiDetailModel.official_pic stringValueForKey:@"redirect_type"]intValue] == 1) {
+        GwebViewController *ccc = [[GwebViewController alloc]init];
+        ccc.urlstring = [_ttaiDetailModel.official_pic stringValueForKey:@"url"];
+        ccc.isSaoyisao = YES;
+        ccc.hidesBottomBarWhenPushed = YES;
+        UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:ccc];
+        [self presentViewController:navc animated:YES completion:^{
+            
+        }];
+    }else{
+        
+    }
+}
+
+
+//计算缩放tableview的高度
+-(CGFloat)jisuanTabHeight{
+    
+    CGFloat height = 0;
+    NSInteger count1 = 0;
+    NSInteger tCount = _relationStoreArray.count;
+    
+    
+    for (int i = 0; i<tCount; i++) {
+        GTtaiRelationStoreModel *model = _relationStoreArray[i];
+        if ([[model.image stringValueForKey:@"have_detail"]intValue] == 1) {
+            count1 = [model.image arrayValueForKey:@"img_detail"].count;
+        }else{
+            count1 = 0;
+        }
+        
+        if (_isOpen[i] == 1) {//打开状态
+            height += (count1*60+30);
+            if (model.activity) {
+                CGFloat p_width = [[model.activity stringValueForKey:@"width"] floatValue];
+                CGFloat p_height = [[model.activity stringValueForKey:@"height"]floatValue];
+                CGFloat n_height = DEVICE_WIDTH/p_width * p_height;
+                height += n_height;
+            }
+        }else{
+            height += 30;
+        }
+    }
+
+    height += (_tableFooterView.frame.size.height+5);
+    
+    return height;
+}
 
 /**
  *  监控 单品详情 和 相似单品都请求完再显示 监控tableview的contentSize
@@ -525,6 +741,68 @@
     }
 }
 
+/**
+ *  更新赞的状态
+ *
+ *  @param isZan 是否赞
+ */
+- (void)updateZanState:(BOOL)isZan
+{
+    _heartButton.selected = isZan;
+
+    int incremNum = isZan ? 1 : -1;
+    NSString *zanSum = NSStringFromInt([_ttaiDetailModel.tt_like_num intValue] + incremNum);
+    
+    _ttaiDetailModel.tt_like_num = zanSum;
+    _zanNumLabel.text = [self zanNumStringForNum:zanSum];
+
+    //同步数据
+    self.likeNumLabel.text = _zanNumLabel.text;
+    self.likeBtn.selected = isZan;
+    self.theModel.tt_like_num = zanSum;
+    self.theModel.is_like = isZan ? 1 : 0;
+}
+
+#pragma mark - 创建视图
+
+//创建瀑布流
+-(void)creatPubuLiu{
+    _collectionView = [[LWaterFlow2 alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT - 64) waterDelegate:self waterDataSource:self noHeadeRefresh:NO noFooterRefresh:NO];
+    [self.view addSubview:_collectionView];
+    //    _collectionView.backgroundColor = [UIColor clearColor];
+    //    _collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [_collectionView showRefreshHeader:YES];
+}
+
+
+
+//创建收藏分享按钮
+- (void)createNavigationbarTools
+{
+    
+    UIButton *rightView=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 190, 44)];
+    rightView.backgroundColor=[UIColor clearColor];
+    
+    //收藏的
+    _collectButton = [[UIButton alloc]initWithframe:CGRectMake(74, 0, 44, 44) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"productDetail_collect_normal"] selectedImage:[UIImage imageNamed:@"productDetail_collect_selected"] target:self action:@selector(clickToCollect:)];
+    _collectButton.center = CGPointMake(rightView.width / 2.f, _collectButton.center.y);
+    [_collectButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
+    
+    _collectButton.selected = _ttaiDetailModel.is_favor == 1 ? YES : NO;
+    
+    //分享
+    
+    UIButton *shareButton = [[UIButton alloc] initWithframe:CGRectMake(rightView.width - 44, 0, 44, 44) buttonType:UIButtonTypeCustom nornalImage:[UIImage imageNamed:@"product_share"] selectedImage:nil target:self action:@selector(clickToShare:)];
+    [shareButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
+    
+    [rightView addSubview:shareButton];
+    [rightView addSubview:_collectButton];
+    
+    UIBarButtonItem *comment_item=[[UIBarButtonItem alloc]initWithCustomView:rightView];
+    
+    self.navigationItem.rightBarButtonItem = comment_item;
+    
+}
 
 
 //加载headerView
@@ -668,10 +946,6 @@
     [likeBtn addSubview:_zanNumLabel];
     
     
-    
-    
-    
-    
     UIView *fenLine1 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_topScrollView1.frame)+6, DEVICE_WIDTH, 0.5)];
     fenLine1.backgroundColor = fenLine.backgroundColor;
     [view2 addSubview:fenLine1];
@@ -773,7 +1047,7 @@
     moreStoreBtn.layer.borderWidth = 0.5;
     moreStoreBtn.layer.cornerRadius = 10;
     moreStoreBtn.layer.borderColor = [RGBCOLOR(244, 76, 139)CGColor];
-    [moreStoreBtn addTarget:self action:@selector(moreStoreBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+    [moreStoreBtn addTarget:self action:@selector(clickToMoreStore) forControlEvents:UIControlEventTouchUpInside];
     if (!_isHaveMoreStoreData) {
         
         if (!_ttaiDetailModel.official_act) {
@@ -837,295 +1111,6 @@
     
 }
 
--(void)moreStoreBtnClicked{
-    
-    GMoreTtaiSameStroViewController *cc = [[GMoreTtaiSameStroViewController alloc]init];
-    cc.tPlat_id = self.tPlat_id;
-    cc.tPlat_id = @"3";
-    cc.locationDic = self.locationDic;
-    [self.navigationController pushViewController:cc animated:YES];
-    
-}
-
-
--(void)pushToGuanfanghuodong{
-    
-    // 1 为外链 url为外链地址
-
-    if ([[_ttaiDetailModel.official_act stringValueForKey:@"redirect_type"]intValue] == 1) {
-        GwebViewController *ccc = [[GwebViewController alloc]init];
-        ccc.urlstring = [_ttaiDetailModel.official_act stringValueForKey:@"url"];
-        ccc.isSaoyisao = YES;
-        ccc.hidesBottomBarWhenPushed = YES;
-        UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:ccc];
-        [self presentViewController:navc animated:YES completion:^{
-            
-        }];
-    }else if ([[_ttaiDetailModel.official_act stringValueForKey:@"redirect_type"]intValue] == 0){
-        NSString *activityId = [_ttaiDetailModel.official_act stringValueForKey:@"activity_id"];
-        MessageDetailController *detail = [[MessageDetailController alloc]init];
-        detail.isActivity = YES;
-        detail.msg_id = activityId;
-        detail.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:detail animated:YES];
-    }
-}
-
--(void)yjyPicClicked{
-    
-    // 1 为外链 url为外链地址
-    if ([[_ttaiDetailModel.official_pic stringValueForKey:@"redirect_type"]intValue] == 1) {
-        GwebViewController *ccc = [[GwebViewController alloc]init];
-        ccc.urlstring = [_ttaiDetailModel.official_pic stringValueForKey:@"url"];
-        ccc.isSaoyisao = YES;
-        ccc.hidesBottomBarWhenPushed = YES;
-        UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:ccc];
-        [self presentViewController:navc animated:YES completion:^{
-            
-        }];
-    }else{
-        
-    }
-}
-
-
-//计算缩放tableview的高度
--(CGFloat)jisuanTabHeight{
-    
-    CGFloat height = 0;
-    NSInteger count1 = 0;
-    NSInteger tCount = _relationStoreArray.count;
-    
-    
-    for (int i = 0; i<tCount; i++) {
-        GTtaiRelationStoreModel *model = _relationStoreArray[i];
-        if ([[model.image stringValueForKey:@"have_detail"]intValue] == 1) {
-            count1 = [model.image arrayValueForKey:@"img_detail"].count;
-        }else{
-            count1 = 0;
-        }
-        
-        if (_isOpen[i] == 1) {//打开状态
-            height += (count1*60+30);
-            if (model.activity) {
-                CGFloat p_width = [[model.activity stringValueForKey:@"width"] floatValue];
-                CGFloat p_height = [[model.activity stringValueForKey:@"height"]floatValue];
-                CGFloat n_height = DEVICE_WIDTH/p_width * p_height;
-                height += n_height;
-            }
-        }else{
-            height += 30;
-        }
-        
-        
-    }
-    
-
-    
-    height += (_tableFooterView.frame.size.height+5);
-    
-    
-    
-    return height;
-}
-
-
-
-
-
-/**
- *  评论页面
- *
- *  @param sender
- */
-- (void)clickToComment:(UIButton *)sender
-{
-    
-    TTaiCommentViewController *commentList = [[TTaiCommentViewController alloc]init];
-    commentList.tt_id = self.tPlat_id;
-    commentList.commentType = COMMENTTYPE_TPlat;
-    commentList.t_model = _ttaiDetailModel;
-    
-    commentList.updateParamsBlock = ^(NSDictionary *params){
-        
-        BOOL result = [params[@"result"]boolValue];
-        if (result) {
-            
-//            [weakSelf networkForCommentList:YES];//更新评论
-        }
-    };
-    
-    
-    
-    CATransition *transition = [CATransition animation];
-    
-    transition.duration = 0.7f;
-    
-    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    
-    transition.type = @"oglFlip";
-    
-    transition.subtype = kCATransitionFromLeft;
-    
-    transition.delegate = self;
-    
-    [self.navigationController.view.layer addAnimation:transition forKey:nil];
-    
-    
-    [self.navigationController pushViewController:commentList animated:YES];
-}
-
-
-/*
- 是否喜欢
- */
-- (void)clickToLike:(UIButton *)sender
-{
-    
-    if ([LTools isLogin:self]) {
-        
-        [LTools animationToBigger:_heartButton duration:0.2 scacle:1.5];
-        
-        if (_heartButton.selected) {
-            
-            [self networkForActionType:Action_like_no];
-        }else
-        {
-            [self networkForActionType:Action_like_yes];
-        }
-    }
-}
-
-
-
-/**
- *  赞 取消赞 收藏 取消收藏
- *
- *  @param action_type
- */
-- (void)networkForActionType:(ACTION_TYPE)action_type
-{
-    
-    
-    //线上T台收藏为get请求
-    
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    
-    __weak typeof(self)weakSelf = self;
-    
-    NSString *api;
-    if (action_type == Action_like_yes) {
-        api = TTAI_ZAN;
-    }else if (action_type == Action_Collect_yes){
-        api = TTAI_COLLECT_ADD1;
-    }else if (action_type == Action_like_no){
-        api = TTAI_ZAN_CANCEL;
-    }else if (action_type == Action_Collect_no){
-        api = TTAI_COLLECT_CANCEL1;
-    }
-    
-    NSString *post = [NSString stringWithFormat:@"tt_id=%@&authcode=%@",self.tPlat_id,[GMAPI getAuthkey]];
-    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-    NSString *url = api;//post
-    if (action_type == Action_Collect_yes || action_type == Action_Collect_no) {
-        url = [NSString stringWithFormat:@"%@&%@",api,post];//get
-        LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:postData];
-        [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
-            
-            NSLog(@"result %@",result);
-            
-            if (action_type == Action_like_yes) {
-                
-                [weakSelf updateZanState:YES];
-                
-                
-            }else if (action_type == Action_Collect_yes){
-                
-                _collectButton.selected = YES;
-                //关注T台通知
-                [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_TTai object:nil userInfo:@{@"state":[NSNumber numberWithBool:YES]}];
-                
-            }else if (action_type == Action_like_no){
-                
-                
-                [weakSelf updateZanState:NO];
-                
-                
-            }else if (action_type == Action_Collect_no){
-                
-                _collectButton.selected = NO;
-                //关注T台通知
-                [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_TTai object:nil userInfo:@{@"state":[NSNumber numberWithBool:NO]}];
-            }
-            
-            
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            
-        } failBlock:^(NSDictionary *failDic, NSError *erro) {
-            
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            
-            NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-            
-        }];
-        
-    }else{
-        LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
-        [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
-            
-            NSLog(@"result %@",result);
-            
-            if (action_type == Action_like_yes) {
-                
-                [weakSelf updateZanState:YES];
-                
-                
-            }else if (action_type == Action_Collect_yes){
-                
-                _collectButton.selected = YES;
-                //关注T台通知
-                [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_TTai object:nil userInfo:@{@"state":[NSNumber numberWithBool:YES]}];
-                
-            }else if (action_type == Action_like_no){
-                
-                
-                [weakSelf updateZanState:NO];
-                
-                
-            }else if (action_type == Action_Collect_no){
-                
-                _collectButton.selected = NO;
-                //关注T台通知
-                [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_GUANZHU_TTai object:nil userInfo:@{@"state":[NSNumber numberWithBool:NO]}];
-            }
-            
-            
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            
-        } failBlock:^(NSDictionary *failDic, NSError *erro) {
-            
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            
-            NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-            
-        }];
-    }
-    
-    
-    
-    
-    
-}
-
-
-
-
-
-
-
-
-
-
 -(void)createbuttonWithModel:(NSDictionary*)maodian_detail imageView:(UIView *)imageView{
     
     NSString *productId = maodian_detail[@"product_id"];
@@ -1166,27 +1151,8 @@
 }
 
 
-
 -(void)cycleScrollDidClickedWithIndex:(NSInteger)index{
     NSLog(@"%ld",index);
-}
-
-
-
-
-
-/**
- *  底部工具栏
- */
-- (void)createBottomView
-{
-    //导航按钮
-    
-    UIView *bottom = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT - 64 - 60, DEVICE_WIDTH, 60)];
-    bottom.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.5];
-    [self.view addSubview:bottom];
-
-    
 }
 
 
@@ -1225,50 +1191,8 @@
     return zanNum;
 }
 
-/**
- *  更新赞的状态
- *
- *  @param isZan 是否赞
- */
-- (void)updateZanState:(BOOL)isZan
-{
-    if (isZan) {
-        _heartButton.selected = YES;
-        _ttaiDetailModel.tt_like_num = NSStringFromInt([_ttaiDetailModel.tt_like_num intValue] + 1);
-    }else
-    {
-        _heartButton.selected = NO;
-        _ttaiDetailModel.tt_like_num = NSStringFromInt([_ttaiDetailModel.tt_like_num intValue] - 1);
-    }
-    _zanNumLabel.text = [self zanNumStringForNum:_ttaiDetailModel.tt_like_num];
-    
-}
-
-
-
-
-
-
-
-/**
- *  跳转活动详情页
- */
-- (void)clickToActivity:(UIButton *)sender
-{
-//    NSString *activityId = _aModel.official_activity[@"id"];
-//    MessageDetailController *detail = [[MessageDetailController alloc]init];
-//    detail.isActivity = YES;
-//    detail.msg_id = activityId;
-//    [self.navigationController pushViewController:detail animated:YES];
-}
-
-
-
-
-
-
-
 #pragma - mark PSWaterFlowDelegate <NSObject>
+
 - (void)waterLoadNewDataForWaterView:(PSCollectionView *)waterView
 {
     _count = 0;
@@ -1294,12 +1218,6 @@
     [self.navigationController pushViewController:ggg animated:YES];
     
 }
-
-
-
-
-
-
 
 - (void)waterScrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -1333,17 +1251,21 @@
     for (UIView*view in cell.subviews) {
         [view removeFromSuperview];
     }
-    
-    
-    cell.photoView.userInteractionEnabled = NO;
-    
-    cell.photoView.backgroundColor =[UIColor redColor];
-    
+
     TPlatModel *amodel = _collectionView.dataArray[index];
     [cell loadCustomViewWithModel:amodel];
     
+    //设置button参数
+    NSDictionary *params = @{@"button":cell.like_btn,
+                             @"label":cell.like_label,
+                             @"model":amodel};
+    cell.likeBackBtn.object = params;
+    [cell.likeBackBtn addTarget:self action:@selector(clickToZan:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
     return cell;
 }
+
 - (CGFloat)collectionView:(PSCollectionView *)collectionView heightForRowAtIndex:(NSInteger)index
 {
     CGFloat imageH = 0.f;
@@ -1605,8 +1527,9 @@
     }
     
     UILabel *totlePriceLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(ttLabel.frame)+5, ttLabel.frame.origin.y, DEVICE_WIDTH *0.3, 30)];
-    totlePriceLabel.font = [UIFont systemFontOfSize:12];
+    totlePriceLabel.font = [UIFont systemFontOfSize:10];
     totlePriceLabel.textAlignment = NSTextAlignmentCenter;
+    totlePriceLabel.textColor = DEFAULT_TEXTCOLOR;
     totlePriceLabel.text = [NSString stringWithFormat:@"搭配价￥%.1f",totlePrice];
     [view addSubview:totlePriceLabel];
     

@@ -24,7 +24,7 @@
     _photoView.userInteractionEnabled =  YES;
     [_backGroudView addSubview:_photoView];
     
-    self.likeBackBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.likeBackBtn = [ButtonProperty buttonWithType:UIButtonTypeCustom];
     [_likeBackBtn addCornerRadius:3.f];
     _likeBackBtn.backgroundColor = [UIColor colorWithHexString:@"fdf8f9"];
     [_photoView addSubview:_likeBackBtn];
@@ -68,8 +68,6 @@
     [self.photoView l_setImageWithURL:[NSURL URLWithString:imageurl] placeholderImage:DEFAULT_YIJIAYI];
     self.photoView.backgroundColor = DEFAULT_VIEW_BACKGROUNDCOLOR;
     
-    
-    
     self.like_btn.selected = aModel.is_like == 1 ? YES : NO;
     
     NSString *zanNum = [NSString stringWithFormat:@"%d",[aModel.tt_like_num intValue]];
@@ -86,7 +84,6 @@
     _backGroudView.frame = CGRectMake(0, 0, self.width, self.height);
     
     CGFloat infoHeight = 0.f;//infoView高度
-    
     
     CGRect aBound = self.bounds;
     aBound.size.height -= infoHeight;

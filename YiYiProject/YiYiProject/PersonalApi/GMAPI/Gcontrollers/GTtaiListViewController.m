@@ -908,24 +908,13 @@
 
 #pragma mark 事件处理
 
-
-- (void)tapImage:(UITapGestureRecognizer *)tap
+/**
+ *  同品牌推荐 赞与取消赞
+ */
+- (void)clickToZan:(ButtonProperty *)sender
 {
-    
-    PropertyImageView *aImageView = (PropertyImageView *)tap.view;
-    
-    [MiddleTools showTPlatDetailFromPropertyImageView:aImageView withController:self.tabBarController cancelSingleTap:YES];
+    [MiddleTools zanTPlatWithParams:sender.object viewController:self resultBlock:nil];
 }
-
-
-- (void)tapCell:(UITableViewCell *)cell
-{
-    
-    PropertyImageView *aImageView = ((GTtaiListCustomTableViewCell *)cell).maodianImv;
-    
-    [MiddleTools showTPlatDetailFromPropertyImageView:aImageView withController:self.tabBarController cancelSingleTap:YES];
-}
-
 
 - (void)updateTTai:(NSNotification *)noti
 {
@@ -935,7 +924,7 @@
 /**
  *  发布 T 台
  *
- *  @param sender <#sender description#>
+ *  @param sender
  */
 - (void)clickToPhoto:(UIButton *)sender
 {
@@ -1129,13 +1118,13 @@
 //    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 //    [self tapCell:[tableView cellForRowAtIndexPath:indexPath]];
     
-    //新版
-    GTtaiDetailViewController *ggg = [[GTtaiDetailViewController alloc]init];
-    TPlatModel *amdol = _table.dataArray[indexPath.row];
-    ggg.locationDic = self.locationDic;
-    ggg.tPlat_id = amdol.tt_id;
-    ggg.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:ggg animated:YES];
+    GTtaiListCustomTableViewCell *cell = (GTtaiListCustomTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    
+    TPlatModel *aModel = (TPlatModel *)[_table.dataArray objectAtIndex:indexPath.row];
+    NSDictionary *params = @{@"button":cell.like_btn,
+                             @"label":cell.like_label,
+                             @"model":aModel};
+    [MiddleTools pushToTPlatDetailWithInfoId:aModel.tt_id fromViewController:self lastNavigationHidden:NO hiddenBottom:YES extraParams:params updateBlock:nil];
 
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
@@ -1203,10 +1192,13 @@
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-//    //赞按钮
-    cell.zanBtn.tag = 100 + indexPath.row;
-    [cell.contentView bringSubviewToFront:cell.zanBtn];
-    [cell.zanBtn addTarget:self action:@selector(zanTTaiDetail:) forControlEvents:UIControlEventTouchUpInside];
+
+    //设置button参数
+    NSDictionary *params = @{@"button":cell.like_btn,
+                             @"label":cell.like_label,
+                             @"model":aModel};
+    cell.likeBackBtn.object = params;
+    [cell.likeBackBtn addTarget:self action:@selector(clickToZan:) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
 }
@@ -1225,14 +1217,6 @@
 {
     return 0.5;
 }
-
-
-
-
-
-
-
-
 
 
 @end

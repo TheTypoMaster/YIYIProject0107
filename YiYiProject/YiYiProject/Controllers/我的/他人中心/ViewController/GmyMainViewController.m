@@ -267,57 +267,55 @@
 
 - (void)clickToZan:(UIButton *)sender
 {
-    if (![LTools isLogin:self]) {
-        
-        return;
-    }
-    //直接变状态
-    //更新数据
-    
-    [LTools animationToBigger:sender duration:0.2 scacle:1.5];
-    
     TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[_waterFlow.quitView cellAtIndexPath:[NSIndexPath indexPathForRow:sender.tag - 100 inSection:0]];
-    
-//    __weak typeof(self)weakSelf = self;
-    
-    __block BOOL isZan = !sender.selected;
-    
-    NSString *api = sender.selected ? TTAI_ZAN_CANCEL : TTAI_ZAN;
-    
     TPlatModel *detail_model = _waterFlow.dataArray[sender.tag - 100];
-    NSString *t_id = detail_model.tt_id;
-    NSString *post = [NSString stringWithFormat:@"tt_id=%@&authcode=%@",t_id,[GMAPI getAuthkey]];
-    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+
+    NSDictionary *params = @{@"label":cell.like_label,@"model":detail_model,@"button":sender};
+    [MiddleTools zanTPlatWithParams:params viewController:self resultBlock:nil];
     
-    NSString *url = api;
-    
-    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
-    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
-        
-        NSLog(@"result %@",result);
-        sender.selected = isZan;
-        detail_model.is_like = isZan ? 1 : 0;
-        detail_model.tt_like_num = NSStringFromInt([detail_model.tt_like_num intValue] + (isZan ? 1 : -1));
-        cell.like_label.text = detail_model.tt_like_num;
-        
-    } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        
-        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-        
-        detail_model.tt_like_num = NSStringFromInt([detail_model.tt_like_num intValue]);
-        cell.like_label.text = detail_model.tt_like_num;
-    }];
+//    if (![LTools isLogin:self]) {
+//        
+//        return;
+//    }
+//    //直接变状态
+//    //更新数据
+//    
+//    [LTools animationToBigger:sender duration:0.2 scacle:1.5];
+//    
+//    
+//    
+////    __weak typeof(self)weakSelf = self;
+//    
+//    __block BOOL isZan = !sender.selected;
+//    
+//    NSString *api = sender.selected ? TTAI_ZAN_CANCEL : TTAI_ZAN;
+//    
+//    NSString *t_id = detail_model.tt_id;
+//    NSString *post = [NSString stringWithFormat:@"tt_id=%@&authcode=%@",t_id,[GMAPI getAuthkey]];
+//    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+//    
+//    NSString *url = api;
+//    
+//    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
+//    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+//        
+//        NSLog(@"result %@",result);
+//        sender.selected = isZan;
+//        detail_model.is_like = isZan ? 1 : 0;
+//        detail_model.tt_like_num = NSStringFromInt([detail_model.tt_like_num intValue] + (isZan ? 1 : -1));
+//        cell.like_label.text = detail_model.tt_like_num;
+//        
+//    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+//        
+//        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+//        
+//        detail_model.tt_like_num = NSStringFromInt([detail_model.tt_like_num intValue]);
+//        cell.like_label.text = detail_model.tt_like_num;
+//    }];
 }
 
 
 #pragma - mark 事件处理
-
-- (void)tapCell:(TPlatCell *)cell
-{
-    PropertyImageView *aImageView = (PropertyImageView *)((TPlatCell *)cell).photoView;
-    
-    [MiddleTools showTPlatDetailFromPropertyImageView:aImageView withController:self cancelSingleTap:YES];
-}
 
 - (void)clickToShop:(UIButton *)sender
 {
@@ -822,7 +820,11 @@
 {
     TPlatCell *cell = (TPlatCell *)[_waterFlow.quitView cellAtIndexPath:indexPath];
     
-    [self tapCell:cell];
+    TPlatModel *aModel = (TPlatModel *)[_waterFlow.dataArray objectAtIndex:indexPath.row];
+    NSDictionary *params = @{@"button":cell.like_btn,
+                             @"label":cell.like_label,
+                             @"model":aModel};
+    [MiddleTools pushToTPlatDetailWithInfoId:aModel.tt_id fromViewController:self lastNavigationHidden:NO hiddenBottom:YES extraParams:params updateBlock:nil];
 }
 
 - (CGFloat)waterHeightForCellIndexPath:(NSIndexPath *)indexPath

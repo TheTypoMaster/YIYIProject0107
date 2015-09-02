@@ -16,6 +16,8 @@
 
 #import "ProductDetailController.h" //单品详情
 #import "ProductDetailControllerNew.h"//单品详情新版
+#import "GTtaiDetailViewController.h"//T台详情
+#import "TPlatModel.h"
 
 @implementation MiddleTools
 
@@ -280,128 +282,117 @@
     [viewController.navigationController pushViewController:detail animated:YES];
 }
 
+/**
+ *  跳转至T台详情、加拓展参数
+ *
+ *  @param aModel               TPlatModel实例
+ *  @param viewController       从哪个视图push
+ *  @param lastNavigationHidden 本页面是否隐藏NavigationBar
+ *  @param hiddenBottom         是否隐藏底部tabbar
+ *  @param extraParams          额外参数
+ *  @param updateBlock          数据同步更新block(选填)
+ */
++ (void)pushToTPlatDetailWithInfoId:(NSString *)infoId
+                fromViewController:(UIViewController *)viewController
+              lastNavigationHidden:(BOOL)lastNavigationHidden
+                      hiddenBottom:(BOOL)hiddenBottom
+                       extraParams:(NSDictionary *)extraParams
+                       updateBlock:(UpdateParamsBlock)updateBlock
+{
+    //新版
+    GTtaiDetailViewController *detail = [[GTtaiDetailViewController alloc]init];
+    detail.tPlat_id = infoId;
+    detail.lastPageNavigationHidden = lastNavigationHidden;
+    detail.hidesBottomBarWhenPushed = hiddenBottom;
+    if (updateBlock) {
+        detail.updateParamsBlock = updateBlock;
+    }
+    if (extraParams) {
+        id label = extraParams[@"label"];
+        id model = extraParams[@"model"];
+        id button = extraParams[@"button"];
+        detail.likeBtn = button;
+        detail.likeNumLabel = label;
+        detail.theModel = model;
+    }
+    detail.hidesBottomBarWhenPushed = hiddenBottom;
+    [viewController.navigationController pushViewController:detail animated:YES];
+}
 
 
-///**
-// *  赞 取消赞 收藏 取消收藏
-// */
-//
-//- (void)clickToZan:(UIButton *)sender
-//{
-//    if (![LTools isLogin:self]) {
-//        
-//        return;
-//    }
-//    //直接变状态
-//    //更新数据
-//    
-//    [LTools animationToBigger:sender duration:0.2 scacle:1.5];
-//    
-//    TPlatCell *cell = (TPlatCell *)[_waterFlow.quitView cellAtIndexPath:[NSIndexPath indexPathForRow:sender.tag - 100 inSection:0]];
-//    
-//    __weak typeof(self)weakSelf = self;
-//    
-//    __block BOOL isZan = !sender.selected;
-//    
-//    NSString *api = sender.selected ? TTAI_ZAN_CANCEL : TTAI_ZAN;
-//    
-//    TPlatModel *detail_model = _waterFlow.dataArray[sender.tag - 100];
-//    NSString *t_id = detail_model.tt_id;
-//    NSString *post = [NSString stringWithFormat:@"tt_id=%@&authcode=%@",t_id,[GMAPI getAuthkey]];
-//    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-//    
-//    NSString *url = api;
-//    
-//    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
-//    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
-//        
-//        NSLog(@"result %@",result);
-//        sender.selected = isZan;
-//        detail_model.is_like = isZan ? 1 : 0;
-//        detail_model.tt_like_num = NSStringFromInt([detail_model.tt_like_num intValue] + (isZan ? 1 : -1));
-//        cell.like_label.text = detail_model.tt_like_num;
-//        
-//    } failBlock:^(NSDictionary *failDic, NSError *erro) {
-//        
-//        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
-//        [GMAPI showAutoHiddenMBProgressWithText:failDic[RESULT_INFO] addToView:weakSelf.view];
-//        if ([failDic[RESULT_CODE] intValue] == -11) {
-//            
-//            [LTools showMBProgressWithText:failDic[RESULT_INFO] addToView:weakSelf.view];
-//        }
-//        detail_model.tt_like_num = NSStringFromInt([detail_model.tt_like_num intValue]);
-//        cell.like_label.text = detail_model.tt_like_num;
-//    }];
-//}
+/**
+ *  T台赞或者取消
+ *
+ *  @param params   需要改变的对象组成字典如:
+ *                  @{@"button":likeBtn,
+ *                    @"label":cell.likeLabel,
+ *                    @"model":aModel};
+ *  @param viewController 目标视图
+ */
++ (void)zanTPlatWithParams:(NSDictionary *)params
+            viewController:(UIViewController *)viewController
+               resultBlock:(RESULTBLOCK)resultBlock
+{
+    if (![LTools isLogin:viewController]) {
+        
+        return;
+    }
 
-//等到加载完图片之后再加载图片上的三个button
-
-//-(void)createbuttonWithModel:(NSDictionary*)maodian_detail
-//                   imageView:(UIView *)imageView
-//          fromViewController:(UIViewController *)viewController{
-//    
-//    NSString *productId = maodian_detail[@"product_id"];
-//    
-//    NSInteger product_id = [productId integerValue];
-//    
-//    float dx=[maodian_detail[@"img_x"] floatValue];
-//    float dy=[maodian_detail[@"img_y"] floatValue];
-//    
-//    
-//    __weak typeof(self)weakSelf = self;
-//    __weak typeof(viewController)weakVC = viewController;
-//
-//    if (product_id>0) {
-//        //说明是单品
-//        
-//        NSString *title = maodian_detail[@"product_name"];
-//        CGPoint point = CGPointMake(dx * imageView.width, dy * imageView.height);
-//        AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title];
-//        [imageView addSubview:pointView];
-//        pointView.infoId = productId;
-//        pointView.infoName = title;
-//        
-//        
-//        [pointView setAnchorBlock:^(NSString *infoId,NSString *infoName,ShopType shopType){
-//            
-////            [weakSelf turnToDanPinInfoId:infoId infoName:infoName];
-//        }];
-//        
-//        //        NSLog(@"单品--title %@",title);
-//        
-//    }else{
-//        
-//        //说明是品牌店面
-//        
-//        NSString *title = maodian_detail[@"shop_name"];
-//        int mall_type = [maodian_detail[@"mall_type"] intValue];
-//        NSString *storeId;
-//        
-//        if (mall_type == ShopType_pinpaiDian) {
-//            
-//            storeId = maodian_detail[@"shop_id"];
-//            
-//        }else if (mall_type == ShopType_jingpinDian){
-//            
-//            storeId = maodian_detail[@"mall_id"];
-//        }
-//        
-//        CGPoint point = CGPointMake(dx * imageView.width, dy * imageView.height);
-//        AnchorPiontView *pointView = [[AnchorPiontView alloc]initWithAnchorPoint:point title:title];
-//        [imageView addSubview:pointView];
-//        
-//        pointView.infoId = storeId;
-//        pointView.infoName = title;
-//        pointView.shopType = mall_type;
-//        
-//        [pointView setAnchorBlock:^(NSString *infoId,NSString *infoName,ShopType shopType){
-//            
-//            [MiddleTools pushToStoreDetailVcWithId:infoId guanzhuleixing:shopType name:infoName fromViewController:weakVC lastNavigationHidden:<#(BOOL)#> hiddenBottom:<#(BOOL)#>]
-//        }];
-//        
-//    }
-//    
-//}
+    if (!params || ![params isKindOfClass:[NSDictionary class]]) {
+        
+        return;
+    }
+    
+    UIButton *btn = params[@"button"];
+    UILabel *label = params[@"label"];
+    TPlatModel *aModel = params[@"model"];
+    
+    [LTools animationToBigger:btn duration:0.2 scacle:1.5];
+    
+    NSString *tt_id = aModel.tt_id;
+    
+    NSString *authkey = [GMAPI getAuthkey];
+    NSString *post = [NSString stringWithFormat:@"tt_id=%@&authcode=%@",tt_id,authkey];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    
+    NSString *url;
+    
+    BOOL zan = btn.selected ? NO : YES;
+    
+    if (zan) {
+        url = TTAI_ZAN;
+    }else
+    {
+        url = TTAI_ZAN_CANCEL;
+    }
+    
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:YES postData:postData];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"result %@",result);
+        btn.selected = zan ? YES : NO;
+        int like_num = [aModel.tt_like_num intValue];
+        aModel.tt_like_num = [NSString stringWithFormat:@"%d",zan ? like_num + 1 : like_num - 1];
+        aModel.is_like = zan ? 1 : 0;
+        label.text = aModel.tt_like_num;
+        
+        if (resultBlock) {
+            
+            resultBlock(@{@"result":[NSNumber numberWithBool:YES]});
+        }
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+        
+        aModel.tt_like_num = NSStringFromInt([aModel.tt_like_num intValue]);
+        label.text = aModel.tt_like_num;
+        if (resultBlock) {
+            
+            resultBlock(@{@"result":[NSNumber numberWithBool:NO]});
+        }
+    }];
+}
 
 
 @end

@@ -188,19 +188,6 @@
 }
 
 #pragma mark - 事件处理
-/**
- *  显示t台详情
- *
- *  @param cell 
- */
-- (void)tapCell:(TPlatCell *)cell
-{
-    
-    PropertyImageView *aImageView = (PropertyImageView *)((TPlatCell *)cell).photoView;
-    
-    [MiddleTools showTPlatDetailFromPropertyImageView:aImageView withController:self.tabBarController cancelSingleTap:YES];
-}
-
 
 #pragma mark - _waterFlowDelegate
 
@@ -231,7 +218,12 @@
 - (void)waterDidSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     TPlatCell *cell = (TPlatCell *)[_waterFlow.quitView cellAtIndexPath:indexPath];
-    [self tapCell:cell];
+    
+    TPlatModel *aModel = (TPlatModel *)[_waterFlow.dataArray objectAtIndex:indexPath.row];
+    NSDictionary *params = @{@"button":cell.like_btn,
+                             @"label":cell.like_label,
+                             @"model":aModel};
+    [MiddleTools pushToTPlatDetailWithInfoId:aModel.tt_id fromViewController:self lastNavigationHidden:NO hiddenBottom:YES extraParams:params updateBlock:nil];
 }
 
 - (CGFloat)waterHeightForCellIndexPath:(NSIndexPath *)indexPath

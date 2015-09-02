@@ -19,11 +19,11 @@
 @property(nonatomic,strong)NSString *tPlat_id;//T台id
 
 @property(nonatomic,strong)TPlatModel *theModel;//单品model 给聊天界面传递
-
+@property(nonatomic,strong)UILabel *likeNumLabel;//赞数字label
+@property(nonatomic,strong)UIButton *likeBtn;//赞按钮
 
 //分享
 @property (strong, nonatomic) UIImageView *bigImageView;
-
 
 //定位信息
 @property(nonatomic,strong)NSDictionary *locationDic;

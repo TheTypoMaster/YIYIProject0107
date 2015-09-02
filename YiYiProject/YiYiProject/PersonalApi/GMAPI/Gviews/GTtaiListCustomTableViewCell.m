@@ -132,31 +132,30 @@
     storeNameLabel.textColor = RGBCOLOR(36, 37, 38);
     [downView addSubview:storeNameLabel];
     
-    self.zanBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.zanBtn setFrame:CGRectMake(CGRectGetMaxX(storeNameLabel.frame), distanceView.frame.origin.y, distanceView.frame.size.width, distanceView.frame.size.height)];
-    self.zanBtn.titleLabel.font = [UIFont systemFontOfSize:12];
-    self.zanBtn.titleLabel.textColor = RGBCOLOR(245, 104, 155);
-    [self.zanBtn setImage:[UIImage imageNamed:@"Ttai_zan_normal.png"] forState:UIControlStateNormal];
-    [self.zanBtn setImage:[UIImage imageNamed:@"Ttai_zan_selected.png"] forState:UIControlStateSelected];
-    [self.zanBtn setTitle:model.tt_like_num forState:UIControlStateNormal];
-    [self.zanBtn setTitleColor:RGBCOLOR(36, 37, 38) forState:UIControlStateNormal];
-    [self.zanBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 15, 0, width-35)];
-    [self.zanBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+    self.likeBackBtn = [ButtonProperty buttonWithType:UIButtonTypeCustom];
+    _likeBackBtn.frame = CGRectMake(CGRectGetMaxX(storeNameLabel.frame), distanceView.frame.origin.y, distanceView.frame.size.width, distanceView.frame.size.height);
+    [downView addSubview:_likeBackBtn];
     
-    if (model.is_like) {
-        self.zanBtn.selected = YES;
-    }else{
-        self.zanBtn.selected = NO;
-    }
+    self.like_label = [[UILabel alloc]init];
+    _like_label.backgroundColor = [UIColor clearColor];
+    _like_label.font = [UIFont systemFontOfSize:10];
+    _like_label.textAlignment = NSTextAlignmentCenter;
+    _like_label.textColor = [UIColor colorWithHexString:@"df81a3"];
+    [_likeBackBtn addSubview:_like_label];
     
-//    self.zanBtn.selected = model.is_like == 1 ? YES : NO;
+    self.like_btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_like_btn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [_like_btn setImage:[UIImage imageNamed:@"danpin_zan_normal"] forState:UIControlStateNormal];
+    [_like_btn setImage:[UIImage imageNamed:@"danpin_zan_selected"] forState:UIControlStateSelected];
+    [_likeBackBtn addSubview:_like_btn];
+    _like_btn.userInteractionEnabled = NO;
     
-    
-
-    
-    [downView addSubview:self.zanBtn];
-    
-    
+    //赞view
+    CGFloat likeBackBtnWidth = 40;
+    self.like_btn.frame = CGRectMake(10, _likeBackBtn.height / 2.f - 17 / 2.f, 17, 17);
+    self.like_label.frame = CGRectMake(_like_btn.right, _likeBackBtn.height / 2.f - 17 / 2.f, likeBackBtnWidth - _like_btn.width, 17);
+    self.like_btn.selected = model.is_like == 1 ? YES : NO;
+    self.like_label.text = [self zanNumStringForNum:model.tt_like_num];
     
     //小分割线
     UIView *line_l = [[UIView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(distanceView.frame), (downView.frame.size.height*1.5 - 12)*0.5, 0.5, 12)];
@@ -166,20 +165,27 @@
     line_r.backgroundColor = RGBCOLOR(220, 221, 223);
     [downView addSubview:line_r];
     
-    
-    
-    
-    
-    
-    
-    
     CGFloat cell_height = CGRectGetMaxY(downView.frame);
     
     return cell_height;
     
 }
 
-
-
+/**
+ *  赞数量大于1000显示 k
+ *
+ *  @param zanNum
+ *
+ *  @return
+ */
+- (NSString *)zanNumStringForNum:(NSString *)zanNum
+{
+    int num = [zanNum intValue];
+    if (num >= 1000) {
+        
+        return [NSString stringWithFormat:@"%.1fk",num * 0.001];
+    }
+    return zanNum;
+}
 
 @end

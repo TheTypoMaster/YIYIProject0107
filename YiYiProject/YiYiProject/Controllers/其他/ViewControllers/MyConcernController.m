@@ -776,18 +776,6 @@
     
 }
 
-/**
- *  显示t台详情
- *
- *  @param cell
- */
-- (void)tapCell:(TPlatCell *)cell
-{
-    
-    PropertyImageView *aImageView = (PropertyImageView *)((TPlatCell *)cell).photoView;
-    
-    [MiddleTools showTPlatDetailFromPropertyImageView:aImageView withController:self.tabBarController cancelSingleTap:YES];
-}
 
 //品牌
 -(void)pushToPinpaiDetailVCWithIdStr:(NSString *)theID pinpaiName:(NSString *)theName{
@@ -1048,9 +1036,11 @@
         
         TPlatCell *cell = (TPlatCell*)[waterFlow_t.quitView cellAtIndexPath:indexPath];
         
-        PropertyImageView *aImageView = (PropertyImageView *)((TPlatCell *)cell).photoView;
-            
-        [MiddleTools showTPlatDetailFromPropertyImageView:aImageView withController:self.tabBarController cancelSingleTap:YES];
+        TPlatModel *aModel = (TPlatModel *)[waterFlow_t.dataArray objectAtIndex:indexPath.row];
+        NSDictionary *params = @{@"button":cell.like_btn,
+                                 @"label":cell.like_label,
+                                 @"model":aModel};
+        [MiddleTools pushToTPlatDetailWithInfoId:aModel.tt_id fromViewController:self lastNavigationHidden:NO hiddenBottom:YES extraParams:params updateBlock:nil];
     }
 }
 

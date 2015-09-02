@@ -12,6 +12,8 @@
 #import "ZanListViewController.h" //赞列表
 #import "ApiHeader.h"
 
+typedef void(^RESULTBLOCK)(NSDictionary *result);//返回结果
+
 @class PropertyImageView;
 
 /**
@@ -164,5 +166,37 @@
                       extraParams:(NSDictionary *)extraParams
                       updateBlock:(UpdateParamsBlock)updateBlock;
 
+#pragma - mark 跳转至T台详情、加拓展参数
+/**
+ *  跳转至T台详情、加拓展参数
+ *
+ *  @param aModel               TPlatModel实例
+ *  @param viewController       从哪个视图push
+ *  @param lastNavigationHidden 本页面是否隐藏NavigationBar
+ *  @param hiddenBottom         是否隐藏底部tabbar
+ *  @param extraParams          额外参数
+ *  @param updateBlock          数据同步更新block(选填)
+ */
++ (void)pushToTPlatDetailWithInfoId:(NSString *)infoId
+                 fromViewController:(UIViewController *)viewController
+               lastNavigationHidden:(BOOL)lastNavigationHidden
+                       hiddenBottom:(BOOL)hiddenBottom
+                        extraParams:(NSDictionary *)extraParams
+                        updateBlock:(UpdateParamsBlock)updateBlock;
+
+#pragma - mark T台赞或者取消
+
+/**
+ *  T台赞或者取消
+ *
+ *  @param params   需要改变的对象组成字典如:
+ *                  @{@"button":likeBtn,
+ *                    @"label":likeLabel,
+ *                    @"model":aModel};
+ *  @param viewController 目标视图
+ */
++ (void)zanTPlatWithParams:(NSDictionary *)params
+            viewController:(UIViewController *)viewController
+               resultBlock:(RESULTBLOCK)resultBlock;
 
 @end
