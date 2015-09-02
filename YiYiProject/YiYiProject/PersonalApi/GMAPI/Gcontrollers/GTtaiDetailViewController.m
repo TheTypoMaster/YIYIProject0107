@@ -35,6 +35,8 @@
 
 #import "GMoreTtaiSameStroViewController.h"//有T台锚点单品的更多商场
 
+#import "GmyTtaiViewController.h"//点击标签跳转
+
 @interface GTtaiDetailViewController ()<UIScrollViewDelegate,PSWaterFlowDelegate,PSCollectionViewDataSource,GgetllocationDelegate,UITableViewDataSource,UITableViewDelegate>
 {
     
@@ -92,6 +94,7 @@
     BOOL _isHaveMoreStoreData;//是否有更多商场
     
     NSMutableArray *_tmpArray;
+    
     
     
 }
@@ -703,6 +706,8 @@
         tagLabel.textAlignment = NSTextAlignmentCenter;
         tagLabel.layer.cornerRadius = 7;
         tagLabel.layer.borderWidth = 0.5;
+        tagLabel.tag = i+10000;
+        [tagLabel addTapGestureTarget:self action:@selector(tagLabelClicked:) tag:i+10000];
         [tagScrollView addSubview:tagLabel];
         
         tagScrollViewContentWidth += (tagLabel.frame.size.width +10);
@@ -834,6 +839,19 @@
     _collectionView.headerView = _tabHeaderView;
     
     
+    
+}
+
+-(void)tagLabelClicked:(UITapGestureRecognizer*)sender{
+    int index = sender.view.tag - 10000;
+    NSDictionary *dic = _ttaiDetailModel.tags[index];
+    NSLog(@"%@",dic);
+    
+    GmyTtaiViewController *cc = [[GmyTtaiViewController alloc]init];
+    cc.isTTaiDetailTagPush = YES;
+    cc.tagId = [dic stringValueForKey:@"tag_id"];
+    cc.tagName = [dic stringValueForKey:@"tag_name"];
+    [self.navigationController pushViewController:cc animated:YES];
     
 }
 

@@ -388,6 +388,9 @@ typedef enum {
 #define TTAI_DETAIL @"http://www119.alayy.com/?d=api&c=tplat&m=ttinfo&tt_id=%@&authcode=%@"
 #define TTAI_DETAIL_V2 @"http://www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_tt_info"
 
+//T台详情点击标签跳转同标签T台瀑布流
+#define TTAI_SAMETAG @"http://www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_tts_by_tag"
+
 //T台相关商场
 #define TTAI_STORE @"http://www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_relation_tts"
 

@@ -9,6 +9,7 @@
 #import "PSCollectionViewCell.h"
 @class ButtonProperty;
 
+
 //T台详情T台同款推荐
 
 @interface GTtaiDetailSamettCell : PSCollectionViewCell
@@ -21,6 +22,8 @@
 @property(nonatomic,retain)ButtonProperty *likeBackBtn;//喜欢的背景大button
 @property(nonatomic,retain)UIButton *like_btn;//喜欢标识
 @property(nonatomic,retain)UILabel *like_label;//喜欢数量
+
+
 
 -(void)loadCustomViewWithModel:(id)theModel;
 
