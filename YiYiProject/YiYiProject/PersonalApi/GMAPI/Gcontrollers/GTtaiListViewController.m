@@ -272,6 +272,7 @@
  *  获取顶部广告图
  */
 -(void)prepareTopScrollViewNetData{
+    
     NSString *url = [NSString stringWithFormat:@"%@",HOME_TTAI_TOPSCROLLVIEW];
     _tool_detail = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [_tool_detail requestCompletion:^(NSDictionary *result, NSError *erro) {
@@ -532,7 +533,7 @@
             
         }];
     }else if ([amodel.redirect_type intValue] == 0){//应用内
-        if ([amodel.adv_type_val intValue] == 2 || [amodel.adv_type_val intValue] == 3){//2商场活动 3店铺活动
+        if ([amodel.adv_type_val intValue] == 2 || [amodel.adv_type_val intValue] == 3 || [amodel.adv_type_val intValue] == 1){//2商场活动 3店铺活动
             NSString *activityId = amodel.theme_id;
             MessageDetailController *detail = [[MessageDetailController alloc]init];
             detail.isActivity = YES;

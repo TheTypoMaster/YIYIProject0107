@@ -23,7 +23,7 @@
 
 static NSString *SG_FOCUS_ITEM_ASS_KEY = @"loopScrollview";
 
-static CGFloat SWITCH_FOCUS_PICTURE_INTERVAL = 3.0; //switch interval time
+static CGFloat SWITCH_FOCUS_PICTURE_INTERVAL = 4.0; //switch interval time
 
 
 @implementation GcycleScrollView
