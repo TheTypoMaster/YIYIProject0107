@@ -24,7 +24,7 @@
         }
         
         UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width*0.3, frame.size.height)];
-        [imv l_setImageWithURL:[NSURL URLWithString:model.url] placeholderImage:DEFAULT_YIJIAYI];
+        [imv l_setImageWithURL:[NSURL URLWithString:model.cover_pic] placeholderImage:DEFAULT_YIJIAYI];
         [self addSubview:imv];
         
         UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(imv.frame)+5, 0, frame.size.width - imv.frame.size.width - 10, imv.frame.size.height *2.0/3.0)];

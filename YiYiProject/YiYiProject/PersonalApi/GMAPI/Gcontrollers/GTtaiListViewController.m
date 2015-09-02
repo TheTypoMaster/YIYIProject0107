@@ -112,6 +112,8 @@
         [_table loadFail];
     }
     
+//
+    
 }
 
 
@@ -306,7 +308,7 @@
     
     
     
-//    NSLog(@"竖着的幻灯的数据===%@",headerDic);
+    NSLog(@"竖着的幻灯的数据===%@",headerDic);
     
     
     _com_id_array1 = [NSMutableArray array];
@@ -324,7 +326,7 @@
             NSDictionary *dic_ofcomment=[self.commentarray1 objectAtIndex:i];
             
             //图片url
-            NSString *strimg=[dic_ofcomment objectForKey:@"url"];
+            NSString *strimg=[dic_ofcomment objectForKey:@"cover_pic"];
             if ([LTools isEmpty:strimg]) {
                 strimg = @" ";
             }
@@ -413,7 +415,7 @@
     
     
     
-//    NSLog(@"最新的幻灯的数据===%@",headerDic);
+    NSLog(@"最新的幻灯的数据===%@",headerDic);
     
     
     _com_id_array=[NSMutableArray array];
@@ -588,10 +590,16 @@
 - (void)loadData
 {
     CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
-    if (kCLAuthorizationStatusRestricted == status || kCLAuthorizationStatusDenied == status) {
+    if (kCLAuthorizationStatusRestricted == status) {
         NSLog(@"kCLAuthorizationStatusRestricted 开启定位失败");
         UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"开启定位失败,请允许衣加衣使用定位服务" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [al show];
+        return;
+    }else if (kCLAuthorizationStatusDenied == status){
+        NSLog(@"请允许衣加衣使用定位服务");
+//        UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请允许衣加衣使用定位服务" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//        [al show];
+        return;
     }
 
     [_table showRefreshHeader:YES];
@@ -1071,14 +1079,6 @@
         {
             streetStr = @"无法获取当前位置";
         }
-        
-        CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
-        if (kCLAuthorizationStatusRestricted == status || kCLAuthorizationStatusDenied == status) {
-            
-            streetStr = @"无法获取当前位置";
-
-        }
-        
         [weakSelf updateCurrentAddress:streetStr];
     }];
     
