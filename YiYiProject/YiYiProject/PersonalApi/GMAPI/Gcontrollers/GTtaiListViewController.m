@@ -125,6 +125,8 @@
     [self createNavigationbarTools];
     
     [self getChouJiangState];//获取抽奖接口
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getChouJiangState) name:NOTIFICATION_GETCHOUJIANGSTATE object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getChouJiangState) name:NOTIFICATION_LOGIN object:nil];
     
     _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH,DEVICE_HEIGHT - 64) showLoadMore:NO];
     _table.refreshDelegate = self;
@@ -608,7 +610,7 @@
     rightView.backgroundColor=[UIColor clearColor];
     
     UIButton *heartButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 44, 44)];
-    [heartButton addTarget:self action:@selector(clickToGift:) forControlEvents:UIControlEventTouchUpInside];
+    [heartButton addTarget:self action:@selector(clickToOpenChouJiangView:) forControlEvents:UIControlEventTouchUpInside];
     [heartButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [heartButton setImage:[UIImage imageNamed:@"Ttai_present"] forState:UIControlStateNormal];
     [heartButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
@@ -626,6 +628,11 @@
 
 #pragma mark 数据解析
 
+/**
+ *  解析T台列表数据
+ *
+ *  @param result
+ */
 - (void)parseDataWithResult:(NSDictionary *)result
 {
     NSMutableArray *arr;
@@ -693,20 +700,6 @@
     }];
 }
 
-- (void)parseChouJiang:(NSDictionary *)dic
-{
-    NSDictionary *info = dic[@"info"];
-    //数据无效
-    if (!info || ![info isKindOfClass:[NSDictionary class]]) {
-        return;
-    }
-    _chouJiangModel = [[ChouJiangModel alloc]initWithDictionary:info];
-    
-    if ([_chouJiangModel.pop_small intValue] == 1) {
-        
-        _redPoint.hidden = NO;
-    }
-}
 
 
 //T台赞 或 取消
@@ -801,27 +794,58 @@
     }];
 }
 
+#pragma mark - 抽奖相关
 
-#pragma mark 事件处理
+- (void)parseChouJiang:(NSDictionary *)dic
+{
+    NSDictionary *info = dic[@"info"];
+    //数据无效
+    if (!info || ![info isKindOfClass:[NSDictionary class]]) {
+        return;
+    }
+    _chouJiangModel = [[ChouJiangModel alloc]initWithDictionary:info];
+    
+    if ([_chouJiangModel.pop_small intValue] == 1) {
+        
+        _redPoint.hidden = NO;
+    }else{
+        _redPoint.hidden = YES;
+    }
+    
+    //需要自动显示抽奖view
+    if ([_chouJiangModel.pop intValue] == 1) {
+        
+        [self showChouJiangBigViewWithModel:_chouJiangModel];
+    }
+}
+
 
 /**
- *  点击去抽奖
+ *  点击打开抽奖view
  *
  *  @param sender
  */
-- (void)clickToGift:(UIButton *)sender
+- (void)clickToOpenChouJiangView:(UIButton *)sender
 {
-    if ([_chouJiangModel.pop_small intValue] != 1) {
+    if ([_chouJiangModel.pop_small intValue] == 1) {
         
-        return;
+        //说明还有抽奖活动
+        [self showChouJiangBigViewWithModel:_chouJiangModel];
+    }else
+    {
+        [LTools alertText:@"一大波活动将要袭来,敬请关注!"];
     }
-//    AdvertisementController *advertise = [[AdvertisementController alloc]init];
-
-//    UIView *view = [[UIView alloc]initWithFrame:[UIScreen mainScreen].bounds];
-//    view.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.5];
-
     
-    UIView *root = [UIApplication sharedApplication].keyWindow;
+}
+
+/**
+ *  控制抽奖大图的显示
+ *
+ *  @param aModel
+ */
+- (void)showChouJiangBigViewWithModel:(ChouJiangModel *)aModel
+{
+    //是否弹出大的抽奖接口
     
     //先把原先的移除
     if (_chouJiangView) {
@@ -830,19 +854,59 @@
         _chouJiangView = nil;
     }
     
-    //是否显示过大图
-    
     //显示抽奖入口
-    _chouJiangView = [[ChouJiangView alloc]initWithChouJiangModel:_chouJiangModel];
+    
+    UIView *root = [UIApplication sharedApplication].keyWindow;
+    
+    _chouJiangView = [[ChouJiangView alloc]initWithChouJiangModelNew:aModel];
+    
     [_chouJiangView showWithView:root];
+    
     __weak typeof(self)weakSelf = self;
     
     _chouJiangView.actionBlock = ^(ActionStyle actionStyle){
         
-//            [weakSelf chouJiangToDo:actionStyle];
+        [weakSelf chouJiangToDo:actionStyle];
     };
+    
+    
 }
 
+- (void)chouJiangToDo:(ActionStyle )actionStyle
+{
+    if (actionStyle == ActionStyle_Close) {
+        
+        
+    }else if (actionStyle == ActionStyle_ChouJiang){
+        
+        [_chouJiangView hidden];//隐藏
+        [self clickToChouJiang:nil];
+    }
+}
+
+
+/**
+ *  跳转抽奖页面
+ *
+ *  @param sender
+ */
+- (void)clickToChouJiang:(UIButton *)sender
+{
+    if ([LTools isLogin:self]) {
+        
+        //prize_id 和 authcode
+        NSString *url = [NSString stringWithFormat:@"%@&authcode=%@&prize_id=%@",_chouJiangModel.url,[GMAPI getAuthkey],_chouJiangModel.prize_id];
+        
+        GwebViewController *web = [[GwebViewController alloc]init];
+        web.urlstring = url;
+        web.targetTitle = _chouJiangModel.title;
+        web.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:web animated:YES];
+    }
+}
+
+
+#pragma mark 事件处理
 
 
 - (void)tapImage:(UITapGestureRecognizer *)tap

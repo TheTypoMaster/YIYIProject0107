@@ -23,6 +23,8 @@ typedef void(^ChouJiangeActionBlock)(ActionStyle actionStyle);
 
 - (id)initWithChouJiangModel:(ChouJiangModel *)aModel;
 
+- (id)initWithChouJiangModelNew:(ChouJiangModel *)aModel;
+
 - (void)show;
 
 - (void)showWithView:(UIView *)aView;

@@ -57,186 +57,186 @@
     
     //获取抽奖状态
     
-    [self getChouJiangState];
+//    [self getChouJiangState];
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getChouJiangState) name:NOTIFICATION_GETCHOUJIANGSTATE object:nil];
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getChouJiangState) name:NOTIFICATION_GETCHOUJIANGSTATE object:nil];
 }
 
 #pragma - mark 网络请求
 
-/**
- *  获取是否弹出抽奖入口
- */
-- (void)getChouJiangState
-{
-    __weak typeof(self)weakSelf = self;
-    NSString *url = [NSString stringWithFormat:GET_CHOUJIANGSTATE,[GMAPI getAuthkey]];
-    
-    NSLog(@"抽奖---%@",url);
-    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
-    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
-        
-        [weakSelf createChouJiangViewWithResult:result];
-        
-    } failBlock:^(NSDictionary *result, NSError *erro) {
-        
-        NSLog(@"获取是否抽奖状态失败");
-    }];
-}
-
-- (void)createChouJiangViewWithResult:(NSDictionary *)result
-{
-    NSDictionary *info = result[@"info"];
-    _chouJiangModel = [[ChouJiangModel alloc]initWithDictionary:info];
-
-    //是否弹出大的抽奖接口
-    
-    //先把原先的移除
-    if (_chouJiangeView) {
-        
-        [_chouJiangeView removeFromSuperview];
-        _chouJiangeView = nil;
-    }
-    
-//    //已显示过大图,
+///**
+// *  获取是否弹出抽奖入口
+// */
+//- (void)getChouJiangState
+//{
+//    __weak typeof(self)weakSelf = self;
+//    NSString *url = [NSString stringWithFormat:GET_CHOUJIANGSTATE,[GMAPI getAuthkey]];
 //    
-//    if ([LTools cacheBoolForKey:USER_CHOUJIANG_BIG]) {
+//    NSLog(@"抽奖---%@",url);
+//    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+//    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
 //        
-//        [self createSmallChouJiangView];//大图点击消失过了
+//        [weakSelf createChouJiangViewWithResult:result];
 //        
-//        return;
+//    } failBlock:^(NSDictionary *result, NSError *erro) {
+//        
+//        NSLog(@"获取是否抽奖状态失败");
+//    }];
+//}
+//
+//- (void)createChouJiangViewWithResult:(NSDictionary *)result
+//{
+//    NSDictionary *info = result[@"info"];
+//    _chouJiangModel = [[ChouJiangModel alloc]initWithDictionary:info];
+//
+//    //是否弹出大的抽奖接口
+//    
+//    //先把原先的移除
+//    if (_chouJiangeView) {
+//        
+//        [_chouJiangeView removeFromSuperview];
+//        _chouJiangeView = nil;
 //    }
-    
-    //是否显示过大图
-    
-    if ([_chouJiangModel.pop intValue] == 1) {
-        
-        //先把小图移除,防止大小都显示
-        
-        if (_chouJiangSmallBtn) {
-            
-            [_chouJiangSmallBtn removeFromSuperview];
-            _chouJiangSmallBtn = nil;
-        }
-        
-        //显示抽奖入口
-        
-        _chouJiangeView = [[ChouJiangView alloc]initWithChouJiangModel:_chouJiangModel];
-        
-        [_chouJiangeView showWithView:self.view];
-        
-        __weak typeof(self)weakSelf = self;
-        
-        _chouJiangeView.actionBlock = ^(ActionStyle actionStyle){
-            
-            [weakSelf chouJiangToDo:actionStyle];
-        };
-    }else
-    {
-        [self createSmallChouJiangView];
-    }
-}
-
-- (void)chouJiangToDo:(ActionStyle )actionStyle
-{
-    if (actionStyle == ActionStyle_Close) {
-        
-        [self createSmallChouJiangView];
-        
-    }else if (actionStyle == ActionStyle_ChouJiang){
-        
-        [self clickToChouJiang:nil];
-    }
-}
-
-/**
- *  创建小图抽奖入口
- */
-- (void)createSmallChouJiangView
-{
-    //抽奖入口小按钮
-    
-    if ([_chouJiangModel.pop_small intValue] == 1) {
-        
-        //显示小图标抽奖入口
-        
-        CGFloat imageWidth = [_chouJiangModel.small_pic_width floatValue] / 2.f;
-        CGFloat imageHeight = [_chouJiangModel.small_pic_height floatValue] / 2.f;
-        
-//        imageWidth = 100;
-//        imageHeight = 100;
-        
-        CGFloat maxWidth = imageWidth;
-        
-        //限定最大 100
-        if (maxWidth > 100) {
-            
-            maxWidth = 100;
-        }
-        
-        CGFloat realWidth = maxWidth * DEVICE_WIDTH / 375;//显示宽度
-        CGFloat realHeight = [LTools heightForImageHeight:imageHeight imageWidth:imageWidth showWidth:realWidth];
-        
-        UIImageView *imageView;
-        
-        
-        if (_chouJiangModel.small_pic_url) {
-            
-            if (!_chouJiangSmallBtn) {
-                _chouJiangSmallBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-                _chouJiangSmallBtn.frame = CGRectMake(10, 10, realWidth, realHeight);
-                [self.view addSubview:_chouJiangSmallBtn];
-                _chouJiangSmallBtn.backgroundColor = [UIColor clearColor];
-                [_chouJiangSmallBtn addTarget:self action:@selector(clickToChouJiang:) forControlEvents:UIControlEventTouchUpInside];
-                
-                imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, realWidth, realHeight)];
-                [_chouJiangSmallBtn addSubview:imageView];
-            }
-            [imageView l_setImageWithURL:[NSURL URLWithString:_chouJiangModel.small_pic_url] placeholderImage:DEFAULT_YIJIAYI];
-            
-//            imageView.image = [UIImage imageNamed:@"tuzi"];
-            
-            imageView.backgroundColor = [UIColor clearColor];
-
-        }else
-        {
-            NSLog(@"抽奖小图无效");
-        }
-        
-        
-    }else{ //不需要显示小按钮
-        
-        if (_chouJiangSmallBtn) {
-            
-            [_chouJiangSmallBtn removeFromSuperview];
-            _chouJiangSmallBtn = nil;
-        }
-    }
-}
-
-/**
- *  跳转抽奖页面
- *
- *  @param sender
- */
-- (void)clickToChouJiang:(UIButton *)sender
-{
-    if ([LTools isLogin:self]) {
-        
-        [_chouJiangeView hidden];//隐藏大的抽奖图
-        
-        [self createSmallChouJiangView];//创建小的
-
-        //prize_id 和 authcode
-        NSString *url = [NSString stringWithFormat:@"%@&authcode=%@&prize_id=%@",_chouJiangModel.url,[GMAPI getAuthkey],_chouJiangModel.prize_id];
-        
-        GwebViewController *web = [[GwebViewController alloc]init];
-        web.urlstring = url;
-        web.targetTitle = _chouJiangModel.title;
-        web.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:web animated:YES];
-    }
-}
+//    
+////    //已显示过大图,
+////    
+////    if ([LTools cacheBoolForKey:USER_CHOUJIANG_BIG]) {
+////        
+////        [self createSmallChouJiangView];//大图点击消失过了
+////        
+////        return;
+////    }
+//    
+//    //是否显示过大图
+//    
+//    if ([_chouJiangModel.pop intValue] == 1) {
+//        
+//        //先把小图移除,防止大小都显示
+//        
+//        if (_chouJiangSmallBtn) {
+//            
+//            [_chouJiangSmallBtn removeFromSuperview];
+//            _chouJiangSmallBtn = nil;
+//        }
+//        
+//        //显示抽奖入口
+//        
+//        _chouJiangeView = [[ChouJiangView alloc]initWithChouJiangModel:_chouJiangModel];
+//        
+//        [_chouJiangeView showWithView:self.view];
+//        
+//        __weak typeof(self)weakSelf = self;
+//        
+//        _chouJiangeView.actionBlock = ^(ActionStyle actionStyle){
+//            
+//            [weakSelf chouJiangToDo:actionStyle];
+//        };
+//    }else
+//    {
+//        [self createSmallChouJiangView];
+//    }
+//}
+//
+//- (void)chouJiangToDo:(ActionStyle )actionStyle
+//{
+//    if (actionStyle == ActionStyle_Close) {
+//        
+//        [self createSmallChouJiangView];
+//        
+//    }else if (actionStyle == ActionStyle_ChouJiang){
+//        
+//        [self clickToChouJiang:nil];
+//    }
+//}
+//
+///**
+// *  创建小图抽奖入口
+// */
+//- (void)createSmallChouJiangView
+//{
+//    //抽奖入口小按钮
+//    
+//    if ([_chouJiangModel.pop_small intValue] == 1) {
+//        
+//        //显示小图标抽奖入口
+//        
+//        CGFloat imageWidth = [_chouJiangModel.small_pic_width floatValue] / 2.f;
+//        CGFloat imageHeight = [_chouJiangModel.small_pic_height floatValue] / 2.f;
+//        
+////        imageWidth = 100;
+////        imageHeight = 100;
+//        
+//        CGFloat maxWidth = imageWidth;
+//        
+//        //限定最大 100
+//        if (maxWidth > 100) {
+//            
+//            maxWidth = 100;
+//        }
+//        
+//        CGFloat realWidth = maxWidth * DEVICE_WIDTH / 375;//显示宽度
+//        CGFloat realHeight = [LTools heightForImageHeight:imageHeight imageWidth:imageWidth showWidth:realWidth];
+//        
+//        UIImageView *imageView;
+//        
+//        
+//        if (_chouJiangModel.small_pic_url) {
+//            
+//            if (!_chouJiangSmallBtn) {
+//                _chouJiangSmallBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//                _chouJiangSmallBtn.frame = CGRectMake(10, 10, realWidth, realHeight);
+//                [self.view addSubview:_chouJiangSmallBtn];
+//                _chouJiangSmallBtn.backgroundColor = [UIColor clearColor];
+//                [_chouJiangSmallBtn addTarget:self action:@selector(clickToChouJiang:) forControlEvents:UIControlEventTouchUpInside];
+//                
+//                imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, realWidth, realHeight)];
+//                [_chouJiangSmallBtn addSubview:imageView];
+//            }
+//            [imageView l_setImageWithURL:[NSURL URLWithString:_chouJiangModel.small_pic_url] placeholderImage:DEFAULT_YIJIAYI];
+//            
+////            imageView.image = [UIImage imageNamed:@"tuzi"];
+//            
+//            imageView.backgroundColor = [UIColor clearColor];
+//
+//        }else
+//        {
+//            NSLog(@"抽奖小图无效");
+//        }
+//        
+//        
+//    }else{ //不需要显示小按钮
+//        
+//        if (_chouJiangSmallBtn) {
+//            
+//            [_chouJiangSmallBtn removeFromSuperview];
+//            _chouJiangSmallBtn = nil;
+//        }
+//    }
+//}
+//
+///**
+// *  跳转抽奖页面
+// *
+// *  @param sender
+// */
+//- (void)clickToChouJiang:(UIButton *)sender
+//{
+//    if ([LTools isLogin:self]) {
+//        
+//        [_chouJiangeView hidden];//隐藏大的抽奖图
+//        
+//        [self createSmallChouJiangView];//创建小的
+//
+//        //prize_id 和 authcode
+//        NSString *url = [NSString stringWithFormat:@"%@&authcode=%@&prize_id=%@",_chouJiangModel.url,[GMAPI getAuthkey],_chouJiangModel.prize_id];
+//        
+//        GwebViewController *web = [[GwebViewController alloc]init];
+//        web.urlstring = url;
+//        web.targetTitle = _chouJiangModel.title;
+//        web.hidesBottomBarWhenPushed = YES;
+//        [self.navigationController pushViewController:web animated:YES];
+//    }
+//}
 
 #pragma - mark 广告页
 
