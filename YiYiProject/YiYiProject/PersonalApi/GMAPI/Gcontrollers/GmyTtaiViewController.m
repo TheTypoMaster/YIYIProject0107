@@ -15,6 +15,7 @@
 
 #import "MJPhoto.h"
 #import "LPhotoBrowser.h"
+#import "GTtaiDetailViewController.h"
 
 @interface GmyTtaiViewController ()<TMQuiltViewDataSource,WaterFlowDelegate>
 {
@@ -42,16 +43,24 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    if (self.isTTaiDetailTagPush) {//T台详情标签跳转
+        [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
+        self.view.backgroundColor = [UIColor whiteColor];
+        self.myTitleLabel.text = self.tagName;
+        [self creatWaterFlowView];
+        
+    }else{
+        [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeText];
+        self.view.backgroundColor = [UIColor whiteColor];
+        self.myTitleLabel.text = @"我的T台";
+        self.myTitleLabel.textColor = RGBCOLOR(252, 76, 139);
+        self.rightString = @"编辑";
+        
+        [self creatWaterFlowView];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateUserTtai) name:NOTIFICATION_TTAI_EDIT_SUCCESS object:nil];
+    }
     
-    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeText];
-    self.view.backgroundColor = [UIColor whiteColor];
-    self.myTitleLabel.text = @"我的T台";
-    self.myTitleLabel.textColor = RGBCOLOR(252, 76, 139);
-    self.rightString = @"编辑";
     
-    [self creatWaterFlowView];
-    
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateUserTtai) name:NOTIFICATION_TTAI_EDIT_SUCCESS object:nil];
     
 
 }
@@ -142,6 +151,49 @@
 }
 
 
+
+
+//获取标签T台
+-(void)getTagTPlat{
+    NSString *text = @"http://www119.alayy.com/index.php?d=api&c=tplat_v2&m=get_tts_by_tag&tag_id=1&authcode=US5SK1ApBeNV7gabVuZci1L3V7UE8Qf2Ay5dbFcyBjEBMgAyBmMHMFFtBDNXOg19BTICOQ==";
+    
+    //请求网络数据
+    NSString *api = [NSString stringWithFormat:@"%@&page=%d&per_page=%d&tag_id=%@&authcode=%@",TTAi_LIST,_waterFlow.pageNum,L_PAGE_SIZE,self.tagId,[GMAPI getAuthkey]];
+    NSLog(@"请求的接口%@",api);
+    
+    LTools *cc = [[LTools alloc]initWithUrl:text isPost:NO postData:nil];
+    [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"result : %@",result);
+        NSMutableArray *arr;
+        if ([result isKindOfClass:[NSDictionary class]]) {
+            
+            NSArray *list = result[@"list"];
+            arr = [NSMutableArray arrayWithCapacity:list.count];
+            if ([list isKindOfClass:[NSArray class]]) {
+                
+                for (NSDictionary *aDic in list) {
+                    
+                    TPlatModel *aModel = [[TPlatModel alloc]initWithDictionary:aDic];
+                    
+                    [arr addObject:aModel];
+                }
+                
+            }
+        }
+        
+        [_waterFlow reloadData:arr pageSize:L_PAGE_SIZE];
+        
+        _waterFlow.isReloadData = NO;
+        
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSLog(@"failBlock == %@",failDic[RESULT_INFO]);
+        [_waterFlow loadFail];
+    }];
+}
+
+
 /**
  *  获取个人T台
  */
@@ -207,11 +259,21 @@
 
 - (void)waterLoadNewData
 {
-    [self getUserTPlat];
+    
+    if (self.isTTaiDetailTagPush) {
+        [self getTagTPlat];
+    }else{
+        [self getUserTPlat];
+    }
+    
 }
 - (void)waterLoadMoreData
 {
-    [self getUserTPlat];
+    if (self.isTTaiDetailTagPush) {
+        [self getTagTPlat];
+    }else{
+        [self getUserTPlat];
+    }
 }
 
 //点击方法

@@ -12,6 +12,8 @@
 
 #import "MyViewController.h"
 
+@class GTtaiDetailViewController;
+
 @interface GTtaiListViewController : MyViewController
 
 
@@ -27,6 +29,9 @@
 //到单品的
 -(void)turnToDanPinInfoId:(NSString *)infoId
                  infoName:(NSString *)infoName;
+
+
+
 
 
 @end
