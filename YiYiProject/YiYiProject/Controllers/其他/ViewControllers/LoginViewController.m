@@ -263,9 +263,14 @@
     
     __weak typeof(self)weakSelf = self;
     
-    NSString *token = [LTools cacheForKey:USER_DEVICE_TOKEN];
+    NSString *thetoken = [LTools cacheForKey:USER_DEVICE_TOKEN];
     
-    NSString *url = [NSString stringWithFormat:USER_LOGIN_ACTION,type,password,thirdId,nickName,thirdphoto,gender,token,mobile,@"iOS"];
+    
+    if ([thetoken isEqualToString:@"null"] || [thetoken isEqualToString:@"(null)"]) {
+        thetoken = @"";
+    }
+    
+    NSString *url = [NSString stringWithFormat:USER_LOGIN_ACTION,type,password,thirdId,nickName,thirdphoto,gender,thetoken,mobile,@"iOS"];
     
     LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {

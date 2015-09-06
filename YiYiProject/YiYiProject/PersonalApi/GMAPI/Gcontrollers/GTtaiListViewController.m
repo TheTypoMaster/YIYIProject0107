@@ -112,8 +112,6 @@
         [_table loadFail];
     }
     
-//
-    
 }
 
 
@@ -308,7 +306,7 @@
     
     
     
-    NSLog(@"竖着的幻灯的数据===%@",headerDic);
+//    NSLog(@"竖着的幻灯的数据===%@",headerDic);
     
     
     _com_id_array1 = [NSMutableArray array];
@@ -334,7 +332,15 @@
             
             //内容
             NSString *str_rec_title = [dic_ofcomment objectForKey:@"activity_info"];
-            str_rec_title = [NSString stringWithFormat:@"%@:%@",[dic_ofcomment objectForKey:@"activity_title"],[dic_ofcomment objectForKey:@"activity_info"]];
+            
+            if ([LTools isEmpty:[dic_ofcomment objectForKey:@"activity_info"]]) {
+                
+                str_rec_title = [dic_ofcomment objectForKey:@"activity_title"];
+            }else
+            {
+                str_rec_title = [NSString stringWithFormat:@"%@:%@",[dic_ofcomment objectForKey:@"activity_title"],[dic_ofcomment objectForKey:@"activity_info"]];
+            }
+            
             if ([LTools isEmpty:str_rec_title]) {
                 str_rec_title = @" ";
             }
@@ -415,7 +421,7 @@
     
     
     
-    NSLog(@"最新的幻灯的数据===%@",headerDic);
+//    NSLog(@"最新的幻灯的数据===%@",headerDic);
     
     
     _com_id_array=[NSMutableArray array];
@@ -590,16 +596,10 @@
 - (void)loadData
 {
     CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
-    if (kCLAuthorizationStatusRestricted == status) {
+    if (kCLAuthorizationStatusRestricted == status || kCLAuthorizationStatusDenied == status) {
         NSLog(@"kCLAuthorizationStatusRestricted 开启定位失败");
         UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"开启定位失败,请允许衣加衣使用定位服务" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [al show];
-        return;
-    }else if (kCLAuthorizationStatusDenied == status){
-        NSLog(@"请允许衣加衣使用定位服务");
-//        UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请允许衣加衣使用定位服务" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-//        [al show];
-        return;
     }
 
     [_table showRefreshHeader:YES];
@@ -1079,6 +1079,14 @@
         {
             streetStr = @"无法获取当前位置";
         }
+        
+        CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
+        if (kCLAuthorizationStatusRestricted == status || kCLAuthorizationStatusDenied == status) {
+            
+            streetStr = @"无法获取当前位置";
+
+        }
+        
         [weakSelf updateCurrentAddress:streetStr];
     }];
     

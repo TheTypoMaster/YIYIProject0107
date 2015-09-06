@@ -47,8 +47,10 @@
 
 #define RedirectUrl @"http://sns.whalecloud.com/sina2/callback" //回调地址
 
-#define BAIDU_APPKEY @"iiUyYDDK4A6CnzmHL4SVUvuo" //企业 com.yijiayi.yjy
-//#define BAIDU_APPKEY @"xVfbtQq4cB5OLkTk8hmxlyLd" //appStore com.yijiayi.yijiayi
+//百度地图
+
+//#define BAIDU_APPKEY @"iiUyYDDK4A6CnzmHL4SVUvuo" //企业 com.yijiayi.yjy
+#define BAIDU_APPKEY @"xVfbtQq4cB5OLkTk8hmxlyLd" //appStore com.yijiayi.yijiayi
 
 
 //sns.whalecloud.com
@@ -400,6 +402,10 @@
 
     if (thetoken && thetoken.length > 10) {
         
+        if ([thetoken isEqualToString:@"null"] || [thetoken isEqualToString:@"(null)"]) {
+            thetoken = @"";
+        }
+        
         NSString *post = [NSString stringWithFormat:@"&devicetoken=%@&authcode=%@",thetoken,[GMAPI getAuthkey]];
         NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
         NSString *url = [NSString stringWithFormat:POST_UPDATEMYINFO_URL];
@@ -415,8 +421,6 @@
             
         }];
     }
-    
-    
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error

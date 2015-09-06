@@ -24,11 +24,23 @@
         }
         
         UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width*0.3, frame.size.height)];
+        imv.clipsToBounds = YES;
         [imv l_setImageWithURL:[NSURL URLWithString:model.cover_pic] placeholderImage:DEFAULT_YIJIAYI];
         [self addSubview:imv];
+        imv.contentMode = UIViewContentModeCenter;
+
         
-        UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(imv.frame)+5, 0, frame.size.width - imv.frame.size.width - 10, imv.frame.size.height *2.0/3.0)];
-        titleLabel.text = [NSString stringWithFormat:@"%@:%@",model.activity_title,model.activity_info];
+        UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(imv.frame)+10, 0, frame.size.width - imv.frame.size.width - 20, imv.frame.size.height *2.0/3.0)];
+        
+        NSString *title;
+        if (![LTools isEmpty:model.activity_info]) {
+            title = [NSString stringWithFormat:@"%@:%@",model.activity_title,model.activity_info];
+        }else
+        {
+            title = model.activity_title;
+        }
+        
+        titleLabel.text = title;
         titleLabel.font = [UIFont systemFontOfSize:13];
         titleLabel.numberOfLines = 2;
         [self addSubview:titleLabel];
