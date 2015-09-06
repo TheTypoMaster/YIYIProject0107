@@ -55,7 +55,9 @@
 
 //sns.whalecloud.com
 
-
+/**
+ *  准备加支付了
+ */
 @interface AppDelegate ()<BMKGeneralDelegate,RCIMConnectionStatusDelegate,RCConnectDelegate,RCIMConnectionStatusDelegate,RCConnectDelegate,RCIMReceiveMessageDelegate,RCIMUserInfoFetcherDelegagte,GgetllocationDelegate>
 {
     BMKMapManager* _mapManager;
