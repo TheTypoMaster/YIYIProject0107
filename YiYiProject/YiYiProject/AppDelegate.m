@@ -56,7 +56,7 @@
 //sns.whalecloud.com
 
 /**
- *  准备加支付了
+ *  准备加支付了 2.0
  */
 @interface AppDelegate ()<BMKGeneralDelegate,RCIMConnectionStatusDelegate,RCConnectDelegate,RCIMConnectionStatusDelegate,RCConnectDelegate,RCIMReceiveMessageDelegate,RCIMUserInfoFetcherDelegagte,GgetllocationDelegate>
 {

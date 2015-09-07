@@ -29,6 +29,11 @@ alpha:(a)]
 #define NSStringFromFloat(float) [NSString stringWithFormat:@"%f",(float)]
 #define NSStringFromInt(int) [NSString stringWithFormat:@"%d",(int)]
 
+//常用变量
+
+//根视图
+#define ROOTVIEWCONTROLLER (UITabBarController *)[UIApplication sharedApplication].keyWindow.rootViewController
+
 //数据更新状态
 
 #define UPDATE_PARAM @"updateParam" //要更新的参数
@@ -166,6 +171,21 @@ alpha:(a)]
 #define NOTIFICATION_TPLATDETAILCLOSE @"TPlatDetailclose"
 
 
+////////////购买支付相关通知////////////
+
+#define NOTIFICATION_ADDADDRESS @"addAddress"//添加新地址
+#define NOTIFICATION_UPDATE_TO_CART @"updateProductToCart"//更新购物车
+#define NOTIFICATION_PAY_WEIXIN_RESULT @"weiXinPayResult" //微信支付结果成功或者失败
+#define NOTIFICATION_PAY_ALI_RESULT @"aliPayResult" //支付宝支付结果成功或者失败
+#define NOTIFICATION_PAY_SUCCESS @"pay_success" //支付成功通知
+#define NOTIFICATION_BUY_AGAIN @"buy_again" //再次购买通知
+#define NOTIFICATION_RECIEVE_CONFIRM @"recieve_confirm" //确认收货通知
+#define NOTIFICATION_ORDER_CANCEL @"cancelOrder" //取消订单
+#define NOTIFICATION_ORDER_DEL @"delOrder" //删除订单
+#define NOTIFICATION_GO_TO_PAY @"goToPayOrder" //去支付订单
+#define NOTIFICATION_COMMENTSUCCESS @"NOTIFICATION_COMMENTSUCCESS"//评价成功
+
+
 //登录类型 normal为正常手机登陆，sweibo、qq、weixin分别代表新浪微博、qq、微信登陆
 typedef enum{
     Login_Normal = 0,
@@ -297,6 +317,13 @@ typedef enum {
     CELLSTYLE_CollectList = 2, //收藏 和 单品列表类似,只是没有店名
     CELLSTYLE_BrandRecommendList = 3 //品牌推荐 只有点赞、大图
 }CELLSTYLE;
+
+typedef enum{
+    ORDERTYPE_DaiFu = 1, //待付
+    ORDERTYPE_PeiSong, //配送中
+    ORDERTYPE_DaiPingJia,//待评价
+    ORDERTYPE_WanCheng //完成
+}ORDERTYPE;
 
 //单品分类
 #define PRODUCT_FENLEI  @[@"全部",@"上衣",@"裤子",@"裙子",@"内衣",@"配饰",@"其他"]
@@ -634,8 +661,6 @@ typedef enum {
 //删除单品  参数：authcode  单品id字符串逗号隔开：product_ids
 #define GDELETPRODUCTS @"http://www.alayy.com/index.php?d=api&c=products&m=del_product"
 
-
-
 //搜索接口 品牌 商铺 单品
 #define GSEARCH @"http://www.alayy.com/index.php?d=api&c=search"
 
@@ -702,7 +727,6 @@ typedef enum {
 //删除T台
 #define DELETE_TTAI @"http://www.alayy.com/index.php?d=api&c=tplat&m=del_tt"
 
-
 //编辑T台
 #define EDIT_TTAI @"http://www.alayy.com/index.php?d=api&c=tplat&m=edit_tt"
 
@@ -756,6 +780,73 @@ typedef enum {
 #define PRODUCT_COMMENT_ADD @"http://www.alayy.com/index.php?d=api&c=products&m=comment"
 //单品赞列表
 #define PRODUCT_ZAN_LIST @"http://www.alayy.com/index.php?d=api&c=products&m=get_like_user&product_id=%@"
+
+//////////////购物车订单购买相关/////////////
+
+//收货地址相关接口==================
+
+//获取用户的收货地址列表
+#define USER_ADDRESS_LIST @"http://www.alayy.com/index.php?d=api&c=user&m=get_user_address"
+
+//16、添加用户的收货地址
+#define USER_ADDRESS_ADD @"http://www.alayy.com/index.php?d=api&c=user&m=add_user_address"
+
+//17、编辑用户的收货地址
+#define USER_ADDRESS_EDIT @"http://www.alayy.com/index.php?d=api&c=user&m=edit_user_address"
+
+//设置默认地址
+#define USER_ADDRESS_SETDEFAULT @"http://www.alayy.com/index.php?d=api&c=user&m=set_default_address"
+
+//删除地址
+#define USER_ADDRESS_DELETE @"http://www.alayy.com/index.php?d=api&c=user&m=del_user_address"
+
+//订单相关接口=====================
+
+//40、购物车添加商品
+#define ORDER_ADD_TO_CART @"http://www.alayy.com/index.php?d=api&c=order&m=add_to_cart"
+
+//41、购物车增加/减少商品
+#define ORDER_EDIT_CART_PRODUCT @"http://www.alayy.com/index.php?d=api&c=order&m=edit_cart_product"
+
+//42、删除某条购物车记录
+#define ORDER_DEL_CART_PRODUCT @"http://www.alayy.com/index.php?d=api&c=order&m=del_cart_product"
+
+//43、获取购物车记录
+#define ORDER_GET_CART_PRODCUTS @"http://www.alayy.com/index.php?d=api&c=order&m=get_cart_products"
+
+//44、用户登录后同步购物车数据
+#define ORDER_SYNC_CART_INFO @"http://www.alayy.com/index.php?d=api&c=order&m=sync_cart_info"
+
+//47、提交订单,后台生成订单号
+#define ORDER_SUBMIT @"http://www.alayy.com/index.php?d=api&c=order&m=submit_order"
+
+//45、获取用户默认地址及运费
+#define ORDER_GET_DEFAULT_ADDRESS @"http://www.alayy.com/index.php?d=api&c=order&m=get_default_address"
+
+//46、获取运费
+
+#define ORDER_GET_EXPRESS_FEE @"http://www.alayy.com/index.php?d=api&c=order&m=get_express_fee"
+
+//48、获取支付宝签名或者微信生成预订单
+#define ORDER_GET_SIGN @"http://www.alayy.com/index.php?d=api&c=order&m=get_sign"
+
+//49、获取订单详情
+#define ORDER_GET_ORDER_INFO @"http://www.alayy.com/index.php?d=api&c=order&m=get_order_info"
+
+//50、获取我的订单列表
+#define ORDER_GET_MY_ORDERS @"http://www.alayy.com/index.php?d=api&c=order&m=get_my_orders"
+
+//51、查看订单支付状态
+#define ORDER_GET_ORDER_PAY @"http://www.alayy.com/index.php?d=api&c=order&m=get_order_pay"
+
+//52、用户确认收货
+#define ORDER_RECEIVING_CONFIRM @"http://www.alayy.com/index.php?d=api&c=order&m=receiving_confirm"
+
+//53、用户取消或删除订单
+#define ORDER_HANDLE_ORDER @"http://www.alayy.com/index.php?d=api&c=order&m=handle_order"
+
+//获取购物车数量
+#define GET_SHOPPINGCAR_NUM @"http://www.alayy.com/index.php?d=api&c=order&m=get_cart_pro_num"
 
 #endif
 

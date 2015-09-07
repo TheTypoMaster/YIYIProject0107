@@ -44,6 +44,9 @@
 @end
 
 @interface RefreshTableView : UITableView<L_EGORefreshTableDelegate,UITableViewDataSource,UITableViewDelegate>
+{
+    int _dataArrayCount;//数据源个数
+}
 
 
 @property (nonatomic,retain)LRefreshTableHeaderView * refreshHeaderView;
@@ -85,5 +88,19 @@
 //买衣日志扩展
 - (id)initWithFrame:(CGRect)frame style:(UITableViewStyle)theStyle;
 - (void)reloadData1:(NSArray *)data1 pageSize:(int)pageSize;
+
+/**
+ *  成功加载数据reload
+ *  1、没有数据时显示自定义view
+ *  2、当数据大于0小于一页时不显示底部加载view
+ *
+ *  @param data       每次请求数据
+ *  @param pageSize   每页个数
+ *  @param noDataView 自定义没有数据时view
+ */
+- (void)reloadData:(NSArray *)data
+          pageSize:(int)pageSize
+        noDataView:(UIView *)noDataView;
+
 
 @end

@@ -151,6 +151,97 @@
     self.tableFooterView = tableFooterView;
 }
 
+#pragma mark - 拓展新方法
+
+/**
+ *  成功加载数据reload
+ *
+ *  @param data       每次请求数据
+ *  @param pageSize   每页个数
+ *  @param noDataView 自定义没有数据时view
+ */
+- (void)reloadData:(NSArray *)data
+          pageSize:(int)pageSize
+        noDataView:(UIView *)noDataView
+{
+    if (data.count < pageSize) {
+        
+        self.isHaveMoreData = NO;
+    }else
+    {
+        self.isHaveMoreData = YES;
+    }
+    
+    if (self.isReloadData) {
+        
+        [self.dataArray removeAllObjects];
+        
+    }
+    [self.dataArray addObjectsFromArray:data];
+    
+    [self finishReloadDataWithView:noDataView pageSize:pageSize];
+}
+
+//完成数据加载
+
+- (void)finishReloadDataWithView:(UIView *)noDataView
+                        pageSize:(int)pageSize
+{
+    NSLog(@"finishReloadigData完成加载");
+    
+    _reloading = NO;
+    if (_refreshHeaderView) {
+        [self.refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self];
+        self.isReloadData = NO;
+    }
+    
+    //没有数据时
+    
+    if (self.dataArray.count == 0) {
+        
+        if (self.tableFooterView) {
+            
+            [self.tableFooterView removeFromSuperview];
+            self.tableFooterView = nil;
+        }
+        
+        UIView *footer = [[UIView alloc]initWithFrame:self.bounds];
+        footer.backgroundColor = [UIColor clearColor];
+        self.tableFooterView = footer;
+        [footer addSubview:noDataView];
+        noDataView.center = CGPointMake(footer.width/2.f, footer.height/2.f);
+        
+    }else //有数据
+    {
+        //总数小于一页时 但是有数据时 不显示tableViewFooter
+        if (self.dataArray.count < pageSize) {
+            
+            self.tableFooterView = nil;
+        }else
+        {
+            [self createFooterView];
+        }
+    }
+    
+    
+    [self reloadData];
+    
+    //如果有更多数据，重新设置footerview  frame
+    if (self.isHaveMoreData)
+    {
+        [self stopLoading:1];
+        
+    }else {
+        
+        [self stopLoading:2];
+    }
+    
+    self.userInteractionEnabled = YES;
+    
+    //设置数据个数
+    [self setValue:[NSNumber numberWithInteger:_dataArray.count] forKey:@"_dataArrayCount"];
+}
+
 
 #pragma mark-
 #pragma mark force to show the refresh headerView
@@ -365,6 +456,9 @@
     }
     
     self.userInteractionEnabled = YES;
+    
+    [self setValue:[NSNumber numberWithInteger:_dataArray.count] forKey:@"_dataArrayCount"];
+
 }
 
 - (BOOL)egoRefreshTableDataSourceIsLoading:(UIView*)view

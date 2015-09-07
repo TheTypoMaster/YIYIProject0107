@@ -18,22 +18,15 @@
 @property(nonatomic,retain)NSString *longitude;
 @property(nonatomic,retain)NSString *latitude;
 @property(nonatomic,retain)NSString *mall_name;//店铺名或者商场名
-
 @property(nonatomic,retain)NSString *mall_type;//店铺类型 2//精品店 3//品牌店 1//大商场
-
 @property(nonatomic,retain)NSString *product_name;//品牌名
-
 @property(nonatomic,retain)NSString *product_price;//打折后价格
 @property(nonatomic,retain)NSString *original_price;//原价
-
 @property(nonatomic,assign)CGFloat discount_num;
 @property(nonatomic,retain)NSString *product_gender;
-
 @property(nonatomic,retain)NSString *product_like_num;//赞数量
 @property(nonatomic,retain)NSString *product_fav_num;//收藏数量
-
 @property(nonatomic,retain)NSString *product_brand_id;
-
 @property(nonatomic,retain)NSString *product_brand_name;//品牌名
 
 @property(nonatomic,retain)NSString *product_share_num;
@@ -78,5 +71,11 @@
 @property(nonatomic,retain)NSString *brand_name;//品牌名字
 @property(nonatomic,retain)NSDictionary *official_pic;//官方固定介绍图
 @property(nonatomic,retain)NSDictionary *official_activity;//官方活动
+
+//支付相关
+@property(nonatomic,retain)NSString *product_num;//单品个数
+@property(nonatomic,retain)NSString *weight;//重量单位 g
+@property(nonatomic,retain)NSString *cover_pic;//单品封面
+@property(nonatomic,retain)NSString *is_seckill;//是否秒杀
 
 @end

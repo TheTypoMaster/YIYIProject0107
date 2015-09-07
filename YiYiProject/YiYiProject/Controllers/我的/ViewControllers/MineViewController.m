@@ -16,25 +16,16 @@
 #import "GMapViewController.h"//测试地图vc
 
 #import "GmyMainViewController.h"//我的主页
-
-
 #import "MyYiChuViewController.h"//我的衣橱
-
 #import "MyConcernController.h"//我的关注
 #import "MessageListController.h"//消息中心
-
 #import "MyBodyViewController.h"//我的体型
 #import "MyMatchViewController.h"//我的搭配
-
 #import "MySettingsViewController.h" //设置
 #import "EditMyInfoViewController.h"  //编辑资料
-
 #import "ShenQingDianPuViewController.h"
-
 #import "MyShopViewController.h"//我的店铺
-
 #import "MyYiChuViewController.h"//我的衣橱
-
 #import "LShareSheetView.h"
 
 #import "ParallaxHeaderView.h"
@@ -44,12 +35,13 @@
 #import "UserInfo.h"
 
 #import "GScanViewController.h"//扫一扫
-
 #import "GwebViewController.h"//web界面
-
 #import "GmyTtaiViewController.h"//我的T台
-
 #import "GMyWalletViewController.h"//我的钱包
+
+#import "ShoppingCarController.h"//我的购物车
+#import "OrderViewController.h"//我的订单
+#import "ShoppingAddressController.h"//收货地址
 
 typedef enum{
     USERFACE = 0,//头像
@@ -74,10 +66,7 @@ typedef enum{
     
     UserInfo *_userInfo;//用户信息model
     
-    
     BOOL _getUserinfoSuccess;//加载用户数据是否成功
-    
-    
     
     UIActivityIndicatorView *_hud;
     
@@ -152,7 +141,7 @@ typedef enum{
     
     [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeNull WithRightButtonType:MyViewControllerRightbuttonTypeNull];
     
-    [self chushihuaView];
+    [self chuShiHuaView];
     
     //获取未读消息条数
     
@@ -190,7 +179,7 @@ typedef enum{
 
 
 //初始化view
--(void)chushihuaView{
+-(void)chuShiHuaView{
     
     
     //初始化相关
@@ -220,6 +209,9 @@ typedef enum{
     
     _logoImageArray = @[[UIImage imageNamed:@"my_shoucang.png"],
                         [UIImage imageNamed:@"my_wallet.png"],
+                        [UIImage imageNamed:@"my_gouwuche"],
+                        [UIImage imageNamed:@"my_dingdan"],
+                        [UIImage imageNamed:@"my_dizhi"],
                         [UIImage imageNamed:@"my_message.png"],
                         [UIImage imageNamed:@"my_friends.png"],
                         [UIImage imageNamed:@"my_saoma.png"],
@@ -228,6 +220,9 @@ typedef enum{
     
     _tabelViewCellTitleArray = @[@"我的收藏",
                                  @"我的钱包",
+                                 @"我的购物车",
+                                 @"我的订单",
+                                 @"我的地址",
                                  @"消息中心",
                                  @"邀请好友",
                                  @"扫一扫",
@@ -278,19 +273,13 @@ typedef enum{
 }
 
 
-
-
-
-
 //退出登录成功后的页面调整
 
 -(void)GLogoutAction{
     
     [self setUpuserInfoViewWithLoginState:[LTools cacheBoolForKey:LOGIN_SERVER_STATE]];
-    [self chushihuaView];
+    [self chuShiHuaView];
 }
-
-
 
 //请求到userinfo之后根据shopman参数判断是否拥有店铺 调整 标题和图标二维数组
 -(void)changeTheTitleAndPicArray_dianzhu{//已经是店主
@@ -348,8 +337,6 @@ typedef enum{
     _userInfo.shopman = @"1";
     [_tableView reloadData];
 }
-
-
 
 
 -(void)cacheUserInfo{
@@ -422,8 +409,6 @@ typedef enum{
     [_tableView reloadData];
     
 }
-
-
 
 
 
@@ -776,10 +761,6 @@ typedef enum{
         return;
     }
     
-    
-    
-    
-    
     if (sender.selected == YES) {//已经签到
         
     }else if (sender.selected == NO){//未签到
@@ -879,7 +860,6 @@ typedef enum{
 }
 
 
-
 -(void)huangdong{
     // 晃动次数
     static int numberOfShakes = 4;
@@ -912,7 +892,7 @@ typedef enum{
 
 
 //跳转个人设置界面
--(void)xiaochilun{
+-(void)clickToSettings{
     
     //判断是否登录
     if ([LTools cacheBoolForKey:LOGIN_SERVER_STATE] == NO) {
@@ -927,13 +907,10 @@ typedef enum{
         return;
         
     }
-    
-    
+
     if (!_getUserinfoSuccess) {
         return;
     }
-    
-    
     
     MySettingsViewController *mySettingVC = [[MySettingsViewController alloc]init];
     mySettingVC.hidesBottomBarWhenPushed = YES;
@@ -1105,7 +1082,9 @@ typedef enum{
     }
 //    cell.separatorInset = UIEdgeInsetsMake(0,0,0,0);//上左下右
     
-    if (indexPath.row == 2) {
+    NSString *title = _tabelViewCellTitleArray[indexPath.row];
+    
+    if ([title isEqualToString:@"消息中心"]) {
         
         //消息中心
         
@@ -1136,9 +1115,7 @@ typedef enum{
         }
         
     }
-    
-    NSLog(@"%@",_tabelViewCellTitleArray[indexPath.row]);
-    
+        
     [cell creatCustomViewWithGcellType:GPERSON indexPath:indexPath customObject:_customInfo_tabelViewCell];
     
     
@@ -1156,91 +1133,144 @@ typedef enum{
         UINavigationController *unVc = [[UINavigationController alloc]initWithRootViewController:login];
         
         [self presentViewController:unVc animated:YES completion:nil];
-
         
         return;
-        
     }
-    
     
     if (!_getUserinfoSuccess) {
         return;
     }
     
-    
-    
-    
-    switch (indexPath.row) {
-        case 0://我的收藏
-        {
-            MyConcernController *concern = [[MyConcernController alloc]init];
-            concern.hidesBottomBarWhenPushed = YES;
-            concern.lastPageNavigationHidden = YES;
-            [self.navigationController pushViewController:concern animated:YES];
-        }
-            break;
-        case 1://我的钱包
-        {
-            GMyWalletViewController *ccc = [[GMyWalletViewController alloc]init];
-            ccc.hidesBottomBarWhenPushed = YES;
-            ccc.lastPageNavigationHidden = YES;
-            ccc.jifen = self.jifen;
-            [self.navigationController pushViewController:ccc animated:YES];
-            
-        }
-            break;
-////        case 2://申请店铺/我的店铺
-////        {
-////            int shopMan = [_userInfo.shopman intValue];
-////            
-////            if (shopMan == 2) {
-////                NSLog(@"店主");
-////                MyShopViewController *shop = [[MyShopViewController alloc]init];
-////                shop.userInfo = _userInfo;
-////                shop.lastPageNavigationHidden = YES;
-////                shop.hidesBottomBarWhenPushed = YES;
-////                [self.navigationController pushViewController:shop animated:YES];
-////            }else if (shopMan == 1){
-////                NSLog(@"店铺申请");
-////                [LTools showMBProgressWithText:@"您已申请店铺,正在审核中..." addToView:self.view];
-////            }else if (shopMan == 0){
-////                NSLog(@"普通");
-////                ShenQingDianPuViewController *_shenqingVC = [[ShenQingDianPuViewController alloc]init];
-////                _shenqingVC.hidesBottomBarWhenPushed = YES;
-////                _shenqingVC.lastPageNavigationHidden = YES;
-////                [self.navigationController pushViewController:_shenqingVC animated:YES];
-////            }
-////        }
-//            break;
-        case 2://消息中心
-        {
-            MessageListController *messageList = [[MessageListController alloc]init];
-            messageList.hidesBottomBarWhenPushed = YES;
-            messageList.lastPageNavigationHidden = YES;
-            [self.navigationController pushViewController:messageList animated:YES];
-            
-        }
-            break;
-        case 3://邀请好友
-        {
-            [self clickToShare:nil];
-            
-        }
-            break;
-        case 4://扫一扫
-        {
-            [self saoyisaoClicked];
-            
-        }
-            break;
-        case 5://设置
-        {
-            [self xiaochilun];
-        }
-            break;
-        default:
-            break;
+    NSString *title = _tabelViewCellTitleArray[indexPath.row];
+
+    if ([title isEqualToString:@"我的收藏"]) {
+        
+        MyConcernController *concern = [[MyConcernController alloc]init];
+        concern.hidesBottomBarWhenPushed = YES;
+        concern.lastPageNavigationHidden = YES;
+        [self.navigationController pushViewController:concern animated:YES];
+        
+    }else if ([title isEqualToString:@"我的钱包"])
+    {
+        GMyWalletViewController *ccc = [[GMyWalletViewController alloc]init];
+        ccc.hidesBottomBarWhenPushed = YES;
+        ccc.lastPageNavigationHidden = YES;
+        ccc.jifen = self.jifen;
+        [self.navigationController pushViewController:ccc animated:YES];
+        
+    }else if ([title isEqualToString:@"我的购物车"]){
+        
+        ShoppingCarController *order = [[ShoppingCarController alloc]init];
+        order.hidesBottomBarWhenPushed = YES;
+        order.lastPageNavigationHidden = YES;
+        [self.navigationController pushViewController:order animated:YES];
+        
+    }else if ([title isEqualToString:@"我的订单"]){
+        
+        OrderViewController *order = [[OrderViewController alloc]init];
+        order.hidesBottomBarWhenPushed = YES;
+        order.lastPageNavigationHidden = YES;
+        [self.navigationController pushViewController:order animated:YES];
+        
+    }else if ([title isEqualToString:@"我的地址"]){
+        
+        ShoppingAddressController *shopping = [[ShoppingAddressController alloc]init];
+        shopping.hidesBottomBarWhenPushed = YES;
+        shopping.lastPageNavigationHidden = YES;
+        [self.navigationController pushViewController:shopping animated:YES];
+        
+    }else if ([title isEqualToString:@"消息中心"]){
+        
+        MessageListController *messageList = [[MessageListController alloc]init];
+        messageList.hidesBottomBarWhenPushed = YES;
+        messageList.lastPageNavigationHidden = YES;
+        [self.navigationController pushViewController:messageList animated:YES];
+        
+    }else if ([title isEqualToString:@"邀请好友"]){
+        
+        [self clickToShare:nil];
+        
+    }else if ([title isEqualToString:@"扫一扫"]){
+        
+        [self saoyisaoClicked];
+        
+    }else if ([title isEqualToString:@"设置"]){
+        
+        [self clickToSettings];
     }
+    
+//    switch (indexPath.row) {
+//            
+//        case 0://我的收藏
+//        {
+//            MyConcernController *concern = [[MyConcernController alloc]init];
+//            concern.hidesBottomBarWhenPushed = YES;
+//            concern.lastPageNavigationHidden = YES;
+//            [self.navigationController pushViewController:concern animated:YES];
+//        }
+//            break;
+//        case 1://我的钱包
+//        {
+//            GMyWalletViewController *ccc = [[GMyWalletViewController alloc]init];
+//            ccc.hidesBottomBarWhenPushed = YES;
+//            ccc.lastPageNavigationHidden = YES;
+//            ccc.jifen = self.jifen;
+//            [self.navigationController pushViewController:ccc animated:YES];
+//            
+//        }
+//            break;
+//////        case 2://申请店铺/我的店铺
+//////        {
+//////            int shopMan = [_userInfo.shopman intValue];
+//////            
+//////            if (shopMan == 2) {
+//////                NSLog(@"店主");
+//////                MyShopViewController *shop = [[MyShopViewController alloc]init];
+//////                shop.userInfo = _userInfo;
+//////                shop.lastPageNavigationHidden = YES;
+//////                shop.hidesBottomBarWhenPushed = YES;
+//////                [self.navigationController pushViewController:shop animated:YES];
+//////            }else if (shopMan == 1){
+//////                NSLog(@"店铺申请");
+//////                [LTools showMBProgressWithText:@"您已申请店铺,正在审核中..." addToView:self.view];
+//////            }else if (shopMan == 0){
+//////                NSLog(@"普通");
+//////                ShenQingDianPuViewController *_shenqingVC = [[ShenQingDianPuViewController alloc]init];
+//////                _shenqingVC.hidesBottomBarWhenPushed = YES;
+//////                _shenqingVC.lastPageNavigationHidden = YES;
+//////                [self.navigationController pushViewController:_shenqingVC animated:YES];
+//////            }
+//////        }
+////            break;
+//        case 2://消息中心
+//        {
+//            MessageListController *messageList = [[MessageListController alloc]init];
+//            messageList.hidesBottomBarWhenPushed = YES;
+//            messageList.lastPageNavigationHidden = YES;
+//            [self.navigationController pushViewController:messageList animated:YES];
+//            
+//        }
+//            break;
+//        case 3://邀请好友
+//        {
+//            [self clickToShare:nil];
+//            
+//        }
+//            break;
+//        case 4://扫一扫
+//        {
+//            [self saoyisaoClicked];
+//            
+//        }
+//            break;
+//        case 5://设置
+//        {
+//            [self clickToSettings];
+//        }
+//            break;
+//        default:
+//            break;
+//    }
     
 }
 
