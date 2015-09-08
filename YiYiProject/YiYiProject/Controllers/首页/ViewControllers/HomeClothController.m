@@ -26,6 +26,10 @@
 #import "RefreshTableView.h"
 #import "GnearbyStoreTableViewCell.h"
 
+//测试
+#import "GChooseColorAndSizeViewController.h"//颜色尺码选择
+#import "GChooseAdrOfBjViewController.h"//选择地区
+
 @interface HomeClothController ()<RefreshDelegate,UITableViewDataSource,GgetllocationDelegate,UISearchBarDelegate>
 {
     
@@ -163,14 +167,24 @@
 //点击
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
-    NSLog(@"%s",__FUNCTION__);
-    NSLog(@"%ld",(long)indexPath.row);
+//    NSLog(@"%s",__FUNCTION__);
+//    NSLog(@"%ld",(long)indexPath.row);
+//    
+//    NSDictionary *dic = _tableView.dataArray [indexPath.row];
+//    NSString *storeId = [dic stringValueForKey:@"mall_id"];
+//    NSString *mallType = [dic stringValueForKey:@"mall_type"];
+//    NSString *storeName = [dic stringValueForKey:@"mall_name"];
+//    [self pushToNearbyStoreVCWithIdStr:storeId theStoreName:storeName theType:mallType];
     
-    NSDictionary *dic = _tableView.dataArray [indexPath.row];
-    NSString *storeId = [dic stringValueForKey:@"mall_id"];
-    NSString *mallType = [dic stringValueForKey:@"mall_type"];
-    NSString *storeName = [dic stringValueForKey:@"mall_name"];
-    [self pushToNearbyStoreVCWithIdStr:storeId theStoreName:storeName theType:mallType];
+//    GChooseColorAndSizeViewController *aa = [[GChooseColorAndSizeViewController alloc]init];
+//    aa.hidesBottomBarWhenPushed = YES;
+    
+    GChooseAdrOfBjViewController *aa = [[GChooseAdrOfBjViewController alloc]init];
+    aa.hidesBottomBarWhenPushed = YES;
+    
+    [self.rootViewController.navigationController pushViewController: aa animated:YES];
+    
+    
     
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView

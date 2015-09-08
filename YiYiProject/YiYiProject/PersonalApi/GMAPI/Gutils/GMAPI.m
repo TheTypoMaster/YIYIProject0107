@@ -697,6 +697,7 @@
     return @"";
 }
 
+
 + (int)cityIdForName:(NSString *)cityName//根据城市名获取id
 {
     //打开数据库
@@ -723,6 +724,10 @@
     sqlite3_finalize(stmt);
     return 0;
 }
+
+
+
+
 
 +(NSString*)getTimeWithDate:(NSDate*)theDate{
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
