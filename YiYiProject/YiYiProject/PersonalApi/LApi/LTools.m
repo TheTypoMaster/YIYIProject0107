@@ -132,6 +132,34 @@
     
 }
 
+#pragma - mark 拼接get请求接口
+
+/**
+ *  拼接get请求url
+ *
+ *  @param url    url
+ *  @param params 参数组成的字典
+ *
+ *  @return 返回url字符串
+ */
++ (NSString *)url:(NSString *)url
+       withParams:(NSDictionary *)params
+{
+    NSArray *allkeys = [params allKeys];
+    
+    if (url == nil) {
+        url = @"";
+    }
+    
+    NSMutableString *url_mutable = [NSMutableString stringWithString:url];
+    
+    for (NSString *key in allkeys) {
+        
+        NSString *param = [NSString stringWithFormat:@"&%@=%@",key,params[key]];
+        [url_mutable appendString:param];
+    }
+    return url_mutable;
+}
 
 
 #pragma - mark 网络数据请求
@@ -202,8 +230,8 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     
     
-//    NSString *str = [[NSString alloc]initWithData:_data encoding:NSUTF8StringEncoding];
-//    
+    NSString *str = [[NSString alloc]initWithData:_data encoding:NSUTF8StringEncoding];
+    
 //    NSLog(@"response string %@",str);
     
     if (_data.length > 0) {

@@ -223,32 +223,32 @@
     {
         api = USER_ADDRESS_ADD;
         params = @{@"authcode":[GMAPI getAuthkey],
-                                 @"pro_id":[NSNumber numberWithInteger:_selectProvinceId],
-                                 @"city_id":[NSNumber numberWithInteger:_selectCityId],
+                                 @"pro_id":[NSNumber numberWithInteger:1000],
+                                 @"city_id":[NSNumber numberWithInteger:1001],
                                  @"street":street,
                                  @"receiver_username":receiver_username,
                                  @"mobile":mobile,
                                  @"default_address":[NSNumber numberWithInt:isDefault]};
     }
-
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-
-    __weak typeof(self)weakSelf = self;
     
-//    [[YJYRequstManager shareInstance]requestWithMethod:YJYRequstMethodPost api:api parameters:params constructingBodyBlock:nil completion:^(NSDictionary *result) {
-//        
-//        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-//        
-//        [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_ADDADDRESS object:nil];
-//        
-//        [weakSelf performSelector:@selector(backAction) withObject:self afterDelay:0.3];
-//        
-//    } failBlock:^(NSDictionary *result) {
-//        
-//        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-//        
-//    }];
+    __weak typeof(self)weakSelf = self;
+    NSString *post = [LTools url:nil withParams:params];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    
+    LTools *tool = [[LTools alloc]initWithUrl:api isPost:YES postData:postData];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_ADDADDRESS object:nil];
+        [weakSelf performSelector:@selector(backAction) withObject:self afterDelay:0.3];
+        
+    } failBlock:^(NSDictionary *result, NSError *erro) {
+        
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+
+    }];
 
 }
 

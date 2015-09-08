@@ -21,11 +21,20 @@
     RefreshTableView *_table;
     __weak AddressModel *_defaultAddress;//记录默认地址
     int _deleteIndexrow;
+    UIView *_footer;
 }
 
 @end
 
 @implementation ShoppingAddressController
+
+- (void)dealloc
+{
+    [_table removeObserver];
+    _table.dataSource = nil;
+    _table.refreshDelegate = nil;
+    _table = nil;
+}
 
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -54,10 +63,25 @@
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_table];
     [_table showRefreshHeader:YES];
-
-    [_table reloadData:nil pageSize:10 noDataView:[self footerViewForNoAddress]];
     
-//    [self createFooter];
+    __weak typeof(self)weakSelf = self;
+    __weak typeof(_table)weakTable = _table;
+    [_table setDataArrayObeserverBlock:^(NSString *keyPath,NSDictionary *change){
+        
+        NSLog(@"keyPath %@ change %@",keyPath,change);
+        
+        int new = [change[@"new"]intValue];
+        if (new > 0) {
+            
+            [weakSelf addFooter];
+            
+        }else
+        {
+            [weakSelf removeFooter];
+        }
+        
+    }];
+
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateAddress) name:NOTIFICATION_ADDADDRESS object:nil];
 }
@@ -80,19 +104,25 @@
 {
     __weak typeof(_table)weakTable = _table;
     __weak AddressModel *aModel = [_table.dataArray objectAtIndex:sender.tag - kPadding_Default];
+    
     NSString *authkey = [GMAPI getAuthkey];
     NSDictionary *params = @{@"authcode":authkey,
                              @"address_id":aModel.address_id};
-//    [[YJYRequstManager shareInstance]requestWithMethod:YJYRequstMethodPost api:USER_ADDRESS_SETDEFAULT parameters:params constructingBodyBlock:nil completion:^(NSDictionary *result) {
-//        
-//        aModel.default_address = @"1";
-//        _defaultAddress.default_address = @"0";
-//        [weakTable reloadData];
-//        
-//    } failBlock:^(NSDictionary *result) {
-//        
-//        
-//    }];
+    
+    NSString *post = [LTools url:nil withParams:params];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    
+    LTools *tool = [[LTools alloc]initWithUrl:USER_ADDRESS_SETDEFAULT isPost:YES postData:postData];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        aModel.default_address = @"1";
+        _defaultAddress.default_address = @"0";
+        [weakTable reloadData];
+        
+    } failBlock:^(NSDictionary *result, NSError *erro) {
+        
+        
+    }];
 
 }
 
@@ -106,18 +136,26 @@
     __weak AddressModel *aModel = [_table.dataArray objectAtIndex:index];
 
     __weak typeof(_table)weakTable = _table;
+    __weak typeof(self)weakSelf = self;
     NSString *authkey = [GMAPI getAuthkey];
     NSDictionary *params = @{@"authcode":authkey,
                              @"address_id":aModel.address_id};
-//    [[YJYRequstManager shareInstance]requestWithMethod:YJYRequstMethodPost api:USER_ADDRESS_DELETE parameters:params constructingBodyBlock:nil completion:^(NSDictionary *result) {
-//        
-//        [weakTable.dataArray removeObjectAtIndex:index];
-//        [weakTable reloadData];
-//        
-//    } failBlock:^(NSDictionary *result) {
-//        
-//        
-//    }];
+    NSString *post = [LTools url:nil withParams:params];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    
+    LTools *tool = [[LTools alloc]initWithUrl:USER_ADDRESS_DELETE isPost:YES postData:postData];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        weakTable.pageNum = 1;
+        weakTable.isReloadData = YES;
+        [weakSelf getAddressList];
+        
+        
+    } failBlock:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"result %@",result);
+    }];
+
 }
 
 //收货地址
@@ -126,42 +164,61 @@
 {
     __weak typeof(_table)weakTable = _table;
     
-    NSDictionary *params = @{@"authcode":[GMAPI getAuthkey],
+    NSString *authey = [GMAPI getAuthkey];
+
+    NSDictionary *params = @{@"authcode":authey,
                              @"page":[NSNumber numberWithInt:_table.pageNum],
-                             @"per_page":[NSNumber numberWithInt:20]};
-//    [[YJYRequstManager shareInstance]requestWithMethod:YJYRequstMethodGet api:USER_ADDRESS_LIST parameters:params constructingBodyBlock:nil completion:^(NSDictionary *result) {
-//        
-//        NSLog(@"result complete %@",result);
-//        
-//        NSArray *list = result[@"list"];
-//        NSMutableArray *temp = [NSMutableArray arrayWithCapacity:list.count];
-//        for (NSDictionary *aDic in list) {
-//            
-//            AddressModel *address = [[AddressModel alloc]initWithDictionary:aDic];
-//            [temp addObject:address];
-//        }
-//        
-//        [weakTable reloadData:temp pageSize:20];
-//        
-//    } failBlock:^(NSDictionary *result) {
-//        
-//        NSLog(@"result fail %@",result);
-//        [weakTable loadFail];
-//
-//    }];
+                             @"per_page":[NSNumber numberWithInt:L_PAGE_SIZE]};
+    
+    
+    NSString *url = [LTools url:USER_ADDRESS_LIST withParams:params];
+    
+    LTools *tool = [[LTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSArray *list = result[@"list"];
+        NSMutableArray *temp = [NSMutableArray arrayWithCapacity:list.count];
+        for (NSDictionary *aDic in list) {
+
+            AddressModel *address = [[AddressModel alloc]initWithDictionary:aDic];
+            [temp addObject:address];
+        }
+        [weakTable reloadData:temp pageSize:L_PAGE_SIZE noDataView:[self footerViewForNoAddress]];
+
+        
+    } failBlock:^(NSDictionary *result, NSError *erro) {
+        
+        [weakTable loadFail];
+    }];
+
 }
 
 #pragma mark - 创建视图
 
-- (void)createFooter
+- (void)addFooter
 {
-    UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT - 43 - 25 - 64, DEVICE_WIDTH, 43 + 25)];
-    [self.view addSubview:footer];
+    if (_footer) {
+        
+        return;
+    }
+    
+    _table.height = DEVICE_HEIGHT - 64 - 43 - 25;
+    _footer = [[UIView alloc]initWithFrame:CGRectMake(0, DEVICE_HEIGHT - 43 - 25 - 64, DEVICE_WIDTH, 43 + 25)];
+    [self.view addSubview:_footer];
     
     UIButton *btn = [[UIButton alloc]initWithframe:CGRectMake(33, 0, DEVICE_WIDTH - 66, 43) buttonType:UIButtonTypeCustom normalTitle:@"添加新地址" selectedTitle:nil target:self action:@selector(clickToAddNewAddress:)];
-    btn.backgroundColor = [UIColor colorWithHexString:@"8ab800"];
+    btn.backgroundColor = DEFAULT_TEXTCOLOR;
     [btn addCornerRadius:3.f];
-    [footer addSubview:btn];
+    [_footer addSubview:btn];
+}
+
+- (void)removeFooter
+{
+    _table.height = DEVICE_HEIGHT - 64;
+    if (_footer) {
+        [_footer removeFromSuperview];
+        _footer = nil;
+    }
 }
 
 /**

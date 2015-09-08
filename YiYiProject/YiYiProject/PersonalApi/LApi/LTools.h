@@ -55,8 +55,16 @@ typedef void(^versionBlock)(BOOL isNewVersion,NSString *updateUrl,NSString *upda
 
 + (BOOL)isLogin:(UIViewController *)viewController loginBlock:(LoginBlock)aBlock;//判断登录状态
 
-//@property(nonatomic,retain)
-
+/**
+ *  拼接get请求url
+ *
+ *  @param url    url
+ *  @param params 参数组成的字典
+ *
+ *  @return 返回url字符串
+ */
++ (NSString *)url:(NSString *)url
+       withParams:(NSDictionary *)params;
 /**
  *  网络请求
  */

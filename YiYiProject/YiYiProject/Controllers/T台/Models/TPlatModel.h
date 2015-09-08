@@ -35,6 +35,7 @@
 @property(nonatomic,retain)NSArray *tag;//标签
 @property(nonatomic,retain)NSArray *sameStyleArray;//同款单品列表
 @property(nonatomic,retain)NSString *brand_name;//品牌名字
+@property(nonatomic,retain)NSString *brand_logo;//品牌logo
 @property(nonatomic,retain)NSDictionary *official_pic;//官方固定介绍图
 @property(nonatomic,retain)NSDictionary *official_activity;//官方活动
 @property(nonatomic,retain)NSArray *images;//图片数组(T台详情)

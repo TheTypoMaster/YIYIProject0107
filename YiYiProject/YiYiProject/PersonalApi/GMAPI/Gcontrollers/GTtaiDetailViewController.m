@@ -768,6 +768,24 @@
     }
 }
 
+-(void)GchooseBtnClicked:(GBtn *)sender{
+    
+    
+    
+    sender.selected = !sender.selected;
+    
+    GTtaiRelationStoreModel *model = _relationStoreArray[sender.theIndex.section];
+    if ([model.isChoose[sender.theIndex.row]intValue] == 1) {
+        model.isChoose[sender.theIndex.row] = @"0";
+    }else{
+        model.isChoose[sender.theIndex.row] = @"1";
+    }
+    NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:sender.theIndex.section];
+    [_tabHeaderTableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+    
+}
+
 /**
  *  更新赞的状态
  *
@@ -1414,25 +1432,6 @@
     
     
     return cell;
-}
-
-
--(void)GchooseBtnClicked:(GBtn *)sender{
-    
-    
-    
-    sender.selected = !sender.selected;
-    
-    GTtaiRelationStoreModel *model = _relationStoreArray[sender.theIndex.section];
-    if ([model.isChoose[sender.theIndex.row]intValue] == 1) {
-        model.isChoose[sender.theIndex.row] = @"0";
-    }else{
-        model.isChoose[sender.theIndex.row] = @"1";
-    }
-    NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:sender.theIndex.section];
-    [_tabHeaderTableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
-    
-    
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{

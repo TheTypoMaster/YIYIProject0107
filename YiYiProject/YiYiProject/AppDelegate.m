@@ -332,7 +332,7 @@
     
     //使用友盟统计
     [MobClick startWithAppkey:UmengAppkey];
-    
+        
     //打开调试log的开关
     [UMSocialData openLog:NO];
     

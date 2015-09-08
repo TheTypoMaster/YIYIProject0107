@@ -43,6 +43,15 @@
 
 @end
 
+/**
+ *  数据源监控block
+ *
+ *  @param keyPath
+ *  @param change  值得变化
+ */
+typedef void(^OBSERVERBLOCK)(NSString *keyPath,NSDictionary *change);
+
+
 @interface RefreshTableView : UITableView<L_EGORefreshTableDelegate,UITableViewDataSource,UITableViewDelegate>
 {
     int _dataArrayCount;//数据源个数
@@ -56,6 +65,8 @@
 @property (nonatomic,assign)BOOL                        reloading;         //是否正在loading
 @property (nonatomic,assign)BOOL                        isLoadMoreData;    //是否是载入更多
 @property (nonatomic,assign)BOOL                        isHaveMoreData;    //是否还有更多数据,决定是否有更多view
+
+@property (nonatomic,copy)OBSERVERBLOCK dataArrayObeserverBlock;//监控数据源
 
 @property (nonatomic,assign)int pageNum;//页数
 @property (nonatomic,retain)NSMutableArray *dataArray;//数据源
@@ -102,5 +113,13 @@
           pageSize:(int)pageSize
         noDataView:(UIView *)noDataView;
 
+/**
+ *  移除下标为Index的数据
+ *
+ *  @param index
+ */
+- (void)removeObjectAtIndex:(int)index;
+
+-(void)removeObserver;//移除
 
 @end

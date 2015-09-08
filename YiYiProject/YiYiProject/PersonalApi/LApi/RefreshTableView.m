@@ -56,6 +56,7 @@
 
 - (void)dealloc
 {
+    self.dataArrayObeserverBlock = nil;
     self.dataArray = nil;
     self.loadingIndicator = nil;
     self.normalLabel = nil;
@@ -152,6 +153,40 @@
 }
 
 #pragma mark - 拓展新方法
+
+/**
+ *  移除下标为Index的数据
+ *
+ *  @param index
+ */
+- (void)removeObjectAtIndex:(int)index
+{
+    [self.dataArray removeObjectAtIndex:index];
+    [self reloadData];
+    [self setValue:[NSNumber numberWithInteger:_dataArray.count] forKey:@"_dataArrayCount"];
+}
+
+//监控数据源的block
+
+-(void)setDataArrayObeserverBlock:(OBSERVERBLOCK)dataArrayObeserverBlock
+{
+    //监测数据源
+    [self addObserver:self forKeyPath:@"_dataArrayCount" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+    _dataArrayObeserverBlock = dataArrayObeserverBlock;
+}
+
+-(void)removeObserver
+{
+    [self removeObserver:self forKeyPath:@"_dataArrayCount"];
+}
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (self.dataArrayObeserverBlock) {
+        
+        self.dataArrayObeserverBlock(keyPath,change);
+    }
+}
 
 /**
  *  成功加载数据reload

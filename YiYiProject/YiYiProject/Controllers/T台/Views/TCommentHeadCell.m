@@ -38,12 +38,12 @@
         TPlatModel *model = (TPlatModel *)aModel;
         desString = model.tt_content;//描述
         addtime = model.add_time;
-        if ([model.uinfo isKindOfClass:[NSDictionary class]]) {
-            
-            iconUrl = model.uinfo[@"photo"];
-            userName = model.uinfo[@"user_name"];
+//        if ([model.uinfo isKindOfClass:[NSDictionary class]]) {
+        
+            iconUrl = model.brand_logo;
+            userName = model.brand_name;
             userName = [LTools isEmpty:userName] ? @"衣加衣-穿衣管家" : userName;
-        }
+//        }
         
     }else if ([aModel isKindOfClass:[ProductModel class]])
     {
