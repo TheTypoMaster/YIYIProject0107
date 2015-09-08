@@ -5773,11 +5773,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GChooseAdrOfBjViewController.m"
-            timestampString = "463402526.254051"
+            timestampString = "463402697.105031"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
             landmarkName = "-prepareNetData"
             landmarkType = "5">
          </BreakpointContent>
@@ -5789,11 +5789,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YiYiProject/PersonalApi/GMAPI/Gcontrollers/GChooseAdrOfBjViewController.m"
-            timestampString = "463402526.254051"
+            timestampString = "463402697.105031"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "43"
-            endingLineNumber = "43"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
             landmarkName = "-prepareNetData"
             landmarkType = "5">
          </BreakpointContent>

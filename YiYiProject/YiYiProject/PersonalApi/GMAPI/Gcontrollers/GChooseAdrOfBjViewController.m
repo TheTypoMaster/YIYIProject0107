@@ -41,12 +41,16 @@
 
 -(void)prepareNetData{
     
+    
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
     LTools *tt = [[LTools alloc]initWithUrl:GET_ADRESS_BJ isPost:NO postData:nil];
     [tt requestCompletion:^(NSDictionary *result, NSError *erro) {
         
-        
         _p_c_list = [result arrayValueForKey:@"p_c_list"];
         [_tab reloadData];
+        
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     } failBlock:^(NSDictionary *result, NSError *erro) {
         
     }];
