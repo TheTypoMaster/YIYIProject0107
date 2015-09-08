@@ -8,8 +8,12 @@
 
 #import "GChooseAdrOfBjViewController.h"
 
-@interface GChooseAdrOfBjViewController ()
-
+@interface GChooseAdrOfBjViewController ()<UITableViewDataSource,UITableViewDelegate>
+{
+    UITableView *_tab;
+    NSArray *_p_c_list;
+    
+}
 @end
 
 @implementation GChooseAdrOfBjViewController
@@ -17,13 +21,112 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    
+    [self setMyViewControllerLeftButtonType:MyViewControllerLeftbuttonTypeBack WithRightButtonType:MyViewControllerRightbuttonTypeNull];
+    self.myTitle = @"选择地址";
+    
+    [self creatTab];
+    [self prepareNetData];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+    
 }
 
+
+#pragma mark - MyMethod
+
+-(void)prepareNetData{
+    
+    LTools *tt = [[LTools alloc]initWithUrl:GET_ADRESS_BJ isPost:NO postData:nil];
+    [tt requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        
+        _p_c_list = [result arrayValueForKey:@"p_c_list"];
+        [_tab reloadData];
+    } failBlock:^(NSDictionary *result, NSError *erro) {
+        
+    }];
+}
+
+-(void)creatTab{
+    _tab = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT-64) style:UITableViewStyleGrouped];
+    _tab.delegate = self;
+    _tab.dataSource = self;
+    [self.view addSubview:_tab];
+}
+
+#pragma mark - UITableViewDataSource && UITableViewDelegate
+
+-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *identifier = @"identifier";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if (!cell) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        
+    }
+    
+    
+    for (UIView *view in cell.contentView.subviews) {
+        [view removeFromSuperview];
+    }
+    
+    
+    NSArray *children = [_p_c_list[indexPath.section] arrayValueForKey:@"children"];
+    NSDictionary *dic = children[indexPath.row];
+    NSString *name = [dic stringValueForKey:@"name"];
+    cell.textLabel.text = name;
+    
+    return cell;
+    
+    
+}
+
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    NSArray *children = [_p_c_list[section] arrayValueForKey:@"children"];
+    return children.count;
+}
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return _p_c_list.count;
+}
+
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 50;
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 40;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return 0.01;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 40)];
+    UILabel *tLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 0, DEVICE_WIDTH-12, 40)];
+    NSDictionary *dic = _p_c_list[section];
+    NSString *name = [dic stringValueForKey:@"name"];
+    tLabel.text = name;
+    tLabel.font = [UIFont systemFontOfSize:15];
+    [view addSubview:tLabel];
+    return view;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSArray *children = [_p_c_list[indexPath.section] arrayValueForKey:@"children"];
+    NSDictionary *dic = children[indexPath.row];
+    NSString *name = [dic stringValueForKey:@"name"];
+    NSString *theId = [dic stringValueForKey:@"id"];
+    NSLog(@"name:%@ id:%@",name,theId);
+}
 
 
 @end

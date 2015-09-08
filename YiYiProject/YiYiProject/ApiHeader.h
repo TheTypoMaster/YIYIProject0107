@@ -850,6 +850,9 @@ typedef enum{
 //获取购物车数量
 #define GET_SHOPPINGCAR_NUM @"http://www119.alayy.com/index.php?d=api&c=order&m=get_cart_pro_num"
 
+#define GET_ADRESS_BJ @"http://www119.alayy.com/index.php?d=api&c=order&m=get_p_c_list"
+
+
 #endif
 
 
