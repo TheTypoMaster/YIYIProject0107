@@ -79,23 +79,23 @@
                 tf.text = self.addressModel.mobile;
             }else if (i == 2){
                 
-//                NSString *add = [NSString stringWithFormat:@"%@%@",[GMAPI cityNameForId:[self.addressModel.pro_id intValue]],[GMAPI cityNameForId:[self.addressModel.city_id intValue]]];
-//                tf.text = add;
-//                
-//                NSString *pro_id = self.addressModel.pro_id;
-//                NSString *city_id = self.addressModel.city_id;
-//                NSString *pro_name = [GMAPI cityNameForId:[pro_id intValue]];
-//                NSString *city_name = [GMAPI cityNameForId:[city_id intValue]];
-//                
-//                self.provinceId = [pro_id integerValue];
-//                self.cityId = [city_id integerValue];
-//                self.provinceName = pro_name;
-//                self.cityName = city_name;
-//                
-//                _selectProvinceId = [pro_id integerValue];
-//                _selectCityId = [city_id integerValue];
-//                
-//                NSLog(@"\nproId:%ld proName:%@\n cityId:%ld cityName:%@",self.provinceId,self.provinceName,self.cityId,self.cityName);
+                NSString *add = [NSString stringWithFormat:@"%@%@",[GMAPI cityNameForId:[self.addressModel.pro_id intValue]],[GMAPI cityNameForId:[self.addressModel.city_id intValue]]];
+                tf.text = add;
+                
+                NSString *pro_id = self.addressModel.pro_id;
+                NSString *city_id = self.addressModel.city_id;
+                NSString *pro_name = [GMAPI cityNameForId:[pro_id intValue]];
+                NSString *city_name = [GMAPI cityNameForId:[city_id intValue]];
+                
+                self.provinceId = [pro_id integerValue];
+                self.cityId = [city_id integerValue];
+                self.provinceName = pro_name;
+                self.cityName = city_name;
+                
+                _selectProvinceId = [pro_id integerValue];
+                _selectCityId = [city_id integerValue];
+                
+                NSLog(@"\nproId:%ld proName:%@\n cityId:%ld cityName:%@",self.provinceId,self.provinceName,self.cityId,self.cityName);
                 
             }else if (i == 3){
                 tf.text = self.addressModel.street;
@@ -223,8 +223,8 @@
     {
         api = USER_ADDRESS_ADD;
         params = @{@"authcode":[GMAPI getAuthkey],
-                                 @"pro_id":[NSNumber numberWithInteger:1000],
-                                 @"city_id":[NSNumber numberWithInteger:1001],
+                                 @"pro_id":[NSNumber numberWithInteger:_selectProvinceId],
+                                 @"city_id":[NSNumber numberWithInteger:_selectCityId],
                                  @"street":street,
                                  @"receiver_username":receiver_username,
                                  @"mobile":mobile,
@@ -491,9 +491,6 @@
     
     [self areaHidden];
     
-    self.provinceId = [GMAPI cityIdForName:self.provinceName];
-    self.cityId = [GMAPI cityIdForName:self.cityName];
-    
     //确定才修改select值
     _selectProvinceId = self.provinceId;
     _selectCityId = self.cityId;
@@ -552,7 +549,7 @@
         }
         NSString *cityStr = [NSString stringWithFormat:@"%@",cities[row][@"city"]];
         //字符转id
-        NSString *pppccc = [NSString stringWithFormat:@"%@%@",self.provinceName,self.cityName];
+        NSString *pppccc = [NSString stringWithFormat:@"%@",self.cityName];
         self.cityId = [GMAPI cityIdForName:pppccc];//上传
         
         return cityStr;

@@ -187,7 +187,7 @@
 //地区选择相关
 + (int)cityIdForName:(NSString *)cityName;
 
-
++ (NSString *)cityNameForId:(int)cityId;
 
 #pragma mark ---------------------提示层
 /**
